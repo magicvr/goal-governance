@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.4
+version: 0.1.5
 ---
 
 # 执行记录 · GOAL-003
@@ -60,14 +60,30 @@ version: 0.1.4
 - 阻塞 / 风险：无。
 - 下一步（计划）：在本项目中强制使用这套 Skills，开始收集使用反馈；之后产出「Skills 使用反馈与修正记录」。
 
+### 2026-07-18 · 优化 skills/AGENTS.template.md
+
+- 重写 [skills/AGENTS.template.md](../../../skills/AGENTS.template.md)（version **0.2.0**），目标：规则更清晰可执行、减少歧义，并与根 [AGENTS.md](../../../AGENTS.md) 核心规则对齐。
+- 主要改进：
+  1. 用表格收敛「真相来源 / frontmatter / 写作要求 / 常见错误」，减少散文式歧义。
+  2. 明确编号流程（先读 goal-tree）、`id` = 文件夹名、`parent` 必须为**完整 id（含 slug）**。
+  3. 补齐 `status` 枚举与 `progress` 建议字段。
+  4. P-001：补充「尚不可直接执行」判定标准；工作流标明 1–4 强制 / 5–6 按影响面。
+  5. goal-tree 同步：显式含 `progress` 变更；写明「不更新视为任务未完成」。
+  6. 新增完成前检查清单 + 常见错误对照表（适度，不冗长）。
+  7. 保留并扩展 `{{占位符}}`（`APP_DIR`、`SKILLS_DIR`、`GOAL_FOLDER_TEMPLATE` 等）以保持可移植。
+- 成功标准「AGENTS.template.md 规则可直接照做，歧义点已收敛」已勾选。
+- 进度由 **50%** 调整为 **60%**（成功标准 3/5）；剩余「强制使用 + 书面反馈」与「修正记录」。
+- 同步更新 [goal-tree.md](../goal-tree.md)。
+- 阻塞 / 风险：无。根 `AGENTS.md` 未在本回合改写（本仓库生效规则仍以根文件为准；模板侧已对齐核心约束，后续若需字面同步可单开一轮）。
+
 ## 待办（按范围）
 
-1. 优化 `skills/AGENTS.template.md`
+1. ~~优化 `skills/AGENTS.template.md`~~ **已完成**（见上，v0.2.0）
 2. ~~补充常用提示词模板（新目标 / 决策 / 执行 / 复盘）~~ **已完成**
-3. ~~完善 `skills/templates/goal-folder/` 示例内容~~ **已完成**（见上）
+3. ~~完善 `skills/templates/goal-folder/` 示例内容~~ **已完成**
 4. 在本项目强制使用并记录反馈
 5. 产出「Skills 使用反馈与修正记录」
 
 ## 进度评估
 
-**约 50%**：提示词模板与 goal-folder 示例已完成（成功标准中对应 2 项已勾选）；AGENTS.template 优化、「强制使用 + 书面反馈」与修正记录尚未开始。
+**约 60%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）已完成（成功标准 3/5 已勾选）；「强制使用 + 书面反馈」与修正记录尚未开始。

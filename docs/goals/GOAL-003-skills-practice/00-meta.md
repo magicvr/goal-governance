@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.3
-progress: 50%
+version: 0.1.4
+progress: 60%
 ---
 
 # GOAL-003 · 完善 Skills 并在本项目中实践验证
@@ -33,7 +33,7 @@ progress: 50%
 
 ## 成功标准
 
-- [ ] `skills/AGENTS.template.md` 规则可直接照做，歧义点已收敛
+- [x] `skills/AGENTS.template.md` 规则可直接照做，歧义点已收敛
 - [x] 至少 4 类常用提示词模板可用（新目标 / 决策 / 执行 / 复盘）
 - [x] `skills/templates/goal-folder/` 带有可参考的示例内容（非空白占位）
 - [ ] 本仓库协作已按 Skills 规则运行，并有书面使用反馈

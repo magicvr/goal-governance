@@ -4,35 +4,40 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.1
+version: 0.2.0
 ---
 
 # AGENTS.md
 
-> **使用说明**：将本文件复制到目标仓库根目录并命名为 `AGENTS.md`。  
-> 将下方 `{{...}}` 占位符改成项目真实信息后生效。
+> **使用说明**：复制到目标仓库根目录并命名为 `AGENTS.md`。  
+> 将 `{{...}}` 替换为项目真实信息后生效。未使用的可选节可删除。
 
 面向在本仓库工作的 AI 助手（及人类协作者）。**以下规则必须遵守。**
 
 ## 1. 文档真相来源
 
-- 目标与过程记录以 `docs/goals/` 为准。
-- 架构约定以 `docs/architecture/` 为准（若项目启用）。
-- 治理原则见 `docs/architecture/principles.md`（若存在）。
-- 文档使用规范见 `docs/README.md`（若存在）。
-- 全局树与状态见 `docs/goals/goal-tree.md`（**必读、必更新**）。
+| 内容 | 路径 | 要求 |
+|------|------|------|
+| 目标与过程记录 | `docs/goals/` | 唯一长期存储 |
+| 目标树与状态 | `docs/goals/goal-tree.md` | **必读、必更新** |
+| 架构约定 | `docs/architecture/` | 若项目启用 |
+| 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001 |
+| 文档使用规范 | `docs/README.md` | 若存在 |
+
+冲突时以 `docs/goals/` 与本文件为准。
 
 ## 2. 目标存储与编号
 
-1. 所有目标**平铺**存放在 `docs/goals/`，**禁止**嵌套目标文件夹。
-2. `GOAL-001` 固定为总目标（Root Goal），`parent` 必须为 `null`。
-3. 新目标从当前最大编号 +1 分配。
-4. 文件夹命名：`GOAL-NNN-short-slug`（数字三位、英文 slug）。
-5. 层级**仅**通过各目标 `00-meta.md` 的 `parent` 字段维护（值为父目标完整 ID，或 `null`）。
+1. **扁平存储**：所有目标文件夹平铺在 `docs/goals/`，**禁止**用子文件夹表达父子关系。
+2. **Root**：`GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
+3. **编号**：先读 `goal-tree.md`（或扫描 `docs/goals/`），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。
+4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
+5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
+6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
+   - 值为**父目标完整 id**（含 slug，例：`GOAL-001-main-vision`），Root 为 `null`。
+   - **禁止**用目录嵌套、文件名或正文标题充当层级真相。
 
-## 3. 每个目标的必备文件
-
-创建目标时必须一次建齐：
+## 3. 目标五件套（创建时一次建齐）
 
 ```text
 docs/goals/GOAL-NNN-short-slug/
@@ -40,93 +45,143 @@ docs/goals/GOAL-NNN-short-slug/
 ├── 01-decision.md
 ├── 02-execution.md
 ├── 03-audit.md
-└── attachments/          # 可为空，但目录必须存在
+└── attachments/          # 可为空，目录必须存在
 ```
 
-不得省略其中任一文件。可从 Skills 包中的 `templates/goal-folder/` 复制。
+- 不得省略任一文件或目录。
+- 可从 `{{GOAL_FOLDER_TEMPLATE}}` 复制后改写（本仓库示例：`skills/templates/goal-folder/`）。
 
 ## 4. Frontmatter 最低要求
 
-每个 Markdown 文档至少包含：
+每个 Markdown 至少包含：
 
-- `status`
-- `created`
-- `updated`
-- `parent`（非目标文件可用 `null`）
-- `version`
+| 字段 | 说明 |
+|------|------|
+| `status` | 见下表 |
+| `created` | `YYYY-MM-DD` |
+| `updated` | 修改内容时更新为当日 |
+| `parent` | 目标：父目标完整 id 或 `null`；非目标文件可用 `null` |
+| `version` | 文档版本号 |
 
-目标 `00-meta.md` 必须包含 `id` 与 `title`。修改内容时更新 `updated`。
+`00-meta.md` **必须**另含：`id`、`title`；**建议**含 `progress`（如 `50%`）。
+
+### status 取值
+
+| 值 | 含义 |
+|----|------|
+| `draft` | 草稿，未正式启动 |
+| `active` | 进行中 |
+| `blocked` | 阻塞 |
+| `done` | 已完成 |
+| `cancelled` | 已取消 |
 
 ## 5. 内容写作要求
 
-- **决策（01-decision）**：写清「决定了什么」和「为什么」；重要取舍注明未选方案。
-- **执行（02-execution）**：按时间线记录事实；**不虚构**未完成工作。
-- **审计（03-audit）**：阶段性复盘：成果、偏差、改进、结论。
-- 语言简洁真实；不确定则标注「待确认」，不要编造进度。
+| 文件 | 写什么 | 禁止 |
+|------|--------|------|
+| `01-decision` | 决定了什么 + 为什么；重要取舍写未选方案 | 编造未发生的决策 |
+| `02-execution` | 按时间线记**事实**（做了什么、产物路径、进度评估） | 虚构未完成工作 |
+| `03-audit` | 阶段性：成果 / 偏差 / 改进 / 结论 | 无复盘节点时硬写「已完成」 |
 
-## 6. 目标可执行性与路线图
+不确定标注「待确认」。语言简洁真实。
 
-处理较大或尚不可直接执行的目标时，**必须**遵守：
+## 6. 目标可执行性与路线图（P-001）
 
-1. 若目标存在明显的拆解需要、尚不能直接执行，**禁止**直接批量创建细粒度子目标并开工。
-2. **必须先**构建可追踪的高层路线图：明确主要阶段与先后关系。
-3. 路线图记录在该目标的 `00-meta.md` 或 `01-decision.md` 中，并随进展更新。
-4. 在路线图就位后，再按阶段创建与执行具体子目标。
-5. 已可直接执行的小目标无需强行补路线图。
+**判定**：范围大、步骤不明、或明显需要拆成多个可独立交付的子目标 → 视为「尚不可直接执行」。
+
+**强制顺序**：
+
+1. **禁止**在尚不可直接执行时，直接批量创建细粒度子目标并开工。
+2. **必须先**写可追踪的高层路线图：主要阶段 + 先后关系（可含完成标记）。
+3. 路线图写在该目标的 `00-meta.md` 或 `01-decision.md`，并随进展更新。
+4. 路线图就位后，再**按阶段**创建与执行具体子目标。
+5. 已可直接执行的小目标**无需**强行补路线图。
+
+原则说明见 `docs/architecture/principles.md`（P-001，若存在）。
 
 ## 7. 必须同步更新 goal-tree.md
 
 以下任一操作后，**必须**更新 `docs/goals/goal-tree.md`：
 
 - 新建目标
-- 修改目标 `status` / 进度
+- 修改 `status` / `progress`
 - 修改 `parent`（调整树）
 - 完成或取消目标
-- 重命名目标文件夹或 slug（同时修正所有引用）
+- 重命名文件夹或 slug（并修正所有引用）
 
-更新内容至少包括：ASCII/文本树、状态表格。
+更新内容至少包括：**ASCII/文本树** + **状态表格**。  
+只改单目标文件、不更新 goal-tree → **视为任务未完成**。
 
 ## 8. 应用代码与文档边界（可选）
 
-> 若项目没有 Web/应用代码，可删除本节或改为实际布局说明。
+> 无应用代码时删除本节；有则替换占位符。
 
-- 应用代码放在 `{{APP_DIR}}`（示例：`web/`）。
-- 不要把目标正文写进 UI 模板当长期存储；长期记录回写 `docs/goals/`。
-- 扩展架构时先更新 `docs/architecture/`，再改代码。
+- 应用代码仅在 `{{APP_DIR}}`（示例：`web/`）。
+- 目标正文的长期存储在 `docs/goals/`，不要写进 UI 模板当真相源。
+- 扩展架构：先更新 `docs/architecture/`（若启用），再改代码。
 
 ## 9. 交付形态（按项目裁剪）
 
-本模板默认支持「文档驱动的目标治理」。可选交付：
+默认：**文档驱动的目标治理**。
 
-1. **文档体系**（必选）：`docs/goals` + `goal-tree.md`
-2. **应用**（可选）：可视化浏览/操作
-3. **Skills / 提示词**（可选）：AI 按同一规则读写目标
+1. **文档体系（必选）**：`docs/goals/` + `goal-tree.md`
+2. **应用（可选）**：`{{APP_DIR}}` 可视化浏览/操作
+3. **Skills / 提示词（可选）**：`{{SKILLS_DIR}}`，AI 按同一规则读写目标
 
-改规则或目标模型时，评估是否需要同步更新文档、应用与 Skills。
+改规则或目标模型时，评估是否需同步文档 / 应用 / Skills。
 
-## 10. 变更工作流（建议）
+## 10. 变更工作流
 
 ```text
-读 goal-tree.md → 确认编号与 parent
-→ 若目标尚不可直接执行：先写/更新高层路线图（00-meta 或 01-decision）
-→ 创建/修改目标五件套
-→ 更新 goal-tree.md
-→ 必要时更新 docs/README.md、architecture/、根 README.md
-→ 再改应用代码或 Skills
+1. 读 goal-tree.md → 确认最大编号与 parent
+2. 若尚不可直接执行 → 先写/更新高层路线图（00-meta 或 01-decision）
+3. 创建或修改目标五件套（frontmatter + 正文）
+4. 更新 goal-tree.md（树 + 表）
+5. 必要时更新 docs/README.md、architecture/、根 README.md
+6. 再改应用代码或 Skills（若有）
 ```
+
+步骤 **1–4 强制**；5–6 按影响面执行。
 
 ## 11. 禁止事项
 
-- 禁止在 `docs/goals/` 下用子文件夹嵌套表达父子目标。
-- 禁止跳过 `goal-tree.md` 只改单目标文件就结束任务。
-- 禁止伪造已完成的执行条目或审计结论。
-- 禁止擅自把 Root Goal 从 GOAL-001 改成其他编号。
-- 禁止对明显需拆解的大目标跳过高层路线图、直接创建并执行大量细粒度子目标。
+- 在 `docs/goals/` 下用子文件夹嵌套表达父子目标
+- 跳过 `goal-tree.md` 只改单目标文件就结束
+- 伪造已完成的执行条目或审计结论
+- 擅自把 Root 从 `GOAL-001` 改成其他编号
+- 对明显需拆解的大目标跳过路线图，直接批量创建并执行细粒度子目标
+- 用 `parent` 以外的方式（目录、标题、正文）作为层级真相
+- 新建目标时漏五件套任一文件或目录
+
+## 12. 完成前检查清单
+
+每次涉及目标的任务结束前自检：
+
+- [ ] 编号未冲突；`id` = 文件夹名
+- [ ] `parent` 为完整父 id 或 `null`（Root）
+- [ ] 五件套齐全（若新建）
+- [ ] 大目标已写/更新路线图（若适用 P-001）
+- [ ] `goal-tree.md` 树与表已同步
+- [ ] `updated` / `progress` / `status` 与事实一致
+- [ ] 无虚构进度或审计结论
+
+## 常见错误（避免）
+
+| 错误 | 正确做法 |
+|------|----------|
+| 用 `docs/goals/父/子/` 建层级 | 平铺 + `parent` 字段 |
+| `parent: GOAL-001`（缺 slug） | `parent: GOAL-001-main-vision`（完整 id） |
+| 只改 `00-meta` 进度，不改 goal-tree | 两处一起改 |
+| 大目标一次创建十几个子目标 | 先路线图，再按阶段立项 |
+| 把计划写成「已完成」 | 只记已发生事实；计划单独标注 |
+| 复制模板后仍留示例 id（如 GOAL-042） | 改成真实 id / 标题 / parent |
 
 ## 快速链接（按项目填写）
 
-- docs/README.md：`{{DOCS_README_PATH}}`
-- goal-tree.md：`docs/goals/goal-tree.md`
+- 文档说明：`{{DOCS_README_PATH}}`
+- 目标树：`docs/goals/goal-tree.md`
 - Root Goal：`docs/goals/{{ROOT_GOAL_FOLDER}}/00-meta.md`
 - 架构说明：`{{ARCHITECTURE_PATH}}`
 - 治理原则：`docs/architecture/principles.md`（若存在）
+- 应用目录：`{{APP_DIR}}`
+- Skills 目录：`{{SKILLS_DIR}}`
