@@ -43,7 +43,7 @@ skills/prompts/
 | 路径 | 角色 |
 |------|------|
 | [../AGENTS.template.md](../AGENTS.template.md) | 规则正文（AI 必须遵守） |
-| [../templates/goal-folder/](../templates/goal-folder/) | 空目标文件夹骨架 |
+| [../templates/goal-folder/](../templates/goal-folder/) | 目标文件夹模板（含虚构示例，复制后改写） |
 | 本目录 | **怎么做**的可复制提示词 |
 
 ## 使用建议

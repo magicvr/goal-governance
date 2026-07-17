@@ -1,29 +1,35 @@
----
-id: GOAL-NNN-short-slug
+﻿---
+id: GOAL-042-optimize-readme
 doc: audit
-status: draft
-parent: null
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
+status: active
+parent: GOAL-040-docs-quality
+created: 2026-03-01
+updated: 2026-03-12
 version: 0.1.0
 ---
 
-# 审计 · GOAL-NNN
+# 审计 · GOAL-042
 
-## 阶段性复盘（YYYY-MM-DD）
+## 阶段性复盘（2026-03-12 · 骨架与自测完成）
 
 ### 成果
 
-- （实际产出）
+- 根 README 已收敛为入口型结构（简介 / 快速开始 / 目录 / 文档链接）。
+- 与架构长文的重复内容已移除，主路径命令可在干净环境跑通。
+- 决策 D-001、D-002 与当前文档形态一致，执行记录可回溯。
 
 ### 偏差与注意点
 
-- （计划与结果的差异、风险）
+- 成功标准里「协作者确认」尚未做，不能仅凭作者自测标 done。
+- 仍可能存在个别死链；交叉链接未系统核对。
+- 曾短暂保留「可选：Docker 启动」第二主路径，与 D-002 冲突，已改回脚注。
 
 ### 改进建议
 
-1. （可执行的下一步）
+1. 列一张 README ↔ docs 链接清单，逐条点开验证后再勾选对应成功标准。
+2. 约一名未参与编写的协作者按 README 操作，把卡点写回本执行记录。
+3. 两项都通过后再考虑将 `status` 标为 `done`。
 
 ### 结论
 
-（是否达标；是否建议将 `status` 标为 `done`。）
+方向正确，约六成完成。当前宜保持 `active`，不建议提前标 done。

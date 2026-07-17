@@ -25,7 +25,7 @@ skills/
 │   ├── 03-update-execution.md
 │   └── 04-write-audit.md
 └── templates/
-    └── goal-folder/          # 单个目标文件夹空模板
+    └── goal-folder/          # 单个目标文件夹模板（含虚构示例，复制后改写）
         ├── 00-meta.md
         ├── 01-decision.md
         ├── 02-execution.md
@@ -114,6 +114,5 @@ skills/templates/goal-folder/
 
 - 可安装的 VS Code / Copilot Skill 包
 - 编号 / parent / goal-tree 一致性校验工具
-- goal-folder 更丰富的示例正文
 
-当前交付定位：**可复制的规则 + 提示词 + 目标文件夹模板**。
+当前交付定位：**可复制的规则 + 提示词 + 含示例的目标文件夹模板**。
