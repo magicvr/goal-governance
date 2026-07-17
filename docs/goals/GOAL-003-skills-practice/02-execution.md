@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.7
+version: 0.1.9
 ---
 
 # 执行记录 · GOAL-003
@@ -103,6 +103,39 @@ version: 0.1.7
   4. 若改规则：先改 template，再按 D-003 评估同步根 AGENTS.md。
   5. 反馈可审计后再评估后 2 项成功标准与是否 `done`。
 
+### 2026-07-18 · 优化安装流程与自定义 skills 目录支持
+
+- 更新 [skills/README.md](../../../skills/README.md)（version **0.2.1**）「安装」章节：
+  1. 明确先把整个 `skills/` 复制到目标项目根（可改名，如 `my-governance-skills`）。
+  2. 说明 `--skills-dir` / `-SkillsDir`（默认 `./skills`）。
+  3. 分步写清手动安装（Claude → 根 `AGENTS.md`；Copilot → 根 `.github/copilot-instructions.md`）与脚本安装。
+  4. 强调提示词统一在 skills 目录下的 `prompts/`。
+- 增强 [skills/install.sh](../../../skills/install.sh)、[skills/install.ps1](../../../skills/install.ps1)：
+  - 新增 `--skills-dir` / `-SkillsDir`（默认 `./skills`）；相对路径相对当前工作目录（项目根）。
+  - 规则文件始终安装到 **CWD**：`AGENTS.md`、`.github/copilot-instructions.md`（自动建 `.github/`）。
+  - `--all` 时 `prompts/`、`templates/` 写入 `--skills-dir` 下。
+  - 源文件读自**脚本所在包**；同源同目标时提示 Already present；保留覆盖确认与缺失源报错。
+  - 更新帮助与示例。
+- 核对安装规则源仍在位：
+  - [skills/install/claude/AGENTS.md](../../../skills/install/claude/AGENTS.md)
+  - [skills/install/copilot/copilot-instructions.md](../../../skills/install/copilot/copilot-instructions.md)
+- 成功标准未新增勾选（仍 3/5）；属安装体验迭代，不改变「强制使用 + 反馈」待办。
+- 进度维持 **约 70%**。
+- 阻塞 / 风险：无。
+
+### 2026-07-18 · 新增 Copilot 斜杠命令 wrapper
+
+- 在 [skills/install/copilot/prompts/](../../../skills/install/copilot/prompts/) 新增 4 个轻量 wrapper：
+  - [new-goal.md](../../../skills/install/copilot/prompts/new-goal.md) → `/new-goal` → 核心 [01-create-new-goal.md](../../../skills/prompts/01-create-new-goal.md)
+  - [log-decision.md](../../../skills/install/copilot/prompts/log-decision.md) → `/log-decision` → 核心 [02-record-decision.md](../../../skills/prompts/02-record-decision.md)
+  - [update-execution.md](../../../skills/install/copilot/prompts/update-execution.md) → `/update-execution` → 核心 [03-update-execution.md](../../../skills/prompts/03-update-execution.md)
+  - [write-audit.md](../../../skills/install/copilot/prompts/write-audit.md) → `/write-audit` → 核心 [04-write-audit.md](../../../skills/prompts/04-write-audit.md)
+- 各 wrapper：先收集必要参数 → 明确引用 `./skills/prompts/` 核心提示词 → 强调 AGENTS（五件套、goal-tree、P-001 等）→ 注释说明「改核心即可全局生效」。
+- 更新 [skills/README.md](../../../skills/README.md)（version **0.2.2**）：目录结构、Copilot 安装小节（wrapper 位置、复制到 `.github/prompts/*.prompt.md` 的用法）。
+- 成功标准仍 **3/5**；属 Copilot 入口体验，不替代「强制使用 + 书面反馈」。
+- 进度维持 **约 70%**。
+- 阻塞 / 风险：无。
+
 ## 待办（按范围）
 
 1. ~~优化 `skills/AGENTS.template.md`~~ **已完成**（见上，v0.2.0）
@@ -114,4 +147,4 @@ version: 0.1.7
 
 ## 进度评估
 
-**约 70%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）与 Claude Code / Copilot 安装路径已完成；中期复盘 A-001 已写入。成功标准仍 **3/5**；「强制使用 + 书面反馈」与修正记录尚未开始。
+**约 70%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）与 Claude Code / Copilot 安装路径已完成；安装支持 `--skills-dir`；Copilot 斜杠命令 wrapper（4 个）已落地。中期复盘 A-001 已写入。成功标准仍 **3/5**；「强制使用 + 书面反馈」与修正记录尚未开始。

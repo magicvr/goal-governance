@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.2.0
+version: 0.2.2
 ---
 
 # Skills
@@ -26,8 +26,13 @@ skills/
 │   ├── claude/
 │   │   └── AGENTS.md         # Claude Code 安装用规则
 │   └── copilot/
-│       └── copilot-instructions.md  # GitHub Copilot 安装用规则
-├── prompts/                  # 可复制的常用提示词模板
+│       ├── copilot-instructions.md  # GitHub Copilot 安装用规则
+│       └── prompts/          # Copilot 斜杠命令 wrapper（轻量入口）
+│           ├── new-goal.md
+│           ├── log-decision.md
+│           ├── update-execution.md
+│           └── write-audit.md
+├── prompts/                  # 核心提示词（唯一真相；修改此处全局生效）
 │   ├── README.md
 │   ├── 01-create-new-goal.md
 │   ├── 02-record-decision.md
@@ -44,104 +49,183 @@ skills/
 
 ## 安装
 
-推荐**手动安装**（透明、可审计）；脚本为可选快捷方式。  
-无论哪种方式，都请先 `cd` 到**目标项目根目录**。
+**支持工具**：GitHub Copilot、Claude Code。  
+**提示词统一位置**：包内 [`prompts/`](prompts/)（安装后位于你选择的 skills 目录下）。
+
+推荐流程：先把整个包复制进目标项目，再装规则文件。  
+手动安装透明可审计；[install.sh](install.sh) / [install.ps1](install.ps1) 为可选快捷方式（**离线**）。
+
+### 0. 准备：复制 skills 包到目标项目
+
+在目标项目**根目录**执行（路径按本仓库实际位置调整）：
+
+```bash
+# Bash：整包复制（目录名可改）
+cp -R /path/to/goal-governance/skills ./skills
+# 或改名：
+# cp -R /path/to/goal-governance/skills ./my-governance-skills
+```
+
+```powershell
+# PowerShell
+Copy-Item -Recurse path\to\goal-governance\skills .\skills
+# 或改名：
+# Copy-Item -Recurse path\to\goal-governance\skills .\my-governance-skills
+```
+
+说明：
+
+- 复制后，提示词在 `./skills/prompts/`（或你改名后的 `./my-governance-skills/prompts/`）。
+- 后续步骤中的「skills 目录」= 你复制后的一级目录；脚本参数 `--skills-dir` / `-SkillsDir` 默认 `./skills`。
+- 无论手动还是脚本，请先 `cd` 到**目标项目根目录**。
 
 ### 1. 手动安装（推荐）
 
 #### Claude Code
 
-将 Claude 规则复制到目标项目根目录，文件名为 `AGENTS.md`：
-
 ```text
-skills/install/claude/AGENTS.md  →  <your-repo>/AGENTS.md
+<skills-dir>/install/claude/AGENTS.md  →  <your-repo>/AGENTS.md
 ```
 
-示例（在目标项目根执行，路径按本仓库实际位置调整）：
-
 ```bash
-# Bash
-cp /path/to/goal-governance/skills/install/claude/AGENTS.md ./AGENTS.md
+# Bash（在目标项目根；skills 目录名按实际修改）
+cp ./skills/install/claude/AGENTS.md ./AGENTS.md
 ```
 
 ```powershell
 # PowerShell
-Copy-Item path\to\goal-governance\skills\install\claude\AGENTS.md .\AGENTS.md
+Copy-Item .\skills\install\claude\AGENTS.md .\AGENTS.md
 ```
 
 也可从可编辑源 [AGENTS.template.md](AGENTS.template.md) 复制后自行适配（替换 `{{...}}` 占位符）。
 
 #### GitHub Copilot
 
-将 Copilot 规则复制到 `.github/copilot-instructions.md`：
+`.github/` **必须**建在目标项目根目录：
 
 ```text
-skills/install/copilot/copilot-instructions.md  →  <your-repo>/.github/copilot-instructions.md
+<skills-dir>/install/copilot/copilot-instructions.md
+  →  <your-repo>/.github/copilot-instructions.md
 ```
-
-示例：
 
 ```bash
 # Bash
 mkdir -p .github
-cp /path/to/goal-governance/skills/install/copilot/copilot-instructions.md .github/copilot-instructions.md
+cp ./skills/install/copilot/copilot-instructions.md .github/copilot-instructions.md
 ```
 
 ```powershell
 # PowerShell
 New-Item -ItemType Directory -Force -Path .github | Out-Null
-Copy-Item path\to\goal-governance\skills\install\copilot\copilot-instructions.md .github\copilot-instructions.md
+Copy-Item .\skills\install\copilot\copilot-instructions.md .github\copilot-instructions.md
 ```
 
-#### 可选：一并复制 prompts/ 与 templates/
+##### Copilot 斜杠命令 wrapper（可选）
+
+位置：[install/copilot/prompts/](install/copilot/prompts/)。这是**轻量交互入口**，核心逻辑仍在 [prompts/](prompts/)。
+
+| Wrapper 文件 | 斜杠命令 | 对应核心提示词 |
+|--------------|----------|----------------|
+| [new-goal.md](install/copilot/prompts/new-goal.md) | `/new-goal` | [01-create-new-goal.md](prompts/01-create-new-goal.md) |
+| [log-decision.md](install/copilot/prompts/log-decision.md) | `/log-decision` | [02-record-decision.md](prompts/02-record-decision.md) |
+| [update-execution.md](install/copilot/prompts/update-execution.md) | `/update-execution` | [03-update-execution.md](prompts/03-update-execution.md) |
+| [write-audit.md](install/copilot/prompts/write-audit.md) | `/write-audit` | [04-write-audit.md](prompts/04-write-audit.md) |
+
+启用方式（在目标项目根）：
+
+1. 确保已安装 `copilot-instructions.md`，且整包中有 `skills/prompts/`（或你改名后的 skills 目录）。
+2. 将 wrapper 复制到 `.github/prompts/`。VS Code / Visual Studio 的自定义 prompt 通常要求 **`.prompt.md` 后缀**，例如：
+
+```bash
+# Bash
+mkdir -p .github/prompts
+cp ./skills/install/copilot/prompts/new-goal.md .github/prompts/new-goal.prompt.md
+cp ./skills/install/copilot/prompts/log-decision.md .github/prompts/log-decision.prompt.md
+cp ./skills/install/copilot/prompts/update-execution.md .github/prompts/update-execution.prompt.md
+cp ./skills/install/copilot/prompts/write-audit.md .github/prompts/write-audit.prompt.md
+```
+
+```powershell
+# PowerShell
+New-Item -ItemType Directory -Force -Path .github\prompts | Out-Null
+Copy-Item .\skills\install\copilot\prompts\new-goal.md .github\prompts\new-goal.prompt.md
+Copy-Item .\skills\install\copilot\prompts\log-decision.md .github\prompts\log-decision.prompt.md
+Copy-Item .\skills\install\copilot\prompts\update-execution.md .github\prompts\update-execution.prompt.md
+Copy-Item .\skills\install\copilot\prompts\write-audit.md .github\prompts\write-audit.prompt.md
+```
+
+3. 在 Copilot Chat 输入 `/`，选择 `/new-goal`、`/log-decision` 等；或通过 `#prompt:` 引用 prompt 文件。
+4. Wrapper 会先引导你补齐参数，再要求 AI 阅读并执行 `./skills/prompts/` 下对应核心提示词。
+
+**维护约定**：只改 [skills/prompts/](prompts/) 核心文件即可全局生效；wrapper 仅收集参数与引用路径，勿在 wrapper 中复制整份核心正文。
+
+#### 提示词与目标模板
+
+整包复制后，以下路径已在项目内，无需再拷：
 
 ```text
-skills/prompts/     →  <your-repo>/skills/prompts/
-skills/templates/   →  <your-repo>/skills/templates/
+<skills-dir>/prompts/      # 01 新目标 / 02 决策 / 03 执行 / 04 复盘
+<skills-dir>/templates/    # goal-folder 五件套示例
 ```
 
-用于常用提示词与「目标五件套」文件夹模板。复制后可按项目改路径与示例内容。
+若只从本仓库零散拷贝，请保证提示词仍落在同一 skills 目录下，便于统一引用。
 
 ### 2. 脚本安装（可选）
 
-提供 [install.sh](install.sh)（Bash）与 [install.ps1](install.ps1)（PowerShell）。  
-在目标项目根目录执行；脚本从 `skills/` 包内复制文件，**不联网**。
+在**目标项目根**执行；源文件读自**脚本所在包**；规则写入**当前工作目录**；`prompts/` 与 `templates/` 写入 `--skills-dir`。
 
 | 参数 | 作用 |
 |------|------|
-| `--claude` / `-Claude` | 仅安装 Claude Code：`AGENTS.md` |
-| `--copilot` / `-Copilot` | 仅安装 Copilot：`.github/copilot-instructions.md` |
-| `--all` / `-All` | 安装两者，并复制 `prompts/` 与 `templates/` 到 `skills/` |
+| `--claude` / `-Claude` | 安装 Claude Code：`./AGENTS.md` |
+| `--copilot` / `-Copilot` | 安装 Copilot：`./.github/copilot-instructions.md`（自动创建 `.github/`） |
+| `--all` / `-All` | 安装两者，并把 `prompts/`、`templates/` 放到 `--skills-dir` |
+| `--skills-dir DIR` / `-SkillsDir DIR` | skills 目录（默认 `./skills`；相对路径相对项目根） |
 | `--help` / `-Help` | 显示帮助 |
 
-基本用法：
-
 ```bash
-# Bash：进入目标项目根，再指向本仓库的脚本
+# Bash
 cd /path/to/your-project
-bash /path/to/goal-governance/skills/install.sh --claude
-bash /path/to/goal-governance/skills/install.sh --copilot
-bash /path/to/goal-governance/skills/install.sh --all
+
+# 已复制为 ./skills
+bash ./skills/install.sh --copilot --skills-dir ./skills
+bash ./skills/install.sh --claude --skills-dir ./skills
+bash ./skills/install.sh --all --skills-dir ./skills
+
+# 已改名为 my-governance-skills
+bash ./my-governance-skills/install.sh --all --skills-dir ./my-governance-skills
+
+# 也可直接指向本仓库包（无需先复制整包；--all 会把 prompts/templates 写入 --skills-dir）
+bash /path/to/goal-governance/skills/install.sh --all --skills-dir ./skills
 ```
 
 ```powershell
 # PowerShell
 cd C:\path\to\your-project
-& C:\path\to\goal-governance\skills\install.ps1 -Claude
-& C:\path\to\goal-governance\skills\install.ps1 -Copilot
-& C:\path\to\goal-governance\skills\install.ps1 -All
+
+# 已复制为 .\skills
+.\skills\install.ps1 -Copilot -SkillsDir .\skills
+.\skills\install.ps1 -Claude -SkillsDir .\skills
+.\skills\install.ps1 -All -SkillsDir .\skills
+
+# 已改名
+.\my-governance-skills\install.ps1 -All -SkillsDir .\my-governance-skills
+
+# 直接指向本仓库包
+& C:\path\to\goal-governance\skills\install.ps1 -All -SkillsDir .\skills
 ```
 
-- 目标文件已存在时会询问是否覆盖。
-- 源文件缺失时会报错并退出。
-- 安装完成后按终端提示检查规则文件并建立 `docs/goals/`。
+安全与行为：
+
+- 目标文件/目录已存在时会询问是否覆盖；源文件缺失则报错退出。
+- 若 `--skills-dir` 与脚本包内 `prompts/` 为同一路径（整包复制后的常见情况），脚本会提示 **Already present**，不重复覆盖。
+- 安装完成后按终端提示检查规则文件，并建立 `docs/goals/`。
 
 ## 在其他项目中快速启用
 
 ### 1. 安装规则文件
 
-见上方「安装」：Claude Code → 根目录 `AGENTS.md`；GitHub Copilot → `.github/copilot-instructions.md`。  
-按项目实际情况调整路径与可选节。
+见上方「安装」：先复制整包（可改名），再装 Claude Code → 根目录 `AGENTS.md`，或 GitHub Copilot → `.github/copilot-instructions.md`。  
+提示词使用包内 `prompts/`。按项目实际情况调整路径与可选节。
 
 ### 2. 建立文档骨架
 
@@ -199,7 +283,7 @@ skills/templates/goal-folder/
 
 ## 提示词模板
 
-日常操作可直接复制 [prompts/](prompts/) 中的提示词给 AI 使用：
+日常操作可直接复制 [prompts/](prompts/) 中的**核心提示词**给 AI 使用：
 
 | 文件 | 用途 |
 |------|------|
@@ -209,6 +293,8 @@ skills/templates/goal-folder/
 | [04-write-audit.md](prompts/04-write-audit.md) | 阶段性复盘 |
 
 用法详见 [prompts/README.md](prompts/README.md)。
+
+GitHub Copilot 还可使用 [install/copilot/prompts/](install/copilot/prompts/) 下的斜杠命令 wrapper（见上方「安装 → GitHub Copilot」），减少每次复制粘贴。
 
 ## 尚未包含（后续可扩展）
 
