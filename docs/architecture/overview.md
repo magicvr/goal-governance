@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
 ---
 
 # 架构概览
@@ -46,7 +46,7 @@ version: 0.1.0
 | 路径 | 职责 |
 |------|------|
 | `docs/goals/` | 目标与过程记录（扁平） |
-| `docs/architecture/` | 技术与架构约定 |
+| `docs/architecture/` | 技术与架构约定、[治理原则](principles.md) |
 | `docs/_index/` | 预留索引/术语 |
 | `web/` | FastAPI Web 应用 |
 | `AGENTS.md` | AI 强制规则 |

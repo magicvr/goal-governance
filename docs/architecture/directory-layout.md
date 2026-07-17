@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
 ---
 
 # 目录布局
@@ -21,6 +21,7 @@ goal-governance/
 │   │   └── GOAL-00N-.../
 │   ├── architecture/
 │   │   ├── overview.md
+│   │   ├── principles.md     # 治理原则（元规则）
 │   │   ├── tech-stack.md
 │   │   └── directory-layout.md
 │   └── _index/               # 预留

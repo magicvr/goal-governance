@@ -16,7 +16,8 @@ version: 0.1.0
 
 ```text
 GOAL-001-main-vision · 构建一个实用的目标治理框架 [active]
-└── GOAL-002-project-bootstrap · 完成项目初始化（文档体系 + Web 基础框架 + Skills 方向） [done 100%]
+├── GOAL-002-project-bootstrap · 完成项目初始化（文档体系 + Web 基础框架 + Skills 方向） [done 100%]
+└── GOAL-003-skills-practice · 完善 Skills 并在本项目中实践验证 [active 0%]
 ```
 
 ## 状态总览
@@ -25,6 +26,7 @@ GOAL-001-main-vision · 构建一个实用的目标治理框架 [active]
 |----|------|--------|--------|----------|------|
 | GOAL-001-main-vision | 构建一个实用的目标治理框架 | — | active | 进行中 | [GOAL-001-main-vision/](GOAL-001-main-vision/) |
 | GOAL-002-project-bootstrap | 完成项目初始化 | GOAL-001-main-vision | done | 100% | [GOAL-002-project-bootstrap/](GOAL-002-project-bootstrap/) |
+| GOAL-003-skills-practice | 完善 Skills 并在本项目中实践验证 | GOAL-001-main-vision | active | 0% | [GOAL-003-skills-practice/](GOAL-003-skills-practice/) |
 
 ## 状态图例
 
@@ -39,6 +41,6 @@ GOAL-001-main-vision · 构建一个实用的目标治理框架 [active]
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-003`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-004`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

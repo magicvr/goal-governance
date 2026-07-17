@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
 ---
 
 # AGENTS.md
@@ -18,6 +18,7 @@ version: 0.1.0
 
 - 目标与过程记录以 `docs/goals/` 为准。
 - 架构约定以 `docs/architecture/` 为准（若项目启用）。
+- 治理原则见 `docs/architecture/principles.md`（若存在）。
 - 文档使用规范见 `docs/README.md`（若存在）。
 - 全局树与状态见 `docs/goals/goal-tree.md`（**必读、必更新**）。
 
@@ -63,7 +64,17 @@ docs/goals/GOAL-NNN-short-slug/
 - **审计（03-audit）**：阶段性复盘：成果、偏差、改进、结论。
 - 语言简洁真实；不确定则标注「待确认」，不要编造进度。
 
-## 6. 必须同步更新 goal-tree.md
+## 6. 目标可执行性与路线图
+
+处理较大或尚不可直接执行的目标时，**必须**遵守：
+
+1. 若目标存在明显的拆解需要、尚不能直接执行，**禁止**直接批量创建细粒度子目标并开工。
+2. **必须先**构建可追踪的高层路线图：明确主要阶段与先后关系。
+3. 路线图记录在该目标的 `00-meta.md` 或 `01-decision.md` 中，并随进展更新。
+4. 在路线图就位后，再按阶段创建与执行具体子目标。
+5. 已可直接执行的小目标无需强行补路线图。
+
+## 7. 必须同步更新 goal-tree.md
 
 以下任一操作后，**必须**更新 `docs/goals/goal-tree.md`：
 
@@ -75,7 +86,7 @@ docs/goals/GOAL-NNN-short-slug/
 
 更新内容至少包括：ASCII/文本树、状态表格。
 
-## 7. 应用代码与文档边界（可选）
+## 8. 应用代码与文档边界（可选）
 
 > 若项目没有 Web/应用代码，可删除本节或改为实际布局说明。
 
@@ -83,7 +94,7 @@ docs/goals/GOAL-NNN-short-slug/
 - 不要把目标正文写进 UI 模板当长期存储；长期记录回写 `docs/goals/`。
 - 扩展架构时先更新 `docs/architecture/`，再改代码。
 
-## 8. 交付形态（按项目裁剪）
+## 9. 交付形态（按项目裁剪）
 
 本模板默认支持「文档驱动的目标治理」。可选交付：
 
@@ -93,22 +104,24 @@ docs/goals/GOAL-NNN-short-slug/
 
 改规则或目标模型时，评估是否需要同步更新文档、应用与 Skills。
 
-## 9. 变更工作流（建议）
+## 10. 变更工作流（建议）
 
 ```text
 读 goal-tree.md → 确认编号与 parent
+→ 若目标尚不可直接执行：先写/更新高层路线图（00-meta 或 01-decision）
 → 创建/修改目标五件套
 → 更新 goal-tree.md
 → 必要时更新 docs/README.md、architecture/、根 README.md
 → 再改应用代码或 Skills
 ```
 
-## 10. 禁止事项
+## 11. 禁止事项
 
 - 禁止在 `docs/goals/` 下用子文件夹嵌套表达父子目标。
 - 禁止跳过 `goal-tree.md` 只改单目标文件就结束任务。
 - 禁止伪造已完成的执行条目或审计结论。
 - 禁止擅自把 Root Goal 从 GOAL-001 改成其他编号。
+- 禁止对明显需拆解的大目标跳过高层路线图、直接创建并执行大量细粒度子目标。
 
 ## 快速链接（按项目填写）
 
@@ -116,3 +129,4 @@ docs/goals/GOAL-NNN-short-slug/
 - goal-tree.md：`docs/goals/goal-tree.md`
 - Root Goal：`docs/goals/{{ROOT_GOAL_FOLDER}}/00-meta.md`
 - 架构说明：`{{ARCHITECTURE_PATH}}`
+- 治理原则：`docs/architecture/principles.md`（若存在）

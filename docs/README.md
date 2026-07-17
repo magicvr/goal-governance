@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
 ---
 
 # docs/ · 文档体系
@@ -27,6 +27,7 @@ docs/
 │   └── GOAL-002-.../
 ├── architecture/             # 架构与技术约定
 │   ├── overview.md
+│   ├── principles.md         # 治理原则（元规则）
 │   └── tech-stack.md
 └── _index/                   # 预留：索引、术语等（可扩展）
 ```
@@ -44,6 +45,7 @@ docs/
    - `02-execution.md` — 执行（时间线、事实）
    - `03-audit.md` — 审计/复盘
    - `attachments/` — 附件（可为空，保留目录）
+7. **可执行性与路线图**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。详见 [architecture/principles.md](architecture/principles.md)。
 
 ## Frontmatter 约定
 
@@ -82,4 +84,5 @@ version: 0.1.0
 1. [goals/goal-tree.md](goals/goal-tree.md) — 全局进展  
 2. [goals/GOAL-001-main-vision/00-meta.md](goals/GOAL-001-main-vision/00-meta.md) — 总目标  
 3. [architecture/overview.md](architecture/overview.md) — 架构概览  
-4. 仓库根 [AGENTS.md](../AGENTS.md) — AI 协作强制规则  
+4. [architecture/principles.md](architecture/principles.md) — 治理原则  
+5. 仓库根 [AGENTS.md](../AGENTS.md) — AI 协作强制规则  

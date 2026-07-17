@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
 ---
 
 # AGENTS.md
@@ -15,6 +15,7 @@ version: 0.1.0
 
 - 目标与过程记录以 `docs/goals/` 为准。
 - 架构约定以 `docs/architecture/` 为准。
+- 治理原则见 `docs/architecture/principles.md`。
 - 文档使用规范见 `docs/README.md`。
 - 全局树与状态见 `docs/goals/goal-tree.md`（**必读、必更新**）。
 
@@ -22,7 +23,7 @@ version: 0.1.0
 
 1. 所有目标**平铺**存放在 `docs/goals/`，**禁止**嵌套目标文件夹。
 2. `GOAL-001` 固定为总目标（Root Goal），`parent` 必须为 `null`。
-3. 新目标从当前最大编号 +1 分配（现有：001、002 → 下一个为 **003**）。
+3. 新目标从当前最大编号 +1 分配（现有：001、002、003 → 下一个为 **004**）。
 4. 文件夹命名：`GOAL-NNN-short-slug`（数字三位、英文 slug）。
 5. 层级**仅**通过各目标 `00-meta.md` 的 `parent` 字段维护（值为父目标完整 ID，或 `null`）。
 
@@ -60,7 +61,19 @@ docs/goals/GOAL-NNN-short-slug/
 - **审计（03-audit）**：阶段性复盘：成果、偏差、改进、结论。
 - 语言简洁真实；不确定则标注「待确认」，不要编造进度。
 
-## 6. 必须同步更新 goal-tree.md
+## 6. 目标可执行性与路线图
+
+处理较大或尚不可直接执行的目标时，**必须**遵守：
+
+1. 若目标存在明显的拆解需要、尚不能直接执行，**禁止**直接批量创建细粒度子目标并开工。
+2. **必须先**构建可追踪的高层路线图：明确主要阶段与先后关系。
+3. 路线图记录在该目标的 `00-meta.md` 或 `01-decision.md` 中，并随进展更新。
+4. 在路线图就位后，再按阶段创建与执行具体子目标。
+5. 已可直接执行的小目标无需强行补路线图。
+
+原则说明见 [docs/architecture/principles.md](docs/architecture/principles.md)（P-001）。
+
+## 7. 必须同步更新 goal-tree.md
 
 以下任一操作后，**必须**更新 `docs/goals/goal-tree.md`：
 
@@ -72,13 +85,13 @@ docs/goals/GOAL-NNN-short-slug/
 
 更新内容至少包括：ASCII/文本树、状态表格。
 
-## 7. Web 与文档边界
+## 8. Web 与文档边界
 
 - 应用代码只在 `web/`。
 - 不要把目标正文写进模板里当长期存储；长期记录回写 `docs/goals/`。
 - 当前 Web 为骨架（FastAPI + Jinja2 + Tailwind + HTMX），扩展时先更新 `docs/architecture/` 再改代码。
 
-## 8. 双交付意识
+## 9. 双交付意识
 
 本项目交付两类能力：
 
@@ -87,22 +100,24 @@ docs/goals/GOAL-NNN-short-slug/
 
 改规则或目标模型时，评估是否两边都需要同步说明。
 
-## 9. 变更工作流（建议）
+## 10. 变更工作流（建议）
 
 ```text
 读 goal-tree.md → 确认编号与 parent
+→ 若目标尚不可直接执行：先写/更新高层路线图（00-meta 或 01-decision）
 → 创建/修改目标五件套
 → 更新 goal-tree.md
 → 必要时更新 docs/README.md、architecture/、根 README.md
 → 再改 web/ 或 Skills
 ```
 
-## 10. 禁止事项
+## 11. 禁止事项
 
 - 禁止在 `docs/goals/` 下用子文件夹嵌套表达父子目标。
 - 禁止跳过 `goal-tree.md` 只改单目标文件就结束任务。
 - 禁止伪造已完成的执行条目或审计结论。
 - 禁止擅自把 Root Goal 从 GOAL-001 改成其他编号。
+- 禁止对明显需拆解的大目标跳过高层路线图、直接创建并执行大量细粒度子目标。
 
 ## 快速链接
 
@@ -110,3 +125,4 @@ docs/goals/GOAL-NNN-short-slug/
 - [docs/goals/goal-tree.md](docs/goals/goal-tree.md)
 - [GOAL-001-main-vision](docs/goals/GOAL-001-main-vision/00-meta.md)
 - [docs/architecture/overview.md](docs/architecture/overview.md)
+- [docs/architecture/principles.md](docs/architecture/principles.md)
