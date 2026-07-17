@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.3
+version: 0.1.4
 ---
 
 # 执行记录 · GOAL-003
@@ -49,6 +49,17 @@ version: 0.1.3
 - 同步更新 [skills/README.md](../../../skills/README.md)、[skills/prompts/README.md](../../../skills/prompts/README.md) 对 goal-folder 的表述（由「空模板」改为「含示例的可复制模板」）。
 - 成功标准「goal-folder 带有可参考的示例内容」已满足。
 
+### 2026-07-18 · 进度复核至 50%
+
+- 复核本日已完成产物：
+  1. [skills/prompts/](../../../skills/prompts/) 及 4 个提示词模板 + README
+  2. 提示词小优化（「信息缺失先确认」；创建后立刻记执行记录）
+  3. [skills/templates/goal-folder/](../../../skills/templates/goal-folder/) 四文件示例（虚构 GOAL-042）
+- 成功标准已勾选 2/5（提示词模板、goal-folder 示例）；AGENTS.template 优化与「强制使用 + 书面反馈」尚未开始。
+- 进度由 **40%** 调整为 **50%**：前半段可复用产物已齐；实践验证与反馈闭环未启动。
+- 阻塞 / 风险：无。
+- 下一步（计划）：在本项目中强制使用这套 Skills，开始收集使用反馈；之后产出「Skills 使用反馈与修正记录」。
+
 ## 待办（按范围）
 
 1. 优化 `skills/AGENTS.template.md`
@@ -59,4 +70,4 @@ version: 0.1.3
 
 ## 进度评估
 
-**约 40%**：4 类提示词模板与 goal-folder 示例均已就绪；AGENTS.template 优化、强制使用反馈与修正记录尚未开始。
+**约 50%**：提示词模板与 goal-folder 示例已完成（成功标准中对应 2 项已勾选）；AGENTS.template 优化、「强制使用 + 书面反馈」与修正记录尚未开始。
