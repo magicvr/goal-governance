@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goal Governance — a framework for better decisions, execution, and audits.">
+    <title>{% block title %}Goal Governance{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    {% block head %}{% endblock %}
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/90 backdrop-blur">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+            <a href="{{ url_for('home') }}" class="flex items-center gap-3" aria-label="Goal Governance home">
+                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500 font-bold text-white shadow-lg shadow-indigo-500/25">G</span>
+                <span class="text-sm font-semibold tracking-wide text-white">Goal Governance</span>
+            </a>
+
+            <nav aria-label="Main navigation">
+                <ul class="flex items-center gap-1 text-sm text-slate-400">
+                    {% set nav_items = [
+                        ('home', '首页', url_for('home')),
+                        ('decision', '决策', url_for('decision')),
+                        ('execution', '执行', url_for('execution')),
+                        ('audit', '审计', url_for('audit'))
+                    ] %}
+                    {% for page_key, label, href in nav_items %}
+                    <li>
+                        <a href="{{ href }}"
+                           class="rounded-lg px-3 py-2 transition {% if active_page == page_key %}bg-white/10 text-white{% else %}hover:bg-white/5 hover:text-white{% endif %}"
+                           {% if active_page == page_key %}aria-current="page"{% endif %}>
+                            {{ label }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="mx-auto min-h-screen max-w-7xl px-6 pb-16 pt-32 lg:px-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-white/10">
+        <div class="mx-auto max-w-7xl px-6 py-6 text-center text-sm text-slate-500 lg:px-8">
+            Goal Governance · Decision · Execution · Audit
+        </div>
+    </footer>
+</body>
+</html>
