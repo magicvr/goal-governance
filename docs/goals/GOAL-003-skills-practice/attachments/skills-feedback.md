@@ -1,0 +1,49 @@
+---
+title: Skills 使用反馈与修正记录
+status: active
+created: 2026-07-18
+updated: 2026-07-18
+parent: GOAL-003-skills-practice
+version: 0.1.0
+---
+
+# Skills 使用反馈与修正记录
+
+> 关联目标：[GOAL-003-skills-practice](../00-meta.md)  
+> 区间：2026-07-18 · 可复用产物落地后的首次强制使用（含 wrapper 创建 GOAL-004）
+
+## 1. 已完成的核心交付
+
+- **规则模板**：`skills/AGENTS.template.md` v0.2.0（表格化约束、P-001、检查清单）
+- **核心提示词**：`skills/prompts/` 01～04（新目标 / 决策 / 执行 / 复盘）
+- **目标模板**：`skills/templates/goal-folder/`（虚构 GOAL-042 示例）
+- **安装脚本与文档**：`install.sh` / `install.ps1`（Claude + Copilot；`--skills-dir`；Copilot 自动复制 wrapper）+ `skills/README.md`
+- **Copilot wrapper**：`new-goal` / `log-decision` / `update-execution` / `write-audit`
+
+## 2. 使用 wrapper 创建 GOAL-004 的体验
+
+用 `/new-goal` 等价流程创建 [GOAL-004-core-data-model](../../GOAL-004-core-data-model/00-meta.md) 时：能先读 `goal-tree.md` 推断下一编号与父目标；对跨模型/Web 的大范围目标按 P-001 只写阶段 A→D 路线图，未批量拆子目标；五件套与 goal-tree 可一次落齐。整体可用，交互优于空白表单式整表提问。
+
+## 3. 优点
+
+- Wrapper 要求**先分析上下文再补问**，避免一上来甩完整参数表。
+- 编号、日期、默认 `status` 等可推断项有明确默认策略。
+- 核心提示词与 wrapper 分离：改 `skills/prompts/` 即可全局生效。
+- 安装脚本把规则与 slash 入口落到固定路径，降低手工遗漏。
+
+## 4. 待改进点
+
+- **wrapper 智能程度仍需提升**：当前偏「流程正确」；复杂 parent/范围边界时仍依赖用户多轮纠正，推断质量随模型读库深度波动。
+- 决策 / 执行 / 复盘 wrapper 的真实使用样本仍少，01～04 尚未在多轮协作中充分压测。
+- 外项目 install 实测不足；根 `AGENTS.md` 与 template 的字面同步仍靠人工判断。
+
+## 5. 后续使用建议
+
+1. 新目标优先 `/new-goal`；大目标先确认是否需路线图，再写五件套。
+2. 决策、进度、复盘走对应 wrapper，并在 execution 记「用了哪条提示词 / 卡点」。
+3. 规则有歧义时：先改 template 与核心 prompts，再评估同步根规则与 install 产物。
+4. 有条件时在空仓库跑一遍 install，把结果并入本记录修订版。
+
+## 结论
+
+Skills 核心交付与安装链路已可支撑本仓库日常目标操作；wrapper 创建 GOAL-004 表明「上下文优先 + P-001」主路径基本成立。后续重点不在扩文件数量，而在持续提高 wrapper 的智能补全与少轮确认能力，并用更多真实操作沉淀修正项。

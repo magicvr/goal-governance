@@ -1,14 +1,54 @@
 ---
 id: GOAL-003-skills-practice
 doc: audit
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.1
+version: 0.1.2
 ---
 
 # 审计 · GOAL-003
+
+## A-002 · 结项检查：强制使用反馈闭环（2026-07-18）
+
+### 范围与区间
+
+- **区间**：A-001 之后至结项（同日）
+- **类型**：结项检查
+- **覆盖**：成功标准后 2 项（强制使用 + 书面反馈；修正记录）及 GOAL-004 创建实践
+
+### 成果（有证据）
+
+1. **书面反馈已产出**  
+   - 证据：[attachments/skills-feedback.md](attachments/skills-feedback.md)  
+   - 要点：核心交付、wrapper 创建 GOAL-004 体验、优点、待改进、后续建议。
+
+2. **本仓库已按 Skills 规则运行并有使用样本**  
+   - 证据：GOAL-004 五件套 + goal-tree 同步 + P-001 路线图；本目标 execution 时间线与 A-001/A-002。  
+   - 说明：wrapper「先分析上下文再补问」主路径在创建 GOAL-004 时可用。
+
+### 对照成功标准
+
+| 标准 | 状态 |
+|------|------|
+| AGENTS.template 可执行 | 已达成（A-001） |
+| 4 类提示词可用 | 已达成（A-001） |
+| goal-folder 示例 | 已达成（A-001） |
+| 按规则运行并有书面反馈 | **已达成**（本条 + skills-feedback） |
+| 修正记录已产出 | **已达成**（skills-feedback） |
+
+### 偏差与遗留
+
+- 外项目 install 实测仍为可选遗留（不阻塞结项）。
+- wrapper 智能程度、01～04 多轮压测列为持续改进，见反馈文档第 4～5 节。
+
+### 结论
+
+成功标准 **5/5**；`status` → **done**；`progress` → **100%**。  
+同步：`00-meta.md`、`02-execution.md`、`goal-tree.md`、GOAL-001 阶段 2。
+
+---
 
 ## A-001 · 中期检查：Skills 可复用产物与安装支持（2026-07-18）
 

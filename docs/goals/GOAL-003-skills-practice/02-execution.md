@@ -1,16 +1,26 @@
 ---
 id: GOAL-003-skills-practice
 doc: execution
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.10
+version: 0.1.11
 ---
 
 # 执行记录 · GOAL-003
 
 ## 时间线
+
+### 2026-07-18 · 产出 Skills 使用反馈与修正记录并结项
+
+- 基于本目标交付物与实际使用 wrapper 创建 GOAL-004 的体验，产出书面反馈：
+  - [attachments/skills-feedback.md](attachments/skills-feedback.md)
+- 反馈覆盖：核心交付清单、GOAL-004 创建体验、优点、待改进（wrapper 智能程度）、后续建议；语气客观中性。
+- 成功标准后 2 项已勾选（强制使用 + 书面反馈；修正记录已产出）；成功标准 **5/5**。
+- 进度调整为 **100%**；`status` 调整为 **done**。
+- 同步 [00-meta.md](00-meta.md)、[goal-tree.md](../goal-tree.md)、[GOAL-001 路线图阶段 2](../GOAL-001-main-vision/00-meta.md)。
+- 阻塞 / 风险：无。遗留改进见反馈文档（不阻塞本目标结项）。
 
 ### 2026-07-18 · 补充 Copilot wrapper 自动复制逻辑
 
@@ -156,10 +166,10 @@ version: 0.1.10
 1. ~~优化 `skills/AGENTS.template.md`~~ **已完成**（见上，v0.2.0）
 2. ~~补充常用提示词模板（新目标 / 决策 / 执行 / 复盘）~~ **已完成**
 3. ~~完善 `skills/templates/goal-folder/` 示例内容~~ **已完成**
-4. 在本项目强制使用并记录反馈
-5. 产出「Skills 使用反馈与修正记录」
-6. （可选）外项目实测 install 路径，结果并入反馈记录
+4. ~~在本项目强制使用并记录反馈~~ **已完成**（见 [attachments/skills-feedback.md](attachments/skills-feedback.md)；含 wrapper 创建 GOAL-004）
+5. ~~产出「Skills 使用反馈与修正记录」~~ **已完成**（同上）
+6. （可选，结项后遗留）外项目实测 install 路径，结果并入反馈记录修订版
 
 ## 进度评估
 
-**约 70%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）与 Claude Code / Copilot 安装路径已完成；安装支持 `--skills-dir`；Copilot 斜杠命令 wrapper（4 个）已落地，且脚本在 `--copilot` / `--all` 时自动复制到 `.github/prompts/*.prompt.md`。中期复盘 A-001 已写入。成功标准仍 **3/5**；「强制使用 + 书面反馈」与修正记录尚未开始。
+**100%**：成功标准 **5/5** 已达成。可复用产物（AGENTS.template / 提示词 / goal-folder）、Claude Code / Copilot 安装与 wrapper、本仓库强制使用与书面反馈均已落地；结项后可继续按反馈改进 wrapper 智能程度，不阻塞本目标 `done`。
