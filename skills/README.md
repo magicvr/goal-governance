@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.2.2
+version: 0.2.3
 ---
 
 # Skills
@@ -120,7 +120,7 @@ New-Item -ItemType Directory -Force -Path .github | Out-Null
 Copy-Item .\skills\install\copilot\copilot-instructions.md .github\copilot-instructions.md
 ```
 
-##### Copilot 斜杠命令 wrapper（可选）
+##### Copilot 斜杠命令 wrapper
 
 位置：[install/copilot/prompts/](install/copilot/prompts/)。这是**轻量交互入口**，核心逻辑仍在 [prompts/](prompts/)。
 
@@ -131,7 +131,13 @@ Copy-Item .\skills\install\copilot\copilot-instructions.md .github\copilot-instr
 | [update-execution.md](install/copilot/prompts/update-execution.md) | `/update-execution` | [03-update-execution.md](prompts/03-update-execution.md) |
 | [write-audit.md](install/copilot/prompts/write-audit.md) | `/write-audit` | [04-write-audit.md](prompts/04-write-audit.md) |
 
-启用方式（在目标项目根）：
+**脚本安装会自动处理**：使用 `--copilot` / `-Copilot` 或 `--all` / `-All` 时，安装脚本会：
+
+1. 创建目标项目根目录的 `.github/prompts/`（若不存在）
+2. 将上述 4 个 wrapper 复制为 `.github/prompts/*.prompt.md`（如 `new-goal.prompt.md`）
+3. **不受** `--skills-dir` 影响，始终落在项目根 `.github/prompts/`
+
+手动安装时（在目标项目根）：
 
 1. 确保已安装 `copilot-instructions.md`，且整包中有 `skills/prompts/`（或你改名后的 skills 目录）。
 2. 将 wrapper 复制到 `.github/prompts/`。VS Code / Visual Studio 的自定义 prompt 通常要求 **`.prompt.md` 后缀**，例如：
@@ -177,9 +183,9 @@ Copy-Item .\skills\install\copilot\prompts\write-audit.md .github\prompts\write-
 | 参数 | 作用 |
 |------|------|
 | `--claude` / `-Claude` | 安装 Claude Code：`./AGENTS.md` |
-| `--copilot` / `-Copilot` | 安装 Copilot：`./.github/copilot-instructions.md`（自动创建 `.github/`） |
-| `--all` / `-All` | 安装两者，并把 `prompts/`、`templates/` 放到 `--skills-dir` |
-| `--skills-dir DIR` / `-SkillsDir DIR` | skills 目录（默认 `./skills`；相对路径相对项目根） |
+| `--copilot` / `-Copilot` | 安装 Copilot：`./.github/copilot-instructions.md` + **自动复制** wrapper 到 `./.github/prompts/*.prompt.md`（自动创建 `.github/` 与 `prompts/`） |
+| `--all` / `-All` | 安装两者，并把 `prompts/`、`templates/` 放到 `--skills-dir`；同时安装 Copilot wrapper |
+| `--skills-dir DIR` / `-SkillsDir DIR` | skills 目录（默认 `./skills`；相对路径相对项目根）。**不**影响 wrapper 目标路径 |
 | `--help` / `-Help` | 显示帮助 |
 
 ```bash

@@ -5,12 +5,27 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.9
+version: 0.1.10
 ---
 
 # 执行记录 · GOAL-003
 
 ## 时间线
+
+### 2026-07-18 · 补充 Copilot wrapper 自动复制逻辑
+
+- 更新安装脚本：使用 `--copilot` / `-Copilot` 或 `--all` / `-All` 时，自动：
+  1. 创建目标项目根目录 `.github/prompts/`（若不存在）
+  2. 将 [skills/install/copilot/prompts/](../../../skills/install/copilot/prompts/) 下 4 个 wrapper 复制为 `.github/prompts/*.prompt.md`（`new-goal` / `log-decision` / `update-execution` / `write-audit`）
+- 涉及文件：
+  - [skills/install.sh](../../../skills/install.sh) — Bash：Copilot 分支内循环 `copy_file`，目标固定 `.github/prompts/`
+  - [skills/install.ps1](../../../skills/install.ps1) — PowerShell：同上逻辑
+- 行为约定：wrapper 安装**不受** `--skills-dir` / `-SkillsDir` 影响，始终落在项目根 `.github/prompts/`；覆盖前仍询问。
+- 更新帮助文案与 Next steps，说明会自动安装 Copilot slash wrappers。
+- 更新 [skills/README.md](../../../skills/README.md)（version **0.2.3**）：Copilot 安装小节与脚本参数表，写明 wrapper 自动复制。
+- 成功标准仍 **3/5**；属安装体验补全，不替代「强制使用 + 书面反馈」。
+- 进度维持 **约 70%**。
+- 阻塞 / 风险：无。
 
 ### 2026-07-18 · 目标立项
 
@@ -147,4 +162,4 @@ version: 0.1.9
 
 ## 进度评估
 
-**约 70%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）与 Claude Code / Copilot 安装路径已完成；安装支持 `--skills-dir`；Copilot 斜杠命令 wrapper（4 个）已落地。中期复盘 A-001 已写入。成功标准仍 **3/5**；「强制使用 + 书面反馈」与修正记录尚未开始。
+**约 70%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）与 Claude Code / Copilot 安装路径已完成；安装支持 `--skills-dir`；Copilot 斜杠命令 wrapper（4 个）已落地，且脚本在 `--copilot` / `--all` 时自动复制到 `.github/prompts/*.prompt.md`。中期复盘 A-001 已写入。成功标准仍 **3/5**；「强制使用 + 书面反馈」与修正记录尚未开始。

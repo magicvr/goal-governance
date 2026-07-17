@@ -38,8 +38,9 @@ Usage (run from target project root):
 Options:
   -Claude / --claude       Install Claude Code rules -> .\AGENTS.md
   -Copilot / --copilot     Install GitHub Copilot rules -> .\.github\copilot-instructions.md
+                           and slash wrappers -> .\.github\prompts\*.prompt.md
   -All / --all             Install both tools + ensure prompts\ and templates\
-                           under -SkillsDir
+                           under -SkillsDir; also install Copilot wrappers
   -SkillsDir / --skills-dir DIR
                            Skills package / destination directory (default: .\skills)
                            Relative paths are resolved from the current working directory.
@@ -48,7 +49,8 @@ Options:
 Behavior:
   - Rule files always install into the current working directory (project root)
   - .github\ is created under the project root when installing Copilot
-  - prompts\ and templates\ are placed under -SkillsDir
+  - Copilot wrappers always install into .\.github\prompts\ (not under -SkillsDir)
+  - prompts\ and templates\ are placed under -SkillsDir (with -All)
   - Source files are read from the package next to this script
   - Prompts before overwriting existing files
   - Offline only; no network calls
@@ -159,6 +161,8 @@ Next steps:
   3. Create or update Root Goal GOAL-001 under docs\goals\.
   4. Use prompts under $SkillsDir\prompts\ for common goal workflows
      (e.g. 01-create-new-goal.md ... 04-write-audit.md).
+  5. If Copilot was installed: slash wrappers are under .github\prompts\
+     (e.g. /new-goal, /log-decision, /update-execution, /write-audit).
 
 Project root:  $TargetDir
 Skills dir:    $SkillsDir
@@ -212,6 +216,7 @@ $SkillsDirResolved = Get-ResolvedPath -Path $SkillsDir -BaseDir $TargetDir
 
 $ClaudeSrc = Join-Path $PackageRoot 'install\claude\AGENTS.md'
 $CopilotSrc = Join-Path $PackageRoot 'install\copilot\copilot-instructions.md'
+$CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
 $TemplatesSrc = Join-Path $PackageRoot 'templates'
 
@@ -248,6 +253,20 @@ if ($Copilot) {
         New-Item -ItemType Directory -Path $githubDir -Force | Out-Null
     }
     Copy-RuleFile -Source $CopilotSrc -Destination (Join-Path $githubDir 'copilot-instructions.md')
+
+    # Slash command wrappers → always .github/prompts/ (not under -SkillsDir)
+    if (-not (Test-Path -LiteralPath $CopilotWrappersSrc -PathType Container)) {
+        Write-Err "Missing package directory: $CopilotWrappersSrc"
+    }
+    $promptsDir = Join-Path $githubDir 'prompts'
+    if (-not (Test-Path -LiteralPath $promptsDir)) {
+        New-Item -ItemType Directory -Path $promptsDir -Force | Out-Null
+    }
+    foreach ($name in @('new-goal', 'log-decision', 'update-execution', 'write-audit')) {
+        Copy-RuleFile `
+            -Source (Join-Path $CopilotWrappersSrc "$name.md") `
+            -Destination (Join-Path $promptsDir "$name.prompt.md")
+    }
 }
 
 if ($installExtras) {

@@ -38,8 +38,9 @@ Usage (run from target project root):
 Options:
   --claude              Install Claude Code rules → ./AGENTS.md
   --copilot             Install GitHub Copilot rules → ./.github/copilot-instructions.md
+                        and slash wrappers → ./.github/prompts/*.prompt.md
   --all                 Install both tools + ensure prompts/ and templates/
-                        under --skills-dir
+                        under --skills-dir; also install Copilot wrappers
   --skills-dir DIR      Skills package / destination directory (default: ./skills)
                         Relative paths are resolved from the current working directory.
   --help, -h            Show this help
@@ -47,7 +48,8 @@ Options:
 Behavior:
   - Rule files always install into the current working directory (project root)
   - .github/ is created under the project root when installing Copilot
-  - prompts/ and templates/ are placed under --skills-dir
+  - Copilot wrappers always install into ./.github/prompts/ (not under --skills-dir)
+  - prompts/ and templates/ are placed under --skills-dir (with --all)
   - Source files are read from the package next to this script
   - Prompts before overwriting existing files
   - Offline only; no network calls
@@ -133,6 +135,8 @@ Next steps:
   3. Create or update Root Goal GOAL-001 under docs/goals/.
   4. Use prompts under $SKILLS_DIR/prompts/ for common goal workflows
      (e.g. 01-create-new-goal.md … 04-write-audit.md).
+  5. If Copilot was installed: slash wrappers are under .github/prompts/
+     (e.g. /new-goal, /log-decision, /update-execution, /write-audit).
 
 Project root:  $TARGET_DIR
 Skills dir:    $SKILLS_DIR
@@ -200,6 +204,7 @@ fi
 
 CLAUDE_SRC="$PACKAGE_ROOT/install/claude/AGENTS.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
+COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
 TEMPLATES_SRC="$PACKAGE_ROOT/templates"
 
@@ -226,6 +231,15 @@ if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   # .github always under project root (CWD)
   mkdir -p "$TARGET_DIR/.github"
   copy_file "$COPILOT_SRC" "$TARGET_DIR/.github/copilot-instructions.md"
+
+  # Slash command wrappers → always .github/prompts/ (not under --skills-dir)
+  [[ -d "$COPILOT_WRAPPERS_SRC" ]] || die "Missing package directory: $COPILOT_WRAPPERS_SRC"
+  mkdir -p "$TARGET_DIR/.github/prompts"
+  for name in new-goal log-decision update-execution write-audit; do
+    copy_file \
+      "$COPILOT_WRAPPERS_SRC/${name}.md" \
+      "$TARGET_DIR/.github/prompts/${name}.prompt.md"
+  done
 fi
 
 if [[ "$INSTALL_EXTRAS" -eq 1 ]]; then
