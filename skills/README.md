@@ -18,6 +18,12 @@ version: 0.1.0
 skills/
 ├── README.md                 # 本文件：如何在其他项目中使用
 ├── AGENTS.template.md        # AI 助手规则模板（可复制为 AGENTS.md）
+├── prompts/                  # 可复制的常用提示词模板
+│   ├── README.md
+│   ├── 01-create-new-goal.md
+│   ├── 02-record-decision.md
+│   ├── 03-update-execution.md
+│   └── 04-write-audit.md
 └── templates/
     └── goal-folder/          # 单个目标文件夹空模板
         ├── 00-meta.md
@@ -91,10 +97,23 @@ skills/templates/goal-folder/
 | [docs/goals/](../docs/goals/) | 本仓库真实目标数据 |
 | [web/](../web/) | 本仓库 Web 应用（其他项目可选） |
 
+## 提示词模板
+
+日常操作可直接复制 [prompts/](prompts/) 中的提示词给 AI 使用：
+
+| 文件 | 用途 |
+|------|------|
+| [01-create-new-goal.md](prompts/01-create-new-goal.md) | 创建新目标（五件套 + goal-tree） |
+| [02-record-decision.md](prompts/02-record-decision.md) | 记录决策（决定了什么 / 为什么） |
+| [03-update-execution.md](prompts/03-update-execution.md) | 更新执行时间线与进度 |
+| [04-write-audit.md](prompts/04-write-audit.md) | 阶段性复盘 |
+
+用法详见 [prompts/README.md](prompts/README.md)。
+
 ## 尚未包含（后续可扩展）
 
 - 可安装的 VS Code / Copilot Skill 包
-- 新建目标、写执行时间线等自动化提示词脚本
 - 编号 / parent / goal-tree 一致性校验工具
+- goal-folder 更丰富的示例正文
 
-当前交付定位：**可复制的规则 + 目标文件夹模板**，满足「Skills 方向」的初始化收尾。
+当前交付定位：**可复制的规则 + 提示词 + 目标文件夹模板**。
