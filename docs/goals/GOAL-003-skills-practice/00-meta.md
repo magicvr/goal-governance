@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.4
-progress: 60%
+version: 0.1.5
+progress: 70%
 ---
 
 # GOAL-003 · 完善 Skills 并在本项目中实践验证

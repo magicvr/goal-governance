@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.6
+version: 0.1.7
 ---
 
 # 执行记录 · GOAL-003
@@ -91,6 +91,18 @@ version: 0.1.6
 - 进度维持 **约 60%**（可复用产物更完整；实践验证闭环未启动）。
 - 阻塞 / 风险：无。本仓库根 `AGENTS.md` 仍为生效规则，未用 install 产物覆盖。
 
+### 2026-07-18 · 中期复盘 A-001 后的跟进计划
+
+- 完成中期复盘 [03-audit.md](03-audit.md) **A-001**（区间：立项至今日；类型：中期检查）。
+- 结论摘要：可复用产物与 Claude/Copilot 安装支持基本完成（成功标准 3/5）；强制使用、书面反馈与修正记录未闭环；**不结项**。
+- 进度由 **60%** 调整为 **70%**；`status` 保持 `active`。已同步 [00-meta.md](00-meta.md)、[goal-tree.md](../goal-tree.md)。
+- 跟进计划（来自 A-001 改进措施，尚未执行）：
+  1. 后续目标操作强制优先使用 `skills/prompts/`（01～04 至少各走通一轮），execution 记使用提示词与卡点。
+  2. 产出「Skills 使用反馈与修正记录」（建议 `attachments/skills-feedback.md` 或本目标专节）。
+  3. 任选 1 个外部/空项目实测 install 手动路径或脚本，结果写入反馈记录。
+  4. 若改规则：先改 template，再按 D-003 评估同步根 AGENTS.md。
+  5. 反馈可审计后再评估后 2 项成功标准与是否 `done`。
+
 ## 待办（按范围）
 
 1. ~~优化 `skills/AGENTS.template.md`~~ **已完成**（见上，v0.2.0）
@@ -98,7 +110,8 @@ version: 0.1.6
 3. ~~完善 `skills/templates/goal-folder/` 示例内容~~ **已完成**
 4. 在本项目强制使用并记录反馈
 5. 产出「Skills 使用反馈与修正记录」
+6. （可选）外项目实测 install 路径，结果并入反馈记录
 
 ## 进度评估
 
-**约 60%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）已完成，并补齐 Claude Code / Copilot 的手动 + 脚本安装路径（成功标准仍 3/5）；「强制使用 + 书面反馈」与修正记录尚未开始。
+**约 70%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）与 Claude Code / Copilot 安装路径已完成；中期复盘 A-001 已写入。成功标准仍 **3/5**；「强制使用 + 书面反馈」与修正记录尚未开始。
