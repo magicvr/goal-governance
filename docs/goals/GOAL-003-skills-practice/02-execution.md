@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.5
+version: 0.1.6
 ---
 
 # 执行记录 · GOAL-003
@@ -76,6 +76,21 @@ version: 0.1.5
 - 同步更新 [goal-tree.md](../goal-tree.md)。
 - 阻塞 / 风险：无。根 `AGENTS.md` 未在本回合改写（本仓库生效规则仍以根文件为准；模板侧已对齐核心约束，后续若需字面同步可单开一轮）。
 
+### 2026-07-18 · 完善 skills/ 安装体验
+
+- 目标工具限定为 **Claude Code** 与 **GitHub Copilot**。
+- 新增安装用规则（基于 `AGENTS.template.md` v0.2.0，做工具适配）：
+  - [skills/install/claude/AGENTS.md](../../../skills/install/claude/AGENTS.md) → 复制到目标项目根 `AGENTS.md`
+  - [skills/install/copilot/copilot-instructions.md](../../../skills/install/copilot/copilot-instructions.md) → 复制到 `.github/copilot-instructions.md`
+- 新增可选安装脚本（离线、在当前工作目录安装、存在则询问覆盖）：
+  - [skills/install.sh](../../../skills/install.sh) — Bash：`--claude` / `--copilot` / `--all` / `--help`
+  - [skills/install.ps1](../../../skills/install.ps1) — PowerShell：`-Claude` / `-Copilot` / `-All` / `-Help`（兼容 `--*`）
+  - `--all` 额外复制 `prompts/` 与 `templates/` 到目标项目 `skills/`
+- 更新 [skills/README.md](../../../skills/README.md)（version **0.2.0**）：新增「安装」章节（手动推荐 + 脚本可选），更新目录结构与交付定位说明。
+- 成功标准未新增勾选（仍 3/5）；属可复用交付物的安装路径完善，不改变「强制使用 + 反馈」待办。
+- 进度维持 **约 60%**（可复用产物更完整；实践验证闭环未启动）。
+- 阻塞 / 风险：无。本仓库根 `AGENTS.md` 仍为生效规则，未用 install 产物覆盖。
+
 ## 待办（按范围）
 
 1. ~~优化 `skills/AGENTS.template.md`~~ **已完成**（见上，v0.2.0）
@@ -86,4 +101,4 @@ version: 0.1.5
 
 ## 进度评估
 
-**约 60%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）已完成（成功标准 3/5 已勾选）；「强制使用 + 书面反馈」与修正记录尚未开始。
+**约 60%**：可复用产物三项（AGENTS.template / 提示词 / goal-folder 示例）已完成，并补齐 Claude Code / Copilot 的手动 + 脚本安装路径（成功标准仍 3/5）；「强制使用 + 书面反馈」与修正记录尚未开始。
