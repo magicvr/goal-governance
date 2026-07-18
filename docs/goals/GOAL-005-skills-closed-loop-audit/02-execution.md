@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.2
+version: 0.1.3
 ---
 
 # 执行记录 · GOAL-005
@@ -40,13 +40,21 @@ version: 0.1.2
 - AGENTS / template / install 升 **v0.4.1**：§5 的 `03-audit` 说明、§6b 落盘表、硬约束「未落盘不作为放行依据」。
 - `docs/README.md` 核心规则第 8 条补充落盘一句。
 
+### 2026-07-18 · 响应独立审计 A-002（D-008）
+
+- **冲突裁决**：采纳 A-002 `conditional`，A-001 无条件 `pass` 加注不再维持（见 [03-audit A-003](03-audit.md)、[D-008](01-decision.md)）。
+- **F-010 关闭**：`.github/copilot-instructions.md` 从 v0.3.4 同步为安装源 **v0.4.2**（含 §6b）。
+- **F-008 / F-012 关闭**：AGENTS §6b 增加「开放必改门禁」；工作流第 5 步与检查清单同步；principles P-003 强化「未关闭必改不得放行/关门」；写入「意见状态最小约定」表。
+- **F-015**：规则层最小约定已写；`00`/`04` 完整流程仍为阶段 B 开放项。
+- 规则副本：`AGENTS.md` / template / Claude install / Copilot install / `.github/copilot-instructions.md` → **v0.4.2**；principles → **v0.2.2**。
+
 ## 待办（计划，非已完成）
 
-1. ~~阶段 A：原则定稿~~ **已完成**
-2. 阶段 B：改编排器与审计原语；落地交叉审计入口
+1. ~~阶段 A：原则定稿~~ **已完成**（经 A-002 响应后 required 已关，F-015 余项归 B）
+2. 阶段 B：改编排器与审计原语；落地交叉审计入口；实现 F-015 提示词侧
 3. 阶段 C：安装与文档同步（Skills README / govern skill 文案；`/audit` 安装策略）
 4. 阶段 D：实践压测与复盘
 
 ## 进度评估
 
-**约 25%**：阶段 A 完成（原则 + AGENTS 操作摘要）；提示词/入口与实践验证未开始。
+**约 30%**：阶段 A 原则 + 落盘 + A-002 响应整改完成；阶段 B 提示词/入口未开始。
