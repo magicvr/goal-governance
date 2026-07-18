@@ -1,12 +1,12 @@
 ---
 id: GOAL-006-core-methodology-template-productization
 title: 核心方法论、文档协议与 canonical 模板产品化
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.5.0
-progress: 80%
+version: 0.6.0
+progress: 100%
 ---
 
 # GOAL-006 · 核心方法论、文档协议与 canonical 模板产品化
@@ -47,7 +47,7 @@ progress: 80%
 1. [x] 核对核心入口与 canonical 模板的现状，明确需要补充的内容。
 2. [x] 编写或修正独立启用说明，并执行空 Git 仓复制验证。
 3. [x] 记录版本与镜像同步事实，运行相关验证。
-4. [x] 对成功标准和证据做阶段审计（A-001 pass）；满足关门条件后再讨论阶段 5。
+4. [x] 对成功标准和证据做阶段审计（A-001 pass）；A-002 的 F-002 已响应并经 A-004 targeted 独立复审通过，A-005 完成正式 close-out；阶段 5 尚未启动。
 
 ## 父目标
 

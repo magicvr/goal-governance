@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.4
+version: 0.2.5
 ---
 
 # 执行记录 · GOAL-001
@@ -63,14 +63,14 @@ version: 0.2.4
 
 | 方向 | 状态 | 说明 |
 |------|------|------|
-| 核心方法论与模板 | 基础已建立，产品化进行中 | `docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/` 已形成核心入口；跨面发布验收尚未完成 |
+| 核心方法论与模板 | 已完成（GOAL-006 done / 100%） | `docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/`、独立启用说明与 A-005 close-out 已形成核心交付；跨面联合发布仍留给后续阶段 |
 | Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互明确留待后续目标 |
 | Skills / 提示词 | 当前基线已交付，对齐验收待做 | GOAL-003、GOAL-005 均为 done；`skills/templates/goal-folder/` 是核心模板的分发镜像；F-019 为 GOAL-005 结项后 recommended residual |
 | 核心数据模型 | 已完成 | GOAL-004 done 100%；阶段 A～D 与关门路径均已完成 |
 
 ## 下一步（根目标视角）
 
-1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已由 `GOAL-006` 承接；按 D-008 交付核心包、独立复制验证与版本/镜像同步证据。
+1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已由 `GOAL-006` 完成；A-005 self close-out 与 A-004 independent targeted 复审通过，满足阶段 4 → 5 门槛。
 2. 阶段 5 复核 Skills 的规则、模板镜像、安装产物与核心协议版本一致性。
 3. 阶段 6 保持 Web 只读，先完善人类浏览/诊断体验；任何写入另立子目标并保留审计证据。
 4. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
@@ -99,3 +99,9 @@ version: 0.2.4
 - 按用户明确指令创建 [GOAL-006-core-methodology-template-productization](../GOAL-006-core-methodology-template-productization/00-meta.md)，其 `parent` 为 `GOAL-001-main-vision`，初始状态为 `active / 0%`。
 - GOAL-006 的范围承接 D-008：核心文档与模板入口、独立复制启用说明、空 Git 仓复制验证，以及 canonical 模板到 Skills 镜像的单向同步记录。
 - 本次只完成立项、范围落盘与目标树同步；尚未修改或验证阶段 4 的实际交付物，未将阶段 4 或根目标标记为完成。
+
+### 2026-07-19 · GOAL-006 正式结项
+
+- GOAL-006 完成 A-001 阶段 self 审计、A-002 independent 条件审计、A-003 编排响应、A-004 F-002 targeted independent 复审和 A-005 self close-out。
+- F-002 已关闭；F-003 保留为非阻塞 recommended residual。GOAL-006 状态同步为 `done / 100%`，阶段 4 → 5 门槛满足，阶段 5 尚未启动。
+- `goal-tree.md` 与 GOAL-001 的阶段/子目标摘要已同步；`0.4.0` 仍绑定无 release tag 的基线 commit，不创建 tag。

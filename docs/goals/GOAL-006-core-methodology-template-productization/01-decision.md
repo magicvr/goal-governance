@@ -1,11 +1,11 @@
 ---
 id: GOAL-006-core-methodology-template-productization
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 决策记录 · GOAL-006
@@ -50,15 +50,35 @@ version: 0.3.0
 **日期**：2026-07-19
 **状态**：accepted
 
-**决定**：将 `docs/README.md` 的 `version: 0.4.0` 作为本轮核心可复制包快照版本，并在该入口记录变更范围与 canonical → Skills 镜像核验台账。由于 `docs/templates/goal-folder/` 本轮没有内容变更，采用“无覆盖复制 + 字节级核验”的同步事实，不伪造一次模板改写；当前快照明确标为未提交工作树，不作为 release 声明。
+**决定**：将 `docs/README.md` 的 `version: 0.4.0` 作为本轮核心可复制包快照版本，并在该入口记录变更范围与 canonical → Skills 镜像核验台账。由于 `docs/templates/goal-folder/` 本轮没有内容变更，采用“无覆盖复制 + 字节级核验”的同步事实，不伪造一次模板改写；快照身份绑定到 2026-07-19 的已提交基线 `2f54048db32b0e02194b0c0092e3e801b9532bc3`，但不声明为 release，也不创建 tag。
 
 **为什么**：
 
 - D-008 要求版本/变更范围由核心入口持有；沿用入口版本能避免再造一个与文档版本脱节的包号。
 - 明确“模板未变更但镜像已核对”比无事实地写“已同步”更准确，也保留了 canonical 单向所有权。
-- 记录工作树快照性质，避免把未提交的阶段性证据误解为已发布版本。
+- 记录基线 commit 与无 release tag 的边界，避免把可追溯 revision 误解为已发布版本。
 
 **未选方案**：
 
-- **新增独立 package manifest 或 release tag**：当前阶段只需可核对的核心入口台账，发布标识留待后续版本化工作。
+- **新增独立 package manifest 或 release tag**：当前阶段只需可核对的核心入口台账；本轮明确不声明 release，发布标识留待后续版本化工作。
 - **强制覆盖复制模板以制造同步差异**：canonical 未变更时没有必要改写镜像，且会制造无意义的 metadata churn。
+
+## D-004 · 明确 0.4.0 快照身份与后续治理修正边界
+
+**日期**：2026-07-19
+**状态**：accepted
+
+**决定**：响应 A-002/F-002 时采用“不声明 release、仅记录 commit revision”的处理方式。`0.4.0` 绑定到已提交基线 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；该基线没有指向它的 release tag。A-002 响应产生的 README、决策、执行和审计台账修正属于基线之后的未发布治理工作树，不冒充 `0.4.0` 的内容。
+
+**为什么**：
+
+- A-002 发现“没有 commit”的旧措辞已与仓库事实不符，但没有发现必须创建 release tag 的用户需求。
+- 绑定已提交 SHA 能提供可追溯身份，同时保留“未声明 release”的阶段边界。
+- 将后续纠错与快照内容分开，避免正式 close-out 时把工作树修正误读为已发布包的一部分。
+
+**未选方案**：
+
+- **立即创建 `0.4.0` release tag**：会扩大本轮授权范围，并把阶段性治理修正混入发布动作。
+- **把 `0.4.0` 绑定到本次响应后的最终 commit**：该 commit 尚未产生，且会使快照身份随响应台账变动。
+
+**影响**：D-003 的发布身份措辞按本条修正；F-002 可在有路径、SHA、日期、无 tag 与工作树边界证据后关闭。F-003 继续作为 low / recommended / open 的非阻塞历史记录项保留。

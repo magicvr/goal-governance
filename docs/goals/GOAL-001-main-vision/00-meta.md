@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.2
+version: 0.2.3
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -38,7 +38,7 @@ version: 0.2.2
 
 | 标准 | 当前状态 |
 |------|----------|
-| 核心方法论、文档协议和 canonical 模板可独立复制使用 | 基础已建立；独立产品化验收进行中 |
+| 核心方法论、文档协议和 canonical 模板可独立复制使用 | 已完成（GOAL-006 done / 100%；A-005 close-out pass） |
 | Skills 能按核心协议安装并驱动 AI 闭环 | 当前 `/govern` + `/audit` 基线已交付；待完成核心契约对齐验收 |
 | Web 能只读浏览目标并展示文档/树诊断，且不产生第二真相源 | 当前基线已完成（GOAL-004） |
 | 三个交付面共享同一版本化协议，并有一致性/发布证据 | 尚未开始 |
@@ -53,14 +53,14 @@ version: 0.2.2
 | 阶段 1 | 项目初始化与文档/Web/Skills 基础结构 | 已完成 | [GOAL-002-project-bootstrap](../GOAL-002-project-bootstrap/00-meta.md) |
 | 阶段 2 | Skills 编排实践与闭环审计验证 | 已完成（历史基线） | [GOAL-003-skills-practice](../GOAL-003-skills-practice/00-meta.md)、[GOAL-005-skills-closed-loop-audit](../GOAL-005-skills-closed-loop-audit/00-meta.md) |
 | 阶段 3 | Goal 数据模型与 Web 只读基线 | 已完成（历史基线） | [GOAL-004-core-data-model](../GOAL-004-core-data-model/00-meta.md) |
-| 阶段 4 | 核心方法论、文档协议与 canonical 模板产品化 | 进行中（GOAL-006 已立项；交付待验证） | [GOAL-006-core-methodology-template-productization](../GOAL-006-core-methodology-template-productization/00-meta.md) |
+| 阶段 4 | 核心方法论、文档协议与 canonical 模板产品化 | 已完成（GOAL-006 done / 100%；A-005 close-out pass） | [GOAL-006-core-methodology-template-productization](../GOAL-006-core-methodology-template-productization/00-meta.md) |
 | 阶段 5 | Skills 消费适配器与发布一致性 | 未开始 | 待拆分子目标 |
 | 阶段 6 | Web 人类工作台深化 | 未开始（第一步保持只读） | 待拆分子目标 |
 | 阶段 7 | 三面一致性、版本化与发布验收 | 未开始 | 待拆分子目标 |
 
 ### 阶段 4 的可执行产品化与退出契约
 
-阶段 4 的最小交付包、canonical 所有者、独立复制场景、版本同步策略、非目标、验收证据和进入阶段 5 的门槛，由 [D-008](01-decision.md#d-008--阶段-4-产品化与退出契约2026-07-19) 定义。本契约已满足以 `GOAL-006` 承接阶段 4 的 P-001 前置条件；它**不**表示阶段 4 已完成，也不自动创建或启动 `GOAL-006`。
+阶段 4 的最小交付包、canonical 所有者、独立复制场景、版本同步策略、非目标、验收证据和进入阶段 5 的门槛，由 [D-008](01-decision.md#d-008--阶段-4-产品化与退出契约2026-07-19) 定义。本契约已满足以 `GOAL-006` 承接阶段 4 的 P-001 前置条件；GOAL-006 后续以 A-005 self close-out 与 A-004 independent targeted 复审完成阶段 4，阶段 5 仍待另行立项。
 
 ## 子目标
 
@@ -70,9 +70,9 @@ version: 0.2.2
 | GOAL-003-skills-practice | 完善 Skills 并在本项目中实践验证 | done |
 | GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | done |
 | GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | done |
-| GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | active |
+| GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | done |
 
-`GOAL-006` 已在 D-008 的阶段 4 契约下立项，承接最小交付包；除该可执行子目标外，未提前批量创建细粒度目标。阶段 4 的实际交付、独立复制验证与关门审计仍待该目标留下事实证据。
+`GOAL-006` 已在 D-008 的阶段 4 契约下完成最小交付包、独立复制验证、镜像核验与关门审计（A-001～A-005）；除该可执行子目标外，未提前批量创建细粒度目标。阶段 5 仍需另行立项并保留其自身审计证据。
 
 ## 相关路径
 

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.6.6
+version: 0.6.7
 ---
 
 # Goal Tree
@@ -22,7 +22,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-003-skills-practice · 完善 Skills 并在本项目中实践验证 [done 100%]
 ├── GOAL-004-core-data-model · 实现核心数据模型与 Goal 基础管理 [done 100%]
 ├── GOAL-005-skills-closed-loop-audit · Skills 治理闭环与交叉审计 [done 100%]
-└── GOAL-006-core-methodology-template-productization · 核心方法论、文档协议与 canonical 模板产品化 [active 80%]
+└── GOAL-006-core-methodology-template-productization · 核心方法论、文档协议与 canonical 模板产品化 [done 100%]
 ```
 
 ## 状态总览
@@ -34,9 +34,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-003-skills-practice | 完善 Skills 并在本项目中实践验证 | GOAL-001-main-vision | done | 100% | [GOAL-003-skills-practice/](GOAL-003-skills-practice/) |
 | GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | GOAL-001-main-vision | done | 100% | [GOAL-004-core-data-model/](GOAL-004-core-data-model/) |
 | GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | GOAL-001-main-vision | done | 100% | [GOAL-005-skills-closed-loop-audit/](GOAL-005-skills-closed-loop-audit/) |
-| GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | GOAL-001-main-vision | active | 80% | [GOAL-006-core-methodology-template-productization/](GOAL-006-core-methodology-template-productization/) |
+| GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | GOAL-001-main-vision | done | 100% | [GOAL-006-core-methodology-template-productization/](GOAL-006-core-methodology-template-productization/) |
 
-当前根目标焦点：阶段 4「核心方法论、文档协议与 canonical 模板产品化」。`GOAL-006` 已完成核心入口、canonical 模板、独立空 Git Root 初始化、版本/镜像核对及 A-001 阶段 self 审计；正式 close-out 待用户确认，阶段 5 未放行。
+当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」。`GOAL-006` 已完成核心入口、canonical 模板、独立空 Git Root 初始化、版本/镜像核对，并完成 A-001 self、A-004 independent targeted 复审和 A-005 self close-out，状态为 `done / 100%`；F-003 作为非阻塞 recommended/open residual 保留，阶段 5 尚未启动。
 
 ## 状态图例
 

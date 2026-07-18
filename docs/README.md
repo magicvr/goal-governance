@@ -87,7 +87,8 @@ version: 0.1.0
 
 - **核心包版本**：`0.4.0`，与本入口文档的 `version` 一致。
 - **快照日期**：2026-07-19。
-- **快照性质**：当前工作树快照，尚未声明为 release 或已提交版本；后续语义变更应递增本入口版本并刷新本台账。
+- **快照身份**：绑定到 2026-07-19 的已提交基线 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；该基线没有指向它的 release tag，且本包不声明为 release。
+- **当前工作树边界**：A-002 响应及后续治理台账修正发生在该基线之后，属于未发布修正，不计入 `0.4.0` 快照内容；后续语义变更仍应递增本入口版本并刷新本台账。
 - **本轮变更范围**：新增 `standalone-bootstrap.md`、`tests/test_standalone_bootstrap.py` 与 GOAL-006 验收附件；更新本入口及 GOAL-006 的决策、执行、进度和目标树记录；`docs/templates/goal-folder/` 与 `skills/templates/goal-folder/` 的模板内容未改动。
 
 ### canonical → Skills 同步台账
