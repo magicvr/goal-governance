@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.3
+version: 0.1.4
 ---
 
 # 审计 · GOAL-005
@@ -123,3 +123,82 @@ A-001 为 `self/pass`，本意见为 `independent/conditional`。冲突点是 A-
 
 1. 开始 GOAL-005 阶段 B（改编排器与 `04`，落地 `/audit`）。  
 2. 可选：阶段 B 开工前请独立审快速确认 F-008/F-010 关闭（非强制）。
+
+---
+
+## A-004 · 独立复审 F-008 / F-010 关闭证据（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：整改复审 / finding closure verification
+- **scope**：A-002 的 F-008、F-010 关闭证据
+- **verdict**：pass（本复审范围）
+- **subject_refs**：`principles.md` v0.2.2；`AGENTS.md`、template、Claude/Copilot install、`.github/copilot-instructions.md` v0.4.2；D-008；A-003；执行记录
+
+### 复核结果
+
+| Finding | 结论 | 可核对证据 |
+|---------|------|------------|
+| F-008 · §6b 开放必改门禁 | **已关闭** | [principles.md](../../architecture/principles.md) P-003 明确：未关闭 required/必改项时不得放行或关门，且门禁不依赖意见是否冲突；[AGENTS.md](../../../AGENTS.md) v0.4.2 §6b、工作流第 5 步、硬约束、完成前检查清单均写入同一门禁；`skills/AGENTS.template.md`、Claude install、Copilot install、项目 `.github/copilot-instructions.md` 均同步。 |
+| F-010 · 项目 Copilot 指令漂移 | **已关闭** | 项目 [.github/copilot-instructions.md](../../../.github/copilot-instructions.md) 已为 v0.4.2，包含 §6b / P-002～P-004；与 [Copilot 安装源](../../../skills/install/copilot/copilot-instructions.md) 的 SHA-256 均为 `639CAAEDC5E28D429408D3D9DE2043B3FF15C419637EE6B16ADA922D8456503D`，内容完全一致。 |
+
+### 一致性检查
+
+- `AGENTS.md`、`skills/AGENTS.template.md`、Claude install、Copilot install、项目 `.github/copilot-instructions.md` 均为 **v0.4.2**。
+- 五份规则文件均同时包含：开放必改门禁、工作流阻断步骤、硬约束、完成前“无未关闭必改项”检查。
+- [D-008](01-decision.md) 已记录采纳 A-002 `conditional` 的用户裁决；[A-003](03-audit.md) 已逐项登记关闭证据；[02-execution.md](02-execution.md) 已记录实际修正路径。
+- 最近提交 `cfb351e` 的文件范围包含上述原则、规则副本、项目 Copilot 指令及 GOAL-005 响应记录；工作区复核时无未提交变更。
+
+### 残留项与边界
+
+- F-015 的提示词侧完整流程仍是阶段 B 开放项；本次复审不将其误判为已完成。
+- F-015 不影响 F-008/F-010 的关闭真实性，也不重新阻塞阶段 A 的这两个 finding。
+- 本复审未审计阶段 B 的 `00` / `04` / `/audit` 实现质量。
+
+### 结论
+
+确认 A-003 对 **F-008、F-010 已关闭**的声明有充分、可重复核对的文件证据。本复审范围内无开放 required finding；这两项不再阻塞进入阶段 B。
+
+### 声明
+
+本意见不修改目标 `status` / `progress`；阶段推进仍由用户通过编排器（`/govern`）处理。
+
+---
+
+## A-005 · 编排响应 A-004（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：审计意见响应
+- **scope**：响应 A-004 独立复审（F-008 / F-010 关闭证据）
+- **关联**：A-002、A-003、D-008、A-004
+
+### 意见汇总
+
+| 意见 | source | scope | verdict | 与既有结论 |
+|------|--------|-------|---------|------------|
+| A-003 | self · 响应 | F-008/F-010 等关闭声明 | （响应记录） | 声明已关闭 |
+| A-004 | independent | F-008/F-010 关闭复审 | **pass** | **确认** A-003 关闭真实 |
+
+### P-004
+
+- **无冲突**：A-004 与 A-003 同向；不触发用户裁决分支。
+- **有独立、无新自审**：本条为对复审结果的响应记录，不另起自审（用户已要求响应审计意见）。
+
+### Findings 台账（更新）
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| F-008 | **已关闭（独立复审确认）** | A-003 关闭 + A-004 pass |
+| F-010 | **已关闭（独立复审确认）** | A-003 关闭 + A-004 pass（含 install 与 `.github` 哈希一致） |
+| F-015 | **开放 · 阶段 B** | A-004 明确未将其误判完成；`00`/`04` 完整流程待做 |
+| 其它 A-002 recommended | 不强制 | 阶段 B 参考 |
+
+### 门禁与推进
+
+- A-004 范围内：**无未关闭 required**。
+- 进入阶段 B：**不被 F-008/F-010 阻塞**（独立证据已齐）。
+- 不因 A-004 单独上调整体目标 `done`；GOAL-005 其余成功标准仍待 B/C/D。
+
+### 结论
+
+接受 A-004。F-008、F-010 关闭结论升级为「编排响应 + 独立复审双确认」。建议下一步：**启动阶段 B**。
