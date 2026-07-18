@@ -15,6 +15,10 @@ from pathlib import Path
 SKILLS_ROOT = Path(__file__).resolve().parents[1]
 PROMPTS = SKILLS_ROOT / "prompts"
 COPILOT_PROMPTS = SKILLS_ROOT / "install" / "copilot" / "prompts"
+CLAUDE_GOVERN_SKILL = (
+    SKILLS_ROOT / "install" / "claude" / "skills" / "govern" / "SKILL.md"
+)
+GROK_GOVERN_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "govern" / "SKILL.md"
 INSTALL_SH = SKILLS_ROOT / "install.sh"
 INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 README = SKILLS_ROOT / "README.md"
@@ -153,6 +157,40 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"primitive|原语|advanced")
         self.assertRegex(text, r"with-primitives|WithPrimitives")
         self.assertRegex(text, r"仅.*govern|默认.*govern|/govern.*only|只装", re.I)
+        self.assertRegex(text, r"Claude|\.claude")
+        self.assertRegex(text, r"Grok|\.grok")
+        self.assertIn("SKILL.md", text)
+
+    def _assert_primary_govern_skill(self, path: Path, host_label: str) -> None:
+        self.assertTrue(path.is_file(), f"missing {host_label} skill: {path}")
+        text = path.read_text(encoding="utf-8")
+        self.assertRegex(text, r"(?m)^name:\s*govern\s*$")
+        self.assertRegex(text, r"description:")
+        self.assertIn("00-govern-orchestrator", text)
+        self.assertRegex(text, r"SKILLS_PKG|prompts/00-govern")
+        self.assertRegex(text, r"设立目标|set-goal|推进|lifecycle|生命周期")
+        self.assertRegex(text, r"primary|主入口|单一")
+        # Must not present four form ops as the default product surface
+        self.assertNotRegex(
+            text,
+            r"(?i)default.*(new-goal|log-decision|四选一|填表菜单)",
+        )
+
+    def test_claude_govern_skill_source(self) -> None:
+        self._assert_primary_govern_skill(CLAUDE_GOVERN_SKILL, "Claude Code")
+
+    def test_grok_govern_skill_source(self) -> None:
+        self._assert_primary_govern_skill(GROK_GOVERN_SKILL, "Grok Build")
+
+    def test_install_scripts_wire_claude_and_grok_skills(self) -> None:
+        sh = INSTALL_SH.read_text(encoding="utf-8")
+        ps1 = INSTALL_PS1.read_text(encoding="utf-8")
+        for text, label in ((sh, "install.sh"), (ps1, "install.ps1")):
+            self.assertRegex(text, r"--grok|-Grok", msg=f"{label} needs grok flag")
+            self.assertIn(".claude/skills/govern", text.replace("\\", "/"))
+            self.assertIn(".grok/skills/govern", text.replace("\\", "/"))
+            self.assertIn("SKILL.md", text)
+            self.assertRegex(text, r"00-govern-orchestrator")
 
 
 def main() -> int:

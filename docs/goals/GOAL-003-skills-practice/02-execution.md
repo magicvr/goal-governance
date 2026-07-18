@@ -12,6 +12,17 @@ version: 0.2.0
 
 ## 时间线
 
+### 2026-07-18 · Claude Code + Grok Build 主入口 skill（/govern）
+
+- 交付形态：与 Copilot `/govern` 对齐的**单一主入口**，采用 **SKILL.md skill**（非四填表默认面）。
+- 新增源文件：
+  - [install/claude/skills/govern/SKILL.md](../../../skills/install/claude/skills/govern/SKILL.md) → 安装到 `.claude/skills/govern/`
+  - [install/grok/skills/govern/SKILL.md](../../../skills/install/grok/skills/govern/SKILL.md) → 安装到 `.grok/skills/govern/`
+- 行为：定位 SKILLS_PKG → 执行 `prompts/00-govern-orchestrator.md`（设立→推进→阶段/关门审计）。
+- 安装：`install.sh` / `install.ps1` 增加 `--grok` / `-Grok`；`--claude` 除 `AGENTS.md` 外安装 Claude skill；`--all` 含 Claude + Grok + Copilot。
+- 文档：[skills/README.md](../../../skills/README.md) v0.4.0；测试断言 skill 源与安装接线。
+- 本目标保持 `done`；本条为结项后能力补齐的事实记录。
+
 ### 2026-07-18 · 提示词正向化改写（最佳实践）
 
 - 问题：通用性修正后提示词出现大量「禁止/不得」否定句，不利于模型遵循。

@@ -1,15 +1,16 @@
-# Goal Governance Skills installer (Claude Code + GitHub Copilot)
+# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot)
 # Run from the target project root. No network access required.
 #
 # Typical flow:
 #   1. Copy this whole skills package into the project root
 #      (may rename, e.g. my-governance-skills)
 #   2. cd to project root
-#   3. .\skills\install.ps1 -Copilot -SkillsDir .\skills
+#   3. .\skills\install.ps1 -Claude -SkillsDir .\skills
 #      or: .\my-governance-skills\install.ps1 -All -SkillsDir .\my-governance-skills
 
 param(
     [switch]$Claude,
+    [switch]$Grok,
     [switch]$Copilot,
     [switch]$All,
     [switch]$Help,
@@ -32,42 +33,37 @@ Prerequisites:
 
 Usage (run from target project root):
   .\install.ps1 -Claude [-SkillsDir DIR]
+  .\install.ps1 -Grok [-SkillsDir DIR]
   .\install.ps1 -Copilot [-SkillsDir DIR] [-WithPrimitives]
   .\install.ps1 -All [-SkillsDir DIR] [-WithPrimitives]
   .\install.ps1 -Help
 
 Options:
-  -Claude / --claude       Install Claude Code rules -> .\AGENTS.md
+  -Claude / --claude       Install Claude Code: .\AGENTS.md + project skill
+                           .\.claude\skills\govern\SKILL.md  ->  /govern
+  -Grok / --grok           Install Grok Build project skill
+                           .\.grok\skills\govern\SKILL.md  ->  /govern
   -Copilot / --copilot     Install GitHub Copilot rules -> .\.github\copilot-instructions.md
                            and PRIMARY slash only -> .\.github\prompts\govern.prompt.md
   -WithPrimitives / --with-primitives
-                           Also install advanced slash wrappers (new-goal, log-decision,
-                           update-execution, write-audit). Opt-in only.
-  -All / --all             Install both tools + ensure prompts\ and templates\
-                           under -SkillsDir; Copilot still gets /govern only unless
-                           -WithPrimitives is set
+                           Also install advanced Copilot slash wrappers. Opt-in only.
+  -All / --all             Install Claude + Grok + Copilot + prompts/templates under -SkillsDir
   -SkillsDir / --skills-dir DIR
                            Skills package / destination directory (default: .\skills)
-                           Relative paths are resolved from the current working directory.
   -Help / --help           Show this help
 
 Behavior:
-  - Rule files always install into the current working directory (project root)
-  - .github\ is created under the project root when installing Copilot
-  - Default Copilot slash surface is /govern only (orchestrator)
-  - Advanced form-filling slashes are NOT installed unless -WithPrimitives
-  - Primitive prompt files (01-04) always ship under prompts\ (with -All or package copy)
-  - prompts\ and templates\ are placed under -SkillsDir (with -All)
-  - Source files are read from the package next to this script
-  - Prompts before overwriting existing files
-  - Offline only; no network calls
+  - Claude skill -> .\.claude\skills\govern\ (SKILL.md form)
+  - Grok skill -> .\.grok\skills\govern\ (SKILL.md form)
+  - Default Copilot slash surface is /govern only
+  - Core orchestrator remains package prompts\00-govern-orchestrator.md
+  - Offline only; prompts before overwriting
 
 Examples:
   cd C:\path\to\your-project
-  .\skills\install.ps1 -Copilot -SkillsDir .\skills
-  .\skills\install.ps1 -Copilot -WithPrimitives -SkillsDir .\skills
-  .\my-governance-skills\install.ps1 -All -SkillsDir .\my-governance-skills
-  & C:\path\to\goal-governance\skills\install.ps1 -All -SkillsDir .\skills
+  .\skills\install.ps1 -Claude -SkillsDir .\skills
+  .\skills\install.ps1 -Grok -SkillsDir .\skills
+  .\skills\install.ps1 -All -SkillsDir .\skills
 "@
 }
 
@@ -133,7 +129,6 @@ function Copy-DirMerge {
         Write-Err "Source directory not found: $Source"
     }
 
-    # Same path -> already in place (common after copying whole package)
     if ((Test-Path -LiteralPath $Destination -PathType Container) -and (Test-SamePath $Source $Destination)) {
         Write-Host "Already present: $Destination\  (from $Label)"
         return
@@ -166,13 +161,13 @@ Done.
 Next steps:
   1. Review installed rule file(s) and adjust paths for your project.
   2. Ensure docs\goals\goal-tree.md exists (create if needed).
-  3. DEFAULT (only) user path: goal-governance orchestrator
+  3. DEFAULT user path: goal-governance orchestrator skill / slash
      - Core: $SkillsDir\prompts\00-govern-orchestrator.md
-     - Copilot: /govern  (installed by default with -Copilot)
-     Scans project, classifies purposes, guides set-goal -> advance ->
-     stage/close-audit (confirm before writes). Invokes 01-04 as needed.
-  4. Do not look for four form-filling slash commands - they are not installed
-     unless you re-run with -WithPrimitives (advanced / optional).
+     - Claude: /govern  (.\.claude\skills\govern\SKILL.md)
+     - Grok:   /govern  (.\.grok\skills\govern\SKILL.md)
+     - Copilot:/govern  (.\.github\prompts\govern.prompt.md)
+     Lifecycle: set-goal -> advance -> stage/close-audit (confirm before writes).
+  4. Advanced Copilot form-filling slashes only if you used -WithPrimitives.
 
 Project root:  $TargetDir
 Skills dir:    $SkillsDir
@@ -180,12 +175,13 @@ Package root:  $PackageRoot
 "@
 }
 
-# Accept GNU-style flags for docs consistency (e.g. --claude, --skills-dir DIR)
+# Accept GNU-style flags
 $i = 0
 while ($i -lt @($RemainingArgs).Count) {
     $arg = $RemainingArgs[$i]
     switch -Regex ($arg) {
         '^--claude$' { $Claude = $true; $i++ }
+        '^--grok$' { $Grok = $true; $i++ }
         '^--copilot$' { $Copilot = $true; $i++ }
         '^--all$' { $All = $true; $i++ }
         '^--with-primitives$' { $WithPrimitives = $true; $i++ }
@@ -208,13 +204,14 @@ while ($i -lt @($RemainingArgs).Count) {
     }
 }
 
-if ($Help -or (-not $Claude -and -not $Copilot -and -not $All)) {
+if ($Help -or (-not $Claude -and -not $Grok -and -not $Copilot -and -not $All)) {
     Show-Usage
     if ($Help) { exit 0 } else { exit 1 }
 }
 
 if ($All) {
     $Claude = $true
+    $Grok = $true
     $Copilot = $true
     $installExtras = $true
 } else {
@@ -225,19 +222,14 @@ $PackageRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TargetDir = (Get-Location).Path
 $SkillsDirResolved = Get-ResolvedPath -Path $SkillsDir -BaseDir $TargetDir
 
-$ClaudeSrc = Join-Path $PackageRoot 'install\claude\AGENTS.md'
+$ClaudeAgentsSrc = Join-Path $PackageRoot 'install\claude\AGENTS.md'
+$ClaudeSkillSrc = Join-Path $PackageRoot 'install\claude\skills\govern\SKILL.md'
+$GrokSkillSrc = Join-Path $PackageRoot 'install\grok\skills\govern\SKILL.md'
 $CopilotSrc = Join-Path $PackageRoot 'install\copilot\copilot-instructions.md'
 $CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
 $TemplatesSrc = Join-Path $PackageRoot 'templates'
 
-# Safety checks
-if (-not (Test-Path -LiteralPath $ClaudeSrc -PathType Leaf)) {
-    Write-Err "Missing package file: $ClaudeSrc"
-}
-if (-not (Test-Path -LiteralPath $CopilotSrc -PathType Leaf)) {
-    Write-Err "Missing package file: $CopilotSrc"
-}
 if (-not (Test-Path -LiteralPath $PromptsSrc -PathType Container)) {
     Write-Err "Missing package directory: $PromptsSrc"
 }
@@ -248,28 +240,55 @@ if (-not (Test-Path -LiteralPath $TargetDir -PathType Container)) {
     Write-Err "Current working directory is not a directory: $TargetDir"
 }
 
+if ($Claude) {
+    if (-not (Test-Path -LiteralPath $ClaudeAgentsSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $ClaudeAgentsSrc"
+    }
+    if (-not (Test-Path -LiteralPath $ClaudeSkillSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $ClaudeSkillSrc"
+    }
+}
+if ($Grok) {
+    if (-not (Test-Path -LiteralPath $GrokSkillSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $GrokSkillSrc"
+    }
+}
+if ($Copilot) {
+    if (-not (Test-Path -LiteralPath $CopilotSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $CopilotSrc"
+    }
+    if (-not (Test-Path -LiteralPath $CopilotWrappersSrc -PathType Container)) {
+        Write-Err "Missing package directory: $CopilotWrappersSrc"
+    }
+}
+
 Write-Host "Project root:  $TargetDir"
 Write-Host "Skills dir:    $SkillsDirResolved"
 Write-Host "Package root:  $PackageRoot"
 Write-Host ''
 
 if ($Claude) {
-    Copy-RuleFile -Source $ClaudeSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
+    Copy-RuleFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
+    Copy-RuleFile -Source $ClaudeSkillSrc -Destination (Join-Path $TargetDir '.claude\skills\govern\SKILL.md')
+    Write-Host 'Claude primary skill: /govern  (.\.claude\skills\govern\)'
+}
+
+if ($Grok) {
+    Copy-RuleFile -Source $GrokSkillSrc -Destination (Join-Path $TargetDir '.grok\skills\govern\SKILL.md')
+    Write-Host 'Grok primary skill: /govern  (.\.grok\skills\govern\)'
+    $agentsPath = Join-Path $TargetDir 'AGENTS.md'
+    if (-not (Test-Path -LiteralPath $agentsPath -PathType Leaf) -and (Test-Path -LiteralPath $ClaudeAgentsSrc -PathType Leaf)) {
+        Write-Host 'Note: no AGENTS.md yet; consider -Claude or copy install\claude\AGENTS.md for project rules.'
+    }
 }
 
 if ($Copilot) {
-    # .github always under project root (CWD)
     $githubDir = Join-Path $TargetDir '.github'
     if (-not (Test-Path -LiteralPath $githubDir)) {
         New-Item -ItemType Directory -Path $githubDir -Force | Out-Null
     }
     Copy-RuleFile -Source $CopilotSrc -Destination (Join-Path $githubDir 'copilot-instructions.md')
 
-    # Slash wrappers → always .github/prompts/ (not under -SkillsDir)
-    # Default: primary /govern only (avoid four form-filling slash entries)
-    if (-not (Test-Path -LiteralPath $CopilotWrappersSrc -PathType Container)) {
-        Write-Err "Missing package directory: $CopilotWrappersSrc"
-    }
     $promptsDir = Join-Path $githubDir 'prompts'
     if (-not (Test-Path -LiteralPath $promptsDir)) {
         New-Item -ItemType Directory -Path $promptsDir -Force | Out-Null

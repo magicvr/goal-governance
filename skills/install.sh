@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Goal Governance Skills installer (Claude Code + GitHub Copilot)
+# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot)
 # Run from the target project root. No network access required.
 #
 # Typical flow:
 #   1. Copy this whole skills package into the project root
 #      (may rename, e.g. my-governance-skills)
 #   2. cd to project root
-#   3. bash ./skills/install.sh --copilot --skills-dir ./skills
+#   3. bash ./skills/install.sh --claude --skills-dir ./skills
 #      or: bash ./my-governance-skills/install.sh --all --skills-dir ./my-governance-skills
 
 set -euo pipefail
@@ -17,6 +17,7 @@ PACKAGE_ROOT="$SCRIPT_DIR"
 TARGET_DIR="${PWD}"
 SKILLS_DIR_ARG="./skills"
 INSTALL_CLAUDE=0
+INSTALL_GROK=0
 INSTALL_COPILOT=0
 INSTALL_EXTRAS=0
 INSTALL_PRIMITIVE_WRAPPERS=0
@@ -32,29 +33,33 @@ Prerequisites:
 
 Usage (run from target project root):
   ./install.sh --claude [--skills-dir DIR]
+  ./install.sh --grok [--skills-dir DIR]
   ./install.sh --copilot [--skills-dir DIR] [--with-primitives]
   ./install.sh --all [--skills-dir DIR] [--with-primitives]
   ./install.sh --help
 
 Options:
-  --claude              Install Claude Code rules → ./AGENTS.md
+  --claude              Install Claude Code: ./AGENTS.md + project skill
+                        ./.claude/skills/govern/SKILL.md  →  /govern
+  --grok                Install Grok Build project skill
+                        ./.grok/skills/govern/SKILL.md  →  /govern
   --copilot             Install GitHub Copilot rules → ./.github/copilot-instructions.md
                         and PRIMARY slash only → ./.github/prompts/govern.prompt.md
-  --with-primitives     Also install advanced slash wrappers (new-goal, log-decision,
-                        update-execution, write-audit). Opt-in only — avoids form-menu UX.
-  --all                 Install both tools + ensure prompts/ and templates/
-                        under --skills-dir; Copilot still gets /govern only unless
-                        --with-primitives is set
+  --with-primitives     Also install advanced Copilot slash wrappers (new-goal, …).
+                        Opt-in only — avoids form-menu UX.
+  --all                 Install Claude + Grok + Copilot + ensure prompts/ and
+                        templates/ under --skills-dir; primary entry remains /govern
   --skills-dir DIR      Skills package / destination directory (default: ./skills)
                         Relative paths are resolved from the current working directory.
   --help, -h            Show this help
 
 Behavior:
   - Rule files always install into the current working directory (project root)
-  - .github/ is created under the project root when installing Copilot
+  - Claude skill → ./.claude/skills/govern/ (SKILL.md form)
+  - Grok skill → ./.grok/skills/govern/ (SKILL.md form)
   - Default Copilot slash surface is /govern only (orchestrator)
   - Advanced form-filling slashes are NOT installed unless --with-primitives
-  - Primitive prompt files (01–04) always ship under prompts/ (with --all or package copy)
+  - Core orchestrator remains package prompts/00-govern-orchestrator.md
   - prompts/ and templates/ are placed under --skills-dir (with --all)
   - Source files are read from the package next to this script
   - Prompts before overwriting existing files
@@ -62,10 +67,10 @@ Behavior:
 
 Examples:
   cd /path/to/your-project
+  bash ./skills/install.sh --claude --skills-dir ./skills
+  bash ./skills/install.sh --grok --skills-dir ./skills
   bash ./skills/install.sh --copilot --skills-dir ./skills
-  bash ./skills/install.sh --copilot --with-primitives --skills-dir ./skills
-  bash ./my-governance-skills/install.sh --all --skills-dir ./my-governance-skills
-  bash /path/to/goal-governance/skills/install.sh --all --skills-dir ./skills
+  bash ./skills/install.sh --all --skills-dir ./skills
 EOF
 }
 
@@ -111,7 +116,6 @@ copy_dir_merge() {
   local label="$3"
   [[ -d "$src" ]] || die "Source directory not found: $src"
 
-  # Same path → already in place (common after copying whole package)
   if [[ -d "$dest" ]] && same_path "$src" "$dest"; then
     echo "Already present: $dest/  (from $label)"
     return 0
@@ -139,13 +143,13 @@ Done.
 Next steps:
   1. Review installed rule file(s) and adjust paths for your project.
   2. Ensure docs/goals/goal-tree.md exists (create if needed).
-  3. DEFAULT (only) user path: goal-governance orchestrator
+  3. DEFAULT user path: goal-governance orchestrator skill / slash
      - Core: $SKILLS_DIR/prompts/00-govern-orchestrator.md
-     - Copilot: /govern  (installed by default with --copilot)
-     Scans project, classifies purposes, guides set-goal → advance →
-     stage/close-audit (confirm before writes). Invokes 01–04 as needed.
-  4. Do not look for four form-filling slash commands — they are not installed
-     unless you re-run with --with-primitives (advanced / optional).
+     - Claude: /govern  (./.claude/skills/govern/SKILL.md)
+     - Grok:   /govern  (./.grok/skills/govern/SKILL.md)
+     - Copilot:/govern  (./.github/prompts/govern.prompt.md)
+     Lifecycle: set-goal → advance → stage/close-audit (confirm before writes).
+  4. Advanced Copilot form-filling slashes only if you used --with-primitives.
 
 Project root:  $TARGET_DIR
 Skills dir:    $SKILLS_DIR
@@ -165,12 +169,17 @@ while [[ $# -gt 0 ]]; do
       INSTALL_CLAUDE=1
       shift
       ;;
+    --grok)
+      INSTALL_GROK=1
+      shift
+      ;;
     --copilot)
       INSTALL_COPILOT=1
       shift
       ;;
     --all)
       INSTALL_CLAUDE=1
+      INSTALL_GROK=1
       INSTALL_COPILOT=1
       INSTALL_EXTRAS=1
       shift
@@ -199,7 +208,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ "$INSTALL_CLAUDE" -eq 0 && "$INSTALL_COPILOT" -eq 0 ]]; then
+if [[ "$INSTALL_CLAUDE" -eq 0 && "$INSTALL_GROK" -eq 0 && "$INSTALL_COPILOT" -eq 0 ]]; then
   usage
   exit 1
 fi
@@ -210,25 +219,32 @@ if [[ "$SKILLS_DIR_ARG" = /* ]]; then
 else
   SKILLS_DIR="$TARGET_DIR/$SKILLS_DIR_ARG"
 fi
-# Normalize if directory already exists
 if [[ -d "$SKILLS_DIR" ]]; then
   SKILLS_DIR="$(cd "$SKILLS_DIR" && pwd)"
 fi
 
-CLAUDE_SRC="$PACKAGE_ROOT/install/claude/AGENTS.md"
+CLAUDE_AGENTS_SRC="$PACKAGE_ROOT/install/claude/AGENTS.md"
+CLAUDE_SKILL_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
+GROK_SKILL_SRC="$PACKAGE_ROOT/install/grok/skills/govern/SKILL.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
 TEMPLATES_SRC="$PACKAGE_ROOT/templates"
 
-# Safety checks
-[[ -f "$CLAUDE_SRC" ]] || die "Missing package file: $CLAUDE_SRC"
-[[ -f "$COPILOT_SRC" ]] || die "Missing package file: $COPILOT_SRC"
 [[ -d "$PROMPTS_SRC" ]] || die "Missing package directory: $PROMPTS_SRC"
 [[ -d "$TEMPLATES_SRC" ]] || die "Missing package directory: $TEMPLATES_SRC"
+[[ -d "$TARGET_DIR" ]] || die "Current working directory is not a directory: $TARGET_DIR"
 
-if [[ ! -d "$TARGET_DIR" ]]; then
-  die "Current working directory is not a directory: $TARGET_DIR"
+if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
+  [[ -f "$CLAUDE_AGENTS_SRC" ]] || die "Missing package file: $CLAUDE_AGENTS_SRC"
+  [[ -f "$CLAUDE_SKILL_SRC" ]] || die "Missing package file: $CLAUDE_SKILL_SRC"
+fi
+if [[ "$INSTALL_GROK" -eq 1 ]]; then
+  [[ -f "$GROK_SKILL_SRC" ]] || die "Missing package file: $GROK_SKILL_SRC"
+fi
+if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
+  [[ -f "$COPILOT_SRC" ]] || die "Missing package file: $COPILOT_SRC"
+  [[ -d "$COPILOT_WRAPPERS_SRC" ]] || die "Missing package directory: $COPILOT_WRAPPERS_SRC"
 fi
 
 echo "Project root:  $TARGET_DIR"
@@ -237,17 +253,24 @@ echo "Package root:  $PACKAGE_ROOT"
 echo
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
-  copy_file "$CLAUDE_SRC" "$TARGET_DIR/AGENTS.md"
+  copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  copy_file "$CLAUDE_SKILL_SRC" "$TARGET_DIR/.claude/skills/govern/SKILL.md"
+  echo "Claude primary skill: /govern  (./.claude/skills/govern/)"
+fi
+
+if [[ "$INSTALL_GROK" -eq 1 ]]; then
+  copy_file "$GROK_SKILL_SRC" "$TARGET_DIR/.grok/skills/govern/SKILL.md"
+  echo "Grok primary skill: /govern  (./.grok/skills/govern/)"
+  # Optional: also ensure AGENTS if missing (Grok reads AGENTS.md as project rules)
+  if [[ ! -f "$TARGET_DIR/AGENTS.md" && -f "$CLAUDE_AGENTS_SRC" ]]; then
+    echo "Note: no AGENTS.md yet; consider --claude or copy install/claude/AGENTS.md for project rules."
+  fi
 fi
 
 if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
-  # .github always under project root (CWD)
   mkdir -p "$TARGET_DIR/.github"
   copy_file "$COPILOT_SRC" "$TARGET_DIR/.github/copilot-instructions.md"
 
-  # Slash wrappers → always .github/prompts/ (not under --skills-dir)
-  # Default: primary /govern only (avoid four form-filling slash entries)
-  [[ -d "$COPILOT_WRAPPERS_SRC" ]] || die "Missing package directory: $COPILOT_WRAPPERS_SRC"
   mkdir -p "$TARGET_DIR/.github/prompts"
   WRAPPER_NAMES=(govern)
   if [[ "$INSTALL_PRIMITIVE_WRAPPERS" -eq 1 ]]; then

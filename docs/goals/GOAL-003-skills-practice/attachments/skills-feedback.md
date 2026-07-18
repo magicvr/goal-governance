@@ -50,6 +50,12 @@ version: 0.1.0
 - 纠正：单一编排入口 + 01～04 原语；修订成功标准后 A-004 关门。
 - 证据：`skills/prompts/00-govern-orchestrator.md`；`install/copilot/prompts/govern.md`；`python skills/tests/test_skills_orchestrator.py` OK。
 
+## 7. Claude / Grok skill 入口（2026-07-18 补齐）
+
+- Claude：`.claude/skills/govern/SKILL.md`（安装源 `install/claude/skills/govern/`）
+- Grok：`.grok/skills/govern/SKILL.md`（安装源 `install/grok/skills/govern/`）
+- 与 Copilot `govern.prompt.md` 同为 **primary `/govern`**；核心仍只读 `00-govern-orchestrator`。
+
 ## 结论
 
 Skills 现以**编排主路径**对齐「设立 → 推进 → 审计」；原语与规则地基保留。继续用真实 `/govern` 会话压测推断质量即可，无需回到四入口并列主产品面。
