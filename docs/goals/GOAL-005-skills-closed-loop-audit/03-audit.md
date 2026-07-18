@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.1
+version: 0.2.2
 ---
 
 # 审计 · GOAL-005
@@ -329,3 +329,112 @@ A-001 为 `self/pass`，本意见为 `independent/conditional`。冲突点是 A-
 
 A-007 已响应。阶段 B 质量结论为 **conditional → required 已关**；可进入阶段 D（含 F-018 与正式压测）。  
 `status` 仍为 `active`（整体目标未关门）。
+
+---
+
+## A-009 · 独立复审 F-017 关闭证据（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`finding-closure`
+- **scope**：A-007 的 F-017 关闭证据（不含 F-018 / 阶段 D 整体）
+- **verdict**：pass（本复审范围）
+- **subject_refs**：`skills/README.md` v0.5.1；`skills/tests/test_skills_orchestrator.py`；`skills/install.sh` / `install.ps1`；D-009；A-008；执行记录
+
+### 范围与区间
+
+仅复核 A-008 对 **F-017「README 默认安装说明与实际分发不一致」** 的关闭声明是否可重复核对；不审阶段 D、不重开 F-018、不评判 GOAL-005 整体关门。
+
+### 成果（有证据）
+
+| 检查项 | 结论 | 可核对证据 |
+|--------|------|------------|
+| README 版本与默认产品面 | **通过** | [skills/README.md](../../../skills/README.md) v0.5.1：产品模型、工具表均为 `/govern` · `/audit`；§1 写明「默认产品面…每个宿主都装 `/govern` + `/audit`」 |
+| 手动安装含 audit | **通过** | Claude：`…/skills/audit/SKILL.md` 映射与 `cp`；Grok：同结构；Copilot：`audit.prompt.md` + wrapper 表中 audit 为 **默认** |
+| 脚本参数表与脚本一致 | **通过** | 参数表：`--claude`/`--grok` 写明 govern+audit；`--copilot` 写「默认双入口」；脚本仍为 `WRAPPER_NAMES=(govern audit)` / `$wrapperNames = @('govern', 'audit')` |
+| 旧「仅 govern」表述已清除 | **通过** | README 中无「仅 govern prompt」类表述；与 A-007 指出的缺口对位消除 |
+| 防回退契约测试 | **通过** | `test_skills_readme_default_install_documents_govern_and_audit` 存在且本轮复现：**18 tests OK**（含 F-017 guard） |
+| 决策与响应留痕 | **通过** | [D-009](01-decision.md) 采纳 A-007 + 关 F-017；[A-008](03-audit.md) 登记关闭证据；[02-execution](02-execution.md) 记 v0.5.1 与测试 |
+
+### 对照成功标准 / Finding 定义
+
+| Finding 原要求（A-007） | 关闭充分性 |
+|-------------------------|------------|
+| 统一手动安装示例，Claude/Grok/Copilot 默认均装 `/govern` + `/audit` | **满足** |
+| 脚本参数表明确默认双入口；advanced 仍 opt-in | **满足**（`--with-primitives` 仍单独列出） |
+| （A-007 建议）补精确契约测试防回退 | **满足**（guard 测试 + 全量 18 OK） |
+
+### Findings
+
+本复审范围内 **无新 required finding**。
+
+| ID | 严重度 | 建议 | 状态 | 说明 |
+|----|--------|------|------|------|
+| F-017 | med | required | **已关闭（独立复审确认）** | 关闭证据充分、可重复核对 |
+| F-018 | low | recommended | **仍开放 · 阶段 D** | 真实安装执行 / 更广自动化不在 F-017 关闭范围内；A-008 归 D 合理，本次不误判完成 |
+
+### 必改项汇总
+
+- **无**（F-017 范围内）。
+
+### 与既有意见的异同
+
+- 与 **A-008** 同向：确认其对 F-017「已关闭」的声明真实。  
+- 与 **A-007** 一致：原缺口（手动步骤与参数表遗漏 audit）在文档侧已消除；脚本默认面此前已正确。  
+- **无冲突**，不触发 P-004 用户裁决分支。  
+- 边界：内容/正则契约测试不能替代 F-018 的真实安装运行证据——这不影响 F-017 关闭真实性。
+
+### 结论 + 建议给编排器/用户的下一步
+
+确认 **F-017 已关闭**。阶段 B 的 required 缺口（A-007 所列）在本复审范围内无残留。建议用 **`/govern`** 响应本条（台账升级为「独立复审确认」），再按路线图进入阶段 D（含 F-018 与正式压测）；**不要**仅因本 pass 将 GOAL-005 标为 `done`。
+
+### 声明
+
+本意见不修改目标 `status` / `progress`；响应与推进由 `/govern` 处理。
+
+---
+
+## A-010 · 编排响应 A-009 + 进入阶段 D（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response` + 阶段推进
+- **scope**：响应 A-009；台账升级；启动阶段 D（含 F-018）
+- **关联**：A-007、A-008、D-009、A-009
+
+### 意见汇总
+
+| 意见 | source | scope | verdict | 关系 |
+|------|--------|-------|---------|------|
+| A-008 | self · 响应 | F-017 关闭声明 | （响应） | 声明已关闭 |
+| A-009 | independent | F-017 关闭复审 | **pass** | **确认** A-008 |
+
+### P-004
+
+- **无冲突**（A-009 与 A-008 同向）。
+- 用户指令明确：确认 pass、升级台账、进入阶段 D → 直接执行。
+
+### Findings 台账（升级）
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| F-017 | **已关闭（独立复审确认）** | A-008 关闭 + **A-009 pass**（双确认） |
+| F-018 | **开放 · 阶段 D 进行中** | 真实安装执行 / 更广文档-脚本自动化；不在 F-017 范围内 |
+| 历史 F-008/F-010 | 已关闭（独立复审确认） | 见 A-004 / A-005 |
+| 历史 F-015 | 已关闭（提示词侧） | 见阶段 B |
+
+### 阶段推进
+
+| 阶段 | 动作 |
+|------|------|
+| B | required 无残留；**不**因 A-009 单独 `done` 整体目标 |
+| **D** | **正式进入**（进行中）：含 F-018 + 正式压测/关门路径 |
+
+### 阶段 D 工作包（登记）
+
+1. **F-018**：在可行环境加强安装/README 一致性证据（优先 PowerShell 隔离安装自动化或 CI；`install.sh` 在有 bash 的环境补跑）。
+2. 正式压测：至少一轮 `/audit` → `/govern` 响应（可复用历史会话证据并补缺口）。
+3. 关门审计（`close-out`）：对照成功标准；无未关闭 required 后提议 `done`。
+
+### 结论
+
+接受 A-009。F-017 关闭结论升级为「编排响应 + 独立复审双确认」。GOAL-005 **进入阶段 D**；`status` 仍为 `active`。
