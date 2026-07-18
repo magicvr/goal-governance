@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.7
+version: 0.2.9
 ---
 
 # 审计 · GOAL-005
@@ -702,3 +702,101 @@ GOAL-005 已满足关门条件。建议用户确认后由 `/govern`：
 ### 结论
 
 A-014 的 close-out `pass` 已获用户接受并执行状态关门。GOAL-005 正式结项：`done / 100%`。
+
+---
+
+## A-016 · GOAL-005 关门审计独立复核（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`close-out` + `execution-facts`
+- **scope**：GOAL-005 整体关门条件；A-014/A-015 的成功标准、历史 required finding 关闭状态、当前 Skills 交付与可执行验证
+- **verdict**：**pass**
+- **subject_refs**：`00-meta.md`、`01-decision.md`、`02-execution.md`、A-001～A-015；`skills/prompts/00-govern-orchestrator.md`、`04-write-audit.md`、`05-independent-audit.md`；`skills/tests/test_skills_orchestrator.py`
+
+### 范围与区间
+
+复核已执行的 A-014 self close-out 与 A-015 结项响应。审计对象为当前暂存工作区快照；核对目标成功标准、审计台账的 required finding 关闭证据、核心提示词职责边界，以及 Windows / PowerShell 安装主路径的可执行证据。
+
+### 成果（有证据）
+
+| 检查项 | 结论 | 可核对证据 |
+|--------|------|------------|
+| 成功标准与路线图 | **通过** | [00-meta.md](00-meta.md) 的 6 项成功标准均已勾选，阶段 A～D 均完成；[A-014](03-audit.md) 对每项给出对照证据。 |
+| required finding 门禁与关闭台账 | **通过** | A-014 列出 F-002、F-008、F-010、F-012、F-015、F-017 的关闭依据；A-003/A-005/A-008/A-010/A-013 留有响应与独立复审证据。当前无开放 required。 |
+| `/govern` 闭环与用户裁决 | **通过** | [00-govern-orchestrator.md](../../../skills/prompts/00-govern-orchestrator.md) 的意见台账、P-004 裁决和开放 required 门禁明确阻断未关闭必改项的推进或关门。 |
+| 审计职责分离 | **通过** | [04-write-audit.md](../../../skills/prompts/04-write-audit.md) 规定 self/response 结构；[05-independent-audit.md](../../../skills/prompts/05-independent-audit.md) 与 Copilot audit wrapper 均要求 `source: independent` 且默认不改 `status` / `progress`。 |
+| 安装与默认产品面 | **通过** | 本轮执行 `skills/tests/test_skills_orchestrator.py`：**20 tests OK**，包括临时目录内真实执行 `install.ps1 -All`、三宿主 `/govern + /audit` 产物、advanced 原语默认不安装，以及 README 默认产品面 guard。 |
+| 暂存快照完整性 | **通过** | 本轮 `git diff --cached --check` 无输出；暂存变更覆盖 GOAL-005 台账、README、安装脚本与对应测试。 |
+
+### 对照成功标准
+
+| # | 成功标准 | 状态 | 复核结论 |
+|---|----------|------|----------|
+| 1 | 原则与规则写明交叉审计、意见响应与用户裁决 | 已达成 | `principles.md`、AGENTS 及 A-003～A-005 支持该结论。 |
+| 2 | `00` / `/govern` 落地汇总、裁决与响应 | 已达成 | 核心提示词含意见台账、P-004 和 S4。 |
+| 3 | `04` 支持结构化意见与 source 区分 | 已达成 | `04` 的最小字段、response 与 finding 结构可核对。 |
+| 4 | `/audit` 可用且默认不改状态 | 已达成 | `05` 与宿主 wrapper 明确独立职责；本条按该入口流程写入。 |
+| 5 | 安装、README 与 prompts 一致 | 已达成 | README guard 与隔离 `install.ps1 -All` 执行测试均通过。 |
+| 6 | 有独立审计到编排响应或冲突裁决的书面实践 | 已达成 | A-002→A-003/D-008、A-007→A-008/D-009 和 A-012→A-013 均已落盘。 |
+
+### Findings
+
+本次复核未发现新的 required finding。
+
+| ID | 严重度 | 建议 | 状态 | 说明 |
+|----|--------|------|------|------|
+| F-019 · Bash / Unix 真实隔离安装证据 | low | recommended | **open（非阻塞 residual）** | `install.sh` 已有语法与内容契约覆盖，但尚无 Linux/macOS 临时目录真实安装执行证据；该边界已在 A-014/A-015 如实保留，且不属于当前成功标准 required 条件。 |
+
+### 必改项汇总
+
+- **无**。当前审计范围内的 required finding 为 0；F-019 保持结项后的 recommended residual。
+
+### 与既有意见的异同
+
+- 与 A-014 self close-out 的 `pass` 同向：本轮直接复验了其所述的 20 项测试，并抽查核心门禁与独立审计职责边界。
+- 与 A-015 结项响应一致：状态变更已有用户确认与台账记录；本条不改写该状态。
+- 无相反 verdict 或互斥必改项，不触发 P-004 冲突裁决。
+- 本审计为入口和职责分离级的独立复核，不构成法定第三方鉴证。
+
+### 结论 + 建议给编排器/用户的下一步
+
+确认 A-014 的关门 `pass` 与 A-015 的 `done / 100%` 状态具有充分的当前证据支撑。无需重开 GOAL-005；F-019 可在具备 Linux/macOS CI 或 Unix 环境时作为单独的 finding-closure 复核处理。
+
+### 声明
+
+本意见不修改 `status` / `progress` / 方案正文；对本条意见的响应由 `/govern` 处理。
+
+---
+
+## A-017 · 编排响应 A-016（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response`
+- **scope**：响应 A-016 GOAL-005 关门独立复核
+- **verdict**：pass（响应范围）
+- **关联**：A-014、A-015、A-016；F-019
+
+### 意见汇总与 P-004
+
+| 意见 | source | scope | verdict | 关系 |
+|------|--------|-------|---------|------|
+| A-014 | self | GOAL-005 整体 close-out | pass | 判定满足关门条件 |
+| A-015 | self · 响应 | 接受 A-014 并执行结项 | pass | 状态已更新为 `done / 100%` |
+| A-016 | independent | 关门条件与结项状态复核 | **pass** | 独立确认 A-014/A-015 |
+
+- **无冲突**：A-016 与 A-014/A-015 同向，不触发 P-004 冲突裁决。
+- 同 scope 已有 A-014 self close-out，不存在「仅有独立审计、尚无自审计」问题。
+- 用户明确指令接受 A-016 `pass`，无需重开目标。
+
+### Findings 台账
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| 历史 required | **全部已关闭** | A-016 复核未发现新的 required finding |
+| F-018 | **已关闭（独立复审确认，PowerShell 主路径）** | 结论保持 |
+| F-019 | **open / recommended / 非阻塞 residual** | 保留为结项后改进项；不改变 `done / 100%` |
+
+### 结论
+
+接受 A-016 的独立复核 `pass`。GOAL-005 的关门结论升级为 self close-out + independent close-out 双确认；目标继续保持 `done / 100%`，F-019 继续作为结项后的 recommended residual。

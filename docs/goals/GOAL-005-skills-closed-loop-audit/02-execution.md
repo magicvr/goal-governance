@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.6
+version: 0.2.7
 ---
 
 # 执行记录 · GOAL-005
@@ -115,6 +115,13 @@ version: 0.2.6
 - F-019 保留为结项后的 **recommended residual（open / 非阻塞）**；不影响 GOAL-005 结项，后续完成时可追加 finding-closure 记录，无需重开本目标。
 - 正式结项响应见 [03-audit A-015](03-audit.md)。
 
+### 2026-07-18 · 响应 A-016 关门独立复核（A-017）
+
+- 接受 A-016（independent / **pass**）：独立复核确认 A-014 close-out 与 A-015 `done / 100%` 状态具有充分证据支撑。
+- A-016 与 A-014/A-015 同向，当前开放 required 仍为 **0**；无需重开 GOAL-005。
+- F-019 保持 **open / recommended / 非阻塞 residual**，不改变目标 `done / 100%` 状态。
+- 编排响应见 [03-audit A-017](03-audit.md)。
+
 ## 待办（计划，非已完成）
 
 1. ~~阶段 A～C~~ **已完成 / 并入**
@@ -125,4 +132,4 @@ version: 0.2.6
 
 ## 进度评估
 
-**100% / done**：6 项成功标准全部达成，历史 required 全部关闭，A-014 close-out `pass` 已获用户接受；F-019 作为 recommended residual 留存。
+**100% / done**：6 项成功标准全部达成，历史 required 全部关闭；A-014 self close-out 与 A-016 independent close-out 均为 `pass`，且已由 A-015/A-017 响应；F-019 作为 recommended residual 留存。
