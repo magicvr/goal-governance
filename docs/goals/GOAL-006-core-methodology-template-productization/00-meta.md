@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.1.0
-progress: 0%
+version: 0.2.0
+progress: 40%
 ---
 
 # GOAL-006 · 核心方法论、文档协议与 canonical 模板产品化
@@ -36,8 +36,8 @@ progress: 0%
 
 ## 成功标准
 
-- [ ] 核心文档入口可定位目标存储、五件套、路线图和审计闭环，且入口路径可核对。
-- [ ] `docs/templates/goal-folder/` 保持完整五件套和 `attachments/` 起点，并可脱离 Skills/Web 作为模板使用。
+- [x] 核心文档入口可定位目标存储、五件套、路线图和审计闭环，且入口路径可核对。
+- [x] `docs/templates/goal-folder/` 保持完整五件套和 `attachments/` 起点，并可脱离 Skills/Web 作为模板使用。
 - [ ] 核心文档层包含独立启用说明；空 Git 仓复制场景可生成 `docs/goals/goal-tree.md` 与合规 Root Goal，并留有来源、生成路径和核对结果。
 - [ ] 可复制包版本/变更范围、canonical → Skills 模板镜像同步及其验证结果均有可核对记录。
 - [ ] 阶段审计确认无开放 required finding；未在阶段 4 完成前放行阶段 5。
