@@ -4,12 +4,12 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.1.3
+version: 0.2.0
 ---
 
 # docs/ · 文档体系
 
-本目录是 **Goal Governance** 的真相来源（source of truth）：目标、决策、执行、审计与架构说明均以 Markdown 维护。
+本目录是 **Goal Governance** 的核心规范与运行记录来源：方法论、文档协议、目标、决策、执行、审计与架构说明均以 Markdown 维护。具体目标实例的状态真相仍只存在于 `docs/goals/`。
 
 ## 目录结构
 
@@ -25,6 +25,9 @@ docs/
 │   │   ├── 03-audit.md
 │   │   └── attachments/
 │   └── GOAL-002-.../
+├── templates/                # 核心 canonical 文档模板
+│   ├── README.md
+│   └── goal-folder/          # 五件套模板
 ├── architecture/             # 架构与技术约定
 │   ├── overview.md
 │   ├── principles.md         # 治理原则（元规则）
@@ -47,6 +50,7 @@ docs/
    - `attachments/` — 附件（可为空，保留目录）
 7. **可执行性与路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识；独立审计出意见、编排器响应全部意见；「是否自审」与意见冲突由用户裁决（编排器给建议）。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
+9. **核心模板与分发镜像**：规范模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 是供安装脚本和离线复制使用的同步镜像。新目标实例仍写入 `docs/goals/`，不把模板目录当作目标状态。
 
 ## Frontmatter 约定
 
@@ -72,13 +76,14 @@ version: 0.1.0
 4. 更新 `goal-tree.md` 的树与表格。
 5. 如影响架构，同步更新 `architecture/`。
 
-## 与 Web / Skills 的关系
+## 三层交付关系
 
 | 形态 | 职责 | 路径 |
 |------|------|------|
-| 文档（本目录） | 目标与过程的权威记录 | `docs/` |
+| 核心方法论与模板 | 生命周期、治理原则、文档协议与 canonical 五件套模板 | `docs/README.md`、`docs/architecture/`、`docs/templates/` |
+| 文档实例 | 目标与过程的权威记录 | `docs/goals/` |
 | Web 应用 | 浏览目标与文档诊断（当前只读；写入待后续阶段） | `web/` |
-| Skills / 提示词 | AI 按规则读写与推进目标 | 根目录 `AGENTS.md` 等 |
+| Skills / 提示词 | AI 按核心协议读写与推进目标 | `skills/`、根目录 `AGENTS.md` 等 |
 
 ## 推荐阅读顺序
 
@@ -86,4 +91,5 @@ version: 0.1.0
 2. [goals/GOAL-001-main-vision/00-meta.md](goals/GOAL-001-main-vision/00-meta.md) — 总目标  
 3. [architecture/overview.md](architecture/overview.md) — 架构概览  
 4. [architecture/principles.md](architecture/principles.md) — 治理原则  
-5. 仓库根 [AGENTS.md](../AGENTS.md) — AI 协作强制规则  
+5. [templates/README.md](templates/README.md) — 核心文档模板
+6. 仓库根 [AGENTS.md](../AGENTS.md) — AI 协作强制规则

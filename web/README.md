@@ -1,12 +1,14 @@
 # Goal Governance Web
 
-基于 FastAPI、Jinja2、Tailwind CSS 和 HTMX 的目标治理 Web 应用。
+基于 FastAPI、Jinja2、Tailwind CSS 和 HTMX 的目标治理 Web 应用。它是核心方法论与文档协议的**人类消费适配器**，不拥有独立的目标状态或生命周期定义。
 
 当前版本提供只读的目标工作台，直接从仓库 `docs/goals/` 的 Markdown 真相源加载数据：
 
 - **目标概览**：展示可读取 Goal、状态、进度和文档/目标树诊断。
 - **目标详情**：展示成功标准、附件、Decision、Execution 和 Audit 的基础信息与原始 Markdown 回退内容。
 - **兼容入口**：原 `/decision`、`/execution`、`/audit` 地址会跳回目标工作台；写入操作尚未在 Web 中开放。
+
+目标实例必须符合 `docs/README.md`、`docs/architecture/` 和 `docs/templates/goal-folder/` 定义的核心协议。Web 当前只读取实例文档；未来若开放写入，必须通过同一协议、保留事务证据并由独立目标承接。
 
 ## 目录结构
 

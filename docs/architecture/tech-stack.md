@@ -2,12 +2,23 @@
 title: 技术栈
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 技术栈
+
+## 核心方法论与文档协议（canonical）
+
+| 层 | 路径 | 说明 |
+|----|------|------|
+| 方法论 | `docs/architecture/` | P-001～P-004、架构与长期约定 |
+| 文档规范 | `docs/README.md` | 目标实例、五件套和同步规则 |
+| 模板 | `docs/templates/goal-folder/` | canonical 五件套模板；不保存运行状态 |
+| 实例真相源 | `docs/goals/` | 目标、决策、执行、审计和附件 |
+
+`skills/templates/goal-folder/` 是上述 canonical 模板的分发镜像，用于离线安装和复制到其他仓库；它不构成第二套规范。
 
 ## Web 应用（已确定）
 
@@ -42,8 +53,9 @@ version: 0.1.0
 - 认证 / 多租户
 - Tailwind 本地构建管线（后续可按需引入）
 
-## 双交付中的 Skills
+## 三层交付中的 Skills
 
-- 形态：提示词 / Agent 规则 / 后续可打包的 Skill 文件
-- 入口规则：根目录 [AGENTS.md](../../AGENTS.md)
-- 实现状态：**方向已定，具体 Skill 未落地**
+- 形态：提示词、Agent 规则、宿主 wrappers、安装脚本和可复制模板镜像
+- 入口规则：根目录 [AGENTS.md](../../AGENTS.md) 与 `skills/prompts/00-govern-orchestrator.md`
+- 消费关系：读取核心方法论与文档协议，驱动 AI 在 `docs/goals/` 中执行闭环
+- 实现状态：**当前基线已交付**；核心协议对齐、镜像漂移检查和跨宿主发布验收属于后续阶段

@@ -2,14 +2,14 @@
 title: 治理原则
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.2
+version: 0.3.0
 ---
 
 # 治理原则
 
-本文件记录 Goal Governance 的**元规则**（跨目标、跨交付形态长期适用的原则）。具体操作细则见根目录 [AGENTS.md](../../AGENTS.md) 与 [docs/README.md](../README.md)。Skills 编排落地见 [GOAL-005-skills-closed-loop-audit](../goals/GOAL-005-skills-closed-loop-audit/00-meta.md) 及 `skills/prompts/`。
+本文件记录 Goal Governance 核心方法论的**元规则**（跨目标、跨交付形态长期适用的原则）。具体操作细则见根目录 [AGENTS.md](../../AGENTS.md)、[docs/README.md](../README.md) 与 canonical 模板 [docs/templates/](../templates/)。Skills 编排落地见 [GOAL-005-skills-closed-loop-audit](../goals/GOAL-005-skills-closed-loop-audit/00-meta.md) 及 `skills/prompts/`；Skills 与 Web 都是消费适配器，不改变这些规则的权威性。
 
 | 编号 | 标题 | 一句话 |
 |------|------|--------|

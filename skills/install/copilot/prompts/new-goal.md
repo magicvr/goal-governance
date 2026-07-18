@@ -82,7 +82,7 @@ role: advanced
 - 路径：在仓库中定位 skills 包根（含 `prompts/01-create-new-goal.md` 的目录，名可能不是 `skills`），再读 `<SKILLS_PKG>/prompts/01-create-new-goal.md`  
   （包内相对路径参考：[01-create-new-goal.md](../../../prompts/01-create-new-goal.md)）
 - 使用其中「提示词正文」的强制步骤、禁止项与交付检查清单
-- 可参考 `./skills/templates/goal-folder/` 的字段与结构
+- 若目标仓库提供核心模板层，优先参考 `./docs/templates/goal-folder/`；否则使用分发包 `./skills/templates/goal-folder/` 的字段与结构
 - 将第一步已确认的参数填入核心提示词的「用户输入」槽位后执行
 
 ---

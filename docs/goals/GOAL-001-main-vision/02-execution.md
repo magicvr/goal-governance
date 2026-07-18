@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.1.4
+version: 0.2.2
 ---
 
 # 执行记录 · GOAL-001
@@ -17,7 +17,7 @@ version: 0.1.4
 ### 2026-07-18 · 项目启动与规则定稿
 
 - 明确根目标：构建实用的目标治理框架。
-- 确定双交付形态：Web 应用 + Skills/提示词。
+- 确定早期双交付形态：Web 应用 + Skills/提示词（该历史决策由 D-007 重述，不删除原记录）。
 - 确定文档核心规则：扁平目标、`parent` 字段、`goal-tree.md`。
 - 创建子目标 [GOAL-002-project-bootstrap](../GOAL-002-project-bootstrap/00-meta.md) 承接初始化工作。
 
@@ -63,13 +63,26 @@ version: 0.1.4
 
 | 方向 | 状态 | 说明 |
 |------|------|------|
-| 文档体系规则 | 主体完成 | 规则、GOAL-001～005、goal-tree、AGENTS 已落地 |
-| Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互属后续阶段 |
-| Skills / 提示词 | 已完成当前阶段 | GOAL-003、GOAL-005 均为 done；F-019 为 GOAL-005 结项后 recommended residual |
+| 核心方法论与模板 | 基础已建立，产品化进行中 | `docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/` 已形成核心入口；跨面发布验收尚未完成 |
+| Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互明确留待后续目标 |
+| Skills / 提示词 | 当前基线已交付，对齐验收待做 | GOAL-003、GOAL-005 均为 done；`skills/templates/goal-folder/` 是核心模板的分发镜像；F-019 为 GOAL-005 结项后 recommended residual |
 | 核心数据模型 | 已完成 | GOAL-004 done 100%；阶段 A～D 与关门路径均已完成 |
 
 ## 下一步（根目标视角）
 
-1. 阶段 4（Web 与文档体系联动深化）尚未立项；按 P-001 先明确路线图或创建可执行子目标。
-2. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
-3. F-019 待具备 Linux/macOS CI 或 Unix 环境时单独补证，不阻塞当前路线。
+1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已写入路线图，先按 P-001 明确可执行边界，再以 `GOAL-006` 起立项。
+2. 阶段 5 复核 Skills 的规则、模板镜像、安装产物与核心协议版本一致性。
+3. 阶段 6 保持 Web 只读，先完善人类浏览/诊断体验；任何写入另立子目标并保留审计证据。
+4. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
+5. F-019 待具备 Linux/macOS CI 或 Unix 环境时单独补证，不阻塞当前路线。
+
+### 2026-07-19 · 根目标重基线与核心模板归属
+
+- 用户确认采用“三层交付、一个真相源”：核心方法论/文档协议与模板、Skills 消费适配器、Web 人类工作台。
+- 在 `docs/templates/goal-folder/` 建立 canonical 五件套模板，并保留 `skills/templates/goal-folder/` 作为安装与离线复制镜像。
+- 在 GOAL-001 的 `00-meta.md`、`01-decision.md`、`03-audit.md` 与本执行记录中记录 D-007 和本轮重基线；既有 GOAL-002～005 的状态与历史审计未重写。
+- Web 的当前边界保持只读；本轮未开放写入，也未提前创建阶段 4 之后的细粒度子目标。
+- 运行 `python skills/tests/test_skills_orchestrator.py`：**21 tests OK**，包含 canonical 模板与 Skills 镜像一致性检查、默认 `/govern` + `/audit` 安装面和 PowerShell 隔离安装冒烟。
+- 在 `web/` 运行 `..\\.venv\\Scripts\\python.exe -m unittest discover -s tests -v`：**20 tests OK**；1 个符号链接权限相关测试按 Windows 环境能力跳过。
+- `git diff --check` 通过；未发现空白错误。
+- 对照 `docs/goals/*/00-meta.md` 修正 `goal-tree.md` 的根进度占位和 GOAL-002 完整标题，Web 目标树诊断不再报告这两项既有投影漂移。

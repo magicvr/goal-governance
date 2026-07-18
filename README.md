@@ -1,6 +1,6 @@
 ﻿# Goal Governance
 
-目标治理框架：以文档为真相来源，贯通 **目标 → 决策 → 执行 → 审计**，并配套 Web 应用与 AI Skills/提示词双交付。
+目标治理框架：交付可复用的核心方法论、文档协议与模板，并提供面向 AI/仓库协作的 Skills 和面向人的 Web 工作台，贯通 **目标 → 决策 → 执行 → 审计**。
 
 ## 从这里开始
 
@@ -8,7 +8,9 @@
 |---------|------|
 | 全局目标与进展 | [docs/goals/goal-tree.md](docs/goals/goal-tree.md) |
 | 文档怎么写、规则是什么 | [docs/README.md](docs/README.md) |
+| 核心模板怎么用 | [docs/templates/README.md](docs/templates/README.md) |
 | AI 必须遵守什么 | [AGENTS.md](AGENTS.md) |
+| Skills 如何安装 | [skills/README.md](skills/README.md) |
 | 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
 | Web 如何启动 | [web/README.md](web/README.md) |
 
@@ -21,8 +23,13 @@ goal-governance/
 ├── docs/                     # 目标与架构文档（source of truth）
 │   ├── README.md
 │   ├── goals/                # 目标平铺 + goal-tree.md
+│   ├── templates/            # 核心 canonical 文档模板
 │   ├── architecture/
 │   └── _index/
+├── skills/                   # AI/Agent 消费适配器与分发包
+│   ├── prompts/
+│   ├── templates/            # docs/templates 的分发镜像
+│   └── install.*
 ├── web/                      # FastAPI Web 应用
 │   ├── main.py
 │   ├── requirements.txt
@@ -33,9 +40,10 @@ goal-governance/
 └── .gitignore
 ```
 
-- **`docs/`**：目标治理内容与规范，独立演进。
-- **`web/`**：FastAPI + Jinja2 + Tailwind CSS + HTMX 的 Web 应用。
-- **双交付**：Web 应用（看与操作）+ Skills/提示词（写与推进），共享同一套 `docs/goals`。
+- **核心文档层**：`docs/README.md`、`docs/architecture/` 与 `docs/templates/` 定义方法论、协议和模板；`docs/goals/` 保存具体目标实例。
+- **`skills/`**：AI/Agent 消费核心协议的编排、审计、原语、宿主适配和离线分发包。
+- **`web/`**：FastAPI + Jinja2 + Tailwind CSS + HTMX 的人类工作台，当前只读。
+- **三层交付共享一个真相源**：Skills 按协议读写、Web 当前读取同一套 `docs/goals` 文档，不建立独立状态。
 
 ## 目标模型（摘要）
 
@@ -47,8 +55,8 @@ goal-governance/
 
 当前目标：
 
-- **GOAL-001-main-vision**：构建实用的目标治理框架  
-- **GOAL-002-project-bootstrap**：项目初始化（约 70%，进行中）
+- **GOAL-001-main-vision**：交付可复用的目标治理方法论、文档协议与消费工具
+- **GOAL-002～005**：初始化、Skills 闭环、Goal 数据模型与 Web 只读基线均已结项；下一阶段按路线图从 `GOAL-006` 起立项
 
 ## Web 应用快速启动
 

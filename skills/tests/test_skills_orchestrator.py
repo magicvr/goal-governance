@@ -31,6 +31,8 @@ INSTALL_SH = SKILLS_ROOT / "install.sh"
 INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
+CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
+SKILLS_TEMPLATES = SKILLS_ROOT / "templates" / "goal-folder"
 
 
 class TestSkillsOrchestratorPackage(unittest.TestCase):
@@ -104,6 +106,34 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("00-govern-orchestrator", text)
         self.assertRegex(text, r"primary|主入口")
         self.assertRegex(text, r"primitive|原语")
+
+    def test_core_templates_are_mirrored_by_skills_package(self) -> None:
+        """The Skills package must distribute the canonical core templates unchanged."""
+        if not CORE_TEMPLATES.is_dir():
+            self.skipTest(
+                "canonical docs/templates layer is not present in a standalone Skills copy"
+            )
+        self.assertTrue(
+            CORE_TEMPLATES.is_dir(), f"missing canonical templates: {CORE_TEMPLATES}"
+        )
+        self.assertTrue(
+            SKILLS_TEMPLATES.is_dir(),
+            f"missing Skills template mirror: {SKILLS_TEMPLATES}",
+        )
+        for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
+            canonical = CORE_TEMPLATES / name
+            mirror = SKILLS_TEMPLATES / name
+            self.assertTrue(canonical.is_file(), f"missing canonical template: {canonical}")
+            self.assertTrue(mirror.is_file(), f"missing Skills template mirror: {mirror}")
+            self.assertEqual(
+                canonical.read_bytes(),
+                mirror.read_bytes(),
+                f"template mirror drift: {canonical} != {mirror}",
+            )
+        docs_readme = CORE_TEMPLATES.parent / "README.md"
+        skills_readme = SKILLS_ROOT / "README.md"
+        self.assertIn("canonical", docs_readme.read_text(encoding="utf-8").lower())
+        self.assertIn("分发镜像", skills_readme.read_text(encoding="utf-8"))
 
     def test_copilot_govern_wrapper_is_primary(self) -> None:
         path = COPILOT_PROMPTS / "govern.md"

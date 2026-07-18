@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.5.0
+version: 0.6.0
 ---
 
 # Goal Tree
@@ -14,8 +14,10 @@ version: 0.5.0
 
 ## 树状结构
 
+> 根目标当前采用“三层交付、一个真相源”：核心方法论与模板、Skills 消费适配器、Web 人类工作台。核心 canonical 模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 为分发镜像。
+
 ```text
-GOAL-001-main-vision · 构建一个实用的目标治理框架 [active]
+GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议与消费工具 [active]
 ├── GOAL-002-project-bootstrap · 完成项目初始化（文档体系 + Web 基础框架 + Skills 方向） [done 100%]
 ├── GOAL-003-skills-practice · 完善 Skills 并在本项目中实践验证 [done 100%]
 ├── GOAL-004-core-data-model · 实现核心数据模型与 Goal 基础管理 [done 100%]
@@ -26,11 +28,13 @@ GOAL-001-main-vision · 构建一个实用的目标治理框架 [active]
 
 | ID | 标题 | Parent | Status | Progress | 路径 |
 |----|------|--------|--------|----------|------|
-| GOAL-001-main-vision | 构建一个实用的目标治理框架 | — | active | 进行中 | [GOAL-001-main-vision/](GOAL-001-main-vision/) |
-| GOAL-002-project-bootstrap | 完成项目初始化 | GOAL-001-main-vision | done | 100% | [GOAL-002-project-bootstrap/](GOAL-002-project-bootstrap/) |
+| GOAL-001-main-vision | 交付可复用的目标治理方法论、文档协议与消费工具 | — | active | — | [GOAL-001-main-vision/](GOAL-001-main-vision/) |
+| GOAL-002-project-bootstrap | 完成项目初始化（文档体系 + Web 基础框架 + Skills 方向） | GOAL-001-main-vision | done | 100% | [GOAL-002-project-bootstrap/](GOAL-002-project-bootstrap/) |
 | GOAL-003-skills-practice | 完善 Skills 并在本项目中实践验证 | GOAL-001-main-vision | done | 100% | [GOAL-003-skills-practice/](GOAL-003-skills-practice/) |
 | GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | GOAL-001-main-vision | done | 100% | [GOAL-004-core-data-model/](GOAL-004-core-data-model/) |
 | GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | GOAL-001-main-vision | done | 100% | [GOAL-005-skills-closed-loop-audit/](GOAL-005-skills-closed-loop-audit/) |
+
+当前根目标焦点：阶段 4「核心方法论、文档协议与 canonical 模板产品化」；路线图确认后再以 `GOAL-006` 起创建子目标。
 
 ## 状态图例
 

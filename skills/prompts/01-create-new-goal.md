@@ -48,7 +48,7 @@ P-001（大目标先路线图）以 AGENTS 为准；若存在 architecture 原�
 1. 读 `docs/goals/goal-tree.md`，新编号 = 最大编号 + 1（三位）。Root 固定为 GOAL-001。
 2. 创建 `docs/goals/GOAL-NNN-<slug>/`（与现有目标平铺，层级只写在 parent）。
 3. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。
-4. 定位 **SKILLS_PKG**（含 `prompts/01-create-new-goal.md` 或 `templates/goal-folder/` 的目录），结构可参考包内 `templates/goal-folder/`。
+4. 优先定位项目的核心模板层 `docs/templates/goal-folder/`；若目标仓库没有独立核心层，再定位 **SKILLS_PKG**（含 `prompts/01-create-new-goal.md` 或 `templates/goal-folder/` 的目录）并参考包内镜像 `templates/goal-folder/`。两者结构必须一致。
 5. Frontmatter 至少：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。
    - Root 的 slug 使用用户确认的名称。
 6. 正文：

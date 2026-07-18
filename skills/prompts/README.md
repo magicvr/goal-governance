@@ -2,9 +2,9 @@
 title: Skills · 提示词模板
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.3.0
+version: 0.4.0
 ---
 
 # prompts/ · 目标治理提示词
@@ -62,6 +62,7 @@ version: 0.3.0
 
 | 路径 | 角色 |
 |------|------|
+| [../../docs/templates/goal-folder/](../../docs/templates/goal-folder/) | 核心 canonical 目标模板（本仓库） |
 | [../AGENTS.template.md](../AGENTS.template.md) | 规则正文 |
-| [../templates/goal-folder/](../templates/goal-folder/) | 目标文件夹示例 |
+| [../templates/goal-folder/](../templates/goal-folder/) | Skills 分发模板镜像 |
 | [../install/](../install/) | 各宿主 skill / slash 安装源 |

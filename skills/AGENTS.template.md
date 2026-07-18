@@ -2,9 +2,9 @@
 title: AGENTS 模板 · 目标治理 AI 规则
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.4.2
+version: 0.5.0
 ---
 
 # AGENTS.md
@@ -23,6 +23,7 @@ version: 0.4.2
 | 架构约定 | `docs/architecture/` | 若项目启用 |
 | 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001～P-004 |
 | 文档使用规范 | `docs/README.md` | 若存在 |
+| 核心方法论与模板 | `{{CORE_TEMPLATES_DIR}}` | 若项目采用独立核心层；canonical 模板优先 |
 
 冲突时以 `docs/goals/` 与本文件为准。
 
@@ -50,7 +51,7 @@ docs/goals/GOAL-NNN-short-slug/
 ```
 
 - 不得省略任一文件或目录。
-- 可从 `{{GOAL_FOLDER_TEMPLATE}}` 复制后改写（常见：`<skills-pkg>/templates/goal-folder/`；包目录名可能不是 `skills`）。
+- 若项目提供独立核心模板层，优先从 `{{CORE_TEMPLATES_DIR}}/goal-folder/` 复制；否则从 `{{GOAL_FOLDER_TEMPLATE}}` 复制（常见：`<skills-pkg>/templates/goal-folder/`；包目录名可能不是 `skills`）。
 
 ## 4. Frontmatter 最低要求
 
@@ -261,6 +262,7 @@ docs/goals/GOAL-NNN-short-slug/
 - 文档说明：`{{DOCS_README_PATH}}`
 - 目标树：`docs/goals/goal-tree.md`
 - Root Goal：`docs/goals/{{ROOT_GOAL_FOLDER}}/00-meta.md`
+- 核心模板目录：`{{CORE_TEMPLATES_DIR}}`（若项目采用独立核心层）
 - 架构说明：`{{ARCHITECTURE_PATH}}`
 - 治理原则：AGENTS 第 6 / 6b 节；`docs/architecture/principles.md`（若存在，P-001～P-004）
 - 代码/应用布局：仓库根为常见默认；若已约定子目录则填 `{{APP_DIR}}`（可空）

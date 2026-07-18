@@ -2,15 +2,17 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.5.2
+version: 0.6.0
 ---
 
 # Skills
 
 本目录提供可复制到**其他项目**的目标治理约定与模板。  
 本仓库运行中的强制规则仍以根目录 [AGENTS.md](../AGENTS.md) 为准；此处是提炼后的**可复用交付物**。
+
+Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/)；本包内的 `templates/goal-folder/` 是用于离线复制和安装脚本的同步镜像。安装到其他仓库后，镜像必须自包含可用。
 
 **支持的目标工具**：Claude Code、Grok Build、GitHub Copilot。
 
@@ -61,7 +63,7 @@ skills/
 │   ├── 01–04 …                         # primitives
 │   └── 05-independent-audit.md         # cross-audit core
 ├── tests/
-└── templates/goal-folder/
+└── templates/goal-folder/          # docs/templates 的分发镜像
 ```
 
 ## 安装
@@ -199,4 +201,4 @@ Windows 上 `test_install_ps1_isolated_all_produces_govern_and_audit` 会在临�
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
 
-当前交付：**规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 安装脚本 + 示例模板**。
+当前交付：**核心协议的 Skills 适配规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 多宿主安装脚本 + 模板分发镜像**。核心 canonical 方法论与模板见仓库 `docs/` 层。
