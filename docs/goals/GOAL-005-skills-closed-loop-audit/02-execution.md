@@ -1,11 +1,11 @@
 ---
 id: GOAL-005-skills-closed-loop-audit
 doc: execution
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.2
+version: 0.2.6
 ---
 
 # 执行记录 · GOAL-005
@@ -80,13 +80,49 @@ version: 0.2.2
 - **正式进入阶段 D**（进行中）：工作包见 [03-audit A-010](03-audit.md)（F-018、正式压测、关门路径）。
 - **未**将整体目标标 `done`（A-009 明确禁止仅因本 pass 关门）。
 
+### 2026-07-18 · 阶段 D · F-018 PowerShell 隔离安装自动化
+
+- 新增 `skills/tests/test_install_ps1_isolated.ps1`：临时目录执行 `install.ps1 -All`，断言 govern+audit 产物、00/05 已复制、无 `new-goal` 默认安装。
+- 契约测试：`test_install_ps1_isolated_all_produces_govern_and_audit`（Windows 执行真实安装）。
+- **修复** `install.ps1`：`RemainingArgs` 为 `$null` 时 `@($null)` 被当成单元素数组导致非交互 `-File` 调用失败（NullArray）。
+- 证据：本机 `python skills/tests/test_skills_orchestrator.py` → **20 tests OK**；独立脚本 `test_install_ps1_isolated.ps1` exit 0。
+- **F-018 关闭（PowerShell 路径）**：真实安装执行已自动化；`install.sh` 运行证据仍依赖 bash 环境（recommended residual，不阻塞 PS 主路径关闭）。
+- README 测试节已补充隔离安装说明。
+
+### 2026-07-18 · 响应 A-012 + 进入阶段 D 关门审计（A-013）
+
+- 接受 A-012（independent / **pass**）：独立复审确认 A-011 的 F-018 PowerShell 主路径关闭证据充分且可重复复现。
+- 台账升级：F-018 → **已关闭（独立复审确认，PowerShell 主路径）**。
+- 本轮编排复跑 `python skills/tests/test_skills_orchestrator.py`：**20 tests OK**（含 PowerShell 临时目录真实安装测试）。
+- 保留 `install.sh` / bash 隔离执行为 **recommended residual（非阻塞）**；未将其提升为 required，也未误写为已验证。
+- 阶段 D 当前焦点转入**关门审计**；GOAL-005 仍为 `active`，本条不构成整体 close-out verdict。
+- 编排响应见 [03-audit A-013](03-audit.md)。
+
+### 2026-07-18 · 阶段 D close-out 关门审计（A-014）
+
+- 对照 [00-meta 成功标准](00-meta.md)、历史 A-001～A-013、决策与执行证据完成整体自审；结果写入 [03-audit A-014](03-audit.md)。
+- **整体 verdict：pass**：6 项成功标准均有证据；历史 required（F-002、F-008、F-010、F-012、F-015、F-017）均已关闭；当前开放 required 为 0。
+- 本轮复验：`python skills/tests/test_skills_orchestrator.py` → **20 tests OK**；`bash -n skills/install.sh` → exit 0；`git diff --check` → 无格式错误（仅行尾转换提示）。
+- 将既有 bash residual 正式登记为 **F-019 · recommended / open / 非阻塞**：仍缺 CI / Unix 环境的 `install.sh` 真实隔离执行，不影响当前 Windows / PowerShell 主路径与关门结论。
+- 关门审计已通过，现**提议**用户确认后将 GOAL-005 改为 `done / 100%` 并同步 `goal-tree.md`；本条尚未执行状态变更。
+
+### 2026-07-18 · 接受 A-014 并正式结项（A-015）
+
+- 用户通过 `/govern` 明确接受 A-014 的整体 `pass`。
+- 将目标四份 Markdown 的 `status` 同步为 `done`，`00-meta.md` 的 `progress` 更新为 `100%`。
+- 高层路线图阶段 A～D 均标记完成；阶段 D 以 A-014 close-out `pass` 作为关门依据。
+- 同步 `docs/goals/goal-tree.md` 的树与状态表为 `done / 100%`。
+- F-019 保留为结项后的 **recommended residual（open / 非阻塞）**；不影响 GOAL-005 结项，后续完成时可追加 finding-closure 记录，无需重开本目标。
+- 正式结项响应见 [03-audit A-015](03-audit.md)。
+
 ## 待办（计划，非已完成）
 
 1. ~~阶段 A～C~~ **已完成 / 并入**
-2. **阶段 D（进行中）**
-   - F-018：安装运行证据 / 一致性自动化加强
-   - 正式压测与关门审计
+2. ~~F-018（PS 隔离安装自动化）~~ **已关闭**
+3. ~~阶段 D 关门审计~~ **已通过（A-014）**
+4. ~~用户确认结项~~ **已完成（A-015）**
+5. **结项后 residual**：F-019 bash/Unix 隔离执行（recommended / 非阻塞）
 
 ## 进度评估
 
-**约 75%**：F-017 双确认已关；阶段 D 已开工（F-018 与关门路径未完成）。
+**100% / done**：6 项成功标准全部达成，历史 required 全部关闭，A-014 close-out `pass` 已获用户接受；F-019 作为 recommended residual 留存。

@@ -1,11 +1,11 @@
 ---
 id: GOAL-005-skills-closed-loop-audit
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.3
+version: 0.1.4
 ---
 
 # 决策记录 · GOAL-005

@@ -178,10 +178,14 @@ Package root:  $PackageRoot
 "@
 }
 
-# Accept GNU-style flags
+# Accept GNU-style flags (avoid @($null) which is a 1-element array)
+$extraArgs = @()
+if ($null -ne $RemainingArgs) {
+    $extraArgs = @($RemainingArgs)
+}
 $i = 0
-while ($i -lt @($RemainingArgs).Count) {
-    $arg = $RemainingArgs[$i]
+while ($i -lt $extraArgs.Count) {
+    $arg = $extraArgs[$i]
     switch -Regex ($arg) {
         '^--claude$' { $Claude = $true; $i++ }
         '^--grok$' { $Grok = $true; $i++ }
@@ -190,10 +194,10 @@ while ($i -lt @($RemainingArgs).Count) {
         '^--with-primitives$' { $WithPrimitives = $true; $i++ }
         '^(--help|-h)$' { $Help = $true; $i++ }
         '^--skills-dir$' {
-            if ($i + 1 -ge $RemainingArgs.Count) {
+            if ($i + 1 -ge $extraArgs.Count) {
                 Write-Err "--skills-dir requires a path argument"
             }
-            $SkillsDir = $RemainingArgs[$i + 1]
+            $SkillsDir = $extraArgs[$i + 1]
             $i += 2
         }
         '^--skills-dir=(.+)$' {

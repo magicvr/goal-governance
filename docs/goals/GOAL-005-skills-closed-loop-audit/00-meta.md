@@ -1,12 +1,12 @@
 ---
 id: GOAL-005-skills-closed-loop-audit
 title: Skills 治理闭环与交叉审计
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.2
-progress: 75%
+version: 0.2.6
+progress: 100%
 ---
 
 # GOAL-005 · Skills 治理闭环与交叉审计
@@ -53,8 +53,8 @@ progress: 75%
 |------|------|------|------|
 | A | 原则与产品语义定稿 | **已完成** | P-002～P-004 + 落盘 + 开放必改门禁；A-002～A-005 |
 | B | 提示词与入口 | **已完成** | A-007 conditional 已响应；F-017 **独立复审确认**（A-009/A-010） |
-| C | 安装与文档同步 | **基本完成**（并入 B） | README v0.5.1 与默认分发一致 |
-| D | 实践验证与关门审计 | **进行中** | **含 F-018**；正式压测 → 关门审计；见 A-010 |
+| C | 安装与文档同步 | **已完成**（并入 B） | README v0.5.1 与默认分发一致 |
+| D | 实践验证与关门审计 | **已完成** | A-014 close-out `pass`；A-015 接受结项；F-019 bash/Unix 隔离执行保留为结项后 recommended residual（非阻塞） |
 
 ## 与 GOAL-003 的关系
 

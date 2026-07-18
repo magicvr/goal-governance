@@ -7,8 +7,12 @@ Run from repo root or skills/: python skills/tests/test_skills_orchestrator.py
 
 from __future__ import annotations
 
+import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -25,6 +29,7 @@ GROK_GOVERN_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "govern" / "SK
 GROK_AUDIT_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "audit" / "SKILL.md"
 INSTALL_SH = SKILLS_ROOT / "install.sh"
 INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
+INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
 
 
@@ -256,6 +261,86 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertIn("SKILL.md", text)
             self.assertRegex(text, r"00-govern-orchestrator")
             self.assertRegex(text, r"05-independent-audit")
+
+    def test_install_ps1_isolated_smoke_script_exists(self) -> None:
+        self.assertTrue(
+            INSTALL_PS1_ISOLATED.is_file(),
+            f"missing F-018 isolated install script: {INSTALL_PS1_ISOLATED}",
+        )
+        text = INSTALL_PS1_ISOLATED.read_text(encoding="utf-8")
+        self.assertIn("install.ps1", text)
+        self.assertIn("audit", text)
+        self.assertIn("govern", text)
+
+    @unittest.skipUnless(sys.platform.startswith("win"), "F-018 PS1 install smoke is Windows-first")
+    def test_install_ps1_isolated_all_produces_govern_and_audit(self) -> None:
+        """Execute install.ps1 -All in a temp project; assert default product surface."""
+        pwsh = shutil.which("powershell") or shutil.which("pwsh")
+        if not pwsh:
+            self.skipTest("PowerShell not found on PATH")
+
+        self.assertTrue(INSTALL_PS1.is_file(), f"missing {INSTALL_PS1}")
+        with tempfile.TemporaryDirectory(prefix="gg-skills-install-") as tmp:
+            target = Path(tmp)
+            skills_dest = target / "skills"
+            cmd = [
+                pwsh,
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                str(INSTALL_PS1),
+                "-All",
+                "-SkillsDir",
+                str(skills_dest),
+            ]
+            proc = subprocess.run(
+                cmd,
+                cwd=str(target),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=180,
+                env={**os.environ, "TERM": "dumb"},
+            )
+            combined = (proc.stdout or "") + "\n" + (proc.stderr or "")
+            self.assertEqual(
+                proc.returncode,
+                0,
+                msg=f"install.ps1 -All failed (code={proc.returncode}):\n{combined}",
+            )
+
+            required = [
+                target / "AGENTS.md",
+                target / ".claude" / "skills" / "govern" / "SKILL.md",
+                target / ".claude" / "skills" / "audit" / "SKILL.md",
+                target / ".grok" / "skills" / "govern" / "SKILL.md",
+                target / ".grok" / "skills" / "audit" / "SKILL.md",
+                target / ".github" / "copilot-instructions.md",
+                target / ".github" / "prompts" / "govern.prompt.md",
+                target / ".github" / "prompts" / "audit.prompt.md",
+                skills_dest / "prompts" / "00-govern-orchestrator.md",
+                skills_dest / "prompts" / "05-independent-audit.md",
+            ]
+            missing = [str(p) for p in required if not p.is_file()]
+            self.assertEqual(missing, [], msg=f"missing install outputs: {missing}")
+
+            # Default install must NOT ship form-fill advanced slashes
+            self.assertFalse(
+                (target / ".github" / "prompts" / "new-goal.prompt.md").is_file(),
+                "new-goal.prompt.md must not install without -WithPrimitives",
+            )
+
+            govern = (target / ".claude" / "skills" / "govern" / "SKILL.md").read_text(
+                encoding="utf-8"
+            )
+            audit = (target / ".claude" / "skills" / "audit" / "SKILL.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("00-govern-orchestrator", govern)
+            self.assertIn("05-independent-audit", audit)
 
 
 def main() -> int:

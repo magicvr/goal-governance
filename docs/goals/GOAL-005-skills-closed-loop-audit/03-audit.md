@@ -1,11 +1,11 @@
 ---
 id: GOAL-005-skills-closed-loop-audit
 doc: audit
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.2
+version: 0.2.7
 ---
 
 # 审计 · GOAL-005
@@ -438,3 +438,267 @@ A-007 已响应。阶段 B 质量结论为 **conditional → required 已关**�
 ### 结论
 
 接受 A-009。F-017 关闭结论升级为「编排响应 + 独立复审双确认」。GOAL-005 **进入阶段 D**；`status` 仍为 `active`。
+
+---
+
+## A-011 · 阶段 D · F-018 PowerShell 隔离安装（2026-07-18）
+
+- **source**：`self`
+- **类型**：`stage` / finding closure
+- **scope**：F-018 · PowerShell 真实隔离安装自动化
+- **verdict**：pass（F-018 PS 范围）
+
+### 成果（有证据）
+
+| 成果 | 证据 |
+|------|------|
+| 隔离安装冒烟脚本 | `skills/tests/test_install_ps1_isolated.ps1`（本机 exit 0） |
+| unittest 真实执行 install.ps1 | `test_install_ps1_isolated_all_produces_govern_and_audit`；全量 **20 tests OK** |
+| 断言默认产品面 | Claude/Grok govern+audit skill；Copilot govern+audit prompt；`00`/`05` 已复制；**无** new-goal 默认安装 |
+| install.ps1 非交互修复 | `RemainingArgs` null-safe 解析（修复 `-File` 调用 NullArray） |
+| README 测试说明 | `skills/README.md` 测试节 |
+
+### Findings 台账
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| F-018 | **已关闭**（PS 主路径） | 真实安装已纳入自动化；内容契约 + 执行冒烟 |
+| residual | recommended | `install.sh` 真实执行仍建议在 bash/CI 环境补跑（非 Windows 阻塞项） |
+
+### 结论
+
+F-018 在阶段 D 的 PowerShell 目标已满足。阶段 D 仍开放：**关门审计**（及可选 bash 安装证据）。不因本条将 GOAL-005 标 `done`。
+
+---
+
+## A-012 · 独立复审 F-018 关闭证据（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`finding-closure`
+- **scope**：A-007 的 F-018 关闭证据（PowerShell 主路径；不含整体关门）
+- **verdict**：pass（本复审范围）
+- **subject_refs**：A-007、A-010、A-011；`skills/tests/test_install_ps1_isolated.ps1`；`skills/tests/test_skills_orchestrator.py`；`skills/install.ps1`；`skills/README.md`
+
+### 范围与区间
+
+仅复核 A-011 对 **F-018「现有测试未覆盖真实安装与 README 语义一致性」** 的关闭声明是否有充分、可重复核对的证据。复审范围以 Windows / PowerShell 主路径为准；不把 `install.sh` 真实执行、阶段 D 关门审计或 GOAL-005 整体结项纳入本次 pass。
+
+### 成果（有证据）
+
+| 检查项 | 结论 | 可核对证据 |
+|--------|------|------------|
+| 真实隔离安装 | **通过** | `test_install_ps1_isolated.ps1` 创建随机临时项目目录，从该目录调用 `install.ps1 -All -SkillsDir <temp>/skills`，不是在当前仓库原地检查已有产物 |
+| 默认产品面断言 | **通过** | 冒烟脚本断言 Claude/Grok 的 govern+audit skills、Copilot govern+audit prompts、项目规则、`00`/`05` 核心提示词均已生成 |
+| advanced 默认排除 | **通过** | 冒烟脚本与 unittest 均断言未使用 `-WithPrimitives` 时不存在 `new-goal.prompt.md` |
+| 入口内容有效性 | **通过** | 安装后的 Claude govern/audit skill 分别包含 `00-govern-orchestrator` / `05-independent-audit` 引用 |
+| 非交互执行缺陷修正 | **通过** | `install.ps1` 对 `RemainingArgs` 先判空再构造数组，消除 `@($null)` 导致的 `NullArray` 失败 |
+| README 语义一致性 guard | **通过** | `test_skills_readme_default_install_documents_govern_and_audit` 核对三宿主默认 `/govern + /audit`、audit 路径及旧「仅 govern」表述不回退 |
+| 本轮复现 | **通过** | 独立执行 `test_install_ps1_isolated.ps1`：exit 0；执行 `test_skills_orchestrator.py`：**20 tests OK**，包含 README guard 与真实 PowerShell 安装测试 |
+
+### 对照 Finding 定义
+
+| F-018 原缺口 | 关闭充分性 |
+|--------------|------------|
+| 自动化未执行真实安装脚本 | **满足**：独立 PS1 冒烟与 unittest 均在临时项目中实际执行 `install.ps1 -All` |
+| 自动化无法发现 README / 默认分发语义漂移 | **满足（当前产品面）**：README 精确 guard 与安装产物断言共同覆盖默认双入口和 advanced opt-in 边界 |
+| `install.sh` 缺少真实运行证据 | **保留为 recommended residual**：当前 Windows 主证据不声称覆盖 bash；不影响 PowerShell 主路径关闭真实性 |
+
+### Findings
+
+| ID | 严重度 | 建议 | 状态 | 说明 |
+|----|--------|------|------|------|
+| F-018 | low | recommended | **已关闭（独立复审确认，PowerShell 主路径）** | A-011 的关闭证据充分且本轮可重复复现 |
+| residual · bash | low | recommended | **开放（非阻塞）** | 可在具备 bash 的 CI / Unix 环境补充 `install.sh` 隔离执行；本次未误写为已验证 |
+
+### 必改项汇总
+
+- **无**（本复审范围内无开放 required finding）。
+
+### 与既有意见的异同
+
+- 与 **A-011** 同向：确认 F-018 的 PowerShell 主路径关闭声明真实。
+- 与 **A-007** 一致：原意见要求补足真实安装与文档语义自动化；当前证据已覆盖 Windows 主路径，且明确保留 bash 边界。
+- **无冲突**，不触发 P-004 用户裁决分支。
+- 当前证据文件处于工作区变更中；本结论针对本轮实际复现的工作区快照，不声称对应某个已提交版本。
+
+### 结论 + 建议给编排器/用户的下一步
+
+确认 **F-018 已关闭（PowerShell 主路径，独立复审确认）**。本范围内无未关闭 required finding；bash 真实执行仅为 recommended residual。建议用 **`/govern`** 响应 A-012、升级 finding 台账，并继续阶段 D 的关门审计；**不要**仅因本条 pass 将 GOAL-005 标为 `done`。
+
+### 声明
+
+本意见不修改 `status` / `progress`；响应、阶段推进与结项由 `/govern` 处理。
+
+---
+
+## A-013 · 编排响应 A-012 + 进入阶段 D 关门审计（2026-07-18）
+
+- **source**：`self`（编排响应，非独立审计）
+- **类型**：`response` + 阶段推进
+- **scope**：响应 A-012；升级 F-018 台账；进入阶段 D 关门审计
+- **verdict**：pass（A-012 响应与 F-018 PowerShell 主路径范围；**非**整体 close-out verdict）
+- **关联**：A-007、A-010、A-011、A-012
+
+### 意见汇总
+
+| 意见 | source | scope | verdict | 关系 |
+|------|--------|-------|---------|------|
+| A-011 | self | F-018 PowerShell 真实隔离安装自动化 | pass | 声明 PS 主路径已关闭 |
+| A-012 | independent | F-018 关闭证据复审（PowerShell 主路径） | **pass** | **确认** A-011；保留 bash 边界 |
+
+### P-004 与门禁检查
+
+- **无冲突**：A-012 与 A-011 同向，不触发冲突裁决。
+- 同 scope 已有 A-011 `self`，不存在「仅有独立审计、尚无自审计」的待决问题。
+- 用户已明确指令：接受 A-012 `pass`、升级 F-018 台账、保留 bash residual，并进入阶段 D 关门审计。
+- 本响应范围内开放 required：**0**。
+
+### Findings 台账（升级）
+
+| ID | 建议 | 状态 | 证据 / 边界 |
+|----|------|------|-------------|
+| F-018 | recommended | **已关闭（独立复审确认，PowerShell 主路径）** | A-011 关闭声明 + A-012 独立复审 `pass`；`test_install_ps1_isolated.ps1` exit 0；本轮 `/govern` 复跑全量 **20 tests OK** |
+| residual · bash 隔离执行 | recommended | **开放（非阻塞）** | 在具备 bash 的 CI / Unix 环境补充 `install.sh` 隔离执行；当前未声称已验证 |
+
+### 阶段推进
+
+- F-018 不再阻塞阶段 D 关门路径。
+- bash residual 保持 **recommended**，不升级为 required，不阻塞关门审计。
+- 阶段 D 当前焦点转入 **close-out 关门审计**：下一条审计须对照全部成功标准、历史 required 关闭状态、实践证据与 residual 边界，形成整体 verdict。
+- GOAL-005 继续保持 `status: active`、`progress: 85%`；本条不将目标标为 `done`。
+
+### 结论
+
+接受 A-012。F-018 台账升级为「**已关闭（独立复审确认，PowerShell 主路径）**」；bash 隔离执行保留为 recommended residual。阶段 D 进入关门审计，整体结项须等待单独的 close-out 结论与后续用户确认。
+
+---
+
+## A-014 · 阶段 D close-out 关门审计（2026-07-18）
+
+- **source**：`self`
+- **类型**：`close-out`
+- **scope**：GOAL-005 整体目标；阶段 A～D；全部成功标准；历史 required finding；实践记录与 residual
+- **verdict**：**pass**
+- **subject_refs**：`00-meta.md`、`01-decision.md`、`02-execution.md`、A-001～A-013；`AGENTS.md`；`docs/architecture/principles.md`；`skills/prompts/00`～`05`；三宿主入口；安装脚本、README 与测试
+
+### 范围与区间
+
+本次审计核对 GOAL-005 从原则定稿、提示词与交叉入口、安装和文档同步，到独立审计响应、整改复审和阶段 D 安装执行证据的完整闭环。审计对象为当前工作区快照；本条只给出关门结论与状态变更建议，不直接修改 `status` / `progress`。
+
+### 成果（有证据）
+
+| 交付面 | 结论 | 主要证据 |
+|--------|------|----------|
+| 治理原则与规则 | 已达成 | `docs/architecture/principles.md` P-002～P-004；`AGENTS.md` §6b；F-008/F-010 由 A-004/A-005 独立复审确认关闭 |
+| `/govern` 编排闭环 | 已达成 | `skills/prompts/00-govern-orchestrator.md`：意见台账、S4、P-004、开放必改门禁、close-out 检查；Claude/Grok/Copilot govern wrapper |
+| `04` 结构化审计 | 已达成 | `skills/prompts/04-write-audit.md`：source、scope、verdict、findings、required/recommended、stage/close-out/response 模式 |
+| 独立 `/audit` 路径 | 已达成 | `skills/prompts/05-independent-audit.md`；三宿主 audit wrapper 均声明 `source: independent` 且默认不改状态 |
+| 安装与文档产品面 | 已达成 | `skills/README.md` 默认 `/govern + /audit`；`install.ps1` / `install.sh` 默认双入口、advanced opt-in；F-017 由 A-009/A-010 独立复审确认关闭 |
+| 实践与运行证据 | 已达成 | A-002→D-008/A-003、A-007→D-009/A-008、A-012→A-013；F-018 PowerShell 隔离安装由 A-011/A-012 双确认 |
+
+### 对照成功标准
+
+| # | 成功标准 | 状态 | 证据 |
+|---|----------|------|------|
+| 1 | 原则/AGENTS 写明交叉审计、全部开放意见响应、冲突裁决与自审询问 | **已达成** | principles P-002～P-004；AGENTS §6b；A-003～A-005 |
+| 2 | `00` / `/govern` 实现裁决点与意见汇总/响应 | **已达成** | `00-govern-orchestrator.md` §1b、§3、S4、关门检查；宿主 govern wrapper |
+| 3 | `04` 支持最小审计意见结构和 source 区分 | **已达成** | `04-write-audit.md` v0.3.0；A-011、A-013、A-014 实际使用 |
+| 4 | 独立交叉审计路径可用且默认不改状态 | **已达成** | `05-independent-audit.md` + Claude/Grok/Copilot audit wrapper；A-002、A-004、A-007、A-009、A-012 |
+| 5 | 安装与 README/prompts 和产品面一致 | **已达成** | README guard；三宿主默认双入口；A-009；PowerShell 隔离安装测试 |
+| 6 | 至少一轮书面实践覆盖独立审计→编排响应或冲突裁决 | **已达成（超额）** | A-002→D-008/A-003；A-007→D-009/A-008；A-012→A-013 |
+
+### 历史 required findings 关闭核对
+
+| Finding | 原级别 | 最终状态 | 关闭证据 |
+|---------|--------|----------|----------|
+| F-002 | required | **已关闭** | D-008 + A-003（A-001/A-002 冲突裁决） |
+| F-008 | required | **已关闭（独立复审确认）** | A-003 修正；A-004/A-005 pass |
+| F-010 | required | **已关闭（独立复审确认）** | `.github/copilot-instructions.md` 与安装源同步；A-004/A-005 |
+| F-012 | required | **已关闭** | 随 F-008 的无 architecture 门禁修正；A-003 |
+| F-015 | required | **已关闭（提示词侧）** | `00`/`04`/`05` 完整流程；A-006；A-010 台账确认 |
+| F-017 | required | **已关闭（独立复审确认）** | README v0.5.1 + guard 测试；A-008～A-010 |
+
+- 当前开放 required finding：**0**。
+- 历史 verdict 冲突均已有用户裁决：A-001 vs A-002 → D-008；A-006 vs A-007 → D-009。
+
+### 本轮复验
+
+| 检查 | 结果 | 说明 |
+|------|------|------|
+| `python skills/tests/test_skills_orchestrator.py` | **20 tests OK** | 包含临时目录真实执行 `install.ps1 -All`、默认双入口、advanced 排除和 README guard |
+| `bash -n skills/install.sh` | **exit 0** | Bash 语法检查通过；不等于 Unix/CI 真实隔离安装 |
+| `git diff --check` | **通过** | 无空白/格式错误；仅 Git 行尾转换提示 |
+| 规则副本一致性 | **通过（按宿主）** | 根 `AGENTS.md` 与 Claude 安装源哈希一致；Copilot 安装源与项目 `.github/copilot-instructions.md` 哈希一致 |
+
+### Findings
+
+#### F-019 · Bash / Unix 真实隔离安装证据
+
+- **严重度**：low
+- **建议**：recommended
+- **状态**：open（非阻塞 residual）
+- **描述**：`install.sh` 已通过语法检查，内容/契约测试覆盖默认入口，但本轮未在 CI / Unix 环境执行与 PowerShell 对等的临时目录真实安装。该缺口不影响已验证的 Windows / PowerShell 主路径，也不是现有成功标准中的 required 条件。
+- **建议后续**：在 Linux/macOS CI 增加 `install.sh --all` 临时目录冒烟；完成后可追加 finding-closure 审计，但无需因此重开 GOAL-005。
+
+### 必改项汇总
+
+- **无**。全部历史 required findings 已关闭；F-019 为 recommended residual。
+
+### 关门判定
+
+- 成功标准：**6 / 6 已达成**。
+- 开放 required：**0**。
+- 阶段/关门向审计：**已具备**（本条 self close-out；另有多轮 independent finding/stage 复审）。
+- residual：F-019 为 low / recommended / 非阻塞，边界已明确且未误写为已完成。
+- **整体 verdict：pass**。
+
+### 结论 + 状态建议
+
+GOAL-005 已满足关门条件。建议用户确认后由 `/govern`：
+
+1. 将 `00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md` 的 `status` 更新为 `done`；
+2. 将 `00-meta.md` 的 `progress` 更新为 `100%`，路线图阶段 D 标为已完成；
+3. 同步 `docs/goals/goal-tree.md` 的树与状态表；
+4. 在执行记录追加结项事实，并保留 F-019 为结项后的 recommended residual。
+
+本条**仅提议**上述状态变更，尚未执行；等待用户明确确认。
+
+---
+
+## A-015 · 编排响应 A-014 + 正式结项（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response` + close-out acceptance
+- **scope**：接受 A-014 整体 `pass`；执行 GOAL-005 状态关门
+- **verdict**：pass（结项响应）
+- **关联**：A-014；F-019
+
+### 用户确认
+
+用户通过 `/govern` 明确接受 A-014 的 `pass`，并授权：
+
+1. 将 GOAL-005 标为 `done / 100%`；
+2. 同步四份目标 Markdown 的 `status`；
+3. 将阶段 D 路线图标为完成并同步 `goal-tree.md`；
+4. 保留 F-019 为结项后的 recommended residual。
+
+### 状态变更
+
+| 对象 | 变更后状态 |
+|------|------------|
+| `00-meta.md` | `status: done`；`progress: 100%`；阶段 A～D 全部完成 |
+| `01-decision.md` | `status: done` |
+| `02-execution.md` | `status: done`；记录 A-015 结项事实 |
+| `03-audit.md` | `status: done`；本条为最终编排响应 |
+| `docs/goals/goal-tree.md` | 树与状态表同步为 `done / 100%` |
+
+### Findings 最终状态
+
+- 历史 required：**全部已关闭**。
+- F-018：**已关闭（独立复审确认，PowerShell 主路径）**。
+- F-019：**open / recommended / 非阻塞 residual**；保留在结项台账中，不影响 `done`。后续若补齐 Linux/macOS CI 或 Unix 隔离安装，可追加 finding-closure 记录，目标无需重开。
+
+### 结论
+
+A-014 的 close-out `pass` 已获用户接受并执行状态关门。GOAL-005 正式结项：`done / 100%`。

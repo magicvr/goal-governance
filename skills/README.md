@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.5.1
+version: 0.5.2
 ---
 
 # Skills
@@ -183,8 +183,16 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 ## 测试
 
 ```bash
+# 结构契约 +（Windows）PowerShell 隔离安装冒烟（F-018）
 python skills/tests/test_skills_orchestrator.py
 ```
+
+```powershell
+# 仅跑隔离安装冒烟（不经过 unittest）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\skills\tests\test_install_ps1_isolated.ps1
+```
+
+Windows 上 `test_install_ps1_isolated_all_produces_govern_and_audit` 会在临时目录执行 `install.ps1 -All`，断言默认产出 `/govern`+`/audit` 且不含填表 advanced slash。`install.sh` 的真实执行仍依赖 bash 环境（本仓库 Windows 主证据以 PS1 为准）。
 
 ## 尚未包含
 
