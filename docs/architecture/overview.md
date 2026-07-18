@@ -54,11 +54,12 @@ version: 0.1.1
 ## 当前阶段（v0）
 
 - 文档体系规则与 GOAL-002/003/004 已建立；GOAL-003 Skills 以**单一编排主入口**（`00-govern-orchestrator` / `/govern`）+ 文档原语交付。
-- Web 仅有模块路由与页面骨架，**未**连接文件系统/数据库读写目标。
+- GOAL-004 阶段 A 已完成：领域模型与存储约定见 [domain-model-and-storage.md](../goals/GOAL-004-core-data-model/attachments/domain-model-and-storage.md)。
+- Web 仅有模块路由与页面骨架，**未**连接文件系统读写目标（阶段 B 起实现）。
 
 ## 演进方向（未实现，仅规划）
 
-1. Web 读取/展示 `docs/goals`（或未来结构化存储）。
+1. Web 读取/展示 `docs/goals`（GOAL-004 B–D；模型见上附设计）。
 2. 校验工具：编号、parent、goal-tree 一致性。
 3. Skills 编排质量与多宿主安装体验持续打磨。
 

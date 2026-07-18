@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 决策记录 · GOAL-004
@@ -62,6 +62,107 @@ version: 0.1.0
 
 **待确认（阶段 A）**：
 
-- 实体边界：Goal / Decision / Execution / Audit 如何映射到五件套文件
-- 列表是否必须读 `goal-tree.md` 或可扫描目录 + meta
-- 写路径是否同步更新 `goal-tree.md`（与 AGENTS 规则对齐方式）
+- ~~实体边界：Goal / Decision / Execution / Audit 如何映射到五件套文件~~ → 见 **D-004**
+- ~~列表是否必须读 `goal-tree.md` 或可扫描目录 + meta~~ → 见 **D-005**
+- ~~写路径是否同步更新 `goal-tree.md`~~ → 见 **D-006**
+
+## D-004 · 领域实体与五件套映射
+
+**日期**：2026-07-18  
+**状态**：accepted
+
+**决定**：
+
+采用「Goal 为聚合根 + 五件套文档为组成部分」的领域模型：
+
+| 实体 | 磁盘映射 |
+|------|----------|
+| Goal / GoalMeta | `docs/goals/<id>/` + `00-meta.md` |
+| DecisionDoc（含可选 DecisionEntry[]） | `01-decision.md` |
+| ExecutionDoc（含可选时间线条目） | `02-execution.md` |
+| AuditDoc | `03-audit.md` |
+| AttachmentRef[] | `attachments/*` |
+| GoalTreeIndex | 运行时由扫描（主）+ `goal-tree.md`（辅）构建 |
+
+正文 Markdown 始终是真相；结构化 entry 为**尽力解析**，失败时 UI 回退全文渲染。完整说明见 [attachments/domain-model-and-storage.md](attachments/domain-model-and-storage.md)。
+
+**为什么**：
+
+- 与现有协作习惯一致，避免引入第二套数据形状。
+- 列表与校验需要结构化字段（id/status/parent），详情需要全文，分层清晰。
+
+**未选方案**：
+
+| 方案 | 未选原因 |
+|------|----------|
+| 仅强类型 entry、丢弃非结构化正文 | 破坏人手写文档自由度 |
+| 把 decision/execution/audit 拆成多文件多实体表 | 超出阶段范围，与五件套约定冲突 |
+
+**影响**：阶段 B 服务层模型与本映射对齐；阶段 C 写回以文件为单位。
+
+## D-005 · 列表运行时权威为目录扫描，goal-tree 为投影
+
+**日期**：2026-07-18  
+**状态**：accepted
+
+**决定**：
+
+- **List / 树构建 / CRUD 读**：以扫描 `docs/goals/GOAL-*/00-meta.md` 为运行时权威。
+- **`goal-tree.md`**：辅助总览与漂移检测；与扫描不一致时 UI 以 meta 为准并标记 `tree_drift`。
+- **写后**：Create/Update 凡触及 id/title/status/progress/parent 时，**必须**同步更新 goal-tree 的树与表（见 D-006）。
+
+**为什么**：
+
+- tree 可能短暂过期；以磁盘 meta 为准避免「文件有目标但列表空白」。
+- 仍落实 AGENTS「变更必更 tree」：写路径强制同步，而不是读路径盲信 tree。
+
+**未选方案**：
+
+| 方案 | 未选原因 |
+|------|----------|
+| 只读 goal-tree.md 做列表 | 解析脆弱且可能与 meta 漂移 |
+| 双源对等合并写回 | 复杂度高，阶段不需要 |
+
+## D-006 · 写路径校验与 goal-tree 同步边界
+
+**日期**：2026-07-18  
+**状态**：accepted
+
+**决定**：
+
+1. Goal CRUD：List/Get（B）、Create/Update meta 与 section（C）；**不做**物理删除（取消用 `cancelled`）。
+2. 写失败规则：id≠文件夹名、非法 status、parent 不存在或成环 → error。
+3. Create 一次建齐五件套 + `attachments/`；编号 = 当前最大 GOAL 号 + 1。
+4. 改 status/progress/parent/title 或 Create 后必须更新 `goal-tree.md`（树 + 表 + updated）；同步失败不得静默忽略。
+5. 本阶段无乐观锁；文档注明并发覆盖风险。
+
+细节表见设计说明 §6。
+
+**为什么**：把 AGENTS 规则变成服务层可执行契约，避免 Web 写出非法树。
+
+**未选方案**：
+
+| 方案 | 未选原因 |
+|------|----------|
+| 写业务文件不同步 tree，交给人补 | 与 AGENTS 强制项冲突 |
+| 本阶段上物理删除 | 不可逆风险高，cancelled 足够 |
+
+## D-007 · 阶段 B 模块落点与解析依赖方向
+
+**日期**：2026-07-18  
+**状态**：accepted
+
+**决定**：
+
+- 服务代码落在 `web/services/`（`models` / `parse_md` / `goals_repo`），由 `main.py` 逐步接入。
+- Frontmatter 解析优先采用轻量库（如 `python-frontmatter`）或等价自研；**实现阶段 B 时再写入 requirements**，阶段 A 不锁死包版本。
+- 阶段 B 可仅内部 service + SSR，不强制先暴露 JSON API。
+
+**为什么**：贴合现有 `web/` FastAPI 布局；避免阶段 A 过早钉死依赖版本。
+
+**未选方案**：
+
+| 方案 | 未选原因 |
+|------|----------|
+| 新建独立 Python 包于仓库根 | 当前规模不必要 |
+| 阶段 A 即改 requirements 并装库 | 无运行代码时无处 |

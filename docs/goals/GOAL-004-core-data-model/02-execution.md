@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 执行记录 · GOAL-004
@@ -20,11 +20,20 @@ version: 0.1.0
 - 同步更新 [goal-tree.md](../goal-tree.md)；轻量更新 GOAL-001 路线图阶段 3 关联。
 - 进度 **0%**：仅完成立项与路线图。
 
+### 2026-07-18 · 阶段 A：领域模型与存储约定
+
+- 产出设计说明：[attachments/domain-model-and-storage.md](attachments/domain-model-and-storage.md)（实体、五件套映射、列表数据源、写路径校验与 goal-tree 同步、服务模块建议、阶段 B 检查清单）。
+- 记录决策 **D-004～D-007**（见 [01-decision.md](01-decision.md)）；关闭 D-003 中阶段 A 待确认三项。
+- 勾选成功标准「完成 Goal 及关联实体的数据模型设计」；路线图阶段 A → 已完成。
+- 进度调整为 **25%**（四阶段中 A 完成；B/C/D 与 CRUD/Web 未实现）。
+- 同步 [goal-tree.md](../goal-tree.md)。
+
 ## 待办
 
-1. 阶段 A：产出领域模型与存储约定设计说明（可放 `attachments/` 或 architecture）
-2. 设计评审通过后，再按阶段 B/C/D 创建具体子目标或直接执行小步交付
+1. 阶段 B：在 `web/services/` 实现只读 `list_goals` / `get_goal`（扫描 meta + 读五件套），加夹具单测
+2. 阶段 C：Create/Update 写回 + goal-tree 强制同步
+3. 阶段 D：首页/详情接真实数据
 
 ## 进度评估
 
-**约 0%**：已立项并写清路线图与边界；模型设计与代码均未开始。
+**约 25%**：阶段 A 设计与决策已落地；读取路径与代码尚未开始。
