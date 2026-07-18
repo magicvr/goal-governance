@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.1
+version: 0.1.2
 ---
 
 # 执行记录 · GOAL-005
@@ -33,6 +33,12 @@ version: 0.1.1
 - 安装源同步：`skills/install/claude/AGENTS.md`、`skills/install/copilot/copilot-instructions.md`。
 - [docs/README.md](../../README.md) 核心规则增加第 8 条指向 P-002～P-004。
 - **未改** `skills/prompts/00`、`04` 与 `/audit` 入口（阶段 B）。
+
+### 2026-07-18 · 补规则 · 审计意见落盘
+
+- 在 [principles.md](../../architecture/principles.md) **P-003** 增加「落盘规则」表（权威 `03-audit.md`、共用 A-00N、长文 attachments + 索引节、禁止仅聊天等）。
+- AGENTS / template / install 升 **v0.4.1**：§5 的 `03-audit` 说明、§6b 落盘表、硬约束「未落盘不作为放行依据」。
+- `docs/README.md` 核心规则第 8 条补充落盘一句。
 
 ## 待办（计划，非已完成）
 

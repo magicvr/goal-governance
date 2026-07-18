@@ -46,7 +46,7 @@ docs/
    - `03-audit.md` — 审计/复盘
    - `attachments/` — 附件（可为空，保留目录）
 7. **可执行性与路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。
-8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识；独立审计出意见、编排器响应全部意见；「是否自审」与意见冲突由用户裁决（编排器给建议）。详见 [architecture/principles.md](architecture/principles.md)。
+8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识；独立审计出意见、编排器响应全部意见；「是否自审」与意见冲突由用户裁决（编排器给建议）。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 
 ## Frontmatter 约定
 
