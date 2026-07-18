@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.2.0
+version: 0.4.0
 ---
 
 # 执行记录 · GOAL-006
@@ -33,13 +33,40 @@ version: 0.2.0
 | `02-execution.md` | `B9BAB71636E3F3AF49192430DC4DE8A62859481B41D716D08F4997D320078D4F` | `B9BAB71636E3F3AF49192430DC4DE8A62859481B41D716D08F4997D320078D4F` |
 | `03-audit.md` | `E5FB3681F0ED9C332E6EF3C2C486E150718C842352E7D2831823172C9E52F2BE` | `E5FB3681F0ED9C332E6EF3C2C486E150718C842352E7D2831823172C9E52F2BE` |
 
-- **进度结论**：成功标准 1、2 已有路径与测试证据；尚未宣称独立启用说明、空 Git 复制、版本/变更范围记录或阶段审计完成。
+- **进度结论（截至立项时）**：成功标准 1、2 已有路径与测试证据；当时尚未宣称独立启用说明、空 Git 复制、版本/变更范围记录或阶段审计完成。
+
+### 2026-07-19 · 核心包独立启用与空 Git 验证
+
+- **事实**：新增 [核心包独立启用说明](../../standalone-bootstrap.md)，并从 [docs/README.md](../../README.md) 建立入口；说明明确复制来源、Root 初始化、`goal-tree.md`、边界和核对清单。
+- **事实**：记录决策 [D-002](../01-decision.md#d-002--将独立启用说明与验证放在核心文档层)，确定核心文档层负责说明与验证，`skills/install.*` 不负责 Root 初始化。
+- **验证来源**：`C:/Users/magicvr/Documents/Code/goal-governance/AGENTS.md`、`docs/README.md`、`docs/architecture/`、`docs/templates/`；未复制 `skills/` 或 `web/`。
+- **验证生成路径**：`docs/tests/test_standalone_bootstrap.py` 在 `<system-temp>/gg-core-bootstrap-*/` 创建空 Git 仓库，并生成 `docs/goals/goal-tree.md` 与 `GOAL-001-main-vision/` 五件套；详细索引见 [附件](attachments/standalone-bootstrap-2026-07-19.md)。
+- **验证结果**：运行 `python -m unittest discover -s docs/tests -p "test_standalone_bootstrap.py" -v`，2 项通过；Git 工作树、Root `parent: null`、ID/目录一致性、五件套、`attachments/` 与 tree 状态表均通过核对。
+- **边界**：本次只证明核心文档包可独立初始化 Root，不代表 Skills 安装、Web 发布或阶段 5 已完成。
+
+- **进度结论**：成功标准 1～3 已有路径与可复现证据；版本/变更范围记录、canonical → Skills 镜像同步的阶段性记录和阶段审计仍未完成。
+
+### 2026-07-19 · 版本、变更范围与镜像同步核对
+
+- **事实**：将核心可复制包快照版本定为 `0.4.0`，由 [docs/README.md](../../README.md) 的入口版本承载；该版本是当前未提交工作树快照，不是 release 声明。
+- **变更范围**：本轮只涉及核心入口、独立启用说明、独立验证测试、GOAL-006 验收附件及目标台账；`docs/templates/goal-folder/` 和 `skills/templates/goal-folder/` 四个模板文件均无内容变更。
+- **同步事实**：依据 D-003，canonical 未变更时不做覆盖式复制；在 2026-07-19 对 canonical → Skills 镜像运行字节级核验，四个文件哈希逐一相等，完整台账见 [docs/README.md](../../README.md#可复制包版本与变更范围)。
+- **验证结果**：运行 `python -m unittest skills/tests/test_skills_orchestrator.py -v`，21 项通过；`git diff --name-status HEAD -- docs/templates skills/templates` 为空，确认本轮没有模板范围外的隐性修改。
+- **边界（截至本条记录时）**：本记录证明版本/范围/镜像事实已可核对；当时尚未完成阶段审计，也未放行阶段 5。
+
+- **进度结论**：成功标准 1～4 已有路径、版本台账和可复现验证；阶段审计及 required finding 结论仍未完成。
+
+### 2026-07-19 · 阶段 4 self 审计（A-001）
+
+- **事实**：按用户指令在 `03-audit.md` 追加 A-001（`source: self`、`scope: stage`、`verdict: pass`），核对四类交付、独立空 Git、版本/变更范围和 canonical → Skills 镜像证据。
+- **审计结果**：本范围无开放 required finding；F-001 为 low / recommended / open，记录未提交快照尚无 release revision 的 residual。
+- **状态边界**：A-001 是阶段范围审计，不直接修改 `status` / `progress`；GOAL-006 仍为 `active / 80%`，阶段 5 未放行。
+- **下一步（计划）**：等待用户确认正式 close-out；如需交叉复核，另用 `/audit`，不在本入口冒充 independent。
 
 ## 下一步
 
-1. 编写独立启用说明并执行空 Git 仓复制验证。
-2. 记录版本/镜像同步与验证结果，再进行阶段审计。
+1. 用户确认正式 close-out；如需更强独立性，另用 `/audit` 复核 A-001。
 
 ## 进度评估
 
-**40%**：五项成功标准中前两项已完成入口/模板核对并留有可复现证据；独立复制、版本/变更范围记录和阶段审计仍未完成。
+**80%**：五项成功标准均已由 A-001 阶段 self 审计核对通过；progress 保留 80% 是因为正式 close-out 与状态变更仍待用户确认。

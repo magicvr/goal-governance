@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.2.0
+version: 0.4.0
 ---
 
 # docs/ · 文档体系
@@ -16,6 +16,8 @@ version: 0.2.0
 ```text
 docs/
 ├── README.md                 # 本文件：文档架构与使用规范
+├── standalone-bootstrap.md   # 核心包独立启用与空 Git 验证
+├── tests/                    # 核心文档层的可重复验证
 ├── goals/                    # 目标（扁平存放）
 │   ├── goal-tree.md          # 树状结构与进展总览（必维护）
 │   ├── GOAL-001-main-vision/
@@ -51,6 +53,7 @@ docs/
 7. **可执行性与路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识；独立审计出意见、编排器响应全部意见；「是否自审」与意见冲突由用户裁决（编排器给建议）。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **核心模板与分发镜像**：规范模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 是供安装脚本和离线复制使用的同步镜像。新目标实例仍写入 `docs/goals/`，不把模板目录当作目标状态。
+10. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal。
 
 ## Frontmatter 约定
 
@@ -75,6 +78,30 @@ version: 0.1.0
 3. 写入五件套，并设置正确的 `parent`。
 4. 更新 `goal-tree.md` 的树与表格。
 5. 如影响架构，同步更新 `architecture/`。
+
+## 核心包独立启用
+
+需要在空 Git 仓库中只使用核心方法论与模板时，按 [核心包独立启用说明](standalone-bootstrap.md) 操作。该说明明确复制来源、生成路径和核对结果；仓库内的可重复验证位于 `docs/tests/test_standalone_bootstrap.py`。
+
+## 可复制包版本与变更范围
+
+- **核心包版本**：`0.4.0`，与本入口文档的 `version` 一致。
+- **快照日期**：2026-07-19。
+- **快照性质**：当前工作树快照，尚未声明为 release 或已提交版本；后续语义变更应递增本入口版本并刷新本台账。
+- **本轮变更范围**：新增 `standalone-bootstrap.md`、`tests/test_standalone_bootstrap.py` 与 GOAL-006 验收附件；更新本入口及 GOAL-006 的决策、执行、进度和目标树记录；`docs/templates/goal-folder/` 与 `skills/templates/goal-folder/` 的模板内容未改动。
+
+### canonical → Skills 同步台账
+
+`docs/templates/goal-folder/` 仍是唯一上游。本轮没有 canonical 内容变更，因此没有执行覆盖式复制；已在 2026-07-19 运行字节级一致性核验，确认分发镜像保持同步：
+
+| 文件 | canonical SHA-256 | Skills mirror SHA-256 |
+|------|------------------|----------------------|
+| `00-meta.md` | `876375F56EE57F15DAEA3A67C43EDFAAF651B4BB1CF16DB24376FAEC3424AB43` | `876375F56EE57F15DAEA3A67C43EDFAAF651B4BB1CF16DB24376FAEC3424AB43` |
+| `01-decision.md` | `C4A35BA90099026154072D41D0385066F160B37C08D985E08058E45C617FED9B` | `C4A35BA90099026154072D41D0385066F160B37C08D985E08058E45C617FED9B` |
+| `02-execution.md` | `B9BAB71636E3F3AF49192430DC4DE8A62859481B41D716D08F4997D320078D4F` | `B9BAB71636E3F3AF49192430DC4DE8A62859481B41D716D08F4997D320078D4F` |
+| `03-audit.md` | `E5FB3681F0ED9C332E6EF3C2C486E150718C842352E7D2831823172C9E52F2BE` | `E5FB3681F0ED9C332E6EF3C2C486E150718C842352E7D2831823172C9E52F2BE` |
+
+核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（21 项通过，包含模板镜像断言）；当前工作树的 `git diff --name-status HEAD -- docs/templates skills/templates` 为空，作为“模板未变更、镜像已核对”的范围证据。
 
 ## 三层交付关系
 

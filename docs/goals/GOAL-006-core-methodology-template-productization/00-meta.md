@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.2.0
-progress: 40%
+version: 0.5.0
+progress: 80%
 ---
 
 # GOAL-006 · 核心方法论、文档协议与 canonical 模板产品化
@@ -38,16 +38,16 @@ progress: 40%
 
 - [x] 核心文档入口可定位目标存储、五件套、路线图和审计闭环，且入口路径可核对。
 - [x] `docs/templates/goal-folder/` 保持完整五件套和 `attachments/` 起点，并可脱离 Skills/Web 作为模板使用。
-- [ ] 核心文档层包含独立启用说明；空 Git 仓复制场景可生成 `docs/goals/goal-tree.md` 与合规 Root Goal，并留有来源、生成路径和核对结果。
-- [ ] 可复制包版本/变更范围、canonical → Skills 模板镜像同步及其验证结果均有可核对记录。
-- [ ] 阶段审计确认无开放 required finding；未在阶段 4 完成前放行阶段 5。
+- [x] 核心文档层包含独立启用说明；空 Git 仓复制场景可生成 `docs/goals/goal-tree.md` 与合规 Root Goal，并留有来源、生成路径和核对结果。
+- [x] 可复制包版本/变更范围、canonical → Skills 模板镜像同步及其验证结果均有可核对记录。
+- [x] 阶段审计确认无开放 required finding；未在阶段 4 完成前放行阶段 5。
 
 ## 工作顺序
 
-1. 核对核心入口与 canonical 模板的现状，明确需要补充的内容。
-2. 编写或修正独立启用说明，并执行空 Git 仓复制验证。
-3. 记录版本与镜像同步事实，运行相关验证。
-4. 对成功标准和证据做阶段审计；满足关门条件后再讨论阶段 5。
+1. [x] 核对核心入口与 canonical 模板的现状，明确需要补充的内容。
+2. [x] 编写或修正独立启用说明，并执行空 Git 仓复制验证。
+3. [x] 记录版本与镜像同步事实，运行相关验证。
+4. [x] 对成功标准和证据做阶段审计（A-001 pass）；满足关门条件后再讨论阶段 5。
 
 ## 父目标
 

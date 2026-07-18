@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.1.0
+version: 0.3.0
 ---
 
 # 决策记录 · GOAL-006
@@ -26,3 +26,39 @@ version: 0.1.0
 
 - **在本目标并入 Skills 发布或 Web 写入**：这些属于 D-008 明确留给阶段 5、阶段 6 或阶段 7 的工作。
 - **只创建占位目标、不写成功标准与验收边界**：会重新引入 A-002 / F-003 已关闭的范围歧义。
+
+## D-002 · 将独立启用说明与验证放在核心文档层
+
+**日期**：2026-07-19
+**状态**：accepted
+
+**决定**：新增 `docs/standalone-bootstrap.md`，由 `docs/README.md` 作为入口链接；新增 `docs/tests/test_standalone_bootstrap.py`，在临时空 Git 仓库中复制 `AGENTS.md`、`docs/README.md`、`docs/architecture/` 与 `docs/templates/`，再生成并核对一个 Root Goal。保持 `skills/install.*` 不负责核心 Root 初始化。
+
+**为什么**：
+
+- D-008 将独立启用说明的 canonical 所有者明确为核心文档层，并要求证明核心包脱离 Skills/Web 可用。
+- 把复制来源、生成路径和核对清单写入 `docs/`，能让人类协作者在没有 AI 宿主时复现同一边界。
+- 把场景测试放在 `docs/tests/`，可验证 `git init`、Root 五件套、`parent: null` 和 goal-tree 一致性，同时不把 Skills 安装测试冒充核心产品证据。
+
+**未选方案**：
+
+- **扩展 `skills/install.*` 增加 Root 初始化**：会把核心文档所有权和 Skills 分发职责混在一起，也超出阶段 4 的独立核心包边界。
+- **只在 `skills/README.md` 写启用步骤**：安装包说明不能作为核心文档层的 canonical 入口。
+
+## D-003 · 以核心入口版本作为可复制包快照
+
+**日期**：2026-07-19
+**状态**：accepted
+
+**决定**：将 `docs/README.md` 的 `version: 0.4.0` 作为本轮核心可复制包快照版本，并在该入口记录变更范围与 canonical → Skills 镜像核验台账。由于 `docs/templates/goal-folder/` 本轮没有内容变更，采用“无覆盖复制 + 字节级核验”的同步事实，不伪造一次模板改写；当前快照明确标为未提交工作树，不作为 release 声明。
+
+**为什么**：
+
+- D-008 要求版本/变更范围由核心入口持有；沿用入口版本能避免再造一个与文档版本脱节的包号。
+- 明确“模板未变更但镜像已核对”比无事实地写“已同步”更准确，也保留了 canonical 单向所有权。
+- 记录工作树快照性质，避免把未提交的阶段性证据误解为已发布版本。
+
+**未选方案**：
+
+- **新增独立 package manifest 或 release tag**：当前阶段只需可核对的核心入口台账，发布标识留待后续版本化工作。
+- **强制覆盖复制模板以制造同步差异**：canonical 未变更时没有必要改写镜像，且会制造无意义的 metadata churn。
