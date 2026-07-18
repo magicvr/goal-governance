@@ -4,12 +4,15 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
+role: primitive
 ---
 
-# 02 · 记录决策
+# 02 · 记录决策（原语 / primitive）
 
 ## 说明
+
+**角色**：文档原语，供 [00-govern-orchestrator.md](00-govern-orchestrator.md) 调用；也可高级直调。默认用户路径请用编排器。
 
 解决「做了取舍却没写清楚、或写了一堆空话」的问题。  
 引导 AI 在目标的 `01-decision.md` 中追加结构化决策条目：决定了什么、为什么、未选方案是什么。

@@ -33,7 +33,7 @@ version: 0.1.0
 | 阶段 | 主题 | 状态 | 关联 |
 |------|------|------|------|
 | 阶段 1 | 项目初始化 | 已完成 | [GOAL-002-project-bootstrap](../GOAL-002-project-bootstrap/00-meta.md) |
-| 阶段 2 | Skills 完善与实践验证 | 已完成 | [GOAL-003-skills-practice](../GOAL-003-skills-practice/00-meta.md) |
+| 阶段 2 | Skills 完善与实践验证 | 已完成（A-004 编排主路径关门） | [GOAL-003-skills-practice](../GOAL-003-skills-practice/00-meta.md) |
 | 阶段 3 | 核心数据模型与 Goal 基础管理 | 进行中 | [GOAL-004-core-data-model](../GOAL-004-core-data-model/00-meta.md) |
 | 阶段 4 | Web 与文档体系联动 | 未开始 | 待拆分子目标 |
 | 阶段 5 | 高级能力与打磨（漂移检测、AI 辅助等） | 未开始 | 待拆分子目标 |

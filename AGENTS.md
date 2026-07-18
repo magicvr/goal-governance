@@ -87,7 +87,8 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 8. Web 与文档边界
 
-- 应用代码只在 `web/`。
+- **本仓库约定**：应用代码在 `web/`（双交付中的 Web 应用；**不是** Skills 对所有项目的通用规则）。
+- 可复用 Skills 中的布局说明见 `skills/AGENTS.template.md` 第 8 节：普遍形态代码可在仓库根；子目录由目标项目自定。
 - 不要把目标正文写进模板里当长期存储；长期记录回写 `docs/goals/`。
 - 当前 Web 为骨架（FastAPI + Jinja2 + Tailwind + HTMX），扩展时先更新 `docs/architecture/` 再改代码。
 
@@ -100,10 +101,19 @@ docs/goals/GOAL-NNN-short-slug/
 
 改规则或目标模型时，评估是否两边都需要同步说明。
 
+## 9b. Skills 主入口
+
+- **默认路径**：`skills/prompts/00-govern-orchestrator.md`（Copilot：`/govern`）。
+- 编排器：扫描 `docs/goals/goal-tree.md` 与项目情境 → 无未关门总目的则引导设立 → 有未关门目标则提议下一步（拆解/决策/执行/审计）并确认 → 再调用原语。
+- **原语（非默认菜单）**：`skills/prompts/01`～`04` 由编排器调用；Copilot 默认**只装** `/govern`（四个填表 slash 需 `--with-primitives`）。
+- 禁止默认「四选一填表」交互。
+- 生命周期：设立目标 → 推进目标 → 阶段性/关门审计。
+
 ## 10. 变更工作流（建议）
 
 ```text
-读 goal-tree.md → 确认编号与 parent
+读 goal-tree.md → 确认编号、parent、未关门目标
+→ 用户未指定原子操作时优先走编排器（分类 → 确认下一步）
 → 若目标尚不可直接执行：先写/更新高层路线图（00-meta 或 01-decision）
 → 创建/修改目标五件套
 → 更新 goal-tree.md

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.2.0
+version: 0.3.2
 ---
 
 # GitHub Copilot 项目指令 · 目标治理
@@ -113,23 +113,22 @@ docs/goals/GOAL-NNN-short-slug/
 更新内容至少包括：**ASCII/文本树** + **状态表格**。  
 只改单目标文件、不更新 goal-tree → **视为任务未完成**。
 
-## 8. 应用代码与文档边界（可选）
+## 8. 代码与文档边界
 
-> 无应用代码时删除本节。
-
-- 应用代码仅在项目约定目录（如 `web/`、`src/`）。
-- 目标正文的长期存储在 `docs/goals/`，不要写进 UI 模板当真相源。
-- 扩展架构：先更新 `docs/architecture/`（若启用），再改代码。
+- **目标真相源**：长期过程记录在 `docs/goals/`，不要把目标正文只写进业务代码或 UI 当唯一真相。
+- **代码布局不统一**：普遍形态是代码在**仓库根**（或根下语言惯例目录）；`web/`、`app/`、`src/` 等子目录只是**部分项目的约定**，不是 Skills 通用硬规则。未约定时禁止照搬示例项目的 `web/`。
+- **刚装 Skills、文件很少时**：不得先验判定「不是代码项目」或「代码必须进某子目录」——由用户决定（可观察目录信号，观察 ≠ 定论）。
+- 若启用 `docs/architecture/`：扩展架构时先更新文档再改代码。
 
 ## 9. 交付形态（按项目裁剪）
 
-默认：**文档驱动的目标治理**。
+默认：**文档驱动的目标治理**（可叠加任意布局的代码库）。
 
 1. **文档体系（必选）**：`docs/goals/` + `goal-tree.md`
-2. **应用（可选）**：可视化浏览/操作
+2. **产品/代码（常见）**：仓库根或项目实际目录
 3. **Skills / 提示词（可选）**：`skills/` 或本仓库提供的 prompts/templates
 
-改规则或目标模型时，评估是否需同步文档 / 应用 / Skills。
+改规则或目标模型时，评估是否需同步文档 / 代码 / Skills。
 
 ## 10. 变更工作流
 
@@ -139,7 +138,7 @@ docs/goals/GOAL-NNN-short-slug/
 3. 创建或修改目标五件套（frontmatter + 正文）
 4. 更新 goal-tree.md（树 + 表）
 5. 必要时更新 docs/README.md、architecture/、根 README.md
-6. 再改应用代码或 Skills（若有）
+6. 再改代码或 Skills（若有；路径以项目实际为准）
 ```
 
 步骤 **1–4 强制**；5–6 按影响面执行。
@@ -153,6 +152,8 @@ docs/goals/GOAL-NNN-short-slug/
 - 对明显需拆解的大目标跳过路线图，直接批量创建并执行细粒度子目标
 - 用 `parent` 以外的方式（目录、标题、正文）作为层级真相
 - 新建目标时漏五件套任一文件或目录
+- 把「应用代码只能在 `web/` 等子目录」当成未约定项目的通用规则
+- 仅因刚装 Skills、仓库文件少，就先验断定「非代码项目」
 
 ## 12. 完成前检查清单
 
@@ -177,11 +178,18 @@ docs/goals/GOAL-NNN-short-slug/
 | 把计划写成「已完成」 | 只记已发生事实；计划单独标注 |
 | 复制模板后仍留示例 id（如 GOAL-042） | 改成真实 id / 标题 / parent |
 
+## Skills 主入口（若已安装 skills/）
+
+- **默认（且通常是唯一 slash）**：**`/govern`** → `skills/prompts/00-govern-orchestrator.md`（扫描 goal-tree、分类情境、引导设立总目的或提议下一步，确认后调用原语）。
+- **原语正文**：`skills/prompts/01`～`04` 由编排器调用；**默认安装不会**把 `/new-goal` 等四个填表 slash 写入 `.github/prompts/`。
+- 若曾手动或使用 `--with-primitives` 安装了 advanced slash，仍应优先 `/govern`，勿引导用户四选一填表。
+- 生命周期：设立目标 → 推进目标 → 阶段性/关门审计。
+
 ## GitHub Copilot 使用提示
 
 - 本文件路径固定为 `.github/copilot-instructions.md`，供 GitHub Copilot 读取项目级指令。
 - 若仓库根另有 `AGENTS.md`（例如同时给 Claude Code 用），两边规则应保持一致。
-- 复杂目标操作可配合 `skills/prompts/` 中的提示词（若已安装）。
+- 日常目标协作使用 **`/govern`**；需要原子写入时由编排器调用 01～04，不要默认打开四入口菜单。
 - 在 VS Code 中修改本文件后，新对话/Agent 会话会采用更新后的指令。
 
 ## 快速链接（按项目填写）

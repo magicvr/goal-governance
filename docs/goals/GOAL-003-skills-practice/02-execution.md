@@ -5,12 +5,49 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.11
+version: 0.2.0
 ---
 
 # 执行记录 · GOAL-003
 
 ## 时间线
+
+### 2026-07-18 · 纠正「代码只能在 web/」与空仓先验判断
+
+- 偏差：可复用 Skills 把本仓库形态（`web/`）写成通用「应用代码仅在 APP_DIR」；编排器扫描易把「刚装 Skills、文件少」当成非代码项目。
+- 纠正：
+  - [AGENTS.template.md](../../../skills/AGENTS.template.md) v0.3.2 第 8 节：普遍形态代码可在**仓库根**；子目录为项目约定；刚装 Skills 须问用户
+  - install/claude 与 copilot-instructions 同步；[00-govern-orchestrator.md](../../../skills/prompts/00-govern-orchestrator.md) 扫描/S0–S1/禁止项同步
+  - 根 [AGENTS.md](../../../AGENTS.md) **仍**写本仓库 `web/`（本项目约定，非 Skills 通用模板）
+  - 测试：`test_agents_template_does_not_force_web_app_dir` + 编排器布局断言
+- 本仓库专属架构文档（`docs/architecture/`）不改其 `web/` 事实描述。
+
+### 2026-07-18 · 默认安装仅 /govern；四填表 slash 改为 --with-primitives
+
+- 避免用户 slash 菜单出现四个并列填表入口造成误导。
+- 变更：
+  - [skills/install.sh](../../../skills/install.sh)：默认只装 `govern.prompt.md`；新增 `--with-primitives`
+  - [skills/install.ps1](../../../skills/install.ps1)：默认只装 govern；新增 `-WithPrimitives` / `--with-primitives`
+  - [skills/README.md](../../../skills/README.md) v0.3.1、copilot-instructions、根 AGENTS / template 同步说明
+  - 01～04 **原语文件保留**（编排器调用）；advanced wrapper **源文件保留**但不默认安装
+  - 测试：`test_install_default_slash_is_govern_only_opt_in_primitives`
+- 不改变 GOAL-003 `done` 终态；属安装面收紧。
+
+### 2026-07-18 · A-003 偏差审计后重开并完成编排主路径重做与关门
+
+- **偏差审计 A-003**：在 [03-audit.md](03-audit.md) 追加偏差陈述（文档填表 vs 目的推进）；保留 A-001/A-002 不删除；记录 A-002 相对 GOAL-001 过早结项。
+- **重开**：`status` → `active`，`progress` → `40%`；同步 [goal-tree.md](../goal-tree.md)、[GOAL-001 阶段 2](../GOAL-001-main-vision/00-meta.md)。
+- **决策 D-004**：单一主入口编排；01～04 为原语；未选「四并列 primary slash」。见 [01-decision.md](01-decision.md)。
+- **修订成功标准**：见 [00-meta.md](00-meta.md)「修订标准」七项 + 历史标准保留。
+- **Skills 重做（路径均为相对仓库根）**：
+  - 新增 primary 核心提示词：`skills/prompts/00-govern-orchestrator.md`（扫描/分类 S0–S3、设立引导、推进提议+确认、调用原语）
+  - 新增 Copilot primary wrapper：`skills/install/copilot/prompts/govern.md` → `/govern`
+  - 01～04 与四 advanced wrapper 标注 primitive/advanced；`skills/prompts/README.md` 分层
+  - 安装脚本 `skills/install.sh`、`skills/install.ps1`：wrapper 列表含 **govern**（优先安装顺序）；Next steps 改为主入口
+  - `skills/README.md` v0.3.0；`AGENTS.template.md` v0.3.0 节 9b；install/claude 与 copilot-instructions；根 `AGENTS.md` 节 9b（D-003 对齐）
+  - 契约测试：`skills/tests/test_skills_orchestrator.py`（7 tests OK）
+- **关门审计 A-004**：对照修订标准勾选证据；`status` → `done`，`progress` → `100%`。
+- 阻塞 / 风险：无。遗留：外项目 install 实测仍可选。
 
 ### 2026-07-18 · 产出 Skills 使用反馈与修正记录并结项
 
@@ -163,13 +200,15 @@ version: 0.1.11
 
 ## 待办（按范围）
 
-1. ~~优化 `skills/AGENTS.template.md`~~ **已完成**（见上，v0.2.0）
-2. ~~补充常用提示词模板（新目标 / 决策 / 执行 / 复盘）~~ **已完成**
-3. ~~完善 `skills/templates/goal-folder/` 示例内容~~ **已完成**
-4. ~~在本项目强制使用并记录反馈~~ **已完成**（见 [attachments/skills-feedback.md](attachments/skills-feedback.md)；含 wrapper 创建 GOAL-004）
-5. ~~产出「Skills 使用反馈与修正记录」~~ **已完成**（同上）
-6. （可选，结项后遗留）外项目实测 install 路径，结果并入反馈记录修订版
+1. ~~优化 `skills/AGENTS.template.md`~~ **已完成**
+2. ~~文档原语 01～04 + goal-folder 示例~~ **已完成**
+3. ~~强制使用 + 书面反馈~~ **已完成**（历史）
+4. ~~A-003 偏差审计并重开~~ **已完成**
+5. ~~D-004 单入口编排决策~~ **已完成**
+6. ~~实现 00-govern-orchestrator + /govern + 原语降级 + 安装/README/AGENTS~~ **已完成**
+7. ~~修订成功标准关门审计 A-004~~ **已完成**
+8. （可选遗留）外项目实测 install
 
 ## 进度评估
 
-**100%**：成功标准 **5/5** 已达成。可复用产物（AGENTS.template / 提示词 / goal-folder）、Claude Code / Copilot 安装与 wrapper、本仓库强制使用与书面反馈均已落地；结项后可继续按反馈改进 wrapper 智能程度，不阻塞本目标 `done`。
+**100%**（A-004）：修订成功标准已对齐「单一编排主入口 + 生命周期辅助」；历史地基（规则/原语/示例/反馈）保留。A-002 的 100% 曾被 A-003 回退为 40%，本轮重做后重新关门。

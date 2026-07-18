@@ -39,11 +39,17 @@ version: 0.1.0
 
 ## 5. 后续使用建议
 
-1. 新目标优先 `/new-goal`；大目标先确认是否需路线图，再写五件套。
-2. 决策、进度、复盘走对应 wrapper，并在 execution 记「用了哪条提示词 / 卡点」。
+1. **默认**使用编排主入口：`00-govern-orchestrator` / Copilot **`/govern`**（A-003/A-004 后产品模型）。
+2. 仅在明确只要原子操作时使用 advanced：`/new-goal` 等 01～04 原语。
 3. 规则有歧义时：先改 template 与核心 prompts，再评估同步根规则与 install 产物。
 4. 有条件时在空仓库跑一遍 install，把结果并入本记录修订版。
 
+## 6. A-003/A-004 修订摘要（2026-07-18）
+
+- 偏差：四并列填表入口 ≠ 辅助达到目的；A-002 相对 GOAL-001 过早 done。
+- 纠正：单一编排入口 + 01～04 原语；修订成功标准后 A-004 关门。
+- 证据：`skills/prompts/00-govern-orchestrator.md`；`install/copilot/prompts/govern.md`；`python skills/tests/test_skills_orchestrator.py` OK。
+
 ## 结论
 
-Skills 核心交付与安装链路已可支撑本仓库日常目标操作；wrapper 创建 GOAL-004 表明「上下文优先 + P-001」主路径基本成立。后续重点不在扩文件数量，而在持续提高 wrapper 的智能补全与少轮确认能力，并用更多真实操作沉淀修正项。
+Skills 现以**编排主路径**对齐「设立 → 推进 → 审计」；原语与规则地基保留。继续用真实 `/govern` 会话压测推断质量即可，无需回到四入口并列主产品面。

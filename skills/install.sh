@@ -19,6 +19,7 @@ SKILLS_DIR_ARG="./skills"
 INSTALL_CLAUDE=0
 INSTALL_COPILOT=0
 INSTALL_EXTRAS=0
+INSTALL_PRIMITIVE_WRAPPERS=0
 
 usage() {
   cat <<'EOF'
@@ -31,16 +32,19 @@ Prerequisites:
 
 Usage (run from target project root):
   ./install.sh --claude [--skills-dir DIR]
-  ./install.sh --copilot [--skills-dir DIR]
-  ./install.sh --all [--skills-dir DIR]
+  ./install.sh --copilot [--skills-dir DIR] [--with-primitives]
+  ./install.sh --all [--skills-dir DIR] [--with-primitives]
   ./install.sh --help
 
 Options:
   --claude              Install Claude Code rules → ./AGENTS.md
   --copilot             Install GitHub Copilot rules → ./.github/copilot-instructions.md
-                        and slash wrappers → ./.github/prompts/*.prompt.md
+                        and PRIMARY slash only → ./.github/prompts/govern.prompt.md
+  --with-primitives     Also install advanced slash wrappers (new-goal, log-decision,
+                        update-execution, write-audit). Opt-in only — avoids form-menu UX.
   --all                 Install both tools + ensure prompts/ and templates/
-                        under --skills-dir; also install Copilot wrappers
+                        under --skills-dir; Copilot still gets /govern only unless
+                        --with-primitives is set
   --skills-dir DIR      Skills package / destination directory (default: ./skills)
                         Relative paths are resolved from the current working directory.
   --help, -h            Show this help
@@ -48,7 +52,9 @@ Options:
 Behavior:
   - Rule files always install into the current working directory (project root)
   - .github/ is created under the project root when installing Copilot
-  - Copilot wrappers always install into ./.github/prompts/ (not under --skills-dir)
+  - Default Copilot slash surface is /govern only (orchestrator)
+  - Advanced form-filling slashes are NOT installed unless --with-primitives
+  - Primitive prompt files (01–04) always ship under prompts/ (with --all or package copy)
   - prompts/ and templates/ are placed under --skills-dir (with --all)
   - Source files are read from the package next to this script
   - Prompts before overwriting existing files
@@ -57,6 +63,7 @@ Behavior:
 Examples:
   cd /path/to/your-project
   bash ./skills/install.sh --copilot --skills-dir ./skills
+  bash ./skills/install.sh --copilot --with-primitives --skills-dir ./skills
   bash ./my-governance-skills/install.sh --all --skills-dir ./my-governance-skills
   bash /path/to/goal-governance/skills/install.sh --all --skills-dir ./skills
 EOF
@@ -132,11 +139,13 @@ Done.
 Next steps:
   1. Review installed rule file(s) and adjust paths for your project.
   2. Ensure docs/goals/goal-tree.md exists (create if needed).
-  3. Create or update Root Goal GOAL-001 under docs/goals/.
-  4. Use prompts under $SKILLS_DIR/prompts/ for common goal workflows
-     (e.g. 01-create-new-goal.md … 04-write-audit.md).
-  5. If Copilot was installed: slash wrappers are under .github/prompts/
-     (e.g. /new-goal, /log-decision, /update-execution, /write-audit).
+  3. DEFAULT (only) user path: goal-governance orchestrator
+     - Core: $SKILLS_DIR/prompts/00-govern-orchestrator.md
+     - Copilot: /govern  (installed by default with --copilot)
+     Scans project, classifies purposes, guides set-goal → advance →
+     stage/close-audit (confirm before writes). Invokes 01–04 as needed.
+  4. Do not look for four form-filling slash commands — they are not installed
+     unless you re-run with --with-primitives (advanced / optional).
 
 Project root:  $TARGET_DIR
 Skills dir:    $SKILLS_DIR
@@ -164,6 +173,10 @@ while [[ $# -gt 0 ]]; do
       INSTALL_CLAUDE=1
       INSTALL_COPILOT=1
       INSTALL_EXTRAS=1
+      shift
+      ;;
+    --with-primitives)
+      INSTALL_PRIMITIVE_WRAPPERS=1
       shift
       ;;
     --skills-dir)
@@ -232,10 +245,18 @@ if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   mkdir -p "$TARGET_DIR/.github"
   copy_file "$COPILOT_SRC" "$TARGET_DIR/.github/copilot-instructions.md"
 
-  # Slash command wrappers → always .github/prompts/ (not under --skills-dir)
+  # Slash wrappers → always .github/prompts/ (not under --skills-dir)
+  # Default: primary /govern only (avoid four form-filling slash entries)
   [[ -d "$COPILOT_WRAPPERS_SRC" ]] || die "Missing package directory: $COPILOT_WRAPPERS_SRC"
   mkdir -p "$TARGET_DIR/.github/prompts"
-  for name in new-goal log-decision update-execution write-audit; do
+  WRAPPER_NAMES=(govern)
+  if [[ "$INSTALL_PRIMITIVE_WRAPPERS" -eq 1 ]]; then
+    WRAPPER_NAMES+=(new-goal log-decision update-execution write-audit)
+    echo "Including advanced primitive slash wrappers (--with-primitives)"
+  else
+    echo "Copilot slash surface: /govern only (pass --with-primitives for advanced form ops)"
+  fi
+  for name in "${WRAPPER_NAMES[@]}"; do
     copy_file \
       "$COPILOT_WRAPPERS_SRC/${name}.md" \
       "$TARGET_DIR/.github/prompts/${name}.prompt.md"

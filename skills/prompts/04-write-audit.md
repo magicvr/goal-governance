@@ -4,12 +4,15 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
+role: primitive
 ---
 
-# 04 · 写阶段性复盘
+# 04 · 写阶段性复盘（原语 / primitive）
 
 ## 说明
+
+**角色**：文档原语，供 [00-govern-orchestrator.md](00-govern-orchestrator.md) 调用；也可高级直调。默认用户路径请用编排器。
 
 解决「阶段结束了却没有结论，或复盘写成表扬稿」的问题。  
 引导 AI 基于 `00-meta` / `01-decision` / `02-execution` 的**已有事实**，在 `03-audit.md` 写出成果、偏差、改进与结论。

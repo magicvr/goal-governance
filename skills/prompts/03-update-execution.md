@@ -4,12 +4,15 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
+role: primitive
 ---
 
-# 03 · 更新执行进度
+# 03 · 更新执行进度（原语 / primitive）
 
 ## 说明
+
+**角色**：文档原语，供 [00-govern-orchestrator.md](00-govern-orchestrator.md) 调用；也可高级直调。默认用户路径请用编排器。
 
 解决「做了工作却不写、或写成虚假 100%」的问题。  
 引导 AI 在 `02-execution.md` 按时间线追加**事实**，并在确有进展时同步 meta / goal-tree 的进度。

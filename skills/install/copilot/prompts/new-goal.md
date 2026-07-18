@@ -1,23 +1,24 @@
 ---
-title: /new-goal · 创建新目标（Copilot wrapper）
-description: 先读 goal-tree 推断编号与父目标，智能补问后按 skills/prompts/01-create-new-goal.md 创建五件套
+title: /new-goal · 创建新目标（Copilot wrapper · advanced primitive）
+description: 原语入口。默认请用 /govern。先读 goal-tree 后按 01-create-new-goal 创建五件套。
 status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.2.0
+version: 0.2.1
 slash: /new-goal
+role: advanced
 ---
 
 <!--
-  这是 GitHub Copilot 斜杠命令 wrapper（轻量交互入口）。
-  核心提示词在：skills/prompts/01-create-new-goal.md
-  修改核心提示词即可全局生效；本文件只负责智能引导参数与引用核心。
-  用法：复制到项目根 .github/prompts/（建议命名 new-goal.prompt.md），
-  在 Copilot Chat 输入 /new-goal 调用。
+  ADVANCED primitive wrapper — not the default user path.
+  Default entry: /govern → skills/prompts/00-govern-orchestrator.md
+  Core for this command: skills/prompts/01-create-new-goal.md
 -->
 
-# /new-goal · 创建新目标
+# /new-goal · 创建新目标（advanced / 原语）
+
+> **默认请使用 `/govern`。** 本命令仅在你已明确只要「创建目标」原子操作时使用。
 
 你是本仓库的目标治理协作者。请严格遵守项目 AI 规则（根目录 `AGENTS.md`，或已安装的 `.github/copilot-instructions.md`），以及 `docs/architecture/principles.md`（尤其 **P-001**：大目标先写高层路线图，禁止直接批量拆细粒度子目标）。
 

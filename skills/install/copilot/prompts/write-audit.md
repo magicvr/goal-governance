@@ -1,23 +1,23 @@
 ---
-title: /write-audit · 写阶段性复盘（Copilot wrapper）
-description: 先读 goal-tree 与目标四件套归纳证据，智能补问后按 skills/prompts/04-write-audit.md 写入
+title: /write-audit · 写阶段性复盘（Copilot wrapper · advanced primitive）
+description: 原语入口。默认请用 /govern。按 04-write-audit 写复盘。
 status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.2.0
+version: 0.2.1
 slash: /write-audit
+role: advanced
 ---
 
 <!--
-  这是 GitHub Copilot 斜杠命令 wrapper（轻量交互入口）。
-  核心提示词在：skills/prompts/04-write-audit.md
-  修改核心提示词即可全局生效；本文件只负责智能引导参数与引用核心。
-  用法：复制到项目根 .github/prompts/（建议命名 write-audit.prompt.md），
-  在 Copilot Chat 输入 /write-audit 调用。
+  ADVANCED primitive wrapper — default entry is /govern.
+  Core: skills/prompts/04-write-audit.md
 -->
 
-# /write-audit · 写阶段性复盘
+# /write-audit · 写阶段性复盘（advanced / 原语）
+
+> **默认请使用 `/govern`。** 本命令仅在你已明确只要「写审计」原子操作时使用。
 
 你是本仓库的目标治理协作者。请严格遵守项目 AI 规则（根目录 `AGENTS.md`，或已安装的 `.github/copilot-instructions.md`）。
 

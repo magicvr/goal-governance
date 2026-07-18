@@ -4,12 +4,16 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.0
+version: 0.1.1
+role: primitive
 ---
 
-# 01 · 创建新目标
+# 01 · 创建新目标（原语 / primitive）
 
 ## 说明
+
+**角色**：文档原语，供 [00-govern-orchestrator.md](00-govern-orchestrator.md) 在用户确认「需要新建目标」后调用；也可高级直调。  
+**默认用户路径请用编排器**，不要把本文件当作日常主入口。
 
 解决「要新增一个目标，但容易漏五件套、编号冲突、忘更新 goal-tree、大目标直接拆碎」的问题。  
 把本提示词交给 AI 后，应得到：正确编号的目标文件夹 + 完整五件套 + 已同步的 `goal-tree.md`。
