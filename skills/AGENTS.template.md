@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.3.4
+version: 0.4.0
 ---
 
 # AGENTS.md
@@ -21,7 +21,7 @@ version: 0.3.4
 | 目标与过程记录 | `docs/goals/` | 唯一长期存储 |
 | 目标树与状态 | `docs/goals/goal-tree.md` | **必读、必更新** |
 | 架构约定 | `docs/architecture/` | 若项目启用 |
-| 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001 |
+| 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001～P-004 |
 | 文档使用规范 | `docs/README.md` | 若存在 |
 
 冲突时以 `docs/goals/` 与本文件为准。
@@ -100,6 +100,32 @@ docs/goals/GOAL-NNN-short-slug/
 
 原则以**本文件（AGENTS）第 6 节**为准；`docs/architecture/principles.md` **若存在**可作补充，**不要求**每个项目都有 architecture 目录。
 
+## 6b. 治理闭环与交叉审计（P-002～P-004）
+
+操作摘要如下；全文见 `docs/architecture/principles.md`（若存在）。**无 architecture 时仍须遵守本小节。**
+
+### P-002 · 阶段质量意识
+
+- 目标态：设立 → 审视目标 → 方案/计划 → 审视方案 → 实施并记**事实** → 审视事实（可整改环）→ 关门审计后结项。
+- 小目标可合并审视步骤；不得省略可验证事实与关门前结论。
+- 实施事实 ≠ 实施流水账；审计须能指回证据。
+
+### P-003 · 交叉审计与意见响应
+
+- **独立/交叉审计**可在编排流程外进行；默认**只写审计意见**，不直接改 `status`/`progress`/方案正文。
+- **编排器**汇总并响应与焦点相关的**全部**意见（`self` + `independent`），驱动修正/复审/推进。
+- 审计条目宜标注来源：`self` | `independent`。
+- 默认主入口仍为编排器；交叉审计为专用入口（如 `/audit`），非四填表并列主路径。
+
+### P-004 · 用户裁决点（必须询问，禁止静默自动裁）
+
+| 情形 | 行为 |
+|------|------|
+| 已有独立审计、尚无自审计 | **询问**用户是否还要自审；不自动跳过、不未问即强制 |
+| 多条意见在结论/必改项上冲突 | 展示冲突 + **给建议** + **等用户决策**并留痕；未决不放行/不关门 |
+
+**延后**：自动判定「可否跳过自审」的复杂机制（版本指纹、覆盖度算法等）。
+
 ## 7. 必须同步更新 goal-tree.md
 
 以下任一操作后，**必须**更新 `docs/goals/goal-tree.md`：
@@ -141,23 +167,24 @@ docs/goals/GOAL-NNN-short-slug/
 ## 9b. Skills 主入口（若已安装本包）
 
 - **默认路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md`（Copilot 若已装：`/govern`）。
-- 编排器：扫描 → 分类 → 提议 → 确认 → 调用原语 `01`～`04`。
-- advanced slash 可选（`--with-primitives`）。
-- **P-001** 以本文件第 6 节为准；有 architecture 原则文档时一并参考即可。
+- 编排器：扫描 → 分类 → 提议 → 确认 → 调用原语 `01`～`04`；推进时汇总审计意见，遇 P-004 裁决点先问用户。
+- advanced slash 可选（`--with-primitives`）；交叉审计入口（若已装）用于独立意见，响应仍归编排器。
+- **P-001** 以本文件第 6 节为准；**P-002～P-004** 以第 6b 节为准；有 architecture 原则文档时一并参考。
 
 ## 10. 变更工作流
 
 ```text
 1. 读 goal-tree.md → 编号、parent、未关门目标
 2. 未指定原子操作时 → 优先编排器
-3. 尚不可直接执行 → 先高层路线图
-4. 创建或修改五件套
-5. 更新 goal-tree.md（树 + 表）
-6. 项目已有 docs/README、architecture 等时再按需更新
-7. 再改代码或 Skills（路径以项目实际为准）
+3. 尚不可直接执行 → 先高层路线图（P-001）
+4. 推进时检查相关审计意见；P-004 情形先询问用户
+5. 创建或修改五件套
+6. 更新 goal-tree.md（树 + 表）
+7. 项目已有 docs/README、architecture 等时再按需更新
+8. 再改代码或 Skills（路径以项目实际为准）
 ```
 
-步骤 **1、3–5 强制**；编排优先；6–7 按影响面。
+步骤 **1、3–6 强制**；编排优先；7–8 按影响面。
 
 ## 11. 正确做法与硬约束
 
@@ -169,13 +196,15 @@ docs/goals/GOAL-NNN-short-slug/
 - 执行/审计：只写有证据的事实；计划单独标注。
 - 代码布局与 Root slug：默认见第 8 节；以用户/项目约定为准（`web/` 等为可选约定示例）。
 - Skills 包：按内容定位 SKILLS_PKG。
-- P-001：本文件第 6 节足够；architecture 可选。
+- P-001：本文件第 6 节；P-002～P-004：第 6b 节；architecture 原则全文可选补充。
+- 交叉审计意见由编排器统一响应；冲突与「是否自审」问用户并给建议。
 
 **硬约束**
 
 - Root 编号保持 `GOAL-001`；`parent: null`。
 - 新建一次建齐五件套。
 - 决策、执行、审计只记录真实内容。
+- 不静默自动裁决 P-004 情形；独立审计默认不直接改目标状态。
 
 ## 12. 完成前检查清单
 
@@ -185,6 +214,7 @@ docs/goals/GOAL-NNN-short-slug/
 - [ ] 大目标路线图已写/更新（若适用）
 - [ ] `goal-tree.md` 已同步
 - [ ] `updated` / `progress` / `status` 与事实一致
+- [ ] 若涉及推进/放行：相关审计意见已汇总；P-004 已询问用户（若适用）
 
 ## 写法对照（简表）
 
@@ -196,6 +226,8 @@ docs/goals/GOAL-NNN-short-slug/
 | 计划与已完成分开写 | 时间线只记事实 |
 | 复制模板后改真实 id | 例如勿留 GOAL-042 |
 | 按 prompts 文件定位包目录 | 包名可以是 `skills` 或其他 |
+| 独立审只出意见；编排器响应 | P-003 |
+| 冲突 / 是否自审 → 问用户 + 建议 | P-004 |
 
 
 ## 快速链接（按项目填写）
@@ -204,6 +236,6 @@ docs/goals/GOAL-NNN-short-slug/
 - 目标树：`docs/goals/goal-tree.md`
 - Root Goal：`docs/goals/{{ROOT_GOAL_FOLDER}}/00-meta.md`
 - 架构说明：`{{ARCHITECTURE_PATH}}`
-- 治理原则：`docs/architecture/principles.md`（若存在）
+- 治理原则：AGENTS 第 6 / 6b 节；`docs/architecture/principles.md`（若存在，P-001～P-004）
 - 代码/应用布局：仓库根为常见默认；若已约定子目录则填 `{{APP_DIR}}`（可空）
 - Skills 目录：`{{SKILLS_DIR}}`

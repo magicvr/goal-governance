@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.0
-progress: 5%
+version: 0.1.1
+progress: 25%
 ---
 
 # GOAL-005 · Skills 治理闭环与交叉审计
@@ -38,7 +38,7 @@ progress: 5%
 
 ## 成功标准
 
-- [ ] 原则（或 AGENTS 等价节）写明：交叉审计、编排器响应全部开放意见、冲突用户裁决、有独立无自审时询问是否自审
+- [x] 原则（或 AGENTS 等价节）写明：交叉审计、编排器响应全部开放意见、冲突用户裁决、有独立无自审时询问是否自审
 - [ ] `00-govern-orchestrator`（及 `/govern` 入口）实现上述用户裁决点与意见汇总/响应路径
 - [ ] `04-write-audit` 支持最小审计意见结构，并能标注 `self` / `independent`
 - [ ] 独立交叉审计路径可用（独立 skill/slash 或明确 advanced 流程），默认不直接改目标 status
@@ -51,9 +51,9 @@ progress: 5%
 
 | 阶段 | 主题 | 状态 | 说明 |
 |------|------|------|------|
-| A | 原则与产品语义定稿 | 进行中 | 把会话结论写入本目标 decision + principles/AGENTS |
+| A | 原则与产品语义定稿 | **已完成** | P-002～P-004 + AGENTS §6b；decision D-001～D-006 |
 | B | 提示词与入口 | 未开始 | 改 `00`/`04`；落地 `/audit`（或等价独立路径） |
-| C | 安装与文档同步 | 未开始 | install、README、各宿主 wrapper |
+| C | 安装与文档同步 | 未开始 | install、README、各宿主 wrapper（原则/AGENTS 安装源已先同步） |
 | D | 实践验证与关门审计 | 未开始 | 真实会话压测 + 本目标阶段/关门复盘 |
 
 ## 与 GOAL-003 的关系
@@ -72,5 +72,5 @@ progress: 5%
 
 - 编排器：`skills/prompts/00-govern-orchestrator.md`
 - 审计原语：`skills/prompts/04-write-audit.md`
-- 原则：`docs/architecture/principles.md`
-- 规则：`AGENTS.md` / `skills/AGENTS.template.md`
+- 原则：`docs/architecture/principles.md`（P-001～P-004）
+- 规则：`AGENTS.md` / `skills/AGENTS.template.md`（§6 / §6b）
