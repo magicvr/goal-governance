@@ -4,14 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: GOAL-004-core-data-model
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 领域模型与存储约定
 
 > **目标**：GOAL-004 阶段 A 产出。  
 > **约束**：`docs/goals` Markdown + frontmatter 为唯一 source of truth（D-002）；Web/服务层读写文件，不引入业务库。  
-> **状态**：accepted（2026-07-18，见 GOAL-004 `01-decision` D-004～D-007）
+> **状态**：accepted（2026-07-18，见 GOAL-004 `01-decision` D-004～D-013）
 
 ---
 
@@ -52,6 +52,27 @@ AttachmentRef[]        ← attachments/ 下文件引用（路径 + 名称）
 | `summary` | string | meta 正文「概述」等 | 解析启发式；失败时用正文前 N 字或空 |
 | `success_criteria` | list[str] | meta 正文 | 可选解析；展示可回退到全文 Markdown |
 | `roadmap_present` | bool | meta/decision | 是否含路线图表（启发式，非硬失败） |
+
+`Goal` 只表示通过最低结构校验的目标，不用大量可空字段表达损坏文档。扫描和单项读取通过 `GoalLoadResult` 暴露无效目录与诊断（D-008）。
+
+#### 2.1.1 GoalLoadResult / ValidationIssue
+
+| 类型 | 字段 | 说明 |
+|------|------|------|
+| GoalLoadResult | `goal: Goal \| null` | 校验通过时为领域对象；无效时为 `null` |
+| GoalLoadResult | `path: Path` | 被读取的目标目录或 meta 路径 |
+| GoalLoadResult | `raw_markdown: string \| null` | frontmatter 无法解析时保留原文，供诊断或详情降级展示 |
+| GoalLoadResult | `issues: ValidationIssue[]` | 可为空；包含 warning / error |
+| ValidationIssue | `code` | 稳定错误码，例如 `invalid_frontmatter`、`missing_required_file` |
+| ValidationIssue | `severity` | `warning \| error` |
+| ValidationIssue | `path` | 问题所在仓库路径 |
+| ValidationIssue | `message` | 面向人类的简短说明 |
+
+**读取结果约定**：
+
+- `list_goals()` 返回所有扫描目录的 `GoalLoadResult`，不得静默丢弃无效目录。
+- `get_goal(id)` 明确区分：目录不存在、frontmatter 无效、meta 硬约束失败、五件套部分缺失。
+- 五件套部分缺失可返回有效 `Goal` + warning；无法构造必填 meta 字段时返回 `goal: null` + error。
 
 **文件夹布局（硬约束）**：
 
@@ -101,7 +122,9 @@ docs/goals/<id>/
 | 字段 | 说明 |
 |------|------|
 | `body_markdown` | 全文真相 |
-| `has_conclusion` | 启发式：是否含「结论」「已完成」等（仅 UI 提示，不作业务关单） |
+| `conclusion_state` | `none \| provisional \| final \| unknown`；仅从明确结论章节或后续约定的结构化字段推导 |
+
+自然语言关键词只能用于定位候选章节，不得直接决定结论状态。无结论章节为 `none`；有明确章节但无法解析为阶段或最终结论时为 `unknown`（D-011）。
 
 **关单权威**仍是 Goal.`status`，不是 audit 正文措辞。
 
@@ -122,6 +145,8 @@ docs/goals/<id>/
 | `nodes: GoalTreeNode[]` | 扁平列表 + 可选 `children` 树 |
 | `generated_at` | 构建时间（运行时） |
 | `source` | `goal_tree_md` \| `directory_scan` \| `merged`（见 §3） |
+| `tree_drift` | 是否存在扫描 meta 与 `goal-tree.md` 的差异或树结构错误 |
+| `validation_report` | `TreeValidationReport`，提供可定位、可测试的差异明细 |
 
 **GoalTreeNode**：
 
@@ -130,6 +155,20 @@ docs/goals/<id>/
 | `id`, `title`, `parent_id`, `status`, `progress` | 与 meta / 表列对齐 |
 | `depth` | 由 parent 链计算；Root=0 |
 | `path` | 文件夹相对 `docs/goals/` |
+
+**TreeValidationReport**：
+
+| 字段 | 说明 |
+|------|------|
+| `missing_in_tree` | 磁盘存在、状态表缺失的 id |
+| `missing_on_disk` | 状态表存在、磁盘目标缺失的 id |
+| `field_mismatches` | title / parent / status / progress 等字段差异 |
+| `orphan_ids` | parent 不存在的目标 |
+| `cycle_ids` | 参与 parent 环的目标 |
+| `duplicate_number_ids` | 复用同一 GOAL 数字编号的完整 id |
+| `issues` | 其他 `ValidationIssue[]` |
+
+`nodes`、根节点和同级 `children` 均按 GOAL 数字编号升序稳定排序；同号异常项按完整 id 排序（D-010）。
 
 ---
 
@@ -150,10 +189,10 @@ docs/goals/<id>/
 
 **实现提示（阶段 B）**：
 
-1. `list_goals()` → 扫描目录 + 读各 `00-meta` frontmatter。  
-2. `build_tree(goals)` → 按 `parent_id` 组树；检测环与孤儿。  
-3. `load_goal_tree_file()` → 可选加载表格行；与扫描 diff。  
-4. 首页默认展示 **扫描树**；若有 drift，页面提示「goal-tree 与磁盘不一致」。
+1. `list_goals()` → 扫描目录 + 读各 `00-meta`，返回 `GoalLoadResult[]`。
+2. `build_tree(valid_goals)` → 按 `parent_id` 组树，生成稳定排序节点与环 / 孤儿 / 重复编号报告。
+3. `load_goal_tree_file()` → 可选加载表格行；与扫描结果 diff，填充 `TreeValidationReport`。
+4. 首页默认展示 **扫描树**；无效目录单独展示诊断；若有 drift，页面提示并提供差异明细。
 
 ---
 
@@ -167,6 +206,13 @@ docs/goals/<id>/
 
 服务层**禁止**写死本机绝对路径；测试可用临时目录注入 `GOALS_DIR`。
 
+### 4.1 ID 与路径安全边界
+
+- 外部输入的 Goal ID 必须完整匹配 `^GOAL-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*$`，不得包含路径分隔符或 `.` / `..` 路径段。
+- 目标目录、五件套文件与附件路径 `resolve()` 后必须满足 `resolved_path` 位于 `GOALS_DIR.resolve()` 内。
+- 拒绝解析后逃逸 `GOALS_DIR` 的符号链接；调用方只能传 Goal ID 或已校验的 `AttachmentRef`，不得传任意相对路径。
+- containment 校验必须在仓库层统一执行，不能只依赖 Web 路由过滤（D-009）。
+
 ---
 
 ## 5. Frontmatter 读写约定
@@ -174,7 +220,8 @@ docs/goals/<id>/
 ### 5.1 解析
 
 - 使用常见 Markdown frontmatter 解析（如 `python-frontmatter` 或等价实现）。
-- 缺失 `---` 块：该文件视为 **invalid**；详情可展示 raw 文本，列表可标红并跳过结构化字段。
+- 缺失 `---` 块：该文件视为 **invalid**；保留 raw 文本并返回 `invalid_frontmatter` issue，不构造半初始化 `Goal`。
+- 列表保留对应 `GoalLoadResult` 供 UI 展示问题；不得静默跳过磁盘中存在的目标目录。
 - 未知 frontmatter 键：**保留**在 `extra: dict`，读写往返不丢键。
 
 ### 5.2 必填（Goal meta）
@@ -186,7 +233,9 @@ docs/goals/<id>/
 | `status` | 是 | 枚举见上 |
 | `parent` | 是 | YAML `null` 或完整 id 字符串 |
 | `created` / `updated` | 是 | 日期 |
-| `version` | 建议 | 缺省时写回补 `0.1.0`（待实现时定） |
+| `version` | 是 | 缺失时返回 issue；普通 List/Get 不隐式补写 |
+
+`version` 必填规则适用于所有治理 Markdown；显式维护/写入操作可补齐或升级，读取操作保持无副作用（D-012）。
 | `progress` | 否 | |
 
 ### 5.3 非 meta 文件
@@ -224,12 +273,26 @@ docs/goals/<id>/
 | 规则 | 级别 |
 |------|------|
 | `id` ≠ 文件夹名 | error |
+| id 不符合 canonical 格式 | error |
+| 解析路径逃逸 `GOALS_DIR` 或符号链接越界 | error |
 | `parent` 指向不存在的 id | error（Root 除外） |
 | `parent` 形成环 | error |
 | status 非法枚举 | error |
 | 缺五件套文件/attachments 目录 | create 时自动建齐；update 读时 warning |
 | 并发写同一文件 | 本阶段不乐观锁；后写覆盖；文档注明风险 |
-| 写 goal-tree 失败 | **error**：事务语义上「业务写成功但 tree 失败」应回滚或重试策略见实现；最低要求：返回错误且日志记录，避免静默不同步 |
+| 写 goal-tree 失败 | **error**：进入失败补偿；不得只返回错误后保留已知不一致状态 |
+
+### 6.3.1 可恢复提交（阶段 C）
+
+跨多个 Markdown 文件的写入不宣称真正原子事务，采用以下可恢复提交协议（D-013）：
+
+1. 在内存中生成目标文件与新 `goal-tree.md` 的完整内容，先完成格式、parent、环和编号校验。
+2. 在各目标文件同目录写临时文件，确保替换不跨文件系统。
+3. 替换前保留原文件备份；按受控顺序替换，全部成功后清理备份。
+4. 任一步失败则执行补偿恢复；补偿失败时保留 recovery record，并阻止后续普通写操作。
+5. 提供 `repair_goal_tree()`：以 meta 扫描为权威重建 ASCII 树、状态表和 updated 字段。
+
+实现阶段必须用故障注入测试覆盖：目标文件替换失败、tree 替换失败、补偿失败和 repair 成功。
 
 ### 6.4 goal-tree.md 同步内容
 
@@ -306,8 +369,12 @@ web/
 
 - [ ] `GOALS_DIR` 可注入；默认指向仓库 `docs/goals`  
 - [ ] `list_goals` / `get_goal` 单测：用夹具目录含 1～2 个 GOAL  
-- [ ] 非法 frontmatter / 缺文件时的错误与降级行为有测试  
-- [ ] （可选）goal-tree 与扫描 diff 返回 drift 标志  
+- [ ] 非法 frontmatter / 缺文件时返回 `GoalLoadResult` 与稳定 issue code
+- [ ] 非 canonical id、路径越界与符号链接逃逸有拒绝测试
+- [ ] goal-tree diff 返回 `TreeValidationReport`；环、孤儿、重复编号和字段差异有测试
+- [ ] 列表与同级树节点按 GOAL 数字编号稳定排序
+- [ ] 审计否定句不会误判 `conclusion_state`
+- [ ] 缺失 `version` 只报告问题，List/Get 不产生磁盘写入
 - [ ] 不在 B 实现写回亦可先合入只读服务
 
 ---
@@ -317,3 +384,4 @@ web/
 | 日期 | 版本 | 说明 |
 |------|------|------|
 | 2026-07-18 | 0.1.0 | 阶段 A 初版；关闭 D-004～D-007 待确认项 |
+| 2026-07-18 | 0.2.0 | 根据 A-001 审计与 D-008～D-013 补齐读取诊断、路径安全、树报告、显式审计结论、version 硬约束及可恢复写入 |
