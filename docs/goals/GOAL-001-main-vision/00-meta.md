@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.0
+version: 0.1.1
 ---
 
 # GOAL-001 · 构建一个实用的目标治理框架
@@ -34,6 +34,7 @@ version: 0.1.0
 |------|------|------|------|
 | 阶段 1 | 项目初始化 | 已完成 | [GOAL-002-project-bootstrap](../GOAL-002-project-bootstrap/00-meta.md) |
 | 阶段 2 | Skills 完善与实践验证 | 已完成（A-004 编排主路径关门） | [GOAL-003-skills-practice](../GOAL-003-skills-practice/00-meta.md) |
+| 阶段 2b | Skills 治理闭环与交叉审计 | 进行中 | [GOAL-005-skills-closed-loop-audit](../GOAL-005-skills-closed-loop-audit/00-meta.md) |
 | 阶段 3 | 核心数据模型与 Goal 基础管理 | 进行中 | [GOAL-004-core-data-model](../GOAL-004-core-data-model/00-meta.md) |
 | 阶段 4 | Web 与文档体系联动 | 未开始 | 待拆分子目标 |
 | 阶段 5 | 高级能力与打磨（漂移检测、AI 辅助等） | 未开始 | 待拆分子目标 |
@@ -45,6 +46,7 @@ version: 0.1.0
 | GOAL-002-project-bootstrap | 完成项目初始化 | done |
 | GOAL-003-skills-practice | 完善 Skills 并在本项目中实践验证 | done |
 | GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | active |
+| GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | active |
 
 ## 相关路径
 

@@ -33,16 +33,22 @@ version: 0.1.0
 - 创建并推进 [GOAL-004-core-data-model](../GOAL-004-core-data-model/00-meta.md)（阶段 3）。
 - GOAL-004 完成阶段 A：领域模型与存储约定设计说明与决策 D-004～D-007（进度 25%）。
 
+### 2026-07-18 · 立项 Skills 闭环升级（阶段 2b）
+
+- 创建子目标 [GOAL-005-skills-closed-loop-audit](../GOAL-005-skills-closed-loop-audit/00-meta.md)：治理闭环、交叉审计、意见冲突与自审问询由用户裁决。
+- 路线图增加**阶段 2b**（与阶段 3 GOAL-004 可并行）；同步 `goal-tree.md`。
+
 ## 当前进展
 
 | 方向 | 状态 | 说明 |
 |------|------|------|
-| 文档体系规则 | 主体完成 | 规则、GOAL-001～004、goal-tree、AGENTS 已落地 |
+| 文档体系规则 | 主体完成 | 规则、GOAL-001～005、goal-tree、AGENTS 已落地 |
 | Web 应用 | 骨架完成 | 基础骨架可用，见 GOAL-002；真实数据接入属 GOAL-004 B–D |
-| Skills / 提示词 | 阶段完成 | GOAL-003 done；主入口 `/govern` + 文档原语 |
+| Skills / 提示词 | 地基完成 + 闭环升级中 | GOAL-003 done；GOAL-005 active 5%（闭环与交叉审计） |
 | 核心数据模型 | 进行中 | GOAL-004 active 25%；阶段 A 完成，B 待开工 |
 
 ## 下一步（根目标视角）
 
 1. 推进 GOAL-004 阶段 B：只读扫描与详情加载服务层。
-2. 阶段 4（Web 与文档联动深化）待 GOAL-004 读路径可用后再拆。
+2. 推进 GOAL-005 阶段 A：原则定稿（交叉审计 / 用户裁决点）。
+3. 阶段 4（Web 与文档联动深化）待 GOAL-004 读路径可用后再拆。
