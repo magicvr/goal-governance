@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.0
+version: 0.2.1
 ---
 
 # 审计 · GOAL-005
@@ -231,3 +231,101 @@ A-001 为 `self/pass`，本意见为 `independent/conditional`。冲突点是 A-
 ### 结论
 
 阶段 B 可关闭。成功标准 2～5 已满足。整体目标关门仍待阶段 D 可选加强验证后由用户决定。
+
+> **后续标注（2026-07-18 · D-009）**：本条无条件 `pass` 被 A-007 挑战。用户/编排器**采纳 A-007 `conditional`**。详见 A-008。
+
+---
+
+## A-007 · 阶段 B 独立交付复审（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`design-plan` + `execution-facts`
+- **scope**：GOAL-005 阶段 B（编排器、04/05、宿主入口、安装与文档、契约测试）
+- **verdict**：conditional
+
+### 范围与区间
+
+复审 A-006 所列阶段 B 交付，核对 `00-govern-orchestrator`、`04-write-audit`、`05-independent-audit`、Claude/Grok/Copilot wrapper、安装脚本、README 与测试证据；不审阶段 D 的正式压测与整体关门条件。
+
+### 成果（有证据）
+
+| 成果 | 结论 | 证据 |
+|------|------|------|
+| 编排器意见台账、P-004 与开放必改门禁 | 已实现 | `skills/prompts/00-govern-orchestrator.md` v0.3.0：§1b、§3、S4、关门检查 |
+| 04 结构化审计与响应 | 已实现 | `skills/prompts/04-write-audit.md` v0.3.0：source、scope、verdict、findings、required/recommended、response 模式 |
+| 独立审计核心与职责分离 | 已实现 | `skills/prompts/05-independent-audit.md`；三类宿主 audit wrapper 均要求 `source: independent`、只写意见、交回 `/govern` |
+| PowerShell 默认安装面 | 已验证 | 在全新临时目录执行 `skills/install.ps1 -All`，实际生成 Claude/Grok 的 govern+audit、Copilot 的 govern+audit、00/05 prompts 与模板 |
+| 契约测试 | 已复现 | `.venv` Python 3.11.9 运行 `skills/tests/test_skills_orchestrator.py`：17 tests OK |
+
+### 对照成功标准
+
+| 阶段 B 相关标准 | 状态 | 说明 |
+|-----------------|------|------|
+| `00` 实现意见汇总、裁决与响应路径 | 已达成 | 核心提示词有明确流程与门禁 |
+| `04` 支持最小意见结构 | 已达成 | 字段、模式与关闭证据要求齐全 |
+| 独立 `/audit` 路径可用 | 已达成 | 核心与三宿主入口均已落地 |
+| 安装与 README/prompts 产品面一致 | **部分达成** | 脚本与 prompts 一致；`skills/README.md` 的参数表和手动安装示例仍遗漏默认 `/audit` |
+
+### Findings
+
+#### F-017 · README 默认安装说明与实际分发不一致
+
+- **严重度**：med
+- **建议**：required
+- **状态**：open
+- **描述**：`skills/README.md` 的产品模型和脚本行为均为默认安装 `/govern + /audit`，但“脚本安装”参数表仍把 `--copilot` / `-Copilot` 写成“仅 govern prompt”；Claude/Grok 手动安装映射与命令也只复制 govern skill。读者按手动步骤执行会缺少 `/audit`，按参数表理解也会得到错误产品面。
+- **证据**：`skills/README.md`“手动安装”“脚本安装”两节；`skills/install.ps1` 的 `$wrapperNames = @('govern', 'audit')`；`skills/install.sh` 的 `WRAPPER_NAMES=(govern audit)`；本次隔离 PowerShell 安装结果。
+
+#### F-018 · 现有测试未覆盖真实安装与 README 语义一致性
+
+- **严重度**：low
+- **建议**：recommended
+- **状态**：open
+- **描述**：17 项测试均为文件内容/正则结构契约，能防止入口消失，但不能发现 F-017 这类文档语义漂移，也不执行安装脚本。PowerShell 本次人工隔离安装通过；当前 Windows 环境的 WSL 无 `/bin/bash`，无法执行 `install.sh`，其运行证据仍不足。
+- **证据**：`skills/tests/test_skills_orchestrator.py`；本次 `install.ps1 -All` 临时目录验证；`bash -n skills/install.sh` 因本机 WSL 缺少 `/bin/bash` 未能运行。
+
+### 必改项汇总
+
+1. 关闭 F-017：统一 `skills/README.md` 的手动安装示例与参数表，明确 Claude、Grok、Copilot 默认均安装 `/govern + /audit`；advanced 原语仍保持 opt-in。
+
+### 与既有意见的异同
+
+- 与 A-006 一致：00/04/05 核心、宿主入口、PowerShell 分发和 17 项契约测试均有证据，未发现职责分离或开放必改门禁回退。
+- 与 A-006 冲突：A-006 判定阶段 B `pass` 且“无 required 开放项”；本意见发现 F-017，故为 `conditional`。按 P-004，应由用户通过 `/govern` 裁决并留痕；裁决前不应把阶段 B 视为无条件通过。
+
+### 结论 + 建议给编排器/用户的下一步
+
+阶段 B 的实现主体可用，当前缺口集中在 README 分发说明，修正成本低但直接影响可安装性承诺。建议通过 `/govern` 采纳 A-007 `conditional`，修正文档并补一条精确契约测试后，再追加响应记录关闭 F-017；F-018 可并入阶段 D 或 CI 加强项。
+
+### 声明
+
+本意见不修改 `status` / `progress`；响应、冲突裁决与 finding 关闭由 `/govern` 处理。
+
+---
+
+## A-008 · 编排响应 A-007（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response`
+- **scope**：响应 A-007；关闭 F-017；F-018 → 阶段 D
+- **关联决策**：[D-009](01-decision.md)
+
+### P-004 冲突裁决
+
+| 意见 | verdict | 裁决 |
+|------|---------|------|
+| A-006 self | pass（阶段 B） | **不再维持无条件 pass**（加注） |
+| A-007 independent | conditional | **采纳**（用户 `/govern` 指令） |
+
+### Findings 关闭状态
+
+| ID | 状态 | 证据 |
+|----|------|------|
+| F-017 | **已关闭** | `skills/README.md` v0.5.1：手动安装含 Claude/Grok/Copilot 的 audit 路径与命令；脚本参数表写明默认 govern+audit；契约测试 `test_skills_readme_default_install_documents_govern_and_audit` |
+| F-018 | **开放 · 阶段 D** | 真实安装执行 / 更广自动化仍属 D；不阻塞 F-017 关闭 |
+
+### 结论
+
+A-007 已响应。阶段 B 质量结论为 **conditional → required 已关**；可进入阶段 D（含 F-018 与正式压测）。  
+`status` 仍为 `active`（整体目标未关门）。

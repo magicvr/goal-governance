@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.5.0
+version: 0.5.1
 ---
 
 # Skills
@@ -80,6 +80,8 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
+**默认产品面**（与脚本一致）：每个宿主都装 **`/govern` + `/audit`**。填表类 advanced slash 仍为可选。
+
 #### Claude Code
 
 ```text
@@ -87,12 +89,15 @@ install/claude/AGENTS.md
   →  <repo>/AGENTS.md
 install/claude/skills/govern/SKILL.md
   →  <repo>/.claude/skills/govern/SKILL.md
+install/claude/skills/audit/SKILL.md
+  →  <repo>/.claude/skills/audit/SKILL.md
 ```
 
 ```bash
-mkdir -p .claude/skills/govern
+mkdir -p .claude/skills/govern .claude/skills/audit
 cp ./skills/install/claude/AGENTS.md ./AGENTS.md
 cp ./skills/install/claude/skills/govern/SKILL.md .claude/skills/govern/SKILL.md
+cp ./skills/install/claude/skills/audit/SKILL.md .claude/skills/audit/SKILL.md
 ```
 
 #### Grok Build
@@ -100,20 +105,27 @@ cp ./skills/install/claude/skills/govern/SKILL.md .claude/skills/govern/SKILL.md
 ```text
 install/grok/skills/govern/SKILL.md
   →  <repo>/.grok/skills/govern/SKILL.md
+install/grok/skills/audit/SKILL.md
+  →  <repo>/.grok/skills/audit/SKILL.md
 ```
 
 （建议同时有根 `AGENTS.md` 作项目规则；可与 Claude 共用。）
 
 ```bash
-mkdir -p .grok/skills/govern
+mkdir -p .grok/skills/govern .grok/skills/audit
 cp ./skills/install/grok/skills/govern/SKILL.md .grok/skills/govern/SKILL.md
+cp ./skills/install/grok/skills/audit/SKILL.md .grok/skills/audit/SKILL.md
 ```
 
 #### GitHub Copilot
 
 ```text
-copilot-instructions.md → .github/copilot-instructions.md
-**默认** slash：.github/prompts/govern.prompt.md
+install/copilot/copilot-instructions.md
+  →  .github/copilot-instructions.md
+install/copilot/prompts/govern.md
+  →  .github/prompts/govern.prompt.md
+install/copilot/prompts/audit.md
+  →  .github/prompts/audit.prompt.md
 ```
 
 | Wrapper | 斜杠 | 何时安装 |
@@ -126,10 +138,10 @@ copilot-instructions.md → .github/copilot-instructions.md
 
 | 参数 | 作用 |
 |------|------|
-| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/govern/SKILL.md` |
-| `--grok` / `-Grok` | `.grok/skills/govern/SKILL.md` |
-| `--copilot` / `-Copilot` | copilot-instructions + **仅** govern prompt |
-| `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced Copilot slash |
+| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/govern` + **`audit`**（`/govern` + `/audit`） |
+| `--grok` / `-Grok` | `.grok/skills/govern` + **`audit`**（`/govern` + `/audit`） |
+| `--copilot` / `-Copilot` | copilot-instructions + **默认双入口** `govern` + `audit` prompts |
+| `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
 | `--all` / `-All` | Claude + Grok + Copilot + prompts/templates |
 | `--skills-dir` / `-SkillsDir` | 默认 `./skills` |
 

@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.2.0
+version: 0.2.1
 ---
 
 # 执行记录 · GOAL-005
@@ -66,13 +66,20 @@ version: 0.2.0
 - **测试**：`python skills/tests/test_skills_orchestrator.py` → 17 tests OK。
 - **F-015**：规则层 + `00`/`04`/`05` 最小字段与判断流程已落地；标记关闭（提示词侧）。
 
+### 2026-07-18 · 响应 A-007（D-009 / A-008）
+
+- **裁决**：采纳 A-007 `conditional`（相对 A-006 无条件 pass）。
+- **F-017 关闭**：修订 `skills/README.md` v0.5.1（手动安装 + 脚本参数表默认 `/govern`+`/audit`）。
+- **契约测试**：新增 `test_skills_readme_default_install_documents_govern_and_audit`（防 README 再写「仅 govern」）。
+- **F-018**：登记为阶段 D 开放项（真实安装执行与更广一致性自动化）。
+
 ## 待办（计划，非已完成）
 
 1. ~~阶段 A：原则定稿~~ **已完成**
-2. ~~阶段 B：提示词与入口~~ **已完成**
-3. ~~阶段 C：安装与文档~~ **基本并入 B**（可选再跑一遍 install 干跑）
-4. 阶段 D：用新入口再压测一轮后关门审计
+2. ~~阶段 B：提示词与入口~~ **已完成**（经 A-007 响应后 F-017 已关）
+3. ~~阶段 C：安装与文档~~ **基本并入 B**
+4. 阶段 D：F-018 + 正式 `/audit`→`/govern` 压测与关门审计
 
 ## 进度评估
 
-**约 70%**：A+B（及安装文档）完成；成功标准条目均已勾选；正式关门压测（D）未做。
+**约 72%**：A+B 交付已响应独立复审 required；阶段 D（含 F-018）未开始。

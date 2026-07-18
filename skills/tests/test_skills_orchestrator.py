@@ -183,6 +183,25 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"Grok|\.grok")
         self.assertIn("SKILL.md", text)
 
+    def test_skills_readme_default_install_documents_govern_and_audit(self) -> None:
+        """F-017 guard: README manual/script sections must match default govern+audit surface."""
+        text = README.read_text(encoding="utf-8")
+        norm = text.replace("\\", "/")
+        # Manual install: both skills/paths for each host family
+        self.assertIn(".claude/skills/audit", norm)
+        self.assertIn(".grok/skills/audit", norm)
+        self.assertRegex(text, r"audit\.prompt\.md|prompts/audit")
+        self.assertIn("skills/audit/SKILL.md", norm)
+        # Must not revive the old "Copilot = only govern prompt" claim
+        self.assertNotIn("仅** govern prompt", text)
+        self.assertNotIn("**仅** govern prompt", text)
+        self.assertNotRegex(text, r"(?i)--copilot[^\n]{0,80}仅\s*govern\s*prompt")
+        # Explicit default surface language
+        self.assertRegex(text, r"`/govern`\s*\+\s*`/audit`")
+        self.assertRegex(text, r"--claude[^\n]*audit", re.I)
+        self.assertRegex(text, r"--grok[^\n]*audit", re.I)
+        self.assertRegex(text, r"--copilot[^\n]*(audit|默认双入口)", re.I)
+
     def _assert_primary_govern_skill(self, path: Path, host_label: str) -> None:
         self.assertTrue(path.is_file(), f"missing {host_label} skill: {path}")
         text = path.read_text(encoding="utf-8")

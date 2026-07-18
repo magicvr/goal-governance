@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.2
+version: 0.1.3
 ---
 
 # 决策记录 · GOAL-005
@@ -196,3 +196,26 @@ version: 0.1.2
 
 - **维持 A-001 pass 并忽略 A-002**：自证幻觉复发。  
 - **把 F-015 全部拖到以后且不登记**：阶段 B 易漏设计。  
+
+---
+
+## D-009 · 响应 A-007：采纳 conditional；关 F-017；F-018 归阶段 D
+
+**日期**：2026-07-18  
+**状态**：accepted
+
+**决定**：
+
+1. **P-004**：A-006（`self` / `pass`）与 A-007（`independent` / `conditional`）冲突 → **采纳 A-007 `conditional`**，不再维持阶段 B 无条件 pass。  
+2. **立即关闭 F-017**：修正 `skills/README.md` 手动安装与脚本参数表，明确默认 **`/govern` + `/audit`**；并增加 README 语义契约测试防止回退。  
+3. **F-018**（真实安装执行 / 更广文档-脚本一致性自动化）**纳入阶段 D**，不阻塞本次 F-017 关闭。
+
+**为什么**：
+
+- 用户经 `/govern` 明确指令采纳 conditional 并指定关闭范围。  
+- F-017 有可核对文档缺口且修正成本低；F-018 属 CI/安装运行证据加强，适合阶段 D。
+
+**未选方案**：
+
+- **维持 A-006 pass**：掩盖 README 与分发不一致。  
+- **本回合强制实现 F-018 全量安装集成测试**：超出用户指定范围，且 Windows 上 `install.sh` 证据本就受限。  
