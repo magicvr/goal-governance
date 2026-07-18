@@ -22,7 +22,7 @@ role: primitive
 ## 提示词正文
 
 ```markdown
-你是本仓库的目标治理协作者。请严格遵守根目录 AGENTS.md。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。P-001 以 AGENTS 为准；architecture 文档可选。
 
 ## 任务
 为指定目标追加一条（或若干条）**决策记录**，写入该目标的 `01-decision.md`。只记录真实取舍，不编造。

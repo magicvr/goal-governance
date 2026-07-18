@@ -111,13 +111,38 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("代码与文档边界", text)
         self.assertRegex(text, r"仓库根|普遍形态")
         self.assertRegex(text, r"禁止.*web/|不是.*通用|未约定")
-        self.assertRegex(text, r"刚装 Skills|先验|用户决定")
-        # Must not keep the old hard rule as the only guidance
+        self.assertRegex(text, r"刚装|先验|用户决定")
         self.assertNotRegex(
             text,
             r"应用代码仅在 `\{\{APP_DIR\}\}`",
             msg="template must not force APP_DIR-only application code",
         )
+
+    def test_portability_skills_pkg_and_optional_architecture(self) -> None:
+        """Reusable package must not require ./skills name or architecture/."""
+        template = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
+        orch = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
+        govern = (COPILOT_PROMPTS / "govern.md").read_text(encoding="utf-8")
+        for text, label in (
+            (template, "AGENTS.template"),
+            (orch, "orchestrator"),
+            (govern, "govern wrapper"),
+        ):
+            self.assertRegex(
+                text,
+                r"SKILLS_PKG|改名|可能不是 `skills`|不是 `skills`",
+                msg=f"{label} should allow renamed skills package",
+            )
+            self.assertRegex(
+                text,
+                r"architecture.*可选|不要求.*architecture|仅当存在|若存在",
+                msg=f"{label} should treat architecture as optional",
+            )
+        self.assertNotIn("GOAL-001-main-vision", orch)
+        self.assertNotIn("GOAL-001-main-vision", (PROMPTS / "01-create-new-goal.md").read_text(encoding="utf-8"))
+        # Orchestrator must locate package by content, not hard-coded ./skills only
+        self.assertIn("SKILLS_PKG", orch)
+        self.assertRegex(orch, r"main-vision")
 
     def test_skills_readme_documents_single_primary_path(self) -> None:
         text = README.read_text(encoding="utf-8")

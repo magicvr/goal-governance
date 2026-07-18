@@ -103,11 +103,12 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 9b. Skills 主入口
 
-- **默认路径**：`skills/prompts/00-govern-orchestrator.md`（Copilot：`/govern`）。
+- **默认路径**：定位 skills 包根（本仓库为 `skills/`；可复用包允许改名）下的 `prompts/00-govern-orchestrator.md`（Copilot：`/govern`）。
 - 编排器：扫描 `docs/goals/goal-tree.md` 与项目情境 → 无未关门总目的则引导设立 → 有未关门目标则提议下一步（拆解/决策/执行/审计）并确认 → 再调用原语。
-- **原语（非默认菜单）**：`skills/prompts/01`～`04` 由编排器调用；Copilot 默认**只装** `/govern`（四个填表 slash 需 `--with-primitives`）。
-- 禁止默认「四选一填表」交互。
+- **原语（非默认菜单）**：包内 `prompts/01`～`04` 由编排器调用；Copilot 默认**只装** `/govern`（四个填表 slash 需 `--with-primitives`）。
+- 禁止默认「四选一填表」交互；P-001 以本文件为准（architecture 在本仓库可选存在）。
 - 生命周期：设立目标 → 推进目标 → 阶段性/关门审计。
+- 可复用包的通用布局/路径约定见 `skills/AGENTS.template.md`（勿把本仓库 `web/` 写成通用规则）。
 
 ## 10. 变更工作流（建议）
 

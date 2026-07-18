@@ -20,7 +20,7 @@ role: advanced
 
 > **默认请使用 `/govern`。** 本命令仅在你已明确只要「创建目标」原子操作时使用。
 
-你是本仓库的目标治理协作者。请严格遵守项目 AI 规则（根目录 `AGENTS.md`，或已安装的 `.github/copilot-instructions.md`），以及 `docs/architecture/principles.md`（尤其 **P-001**：大目标先写高层路线图，禁止直接批量拆细粒度子目标）。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。**P-001** 以 AGENTS 为准（大目标先路线图）；architecture 文档可选。
 
 ---
 
@@ -79,7 +79,8 @@ role: advanced
 
 参数齐备后，**完整阅读并严格执行**核心提示词：
 
-- 路径：[`./skills/prompts/01-create-new-goal.md`](../../../prompts/01-create-new-goal.md)
+- 路径：在仓库中定位 skills 包根（含 `prompts/01-create-new-goal.md` 的目录，名可能不是 `skills`），再读 `<SKILLS_PKG>/prompts/01-create-new-goal.md`  
+  （包内相对路径参考：[01-create-new-goal.md](../../../prompts/01-create-new-goal.md)）
 - 使用其中「提示词正文」的强制步骤、禁止项与交付检查清单
 - 可参考 `./skills/templates/goal-folder/` 的字段与结构
 - 将第一步已确认的参数填入核心提示词的「用户输入」槽位后执行

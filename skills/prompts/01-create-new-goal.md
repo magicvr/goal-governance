@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.1
+version: 0.1.2
 role: primitive
 ---
 
@@ -23,22 +23,23 @@ role: primitive
 ## 提示词正文
 
 ```markdown
-你是本仓库的目标治理协作者。请严格遵守根目录 AGENTS.md 与 docs/architecture/principles.md（尤其 P-001）。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。  
+P-001 以 AGENTS 为准；`docs/architecture/principles.md` 仅当存在时参考，不强制。
 
 ## 任务
 按下列信息创建一个新目标。不要省略任何必备文件。
 
 ## 用户输入（请先向我确认空白项，或使用我填写的内容）
 如果某项信息缺失或不确定，请先向我确认，不要猜测后继续。
-- 目标标题：【填写】
-- 英文短 slug（小写、短横线）：【填写，如 skills-practice】
-- 父目标 ID：【填写，如 GOAL-001-main-vision；Root 则写 null】
+- 目标标题：【填写；语言跟随用户，不强制中/英】
+- 英文短 slug（小写、短横线）：【填写，如 improve-auth】
+- 父目标 ID：【填写完整 id，如 GOAL-001-my-root-slug；Root 则写 null】
 - 一句话概述：【填写】
 - 成功标准（可验证的勾选项）：【列出 2～5 条】
 - 是否明显需要拆解（尚不能直接执行）？【是 / 否】
 - 若「是」：请先在 00-meta 或 01-decision 写高层路线图（阶段 + 先后关系），本回合**不要**批量创建细粒度子目标
 - 初始状态：draft 或 active（默认 draft）
-- 今日日期：【YYYY-MM-DD】
+- 今日日期：【会话/系统当前 YYYY-MM-DD】
 
 ## 强制步骤（按顺序）
 1. 读取 `docs/goals/goal-tree.md`，确认当前最大编号；新编号 = 最大编号 + 1（三位，如 GOAL-004）。GOAL-001 永久为 Root，禁止改号。
@@ -49,10 +50,10 @@ role: primitive
    - 02-execution.md
    - 03-audit.md
    - attachments/（可空，目录必须存在）
-4. 可参考 `skills/templates/goal-folder/` 的结构与字段。
+4. 定位 skills 包根（含 `templates/goal-folder/` 或 `prompts/01-create-new-goal.md` 的目录，名称可能不是 `skills`），可参考其中 `templates/goal-folder/` 的结构与字段。
 5. 每个 Markdown 文件 frontmatter 至少包含：status, created, updated, parent, version。
    - 00-meta.md 还必须有：id, title；建议有 progress。
-   - parent 填父目标完整 ID，或 Root 时为 null。
+   - parent 填父目标完整 ID，或 Root 时为 null（Root slug 由用户确认，勿默认 main-vision）。
 6. 内容要求：
    - 00-meta：概述、范围（可选）、成功标准、父目标链接
    - 01-decision：若已有明确取舍则写「决定了什么 + 为什么」；暂无则写「待立项后补充」，不要编造决策
@@ -66,6 +67,7 @@ role: primitive
 - 禁止跳过 goal-tree.md
 - 禁止对大目标跳过路线图、直接创建大量子目标
 - 禁止虚构已完成工作或审计结论
+- 禁止未请求就创建 docs/architecture 或应用骨架
 
 ## 交付检查清单
 完成后逐条自检并简短汇报：

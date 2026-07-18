@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.3.1
+version: 0.3.3
 ---
 
 # Skills
@@ -144,11 +144,14 @@ bash ./skills/install.sh --all --skills-dir ./skills
 
 | 规则 | 说明 |
 |------|------|
-| 扁平存储 | 目标平铺在 `docs/goals/` |
-| 编号 | `GOAL-001` 为 Root；之后顺序编号 |
+| 扁平存储 | 目标平铺在 `docs/goals/`（**本包约定路径**） |
+| 编号 | `GOAL-001` 为 Root；之后顺序编号；Root **slug 自定** |
 | 层级 | 仅 `parent` 字段 |
 | 总览 | 变更后必须更新 `goal-tree.md` |
 | 五件套 | meta / decision / execution / audit / attachments |
+| 代码布局 | **普遍在仓库根**；子目录仅项目自定，勿照搬 `web/` |
+| 包目录名 | 常为 `skills/`，可改名；按含 `prompts/00-…` 的目录定位 |
+| architecture | **可选**；P-001 以安装后的 AGENTS 为准 |
 | P-001 | 大目标先路线图，再按阶段拆子目标 |
 
 ## 与本仓库的关系

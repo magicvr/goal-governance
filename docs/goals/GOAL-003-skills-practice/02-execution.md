@@ -12,6 +12,17 @@ version: 0.2.0
 
 ## 时间线
 
+### 2026-07-18 · 通用性审计：清除更多先验假定
+
+- 审计发现并修正（可复用 Skills，非本仓库专属规则）：
+  1. **硬编码 `./skills`**：改为按含 `prompts/00-…` 的目录定位 **SKILLS_PKG**（可改名）
+  2. **强制 `docs/architecture/principles.md`**：P-001 以 AGENTS 为准，architecture 可选
+  3. **示例 Root slug `main-vision`**：改为项目自定；禁止默认强加
+  4. **标题语言 / 日期 / 双交付 Web / 擅自建 architecture**：编排器与模板禁止未请求创建骨架
+  5. 01～04、govern wrapper、install 规则同步；测试 `test_portability_*`
+- 仍作为**本包产品约定**保留：`docs/goals/` 扁平 + `GOAL-001` Root 编号（框架语义，非从本仓库业务抄来的布局偏见）
+- 本仓库根 AGENTS 仍描述本地 `web/` + `skills/` 事实路径
+
 ### 2026-07-18 · 纠正「代码只能在 web/」与空仓先验判断
 
 - 偏差：可复用 Skills 把本仓库形态（`web/`）写成通用「应用代码仅在 APP_DIR」；编排器扫描易把「刚装 Skills、文件少」当成非代码项目。

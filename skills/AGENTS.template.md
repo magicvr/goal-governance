@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.3.2
+version: 0.3.3
 ---
 
 # AGENTS.md
@@ -34,7 +34,8 @@ version: 0.3.2
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
 5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
 6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
-   - 值为**父目标完整 id**（含 slug，例：`GOAL-001-main-vision`），Root 为 `null`。
+   - 值为**父目标完整 id**（含 slug，例：`GOAL-001-your-root-slug`），Root 为 `null`。
+   - Root 的 slug **由项目自定**（不要照搬其他仓库的 `main-vision` 等示例名）。
    - **禁止**用目录嵌套、文件名或正文标题充当层级真相。
 
 ## 3. 目标五件套（创建时一次建齐）
@@ -49,7 +50,7 @@ docs/goals/GOAL-NNN-short-slug/
 ```
 
 - 不得省略任一文件或目录。
-- 可从 `{{GOAL_FOLDER_TEMPLATE}}` 复制后改写（本仓库示例：`skills/templates/goal-folder/`）。
+- 可从 `{{GOAL_FOLDER_TEMPLATE}}` 复制后改写（常见：`<skills-pkg>/templates/goal-folder/`；包目录名可能不是 `skills`）。
 
 ## 4. Frontmatter 最低要求
 
@@ -97,7 +98,7 @@ docs/goals/GOAL-NNN-short-slug/
 4. 路线图就位后，再**按阶段**创建与执行具体子目标。
 5. 已可直接执行的小目标**无需**强行补路线图。
 
-原则说明见 `docs/architecture/principles.md`（P-001，若存在）。
+原则以**本文件（AGENTS）第 6 节**为准；`docs/architecture/principles.md` **若存在**可作补充，**不要求**每个项目都有 architecture 目录。
 
 ## 7. 必须同步更新 goal-tree.md
 
@@ -114,31 +115,40 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 8. 代码与文档边界
 
-- **目标真相源**：长期过程记录在 `docs/goals/`，不要把目标正文只写进业务代码或 UI 当唯一真相。
+- **目标真相源**：长期过程记录在 `docs/goals/`（本 Skills 包的约定路径），不要把目标正文只写进业务代码或 UI 当唯一真相。
 - **代码布局不统一、无默认「必须子目录」**：
-  - **普遍形态**：应用/库代码常在**仓库根**（或根下按语言惯例分散：`*.py`、`src/`、`lib/`、`packages/` 等）。
-  - **可选形态**：部分项目把应用收拢到子目录（如 `web/`、`app/`）——这是**该项目自己的约定**，不是 Skills 的通用硬规则。
-  - 占位符 `{{APP_DIR}}` **仅在本项目已明确约定应用子目录时**填写；未约定则视为「代码可在仓库根及项目实际目录」，**禁止**照搬示例项目的 `web/`。
-- **刚装 Skills、仓库尚几乎只有 skills/docs 时**：不得先验判定「不是代码项目」或「代码将来一定在某子目录」。是否写代码、代码放根还是子目录，**由用户决定**（或读取用户已有 README/架构约定）；可观察目录信号，但观察 ≠ 定论。
-- 若项目启用 `docs/architecture/`：扩展架构约定时先更新文档再改代码（与布局无关）。
+  - **普遍形态**：应用/库代码常在**仓库根**，或按该语言/生态惯例分布（目录名因项目而异，**无**统一必选子目录）。
+  - **可选形态**：部分项目把应用收拢到子目录（如 `web/`、`app/`、`services/`）——**该项目自己的约定**，不是本包通用硬规则。
+  - 占位符 `{{APP_DIR}}` **仅在本项目已明确约定应用子目录时**填写；未约定则视为「代码可在仓库根及项目实际目录」，**禁止**照搬任一示例仓库的布局。
+- **刚装本包、仓库文件很少时**：不得先验判定「不是代码项目」或「代码将来一定在某子目录」。是否写代码、代码放根还是子目录，**由用户决定**（或读取用户已有 README/架构约定）；可观察目录信号，观察 ≠ 定论。
+- **语言与文案**：目标标题/正文语言跟随用户与项目（中/英/其他均可）；**文件夹 slug** 仍建议小写英文短横线（文件系统与跨工具友好）。不要强制中文标题或英文标题。
+- **日期**：使用会话/系统当前日期 `YYYY-MM-DD`，不要假定特定时区或「永远是某地当地日」。
+- 若项目启用 `docs/architecture/`：扩展架构约定时先更新文档再改代码；**未启用则不要创建** architecture，除非用户要求。
+
+## 8b. Skills 包路径（可改名）
+
+- 安装后包目录**常见**名为 `skills/`，也可用其他名（如 `my-governance-skills`）。
+- 定位方式：查找含 `prompts/00-govern-orchestrator.md`（或 `prompts/01-create-new-goal.md`）的目录，记为 **skills 包根**；后续原语、模板均相对该根，**禁止**写死「必须是 `./skills`」。
+- 占位符 `{{SKILLS_DIR}}` 填该包根（相对仓库根的路径）。
 
 ## 9. 交付形态（按项目裁剪）
 
-默认：**文档驱动的目标治理**（可叠加代码库，布局见第 8 节）。
+默认：**文档驱动的目标治理**（可叠加代码库，布局见第 8 节）。**不**默认假设项目必须同时有 Web 应用。
 
-1. **文档体系（必选）**：`docs/goals/` + `goal-tree.md`
-2. **产品/代码（常见）**：仓库根或项目约定目录中的应用、库、脚本等
-3. **可视化应用（可选）**：若单独存在，路径以项目约定为准（可为根，或 `{{APP_DIR}}` 等）
-4. **Skills / 提示词（可选）**：`{{SKILLS_DIR}}`，AI 按同一规则读写目标
+1. **文档体系（本包约定）**：`docs/goals/` + `goal-tree.md`
+2. **产品/代码（常见）**：仓库根或项目实际目录中的应用、库、脚本等
+3. **独立可视化应用（可选）**：仅当项目确有时；路径自定
+4. **Skills 包（可选）**：`{{SKILLS_DIR}}`
 
 改规则或目标模型时，评估是否需同步文档 / 代码 / Skills。
 
-## 9b. Skills 主入口（若已安装 Skills）
+## 9b. Skills 主入口（若已安装本包）
 
-- **默认路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md`（Copilot：`/govern`）。
-- 编排器行为：扫描项目与 goal-tree → 分类（无未关门总目的 vs 有未关门目标）→ 引导设立总目的 **或** 提议下一步（拆解/决策/执行/审计）并确认 → 再调用原语写入。
-- **原语（非默认菜单）**：`01-create-new-goal` … `04-write-audit`（由编排器调用）。advanced slash 默认**不安装**（需 `--with-primitives`）。
-- 禁止默认把用户推入「四选一填表」交互。
+- **默认路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md`（Copilot 若已装：`/govern`）。
+- 编排器：扫描 goal-tree → 分类 → 引导设立总目的 **或** 提议下一步并确认 → 再调用原语。
+- **原语**：`01`～`04` 由编排器调用；advanced slash 默认不安装（需 `--with-primitives`）。
+- 禁止默认「四选一填表」交互。
+- **P-001** 以本文件第 6 节为准；勿因缺少 `docs/architecture/principles.md` 而拒绝工作。
 
 ## 10. 变更工作流
 
@@ -148,11 +158,11 @@ docs/goals/GOAL-NNN-short-slug/
 3. 若尚不可直接执行 → 先写/更新高层路线图（00-meta 或 01-decision）
 4. 创建或修改目标五件套（frontmatter + 正文）
 5. 更新 goal-tree.md（树 + 表）
-6. 必要时更新 docs/README.md、architecture/、根 README.md
-7. 再改代码或 Skills（若有；代码路径以项目实际布局为准，默认勿假设仅在 `web/`）
+6. 仅当项目已有对应文件/目录时：更新 docs/README、architecture、根 README 等
+7. 再改代码或 Skills（路径以项目实际为准；勿假设仅在 `web/`）
 ```
 
-步骤 **1、3–5 强制**；编排优先；6–7 按影响面执行。
+步骤 **1、3–5 强制**；编排优先；6–7 按影响面且**不强制创建**用户未要求的目录。
 
 ## 11. 禁止事项
 
@@ -164,7 +174,10 @@ docs/goals/GOAL-NNN-short-slug/
 - 用 `parent` 以外的方式（目录、标题、正文）作为层级真相
 - 新建目标时漏五件套任一文件或目录
 - 把「应用代码只能在某子目录（如 `web/`）」当成未约定项目的通用规则
-- 仅因仓库刚装 Skills、文件很少，就先验断定「非代码项目」或擅自规定代码目录
+- 仅因刚装本包、仓库文件很少，就先验断定「非代码项目」或擅自规定代码目录
+- 写死 skills 包路径必须为 `./skills`（忽略改名）
+- 因缺少 `docs/architecture/` 就认为规则不完整或拒绝执行
+- 把其他项目的 Root slug（如 `main-vision`）当成所有仓库的默认 Root 名
 
 ## 12. 完成前检查清单
 
@@ -183,11 +196,13 @@ docs/goals/GOAL-NNN-short-slug/
 | 错误 | 正确做法 |
 |------|----------|
 | 用 `docs/goals/父/子/` 建层级 | 平铺 + `parent` 字段 |
-| `parent: GOAL-001`（缺 slug） | `parent: GOAL-001-main-vision`（完整 id） |
+| `parent: GOAL-001`（缺 slug） | `parent: GOAL-001-<实际 slug>`（完整 id） |
 | 只改 `00-meta` 进度，不改 goal-tree | 两处一起改 |
 | 大目标一次创建十几个子目标 | 先路线图，再按阶段立项 |
 | 把计划写成「已完成」 | 只记已发生事实；计划单独标注 |
 | 复制模板后仍留示例 id（如 GOAL-042） | 改成真实 id / 标题 / parent |
+| 假定包目录一定叫 `skills/` | 按含 `prompts/00-…` 的目录定位 |
+| 假定必有 `docs/architecture/` | architecture 可选；P-001 在 AGENTS 即可 |
 
 ## 快速链接（按项目填写）
 

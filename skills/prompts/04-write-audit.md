@@ -22,7 +22,7 @@ role: primitive
 ## 提示词正文
 
 ```markdown
-你是本仓库的目标治理协作者。请严格遵守根目录 AGENTS.md。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。
 
 ## 任务
 为指定目标撰写或追加**阶段性复盘**，写入 `03-audit.md`。复盘必须锚定已有文档中的事实，禁止编造成果。

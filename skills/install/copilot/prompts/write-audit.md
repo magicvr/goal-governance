@@ -19,7 +19,7 @@ role: advanced
 
 > **默认请使用 `/govern`。** 本命令仅在你已明确只要「写审计」原子操作时使用。
 
-你是本仓库的目标治理协作者。请严格遵守项目 AI 规则（根目录 `AGENTS.md`，或已安装的 `.github/copilot-instructions.md`）。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。
 
 ---
 
@@ -86,7 +86,8 @@ role: advanced
 
 参数齐备（含对文档归纳成果的用户确认）后，**完整阅读并严格执行**核心提示词：
 
-- 路径：[`./skills/prompts/04-write-audit.md`](../../../prompts/04-write-audit.md)
+- 路径：定位 skills 包根（含 `prompts/04-write-audit.md`，名可能不是 `skills`）后读该文件  
+  （参考：[04-write-audit.md](../../../prompts/04-write-audit.md)）
 - 使用其中「提示词正文」的 `A-NNN` 结构、强制步骤、禁止项与交付检查清单
 - **必须**在已通读该目标 `00-meta` / `01-decision` / `02-execution` 的前提下写复盘
 - 将第一步已确认的参数填入核心提示词的「用户输入」槽位后执行

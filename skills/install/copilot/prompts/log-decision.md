@@ -19,7 +19,7 @@ role: advanced
 
 > **默认请使用 `/govern`。** 本命令仅在你已明确只要「记录决策」原子操作时使用。
 
-你是本仓库的目标治理协作者。请严格遵守项目 AI 规则（根目录 `AGENTS.md`，或已安装的 `.github/copilot-instructions.md`）。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。
 
 ---
 
@@ -84,7 +84,8 @@ role: advanced
 
 参数齐备后，**完整阅读并严格执行**核心提示词：
 
-- 路径：[`./skills/prompts/02-record-decision.md`](../../../prompts/02-record-decision.md)
+- 路径：定位 skills 包根（含 `prompts/02-record-decision.md`，名可能不是 `skills`）后读该文件  
+  （参考：[02-record-decision.md](../../../prompts/02-record-decision.md)）
 - 使用其中「提示词正文」的条目格式（`D-NNN`）、强制步骤、禁止项与交付检查清单
 - 将第一步已确认的参数填入核心提示词的「用户输入」槽位后执行
 

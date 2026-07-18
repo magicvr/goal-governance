@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.3.2
+version: 0.3.3
 ---
 
 # GitHub Copilot 项目指令 · 目标治理
@@ -35,7 +35,8 @@ version: 0.3.2
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
 5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
 6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
-   - 值为**父目标完整 id**（含 slug，例：`GOAL-001-main-vision`），Root 为 `null`。
+   - 值为**父目标完整 id**（含 slug，例：`GOAL-001-your-root-slug`），Root 为 `null`。
+   - Root 的 slug **由项目自定**，勿照搬其他仓库示例名。
    - **禁止**用目录嵌套、文件名或正文标题充当层级真相。
 
 ## 3. 目标五件套（创建时一次建齐）
@@ -50,7 +51,7 @@ docs/goals/GOAL-NNN-short-slug/
 ```
 
 - 不得省略任一文件或目录。
-- 可从 `skills/templates/goal-folder/`（若已复制）复制后改写。
+- 可从 skills 包内 `templates/goal-folder/` 复制后改写（包目录名可能不是 `skills`）。
 
 ## 4. Frontmatter 最低要求
 
@@ -98,7 +99,7 @@ docs/goals/GOAL-NNN-short-slug/
 4. 路线图就位后，再**按阶段**创建与执行具体子目标。
 5. 已可直接执行的小目标**无需**强行补路线图。
 
-原则说明见 `docs/architecture/principles.md`（P-001，若存在）。
+原则以本文件第 6 节为准；`docs/architecture/principles.md` 若存在可作补充，**不要求**必有 architecture。
 
 ## 7. 必须同步更新 goal-tree.md
 
@@ -116,19 +117,22 @@ docs/goals/GOAL-NNN-short-slug/
 ## 8. 代码与文档边界
 
 - **目标真相源**：长期过程记录在 `docs/goals/`，不要把目标正文只写进业务代码或 UI 当唯一真相。
-- **代码布局不统一**：普遍形态是代码在**仓库根**（或根下语言惯例目录）；`web/`、`app/`、`src/` 等子目录只是**部分项目的约定**，不是 Skills 通用硬规则。未约定时禁止照搬示例项目的 `web/`。
-- **刚装 Skills、文件很少时**：不得先验判定「不是代码项目」或「代码必须进某子目录」——由用户决定（可观察目录信号，观察 ≠ 定论）。
-- 若启用 `docs/architecture/`：扩展架构时先更新文档再改代码。
+- **代码布局不统一**：普遍形态是代码在**仓库根**（或该语言惯例分布）；子目录仅为部分项目约定。禁止照搬示例仓库的 `web/`。
+- **刚装本包、文件很少时**：不得先验判定「非代码项目」或规定代码目录——由用户决定。
+- **语言**：标题/正文跟随用户；slug 建议英文短横线。
+- architecture 目录**可选**；未启用则不要擅自创建。
+
+## 8b. Skills 包路径
+
+- 包目录常见名 `skills/`，也可改名。以含 `prompts/00-govern-orchestrator.md` 的目录为准，**禁止**写死必须为 `./skills`。
 
 ## 9. 交付形态（按项目裁剪）
 
-默认：**文档驱动的目标治理**（可叠加任意布局的代码库）。
+默认：**文档驱动的目标治理**（可叠加任意布局的代码库）。**不**默认必须有 Web 应用。
 
-1. **文档体系（必选）**：`docs/goals/` + `goal-tree.md`
+1. **文档体系**：`docs/goals/` + `goal-tree.md`
 2. **产品/代码（常见）**：仓库根或项目实际目录
-3. **Skills / 提示词（可选）**：`skills/` 或本仓库提供的 prompts/templates
-
-改规则或目标模型时，评估是否需同步文档 / 代码 / Skills。
+3. **Skills 包（可选）**：上节定位的包目录
 
 ## 10. 变更工作流
 
@@ -137,8 +141,8 @@ docs/goals/GOAL-NNN-short-slug/
 2. 若尚不可直接执行 → 先写/更新高层路线图（00-meta 或 01-decision）
 3. 创建或修改目标五件套（frontmatter + 正文）
 4. 更新 goal-tree.md（树 + 表）
-5. 必要时更新 docs/README.md、architecture/、根 README.md
-6. 再改代码或 Skills（若有；路径以项目实际为准）
+5. 仅当项目已有对应文件时更新 docs/README、architecture 等（不强制新建）
+6. 再改代码或 Skills（路径以项目实际为准）
 ```
 
 步骤 **1–4 强制**；5–6 按影响面执行。
@@ -153,7 +157,8 @@ docs/goals/GOAL-NNN-short-slug/
 - 用 `parent` 以外的方式（目录、标题、正文）作为层级真相
 - 新建目标时漏五件套任一文件或目录
 - 把「应用代码只能在 `web/` 等子目录」当成未约定项目的通用规则
-- 仅因刚装 Skills、仓库文件少，就先验断定「非代码项目」
+- 仅因刚装本包、仓库文件少，就先验断定「非代码项目」
+- 写死 skills 包必须为 `./skills`；因缺 architecture 拒绝工作；强加示例 Root slug
 
 ## 12. 完成前检查清单
 
@@ -172,28 +177,29 @@ docs/goals/GOAL-NNN-short-slug/
 | 错误 | 正确做法 |
 |------|----------|
 | 用 `docs/goals/父/子/` 建层级 | 平铺 + `parent` 字段 |
-| `parent: GOAL-001`（缺 slug） | `parent: GOAL-001-main-vision`（完整 id） |
+| `parent: GOAL-001`（缺 slug） | `parent: GOAL-001-<实际 slug>`（完整 id） |
 | 只改 `00-meta` 进度，不改 goal-tree | 两处一起改 |
 | 大目标一次创建十几个子目标 | 先路线图，再按阶段立项 |
 | 把计划写成「已完成」 | 只记已发生事实；计划单独标注 |
 | 复制模板后仍留示例 id（如 GOAL-042） | 改成真实 id / 标题 / parent |
 
-## Skills 主入口（若已安装 skills/）
+## Skills 主入口（若已安装本包）
 
-- **默认（且通常是唯一 slash）**：**`/govern`** → `skills/prompts/00-govern-orchestrator.md`（扫描 goal-tree、分类情境、引导设立总目的或提议下一步，确认后调用原语）。
-- **原语正文**：`skills/prompts/01`～`04` 由编排器调用；**默认安装不会**把 `/new-goal` 等四个填表 slash 写入 `.github/prompts/`。
-- 若曾手动或使用 `--with-primitives` 安装了 advanced slash，仍应优先 `/govern`，勿引导用户四选一填表。
+- **默认（且通常是唯一 slash）**：**`/govern`** → 定位 **SKILLS_PKG**（含 `prompts/00-govern-orchestrator.md` 的目录，名可能不是 `skills`）后执行编排器。
+- **原语正文**：`<SKILLS_PKG>/prompts/01`～`04` 由编排器调用；**默认安装不会**装四个填表 slash。
+- 若曾用 `--with-primitives` 安装 advanced slash，仍应优先 `/govern`。
 - 生命周期：设立目标 → 推进目标 → 阶段性/关门审计。
+- P-001 以本文件第 6 节为准；architecture 可选。
 
 ## GitHub Copilot 使用提示
 
 - 本文件路径固定为 `.github/copilot-instructions.md`，供 GitHub Copilot 读取项目级指令。
 - 若仓库根另有 `AGENTS.md`（例如同时给 Claude Code 用），两边规则应保持一致。
-- 日常目标协作使用 **`/govern`**；需要原子写入时由编排器调用 01～04，不要默认打开四入口菜单。
+- 日常目标协作使用 **`/govern`**；需要原子写入时由编排器调用 01～04。
 - 在 VS Code 中修改本文件后，新对话/Agent 会话会采用更新后的指令。
 
 ## 快速链接（按项目填写）
 
 - 目标树：`docs/goals/goal-tree.md`
-- Root Goal：`docs/goals/GOAL-001-.../00-meta.md`
-- 治理原则：`docs/architecture/principles.md`（若存在）
+- Root Goal：`docs/goals/GOAL-001-<your-slug>/00-meta.md`
+- 治理原则：本文件第 6 节；`docs/architecture/principles.md`（若存在）
