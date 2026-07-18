@@ -137,12 +137,14 @@ copilot-instructions.md → .github/copilot-instructions.md
 bash ./skills/install.sh --all --skills-dir ./skills
 bash ./skills/install.sh --claude --skills-dir ./skills
 bash ./skills/install.sh --grok --skills-dir ./skills
+bash ./skills/install.sh --copilot --skills-dir ./skills
 ```
 
 ```powershell
 .\skills\install.ps1 -All -SkillsDir .\skills
 .\skills\install.ps1 -Claude -SkillsDir .\skills
 .\skills\install.ps1 -Grok -SkillsDir .\skills
+.\skills\install.ps1 -Copilot -SkillsDir .\skills
 ```
 
 安装后：使用 **`/govern`** 推进；需要交叉审计时用 **`/audit`**，再用 `/govern` 响应意见。
