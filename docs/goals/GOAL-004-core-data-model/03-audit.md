@@ -1,11 +1,11 @@
 ---
 id: GOAL-004-core-data-model
 doc: audit
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 审计 · GOAL-004
@@ -239,3 +239,96 @@ version: 0.6.0
 ### 结论与建议下一步
 
 **pass**：阶段 D 的实现与验证证据满足本目标全部成功标准，可进入 GOAL-004 关门审计。此条仅确认实施阶段完成；目标保持 `active / 100%`，等待用户确认关门后才可改为 `done`。
+
+## A-006 · GOAL-004 关门独立交叉审计（2026-07-19）
+
+- **source**：independent
+- **auditor**：Codex audit skill
+- **类型 / scope**：close-out / GOAL-004 整体完成情况；四项成功标准、阶段 A～D 实施事实、既有 residual 与关门条件
+- **verdict**：pass
+
+### 范围与区间
+
+独立核对 `00-meta.md` 的范围、成功标准和路线图，`01-decision.md` 的 D-004～D-015，`02-execution.md` 的阶段 A～D 时间线，既有 A-001～A-005 审计意见，以及当前实现与测试：
+
+- `web/services/models.py`、`web/services/parse_md.py`、`web/services/goals_repo.py`
+- `web/main.py`、`web/templates/index.html`、`web/templates/goal_detail.html`
+- `web/tests/test_goals_repo.py`、`web/tests/test_main.py`
+- 当前仓库 `docs/goals/` 扫描与 `goal-tree.md` 投影校验
+
+### 成果（有证据）
+
+- 领域模型与五件套映射已形成设计、决策和阶段 A 整改闭环；读取层提供 `GoalLoadResult`、校验诊断、路径 containment、树校验报告和显式审计结论状态。
+- `GoalsRepository` 已覆盖 List/Get/Create/Update；Create/影响树投影的 Update 同步五件套与 `goal-tree.md`，受控写入失败可补偿，补偿失败会阻断后续写入并由 `repair_goal_tree()` 恢复。
+- 首页和 `/goals/{goal_id}` 详情路由复用仓库真实读取结果；详情包含 meta、成功标准、附件及 Decision / Execution / Audit 三类基础信息，非法或不存在目标返回 404。
+- 独立复跑 `..\\.venv\\Scripts\\python.exe -m unittest discover -s tests -v`：20 项通过，1 项因 Windows 无符号链接创建权限跳过；`compileall`、`pip check`、`git diff --check` 通过。
+- 当前仓库扫描加载 5/5 个目标且无读取 issue；树校验复现 3 个既有字段差异，无缺项、孤儿、环或重复编号。该结果与 F-001 的 residual 记录一致。
+
+### 对照成功标准
+
+| 标准 | 独立核验 | 证据 |
+|------|----------|------|
+| 完成 Goal 及关联实体的数据模型设计 | 已达成 | 阶段 A 设计说明、D-004～D-013、A-001/A-002 |
+| 实现 Goal 的基础 CRUD（创建、读取、更新、列表） | 已达成 | `GoalsRepository.list_goals/get_goal/create_goal/update_goal` 与 `test_goals_repo.py` |
+| Web 首页和详情页展示真实目标数据 | 已达成 | `web/main.py` 首页/详情路由、`test_main.py` 首页与 404 回归测试 |
+| 详情页展示决策 / 执行 / 审计基础信息 | 已达成 | `goal_detail.html` 三个详情面板、`test_goal_detail_renders_decision_execution_and_audit` |
+
+### Findings
+
+本轮未新增 finding，亦未发现开放的 `required` / 必改项。以下既有 residual 经复核仍保持开放，不应在本意见中静默关闭：
+
+| Finding | 状态 | 独立复核 |
+|---------|------|----------|
+| F-001 | open / recommended | 当前 `goal-tree.md` 与两个目标的标题/进度仍有 3 个字段差异；服务层能报告且 Web 会展示，不影响读取真实性。 |
+| F-002 | open / recommended | containment 实现与测试存在，但本 Windows 进程仍无法创建真实符号链接；需在具备权限的 Windows 或非 Windows CI 复跑。 |
+| F-003 | open / recommended | 受控替换失败、补偿失败与 repair 有测试；进程中断和并发写入仍无端到端验证，且 D-006 明确本阶段不提供乐观锁。 |
+
+### 必改项汇总
+
+无开放 required finding；P-003 的 required 门禁未被触发。F-001～F-003 均为 recommended residual，可由后续治理或部署可靠性目标继续处理。
+
+### 与既有意见的异同
+
+本意见与 A-003～A-005 的阶段自审结论一致（均为 `pass`），但独立复跑了完整测试和当前仓库树诊断；未发现需要推翻既有完成主张的新证据，也未将既有 recommended residual 误记为已关闭。
+
+### 结论与建议给编排器/用户的下一步
+
+**pass**：GOAL-004 的实施范围和四项成功标准均有可复核证据，当前没有阻断关门的 required finding。建议通过 `/govern` 汇总 A-001～A-006、确认是否接受 F-001～F-003 residual，并由用户决定是否将 `00-meta.md` 与 `goal-tree.md` 的目标状态从 `active` 变更为 `done`；在该用户裁决前，本意见不放行状态变更。
+
+### 声明
+
+本意见为 `source: independent` 的交叉审计，只追加审计台账，不修改目标 `status` / `progress` 或 `goal-tree`；后续响应由 `/govern` 处理。
+
+## A-007 · A-006 关门意见的编排响应（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex
+- **类型 / scope**：response / A-006 independent close-out、P-004 用户裁决与 F-001～F-003 residual 接受
+- **verdict**：pass
+
+### 范围与区间
+
+响应 A-006 的关门建议，并记录用户针对 P-004 的明确裁决。此条是编排响应，**不是**补做的 self close-out 审计。
+
+### 用户裁决与关闭证据
+
+| 项目 | 状态 | 证据 |
+|------|------|------|
+| A-006 independent close-out | 已采纳 | A-006 `pass`；四项成功标准均有可复核证据，无开放 required finding |
+| P-004 self close-out 选择 | 已裁决 | 用户明确选择「跳过 self 关门审计」；取舍记录为 D-016 |
+| F-001 | 已接受为 residual，仍 open | 3 个既有 tree 投影字段差异持续在服务层和 Web 诊断中可见 |
+| F-002 | 已接受为 residual，仍 open | 当前环境无符号链接创建权限；保留后续具备权限环境复跑要求 |
+| F-003 | 已接受为 residual，仍 open | 受控失败恢复已测试；进程中断与并发写入验证留给后续可靠性范围 |
+| 目标状态 | 已执行 | `00-meta.md`、三个 section frontmatter 与 `goal-tree.md` 同步为 `done / 100%` |
+
+### Findings
+
+未新增 finding。F-001～F-003 不因本响应而关闭，继续是 `open / recommended` residual。
+
+### 必改项汇总
+
+无开放 required finding。
+
+### 结论与建议下一步
+
+**pass**：用户已完成 P-004 裁决并接受 residual；GOAL-004 依据 A-006 和本响应关门为 `done / 100%`。后续处理 F-001～F-003 时应单独立项或纳入对应的文档维护、CI/环境或可靠性工作，不回溯否定本目标的关门结论。

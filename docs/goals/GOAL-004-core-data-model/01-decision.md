@@ -1,11 +1,11 @@
 ---
 id: GOAL-004-core-data-model
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 决策记录 · GOAL-004
@@ -345,3 +345,33 @@ version: 0.6.0
 | 将 Markdown 直接标记为可信 HTML | 文档输入未经过 HTML 清洗，安全边界不清楚 |
 
 **影响**：新增首页和详情路由测试；阶段 D 页面是只读工作台，后续写入交互需复用 D-014 的仓库服务命令。
+
+## D-016 · 用户裁决：接受关门 residual 并结束 GOAL-004
+
+**日期**：2026-07-19
+**状态**：accepted
+
+**决定**：
+
+- 按用户明确指令，**不**补充 self close-out 审计；以 A-006 的 independent close-out 结论和既有 A-001～A-005 阶段证据作为关门审视依据。
+- 接受 F-001、F-002、F-003 为 `open / recommended` residual，不将其误记为已关闭或已修复。
+- 将 GOAL-004 状态由 `active / 100%` 变更为 `done / 100%`。
+
+**为什么**：
+
+- A-006 已独立核验四项成功标准并给出 `pass`，且没有开放 required finding 或与既有 self 意见冲突。
+- P-004 的「独立审计而无同 scope self 审计」裁决点已向用户提出；用户明确选择跳过 self close-out 并接受 residual。
+- 三项 residual 均有明确边界、可见诊断或后续复测路径，不阻断本目标已完成的模型、CRUD 和只读 Web 交付。
+
+**未选方案**：
+
+| 方案 | 未选原因 |
+|------|----------|
+| 强制追加 self close-out 后再关门 | 用户在 P-004 裁决中明确选择跳过；A-006 已提供独立整体核验 |
+| 先修复 F-001～F-003 再关门 | 均为 recommended residual，且会扩大至文档维护、环境权限或部署可靠性范围 |
+| 保持 `active / 100%` 等待未来环境 | 会使已满足成功标准且无 required finding 的目标长期无法关门 |
+
+**影响**：
+
+- 在 [03-audit.md](03-audit.md) 以 A-007 记录对 A-006 与 residual 的编排响应；F-001～F-003 仍保持 open。
+- 同步本目标五件套 frontmatter、[goal-tree.md](../goal-tree.md) 与 GOAL-001 路线图/执行记录；后续如需处理 residual，应另行治理而不回写本目标为 active。

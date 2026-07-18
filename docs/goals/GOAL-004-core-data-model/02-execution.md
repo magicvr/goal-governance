@@ -1,11 +1,11 @@
 ---
 id: GOAL-004-core-data-model
 doc: execution
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 执行记录 · GOAL-004
@@ -65,11 +65,18 @@ version: 0.6.0
 - 本地 Uvicorn 实测 `http://127.0.0.1:8000/` 与 `http://127.0.0.1:8000/goals/GOAL-004-core-data-model` 均返回 200；浏览器在 1440×960 与 390×844 下验证首页和详情不为空、布局可用，Decision / Execution / Audit 标签可切换。
 - 勾选两项 Web 成功标准，路线图阶段 D → **已完成**；进度由 **75% 调整为 100%**。目标 `status` 保持 `active`，等待单独关门路径。
 
-## 后续
+### 2026-07-19 · GOAL-004 关门
 
-1. 对 GOAL-004 进行关门审计，并由用户确认是否将 `status` 变更为 `done`。
-2. F-001（既有 goal-tree 投影差异）、F-002（Windows 符号链接环境）与 F-003（进程中断/并发写入）保持为 recommended residual，不阻断本阶段完成。
+- A-006 independent close-out 审计复核四项成功标准并给出 `pass`；未发现开放 required finding，也未与 A-001～A-005 的阶段结论冲突。
+- P-004 裁决点已向用户呈现。用户明确指示跳过 self close-out、接受 F-001～F-003 residual 并关门；取舍记录为 D-016，A-007 记录编排响应。
+- 同步本目标五件套 frontmatter、[goal-tree.md](../goal-tree.md) 与 GOAL-001 路线图/执行记录，状态由 `active / 100%` 变更为 `done / 100%`。
+
+## 关闭后 residual
+
+1. F-001：`goal-tree.md` 的 3 个既有投影字段差异保持可见，后续作为文档维护或投影语义澄清处理。
+2. F-002：在具备符号链接权限的 Windows 或非 Windows CI 环境复跑逃逸测试。
+3. F-003：若进入多进程部署或高可靠场景，再补进程中断恢复与并发写入策略验证。
 
 ## 进度评估
 
-**100%（实施范围）**：阶段 A 设计、阶段 B 读取、阶段 C 可恢复基础 CRUD、阶段 D 真实数据 Web 接入均有代码、自动化测试和浏览器验证证据。目标仍为 `active`，因为关门审计和用户确认尚未发生。
+**done / 100%**：阶段 A 设计、阶段 B 读取、阶段 C 可恢复基础 CRUD、阶段 D 真实数据 Web 接入均有代码、自动化测试、浏览器验证和 independent close-out 审计证据。F-001～F-003 已获用户接受为 open / recommended residual，不影响本目标关门。

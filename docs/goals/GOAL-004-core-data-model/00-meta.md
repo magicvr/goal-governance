@@ -1,11 +1,11 @@
 ---
 id: GOAL-004-core-data-model
 title: 实现核心数据模型与 Goal 基础管理
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.5.0
+version: 0.6.0
 progress: 100%
 ---
 
@@ -49,7 +49,7 @@ progress: 100%
 | 阶段 C | 写路径（创建 / 更新） | **已完成** | `GoalsRepository` 已实现 Create/Update、goal-tree 同步、可恢复提交与 `repair_goal_tree()`；14 项单测通过（1 项环境跳过） |
 | 阶段 D | Web 接入真实数据 | **已完成** | 首页与 `/goals/{goal_id}` 复用 `GoalsRepository` 展示真实数据、诊断与三类详情内容；20 项单测通过（1 项环境跳过） |
 
-**先后关系**：A → B → C → D。A～D 已完成；A-005 阶段自审通过。目标实施范围已达成，仍待单独的关门审计与用户确认后再变更 `status`。
+**先后关系**：A → B → C → D。A～D 已完成；A-005 阶段自审与 A-006 独立关门审计均为 pass。用户已在 D-016 接受 F-001～F-003 residual 并明确跳过 self close-out；A-007 完成编排响应，目标已关门。
 
 ## 父目标
 

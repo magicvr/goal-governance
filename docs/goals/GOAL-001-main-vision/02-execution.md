@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.1.3
+version: 0.1.4
 ---
 
 # 执行记录 · GOAL-001
@@ -54,6 +54,11 @@ version: 0.1.3
 - GOAL-004 已将 Markdown 真相源接入首页和目标详情页，详情可查看 Decision / Execution / Audit 基础信息及文档诊断；阶段 D 自动化测试、编译/依赖检查与桌面/移动浏览器验证均已完成。
 - GOAL-004 已完成 A～D 全部实施阶段并记录 A-005 self 阶段审计，进度为 `100%`；目标仍为 `active`，待关门审计和用户确认。
 
+### 2026-07-19 · GOAL-004 关门
+
+- A-006 independent close-out 审计为 `pass`，无开放 required finding；P-004 裁决由用户完成，选择跳过 self close-out 并接受 F-001～F-003 为 open / recommended residual。
+- GOAL-004 以 D-016 和 A-007 留痕后标记为 `done / 100%`；根目标路线图阶段 3 随之完成。F-001～F-003 应在后续对应范围处理，不阻断本次关门。
+
 ## 当前进展
 
 | 方向 | 状态 | 说明 |
@@ -61,10 +66,10 @@ version: 0.1.3
 | 文档体系规则 | 主体完成 | 规则、GOAL-001～005、goal-tree、AGENTS 已落地 |
 | Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互属后续阶段 |
 | Skills / 提示词 | 已完成当前阶段 | GOAL-003、GOAL-005 均为 done；F-019 为 GOAL-005 结项后 recommended residual |
-| 核心数据模型 | 实施完成 | GOAL-004 active 100%；阶段 A～D 完成，待关门审计 |
+| 核心数据模型 | 已完成 | GOAL-004 done 100%；阶段 A～D 与关门路径均已完成 |
 
 ## 下一步（根目标视角）
 
-1. 对 GOAL-004 进行关门审计并由用户确认是否标记为 `done`。
-2. 阶段 4（Web 与文档体系联动深化）待 GOAL-004 关门后再拆分。
+1. 阶段 4（Web 与文档体系联动深化）尚未立项；按 P-001 先明确路线图或创建可执行子目标。
+2. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
 3. F-019 待具备 Linux/macOS CI 或 Unix 环境时单独补证，不阻塞当前路线。
