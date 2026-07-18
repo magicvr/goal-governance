@@ -114,6 +114,20 @@ macOS / Linux：
 - <http://127.0.0.1:8000/execution>
 - <http://127.0.0.1:8000/audit>
 
+## 测试
+
+从 `web/` 目录使用项目虚拟环境运行：
+
+```powershell
+..\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+macOS / Linux：
+
+```bash
+../.venv/bin/python -m unittest discover -s tests -v
+```
+
 ## 技术说明
 
 - `main.py` 通过 `Path(__file__).resolve().parent` 定位 `static/` 与 `templates/`，可在任意工作目录启动。

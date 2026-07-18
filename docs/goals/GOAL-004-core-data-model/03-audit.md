@@ -4,8 +4,8 @@ doc: audit
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
-updated: 2026-07-18
-version: 0.3.0
+updated: 2026-07-19
+version: 0.4.0
 ---
 
 # 审计 · GOAL-004
@@ -97,3 +97,54 @@ version: 0.3.0
 ### 结论
 
 **阶段 A 数据模型设计审计通过，A-001 意见已闭环。** 本次设计审计结论状态为 `final`，仅表示阶段 A 设计可作为实现依据，不代表 GOAL-004 已关单。下一步进入阶段 B 读取路径实现。
+
+## A-003 · 阶段 B 读取路径实施事实自审（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex
+- **类型 / scope**：execution-facts / 阶段 B 读取路径（列表、详情、诊断、树校验与测试）
+- **verdict**：pass
+
+### 范围与区间
+
+核对阶段 A §10 检查清单与阶段 B 实际产物：`web/services/`、`web/tests/`、`web/requirements.txt`、`web/README.md`，以及 [02-execution.md](02-execution.md) 2026-07-19 的验证记录。
+
+### 成果（有证据）
+
+- `GoalsRepository` 已提供可注入 `GOALS_DIR` 的 List/Get，并显式返回 `GoalLoadResult` 与稳定 issue code；普通读取无写副作用。
+- 路径边界、部分缺失降级、frontmatter/version 校验、结构化树诊断和数字编号稳定排序均有实现及夹具测试。
+- 真实仓库扫描成功加载 5/5 个目标、无读取错误或警告；树投影差异被结构化报告，而非静默覆盖 meta。
+- 项目虚拟环境运行 7 项单测通过；`compileall` 与 `pip check` 通过。
+
+### 对照成功标准
+
+| 标准 | 状态 | 证据 |
+|------|------|------|
+| 完成 Goal 及关联实体的数据模型设计 | 已达成 | 阶段 A + A-001/A-002 |
+| 实现 Goal 基础 CRUD | 部分达成 | 阶段 B 已完成 Read/List；Create/Update 属阶段 C |
+| Web 首页和详情页展示真实目标数据 | 未开始 | 阶段 D |
+| 详情展示决策 / 执行 / 审计基础信息 | 部分准备 | 阶段 B 已解析三类文档；页面接入属阶段 D |
+
+### Findings
+
+#### F-001 · 当前 goal-tree 投影存在 3 个字段差异
+
+- **严重度**：low
+- **建议**：recommended
+- **描述与证据**：真实扫描报告 GOAL-001/002 的表格标题与 meta 不同，GOAL-001 的表格 progress 与 meta 缺省值不同；读取层已正确返回 `tree_drift: true` 和字段明细。
+- **状态**：open；属于文档维护或投影语义澄清，不阻断阶段 B。
+
+#### F-002 · Windows 环境未执行真实符号链接逃逸用例
+
+- **严重度**：low
+- **建议**：recommended
+- **描述与证据**：containment 逻辑和测试均已存在；当前进程因 Windows `WinError 1314` 无创建符号链接权限而跳过该用例。
+- **状态**：open；建议在具备符号链接权限或非 Windows CI 环境复跑。
+
+### 必改项汇总
+
+无开放 required finding。
+
+### 结论与建议下一步
+
+**pass**：阶段 B 合同与主要异常路径均有实现和测试证据，可进入阶段 C。F-001/F-002 为低风险 recommended residual，不阻断推进；下一步按 D-006/D-013 实现 Create/Update、goal-tree 同步与故障恢复测试。

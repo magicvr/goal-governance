@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
-updated: 2026-07-18
-version: 0.3.0
+updated: 2026-07-19
+version: 0.4.0
 ---
 
 # 执行记录 · GOAL-004
@@ -36,12 +36,21 @@ version: 0.3.0
 - 文档诊断未发现格式错误；未修改 GOAL-004 的范围、status 或 progress，因此 `goal-tree.md` 无需变更。
 - 进度保持 **25%**：阶段 A 设计已评审并修正，阶段 B 读取代码尚未开始。
 
+### 2026-07-19 · 阶段 B：读取路径实现与验证
+
+- 在 `web/services/` 实现领域模型、Markdown/frontmatter 解析和 `GoalsRepository`：覆盖 `list_goals`、`get_goal`、无效文档诊断、canonical ID、路径 containment、五件套降级读取、附件索引与 `GoalTreeIndex` 校验报告。
+- `web/requirements.txt` 新增 `python-frontmatter>=1.1.0,<2.0.0`；`web/README.md` 增加使用项目虚拟环境运行测试的命令。
+- 在 `web/tests/test_goals_repo.py` 与 `web/tests/fixtures/valid-goals/` 建立夹具测试，覆盖有效列表/详情、非法 frontmatter、缺失文件/version、硬字段校验、无副作用读取、树漂移/孤儿/环/重复编号/稳定排序、审计否定句与路径逃逸。
+- 修正 `GoalTreeNode.path` 为相对 `docs/goals` 的路径，并增加回归断言，与阶段 A 设计契约一致。
+- 验证事实：项目 `.venv` 下 `unittest` 共 7 项通过；符号链接逃逸用例因当前 Windows 进程无创建符号链接权限跳过 1 项；`compileall` 与 `pip check` 通过。
+- 真实数据只读扫描加载 `docs/goals` 中 5/5 个目标，错误/警告均为 0；树诊断按设计报告 3 个既有投影字段差异（GOAL-001/002 标题、GOAL-001 progress），未修改源文档。
+- 阶段 B 标记为**已完成**，进度由 **25% 调整为 50%**；阶段 C/D 尚未开始。
+
 ## 待办
 
-1. 阶段 B：在 `web/services/` 实现只读 `list_goals` / `get_goal`（含加载诊断、路径 containment、树校验报告），加夹具单测
-2. 阶段 C：Create/Update 写回 + goal-tree 强制同步
-3. 阶段 D：首页/详情接真实数据
+1. 阶段 C：Create/Update 写回 + goal-tree 强制同步
+2. 阶段 D：首页/详情接真实数据
 
 ## 进度评估
 
-**约 25%**：阶段 A 设计、审计与整改已闭环；读取路径与代码尚未开始。
+**约 50%**：阶段 A 设计与阶段 B 读取路径均已完成并有测试证据；Create/Update 写回与 Web 接入仍待实现。

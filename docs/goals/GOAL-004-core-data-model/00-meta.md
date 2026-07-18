@@ -4,9 +4,9 @@ title: 实现核心数据模型与 Goal 基础管理
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
-updated: 2026-07-18
-version: 0.2.0
-progress: 25%
+updated: 2026-07-19
+version: 0.3.0
+progress: 50%
 ---
 
 # GOAL-004 · 实现核心数据模型与 Goal 基础管理
@@ -45,11 +45,11 @@ progress: 25%
 | 阶段 | 主题 | 状态 | 说明 |
 |------|------|------|------|
 | 阶段 A | 领域模型与存储约定 | **已完成** | 设计说明：[attachments/domain-model-and-storage.md](attachments/domain-model-and-storage.md)；决策 D-004～D-007 |
-| 阶段 B | 读取路径（列表 / 详情） | 未开始 | 从文档体系解析并加载 Goal 及关联信息；服务层可单测或脚本验证 |
+| 阶段 B | 读取路径（列表 / 详情） | **已完成** | `web/services/` 已实现 List/Get、解析诊断、containment 与树校验；7 项单测通过（1 项环境跳过） |
 | 阶段 C | 写路径（创建 / 更新） | 未开始 | Goal 基础创建与更新；写回约定与校验边界见设计 §6 |
 | 阶段 D | Web 接入真实数据 | 未开始 | 首页列表 + 目标详情页展示决策 / 执行 / 审计基础信息；替换骨架占位 |
 
-**先后关系**：A → B → C → D。A 已完成；B 可开工；C 依赖 A 的写约定；D 至少依赖 B（只读展示可先于完整写路径）。
+**先后关系**：A → B → C → D。A、B 已完成；下一步进入 C。C 依赖 A 的写约定；D 已具备只读数据基础，仍待页面接入。
 
 ## 父目标
 
