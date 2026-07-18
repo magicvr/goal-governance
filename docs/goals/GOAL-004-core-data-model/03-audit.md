@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 审计 · GOAL-004
@@ -148,3 +148,47 @@ version: 0.4.0
 ### 结论与建议下一步
 
 **pass**：阶段 B 合同与主要异常路径均有实现和测试证据，可进入阶段 C。F-001/F-002 为低风险 recommended residual，不阻断推进；下一步按 D-006/D-013 实现 Create/Update、goal-tree 同步与故障恢复测试。
+
+## A-004 · 阶段 C 可恢复写路径实施事实自审（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex
+- **类型 / scope**：execution-facts / 阶段 C Create、Update、goal-tree 同步与恢复
+- **verdict**：pass
+
+### 范围与区间
+
+核对 D-006、D-013、D-014 与阶段 C 产物：`web/services/goals_repo.py`、`web/tests/test_goals_repo.py`、[02-execution.md](02-execution.md) 2026-07-19 阶段 C 记录。
+
+### 成果（有证据）
+
+- Create 生成 canonical 编号、完整五件套和附件目录；Update 支持 meta 与 section 正文，拒绝非法 slug/status/parent、重复编号、环和非单 Root 树。
+- Create 与影响 tree 投影的 Update 同步生成 ASCII 树、状态表和 tree 文件 `updated`；section-only Update 不做无关 tree 写入。
+- 多文件提交在目标文件和 tree 替换失败时恢复原始内容；补偿失败会保留 recovery record、阻断普通写入，并由 `repair_goal_tree()` 恢复后重建 tree。
+- 14 项单测通过，覆盖 Create/Update、Root 规则、五件套、未知 frontmatter 保留、tree 内容、校验失败无写入、目标文件失败、tree 失败、补偿失败和 repair。
+
+### 对照成功标准
+
+| 标准 | 状态 | 证据 |
+|------|------|------|
+| 完成 Goal 及关联实体的数据模型设计 | 已达成 | 阶段 A + A-001/A-002 |
+| 实现 Goal 基础 CRUD | 已达成 | 阶段 B Read/List + 阶段 C Create/Update |
+| Web 首页和详情页展示真实目标数据 | 未开始 | 阶段 D |
+| 详情展示决策 / 执行 / 审计基础信息 | 部分准备 | 服务层已读写三类 section；页面接入属阶段 D |
+
+### Findings
+
+#### F-003 · 进程级中断与并发写入尚无端到端验证
+
+- **严重度**：med
+- **建议**：recommended
+- **描述与证据**：当前协议覆盖受控异常下的备份、补偿和 repair；未模拟进程在替换步骤间被终止，也未实现乐观锁或并发写测试。D-006 已明确本阶段无乐观锁。
+- **状态**：open；不阻断阶段 D 的单进程服务接入，后续若引入多进程部署或高可靠要求，应补进程崩溃恢复和并发策略验证。
+
+### 必改项汇总
+
+无开放 required finding。A-003 的 F-001/F-002 和本条 F-003 均为 recommended residual。
+
+### 结论与建议下一步
+
+**pass**：阶段 C 的约定主路径、同步边界和受控失败恢复均有实现与测试证据，可进入阶段 D。下一步接入首页和目标详情页，展示 Goal 与 decision/execution/audit 基础信息；写接口路由仅在页面交互需要时接入。

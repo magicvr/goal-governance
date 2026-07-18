@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
-updated: 2026-07-18
-version: 0.3.0
+updated: 2026-07-19
+version: 0.5.0
 ---
 
 # 决策记录 · GOAL-004
@@ -289,3 +289,32 @@ version: 0.3.0
 | 引入数据库事务 | 当前 Markdown SoT 不变，代价超出本目标范围 |
 
 **影响**：本决策补充 D-006 的写失败规则；D-006 其余 CRUD、校验与不物理删除约定继续有效。
+
+## D-014 · 阶段 C 以仓库服务命令承载写入与恢复
+
+**日期**：2026-07-19
+**状态**：accepted
+
+**决定**：
+
+- `GoalsRepository` 在阶段 C 提供 `create_goal`、`update_goal` 和 `repair_goal_tree()`；Web 路由仍留待阶段 D 接入。
+- Create 接收标题、slug、parent、状态、进度和各文档正文，生成完整五件套；Update 以字段和各 section 的**整段正文替换**为最小写入粒度，保留未改 section 与未知 frontmatter 键。
+- Create 或变更 title/status/progress/parent 的 Update 在内存中重建并校验 `goal-tree.md`；普通 section-only Update 不重写 tree。
+- 变更 Goal 的 `status` 或 `parent` 时，同一事务同步三个 section 文件的对应 frontmatter 和 `updated`，避免五件套保留过期的目标元数据。
+- 多文件提交失败且补偿也失败时，服务在 `docs/goals/.goal-write-recovery.json` 保留恢复记录并拒绝后续普通写入；`repair_goal_tree()` 先恢复已知备份，再以 meta 扫描重建 tree。
+
+**为什么**：
+
+- 服务命令让阶段 D 可以复用同一套校验、同步和恢复边界，而不会把文件系统细节散落到路由中。
+- Markdown 正文没有稳定的细粒度语法树；整段替换的语义明确，能够保护未修改的文档和未知 frontmatter 字段。
+- 恢复记录把“无法确认补偿是否完成”的状态显式化，避免后续写入在半提交状态上继续扩大偏差。
+
+**未选方案**：
+
+| 方案 | 未选原因 |
+|------|----------|
+| 阶段 C 直接暴露 POST/PATCH 路由 | 页面和 API 形状属于阶段 D，当前会扩大调试面 |
+| 用字符串局部替换 YAML/Markdown 行 | 难以可靠保留未知字段和任意正文结构 |
+| tree 写失败后仅报错或写日志 | 不能恢复跨文件一致性，违反 D-013 |
+
+**影响**：阶段 C 的测试必须覆盖 Create、Update、tree 同步、树替换失败后的补偿、补偿失败后的阻断，以及 `repair_goal_tree()`。

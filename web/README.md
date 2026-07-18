@@ -133,3 +133,4 @@ macOS / Linux：
 - `main.py` 通过 `Path(__file__).resolve().parent` 定位 `static/` 与 `templates/`，可在任意工作目录启动。
 - Tailwind CSS 和 HTMX 当前通过 CDN 加载。
 - `static/` 已挂载到 `/static`。
+- `services/goals_repo.py` 已提供目标的 List/Get/Create/Update 与 `repair_goal_tree()`；Web 路由接入留待目标详情与首页阶段。

@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+from datetime import date
 from pathlib import Path
-import os
-import shutil
 import tempfile
 import unittest
 
-from services.goals_repo import GoalsRepository
+from services.goals_repo import (
+    GoalRecoveryRequiredError,
+    GoalValidationError,
+    GoalWriteError,
+    GoalsRepository,
+)
 from services.models import AuditConclusionState, GoalStatus, IssueSeverity
 
 
@@ -226,6 +230,205 @@ class GoalsRepositoryTests(unittest.TestCase):
             result = GoalsRepository(root).get_goal("GOAL-001-root")
             self.assertIn("missing_version", _codes(result))
             self.assertIsNotNone(result.goal)
+
+    def test_create_and_update_keep_tree_and_unknown_metadata_in_sync(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_complete_goal(root / "GOAL-001-root", "GOAL-001-root", None)
+            repo = GoalsRepository(root)
+
+            created = repo.create_goal(
+                "Child Goal",
+                "child-goal",
+                "GOAL-001-root",
+                status=GoalStatus.ACTIVE,
+                progress="0%",
+                body_markdown="## 概述\nCreated from the service.\n",
+                section_bodies={"decision": "## D-001 · Start\n"},
+                on_date=date(2026, 7, 20),
+            )
+            self.assertIsNotNone(created.goal)
+            assert created.goal is not None
+            self.assertEqual(created.goal.id, "GOAL-002-child-goal")
+            created_dir = root / "GOAL-002-child-goal"
+            self.assertTrue((created_dir / "attachments").is_dir())
+            self.assertTrue(all((created_dir / name).is_file() for name in (
+                "00-meta.md",
+                "01-decision.md",
+                "02-execution.md",
+                "03-audit.md",
+            )))
+
+            meta_path = created_dir / "00-meta.md"
+            meta_path.write_text(
+                meta_path.read_text(encoding="utf-8").replace(
+                    "version: 0.1.0\n",
+                    "version: 0.1.0\ncustom_key: keep-me\n",
+                ),
+                encoding="utf-8",
+            )
+            updated = repo.update_goal(
+                "GOAL-002-child-goal",
+                title="Renamed Child",
+                status=GoalStatus.DONE,
+                progress="100%",
+                body_markdown="## 概述\nUpdated through the service.\n",
+                section_bodies={"execution": "### 2026-07-21 · Finished\n"},
+                on_date=date(2026, 7, 21),
+            )
+
+            self.assertIsNotNone(updated.goal)
+            assert updated.goal is not None
+            self.assertEqual(updated.goal.title, "Renamed Child")
+            self.assertEqual(updated.goal.status, GoalStatus.DONE)
+            self.assertEqual(updated.goal.progress, "100%")
+            self.assertEqual(updated.goal.meta.extra["custom_key"], "keep-me")
+            self.assertIn("Updated through the service.", updated.goal.meta.body_markdown)
+            self.assertIn("Finished", updated.goal.execution.body_markdown)
+            self.assertEqual(updated.goal.decision.metadata["status"], "done")
+            self.assertEqual(updated.goal.audit.metadata["status"], "done")
+            self.assertEqual(updated.goal.decision.metadata["parent"], "GOAL-001-root")
+
+            tree = repo.build_tree_index(repo.list_goals())
+            self.assertFalse(tree.tree_drift)
+            self.assertEqual(tree.root_ids, ("GOAL-001-root",))
+            self.assertEqual(tree.nodes[0].children_ids, ("GOAL-002-child-goal",))
+            tree_text = (root / "goal-tree.md").read_text(encoding="utf-8")
+            self.assertIn("Renamed Child", tree_text)
+            self.assertIn("100%", tree_text)
+            self.assertIn("updated: 2026-07-21", tree_text)
+            self.assertIn("GOAL-001-root · GOAL-001-root [active]", tree_text)
+            self.assertIn(
+                "└── GOAL-002-child-goal · Renamed Child [done 100%]",
+                tree_text,
+            )
+
+    def test_create_first_goal_as_the_only_root(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            repo = GoalsRepository(root)
+
+            created = repo.create_goal(
+                "Root Goal",
+                "root-goal",
+                None,
+                on_date=date(2026, 7, 20),
+            )
+
+            self.assertIsNotNone(created.goal)
+            assert created.goal is not None
+            self.assertEqual(created.goal.id, "GOAL-001-root-goal")
+            self.assertIsNone(created.goal.parent_id)
+            self.assertFalse(repo.build_tree_index(repo.list_goals()).tree_drift)
+            with self.assertRaises(GoalValidationError):
+                repo.create_goal("Second Root", "second-root", None)
+
+    def test_section_only_update_leaves_goal_tree_unchanged(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_complete_goal(root / "GOAL-001-root", "GOAL-001-root", None)
+            repo = GoalsRepository(root)
+            repo.repair_goal_tree(on_date=date(2026, 7, 20))
+            tree_before = (root / "goal-tree.md").read_bytes()
+
+            result = repo.update_goal(
+                "GOAL-001-root",
+                section_bodies={"audit": "### 结论\n阶段性记录。\n"},
+                on_date=date(2026, 7, 21),
+            )
+
+            self.assertIsNotNone(result.goal)
+            self.assertEqual((root / "goal-tree.md").read_bytes(), tree_before)
+            assert result.goal is not None
+            self.assertIn("阶段性记录", result.goal.audit.body_markdown)
+
+    def test_write_validation_rejects_invalid_parent_cycle_and_slug_without_writes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_complete_goal(root / "GOAL-001-root", "GOAL-001-root", None)
+            repo = GoalsRepository(root)
+            repo.create_goal("Child", "child", "GOAL-001-root", on_date=date(2026, 7, 20))
+            snapshot = _snapshot(root)
+
+            with self.assertRaises(GoalValidationError):
+                repo.update_goal("GOAL-002-child", parent_id="GOAL-999-missing")
+            with self.assertRaises(GoalValidationError):
+                repo.update_goal("GOAL-001-root", parent_id="GOAL-002-child")
+            with self.assertRaises(GoalValidationError):
+                repo.create_goal("Bad", "not a slug", "GOAL-001-root")
+
+            self.assertEqual(snapshot, _snapshot(root))
+
+    def test_tree_replacement_failure_compensates_all_written_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_complete_goal(root / "GOAL-001-root", "GOAL-001-root", None)
+            repo = GoalsRepository(root)
+            repo.repair_goal_tree(on_date=date(2026, 7, 20))
+            snapshot = _snapshot(root)
+            replace_file = repo._replace_file
+
+            def fail_tree_replacement(source: Path, destination: Path) -> None:
+                if destination == repo.goal_tree_file and source.name.endswith(".tmp"):
+                    raise OSError("simulated goal-tree replacement failure")
+                replace_file(source, destination)
+
+            repo._replace_file = fail_tree_replacement  # type: ignore[method-assign]
+            with self.assertRaises(GoalWriteError):
+                repo.update_goal("GOAL-001-root", title="Changed Root")
+
+            self.assertEqual(snapshot, _snapshot(root))
+            self.assertFalse(repo.recovery_record_file.exists())
+
+    def test_goal_file_replacement_failure_leaves_no_partial_write(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_complete_goal(root / "GOAL-001-root", "GOAL-001-root", None)
+            repo = GoalsRepository(root)
+            repo.repair_goal_tree(on_date=date(2026, 7, 20))
+            snapshot = _snapshot(root)
+            replace_file = repo._replace_file
+
+            def fail_meta_replacement(source: Path, destination: Path) -> None:
+                if destination.name == "00-meta.md" and source.name.endswith(".tmp"):
+                    raise OSError("simulated goal metadata replacement failure")
+                replace_file(source, destination)
+
+            repo._replace_file = fail_meta_replacement  # type: ignore[method-assign]
+            with self.assertRaises(GoalWriteError):
+                repo.update_goal("GOAL-001-root", progress="50%")
+
+            self.assertEqual(snapshot, _snapshot(root))
+            self.assertFalse(repo.recovery_record_file.exists())
+
+    def test_failed_compensation_blocks_writes_until_repair(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_complete_goal(root / "GOAL-001-root", "GOAL-001-root", None)
+            repo = GoalsRepository(root)
+            repo.repair_goal_tree(on_date=date(2026, 7, 20))
+            replace_file = repo._replace_file
+
+            def fail_commit_and_meta_restore(source: Path, destination: Path) -> None:
+                if destination == repo.goal_tree_file and source.name.endswith(".tmp"):
+                    raise OSError("simulated goal-tree replacement failure")
+                if destination.name == "00-meta.md" and source.name.endswith(".bak"):
+                    raise OSError("simulated compensation failure")
+                replace_file(source, destination)
+
+            repo._replace_file = fail_commit_and_meta_restore  # type: ignore[method-assign]
+            with self.assertRaises(GoalRecoveryRequiredError):
+                repo.update_goal("GOAL-001-root", title="Interrupted Root")
+            self.assertTrue(repo.recovery_record_file.exists())
+
+            with self.assertRaises(GoalRecoveryRequiredError):
+                repo.update_goal("GOAL-001-root", progress="50%")
+
+            repo._replace_file = replace_file  # type: ignore[method-assign]
+            repaired = repo.repair_goal_tree(on_date=date(2026, 7, 21))
+            self.assertFalse(repo.recovery_record_file.exists())
+            self.assertFalse(repaired.tree_drift)
+            self.assertEqual(repo.get_goal("GOAL-001-root").goal.title, "GOAL-001-root")
 
 
 def _meta(goal_id: str, parent: str | None, *, version: str | None = "0.1.0") -> str:

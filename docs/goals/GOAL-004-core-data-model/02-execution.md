@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 执行记录 · GOAL-004
@@ -46,11 +46,20 @@ version: 0.4.0
 - 真实数据只读扫描加载 `docs/goals` 中 5/5 个目标，错误/警告均为 0；树诊断按设计报告 3 个既有投影字段差异（GOAL-001/002 标题、GOAL-001 progress），未修改源文档。
 - 阶段 B 标记为**已完成**，进度由 **25% 调整为 50%**；阶段 C/D 尚未开始。
 
+### 2026-07-19 · 阶段 C：可恢复写路径实现与验证
+
+- 在 `web/services/goals_repo.py` 实现 `create_goal`、`update_goal` 与 `repair_goal_tree()`：Create 一次创建五件套和 `attachments/`，Update 支持 meta 与 decision/execution/audit 正文替换；不提供物理删除。
+- 写入前基于 meta 扫描校验 canonical ID、编号、单 Root、parent 存在性、环、重复编号和合法 status；变更 title/status/progress/parent 或 Create 时同步重建 `goal-tree.md` 的 ASCII 树、状态表和 frontmatter `updated`。
+- 多文件写入使用同目录临时文件、原文件备份、受控替换和补偿；补偿失败写入 `.goal-write-recovery.json` 并阻断普通写入，`repair_goal_tree()` 恢复已知备份后按 meta 重新生成 tree。
+- 变更 Goal 的 `status` 或 `parent` 时，同一事务同步三个 section 的对应 frontmatter，避免五件套保留过期元数据；普通 section-only Update 不重写 tree。
+- 记录实现取舍 [D-014](01-decision.md)；在 `web/tests/test_goals_repo.py` 增加 Create/Update、五件套、tree、字段校验、目标文件失败、tree 失败、补偿失败和 repair 的故障注入测试。
+- 验证事实：项目 `.venv` 下 14 项单测通过；符号链接逃逸用例因当前 Windows 进程无创建符号链接权限跳过 1 项；`compileall` 与 `pip check` 通过。
+- 阶段 C 标记为**已完成**，勾选基础 CRUD 成功标准，进度由 **50% 调整为 75%**；阶段 D 尚未开始。
+
 ## 待办
 
-1. 阶段 C：Create/Update 写回 + goal-tree 强制同步
-2. 阶段 D：首页/详情接真实数据
+1. 阶段 D：首页/详情接真实数据
 
 ## 进度评估
 
-**约 50%**：阶段 A 设计与阶段 B 读取路径均已完成并有测试证据；Create/Update 写回与 Web 接入仍待实现。
+**约 75%**：阶段 A 设计、阶段 B 读取与阶段 C 基础 CRUD 写回均已完成并有测试证据；Web 首页和详情接入仍待实现。

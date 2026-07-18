@@ -2,9 +2,9 @@
 title: 架构概览
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.1.2
+version: 0.1.3
 ---
 
 # 架构概览
@@ -55,8 +55,8 @@ version: 0.1.2
 
 - 文档体系规则与 GOAL-002/003/004/005 已建立；GOAL-003 Skills 以**单一编排主入口**（`00-govern-orchestrator` / `/govern`）+ 文档原语交付。
 - 治理原则 [principles.md](principles.md) 已含 P-001～P-004（闭环、交叉审计、用户裁决）；GOAL-005 阶段 A 完成，阶段 B 起改提示词。
-- GOAL-004 阶段 A 已完成：领域模型与存储约定见 [domain-model-and-storage.md](../goals/GOAL-004-core-data-model/attachments/domain-model-and-storage.md)。
-- Web 仅有模块路由与页面骨架，**未**连接文件系统读写目标（阶段 B 起实现）。
+- GOAL-004 阶段 A～C 已完成：领域模型、读取服务与可恢复 Create/Update 写入见 [domain-model-and-storage.md](../goals/GOAL-004-core-data-model/attachments/domain-model-and-storage.md)；Web 页面接入仍待阶段 D。
+- Web 仍仅有模块路由与页面骨架，尚未将目标服务接入首页或详情页。
 
 ## 演进方向（未实现，仅规划）
 
