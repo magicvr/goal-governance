@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.4
+version: 0.2.0
 ---
 
 # 执行记录 · GOAL-005
@@ -54,13 +54,25 @@ version: 0.1.4
 - 编排响应记入 [03-audit A-005](03-audit.md)：与 A-003 **无冲突**；F-008/F-010 标记为「独立复审确认已关闭」；F-015 仍归阶段 B。
 - **未**改 `status`；progress 保持约 30%（无新交付物，仅意见台账更新）。
 
+### 2026-07-18 · 阶段 B · 提示词与入口
+
+- **`00-govern-orchestrator.md` → v0.3.0**：意见台账、S4 审计响应、P-004 裁决点、开放必改门禁、关门检查；引用 `05`。
+- **`04-write-audit.md` → v0.3.0**：source / verdict / findings / required；模式 stage|close-out|response|ad-hoc。
+- **新增 `05-independent-audit.md`**：交叉审计核心（只写意见、不改 status）。
+- **入口**：Claude/Grok `audit` skill；Copilot `audit.md`；govern wrapper 同步新语义。
+- **install.sh / install.ps1**：默认安装 `/govern` + `/audit`；填表原语仍 `--with-primitives`。
+- **本仓库宿主**：`.grok/skills/{govern,audit}`、`.claude/skills/{govern,audit}`、`.github/prompts/{govern,audit}.prompt.md`。
+- **文档**：`skills/README.md` v0.5.0、`prompts/README.md` v0.3.0、AGENTS §9b。
+- **测试**：`python skills/tests/test_skills_orchestrator.py` → 17 tests OK。
+- **F-015**：规则层 + `00`/`04`/`05` 最小字段与判断流程已落地；标记关闭（提示词侧）。
+
 ## 待办（计划，非已完成）
 
-1. ~~阶段 A：原则定稿~~ **已完成**（经 A-002 响应后 required 已关，F-015 余项归 B）
-2. 阶段 B：改编排器与审计原语；落地交叉审计入口；实现 F-015 提示词侧
-3. 阶段 C：安装与文档同步（Skills README / govern skill 文案；`/audit` 安装策略）
-4. 阶段 D：实践压测与复盘
+1. ~~阶段 A：原则定稿~~ **已完成**
+2. ~~阶段 B：提示词与入口~~ **已完成**
+3. ~~阶段 C：安装与文档~~ **基本并入 B**（可选再跑一遍 install 干跑）
+4. 阶段 D：用新入口再压测一轮后关门审计
 
 ## 进度评估
 
-**约 30%**：阶段 A 原则 + 落盘 + A-002 响应整改完成；阶段 B 提示词/入口未开始。
+**约 70%**：A+B（及安装文档）完成；成功标准条目均已勾选；正式关门压测（D）未做。

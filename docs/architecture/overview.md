@@ -62,6 +62,6 @@ version: 0.1.2
 
 1. Web 读取/展示 `docs/goals`（GOAL-004 B–D；模型见上附设计）。
 2. 校验工具：编号、parent、goal-tree 一致性。
-3. Skills：GOAL-005 编排门禁/交叉审计提示词与 `/audit` 入口落地。
+3. Skills：GOAL-005 阶段 B 已落地编排门禁、`/audit` 交叉入口与 01～05 提示词；阶段 D 可再压测后关门。
 
 细节技术选型见 [tech-stack.md](tech-stack.md)。

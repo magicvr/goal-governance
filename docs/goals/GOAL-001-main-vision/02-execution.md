@@ -44,7 +44,7 @@ version: 0.1.0
 |------|------|------|
 | 文档体系规则 | 主体完成 | 规则、GOAL-001～005、goal-tree、AGENTS 已落地 |
 | Web 应用 | 骨架完成 | 基础骨架可用，见 GOAL-002；真实数据接入属 GOAL-004 B–D |
-| Skills / 提示词 | 地基完成 + 闭环升级中 | GOAL-003 done；GOAL-005 active 30%（A 完成并响应交叉审计，待 B） |
+| Skills / 提示词 | 闭环升级中 | GOAL-003 done；GOAL-005 active 70%（A+B：`/govern`+`/audit` 已落地，待 D） |
 | 核心数据模型 | 进行中 | GOAL-004 active 25%；阶段 A 完成，B 待开工 |
 
 ## 下一步（根目标视角）

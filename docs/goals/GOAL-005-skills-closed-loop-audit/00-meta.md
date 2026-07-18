@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.2
-progress: 30%
+version: 0.2.0
+progress: 70%
 ---
 
 # GOAL-005 · Skills 治理闭环与交叉审计
@@ -39,10 +39,10 @@ progress: 30%
 ## 成功标准
 
 - [x] 原则（或 AGENTS 等价节）写明：交叉审计、编排器响应全部开放意见、冲突用户裁决、有独立无自审时询问是否自审
-- [ ] `00-govern-orchestrator`（及 `/govern` 入口）实现上述用户裁决点与意见汇总/响应路径
-- [ ] `04-write-audit` 支持最小审计意见结构，并能标注 `self` / `independent`
-- [ ] 独立交叉审计路径可用（独立 skill/slash 或明确 advanced 流程），默认不直接改目标 status
-- [ ] 安装与 README/prompts 说明与产品面一致（单主入口 + 可选/独立审计）
+- [x] `00-govern-orchestrator`（及 `/govern` 入口）实现上述用户裁决点与意见汇总/响应路径
+- [x] `04-write-audit` 支持最小审计意见结构，并能标注 `self` / `independent`
+- [x] 独立交叉审计路径可用（独立 skill/slash 或明确 advanced 流程），默认不直接改目标 status
+- [x] 安装与 README/prompts 说明与产品面一致（单主入口 + 可选/独立审计）
 - [x] 至少一次书面实践记录：覆盖「独立审计 → 编排器响应」或「冲突提示用户」之一（A-002 → D-008 / A-003）
 
 ## 高层路线图
@@ -51,17 +51,17 @@ progress: 30%
 
 | 阶段 | 主题 | 状态 | 说明 |
 |------|------|------|------|
-| A | 原则与产品语义定稿 | **已完成**（A-002 响应后） | P-002～P-004 + 落盘 + 开放必改门禁；D-001～D-008；A-003 已关 F-008/F-010 |
-| B | 提示词与入口 | 未开始 | 改 `00`/`04`；落地 `/audit`（或等价独立路径） |
-| C | 安装与文档同步 | 未开始 | install、README、各宿主 wrapper（原则/AGENTS 安装源已先同步） |
-| D | 实践验证与关门审计 | 未开始 | 真实会话压测 + 本目标阶段/关门复盘 |
+| A | 原则与产品语义定稿 | **已完成** | P-002～P-004 + 落盘 + 开放必改门禁；A-002～A-005 |
+| B | 提示词与入口 | **已完成** | `00` v0.3 / `04` v0.3 / `05` + `/audit`；install 默认 govern+audit |
+| C | 安装与文档同步 | **基本完成**（并入 B） | README、install、宿主 skill 已同步；可再压测安装脚本 |
+| D | 实践验证与关门审计 | 未开始 | 用新 `/govern`+`/audit` 再跑一轮正式压测后关门 |
 
 ## 与 GOAL-003 的关系
 
 | 项 | 说明 |
 |----|------|
 | 继承 | 单一主入口 `/govern`、01–04 原语分层、安装与 AGENTS 地基 |
-| 升级 | 门禁意识与闭环响应、交叉审计、多意见冲突裁决 |
+| 升级 | 门禁意识与闭环响应、交叉审计 `/audit`、多意见冲突裁决 |
 | 历史 | GOAL-003 保持 `done`；不回写其成功标准 |
 
 ## 父目标
@@ -72,5 +72,6 @@ progress: 30%
 
 - 编排器：`skills/prompts/00-govern-orchestrator.md`
 - 审计原语：`skills/prompts/04-write-audit.md`
+- 交叉审计：`skills/prompts/05-independent-audit.md`
 - 原则：`docs/architecture/principles.md`（P-001～P-004）
-- 规则：`AGENTS.md` / `skills/AGENTS.template.md`（§6 / §6b）
+- 规则：`AGENTS.md` / `skills/AGENTS.template.md`（§6 / §6b / §9b）

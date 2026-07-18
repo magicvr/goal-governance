@@ -39,12 +39,14 @@ Usage (run from target project root):
   ./install.sh --help
 
 Options:
-  --claude              Install Claude Code: ./AGENTS.md + project skill
-                        ./.claude/skills/govern/SKILL.md  →  /govern
-  --grok                Install Grok Build project skill
-                        ./.grok/skills/govern/SKILL.md  →  /govern
+  --claude              Install Claude Code: ./AGENTS.md + project skills
+                        ./.claude/skills/govern/  →  /govern
+                        ./.claude/skills/audit/   →  /audit  (cross-audit)
+  --grok                Install Grok Build project skills
+                        ./.grok/skills/govern/  →  /govern
+                        ./.grok/skills/audit/   →  /audit
   --copilot             Install GitHub Copilot rules → ./.github/copilot-instructions.md
-                        and PRIMARY slash only → ./.github/prompts/govern.prompt.md
+                        and default slashes → govern.prompt.md + audit.prompt.md
   --with-primitives     Also install advanced Copilot slash wrappers (new-goal, …).
                         Opt-in only — avoids form-menu UX.
   --all                 Install Claude + Grok + Copilot + ensure prompts/ and
@@ -55,11 +57,12 @@ Options:
 
 Behavior:
   - Rule files always install into the current working directory (project root)
-  - Claude skill → ./.claude/skills/govern/ (SKILL.md form)
-  - Grok skill → ./.grok/skills/govern/ (SKILL.md form)
-  - Default Copilot slash surface is /govern only (orchestrator)
+  - Claude skills → ./.claude/skills/govern/ + audit/
+  - Grok skills → ./.grok/skills/govern/ + audit/
+  - Default Copilot slash surface: /govern (primary) + /audit (cross-audit)
   - Advanced form-filling slashes are NOT installed unless --with-primitives
-  - Core orchestrator remains package prompts/00-govern-orchestrator.md
+  - Core orchestrator: prompts/00-govern-orchestrator.md
+  - Cross-audit core: prompts/05-independent-audit.md
   - prompts/ and templates/ are placed under --skills-dir (with --all)
   - Source files are read from the package next to this script
   - Prompts before overwriting existing files
@@ -143,12 +146,12 @@ Done.
 Next steps:
   1. Review installed rule file(s) and adjust paths for your project.
   2. Ensure docs/goals/goal-tree.md exists (create if needed).
-  3. DEFAULT user path: goal-governance orchestrator skill / slash
+  3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
      - Core: $SKILLS_DIR/prompts/00-govern-orchestrator.md
-     - Claude: /govern  (./.claude/skills/govern/SKILL.md)
-     - Grok:   /govern  (./.grok/skills/govern/SKILL.md)
-     - Copilot:/govern  (./.github/prompts/govern.prompt.md)
-     Lifecycle: set-goal → advance → stage/close-audit (confirm before writes).
+     - Cross: $SKILLS_DIR/prompts/05-independent-audit.md
+     - Claude: /govern + /audit under ./.claude/skills/
+     - Grok:   /govern + /audit under ./.grok/skills/
+     - Copilot: govern.prompt.md + audit.prompt.md
   4. Advanced Copilot form-filling slashes only if you used --with-primitives.
 
 Project root:  $TARGET_DIR
@@ -224,8 +227,10 @@ if [[ -d "$SKILLS_DIR" ]]; then
 fi
 
 CLAUDE_AGENTS_SRC="$PACKAGE_ROOT/install/claude/AGENTS.md"
-CLAUDE_SKILL_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
-GROK_SKILL_SRC="$PACKAGE_ROOT/install/grok/skills/govern/SKILL.md"
+CLAUDE_GOVERN_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
+CLAUDE_AUDIT_SRC="$PACKAGE_ROOT/install/claude/skills/audit/SKILL.md"
+GROK_GOVERN_SRC="$PACKAGE_ROOT/install/grok/skills/govern/SKILL.md"
+GROK_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/audit/SKILL.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
@@ -237,10 +242,12 @@ TEMPLATES_SRC="$PACKAGE_ROOT/templates"
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
   [[ -f "$CLAUDE_AGENTS_SRC" ]] || die "Missing package file: $CLAUDE_AGENTS_SRC"
-  [[ -f "$CLAUDE_SKILL_SRC" ]] || die "Missing package file: $CLAUDE_SKILL_SRC"
+  [[ -f "$CLAUDE_GOVERN_SRC" ]] || die "Missing package file: $CLAUDE_GOVERN_SRC"
+  [[ -f "$CLAUDE_AUDIT_SRC" ]] || die "Missing package file: $CLAUDE_AUDIT_SRC"
 fi
 if [[ "$INSTALL_GROK" -eq 1 ]]; then
-  [[ -f "$GROK_SKILL_SRC" ]] || die "Missing package file: $GROK_SKILL_SRC"
+  [[ -f "$GROK_GOVERN_SRC" ]] || die "Missing package file: $GROK_GOVERN_SRC"
+  [[ -f "$GROK_AUDIT_SRC" ]] || die "Missing package file: $GROK_AUDIT_SRC"
 fi
 if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   [[ -f "$COPILOT_SRC" ]] || die "Missing package file: $COPILOT_SRC"
@@ -254,13 +261,15 @@ echo
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
   copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
-  copy_file "$CLAUDE_SKILL_SRC" "$TARGET_DIR/.claude/skills/govern/SKILL.md"
-  echo "Claude primary skill: /govern  (./.claude/skills/govern/)"
+  copy_file "$CLAUDE_GOVERN_SRC" "$TARGET_DIR/.claude/skills/govern/SKILL.md"
+  copy_file "$CLAUDE_AUDIT_SRC" "$TARGET_DIR/.claude/skills/audit/SKILL.md"
+  echo "Claude skills: /govern  (./.claude/skills/govern/)  +  /audit  (./.claude/skills/audit/)"
 fi
 
 if [[ "$INSTALL_GROK" -eq 1 ]]; then
-  copy_file "$GROK_SKILL_SRC" "$TARGET_DIR/.grok/skills/govern/SKILL.md"
-  echo "Grok primary skill: /govern  (./.grok/skills/govern/)"
+  copy_file "$GROK_GOVERN_SRC" "$TARGET_DIR/.grok/skills/govern/SKILL.md"
+  copy_file "$GROK_AUDIT_SRC" "$TARGET_DIR/.grok/skills/audit/SKILL.md"
+  echo "Grok skills: /govern  (./.grok/skills/govern/)  +  /audit  (./.grok/skills/audit/)"
   # Optional: also ensure AGENTS if missing (Grok reads AGENTS.md as project rules)
   if [[ ! -f "$TARGET_DIR/AGENTS.md" && -f "$CLAUDE_AGENTS_SRC" ]]; then
     echo "Note: no AGENTS.md yet; consider --claude or copy install/claude/AGENTS.md for project rules."
@@ -272,12 +281,13 @@ if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   copy_file "$COPILOT_SRC" "$TARGET_DIR/.github/copilot-instructions.md"
 
   mkdir -p "$TARGET_DIR/.github/prompts"
-  WRAPPER_NAMES=(govern)
+  # Default product surface: primary orchestrator + cross-audit (not form-fill primitives)
+  WRAPPER_NAMES=(govern audit)
   if [[ "$INSTALL_PRIMITIVE_WRAPPERS" -eq 1 ]]; then
     WRAPPER_NAMES+=(new-goal log-decision update-execution write-audit)
     echo "Including advanced primitive slash wrappers (--with-primitives)"
   else
-    echo "Copilot slash surface: /govern only (pass --with-primitives for advanced form ops)"
+    echo "Copilot slash surface: /govern + /audit (pass --with-primitives for form-fill ops)"
   fi
   for name in "${WRAPPER_NAMES[@]}"; do
     copy_file \

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.4.0
+version: 0.5.0
 ---
 
 # Skills
@@ -18,19 +18,24 @@ version: 0.4.0
 
 | 层级 | 是什么 | 用户怎么用 |
 |------|--------|------------|
-| **主入口（primary）** | 编排器：扫描 / 分类 / 提议 / 确认 / 调用原语 | **`/govern`**（各工具 skill 或 slash） |
+| **主入口（primary）** | 编排器：扫描 / 意见台账 / 分类 / P-004 裁决 / 确认 / 原语 | **`/govern`** |
+| **交叉入口** | 独立审计：只出意见（`source: independent`） | **`/audit`** |
 | **原语（primitives）** | 创建目标、记决策、更执行、写审计 | 由编排器调用；Copilot advanced 可选 |
-| **规则** | AGENTS / copilot-instructions | 结构、编号、P-001、goal-tree |
+| **规则** | AGENTS / copilot-instructions | 结构、编号、P-001～P-004、goal-tree |
 
-生命周期：**设立目标 → 推进目标 → 阶段性审计 / 关门审计**。
+生命周期：**设立 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。  
+交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
 
-| 工具 | 主入口安装位置 | 形态 |
-|------|----------------|------|
-| Claude Code | `.claude/skills/govern/SKILL.md` | **skill** → `/govern` |
-| Grok Build | `.grok/skills/govern/SKILL.md` | **skill** → `/govern` |
-| GitHub Copilot | `.github/prompts/govern.prompt.md` | prompt slash → `/govern` |
+| 工具 | 安装位置 | 斜杠 |
+|------|----------|------|
+| Claude Code | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` |
+| Grok Build | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` |
+| GitHub Copilot | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` |
 
-核心行为只在一处：[`prompts/00-govern-orchestrator.md`](prompts/00-govern-orchestrator.md)。
+核心行为：
+
+- 编排：[`prompts/00-govern-orchestrator.md`](prompts/00-govern-orchestrator.md)
+- 交叉：[`prompts/05-independent-audit.md`](prompts/05-independent-audit.md)
 
 ## 目录结构
 
@@ -42,17 +47,19 @@ skills/
 ├── install/
 │   ├── claude/
 │   │   ├── AGENTS.md
-│   │   └── skills/govern/SKILL.md      # → .claude/skills/govern/
+│   │   └── skills/{govern,audit}/SKILL.md
 │   ├── grok/
-│   │   └── skills/govern/SKILL.md      # → .grok/skills/govern/
+│   │   └── skills/{govern,audit}/SKILL.md
 │   └── copilot/
 │       ├── copilot-instructions.md
 │       └── prompts/
 │           ├── govern.md               # primary
+│           ├── audit.md                # cross-audit (default install)
 │           └── new-goal.md …           # advanced only
 ├── prompts/
 │   ├── 00-govern-orchestrator.md       # PRIMARY core
-│   └── 01–04 …                         # primitives
+│   ├── 01–04 …                         # primitives
+│   └── 05-independent-audit.md         # cross-audit core
 ├── tests/
 └── templates/goal-folder/
 ```
@@ -111,7 +118,8 @@ copilot-instructions.md → .github/copilot-instructions.md
 
 | Wrapper | 斜杠 | 何时安装 |
 |---------|------|----------|
-| govern.md | `/govern` | **默认** |
+| govern.md | `/govern` | **默认**（主入口） |
+| audit.md | `/audit` | **默认**（交叉审计） |
 | new-goal … write-audit | advanced | 仅 `--with-primitives` |
 
 ### 2. 脚本安装
@@ -137,13 +145,14 @@ bash ./skills/install.sh --grok --skills-dir ./skills
 .\skills\install.ps1 -Grok -SkillsDir .\skills
 ```
 
-安装后：在 Claude / Grok / Copilot 中使用 **`/govern`**。
+安装后：使用 **`/govern`** 推进；需要交叉审计时用 **`/audit`**，再用 `/govern` 响应意见。
 
 ## 在其他项目中快速启用
 
-1. 安装规则 + `/govern` skill（见上）。  
+1. 安装规则 + `/govern` + `/audit` skill（见上）。  
 2. 建立 `docs/goals/goal-tree.md`（可先空）。  
-3. 调用 `/govern`：扫描并引导总目的，或分析未关门目标的下一步。
+3. 调用 `/govern`：扫描并引导总目的，或分析未关门目标的下一步。  
+4. 调用 `/audit`：对指定目标写独立审计意见（不改 status）。
 
 ## 核心约定（摘要）
 
@@ -168,4 +177,4 @@ python skills/tests/test_skills_orchestrator.py
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
 
-当前交付：**规则 + 单一编排主入口（Claude/Grok skill + Copilot slash）+ 文档原语 + 安装脚本 + 示例模板**。
+当前交付：**规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 安装脚本 + 示例模板**。

@@ -18,7 +18,11 @@ COPILOT_PROMPTS = SKILLS_ROOT / "install" / "copilot" / "prompts"
 CLAUDE_GOVERN_SKILL = (
     SKILLS_ROOT / "install" / "claude" / "skills" / "govern" / "SKILL.md"
 )
+CLAUDE_AUDIT_SKILL = (
+    SKILLS_ROOT / "install" / "claude" / "skills" / "audit" / "SKILL.md"
+)
 GROK_GOVERN_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "govern" / "SKILL.md"
+GROK_AUDIT_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "audit" / "SKILL.md"
 INSTALL_SH = SKILLS_ROOT / "install.sh"
 INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 README = SKILLS_ROOT / "README.md"
@@ -55,6 +59,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"默认策略|待确认|问用户")
         self.assertRegex(text, r"web/")  # as optional project convention example
         self.assertRegex(text, r"完成标准|硬约束")
+        # GOAL-005 phase B: opinion ledger + user gates
+        self.assertRegex(text, r"意见台账|P-004|开放必改")
+        self.assertRegex(text, r"independent|交叉")
+        self.assertRegex(text, r"S4|审计响应")
+        self.assertIn("05-independent-audit", text)
 
     def test_primitives_exist_and_marked(self) -> None:
         for fname in (
@@ -71,6 +80,19 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 r"primitive|原语",
                 msg=f"{fname} should label itself as primitive",
             )
+        audit04 = (PROMPTS / "04-write-audit.md").read_text(encoding="utf-8")
+        self.assertRegex(audit04, r"source")
+        self.assertRegex(audit04, r"verdict")
+        self.assertRegex(audit04, r"independent|self")
+
+    def test_independent_audit_prompt_exists(self) -> None:
+        path = PROMPTS / "05-independent-audit.md"
+        self.assertTrue(path.is_file(), f"missing independent audit core: {path}")
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("independent", text)
+        self.assertRegex(text, r"03-audit")
+        self.assertRegex(text, r"status|progress")
+        self.assertRegex(text, r"govern|/govern")
 
     def test_prompts_readme_primary_vs_primitive(self) -> None:
         text = (PROMPTS / "README.md").read_text(encoding="utf-8")
@@ -94,21 +116,20 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(sh, r"00-govern-orchestrator|/govern")
         self.assertRegex(ps1, r"00-govern-orchestrator|/govern")
 
-    def test_install_default_slash_is_govern_only_opt_in_primitives(self) -> None:
-        """Default install must not always ship four form-filling slash wrappers."""
+    def test_install_default_slash_is_govern_and_audit_opt_in_primitives(self) -> None:
+        """Default install: /govern + /audit; form-fill primitives stay opt-in."""
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
         self.assertIn("--with-primitives", sh)
         self.assertRegex(ps1, r"WithPrimitives|with-primitives")
-        # Default list is govern-only; advanced names only under the opt-in flag path
-        self.assertRegex(sh, r'WRAPPER_NAMES=\(govern\)|WRAPPER_NAMES=\("govern"\)|WRAPPER_NAMES=\(govern\)')
-        self.assertIn("WRAPPER_NAMES=(govern)", sh)
-        self.assertIn("$wrapperNames = @('govern')", ps1)
+        self.assertIn("WRAPPER_NAMES=(govern audit)", sh)
+        self.assertIn("$wrapperNames = @('govern', 'audit')", ps1)
         self.assertIn("INSTALL_PRIMITIVE_WRAPPERS", sh)
         self.assertIn("$WithPrimitives", ps1)
-        # Advanced names still exist as sources, but gated
         self.assertIn("new-goal", sh)
         self.assertIn("new-goal", ps1)
+        self.assertRegex(sh, r"skills/audit|audit/SKILL")
+        self.assertRegex(ps1, r"skills\\audit|audit\\SKILL")
         self.assertRegex(sh, r"INSTALL_PRIMITIVE_WRAPPERS.*1|with-primitives")
 
     def test_agents_template_does_not_force_web_app_dir(self) -> None:
@@ -149,14 +170,15 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         ban_hits = len(__import__("re").findall(r"^[-*]\s*禁止", orch, flags=__import__("re").M))
         self.assertLessEqual(ban_hits, 2, "orchestrator should not be a ban-list prompt")
 
-    def test_skills_readme_documents_single_primary_path(self) -> None:
+    def test_skills_readme_documents_primary_and_audit_paths(self) -> None:
         text = README.read_text(encoding="utf-8")
         self.assertIn("/govern", text)
+        self.assertIn("/audit", text)
         self.assertIn("00-govern-orchestrator", text)
+        self.assertIn("05-independent-audit", text)
         self.assertRegex(text, r"primary|主入口")
         self.assertRegex(text, r"primitive|原语|advanced")
         self.assertRegex(text, r"with-primitives|WithPrimitives")
-        self.assertRegex(text, r"仅.*govern|默认.*govern|/govern.*only|只装", re.I)
         self.assertRegex(text, r"Claude|\.claude")
         self.assertRegex(text, r"Grok|\.grok")
         self.assertIn("SKILL.md", text)
@@ -182,6 +204,28 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
     def test_grok_govern_skill_source(self) -> None:
         self._assert_primary_govern_skill(GROK_GOVERN_SKILL, "Grok Build")
 
+    def _assert_audit_skill(self, path: Path, host_label: str) -> None:
+        self.assertTrue(path.is_file(), f"missing {host_label} audit skill: {path}")
+        text = path.read_text(encoding="utf-8")
+        self.assertRegex(text, r"(?m)^name:\s*audit\s*$")
+        self.assertIn("05-independent-audit", text)
+        self.assertRegex(text, r"independent|交叉")
+        self.assertRegex(text, r"status|progress")
+
+    def test_claude_audit_skill_source(self) -> None:
+        self._assert_audit_skill(CLAUDE_AUDIT_SKILL, "Claude Code")
+
+    def test_grok_audit_skill_source(self) -> None:
+        self._assert_audit_skill(GROK_AUDIT_SKILL, "Grok Build")
+
+    def test_copilot_audit_wrapper(self) -> None:
+        path = COPILOT_PROMPTS / "audit.md"
+        self.assertTrue(path.is_file(), f"missing audit wrapper: {path}")
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("/audit", text)
+        self.assertIn("05-independent-audit", text)
+        self.assertRegex(text, r"independent|交叉")
+
     def test_install_scripts_wire_claude_and_grok_skills(self) -> None:
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
@@ -189,8 +233,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertRegex(text, r"--grok|-Grok", msg=f"{label} needs grok flag")
             self.assertIn(".claude/skills/govern", text.replace("\\", "/"))
             self.assertIn(".grok/skills/govern", text.replace("\\", "/"))
+            self.assertIn("audit", text)
             self.assertIn("SKILL.md", text)
             self.assertRegex(text, r"00-govern-orchestrator")
+            self.assertRegex(text, r"05-independent-audit")
 
 
 def main() -> int:

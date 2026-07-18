@@ -187,9 +187,10 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 9b. Skills 主入口（若已安装本包）
 
-- **默认路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md`（Copilot 若已装：`/govern`）。
-- 编排器：扫描 → 分类 → 提议 → 确认 → 调用原语 `01`～`04`；推进时汇总审计意见，遇 P-004 裁决点先问用户。
-- advanced slash 可选（`--with-primitives`）；交叉审计入口（若已装）用于独立意见，响应仍归编排器。
+- **编排主路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md` → **`/govern`**。  
+  扫描 → 意见台账 → 分类 → P-004 裁决 → 提议 → 确认 → 原语 `01`～`04`。
+- **交叉审计**：`{{SKILLS_DIR}}/prompts/05-independent-audit.md` → **`/audit`**（只出意见，不改 status；响应归 `/govern`）。
+- advanced 填表 slash 可选（`--with-primitives`）。
 - **P-001** 以本文件第 6 节为准；**P-002～P-004** 以第 6b 节为准；有 architecture 原则文档时一并参考。
 
 ## 10. 变更工作流

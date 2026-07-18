@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-18
-version: 0.1.4
+version: 0.2.0
 ---
 
 # 审计 · GOAL-005
@@ -202,3 +202,32 @@ A-001 为 `self/pass`，本意见为 `independent/conditional`。冲突点是 A-
 ### 结论
 
 接受 A-004。F-008、F-010 关闭结论升级为「编排响应 + 独立复审双确认」。建议下一步：**启动阶段 B**。
+
+---
+
+## A-006 · 阶段 B 自检（提示词与入口）（2026-07-18）
+
+- **source**：`self`
+- **类型**：`stage` 阶段结束
+- **scope**：GOAL-005 阶段 B
+- **verdict**：pass（阶段 B 范围）
+
+### 成果（有证据）
+
+| 成果 | 证据 |
+|------|------|
+| 编排器意见台账 + P-004 + 开放必改 | `skills/prompts/00-govern-orchestrator.md` v0.3.0 |
+| 04 结构化意见 | `skills/prompts/04-write-audit.md` v0.3.0 |
+| 交叉审计核心 + 入口 | `05-independent-audit.md`；install `audit` skill/slash |
+| 产品面文档 | `skills/README.md` v0.5.0；默认 govern+audit |
+| 契约测试 | `skills/tests/test_skills_orchestrator.py` 17 OK |
+| F-015 提示词侧 | `00` 意见状态表 + `04`/`05` 字段 |
+
+### Findings
+
+- 无阶段 B 范围 required 开放项。
+- **recommended**：阶段 D 用真实 `/audit`→`/govern` 会话再压一轮（非阻塞 B 完成）。
+
+### 结论
+
+阶段 B 可关闭。成功标准 2～5 已满足。整体目标关门仍待阶段 D 可选加强验证后由用户决定。
