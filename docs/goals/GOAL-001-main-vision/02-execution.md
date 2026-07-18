@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.2
+version: 0.2.4
 ---
 
 # 执行记录 · GOAL-001
@@ -70,7 +70,7 @@ version: 0.2.2
 
 ## 下一步（根目标视角）
 
-1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已写入路线图，先按 P-001 明确可执行边界，再以 `GOAL-006` 起立项。
+1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已由 `GOAL-006` 承接；按 D-008 交付核心包、独立复制验证与版本/镜像同步证据。
 2. 阶段 5 复核 Skills 的规则、模板镜像、安装产物与核心协议版本一致性。
 3. 阶段 6 保持 Web 只读，先完善人类浏览/诊断体验；任何写入另立子目标并保留审计证据。
 4. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
@@ -86,3 +86,16 @@ version: 0.2.2
 - 在 `web/` 运行 `..\\.venv\\Scripts\\python.exe -m unittest discover -s tests -v`：**20 tests OK**；1 个符号链接权限相关测试按 Windows 环境能力跳过。
 - `git diff --check` 通过；未发现空白错误。
 - 对照 `docs/goals/*/00-meta.md` 修正 `goal-tree.md` 的根进度占位和 GOAL-002 完整标题，Web 目标树诊断不再报告这两项既有投影漂移。
+
+### 2026-07-19 · 响应 A-002 的入口边界与阶段 4 契约必改项
+
+- 修正根 [README.md](../../../README.md) 的 Web 描述：当前 Web 直接读取 `docs/goals/`，提供目标浏览与文档树诊断；不维护第二状态层，也不提供 Web 写入、创建/更新或后台同步。
+- 在 [D-008](01-decision.md#d-008--阶段-4-产品化与退出契约2026-07-19) 和 [00-meta.md](00-meta.md) 记录阶段 4 的最小交付包、canonical 所有者、独立复制场景、版本/镜像同步、非目标、验收证据及阶段 4 → 5 门槛。
+- 复跑 `python skills/tests/test_skills_orchestrator.py`：**21 tests OK**；复跑 `web` 的 `unittest discover -s tests -v`：**20 tests OK**，1 项因 Windows 无创建符号链接权限跳过；`git diff --check` 通过。
+- 本次没有改变根目标 `status` / `progress`，没有创建 `GOAL-006`，也没有把阶段 4 标为完成；下一步仅可在 D-008 的边界内决定是否立项。
+
+### 2026-07-19 · 立项阶段 4 核心交付包
+
+- 按用户明确指令创建 [GOAL-006-core-methodology-template-productization](../GOAL-006-core-methodology-template-productization/00-meta.md)，其 `parent` 为 `GOAL-001-main-vision`，初始状态为 `active / 0%`。
+- GOAL-006 的范围承接 D-008：核心文档与模板入口、独立复制启用说明、空 Git 仓复制验证，以及 canonical 模板到 Skills 镜像的单向同步记录。
+- 本次只完成立项、范围落盘与目标树同步；尚未修改或验证阶段 4 的实际交付物，未将阶段 4 或根目标标记为完成。

@@ -42,7 +42,7 @@ goal-governance/
 
 - **核心文档层**：`docs/README.md`、`docs/architecture/` 与 `docs/templates/` 定义方法论、协议和模板；`docs/goals/` 保存具体目标实例。
 - **`skills/`**：AI/Agent 消费核心协议的编排、审计、原语、宿主适配和离线分发包。
-- **`web/`**：FastAPI + Jinja2 + Tailwind CSS + HTMX 的人类工作台，当前只读。
+- **`web/`**：FastAPI + Jinja2 + Tailwind CSS + HTMX 的人类工作台；当前直接读取 `docs/goals/`，提供只读浏览与文档树诊断，不维护独立状态，也不提供 Web 写入、创建/更新或后台同步入口。
 - **三层交付共享一个真相源**：Skills 按协议读写、Web 当前读取同一套 `docs/goals` 文档，不建立独立状态。
 
 ## 目标模型（摘要）
@@ -80,8 +80,8 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
 ## 当前 Web 模块
 
-- **Decision（决策）**
-- **Execution（执行）**
-- **Audit（审计）**
+- **目标概览**：展示目标、状态、进度及目标树 / 文档诊断。
+- **目标详情**：展示成功标准、附件、Decision、Execution 和 Audit 的基础信息，并在需要时回退到原始 Markdown。
+- **兼容入口**：`/decision`、`/execution`、`/audit` 会跳回目标工作台。
 
-当前版本为页面与路由骨架，暂不包含数据库、认证或目标文件自动同步。
+当前 Web 是读取运行中目标文档的只读工作台，而非仅有页面与路由骨架。它直接以 `docs/goals/` 为真相源，不使用独立数据库或第二状态层，因此没有需要与目标文件“同步”的副本；当前也不提供 Web 写入、创建/更新或写入同步。任何写入能力须由独立目标实现，并遵守同一文档协议与审计约束。
