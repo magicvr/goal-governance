@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.2
+version: 0.2.0
 role: primitive
 ---
 
@@ -12,78 +12,66 @@ role: primitive
 
 ## 说明
 
-**角色**：文档原语，供 [00-govern-orchestrator.md](00-govern-orchestrator.md) 在用户确认「需要新建目标」后调用；也可高级直调。  
-**默认用户路径请用编排器**，不要把本文件当作日常主入口。
+供 [00-govern-orchestrator.md](00-govern-orchestrator.md) 在用户确认「需要新建目标」后调用；也可高级直调。  
+日常默认路径请用编排器。
 
-解决「要新增一个目标，但容易漏五件套、编号冲突、忘更新 goal-tree、大目标直接拆碎」的问题。  
-把本提示词交给 AI 后，应得到：正确编号的目标文件夹 + 完整五件套 + 已同步的 `goal-tree.md`。
+交付物：正确编号的目标文件夹 + 完整五件套 + 已同步的 `goal-tree.md`。
 
 ---
 
 ## 提示词正文
 
 ```markdown
-你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。  
-P-001 以 AGENTS 为准；`docs/architecture/principles.md` 仅当存在时参考，不强制。
+# 角色
 
-## 任务
-按下列信息创建一个新目标。不要省略任何必备文件。
+你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`。  
+P-001（大目标先路线图）以 AGENTS 为准；若存在 architecture 原则文档，可作补充。
 
-## 用户输入（请先向我确认空白项，或使用我填写的内容）
-如果某项信息缺失或不确定，请先向我确认，不要猜测后继续。
-- 目标标题：【填写；语言跟随用户，不强制中/英】
-- 英文短 slug（小写、短横线）：【填写，如 improve-auth】
-- 父目标 ID：【填写完整 id，如 GOAL-001-my-root-slug；Root 则写 null】
-- 一句话概述：【填写】
-- 成功标准（可验证的勾选项）：【列出 2～5 条】
-- 是否明显需要拆解（尚不能直接执行）？【是 / 否】
-- 若「是」：请先在 00-meta 或 01-decision 写高层路线图（阶段 + 先后关系），本回合**不要**批量创建细粒度子目标
+# 任务
+
+按已确认信息创建一个新目标：五件套齐全，goal-tree 已更新。
+
+# 用户输入（缺项先问清再写）
+
+- 目标标题：【用户语言】
+- 英文短 slug（小写、短横线）：【如 improve-auth】
+- 父目标完整 ID：【如 GOAL-001-my-root-slug；Root 则 null】
+- 一句话概述：
+- 成功标准（2～5 条可验证项）：
+- 是否需要高层路线图（范围大/步骤不明）？【是 / 否】
+  - 若是：本回合在 00-meta 或 01-decision 写阶段与先后；子目标留待后续阶段
 - 初始状态：draft 或 active（默认 draft）
-- 今日日期：【会话/系统当前 YYYY-MM-DD】
+- 今日日期：【会话/系统 YYYY-MM-DD】
 
-## 强制步骤（按顺序）
-1. 读取 `docs/goals/goal-tree.md`，确认当前最大编号；新编号 = 最大编号 + 1（三位，如 GOAL-004）。GOAL-001 永久为 Root，禁止改号。
-2. 文件夹名：`docs/goals/GOAL-NNN-<slug>/`（平铺在 docs/goals/ 下，禁止用子文件夹表达父子关系）。
-3. 一次创建完整五件套：
-   - 00-meta.md
-   - 01-decision.md
-   - 02-execution.md
-   - 03-audit.md
-   - attachments/（可空，目录必须存在）
-4. 定位 skills 包根（含 `templates/goal-folder/` 或 `prompts/01-create-new-goal.md` 的目录，名称可能不是 `skills`），可参考其中 `templates/goal-folder/` 的结构与字段。
-5. 每个 Markdown 文件 frontmatter 至少包含：status, created, updated, parent, version。
-   - 00-meta.md 还必须有：id, title；建议有 progress。
-   - parent 填父目标完整 ID，或 Root 时为 null（Root slug 由用户确认，勿默认 main-vision）。
-6. 内容要求：
-   - 00-meta：概述、范围（可选）、成功标准、父目标链接
-   - 01-decision：若已有明确取舍则写「决定了什么 + 为什么」；暂无则写「待立项后补充」，不要编造决策
-   - 02-execution：时间线只记真实事实（如「今日创建目标」）；不写未发生的工作
-   - 03-audit：可写「尚未到达复盘节点」
-7. **必须**同步更新 `docs/goals/goal-tree.md`：ASCII 树 + 状态表格都要有新目标。
-8. 若父目标进度/说明需要轻量提及「已挂新子目标」，可更新父目标相关文档；不要伪造父目标完成度。
+# 步骤
 
-## 禁止
-- 禁止在 docs/goals/ 下嵌套目标文件夹表示层级
-- 禁止跳过 goal-tree.md
-- 禁止对大目标跳过路线图、直接创建大量子目标
-- 禁止虚构已完成工作或审计结论
-- 禁止未请求就创建 docs/architecture 或应用骨架
+1. 读 `docs/goals/goal-tree.md`，新编号 = 最大编号 + 1（三位）。Root 固定为 GOAL-001。
+2. 创建 `docs/goals/GOAL-NNN-<slug>/`（与现有目标平铺，层级只写在 parent）。
+3. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。
+4. 定位 **SKILLS_PKG**（含 `prompts/01-create-new-goal.md` 或 `templates/goal-folder/` 的目录），结构可参考包内 `templates/goal-folder/`。
+5. Frontmatter 至少：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。
+   - Root 的 slug 使用用户确认的名称。
+6. 正文：
+   - meta：概述、成功标准、parent 链接；需要时含路线图
+   - decision：已有取舍则写「决定 + 为什么」；否则「待立项后补充」
+   - execution：只记已发生事实（如「今日创建目标」）
+   - audit：可写「尚未到达复盘节点」
+7. 更新 `goal-tree.md` 的 ASCII 树与状态表。
+8. 如需，在父目标文档轻量提及新子目标；progress 与事实一致。
 
-## 交付检查清单
-完成后逐条自检并简短汇报：
-- [ ] 编号正确且未与现有冲突
-- [ ] 五件套齐全
-- [ ] parent 正确
-- [ ] goal-tree.md 已更新
-- [ ] 大目标已写路线图（若适用）
-- [ ] 无编造进度
+# 完成标准
+
+- [ ] 编号无冲突；id = 文件夹名  
+- [ ] 五件套齐全；parent 为完整 id 或 null  
+- [ ] goal-tree 树与表已更新  
+- [ ] 大目标已写路线图（若适用）  
+- [ ] 内容真实，无虚构完成项  
 ```
 
 ---
 
 ## 使用注意事项
 
-- 创建前先在对话里填好标题、父目标与是否需拆解；AI 缺信息时应先问再写。
-- 目标创建完成后，建议立刻使用「03-update-execution」提示词，追加一条「目标已创建」的执行记录。
-- Root Goal 只能是 GOAL-001 且 `parent: null`；一般不要用本提示词「重建 Root」。
-- 若只是草稿试探，状态用 `draft`，并在 goal-tree 中如实标注。
+- 缺信息时先确认再写入。
+- 创建后建议用 03 追加一条「目标已创建」执行记录。
+- Root：`GOAL-001` + `parent: null`；slug 由用户定。

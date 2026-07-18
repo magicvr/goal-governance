@@ -46,10 +46,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertIn(name, text)
         # Primary role marker
         self.assertRegex(text, r"主入口|primary|单一")
-        # Layout / project-nature must not be hard-coded to web/ or empty=non-code
-        self.assertRegex(text, r"仓库根|普遍")
-        self.assertRegex(text, r"先验|不得.*断定|问用户|由用户")
-        self.assertRegex(text, r"web/")  # mentioned as non-universal / forbidden assumption
+        # Defaults / confirm-with-user (positive framing)
+        self.assertRegex(text, r"仓库根")
+        self.assertRegex(text, r"默认策略|待确认|问用户")
+        self.assertRegex(text, r"web/")  # as optional project convention example
+        self.assertRegex(text, r"完成标准|硬约束")
 
     def test_primitives_exist_and_marked(self) -> None:
         for fname in (
@@ -109,9 +110,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
     def test_agents_template_does_not_force_web_app_dir(self) -> None:
         text = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
         self.assertIn("代码与文档边界", text)
-        self.assertRegex(text, r"仓库根|普遍形态")
-        self.assertRegex(text, r"禁止.*web/|不是.*通用|未约定")
-        self.assertRegex(text, r"刚装|先验|用户决定")
+        self.assertRegex(text, r"仓库根")
+        self.assertRegex(text, r"默认策略|问用户|待确认")
+        self.assertRegex(text, r"web/")
+        self.assertRegex(text, r"正确做法|硬约束")
         self.assertNotRegex(
             text,
             r"应用代码仅在 `\{\{APP_DIR\}\}`",
@@ -130,19 +132,18 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         ):
             self.assertRegex(
                 text,
-                r"SKILLS_PKG|改名|可能不是 `skills`|不是 `skills`",
+                r"SKILLS_PKG|改名|也可改名|其他名字|其他名",
                 msg=f"{label} should allow renamed skills package",
             )
-            self.assertRegex(
-                text,
-                r"architecture.*可选|不要求.*architecture|仅当存在|若存在",
-                msg=f"{label} should treat architecture as optional",
-            )
+        self.assertRegex(template, r"architecture 可选|architecture.*可选|有 architecture")
+        self.assertRegex(orch, r"若存在|一并参考|architecture")
+        self.assertRegex(govern, r"若存在|architecture")
         self.assertNotIn("GOAL-001-main-vision", orch)
         self.assertNotIn("GOAL-001-main-vision", (PROMPTS / "01-create-new-goal.md").read_text(encoding="utf-8"))
-        # Orchestrator must locate package by content, not hard-coded ./skills only
         self.assertIn("SKILLS_PKG", orch)
-        self.assertRegex(orch, r"main-vision")
+        # Prefer positive defaults over long ban-lists
+        ban_hits = len(__import__("re").findall(r"^[-*]\s*禁止", orch, flags=__import__("re").M))
+        self.assertLessEqual(ban_hits, 2, "orchestrator should not be a ban-list prompt")
 
     def test_skills_readme_documents_single_primary_path(self) -> None:
         text = README.read_text(encoding="utf-8")

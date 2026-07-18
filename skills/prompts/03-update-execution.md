@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.1.1
+version: 0.2.0
 role: primitive
 ---
 
@@ -22,59 +22,45 @@ role: primitive
 ## 提示词正文
 
 ```markdown
-你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。
+# 角色
+你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`。
 
-## 任务
-更新指定目标的执行记录与（如适用）进度。只记录真实发生的工作。
+# 任务
+在 `02-execution.md` 按时间线追加**已发生事实**；确有进展时同步 progress / status 与 goal-tree。
 
-## 用户输入
-如果某项信息缺失或不确定，请先向我确认，不要猜测后继续。
-- 目标 ID / 路径：【如 GOAL-003-skills-practice】
+# 用户输入（缺项先确认）
+- 目标 ID / 路径：
 - 今日日期：【YYYY-MM-DD】
-- 本次实际完成的工作（条目列表，务必具体）：
-  1. 【例如：完成了某某模块的接口草稿；路径按项目实际填写】
-  2. 【……】
-- 阻塞 / 风险（如有）：【填写或「无」】
-- 下一步计划（可选，标为计划而非已完成）：【填写】
-- 进度百分比是否调整：【保持 / 调整为 N%】
-  - 若调整：给出简短依据（对照 00-meta 成功标准勾选情况）
-- status 是否变化：【保持 / 改为 draft|active|blocked|done|cancelled】
+- 本次实际完成（具体条目，含路径/产物更佳）：
+  1. …
+- 阻塞 / 风险：【或「无」】
+- 下一步计划（可选，标明为计划）：
+- progress：【保持 / 调整为 N%，并给依据】
+- status：【保持 / draft|active|blocked|done|cancelled】
 
-## 强制步骤
-1. 读取该目标 `00-meta.md`、`02-execution.md`，以及 `docs/goals/goal-tree.md`。
-2. 在 `02-execution.md` 的「时间线」下追加一节：
+# 步骤
+1. 读 `00-meta.md`、`02-execution.md`、`goal-tree.md`。
+2. 在时间线追加：
 
    ### YYYY-MM-DD · <短标题>
-   - 事实条目（做了什么、改了哪些路径）
+   - 事实（做了什么、改了哪些路径）
    - 阻塞（如有）
-   - 下一步（如有，明确是计划）
+   - 下一步（计划单独标注）
 
-3. 内容规则：
-   - **只写已发生事实**；未做的事不得写成完成。
-   - 尽量带路径或产物名，避免「优化了体验」这类空话。
-   - 不要回填虚构的历史日期。
-4. 更新 frontmatter `updated`。
-5. 若用户要求调整 progress/status：
-   - 改 `00-meta.md` 的 progress / status / updated
-   - **必须**同步 `docs/goals/goal-tree.md` 的树与表格
-6. 若本次完成了某条成功标准，可在 `00-meta.md` 将对应 `- [ ]` 改为 `- [x]`，并在 execution 中点明。
-7. 待办列表（若 execution 中有）按事实勾掉或改写，勿把计划项标成已完成。
+3. 条目具体可核对；计划与已完成分开写。
+4. 刷新 `updated`。
+5. 调整 progress/status 时：同步 meta 与 goal-tree（树 + 表）。
+6. 完成某条成功标准时：勾选 meta 并在 execution 点明。
+7. 决策论证写入 `01-decision`；execution 保持时间线事实。
 
-## 进度评估写法（建议）
-在 execution 文末用一两句说明当前百分比依据，例如：
-「约 20%：提示词模板已落地；AGENTS 优化、示例内容、使用反馈尚未开始。」
+# 进度说明（建议）
+文末一两句说明百分比依据（对照成功标准）。
 
-## 禁止
-- 禁止编造未提交/未创建的文件与结果
-- 禁止无依据地把进度写成 100%
-- 禁止改 status/progress 却不更新 goal-tree.md
-- 禁止把决策论证长文塞进 execution（决策去 01-decision.md）
-
-## 交付检查清单
-- [ ] 时间线新增条目为事实
-- [ ] updated 已刷新
-- [ ] progress/status 与 meta、goal-tree 一致（若有变更）
-- [ ] 成功标准勾选与事实一致
+# 完成标准
+- [ ] 新条目为可核对事实  
+- [ ] updated 已刷新  
+- [ ] progress/status 与 meta、goal-tree 一致（若有变更）  
+- [ ] 成功标准勾选与事实一致  
 ```
 
 ---
