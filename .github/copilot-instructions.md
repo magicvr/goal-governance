@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-18
 parent: null
-version: 0.2.0
+version: 0.3.4
 ---
 
 # GitHub Copilot 项目指令 · 目标治理
@@ -35,7 +35,8 @@ version: 0.2.0
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
 5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
 6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
-   - 值为**父目标完整 id**（含 slug，例：`GOAL-001-main-vision`），Root 为 `null`。
+   - 值为**父目标完整 id**（含 slug，例：`GOAL-001-your-root-slug`），Root 为 `null`。
+   - Root 的 slug **由项目自定**，勿照搬其他仓库示例名。
    - **禁止**用目录嵌套、文件名或正文标题充当层级真相。
 
 ## 3. 目标五件套（创建时一次建齐）
@@ -50,7 +51,7 @@ docs/goals/GOAL-NNN-short-slug/
 ```
 
 - 不得省略任一文件或目录。
-- 可从 `skills/templates/goal-folder/`（若已复制）复制后改写。
+- 可从 skills 包内 `templates/goal-folder/` 复制后改写（包目录名可能不是 `skills`）。
 
 ## 4. Frontmatter 最低要求
 
@@ -98,7 +99,7 @@ docs/goals/GOAL-NNN-short-slug/
 4. 路线图就位后，再**按阶段**创建与执行具体子目标。
 5. 已可直接执行的小目标**无需**强行补路线图。
 
-原则说明见 `docs/architecture/principles.md`（P-001，若存在）。
+原则以本文件第 6 节为准；`docs/architecture/principles.md` 若存在可作补充，**不要求**必有 architecture。
 
 ## 7. 必须同步更新 goal-tree.md
 
@@ -113,79 +114,100 @@ docs/goals/GOAL-NNN-short-slug/
 更新内容至少包括：**ASCII/文本树** + **状态表格**。  
 只改单目标文件、不更新 goal-tree → **视为任务未完成**。
 
-## 8. 应用代码与文档边界（可选）
+## 8. 代码与文档边界
 
-> 无应用代码时删除本节。
+- **目标真相源**：长期过程记录在 `docs/goals/`（本包约定）。业务代码与 UI 可以引用目标，长期存储以 `docs/goals/` 为准。
+- **代码布局（默认策略）**：
+  - 默认：应用/库代码可在**仓库根**，或按该语言/生态惯例分布。
+  - 若项目已约定子目录（如 `web/`、`app/`、`services/`）：按该约定；`{{APP_DIR}}` 仅在有约定时填写。
+  - 刚装本包、文件很少时：项目性质与代码路径标为待确认，**问用户**或读已有 README/架构；目录观察只作参考。
+- **语言与日期**：标题/正文跟随用户语言；slug 建议小写英文短横线；日期用会话/系统 `YYYY-MM-DD`。
+- **architecture**：已有则改架构先更新文档；没有则按用户要求再考虑是否建立。
 
-- 应用代码仅在项目约定目录（如 `web/`、`src/`）。
-- 目标正文的长期存储在 `docs/goals/`，不要写进 UI 模板当真相源。
-- 扩展架构：先更新 `docs/architecture/`（若启用），再改代码。
+## 8b. Skills 包路径
+
+- 常见目录名 `skills/`，也可改名。
+- **定位 SKILLS_PKG**：含 `prompts/00-govern-orchestrator.md`（或 `prompts/01-create-new-goal.md`）的目录。原语与模板相对该根。
+- `{{SKILLS_DIR}}` = 包根相对仓库根的路径。
 
 ## 9. 交付形态（按项目裁剪）
 
-默认：**文档驱动的目标治理**。
+默认：**文档驱动的目标治理**；代码与可视化应用按项目实际叠加。
 
-1. **文档体系（必选）**：`docs/goals/` + `goal-tree.md`
-2. **应用（可选）**：可视化浏览/操作
-3. **Skills / 提示词（可选）**：`skills/` 或本仓库提供的 prompts/templates
+1. **文档体系（本包约定）**：`docs/goals/` + `goal-tree.md`
+2. **产品/代码（常见）**：仓库根或项目实际目录
+3. **独立可视化应用（可选）**：有则按项目路径
+4. **Skills 包（可选）**：`{{SKILLS_DIR}}`
 
-改规则或目标模型时，评估是否需同步文档 / 应用 / Skills。
+## 9b. Skills 主入口（若已安装本包）
+
+- **默认路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md`（Copilot 若已装：`/govern`）。
+- 编排器：扫描 → 分类 → 提议 → 确认 → 调用原语 `01`～`04`。
+- advanced slash 可选（`--with-primitives`）。
+- **P-001** 以本文件第 6 节为准；有 architecture 原则文档时一并参考即可。
 
 ## 10. 变更工作流
 
 ```text
-1. 读 goal-tree.md → 确认最大编号与 parent
-2. 若尚不可直接执行 → 先写/更新高层路线图（00-meta 或 01-decision）
-3. 创建或修改目标五件套（frontmatter + 正文）
-4. 更新 goal-tree.md（树 + 表）
-5. 必要时更新 docs/README.md、architecture/、根 README.md
-6. 再改应用代码或 Skills（若有）
+1. 读 goal-tree.md → 编号、parent、未关门目标
+2. 未指定原子操作时 → 优先编排器
+3. 尚不可直接执行 → 先高层路线图
+4. 创建或修改五件套
+5. 更新 goal-tree.md（树 + 表）
+6. 项目已有 docs/README、architecture 等时再按需更新
+7. 再改代码或 Skills（路径以项目实际为准）
 ```
 
-步骤 **1–4 强制**；5–6 按影响面执行。
+步骤 **1、3–5 强制**；编排优先；6–7 按影响面。
 
-## 11. 禁止事项
+## 11. 正确做法与硬约束
 
-- 在 `docs/goals/` 下用子文件夹嵌套表达父子目标
-- 跳过 `goal-tree.md` 只改单目标文件就结束
-- 伪造已完成的执行条目或审计结论
-- 擅自把 Root 从 `GOAL-001` 改成其他编号
-- 对明显需拆解的大目标跳过路线图，直接批量创建并执行细粒度子目标
-- 用 `parent` 以外的方式（目录、标题、正文）作为层级真相
-- 新建目标时漏五件套任一文件或目录
+**正确做法**
+
+- 层级：平铺文件夹 + `parent` 完整 id。
+- 改 status/progress/parent/新建：同步 goal-tree 树与表。
+- 大目标：先路线图，再按阶段建子目标。
+- 执行/审计：只写有证据的事实；计划单独标注。
+- 代码布局与 Root slug：默认见第 8 节；以用户/项目约定为准（`web/` 等为可选约定示例）。
+- Skills 包：按内容定位 SKILLS_PKG。
+- P-001：本文件第 6 节足够；architecture 可选。
+
+**硬约束**
+
+- Root 编号保持 `GOAL-001`；`parent: null`。
+- 新建一次建齐五件套。
+- 决策、执行、审计只记录真实内容。
 
 ## 12. 完成前检查清单
 
-每次涉及目标的任务结束前自检：
-
 - [ ] 编号未冲突；`id` = 文件夹名
-- [ ] `parent` 为完整父 id 或 `null`（Root）
+- [ ] `parent` 为完整父 id 或 `null`
 - [ ] 五件套齐全（若新建）
-- [ ] 大目标已写/更新路线图（若适用 P-001）
-- [ ] `goal-tree.md` 树与表已同步
+- [ ] 大目标路线图已写/更新（若适用）
+- [ ] `goal-tree.md` 已同步
 - [ ] `updated` / `progress` / `status` 与事实一致
-- [ ] 无虚构进度或审计结论
 
-## 常见错误（避免）
+## 写法对照（简表）
 
-| 错误 | 正确做法 |
-|------|----------|
-| 用 `docs/goals/父/子/` 建层级 | 平铺 + `parent` 字段 |
-| `parent: GOAL-001`（缺 slug） | `parent: GOAL-001-main-vision`（完整 id） |
-| 只改 `00-meta` 进度，不改 goal-tree | 两处一起改 |
-| 大目标一次创建十几个子目标 | 先路线图，再按阶段立项 |
-| 把计划写成「已完成」 | 只记已发生事实；计划单独标注 |
-| 复制模板后仍留示例 id（如 GOAL-042） | 改成真实 id / 标题 / parent |
+| 推荐 | 说明 |
+|------|------|
+| 平铺 + `parent: GOAL-001-<slug>` | 完整 id |
+| 改 progress 同时改 goal-tree | 两处一致 |
+| 大目标先路线图 | 再按阶段立项 |
+| 计划与已完成分开写 | 时间线只记事实 |
+| 复制模板后改真实 id | 例如勿留 GOAL-042 |
+| 按 prompts 文件定位包目录 | 包名可以是 `skills` 或其他 |
+
 
 ## GitHub Copilot 使用提示
 
-- 本文件路径固定为 `.github/copilot-instructions.md`，供 GitHub Copilot 读取项目级指令。
-- 若仓库根另有 `AGENTS.md`（例如同时给 Claude Code 用），两边规则应保持一致。
-- 复杂目标操作可配合 `skills/prompts/` 中的提示词（若已安装）。
-- 在 VS Code 中修改本文件后，新对话/Agent 会话会采用更新后的指令。
+- 本文件路径固定为 `.github/copilot-instructions.md`。
+- 日常目标协作使用 **`/govern`**（§9b）；原语由编排器调用。
+- 若仓库根另有 `AGENTS.md`，两边规则保持一致。
+- 修改本文件后，新对话会采用更新后的指令。
 
 ## 快速链接（按项目填写）
 
 - 目标树：`docs/goals/goal-tree.md`
-- Root Goal：`docs/goals/GOAL-001-.../00-meta.md`
-- 治理原则：`docs/architecture/principles.md`（若存在）
+- Root Goal：`docs/goals/GOAL-001-<your-slug>/00-meta.md`
+- 治理原则：本文件第 6 节；`docs/architecture/principles.md`（若存在）
