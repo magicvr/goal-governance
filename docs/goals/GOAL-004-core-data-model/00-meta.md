@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.4.0
-progress: 75%
+version: 0.5.0
+progress: 100%
 ---
 
 # GOAL-004 · 实现核心数据模型与 Goal 基础管理
@@ -35,8 +35,8 @@ progress: 75%
 
 - [x] 完成 Goal 及关联实体的数据模型设计
 - [x] 实现 Goal 的基础 CRUD（创建、读取、更新、列表）
-- [ ] Web 应用首页和详情页能展示真实目标数据
-- [ ] 实现目标详情页，能看到决策 / 执行 / 审计的基础信息
+- [x] Web 应用首页和详情页能展示真实目标数据
+- [x] 实现目标详情页，能看到决策 / 执行 / 审计的基础信息
 
 ## 高层路线图（P-001）
 
@@ -47,9 +47,9 @@ progress: 75%
 | 阶段 A | 领域模型与存储约定 | **已完成** | 设计说明：[attachments/domain-model-and-storage.md](attachments/domain-model-and-storage.md)；决策 D-004～D-007 |
 | 阶段 B | 读取路径（列表 / 详情） | **已完成** | `web/services/` 已实现 List/Get、解析诊断、containment 与树校验；7 项单测通过（1 项环境跳过） |
 | 阶段 C | 写路径（创建 / 更新） | **已完成** | `GoalsRepository` 已实现 Create/Update、goal-tree 同步、可恢复提交与 `repair_goal_tree()`；14 项单测通过（1 项环境跳过） |
-| 阶段 D | Web 接入真实数据 | 未开始 | 首页列表 + 目标详情页展示决策 / 执行 / 审计基础信息；替换骨架占位 |
+| 阶段 D | Web 接入真实数据 | **已完成** | 首页与 `/goals/{goal_id}` 复用 `GoalsRepository` 展示真实数据、诊断与三类详情内容；20 项单测通过（1 项环境跳过） |
 
-**先后关系**：A → B → C → D。A、B、C 已完成；下一步进入 D。D 已具备真实读写服务基础，仍待页面接入。
+**先后关系**：A → B → C → D。A～D 已完成；A-005 阶段自审通过。目标实施范围已达成，仍待单独的关门审计与用户确认后再变更 `status`。
 
 ## 父目标
 

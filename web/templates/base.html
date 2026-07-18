@@ -1,34 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Goal Governance — a framework for better decisions, execution, and audits.">
+    <meta name="description" content="Goal Governance 目标工作台">
     <title>{% block title %}Goal Governance{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <style>
+        [data-tab-panel][hidden] { display: none; }
+    </style>
     {% block head %}{% endblock %}
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
-    <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/90 backdrop-blur">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-            <a href="{{ url_for('home') }}" class="flex items-center gap-3" aria-label="Goal Governance home">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500 font-bold text-white shadow-lg shadow-indigo-500/25">G</span>
-                <span class="text-sm font-semibold tracking-wide text-white">Goal Governance</span>
+<body class="min-h-screen bg-zinc-50 text-zinc-900 antialiased">
+    {% macro status_badge(status) -%}
+        {% set value = status.value if status.value is defined else status %}
+        {% set label = status_labels.get(value, value) %}
+        {% if value == 'active' %}
+            <span class="inline-flex border border-sky-200 bg-sky-50 px-2 py-0.5 text-xs font-medium text-sky-800">{{ label }}</span>
+        {% elif value == 'done' %}
+            <span class="inline-flex border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-800">{{ label }}</span>
+        {% elif value == 'blocked' %}
+            <span class="inline-flex border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-medium text-rose-800">{{ label }}</span>
+        {% elif value == 'cancelled' %}
+            <span class="inline-flex border border-zinc-200 bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-700">{{ label }}</span>
+        {% else %}
+            <span class="inline-flex border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-800">{{ label }}</span>
+        {% endif %}
+    {%- endmacro %}
+
+    {% macro audit_badge(state) -%}
+        {% set value = state.value if state.value is defined else state %}
+        <span class="inline-flex border border-zinc-200 bg-white px-2 py-0.5 text-xs font-medium text-zinc-700">{{ audit_labels.get(value, value) }}</span>
+    {%- endmacro %}
+
+    <header class="sticky inset-x-0 top-0 z-50 border-b border-zinc-200 bg-zinc-50/95 backdrop-blur">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+            <a href="{{ url_for('home') }}" class="flex min-w-0 items-center gap-3" aria-label="Goal Governance 首页">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-teal-700 text-sm font-semibold text-white">G</span>
+                <span class="truncate text-sm font-semibold text-zinc-950">Goal Governance</span>
             </a>
 
-            <nav aria-label="Main navigation">
-                <ul class="flex items-center gap-1 text-sm text-slate-400">
+            <nav class="overflow-x-auto" aria-label="主导航">
+                <ul class="flex min-w-max items-center gap-4 text-sm text-zinc-600">
                     {% set nav_items = [
-                        ('home', '首页', url_for('home')),
-                        ('decision', '决策', url_for('decision')),
-                        ('execution', '执行', url_for('execution')),
-                        ('audit', '审计', url_for('audit'))
+                        ('home', '目标', url_for('home')),
+                        ('diagnostics', '诊断', url_for('home') ~ '#diagnostics')
                     ] %}
                     {% for page_key, label, href in nav_items %}
                     <li>
                         <a href="{{ href }}"
-                           class="rounded-lg px-3 py-2 transition {% if active_page == page_key %}bg-white/10 text-white{% else %}hover:bg-white/5 hover:text-white{% endif %}"
+                           class="border-b-2 py-2 transition {% if active_page == page_key %}border-teal-700 text-zinc-950{% else %}border-transparent hover:border-zinc-300 hover:text-zinc-950{% endif %}"
                            {% if active_page == page_key %}aria-current="page"{% endif %}>
                             {{ label }}
                         </a>
@@ -39,14 +60,15 @@
         </div>
     </header>
 
-    <main class="mx-auto min-h-screen max-w-7xl px-6 pb-16 pt-32 lg:px-8">
+    <main class="mx-auto min-h-screen max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="border-t border-white/10">
-        <div class="mx-auto max-w-7xl px-6 py-6 text-center text-sm text-slate-500 lg:px-8">
-            Goal Governance · Decision · Execution · Audit
+    <footer class="border-t border-zinc-200">
+        <div class="mx-auto max-w-7xl px-4 py-5 text-sm text-zinc-500 sm:px-6 lg:px-8">
+            Goal Governance
         </div>
     </footer>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

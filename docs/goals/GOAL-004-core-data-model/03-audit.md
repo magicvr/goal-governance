@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 审计 · GOAL-004
@@ -192,3 +192,50 @@ version: 0.5.0
 ### 结论与建议下一步
 
 **pass**：阶段 C 的约定主路径、同步边界和受控失败恢复均有实现与测试证据，可进入阶段 D。下一步接入首页和目标详情页，展示 Goal 与 decision/execution/audit 基础信息；写接口路由仅在页面交互需要时接入。
+
+## A-005 · 阶段 D 真实数据 Web 接入实施事实自审（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex
+- **类型 / scope**：execution-facts / 阶段 D 首页、目标详情、诊断、兼容路由与验证
+- **verdict**：pass
+
+### 范围与区间
+
+核对 D-015 与阶段 D 产物：`web/main.py`、`web/templates/base.html`、`web/templates/index.html`、`web/templates/goal_detail.html`、`web/tests/test_main.py`、`web/README.md`，以及 [02-execution.md](02-execution.md) 的阶段 D 验证记录。
+
+### 成果（有证据）
+
+- 首页经 `GoalsRepository` 读取 `docs/goals/`，展示有效目标、未关门计数、无效文档与 goal-tree 漂移诊断；树诊断覆盖字段差异、缺项、孤儿、环、重复编号和解析问题。
+- `/goals/{goal_id}` 对有效 Goal 渲染元数据、成功标准、附件、结构化 Decision / Execution、Audit 原文与结论状态；非法或不存在的 Goal 返回 404。
+- 旧模块地址兼容跳转到统一的目标工作台，不再呈现过时的占位页；页面不暴露写入路由或 JSON API。
+- 自动化验证运行 20 项通过（1 项 Windows 符号链接权限环境跳过）；`compileall`、`pip check`、`git diff --check` 通过。本地页面两个目标 URL 均返回 200，浏览器在桌面与移动视口下验证布局和三个详情标签切换。
+
+### 对照成功标准
+
+| 标准 | 状态 | 证据 |
+|------|------|------|
+| 完成 Goal 及关联实体的数据模型设计 | 已达成 | 阶段 A、D-004～D-013、A-001/A-002 |
+| 实现 Goal 的基础 CRUD（创建、读取、更新、列表） | 已达成 | 阶段 B/C、D-006、D-013、D-014、A-003/A-004 |
+| Web 应用首页和详情页能展示真实目标数据 | 已达成 | `web/main.py`、`web/templates/index.html`、`web/templates/goal_detail.html`、`web/tests/test_main.py` |
+| 实现目标详情页，能看到决策 / 执行 / 审计的基础信息 | 已达成 | `web/templates/goal_detail.html`、阶段 D 浏览器标签切换验证 |
+
+### Findings
+
+本轮未发现新的 required 或 recommended finding。
+
+### 既有 residual
+
+| Finding | 状态 | 说明 |
+|---------|------|------|
+| F-001 | open / recommended | 当前 `goal-tree.md` 仍有 3 个既有投影字段差异；阶段 D 已将其明确展示，不静默覆盖。 |
+| F-002 | open / recommended | 当前 Windows 进程没有创建符号链接权限，真实逃逸用例仍需在具备权限的环境复跑。 |
+| F-003 | open / recommended | 受控异常补偿已测试；进程中断与并发写入仍未端到端验证。 |
+
+### 必改项汇总
+
+无开放 required finding。
+
+### 结论与建议下一步
+
+**pass**：阶段 D 的实现与验证证据满足本目标全部成功标准，可进入 GOAL-004 关门审计。此条仅确认实施阶段完成；目标保持 `active / 100%`，等待用户确认关门后才可改为 `done`。

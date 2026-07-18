@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 决策记录 · GOAL-004
@@ -318,3 +318,30 @@ version: 0.5.0
 | tree 写失败后仅报错或写日志 | 不能恢复跨文件一致性，违反 D-013 |
 
 **影响**：阶段 C 的测试必须覆盖 Create、Update、tree 同步、树替换失败后的补偿、补偿失败后的阻断，以及 `repair_goal_tree()`。
+
+## D-015 · 阶段 D 采用只读 SSR 目标工作台
+
+**日期**：2026-07-19
+**状态**：accepted
+
+**决定**：
+
+- 首页与 `/goals/{goal_id}` 详情页直接注入 `GoalsRepository`，以 Jinja2 服务端渲染目录扫描结果；阶段 D 不额外建立 JSON API 或暴露写入路由。
+- 首页同时展示有效 Goal、无效文档诊断和 `GoalTreeIndex` 的 drift 信息；详情页展示 meta、成功标准、Decision/Execution 解析条目、Audit 结论和附件。
+- 结构化条目无法覆盖的内容保留为可查看的原始 Markdown 文本，保持 Jinja 自动转义；本阶段不把 Markdown 直接作为 HTML 标记为 safe。
+
+**为什么**：
+
+- 服务层已是文档读取的唯一入口，SSR 可让页面立即复用路径边界、诊断和稳定排序契约。
+- 首页需要暴露真实问题而不是只展示“健康”目标，才能体现 Markdown 为 source of truth 的治理边界。
+- 直接渲染任意文档 HTML 会扩大 XSS 与格式兼容风险；结构化展示加原文回退足以达成阶段 D 成功标准。
+
+**未选方案**：
+
+| 方案 | 未选原因 |
+|------|----------|
+| 先建立 JSON API 再由前端请求 | 当前没有 SPA，增加无收益的接口与状态管理层 |
+| 阶段 D 直接开放 Create/Update 表单 | 写入交互和冲突体验需单独设计，不应与读取接入混做 |
+| 将 Markdown 直接标记为可信 HTML | 文档输入未经过 HTML 清洗，安全边界不清楚 |
+
+**影响**：新增首页和详情路由测试；阶段 D 页面是只读工作台，后续写入交互需复用 D-014 的仓库服务命令。

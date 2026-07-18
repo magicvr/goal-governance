@@ -1,36 +1,147 @@
 {% extends "base.html" %}
 
-{% block title %}首页 · Goal Governance{% endblock %}
+{% block title %}目标概览 · Goal Governance{% endblock %}
 
 {% block content %}
-<section class="mx-auto max-w-4xl text-center">
-    <span class="inline-flex items-center rounded-full border border-indigo-400/20 bg-indigo-400/10 px-3 py-1 text-sm font-medium text-indigo-300">
-        A framework for intentional progress
-    </span>
-    <h1 class="mt-6 text-4xl font-bold tracking-tight text-white sm:text-6xl">
-        Goal <span class="text-indigo-400">Governance</span>
-    </h1>
-    <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-400">
-        将目标从想法带到结果，通过清晰的决策、可靠的执行和可追溯的审计，建立持续改进的治理闭环。
-    </p>
+<section class="border-b border-zinc-200 pb-6">
+    <p class="text-sm font-medium text-teal-700">目标工作台</p>
+    <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <h1 class="text-3xl font-semibold text-zinc-950">目标概览</h1>
+            <p class="mt-1 text-sm text-zinc-600">{{ summary.total }} 个可读取目标</p>
+        </div>
+        <p class="text-sm text-zinc-500">目录扫描为当前视图依据</p>
+    </div>
 </section>
 
-<section class="mx-auto mt-16 grid max-w-6xl gap-6 md:grid-cols-3" aria-label="Governance modules">
-    {% set modules = [
-        ('01', 'Decision', '决策', '明确目标、权衡取舍，并记录关键决策依据。', url_for('decision'), 'indigo'),
-        ('02', 'Execution', '执行', '把战略拆解为可跟踪的行动，持续推动目标落地。', url_for('execution'), 'emerald'),
-        ('03', 'Audit', '审计', '回顾过程与结果，让经验沉淀为下一次更好的行动。', url_for('audit'), 'amber')
-    ] %}
-    {% for number, title, subtitle, description, href, color in modules %}
-    <a href="{{ href }}" class="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-{{ color }}-400/40 hover:bg-white/[0.06]">
-        <div class="flex items-center justify-between">
-            <span class="text-sm font-semibold text-{{ color }}-400">{{ number }}</span>
-            <span class="text-slate-600 transition group-hover:translate-x-1 group-hover:text-{{ color }}-400" aria-hidden="true">→</span>
-        </div>
-        <h2 class="mt-10 text-xl font-semibold text-white">{{ title }}</h2>
-        <p class="mt-1 text-sm font-medium text-slate-400">{{ subtitle }}</p>
-        <p class="mt-4 text-sm leading-6 text-slate-500">{{ description }}</p>
-    </a>
-    {% endfor %}
+<section class="grid gap-3 py-6 sm:grid-cols-3" aria-label="目标统计">
+    <div class="border border-zinc-200 bg-white p-4 rounded-lg">
+        <p class="text-sm text-zinc-500">目标总数</p>
+        <p class="mt-2 text-2xl font-semibold text-zinc-950">{{ summary.total }}</p>
+    </div>
+    <div class="border border-zinc-200 bg-white p-4 rounded-lg">
+        <p class="text-sm text-zinc-500">未关门</p>
+        <p class="mt-2 text-2xl font-semibold text-zinc-950">{{ summary.open }}</p>
+    </div>
+    <div class="border border-zinc-200 bg-white p-4 rounded-lg">
+        <p class="text-sm text-zinc-500">待处理诊断</p>
+        <p class="mt-2 text-2xl font-semibold text-zinc-950">{{ summary.issues }}</p>
+    </div>
+</section>
+
+<section aria-labelledby="goal-list-heading">
+    <div class="flex items-center justify-between gap-4 border-b border-zinc-200 pb-3">
+        <h2 id="goal-list-heading" class="text-lg font-semibold text-zinc-950">目标</h2>
+        {% if tree.tree_drift %}
+        <a href="#diagnostics" class="text-sm font-medium text-teal-700 hover:text-teal-900">查看树诊断</a>
+        {% endif %}
+    </div>
+
+    {% if valid_results %}
+    <div class="mt-4 overflow-x-auto border border-zinc-200 bg-white rounded-lg">
+        <table class="min-w-full divide-y divide-zinc-200 text-left text-sm">
+            <thead class="bg-zinc-100 text-xs font-medium text-zinc-600">
+                <tr>
+                    <th scope="col" class="px-4 py-3">目标</th>
+                    <th scope="col" class="px-4 py-3">状态</th>
+                    <th scope="col" class="px-4 py-3">进度</th>
+                    <th scope="col" class="px-4 py-3">父目标</th>
+                    <th scope="col" class="px-4 py-3">更新</th>
+                    <th scope="col" class="px-4 py-3"><span class="sr-only">详情</span></th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-200">
+                {% for result in valid_results %}
+                {% set goal = result.goal %}
+                <tr class="hover:bg-zinc-50">
+                    <td class="max-w-xs px-4 py-4 sm:max-w-md">
+                        <a href="{{ url_for('goal_detail', goal_id=goal.id) }}" class="font-medium text-zinc-950 hover:text-teal-700">{{ goal.title }}</a>
+                        <p class="mt-1 truncate font-mono text-xs text-zinc-500">{{ goal.id }}</p>
+                        {% if goal.summary %}
+                        <p class="mt-2 line-clamp-2 text-sm text-zinc-600">{{ goal.summary }}</p>
+                        {% endif %}
+                        {% if result.issues %}
+                        <p class="mt-2 text-xs font-medium text-amber-700">{{ result.issues|length }} 项读取提醒</p>
+                        {% endif %}
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-4">{{ status_badge(goal.status) }}</td>
+                    <td class="whitespace-nowrap px-4 py-4 text-zinc-700">{{ goal.progress or '—' }}</td>
+                    <td class="whitespace-nowrap px-4 py-4 font-mono text-xs text-zinc-600">{{ goal.parent_id or '—' }}</td>
+                    <td class="whitespace-nowrap px-4 py-4 text-zinc-600">{{ goal.updated }}</td>
+                    <td class="whitespace-nowrap px-4 py-4 text-right"><a href="{{ url_for('goal_detail', goal_id=goal.id) }}" class="font-medium text-teal-700 hover:text-teal-900">查看</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="mt-4 border border-dashed border-zinc-300 bg-white p-6 text-sm text-zinc-600 rounded-lg">当前没有可读取目标。</p>
+    {% endif %}
+</section>
+
+<section id="diagnostics" class="mt-10 scroll-mt-24" aria-labelledby="diagnostics-heading">
+    <div class="flex items-center justify-between gap-4 border-b border-zinc-200 pb-3">
+        <h2 id="diagnostics-heading" class="text-lg font-semibold text-zinc-950">文档诊断</h2>
+        {% if tree.tree_drift or invalid_results %}
+        <span class="text-sm font-medium text-amber-700">需要关注</span>
+        {% else %}
+        <span class="text-sm font-medium text-emerald-700">无诊断</span>
+        {% endif %}
+    </div>
+
+    {% if tree.tree_drift %}
+    <div class="mt-4 border border-amber-200 bg-amber-50 p-4 rounded-lg">
+        <p class="font-medium text-amber-950">goal-tree.md 与目录扫描存在差异</p>
+        <ul class="mt-3 space-y-2 text-sm text-amber-900">
+            {% for mismatch in tree.validation_report.field_mismatches %}
+            <li><span class="font-mono text-xs">{{ mismatch.goal_id }}</span> 的 {{ mismatch.field }} 不一致</li>
+            {% endfor %}
+            {% for goal_id in tree.validation_report.missing_in_tree %}
+            <li><span class="font-mono text-xs">{{ goal_id }}</span> 未出现在状态表</li>
+            {% endfor %}
+            {% for goal_id in tree.validation_report.missing_on_disk %}
+            <li><span class="font-mono text-xs">{{ goal_id }}</span> 仅出现在状态表</li>
+            {% endfor %}
+            {% for goal_id in tree.validation_report.orphan_ids %}
+            <li><span class="font-mono text-xs">{{ goal_id }}</span> 的父目标不存在</li>
+            {% endfor %}
+            {% for goal_id in tree.validation_report.cycle_ids %}
+            <li><span class="font-mono text-xs">{{ goal_id }}</span> 参与 parent 环</li>
+            {% endfor %}
+            {% for number, goal_ids in tree.validation_report.duplicate_number_ids.items() %}
+            <li><span class="font-mono text-xs">GOAL-{{ '%03d'|format(number) }}</span> 编号重复：{{ goal_ids|join('、') }}</li>
+            {% endfor %}
+            {% for issue in tree.validation_report.issues %}
+            <li>{{ issue.message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if invalid_results %}
+    <div class="mt-4 overflow-x-auto border border-rose-200 bg-white rounded-lg">
+        <table class="min-w-full divide-y divide-rose-100 text-left text-sm">
+            <thead class="bg-rose-50 text-xs font-medium text-rose-800">
+                <tr><th scope="col" class="px-4 py-3">位置</th><th scope="col" class="px-4 py-3">问题</th></tr>
+            </thead>
+            <tbody class="divide-y divide-rose-100">
+                {% for result in invalid_results %}
+                <tr>
+                    <td class="px-4 py-3 font-mono text-xs text-zinc-700">{{ result.path.name }}</td>
+                    <td class="px-4 py-3 text-rose-900">
+                        {% for issue in result.issues %}
+                        <p>{{ issue.message }}</p>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if not tree.tree_drift and not invalid_results %}
+    <p class="mt-4 border border-zinc-200 bg-white p-4 text-sm text-zinc-600 rounded-lg">目录扫描与目标树一致。</p>
+    {% endif %}
 </section>
 {% endblock %}

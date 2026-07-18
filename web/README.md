@@ -2,11 +2,11 @@
 
 基于 FastAPI、Jinja2、Tailwind CSS 和 HTMX 的目标治理 Web 应用。
 
-当前版本提供页面与路由骨架，包含三个模块：
+当前版本提供只读的目标工作台，直接从仓库 `docs/goals/` 的 Markdown 真相源加载数据：
 
-- **Decision（决策）**
-- **Execution（执行）**
-- **Audit（审计）**
+- **目标概览**：展示可读取 Goal、状态、进度和文档/目标树诊断。
+- **目标详情**：展示成功标准、附件、Decision、Execution 和 Audit 的基础信息与原始 Markdown 回退内容。
+- **兼容入口**：原 `/decision`、`/execution`、`/audit` 地址会跳回目标工作台；写入操作尚未在 Web 中开放。
 
 ## 目录结构
 
@@ -15,14 +15,14 @@ web/
 ├── main.py
 ├── requirements.txt
 ├── README.md
+├── services/
+│   └── goals_repo.py
 ├── static/
 │   └── .gitkeep
 └── templates/
     ├── base.html
     ├── index.html
-    ├── decision.html
-    ├── execution.html
-    └── audit.html
+    └── goal_detail.html
 ```
 
 ## 环境要求
@@ -108,11 +108,10 @@ macOS / Linux：
 
 启动后访问：<http://127.0.0.1:8000>
 
-模块页面：
+常用页面：
 
-- <http://127.0.0.1:8000/decision>
-- <http://127.0.0.1:8000/execution>
-- <http://127.0.0.1:8000/audit>
+- <http://127.0.0.1:8000/> — 目标概览
+- <http://127.0.0.1:8000/goals/GOAL-004-core-data-model> — 目标详情示例
 
 ## 测试
 
@@ -131,6 +130,7 @@ macOS / Linux：
 ## 技术说明
 
 - `main.py` 通过 `Path(__file__).resolve().parent` 定位 `static/` 与 `templates/`，可在任意工作目录启动。
+- 首页与 `/goals/{goal_id}` 通过 `GoalsRepository` 读取 `docs/goals/`；目录扫描为运行时列表权威，`goal-tree.md` 的差异会显示为诊断。
 - Tailwind CSS 和 HTMX 当前通过 CDN 加载。
 - `static/` 已挂载到 `/static`。
-- `services/goals_repo.py` 已提供目标的 List/Get/Create/Update 与 `repair_goal_tree()`；Web 路由接入留待目标详情与首页阶段。
+- `services/goals_repo.py` 提供目标的 List/Get/Create/Update 与 `repair_goal_tree()`；本阶段 Web 只接入只读 List/Get，写入交互留待后续目标。

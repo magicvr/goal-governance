@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 执行记录 · GOAL-004
@@ -56,10 +56,20 @@ version: 0.5.0
 - 验证事实：项目 `.venv` 下 14 项单测通过；符号链接逃逸用例因当前 Windows 进程无创建符号链接权限跳过 1 项；`compileall` 与 `pip check` 通过。
 - 阶段 C 标记为**已完成**，勾选基础 CRUD 成功标准，进度由 **50% 调整为 75%**；阶段 D 尚未开始。
 
-## 待办
+### 2026-07-19 · 阶段 D：Web 接入真实数据与验证
 
-1. 阶段 D：首页/详情接真实数据
+- 在 `web/main.py` 将首页和 `/goals/{goal_id}` 详情页接入 `GoalsRepository`；首页以目录扫描结果展示 Goal 列表、未关门数量与树/文档诊断，详情页展示 meta、成功标准、附件以及 Decision / Execution / Audit。
+- 在 `web/templates/base.html`、`index.html` 与新增的 `goal_detail.html` 建立只读工作台；保留原始 Markdown 的安全转义回退。首页的树诊断现在同时展示重复编号等全部 `TreeValidationReport` 类别，旧 `/decision`、`/execution`、`/audit` 地址兼容跳回首页。
+- 在 `web/tests/test_main.py` 增加首页、详情、404、旧路由跳转、重复编号诊断和完整树诊断计数的回归测试；`web/requirements.txt` 补齐 TestClient 所需 `httpx2` 依赖，`web/README.md` 更新真实页面入口与只读边界。
+- 验证事实：`..\\.venv\\Scripts\\python.exe -m unittest discover -s tests -v` 运行 20 项通过；符号链接逃逸用例因当前 Windows 进程无权限创建链接跳过 1 项；`compileall`、`pip check` 与 `git diff --check` 通过。
+- 本地 Uvicorn 实测 `http://127.0.0.1:8000/` 与 `http://127.0.0.1:8000/goals/GOAL-004-core-data-model` 均返回 200；浏览器在 1440×960 与 390×844 下验证首页和详情不为空、布局可用，Decision / Execution / Audit 标签可切换。
+- 勾选两项 Web 成功标准，路线图阶段 D → **已完成**；进度由 **75% 调整为 100%**。目标 `status` 保持 `active`，等待单独关门路径。
+
+## 后续
+
+1. 对 GOAL-004 进行关门审计，并由用户确认是否将 `status` 变更为 `done`。
+2. F-001（既有 goal-tree 投影差异）、F-002（Windows 符号链接环境）与 F-003（进程中断/并发写入）保持为 recommended residual，不阻断本阶段完成。
 
 ## 进度评估
 
-**约 75%**：阶段 A 设计、阶段 B 读取与阶段 C 基础 CRUD 写回均已完成并有测试证据；Web 首页和详情接入仍待实现。
+**100%（实施范围）**：阶段 A 设计、阶段 B 读取、阶段 C 可恢复基础 CRUD、阶段 D 真实数据 Web 接入均有代码、自动化测试和浏览器验证证据。目标仍为 `active`，因为关门审计和用户确认尚未发生。

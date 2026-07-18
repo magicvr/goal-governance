@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.3.0
+version: 0.4.0
 ---
 
 # Goal Tree
@@ -18,7 +18,7 @@ version: 0.3.0
 GOAL-001-main-vision · 构建一个实用的目标治理框架 [active]
 ├── GOAL-002-project-bootstrap · 完成项目初始化（文档体系 + Web 基础框架 + Skills 方向） [done 100%]
 ├── GOAL-003-skills-practice · 完善 Skills 并在本项目中实践验证 [done 100%]
-├── GOAL-004-core-data-model · 实现核心数据模型与 Goal 基础管理 [active 75%]
+├── GOAL-004-core-data-model · 实现核心数据模型与 Goal 基础管理 [active 100%]
 └── GOAL-005-skills-closed-loop-audit · Skills 治理闭环与交叉审计 [done 100%]
 ```
 
@@ -29,7 +29,7 @@ GOAL-001-main-vision · 构建一个实用的目标治理框架 [active]
 | GOAL-001-main-vision | 构建一个实用的目标治理框架 | — | active | 进行中 | [GOAL-001-main-vision/](GOAL-001-main-vision/) |
 | GOAL-002-project-bootstrap | 完成项目初始化 | GOAL-001-main-vision | done | 100% | [GOAL-002-project-bootstrap/](GOAL-002-project-bootstrap/) |
 | GOAL-003-skills-practice | 完善 Skills 并在本项目中实践验证 | GOAL-001-main-vision | done | 100% | [GOAL-003-skills-practice/](GOAL-003-skills-practice/) |
-| GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | GOAL-001-main-vision | active | 75% | [GOAL-004-core-data-model/](GOAL-004-core-data-model/) |
+| GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | GOAL-001-main-vision | active | 100% | [GOAL-004-core-data-model/](GOAL-004-core-data-model/) |
 | GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | GOAL-001-main-vision | done | 100% | [GOAL-005-skills-closed-loop-audit/](GOAL-005-skills-closed-loop-audit/) |
 
 ## 状态图例
