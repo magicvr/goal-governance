@@ -97,7 +97,7 @@ The original sections below preserve the historical implementation review. The f
 
 ## 审计结论
 
-> A-001～A-012 是按时间追加的历史审视；其中的 `collecting`、`deferred`、`open / required` 表示各自审计时点。当前状态以本文件顶部信息台账和最新响应 A-013 为准。
+> A-001～A-015 是按时间追加的历史审视；其中的 `collecting`、`deferred`、`open / required` 表示各自审计时点。当前状态以本文件顶部信息台账和最新 close-out A-016 为准。
 
 ## A-001 · I-001 行业实践收集与方案前审视（2026-07-19）
 
