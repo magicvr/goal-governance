@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-20
-version: 0.3.5
+version: 0.3.6
 ---
 
 # 执行记录 · GOAL-001
@@ -24,6 +24,13 @@ version: 0.3.5
 - 使用普通 merge 生成 commit `2662c2551ea92a1d046d9658b0b9b55885f3e57f`，保留 annotated `v0.7.0` 及其候选提交 `8a33ecd21d9183a680c9c0d63e471469f5e515a8` 在 `main` 的祖先链中。
 - `main` 的 GitHub Actions run `29701936833` 通过，包含 portable contract/report 与 Windows install-surface 两项 job；确认 `main` 包含 PR head 和 `v0.7.0` 后，删除 `origin/dev` 与本地 `dev`（原 head `491152a`）。
 - 本次只完成分支整合与执行留痕；GOAL-001 继续 `active`，不改变阶段 6/7、F-006 或目标树状态。
+
+## 2026-07-20 · 阶段 6 方向重定向与 GOAL-009 立项
+
+- 用户明确否决将 Web 定位为“完善的只读工具”，要求其成为供人类工作时由 AI 协助的目标治理工作台。
+- 已记录 [D-014](01-decision.md#d-014--阶段-6-重定向为-ai-协助的人类目标治理工作台2026-07-20)，保持 `docs/goals/` 的 canonical 地位，同时允许后续在确认、事务和审计约束下规划受控 Web 变更。
+- 已创建 [GOAL-009-ai-assisted-governance-workbench](../GOAL-009-ai-assisted-governance-workbench/00-meta.md) 作为产品定义与信息发现目标，初始 `active / 0%`；其 I-001～I-006 为受影响实施/验收门禁，当前均未被写成已验证。
+- 本次未修改 Web 应用代码、未暴露写入 API、未开放 AI 自动写入或部署服务；现有 Web 只读页保留为历史基线，不再作为阶段 6 的产品终态。
 
 ## 时间线
 
@@ -77,17 +84,17 @@ version: 0.3.5
 | 方向 | 状态 | 说明 |
 |------|------|------|
 | 核心方法论与模板 | 已完成（GOAL-006 done / 100%） | `docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/`、独立启用说明与 A-005 close-out 已形成核心交付；跨面联合发布仍留给后续阶段 |
-| Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互明确留待后续目标 |
-| Skills / 提示词 | Claude/Grok 候选双入口 runtime 已证；完整发布一致性继续 | GOAL-003、GOAL-005、GOAL-007 均为 done；GOAL-008 active / 20%，尚缺 Copilot 双入口、Web CI replay 与 release-candidate/tag，I-002 / I-003 / F-005 继续为 required |
+| Web 应用 | 阶段 6 规划已启动 | GOAL-009 定义 AI 协助的人类目标治理工作台；现有只读页只是基线，后续能力必须先通过产品、确认、事务与安全门禁。 |
+| Skills / 提示词 | 已完成阶段 5 发布一致性 | GOAL-003、GOAL-005、GOAL-007、GOAL-008 均为 done；GOAL-008 A-016、CI replay 与 `v0.7.0` 已关闭 I-002 / I-003 / F-005。 |
 | 核心数据模型 | 已完成 | GOAL-004 done 100%；阶段 A～D 与关门路径均已完成 |
 
 ## 下一步（根目标视角）
 
 1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已由 `GOAL-006` 完成；A-005 self close-out 与 A-004 independent targeted 复审通过，满足阶段 4 → 5 门槛。
-2. 阶段 5 已由 GOAL-008 承接：矩阵、fixtures、CI/rehearsal 和 Claude/Grok 四个候选 runtime 单元已形成；下一步补 Copilot 双入口与 Web CI replay，再处理发行身份和 tag/release。
-3. 阶段 6 保持 Web 只读；GOAL-008 正式关门前不启动 Web 深化。任何未来写入仍须另立子目标并保留审计证据。
-4. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
-5. F-019 待具备 Linux/macOS CI 或 Unix 环境时单独补证，不阻塞当前路线。
+2. 阶段 5 已由 GOAL-008 完成；其 release evidence 不等于阶段 7 的三面最终验收。
+3. 阶段 6 由 GOAL-009 先完成产品形态、核心工作流、AI 协作/确认语义、canonical 写入与证据门禁的规划；每个 required 信息项只阻断受其影响的实现、部署或验收范围。
+4. 后续只在 GOAL-009 的路线图与门禁明确后，按第一个最小可验证工作流另立实现子目标；不批量预建子目标。
+5. F-001～F-003、F-019 与 F-006 按各自后续范围跟踪，不阻断当前产品规划。
 
 ### 2026-07-19 · 根目标重基线与核心模板归属
 
