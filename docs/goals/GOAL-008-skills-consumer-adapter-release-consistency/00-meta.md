@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 1.0.0
+version: 1.2.0
 progress: 20%
 ---
 
@@ -15,9 +15,11 @@ progress: 20%
 
 按 [GOAL-001 D-010](../GOAL-001-main-vision/01-decision.md#d-010--p-004-自审裁决与阶段-5-发布一致性立项边界2026-07-19) 承接阶段 5：在不产生第二状态源的前提下，定义并验证 Skills 消费适配器的机读协议/模板版本、兼容声明和跨宿主/跨版本发布契约，形成可复核的兼容矩阵、fixtures、CI 与发行证据。
 
-## 当前交付取舍（2026-07-19）
+## 当前交付取舍与恢复（2026-07-19）
 
-用户确认当前使用场景只需“可安装、可使用”的最低基线：canonical 契约与安装分发受测试覆盖，Claude Code `2.1.215`、Grok Build `0.2.103`、Copilot VS Code `1.129.1` / `copilot-chat 0.57.0` 均已有 `0.1.0` current `/govern` 的实际调度证据。该结论只允许声明**当前三宿主的 `/govern` 最低可用**，不等同于完整兼容验收、`/audit` 运行时、manifest 解析、CI 或 release 通过。
+历史上，用户曾确认当前使用场景只需“可安装、可使用”的最低基线：canonical 契约与安装分发受测试覆盖，Claude Code `2.1.215`、Grok Build `0.2.103`、Copilot VS Code `1.129.1` / `copilot-chat 0.57.0` 均已有 `0.1.0` current `/govern` 的实际调度证据。该历史结论只允许声明**当前三宿主的 `/govern` 最低可用**，不等同于完整兼容验收、`/audit` 运行时、manifest 解析、CI 或 release 通过。
+
+用户现已明确要求完整关门本目标，并在阶段 5 完成前不推进 Web 深化。[D-005](01-decision.md#d-005--重启完整发布一致性关门路径2026-07-19) 因此恢复 I-002、I-003 与上游 F-005 的 required 工作；最低可用证据保留为历史基线，不再作为延期理由。
 
 ## 范围
 
@@ -44,22 +46,22 @@ progress: 20%
 
 ## 信息就绪与未知项（P-005）
 
-> I-001～I-003 由 GOAL-001 D-010 登记为 `required`；I-001 已 `verified`。用户于 2026-07-19 确认 I-002、I-003 在当前最低可用范围内改为 `deferred`，但未接受 residual risk，也没有把它们写成 `verified`。`deferred required` 在其复核触发或受影响门禁到达时仍按开放 required 处理。
+> I-001～I-003 由 GOAL-001 D-010 登记为 `required`；I-001 已 `verified`。D-004 的历史延期已由用户在 D-005 中解除，I-002、I-003 当前均为 `collecting / required`，且没有 residual risk 接受。兼容矩阵、自动化与 rehearsal 已形成，但候选 runtime 与正式发行证据未闭环。
 
 | ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|------------------|------|-------------|-------------|
 | I-001 | required | 哪个 canonical 位置和字段承载机读协议/模板版本与兼容声明；版本演进和兼容判定采用什么语义？ | 阶段 5 方案与发布范围冻结 | 方案冻结前 | 按 D-002 创建 canonical schema/manifest、同步分发镜像，并以正反 fixtures 和适配器契约测试验证 | verified | 无延期；已于方案审视复核 | [D-002](01-decision.md#d-002--i-001-单一机读版本声明契约2026-07-19)；`docs/contracts/`、`skills/contracts/`；`python -m unittest skills/tests/test_skills_orchestrator.py -v`（29 passed）与 `python -m unittest discover -s docs/tests -p "test_standalone_bootstrap.py" -v`（3 passed） |
-| I-002 | required | 哪些宿主/wrapper/Web 解析器版本必须支持当前与上一协议版本；兼容矩阵和 fixtures 的边界是什么？ | 受影响实施与兼容验收 | 首次支持新的宿主/版本，或首次对外/可复现发布前 | 触发时扩展兼容矩阵、未覆盖入口和自动化重放；以版本固定的 current / negative fixture 与可观察 dispatch 完成验收 | deferred | 延期理由：当前只声明三宿主 current `/govern` 最低可用；责任人：项目维护者（本轮用户确认）；复核触发：首次支持新宿主/版本或首次对外/可复现发布，以先到者为准 | [D-003](01-decision.md#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)、[D-004](01-decision.md#d-004--当前最低可用基线与发布一致性延期2026-07-19)；[runtime fixture 结果](attachments/i-002-runtime-fixture-2026-07-19.md)：Claude Code `2.1.215`、Grok Build CLI `0.2.103 (89c3d36fb6)` 与 Copilot VS Code `1.129.1` / built-in `GitHub copilot-chat 0.57.0` 均有归档 screenshot 显示实际调度 `/govern`，三条 manifest adapter 均为 `verified`；该结论仅覆盖 `0.1.0` current `/govern` fixture。 |
-| I-003 | required | 发行物如何唯一标识，CI 如何重放 canonical/mirror、测试报告、变更日志与 tag/release 证据？ | 阶段 5 发布验收、F-005 关闭和阶段 7 输入 | 首次对外/可复现发布前 | 触发时定义发行物身份和流水线产物，实施 CI 与发布演练，并核对可追溯 tag/release | deferred | 延期理由：当前不进行对外/可复现发布；责任人：项目维护者（本轮用户确认）；复核触发：首次对外/可复现发布 | [GOAL-001 D-010](../GOAL-001-main-vision/01-decision.md#d-010--p-004-自审裁决与阶段-5-发布一致性立项边界2026-07-19)、[D-004](01-decision.md#d-004--当前最低可用基线与发布一致性延期2026-07-19)；当前 `0.5.0` 尚无 release tag |
+| I-002 | required | 哪些宿主/wrapper/Web 解析器版本必须支持当前与上一协议版本；兼容矩阵和 fixtures 的边界是什么？ | 受影响实施与兼容验收 | 阶段 5 兼容验收前 | 建立 canonical 矩阵、当前与 negative fixtures、跨宿主安装/消费重放；对固定版本的 `govern` 与 `audit` 分别取得可观察 dispatch | collecting | 2026-07-19 用户明确恢复完整关门；责任人：项目维护者；不再延期。`previousSupportedProtocol: null` 仅允许“首个基线无前身”的显式 N/A 与负例，不得伪造 predecessor。 | [D-003](01-decision.md#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)、[D-005](01-decision.md#d-005--重启完整发布一致性关门路径2026-07-19)、[D-008](01-decision.md#d-008--候选运行时证据契约与宿主配置边界2026-07-19)；Claude Code 与 Grok Build 的 `/govern`、`/audit` 已由机读证据验证。Copilot 两个入口与 Web parser CI replay 仍未覆盖，当前报告剩 3 个 uncovered 单元。 |
+| I-003 | required | 发行物如何唯一标识，CI 如何重放 canonical/mirror、测试报告、变更日志与 tag/release 证据？ | 阶段 5 发布验收、F-005 关闭和阶段 7 输入 | 阶段 5 发布验收前 | 定义发行物身份和流水线产物，实施 CI 与发布演练，并核对可追溯 tag/release | collecting | 2026-07-19 用户明确恢复完整关门；责任人：项目维护者；不再延期。首次 annotated tag/release 或等价可追溯演练仍需维护者授权。 | [GOAL-001 D-010](../GOAL-001-main-vision/01-decision.md#d-010--p-004-自审裁决与阶段-5-发布一致性立项边界2026-07-19)、[D-005](01-decision.md#d-005--重启完整发布一致性关门路径2026-07-19)；`.github/workflows/ci.yml`、`scripts/compatibility_report.py`、`scripts/release_evidence.py`、`docs/releases/`、`CHANGELOG.md` 与本地 rehearsal 已形成；当前仍无 clean-tree CI 归档、ready coverage 或 annotated release tag。 |
 
 ## 高层路线图
 
 | 阶段 | 主题 | 状态 | 退出证据 |
 |------|------|------|----------|
 | A | 信息发现与方案冻结：关闭 I-001，定义协议/兼容语义和发行证据契约 | 已完成（I-001） | 单一机读声明、兼容判定语义、canonical 所有者和契约测试方案 |
-| B | 支持范围、兼容矩阵与 fixtures：按 I-002 冻结当前/上一版本边界 | deferred | 当前三宿主 `/govern` 最低可用已有证据；完整矩阵在首次支持新宿主/版本或首次对外/可复现发布时复核 |
-| C | 跨宿主/跨版本验证与漂移校验 | deferred | 触发后形成可重复的安装/消费测试、canonical/mirror 校验和兼容性报告 |
-| D | 发行证据与关门审计：按 I-003 形成可追溯发布证据并响应 F-005 | deferred | 首次对外/可复现发布时形成 CI 重放结果、报告、变更日志、tag/release 证据及阶段/关门审计结论 |
+| B | 支持范围、兼容矩阵与 fixtures：按 I-002 冻结当前/上一版本边界 | 进行中（Claude/Grok 双入口已验证；Copilot 待人工证据） | 固定宿主版本、current `0.1.0` 与“无 predecessor”负例；每宿主 `govern` / `audit` 的可观察 dispatch |
+| C | 跨宿主/跨版本验证与漂移校验 | 进行中（自动化、本地重放与 runtime freshness 校验已实现） | 可重复的安装/消费测试、canonical/mirror 校验和兼容性报告；当前报告仍列 Copilot 两项与 Web CI replay 共 3 个 uncovered 单元 |
+| D | 发行证据与关门审计：按 I-003 形成可追溯发布证据并响应 F-005 | 进行中（rehearsal 工具链已实现） | CI 重放结果、报告、变更日志、矩阵 `candidateRevision` 与 annotated tag 相互绑定的 release-candidate 证据及阶段/关门审计结论 |
 
 ## 父目标
 
@@ -67,4 +69,4 @@ progress: 20%
 
 ## 当前状态
 
-本目标已按 D-010 建立。2026-07-19 已完成 I-001 的行业实践收集、设计、schema/manifest、镜像和契约测试；D-003 已冻结 I-002 的初始支持边界，三宿主的固定版本 current `/govern` runtime fixture 也已由归档证据验证，故保持 `active / 20%`。用户随后确认当前交付只声明该最低可用范围：I-002、I-003 与上游 F-005 均为 `deferred required`，在相应触发到来前不投入完整兼容矩阵、自动化重放或发布演练；它们未关闭，仍阻断阶段 5 发布验收、阶段 7 验收和根目标关门。
+本目标已按 D-010 建立。2026-07-19 已完成 I-001 的行业实践收集、设计、schema/manifest、镜像和契约测试；D-003 已冻结 I-002 的初始支持边界。D-005 之后已建立 canonical/Skills 兼容矩阵、负例 fixtures、Ubuntu/Windows CI、兼容/发行报告工具与本地 rehearsal；D-008 又以机读 schema、行为源/输出摘要和脱敏 transcript 验证 Claude Code、Grok Build 的 `/govern` 与 `/audit` 四个候选单元。当前仍有 Copilot 两个入口与 Web CI replay 共 3 个 uncovered 单元，且工作树不干净、无 annotated tag。I-002、I-003 与上游 F-005 继续为 `collecting / required`，阻断阶段 5 发布验收、GOAL-008 关门、阶段 6 Web 深化、阶段 7 验收和根目标关门；因此保持 `active / 20%`。

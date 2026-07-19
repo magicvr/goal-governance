@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 1.0.0
+version: 1.1.0
 ---
 
 # Skills
@@ -14,7 +14,7 @@ version: 1.0.0
 
 Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/)；本包内的 `templates/goal-folder/` 是用于离线复制和安装脚本的同步镜像。消费适配器的机读版本/兼容声明以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 是逐字节分发镜像。安装到其他仓库后，镜像必须自包含可用。
 
-**当前契约范围（D-003 / I-002）**：Claude Code CLI 与 GitHub Copilot **VS Code** 插件为 `committed`；Grok Build CLI 为已纳入 manifest 的 `declared` 范围。三者都已有固定产品版本下实际调度 `/govern` 的运行时证据，故 manifest 的 `verificationStatus` 为 `verified`。该标记仅覆盖 `0.1.0` current `/govern` fixture，不替代 `/audit`、manifest 解析、CI 或 release 验收。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json)。
+**当前候选支持范围（GOAL-008 D-005 / I-002）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot **VS Code** 插件均以固定的当前机器版本列为 `committed` 支持基线。三者 manifest 的 `verificationStatus: verified` 仍只表示历史 `0.1.0` current `/govern` 子范围；候选矩阵中 Claude Code 与 Grok Build 的 `/govern`、`/audit` 已有机读 runtime 证据，Copilot 两个入口与 Web CI replay 仍待补齐。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
 ## 产品模型（必读）
 
@@ -30,11 +30,13 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
-| Claude Code CLI | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / verified` |
-| Grok Build CLI | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `declared / verified` |
-| GitHub Copilot VS Code 插件 | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` | `committed / verified` |
+| Claude Code CLI | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / candidate runtime-verified` |
+| Grok Build CLI | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / candidate runtime-verified*` |
+| GitHub Copilot VS Code 插件 | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` | `committed / candidate pending` |
 
 核心行为：
+
+> Contract manifest 的 `verificationStatus` 仍是历史有界事实，不能替代候选矩阵。Claude Code 机读证据保存脱敏 stream transcript；Grok Build 机读证据保留辅助 session-title `grok-build` alias 的 502 警告，但主 `grok-4.5` 调用 exit `0` 且输出实际 dispatch marker。完整发行验收仍以全部 matrix 单元、coverage、CI 与 release 证据为准。
 
 - 编排：[`prompts/00-govern-orchestrator.md`](prompts/00-govern-orchestrator.md)
 - 交叉：[`prompts/05-independent-audit.md`](prompts/05-independent-audit.md)

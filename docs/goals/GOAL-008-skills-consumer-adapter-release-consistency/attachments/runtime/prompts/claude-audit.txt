@@ -1,0 +1,10 @@
+/audit GOAL-008
+
+This is a read-only runtime dispatch probe. Do not modify files, append an audit, launch subagents, or ask the user questions. Load the installed audit skill and use repository reads to report:
+
+1. literal marker CLAUDE_AUDIT_DISPATCH_OK;
+2. the loaded skill title and actual source path;
+3. the independent-audit prompt path named by that skill;
+4. the audit-only status boundary and one current required evidence gap for GOAL-008.
+
+Only emit the marker after reading the installed skill, its independent-audit prompt, and current GOAL-008 governance records. A prompt echo is not sufficient.

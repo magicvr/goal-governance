@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.3.0
+version: 0.3.2
 ---
 
 # 审计 · GOAL-001
@@ -470,3 +470,88 @@ D-010 同时登记 I-001～I-003 为 `required / collecting`。这些信息项�
 ### 结论 + 建议下一步
 
 **conditional**：当前最低可用范围可用，GOAL-008 与 GOAL-001 均保持 active；完整发布一致性已正式延期而非完成。下一步仅在首次支持新宿主/版本或首次对外/可复现发布时恢复 `/govern GOAL-008`，重新检查 I-002、I-003 与 F-005。
+
+## A-010 · 重启 F-005 完整发布一致性关门响应（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex `/govern`
+- **类型 / scope**：response / 响应 A-009 的延期状态、D-012 的阶段顺序和 GOAL-008 D-005 的恢复工作；不作阶段 5 发布验收或根目标关门审计。
+- **verdict**：conditional
+
+### 范围与区间
+
+用户已明确将完整 Skills 关门恢复为阶段 6 Web 深化的前置条件。本条只核对该取舍是否将 F-005、I-002 与 I-003 重新置于可追踪的 required 门禁，并确认没有用最低可用证据掩盖未完成发布工作。
+
+### 成果（有证据）
+
+- [D-012](01-decision.md#d-012--重启阶段-5-完整关门并将-web-深化后置2026-07-19) 已记录阶段顺序、当前机器基线与 Web 后置边界。
+- [GOAL-008 D-005](../GOAL-008-skills-consumer-adapter-release-consistency/01-decision.md#d-005--重启完整发布一致性关门路径2026-07-19) 已恢复 I-002、I-003 和 F-005 的具体矩阵、CI、发行与 runtime 工作，且没有接受 residual risk。
+- GOAL-008 的信息台账与 A-009 已将 I-002、I-003 改为 `collecting / required`；现有三宿主 `/govern` evidence 仅作为候选基线，候选发行物仍需重新验证 `/govern` 与 `/audit`。
+
+### 关闭证据与仍开放项
+
+| finding / I-00N | 当前状态 | 关闭所需证据 |
+|-----------------|----------|--------------|
+| F-005 | open / required | 兼容矩阵、current/negative fixtures、CI 重放、报告、发行物身份与可追溯 tag/release；见 GOAL-008 D-005 |
+| I-002 | collecting / required | 三宿主固定版本的 `/govern` / `/audit` runtime、自动化重放与未覆盖范围报告 |
+| I-003 | collecting / required | CI、digest、测试/兼容报告、变更日志和 tag/release 演练 |
+
+### Findings
+
+没有新增 finding；F-005 仍开放且 required。D-012 恢复了关闭路径，不等同于关闭证据。
+
+### P-004 与建议下一步
+
+既有 A-006 independent 与 A-007 self 对 F-005 同向，当前没有 verdict 或必改项冲突。下一步由 GOAL-008 先完成自动化与运行时证据；实施事实形成后再做阶段 self 审计，建议邀请 independent 复审。只有 F-005、I-002、I-003 都有可核对关闭证据，才可向用户提议 GOAL-008 close-out。
+
+## A-011 · GOAL-008 A-010 响应后的 F-005 状态复核（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex `/govern`
+- **类型 / scope**：response / 核对 GOAL-008 A-011 对发布自动化与本地 ledger findings 的响应是否改变根目标 F-005；不作阶段 5 发布验收或根目标关门审计。
+- **verdict**：conditional
+
+### 成果（有证据）
+
+- [GOAL-008 A-011](../GOAL-008-skills-consumer-adapter-release-consistency/03-audit.md#a-011--响应-a-010对齐执行台账并收紧候选证据2026-07-19) 已关闭其本地 F-001、F-004、F-005，并留下 matrix、negative fixtures、CI、报告工具、rehearsal 与 7 个 uncovered 单元的事实台账。
+- 发行证据已收紧为内部执行 checks、完整报告新鲜度、matrix `candidateRevision` 与 annotated tag 绑定；这提高 I-003 证据契约可信度，但不等于发行已发生。
+
+### 关闭证据与仍开放项
+
+| finding / I-00N | 当前状态 | 证据与边界 |
+|-----------------|----------|------------|
+| GOAL-008 A-010 F-001/F-004/F-005 | closed | GOAL-008 D-006、执行记录与 A-011。 |
+| I-002 | collecting / required | 7 个 candidate 单元仍 uncovered；三宿主六个入口需真实证据。 |
+| I-003 | collecting / required | 仅 rehearsal；无 ready coverage、clean release commit 或 annotated tag/release。 |
+| GOAL-001 F-005 | **open / required** | 仍依赖 I-002/I-003 关闭及根目标最终响应；本条不把工具链存在写成发布验收通过。 |
+
+### 结论 + 建议下一步
+
+**conditional**：GOAL-008 的自动化与记录质量已显著推进，但 F-005 的核心关闭条件未满足。继续阻断阶段 5 发布验收、GOAL-008 关门、阶段 6 Web 深化、阶段 7 验收与 GOAL-001 关门；下一步仍是 runtime/CI coverage 证据，然后才是用户授权的版本与 annotated tag/release。
+
+## A-012 · GOAL-008 候选 runtime 部分关闭后的 F-005 复核（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex `/govern`
+- **类型 / scope**：response / 核对 GOAL-008 D-008、执行记录与 A-013 对 I-002 的部分推进是否足以改变根目标 F-005；不作阶段 5 发布验收或根目标关门审计。
+- **verdict**：conditional
+
+### 成果（有证据）
+
+- GOAL-008 已建立 canonical/Skills runtime evidence schema、捕获器、freshness/digest/timeout/脱敏 transcript 回归；Claude Code 与 Grok Build 的 `/govern`、`/audit` 四个候选单元已有有效 machine evidence。
+- compatibility report 当前仅余 Copilot 两个入口与 Web parser CI replay 共 3 个 uncovered；完整 rehearsal 5/5 checks 通过，但 coverage 仍为 `pending`、`candidateRevision: unreleased`、工作树不干净且无 annotated tag。
+
+### 关闭证据与仍开放项
+
+| finding / I-00N | 当前状态 | 证据与边界 |
+|-----------------|----------|------------|
+| GOAL-008 A-010 F-002 · Claude/Grok 四单元 | closed（单元级） | GOAL-008 D-008 / A-013 与四份 runtime JSON。 |
+| I-002 | collecting / required | Copilot `/govern`、`/audit` 与 Web CI replay 仍 uncovered；完整兼容验收未通过。 |
+| I-003 | collecting / required | 仍无 ready coverage、clean release commit、annotated tag/release 或正式 CI 归档。 |
+| GOAL-001 F-005 | **open / required** | 继续依赖 I-002/I-003 全部关闭及根目标最终响应；部分 runtime 通过不等于发布验收。 |
+
+### P-004 与结论
+
+既有 independent A-006 与 self A-007/A-008、GOAL-008 A-010/A-013 对 F-005 的方向同向，没有冲突，也没有 residual risk 接受。
+
+**conditional**：F-005 的关闭路径已从 7 个 candidate 缺口缩小到 3 个，但 required 条件仍未满足。继续阻断阶段 5 发布验收、GOAL-008 `done`、阶段 6 Web 深化、阶段 7 验收与 GOAL-001 关门。下一步是 Copilot 双入口和 Web CI replay；其后仍需维护者授权的版本/tag 与 release-candidate 复审。

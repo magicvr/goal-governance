@@ -39,7 +39,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         entry = (REPO_ROOT / "docs" / "README.md").read_text(encoding="utf-8")
         for phrase in (
             "核心包版本",
-            "0.6.0",
+            "0.7.0",
             "canonical → Skills",
             "SHA-256",
             "docs/templates/goal-folder/",
@@ -90,10 +90,29 @@ class StandaloneBootstrapTests(unittest.TestCase):
             )
             contract_manifest = target / "docs" / "contracts" / "skills-consumer-contract.json"
             contract_schema = target / "docs" / "contracts" / "skills-consumer-contract.schema.json"
+            compatibility_matrix = (
+                target
+                / "docs"
+                / "contracts"
+                / "skills-consumer-compatibility-matrix.json"
+            )
+            runtime_evidence_schema = (
+                target / "docs" / "contracts" / "runtime-evidence.schema.json"
+            )
             self.assertTrue(contract_manifest.is_file())
             self.assertTrue(contract_schema.is_file())
+            self.assertTrue(compatibility_matrix.is_file())
+            self.assertTrue(runtime_evidence_schema.is_file())
             self.assertIn("contractSchemaId", contract_manifest.read_text(encoding="utf-8"))
             self.assertIn('"$id"', contract_schema.read_text(encoding="utf-8"))
+            self.assertIn(
+                "candidateRevision",
+                compatibility_matrix.read_text(encoding="utf-8"),
+            )
+            self.assertIn(
+                "host-runtime-evidence",
+                runtime_evidence_schema.read_text(encoding="utf-8"),
+            )
             self.assertFalse((target / "skills").exists())
             self.assertFalse((target / "web").exists())
             result = subprocess.run(

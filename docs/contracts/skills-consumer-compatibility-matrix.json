@@ -1,0 +1,161 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
+  "format": "goal-governance.skills-consumer-compatibility-matrix",
+  "formatVersion": "1.0.0",
+  "candidateRevision": "unreleased",
+  "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
+  "protocol": {
+    "current": "0.1.0",
+    "previous": null,
+    "previousStatus": "not-applicable-first-supported-protocol"
+  },
+  "requiredEntrypoints": [
+    "govern",
+    "audit"
+  ],
+  "negativeFixtures": [
+    {
+      "id": "unsupported-protocol-0.2.0",
+      "kind": "unsupported-protocol",
+      "path": "docs/contracts/fixtures/invalid/unsupported-protocol-0.2.0.json",
+      "assertion": "Protocol 0.2.0 is outside every declared 0.1.x adapter range."
+    },
+    {
+      "id": "no-fabricated-predecessor",
+      "kind": "fabricated-predecessor",
+      "path": "docs/contracts/fixtures/invalid/fabricated-predecessor-0.0.0.json",
+      "assertion": "previousSupportedProtocol is null; no 0.0.x or other predecessor fixture may be claimed."
+    }
+  ],
+  "consumers": [
+    {
+      "id": "claude-code-cli",
+      "kind": "host-adapter",
+      "host": {
+        "product": "Claude Code CLI",
+        "version": "2.1.215",
+        "platform": "Windows 11",
+        "installationSurface": ".claude/skills/govern and .claude/skills/audit"
+      },
+      "supportsProtocol": {
+        "minInclusive": "0.1.0",
+        "maxExclusive": "0.2.0"
+      },
+      "supportCommitment": "committed",
+      "contractVerificationStatus": "verified",
+      "entrypoints": [
+        {
+          "name": "govern",
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/claude-code-govern-runtime-2026-07-19.png",
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-19.json"
+          ]
+        },
+        {
+          "name": "audit",
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-19.json"
+          ]
+        }
+      ],
+      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only. Candidate /govern and /audit are runtime-verified by Claude Code CLI stream-json probes using only Read, Glob, and Grep in plan mode. Machine evidence stores a sanitized transcript with session initialization, tool-call/result summaries, final markers, and process success while excluding thinking blocks and full file contents. Release readiness still requires complete matrix coverage."
+    },
+    {
+      "id": "grok-build-cli",
+      "kind": "host-adapter",
+      "host": {
+        "product": "Grok Build CLI",
+        "version": "0.2.103",
+        "build": "89c3d36fb6",
+        "platform": "Windows 11",
+        "installationSurface": ".grok/skills/govern and .grok/skills/audit"
+      },
+      "supportsProtocol": {
+        "minInclusive": "0.1.0",
+        "maxExclusive": "0.2.0"
+      },
+      "supportCommitment": "committed",
+      "contractVerificationStatus": "verified",
+      "entrypoints": [
+        {
+          "name": "govern",
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/grok-build-govern-runtime-2026-07-19.png",
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-19.json"
+          ]
+        },
+        {
+          "name": "audit",
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-19.json"
+          ]
+        }
+      ],
+      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only. Candidate /govern and /audit are runtime-verified by machine-readable Grok Build CLI probes bound to current behavior-source and raw-output digests. Both probes preserve an auxiliary session-title alias 502 warning while the main grok-4.5 process exited 0 and emitted the required repository-backed dispatch marker. Release readiness still requires complete matrix coverage."
+    },
+    {
+      "id": "github-copilot-vscode",
+      "kind": "host-adapter",
+      "host": {
+        "product": "VS Code with built-in GitHub Copilot Chat",
+        "version": "1.129.1",
+        "build": "1",
+        "commit": "8a7abeba6e03ea3af87bfbce9a1b7e48fed567b8",
+        "packageSha256": "4304D865FF058792AE0AA5304014534FA61447C08D966429FB4AD38A0CC17AC0",
+        "platform": "Windows 11",
+        "installationSurface": ".github/copilot-instructions.md and .github/prompts"
+      },
+      "supportsProtocol": {
+        "minInclusive": "0.1.0",
+        "maxExclusive": "0.2.0"
+      },
+      "supportCommitment": "committed",
+      "contractVerificationStatus": "verified",
+      "entrypoints": [
+        {
+          "name": "govern",
+          "status": "pending-runtime-validation",
+          "evidence": [
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/copilot-vscode-govern-runtime-2026-07-19.png"
+          ]
+        },
+        {
+          "name": "audit",
+          "status": "pending-runtime-validation",
+          "evidence": []
+        }
+      ],
+      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only; release readiness is determined by this matrix entrypoint status plus compatibility report coverage. Candidate release requires fresh runtime evidence after source changes."
+    },
+    {
+      "id": "web-readonly-parser",
+      "kind": "goal-document-parser",
+      "host": {
+        "product": "Goal document parser",
+        "version": "repository-worktree",
+        "platform": "Python web test environment",
+        "installationSurface": "web/tests"
+      },
+      "supportsProtocol": {
+        "minInclusive": "0.1.0",
+        "maxExclusive": "0.2.0"
+      },
+      "supportCommitment": "not-applicable",
+      "contractVerificationStatus": "not-applicable",
+      "entrypoints": [
+        {
+          "name": "goal-document-parser",
+          "status": "pending-ci-replay",
+          "evidence": [
+            "web/tests"
+          ]
+        }
+      ],
+      "evidenceScope": "Web parses goal documents only; it is not a manifest adapter."
+    }
+  ]
+}

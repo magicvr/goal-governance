@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.8.0
+version: 1.1.0
 ---
 
 # 决策记录 · GOAL-008
@@ -17,8 +17,8 @@ version: 0.8.0
 | ID | 级别 | 所需信息 / 假设 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|------------------|------|-------------|-------------|
 | I-001 | required | 机读协议/模板版本、兼容声明的 canonical 位置、字段和演进语义 | 方案与发布范围冻结 | 方案冻结前 | 按 D-002 创建 canonical schema/manifest、同步分发镜像并以正反 fixtures、适配器契约测试验证 | verified | 已于方案审视复核 | [D-002](#d-002--i-001-单一机读版本声明契约2026-07-19)；`docs/contracts/`、`skills/contracts/`；29 项 Skills 契约测试与 3 项 core bootstrap 测试通过；见 [02-execution.md](02-execution.md) 与 [A-002](03-audit.md#a-002--i-001-契约实现与验证复审2026-07-19) |
-| I-002 | required | 当前/上一协议版本需支持的宿主、wrapper、Web 解析器及 fixtures 边界 | 受影响实施与兼容验收 | 首次支持新的宿主/版本，或首次对外/可复现发布前 | 触发时扩展兼容矩阵、未覆盖入口和自动化重放，以精确 host release、可观察 dispatch、current / negative fixture 与实际调用完成验证 | deferred | 延期理由：当前只声明三宿主 current `/govern` 最低可用；责任人：项目维护者（本轮用户确认）；复核触发：首次支持新宿主/版本或首次对外/可复现发布，以先到者为准 | [D-003](#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)、[D-004](#d-004--当前最低可用基线与发布一致性延期2026-07-19)；[runtime fixture 结果](attachments/i-002-runtime-fixture-2026-07-19.md)：Claude Code `2.1.215`、Grok Build CLI `0.2.103 (89c3d36fb6)`、Copilot VS Code `1.129.1` / built-in `GitHub copilot-chat 0.57.0` 的 current `/govern` 均已有实际 dispatch 证据，三条 adapter 为 `verified`。验证不扩展到 `/audit`、manifest 解析、CI 或 release。 |
-| I-003 | required | 发行物唯一身份及 CI 重放 canonical/mirror、报告、变更日志、tag/release 的方式 | 阶段 5 验收、F-005 关闭、阶段 7 输入 | 首次对外/可复现发布前 | 触发时定义流水线产物，实施 CI 和发布演练，核对 tag/release 追溯 | deferred | 延期理由：当前不进行对外/可复现发布；责任人：项目维护者（本轮用户确认）；复核触发：首次对外/可复现发布 | [D-004](#d-004--当前最低可用基线与发布一致性延期2026-07-19)；D-010；当前无 release tag |
+| I-002 | required | 当前/上一协议版本需支持的宿主、wrapper、Web 解析器及 fixtures 边界 | 受影响实施与兼容验收 | 阶段 5 兼容验收前 | 建立矩阵、current/negative fixtures 与自动化重放；固定三宿主版本并为 `/govern`、`/audit` 分别取得可观察 dispatch | collecting | D-005：用户重启完整关门；责任人：项目维护者；无延期。首个基线 `previousSupportedProtocol: null` 只能以显式 N/A 与负例验证。 | [D-003](#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)、[D-005](#d-005--重启完整发布一致性关门路径2026-07-19)、[D-008](#d-008--候选运行时证据契约与宿主配置边界2026-07-19)；Claude/Grok 四个候选入口已验证，Copilot 两项与 Web CI replay 仍开放。 |
+| I-003 | required | 发行物唯一身份及 CI 重放 canonical/mirror、报告、变更日志、tag/release 的方式 | 阶段 5 验收、F-005 关闭、阶段 7 输入 | 阶段 5 发布验收前 | 定义流水线产物，实施 CI 和发布演练，核对 tag/release 追溯 | collecting | D-005：用户重启完整关门；责任人：项目维护者；无延期。tag/release 操作须由维护者授权。 | [D-004](#d-004--当前最低可用基线与发布一致性延期2026-07-19)、[D-005](#d-005--重启完整发布一致性关门路径2026-07-19)；当前无 release tag |
 
 ## D-001 · 承接 D-010 的阶段 5 发布一致性边界（2026-07-19）
 
@@ -104,6 +104,8 @@ version: 0.8.0
 
 **状态**：accepted
 
+> **历史状态**：本条记录当时暂停完整发布一致性投入的有界裁决。该暂停已由 [D-005](#d-005--重启完整发布一致性关门路径2026-07-19) 在 2026-07-19 的后续用户指令中解除；历史最低可用证据仍有效，但不再决定当前工作顺序。
+
 **确认来源**：用户在本对话核对当前证据后确认「同意」：当前以 Skills 能安装、能使用为足够范围，不在本目标继续投入完整发布一致性验收。
 
 **决定**：
@@ -121,3 +123,99 @@ version: 0.8.0
 - 接受无边界 residual risk 并将 GOAL-008 标为 `done`：用户没有接受 residual，且本目标的完整发布一致性成功标准仍未完成。
 
 **影响与后续**：GOAL-008 保持 `active / 20%`，不关门；当前可以按最低可用范围使用 Skills。触发条件出现前不安排 I-002 / I-003 的进一步实现；触发后先复核台账和上游 F-005，再恢复相应的矩阵、自动化重放或发行证据工作。
+
+## D-005 · 重启完整发布一致性关门路径（2026-07-19）
+
+**状态**：accepted
+
+**确认来源**：用户明确要求重启 GOAL-008，使用其机器当前的 Claude Code CLI、Grok Build CLI 与 VS Code 内置 GitHub Copilot 版本作为首个支持基线；并要求在 Skills 完整关门后才继续 Web 深化。
+
+**决定**：
+
+1. 解除 D-004 对完整发布一致性工作的暂停。I-002、I-003 与上游 F-005 从 `deferred required` 恢复为 `collecting / required`；不接受 residual risk，未取得的证据不得提前写成通过。
+2. 本次候选发行物的宿主基线固定为 Claude Code CLI `2.1.215`、Grok Build CLI `0.2.103 (89c3d36fb6)`、VS Code `1.129.1` / commit `8a7abeba6e03ea3af87bfbce9a1b7e48fed567b8`，以及内置 GitHub Copilot Chat `0.57.0` build `1`。三者均为 `committed` 支持基线；版本、安装来源/哈希、环境与证据链接必须写入 canonical 兼容矩阵和发行证据。此承诺不替代 runtime、CI 或 release 验收。
+3. I-002 的 required 矩阵覆盖三个宿主在协议 `0.1.0` 上的 `/govern` 与 `/audit`；Web 保持独立的只读目标文档解析消费者，不冒充 manifest adapter。每个矩阵单元需区分自动化、真实运行时、阻断和未覆盖状态。
+4. `previousSupportedProtocol: null` 仍是首个支持基线的真实事实。完整关门以 current `0.1.0` fixture、无 predecessor 的显式 N/A 和“拒绝伪造 predecessor / 不支持协议”的负例为证据；不凭空生成 `0.0.x`。只有未来存在可追溯前一协议 artifact 后，才把 previous 纳入实际执行矩阵。
+5. I-003 / F-005 以可重复 CI、canonical/mirror SHA-256 清单、兼容性报告、测试报告、变更日志、发行物身份和一次 annotated SemVer tag/release 或等价可追溯发布演练关闭。CI 和材料可由自动化生成；真实宿主运行、tag/release 授权及最终关门确认保留给用户/维护者。
+6. 完成实现后，先写阶段 self 审计；对发布与关门证据建议再请求 independent 复审。所有 required finding 和信息项闭环后，才向用户请求 `done` 确认并同步目标树。
+
+**为什么**：当前机器的版本已可作为明确、可重复的首个支持边界；将完整关门工作恢复到 GOAL-008 可保持既有 D-010 的范围，避免在尚未完成 Skills 发布一致性时推进 Web 深化或把最小可用证据误作发布证据。
+
+**未选方案**：
+
+- 继续沿用 D-004 的延期，并把三宿主 `/govern` 最低可用写成完整发布一致性：会绕过 I-002、I-003 与 F-005。
+- 人为制造不存在的前一协议版本 fixture：与 D-003 的可追溯性约束冲突。
+- 将 Web 写入、真实消费者采用度试点或阶段 7 最终验收混入本目标：超出 D-010 的边界。
+
+**影响与后续**：本目标保持 `active / 20%`，先实现矩阵、fixtures、CI 与发行证据；随后再向用户索取 Claude、Grok、Copilot 的 `/govern` 与 `/audit` 真实运行时证据。GOAL-001 的阶段 6 Web 深化在 GOAL-008 完整关门前不启动。
+
+## D-007 · Grok headless 测试的 provider/model 防漂移约定（2026-07-19）
+
+**状态**：accepted
+
+**确认来源**：用户要求修复未来测试调用 Grok Build 时出现 `unknown provider for model grok-build` 的误用路径。
+
+**决定**：
+
+1. 根目录 `AGENTS.md` 明确区分宿主适配器 ID 与 API provider/model：`grok-build-cli` 只表示适配器，不是 API model。
+2. 当前本机 `GROK_MODELS_BASE_URL` endpoint 的 headless 测试 model 固定为 `grok-4.5`；未来重放命令必须显式传入 `--model grok-4.5`。若 endpoint 或可识别 model 改变，必须先同步规则、测试断言和实际环境证据。
+3. `unknown provider`、模型相关 5xx 或无法核对实际 model 时，fixture 记为 `blocked`；不能用 CLI exit `0`、prompt 回显或交互式成功截图覆盖 headless 失败。
+4. 用 `scripts/tests/test_grok_runtime_fixture.py` 对重放命令和规则做静态防漂移断言；保留历史 502 原文，不把历史失败改写成新配置的结果。
+
+**为什么**：旧 fixture 没有显式 model，适配器标识 `grok-build` 被下游当成 API model，触发 `unknown provider`。把适配器身份与实际 model 分开，并在测试阶段拒绝错误命令，可以在再次调用 CLI 前暴露这类配置错误。
+
+**未选方案**：
+
+- 仅在历史 runtime fixture 中追加说明：不能约束未来新测试命令。
+- 修改 `skills-consumer-contract.json`：该契约描述适配器兼容身份，不是运行时 provider/model 调用配置，混入会扩大契约职责。
+- 直接把现有 502 记录改成 `grok-4.5` 的成功记录：会抹去真实历史，也没有新的 runtime 成功证据支持。
+
+**影响与后续**：本次不改变 GOAL-008 的 `status`、`progress`、I-002/F-002 状态或 `goal-tree.md`。防漂移规则和静态测试已补齐；实际 Grok `/govern`、`/audit` 候选 runtime 兼容证据仍需按 I-002 另行取得。
+
+## D-006 · 候选验证状态与发行身份分层（2026-07-19）
+
+**状态**：accepted
+
+**依据**：[A-010 F-004](03-audit.md#a-010--独立交叉审计当前状态执行事实与门禁2026-07-19) 指出 contract manifest 的历史 `verificationStatus: verified` 与候选 matrix 的 `pending-runtime-validation` 容易被误读；发行工具独立复核还发现 rehearsal 不应接受调用方注入的检查结果，且 compatibility report 必须与当前仓库状态完整一致。
+
+**决定**：
+
+1. 保留 contract manifest 的历史 `verificationStatus: verified`，但其语义严格限定为 A-007 已归档的固定版本 current `/govern` 子范围；不将其改写成当前候选全面通过。
+2. 候选发行物的真实 readiness 只由 canonical compatibility matrix 的逐入口状态与重新生成报告的 `coverage` 判定。Skills README、matrix `evidenceScope` 与目标台账均显式说明这层区别。
+3. matrix `candidateRevision` 只允许 `unreleased`、完整 Git commit 或 `v` 前缀 SemVer tag。`release-candidate` 模式要求其精确等于指向 HEAD 的 annotated tag，并将该值写入 release evidence。
+4. `release_evidence.py` 的检查只允许内部执行，不接受调用方提供“已通过”记录；传入 compatibility report 必须与当前 HEAD 重新生成的 source、contract、matrix、mirror 和 coverage 全部一致。rehearsal 仍可记录失败事实，但不能靠伪造输入得到可信通过。
+
+**为什么**：历史证据与候选发行证据服务不同时间范围。保留历史有界事实同时把候选 readiness 收敛到矩阵、coverage、HEAD、tag 和内部执行检查，可避免抹去真实历史，也避免发布工具或外部读者把它扩大为未经验证的全面兼容。
+
+**未选方案**：
+
+- 将 contract 三条 adapter 统一改回 `unverified`：会抹去 A-007 的真实历史子范围，且仍不能替代候选矩阵。
+- 仅在 README 加一句说明而不收紧工具和 schema：无法防止 rehearsal 假阳性或 tag 与矩阵身份漂移。
+- 允许自由文本 `candidateRevision`：不能建立候选发行物与 commit/tag 的可核对绑定。
+
+**影响与后续**：D-006 关闭 A-010 F-004 的误读风险和本轮工具复核发现；不关闭 I-002、I-003、A-010 F-002/F-003 或 GOAL-001 F-005。矩阵当前仍为 `unreleased`，正式发布前须由维护者选择并授权版本/tag，再把两份镜像的 `candidateRevision` 同步为该 tag。
+
+## D-008 · 候选运行时证据契约与宿主配置边界（2026-07-19）
+
+**状态**：accepted
+
+**依据**：A-010 F-002 要求候选发行物对三宿主 `/govern`、`/audit` 分别形成可观察证据；前序 headless 探测还暴露 Grok 主请求与辅助 session-title 请求必须分开判定、Claude stream-json 不应归档模型思考块或完整文件正文、长探针必须有有界超时。
+
+**决定**：
+
+1. `docs/contracts/runtime-evidence.schema.json` 是候选宿主运行时证据的 canonical schema，`skills/contracts/` 保存逐字节分发镜像。`scripts/capture_runtime_evidence.py` 负责执行探针并生成 JSON、stdout/stderr 摘要与可选截图索引。
+2. 证据绑定实际宿主行为源、探针输入 SHA-256、命令/环境、退出码、marker、stdout/stderr SHA-256；不绑定最终 commit 或 matrix digest，以避免“写入证据又改变 commit/矩阵”的循环。任何 skill、wrapper、核心 prompt、根规则或探针输入变化都会使对应证据失效。
+3. `runtime-verified` 单元必须引用有效 JSON；验证器须核对 schema、consumer/entrypoint/protocol 身份、`verdict: pass`、行为源新鲜度、stdout/stderr 摘要和截图路径。文件后缀、截图存在或调用方声明均不能替代这些检查。
+4. 探针使用有界超时；超时写为 `blocked`，不无限等待。Claude Code 的 stream-json 仅保存初始化、工具调用、工具结果哈希/计数、可见文本和最终进程结果，剔除 thinking/signature 与完整工具结果正文；Grok 保留可诊断 stdout/stderr，但把本机 `Request URL` 值脱敏，并将辅助 session-title `grok-build` alias 的 502 与主 `grok-4.5` 调用分开记录。
+5. 对 D-007 作范围修正：`grok-build-cli` 与具体 endpoint/model 的防误用规则属于本目标 runtime 证据附件和测试，不属于可分发的根级 `AGENTS.md`。根规则保持宿主无关；`scripts/tests/test_grok_runtime_fixture.py` 同时断言具体配置留在附件、未泄漏进根规则。
+
+**为什么**：候选 release 需要可重复核验真实 dispatch，而不是 prompt 回显或历史截图。行为源/输出摘要能发现证据陈旧和内容篡改；脱敏 transcript 保留工具调用与最终 marker，又避免把模型私有思考和完整仓库正文当作发行物。
+
+**未选方案**：
+
+- 只在矩阵里放 screenshot 或自由文本状态：无法验证单元身份、来源新鲜度或输出摘要。
+- 把 runtime evidence 绑定最终 commit/matrix digest：证据写入会改变被绑定对象，形成不可收敛循环。
+- 将产品专用 endpoint/model 配置写入根 `AGENTS.md`：会污染可复制核心规则，并把本机环境误作通用协议。
+- 保留 Claude 原始 verbose stream-json：其中含 thinking/signature 和大段工具结果，不适合作为仓库发布证据。
+
+**影响与后续**：Claude Code 与 Grok Build 的 `/govern`、`/audit` 四个单元已按本契约进入 `runtime-verified`；Grok 证据保留辅助 502 警告。Copilot `/govern`、`/audit` 与 Web CI replay 仍为 3 个 uncovered 单元，所以 I-002、A-010 F-002、I-003、A-010 F-003 与 GOAL-001 F-005 均不关闭。

@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.6
+version: 0.2.8
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -39,9 +39,9 @@ version: 0.2.6
 | 标准 | 当前状态 |
 |------|----------|
 | 核心方法论、文档协议和 canonical 模板可独立复制使用 | 已完成（GOAL-006 done / 100%；A-005 close-out pass） |
-| Skills 能按核心协议安装并驱动 AI 闭环 | 当前三宿主 `/govern` 最低可用已由 GOAL-008 证实；完整发布一致性作为 deferred required，首次对外/可复现发布或新增宿主/版本时复核 |
+| Skills 能按核心协议安装并驱动 AI 闭环 | GOAL-008 已取得 Claude/Grok 候选 `/govern`、`/audit` 机读证据；Copilot 双入口与 Web CI replay 仍开放，I-002 / I-003 / F-005 必须关闭后才完成阶段 5 |
 | Web 能只读浏览目标并展示文档/树诊断，且不产生第二真相源 | 当前基线已完成（GOAL-004） |
-| 三个交付面共享同一版本化协议，并有一致性/发布证据 | 尚未开始 |
+| 三个交付面共享同一版本化协议，并有一致性/发布证据 | 进行中（矩阵、报告与 rehearsal 已形成；coverage pending / 3 uncovered，尚无 annotated tag） |
 | 至少一个子目标走完可审计的阶段性闭环 | 已由既有 GOAL-003、GOAL-004、GOAL-005 留有证据 |
 
 ## 高层路线图
@@ -54,8 +54,8 @@ version: 0.2.6
 | 阶段 2 | Skills 编排实践与闭环审计验证 | 已完成（历史基线） | [GOAL-003-skills-practice](../GOAL-003-skills-practice/00-meta.md)、[GOAL-005-skills-closed-loop-audit](../GOAL-005-skills-closed-loop-audit/00-meta.md) |
 | 阶段 3 | Goal 数据模型与 Web 只读基线 | 已完成（历史基线） | [GOAL-004-core-data-model](../GOAL-004-core-data-model/00-meta.md) |
 | 阶段 4 | 核心方法论、文档协议与 canonical 模板产品化 | 已完成（GOAL-006 done / 100%；A-005 close-out pass） | [GOAL-006-core-methodology-template-productization](../GOAL-006-core-methodology-template-productization/00-meta.md) |
-| 阶段 5 | Skills 消费适配器与发布一致性 | 进行中（GOAL-008 active / 20%；当前最低可用已证，发布一致性 deferred） | [GOAL-008-skills-consumer-adapter-release-consistency](../GOAL-008-skills-consumer-adapter-release-consistency/00-meta.md) |
-| 阶段 6 | Web 人类工作台深化 | 未开始（第一步保持只读） | 待拆分子目标 |
+| 阶段 5 | Skills 消费适配器与发布一致性 | 进行中（GOAL-008 active / 20%；完整关门已重启） | [GOAL-008-skills-consumer-adapter-release-consistency](../GOAL-008-skills-consumer-adapter-release-consistency/00-meta.md) |
+| 阶段 6 | Web 人类工作台深化 | 未开始（GOAL-008 完整关门后再启动；第一步保持只读） | 待拆分子目标 |
 | 阶段 7 | 三面一致性、版本化与发布验收 | 未开始 | 待拆分子目标 |
 
 ### 阶段 4 的可执行产品化与退出契约
@@ -78,7 +78,7 @@ version: 0.2.6
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | done |
 | GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | active / 20% |
 
-`GOAL-006` 已在 D-008 的阶段 4 契约下完成最小交付包、独立复制验证、镜像核验与关门审计（A-001～A-005）。`GOAL-007` 已完成单一跨阶段协议修订，并以 A-001 / 根目标 A-005 关闭 A-004 的 required finding。`GOAL-008` 当前已证明三宿主 `/govern` 最低可用；I-002、I-003 与 F-005 保持 deferred required，在首次支持新宿主/版本或首次对外/可复现发布时复核，不把阶段 5 写成完成。
+`GOAL-006` 已在 D-008 的阶段 4 契约下完成最小交付包、独立复制验证、镜像核验与关门审计（A-001～A-005）。`GOAL-007` 已完成单一跨阶段协议修订，并以 A-001 / 根目标 A-005 关闭 A-004 的 required finding。`GOAL-008` 已将 Claude/Grok 四个候选 runtime 单元验证为 `runtime-verified`，当前仍缺 Copilot 双入口、Web CI replay 与 release-candidate/tag；I-002、I-003 与 F-005 为 `collecting / required`，不把阶段 5 写成完成，也不在其完成前启动阶段 6 深化。
 
 ## 相关路径
 

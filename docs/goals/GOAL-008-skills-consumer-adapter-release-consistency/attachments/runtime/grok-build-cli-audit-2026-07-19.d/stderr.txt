@@ -1,0 +1,34 @@
+[2m2026-07-19T16:56:55.989308Z[0m [33m WARN[0m auth: prepare_sampling_config has no session key [3mmodel[0m[2m=[0m"grok-4.5" [3mis_expired[0m[2m=[0mfalse [3mauth_type[0m[2m=[0mApiKey
+[2m2026-07-19T16:56:56.003526Z[0m [33m WARN[0m auth: prepare_sampling_config has no session key [3mmodel[0m[2m=[0m"grok-4.5" [3mis_expired[0m[2m=[0mfalse [3mauth_type[0m[2m=[0mApiKey
+[2m2026-07-19T16:56:56.072316Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mEdit
+[2m2026-07-19T16:56:56.072348Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mWrite
+[2m2026-07-19T16:56:56.072357Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mNotebookEdit
+[2m2026-07-19T16:56:56.180732Z[0m [33m WARN[0m auth: prepare_sampling_config has no session key [3mmodel[0m[2m=[0m"grok-4.5" [3mis_expired[0m[2m=[0mfalse [3mauth_type[0m[2m=[0mApiKey
+[2m2026-07-19T16:56:56.521174Z[0m [31mERROR[0m responses API error [3mstatus[0m[2m=[0m502 Bad Gateway [3merror_message[0m[2m=[0munknown provider for model grok-build
+
+Request URL: <redacted>
+Response headers:
+  content-length: "114"
+  access-control-allow-headers: "*"
+  access-control-allow-methods: "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  access-control-allow-origin: "*"
+  access-control-expose-headers: "X-CPA-TRACE-ID, X-CPA-VERSION, X-CPA-COMMIT, X-CPA-BUILD-DATE, X-CPA-SUPPORT-PLUGIN, X-CPA-HOME-VERSION, X-CPA-HOME-BUILD-DATE, X-SERVER-VERSION, X-SERVER-BUILD-DATE"
+  connection: "keep-alive"
+  content-type: "application/json"
+  date: "Sun, 19 Jul 2026 16:56:57 GMT"
+  keep-alive: "timeout=60"
+  proxy-connection: "keep-alive" [3mmodel_id[0m[2m=[0mgrok-build
+[2m2026-07-19T16:56:56.521229Z[0m [33m WARN[0m session title generation failed, falling back to truncated user text [3mmodel[0m[2m=[0mgrok-build [3merror[0m[2m=[0mAPI error (status 502 Bad Gateway): unknown provider for model grok-build
+
+Request URL: <redacted>
+Response headers:
+  content-length: "114"
+  access-control-allow-headers: "*"
+  access-control-allow-methods: "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  access-control-allow-origin: "*"
+  access-control-expose-headers: "X-CPA-TRACE-ID, X-CPA-VERSION, X-CPA-COMMIT, X-CPA-BUILD-DATE, X-CPA-SUPPORT-PLUGIN, X-CPA-HOME-VERSION, X-CPA-HOME-BUILD-DATE, X-SERVER-VERSION, X-SERVER-BUILD-DATE"
+  connection: "keep-alive"
+  content-type: "application/json"
+  date: "Sun, 19 Jul 2026 16:56:57 GMT"
+  keep-alive: "timeout=60"
+  proxy-connection: "keep-alive"

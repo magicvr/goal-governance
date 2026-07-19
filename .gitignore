@@ -24,6 +24,7 @@ dist/
 pip-wheel-metadata/
 
 # Test and coverage artifacts
+artifacts/
 .pytest_cache/
 .coverage
 .coverage.*
@@ -54,4 +55,5 @@ Desktop.ini
 
 # Claude Code personal project-local overrides
 .claude/settings.local.json
+.claude/worktrees/
 CLAUDE.local.md

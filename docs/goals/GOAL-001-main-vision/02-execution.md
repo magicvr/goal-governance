@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.3.1
+version: 0.3.3
 ---
 
 # 执行记录 · GOAL-001
@@ -65,14 +65,14 @@ version: 0.3.1
 |------|------|------|
 | 核心方法论与模板 | 已完成（GOAL-006 done / 100%） | `docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/`、独立启用说明与 A-005 close-out 已形成核心交付；跨面联合发布仍留给后续阶段 |
 | Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互明确留待后续目标 |
-| Skills / 提示词 | 当前三宿主 `/govern` 最低可用已证；发布一致性 deferred | GOAL-003、GOAL-005、GOAL-007 均为 done；GOAL-008 active / 20%，I-002 / I-003 / F-005 保持 deferred required，触发时再复核 |
+| Skills / 提示词 | Claude/Grok 候选双入口 runtime 已证；完整发布一致性继续 | GOAL-003、GOAL-005、GOAL-007 均为 done；GOAL-008 active / 20%，尚缺 Copilot 双入口、Web CI replay 与 release-candidate/tag，I-002 / I-003 / F-005 继续为 required |
 | 核心数据模型 | 已完成 | GOAL-004 done 100%；阶段 A～D 与关门路径均已完成 |
 
 ## 下一步（根目标视角）
 
 1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已由 `GOAL-006` 完成；A-005 self close-out 与 A-004 independent targeted 复审通过，满足阶段 4 → 5 门槛。
-2. 阶段 5 已由 GOAL-008 承接：当前只声明三宿主 `/govern` 最低可用；I-002 / I-003 / F-005 在首次支持新宿主/版本或首次对外/可复现发布时恢复复核，届时再推进完整发布一致性范围。
-3. 阶段 6 保持 Web 只读，先完善人类浏览/诊断体验；任何写入另立子目标并保留审计证据。
+2. 阶段 5 已由 GOAL-008 承接：矩阵、fixtures、CI/rehearsal 和 Claude/Grok 四个候选 runtime 单元已形成；下一步补 Copilot 双入口与 Web CI replay，再处理发行身份和 tag/release。
+3. 阶段 6 保持 Web 只读；GOAL-008 正式关门前不启动 Web 深化。任何未来写入仍须另立子目标并保留审计证据。
 4. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
 5. F-019 待具备 Linux/macOS CI 或 Unix 环境时单独补证，不阻塞当前路线。
 
@@ -144,3 +144,24 @@ version: 0.3.1
 - 记录 [D-011](01-decision.md#d-011--当前最低可用基线与发布一致性延期2026-07-19)：I-002、I-003 和 `F-005` 保持 `required`，但在当前没有对外/可复现发布或新增宿主/版本计划时为 `deferred`；本轮没有接受 residual risk、关闭 F-005 或改变 GOAL-001 / GOAL-008 状态。
 - `GOAL-008` 的 [D-004](../GOAL-008-skills-consumer-adapter-release-consistency/01-decision.md#d-004--当前最低可用基线与发布一致性延期2026-07-19) 与 [A-008](../GOAL-008-skills-consumer-adapter-release-consistency/03-audit.md#a-008--当前最低可用裁决与发布一致性延期响应2026-07-19) 已记录最低可用边界、责任人与触发；首次对外/可复现发布时先恢复 I-003 / F-005，首次支持新宿主/版本时先恢复 I-002。
 - 对本轮治理记录运行 Skills 契约测试（30 passed）、独立启用测试（3 passed）和 Web 回归（20 passed / 1 Windows symlink-permission skipped）；`git diff --check` 无空白错误。
+
+### 2026-07-19 · 用户重启阶段 5 完整关门
+
+- 用户确认“核心文档体系 → Skills 体系 → Web 体系”的顺序，并要求重启 GOAL-008 的完整关门；记录 D-012 与 GOAL-008 D-005，不重写 D-011 的历史最低可用事实。
+- 当前机器的 Claude Code `2.1.215`、Grok Build `0.2.103 (89c3d36fb6)`、VS Code `1.129.1` / built-in Copilot Chat `0.57.0` build `1` 已作为候选基线发现并留存到 GOAL-008 执行记录。
+- I-002、I-003 与 F-005 由 `deferred required` 恢复为 `collecting / required`；本次尚未关闭门禁、创建 release tag 或启动 Web 深化。
+
+### 2026-07-19 · GOAL-008 完成发布自动化基础并响应 A-010
+
+- GOAL-008 已实现 canonical/Skills compatibility matrix、current/negative 基线、Ubuntu/Windows CI、兼容与发行报告工具、release evidence schema、CHANGELOG 与 rehearsal；对应执行事实已写入其 `02-execution.md`，并以 A-011 响应独立 A-010。
+- A-010 F-001（执行台账漂移）、F-004（历史 verified 与候选 readiness 误读）、F-005（摘要过时）已有关闭证据；GOAL-008 保持 `active / 20%`，goal-tree 状态与进度无需变化。
+- I-002 仍有三宿主 `/govern` / `/audit` 六个候选 runtime 单元和 Web parser CI replay 共 7 个 uncovered；I-003 仍无 ready coverage、干净 release commit 与 annotated tag/release。根目标 F-005 因而继续 `open / required`。
+- 本地最终验证：发行工具 19 项、Skills 31 项、standalone 3 项、Web 20 项通过（1 项 Windows symlink 权限跳过）；完整 rehearsal 的 5 个固定 checks 全部通过，但报告仍为 coverage pending / 7 uncovered、`candidateRevision: unreleased`、工作树不干净。
+- Web 深化仍按 D-012 后置；本轮没有创建 Web 目标、tag、commit、push 或 release。
+
+### 2026-07-19 · GOAL-008 验证 Claude/Grok 候选双入口
+
+- GOAL-008 以 D-008、执行记录和 A-013 建立 runtime evidence schema、捕获器、陈旧/摘要/timeout 门禁与 Claude 脱敏 transcript；Claude Code 与 Grok Build 的 `/govern`、`/audit` 四个候选单元现为 `runtime-verified`。
+- Grok 主 `grok-4.5` 调用均通过；可选 session-title `grok-build` alias 的 502 作为 warning 保留，不将辅助失败扩大为主 dispatch 失败。具体 endpoint/model 配置保留在 GOAL-008 附件，不污染根 `AGENTS.md`。
+- compatibility report 从 7 个 uncovered 缩小为 3 个：Copilot `/govern`、Copilot `/audit` 与 Web parser CI replay。完整 rehearsal 5/5 checks 通过；Skills 31、standalone 3、scripts 30、Web 20 项通过，1 项 Windows symlink 权限跳过。
+- I-002 仍为 `collecting / required`，I-003 仍缺 ready coverage、干净候选和 annotated tag；根 F-005 继续 `open / required`。本轮没有 status/progress 变化，也没有 commit、push、tag 或 release。

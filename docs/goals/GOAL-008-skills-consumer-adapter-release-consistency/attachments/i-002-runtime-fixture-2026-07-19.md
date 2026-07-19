@@ -5,7 +5,7 @@ status: active
 parent: GOAL-008-skills-consumer-adapter-release-consistency
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.3.0
+version: 0.4.0
 ---
 
 # I-002 · 0.1.0 版本固定 Runtime Fixture 结果
@@ -48,8 +48,9 @@ version: 0.3.0
 # Claude current / negative：用子 PowerShell 隔离 claude.ps1 的 exit 行为。
 powershell -NoProfile -NonInteractive -Command '& claude -p $env:FIXTURE_PROMPT --no-session-persistence --output-format text --permission-mode plan --max-turns 3'
 
-# Grok current：实际调用失败时以 Responses API 错误为准，而非回显 prompt 或 exit code。
-grok -p $prompt --output-format plain --permission-mode plan --max-turns 3 --no-subagents --no-memory --disable-web-search --cwd <repo-root>
+# Grok current：`grok-build-cli` 是适配器 ID，不是 API model；当前 endpoint 的可识别 model 显式固定为 `grok-4.5`。
+# 实际调用失败时以 Responses API 错误为准，而非回显 prompt 或 exit code。
+grok -p $prompt --model grok-4.5 --output-format plain --permission-mode plan --max-turns 3 --no-subagents --no-memory --disable-web-search --cwd <repo-root>
 
 # Web：必须在 web/ 目录并使用项目 venv。
 Push-Location web
@@ -58,6 +59,35 @@ Pop-Location
 ```
 
 两条 Claude prompt 分别固定为 `i002-current-0.1.0` 的协议/adapter 边界和 `previousFixture=not-applicable` 的 negative 语义；执行时均明确禁止修改文件、shell 与网络访问。Grok 使用相同 current 语义，且额外禁用 web search、memory 与 subagents。
+
+### Grok provider/model 防误用约定
+
+- `grok-build-cli` 只表示兼容矩阵中的宿主适配器 ID；不得把它或 `grok-build` 作为 API model 传给 Grok Build。
+- 本机当前 `GROK_MODELS_BASE_URL` endpoint 的测试主 model 为 `grok-4.5`，所以本目标的候选 headless 重放显式包含 `--model grok-4.5`。该参数只控制主采样；Grok 仍可能使用内置 `grok-build` 别名生成会话标题或辅助请求。本机用户配置虽存在以下路由覆盖，但 2026-07-19 的 streaming probe 中标题辅助请求仍返回 provider 502，不能把配置存在写成辅助链路已验证：
+
+  ```toml
+  [model.grok-build]
+  model = "grok-4.5"
+  base_url = "${GROK_MODELS_BASE_URL}"
+  env_key = "XAI_API_KEY"
+  api_backend = "responses"
+  ```
+
+  若 endpoint 或可识别 model 改变，必须先同步此覆盖、本约定、测试断言和实际环境证据。
+- 主请求出现 `unknown provider`、模型相关 5xx 或无法确认实际 model 时，结果记为 `blocked`；CLI 的 exit `0` 或 prompt 回显不能覆盖主请求失败。若仅非必要辅助请求失败，而主请求 exit `0`、加载实际 skill、读取仓库来源并输出预期标记，可将对应入口记为通过，但必须在证据中保留辅助故障警告。
+
+### 2026-07-19 · 自定义 endpoint 路由修正验证
+
+- 显式传入 `--model grok-4.5` 的简单主请求进程 exit `0` 并返回 `GROK_MODEL_ROUTE_OK`，证明当前 endpoint 的主采样可用。
+- 后续 `/govern` streaming probe 同样由主 model 成功完成 skill 加载、仓库读取和治理扫描，exit `0`；与此同时，stderr 仍记录会话标题辅助请求对 `grok-build` 的 `502 unknown provider`。因此主入口 dispatch 与辅助标题链路必须分开判定。
+- 该验证不替代其余候选入口；每个 `/govern`、`/audit` 单元仍须各自形成可机读证据。
+
+### 2026-07-19 · 候选机读 runtime evidence
+
+- Claude Code `2.1.215`：`attachments/runtime/claude-code-cli-govern-2026-07-19.json` 与 `claude-code-cli-audit-2026-07-19.json` 均为 `pass`。两次调用仅开放 `Read,Glob,Grep`、使用 `permission-mode plan` 和 `--no-session-persistence`；stdout 为脱敏 transcript，不保留 thinking/signature 或完整工具结果正文。
+- Grok Build `0.2.103 (89c3d36fb6)`：`attachments/runtime/grok-build-cli-govern-2026-07-19.json` 与 `grok-build-cli-audit-2026-07-19.json` 均为 `pass`。主 `grok-4.5` 调用完成实际 skill/仓库读取并输出 marker；可选 session-title 请求的 `grok-build` alias 502 保留为 warning，本机 `Request URL` 已脱敏。
+- runtime evidence 由 canonical `docs/contracts/runtime-evidence.schema.json` 验证，并绑定行为源与 stdout/stderr SHA-256；matrix 当前只剩 Copilot 两个入口和 Web CI replay 共 3 个 uncovered。
+- 具体 endpoint/model 配置仅属于本附件的本机候选证据，不进入根 `AGENTS.md` 的可复制通用规则。
 
 ## 补充：三宿主可观察 Slash Dispatch（2026-07-19）
 

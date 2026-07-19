@@ -32,7 +32,10 @@ docs/
 │   └── goal-folder/          # 五件套模板
 ├── contracts/                # 消费适配器的 canonical 机读兼容契约
 │   ├── skills-consumer-contract.schema.json
-│   └── skills-consumer-contract.json
+│   ├── skills-consumer-contract.json
+│   ├── skills-consumer-compatibility-matrix.schema.json
+│   ├── skills-consumer-compatibility-matrix.json
+│   └── runtime-evidence.schema.json
 ├── architecture/             # 架构与技术约定
 │   ├── overview.md
 │   ├── principles.md         # 治理原则（元规则）
@@ -89,11 +92,11 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **核心包版本**：`0.6.0`，与本入口文档的 `version` 一致。
+- **核心包版本**：`0.7.0`，与本入口文档的 `version` 一致；这是当前未发布候选的包身份，不是已存在的 Git tag。
 - **快照日期**：2026-07-19。
-- **快照身份**：`0.4.0` 的已提交基线为 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；`0.6.0` 是该基线之后工作树中的协议演进，尚未建立 release tag，且本包不声明为 release。
-- **当前工作树边界**：本轮将 P-005、目标模板、Skills 适配器和 D-002 的机读兼容契约同步纳入未发布的核心协议更新；发布时应记录对应提交与 tag。
-- **本轮变更范围**：新增信息需求、阶段门禁、残余风险接受和按规模拆分信息工作的核心规则；更新 canonical 五件套与消费适配器契约、Skills 镜像、编排/审计提示词、宿主规则源、独立启用说明和契约测试。
+- **快照身份**：`0.4.0` 的已提交基线为 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；当前 `0.7.0` 是该基线之后的未发布候选演进，尚未建立 release tag，且本包不声明为 release。
+- **当前工作树边界**：本轮将 P-005、目标模板、Skills 适配器、机读兼容契约、候选兼容矩阵与发布证据工具纳入未发布更新；正式发布时必须以矩阵 `candidateRevision`、对应提交和 annotated tag 相互绑定。
+- **本轮变更范围**：新增信息需求、阶段门禁、残余风险接受和按规模拆分信息工作的核心规则；更新 canonical 五件套、消费适配器契约与矩阵、Skills 镜像、编排/审计提示词、宿主规则源、独立启用说明、CI/发行证据工具和契约测试。
 
 ### canonical → Skills 同步台账
 
@@ -106,7 +109,10 @@ version: 0.1.0
 | 模板 | `02-execution.md` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` |
 | 模板 | `03-audit.md` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` |
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
-| 契约 | `skills-consumer-contract.json` | `F49FE4A3C5BDBAC5E9DA6EDF180619E0F5CA175638E7B68CDF775E5A7D9019DA` | `F49FE4A3C5BDBAC5E9DA6EDF180619E0F5CA175638E7B68CDF775E5A7D9019DA` |
+| 契约 | `skills-consumer-contract.json` | `03A4C01DD6728D392A039A15AEA43314CD1A1D5FD7254AE6C3B99ACC3E4C7F33` | `03A4C01DD6728D392A039A15AEA43314CD1A1D5FD7254AE6C3B99ACC3E4C7F33` |
+| 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |
+| 契约 | `skills-consumer-compatibility-matrix.json` | `CE0DF6BB72A69A57926BB5DB40AF909E2AD30F63CF5A117EF3DFF0BB9E3FDB2F` | `CE0DF6BB72A69A57926BB5DB40AF909E2AD30F63CF5A117EF3DFF0BB9E3FDB2F` |
+| 契约 | `runtime-evidence.schema.json` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。
 

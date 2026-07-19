@@ -1,0 +1,69 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-07-19T16:30:14.237302Z",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.215",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": ".claude/skills/govern/SKILL.md",
+      "sha256": "4132fdc6db73b5992eac0b42cda92452191a6444490758e9dbc1ea396d017d34"
+    },
+    {
+      "path": "skills/install/claude/skills/govern/SKILL.md",
+      "sha256": "4132fdc6db73b5992eac0b42cda92452191a6444490758e9dbc1ea396d017d34"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "bf8450e2d8608971f168f726068b2654860138d733a76fcb8f5a113da724e21e"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+    },
+    {
+      "path": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/claude-govern.txt",
+      "sha256": "d1b9d242732098a2dd0412eb20cc402eb37ecb3719d82d6ab854a4a49d9e396f"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "cmd.exe",
+      "/d",
+      "/s",
+      "/c",
+      "claude -p --no-session-persistence --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 3"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 120.0,
+    "inputSha256": "d1b9d242732098a2dd0412eb20cc402eb37ecb3719d82d6ab854a4a49d9e396f",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker CLAUDE_GOVERN_DISPATCH_OK after repository-backed skill execution."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "CLAUDE_GOVERN_DISPATCH_OK",
+    "markerObserved": true,
+    "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-19.d/stdout.txt",
+    "stdoutSha256": "6575800d025b152f33fa1448c0691c4dd3aadb4c2e94668d7b17ebbdbe3350d5",
+    "stdoutMode": "claude-stream-json-sanitized",
+    "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-19.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "warnings": [],
+    "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

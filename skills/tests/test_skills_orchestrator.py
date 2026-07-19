@@ -42,9 +42,19 @@ CORE_AGENTS = SKILLS_ROOT.parent / "AGENTS.md"
 CONTRACT_SCHEMA_ID = (
     "https://github.com/magicvr/goal-governance/schema/skills-consumer-contract/v1"
 )
+MATRIX_SCHEMA_ID = (
+    "https://github.com/magicvr/goal-governance/schema/"
+    "skills-consumer-compatibility-matrix/v1"
+)
+RUNTIME_EVIDENCE_SCHEMA_ID = (
+    "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1"
+)
 CONTRACT_MIRROR_FILES = (
     "skills-consumer-contract.schema.json",
     "skills-consumer-contract.json",
+    "skills-consumer-compatibility-matrix.schema.json",
+    "skills-consumer-compatibility-matrix.json",
+    "runtime-evidence.schema.json",
     "fixtures/valid/manifest-0.1.0.json",
     "fixtures/valid/declared-adapter-0.1.0.json",
     "fixtures/invalid/missing-contract-schema-id.json",
@@ -52,6 +62,8 @@ CONTRACT_MIRROR_FILES = (
     "fixtures/invalid/declared-adapter-without-commitment.json",
     "fixtures/invalid/reversed-protocol-range.json",
     "fixtures/invalid/unstable-cross-minor-range.json",
+    "fixtures/invalid/unsupported-protocol-0.2.0.json",
+    "fixtures/invalid/fabricated-predecessor-0.0.0.json",
 )
 SEMVER_RE = re.compile(
     r"^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)"
@@ -443,6 +455,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             "declared-adapter-without-commitment.json",
             "reversed-protocol-range.json",
             "unstable-cross-minor-range.json",
+            "unsupported-protocol-0.2.0.json",
         ):
             with self.assertRaises(AssertionError, msg=name):
                 self._assert_contract_instance(
@@ -475,7 +488,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(
             by_id["github-copilot-vscode"]["supportCommitment"], "committed"
         )
-        self.assertEqual(by_id["grok-build-cli"]["supportCommitment"], "declared")
+        self.assertEqual(by_id["grok-build-cli"]["supportCommitment"], "committed")
         for adapter in by_id.values():
             self.assertEqual(
                 adapter["supportsProtocol"],
@@ -486,6 +499,90 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["github-copilot-vscode"]["verificationStatus"], "verified")
         self.assertNotIn("web-readonly-parser", by_id)
+
+    def test_candidate_compatibility_matrix_keeps_runtime_coverage_explicit(self) -> None:
+        """Verified host cells and remaining candidate gaps must stay distinct."""
+        schema = self._load_json(
+            CORE_CONTRACTS / "skills-consumer-compatibility-matrix.schema.json"
+        )
+        runtime_schema = self._load_json(
+            CORE_CONTRACTS / "runtime-evidence.schema.json"
+        )
+        matrix = self._load_json(
+            CORE_CONTRACTS / "skills-consumer-compatibility-matrix.json"
+        )
+        manifest = self._load_json(CORE_CONTRACTS / "skills-consumer-contract.json")
+        self.assertEqual(schema["$id"], MATRIX_SCHEMA_ID)
+        self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
+        self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
+        self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
+        self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
+        self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
+        self.assertIsNone(matrix["protocol"]["previous"])
+        self.assertEqual(
+            matrix["protocol"]["previousStatus"],
+            "not-applicable-first-supported-protocol",
+        )
+        self.assertEqual(matrix["requiredEntrypoints"], ["govern", "audit"])
+        negative = {item["id"]: item for item in matrix["negativeFixtures"]}
+        self.assertIn("unsupported-protocol-0.2.0", negative)
+        self.assertIn("no-fabricated-predecessor", negative)
+        for item in negative.values():
+            self.assertTrue(
+                (SKILLS_ROOT.parent / item["path"]).is_file(),
+                msg=item["path"],
+            )
+        self.assertEqual(negative["unsupported-protocol-0.2.0"]["kind"], "unsupported-protocol")
+        self.assertEqual(negative["no-fabricated-predecessor"]["kind"], "fabricated-predecessor")
+        fabricated = self._load_json(SKILLS_ROOT.parent / negative["no-fabricated-predecessor"]["path"])
+        self.assertEqual(fabricated["protocol"], manifest["protocol"])
+        self.assertEqual(fabricated["supportBaseline"]["previousSupportedProtocol"], "0.0.0")
+
+        consumers = {item["id"]: item for item in matrix["consumers"]}
+        self.assertEqual(
+            set(consumers),
+            {
+                "claude-code-cli",
+                "grok-build-cli",
+                "github-copilot-vscode",
+                "web-readonly-parser",
+            },
+        )
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.215")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.103")
+        self.assertEqual(consumers["github-copilot-vscode"]["host"]["version"], "1.129.1")
+        self.assertEqual(consumers["github-copilot-vscode"]["host"]["build"], "1")
+        for consumer_id in ("claude-code-cli", "grok-build-cli"):
+            entrypoints = {entry["name"]: entry for entry in consumers[consumer_id]["entrypoints"]}
+            self.assertEqual(
+                consumers[consumer_id]["contractVerificationStatus"],
+                {adapter["id"]: adapter for adapter in manifest["adapters"]}[consumer_id]["verificationStatus"],
+            )
+            self.assertEqual(set(entrypoints), {"govern", "audit"})
+            self.assertEqual(entrypoints["govern"]["status"], "runtime-verified")
+            self.assertEqual(entrypoints["audit"]["status"], "runtime-verified")
+            for entrypoint in entrypoints.values():
+                self.assertTrue(
+                    any(path.endswith(".json") for path in entrypoint["evidence"])
+                )
+        copilot = consumers["github-copilot-vscode"]
+        copilot_entrypoints = {
+            entry["name"]: entry for entry in copilot["entrypoints"]
+        }
+        self.assertEqual(copilot["contractVerificationStatus"], "verified")
+        self.assertEqual(
+            copilot_entrypoints["govern"]["status"],
+            "pending-runtime-validation",
+        )
+        self.assertEqual(
+            copilot_entrypoints["audit"]["status"],
+            "pending-runtime-validation",
+        )
+        web = consumers["web-readonly-parser"]
+        self.assertEqual(web["kind"], "goal-document-parser")
+        self.assertEqual(web["supportCommitment"], "not-applicable")
+        self.assertEqual(web["contractVerificationStatus"], "not-applicable")
+        self.assertEqual(web["entrypoints"][0]["status"], "pending-ci-replay")
 
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""
@@ -680,6 +777,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         for name in (
             "skills-consumer-contract.schema.json",
             "skills-consumer-contract.json",
+            "skills-consumer-compatibility-matrix.schema.json",
+            "skills-consumer-compatibility-matrix.json",
+            "runtime-evidence.schema.json",
         ):
             canonical = CORE_CONTRACTS / name
             mirror = SKILLS_CONTRACTS / name
@@ -865,6 +965,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 skills_dest / "prompts" / "05-independent-audit.md",
                 skills_dest / "contracts" / "skills-consumer-contract.schema.json",
                 skills_dest / "contracts" / "skills-consumer-contract.json",
+                skills_dest / "contracts" / "skills-consumer-compatibility-matrix.schema.json",
+                skills_dest / "contracts" / "skills-consumer-compatibility-matrix.json",
+                skills_dest / "contracts" / "runtime-evidence.schema.json",
             ]
             missing = [str(p) for p in required if not p.is_file()]
             self.assertEqual(missing, [], msg=f"missing install outputs: {missing}")
@@ -886,6 +989,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             for name in (
                 "skills-consumer-contract.schema.json",
                 "skills-consumer-contract.json",
+                "skills-consumer-compatibility-matrix.schema.json",
+                "skills-consumer-compatibility-matrix.json",
+                "runtime-evidence.schema.json",
             ):
                 self.assertEqual(
                     (skills_dest / "contracts" / name).read_bytes(),

@@ -1,0 +1,19 @@
+Loading the audit skill and the minimum GOAL-008 sources for this read-only dispatch probe.Reading the independent-audit prompt and GOAL-008 sources for required evidence semantics.**GROK_AUDIT_DISPATCH_OK**
+
+1. **Loaded skill title and source**
+   - **Title:** `audit · 独立交叉审计（Grok Build skill）`
+   - **Source path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md`
+
+2. **Independent-audit prompt named by that skill**
+   - Skill step 2: full read/execute **`<SKILLS_PKG>/prompts/05-independent-audit.md`**
+   - Resolved SKILLS_PKG = `skills/` → **`skills/prompts/05-independent-audit.md`**
+   - Prompt frontmatter title: `提示词 · 独立交叉审计` (`role: independent-audit`)
+
+3. **Required source / status semantics**
+   - **`source` must be `independent`** (skill + `05-independent-audit.md` hard constraint).
+   - **Default write-only opinions** into the audited goal’s `03-audit.md` (optional attachments); do **not** change goal `status` / `progress` / plan body / goal-tree status columns unless the user explicitly authorizes “边审边改” in-session (default: refuse).
+   - Response, finding closure, and any status advance belong to **`/govern`**.
+
+4. **One current required evidence gap (GOAL-008)**
+   - **I-002** remains **`collecting` / `required`** (gate: 阶段 5 兼容验收前).
+   - Gap: Claude Code and Grok Build `/govern` + `/audit` have machine-readable runtime evidence, but **Copilot’s two entries** (`/govern` and `/audit`) and **Web parser CI replay** are still uncovered — meta reports **3 uncovered units**, so I-002 is not closed and blocks full compatibility acceptance.

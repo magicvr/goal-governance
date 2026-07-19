@@ -1,0 +1,10 @@
+/audit GOAL-008
+
+This is a read-only runtime dispatch probe. Do not modify files, append an audit, launch subagents, or ask the user questions. Load the installed audit skill and read the minimum repository sources needed to report:
+
+1. literal marker GROK_AUDIT_DISPATCH_OK;
+2. the loaded skill title and actual source path;
+3. the independent-audit prompt path named by that skill;
+4. the required source/status semantics and one current required evidence gap.
+
+Only emit the marker after performing the repository reads. A prompt echo is not sufficient.

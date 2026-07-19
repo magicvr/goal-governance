@@ -1,0 +1,63 @@
+name: Skills release evidence
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-and-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install web test dependencies
+        run: python -m pip install -r web/requirements.txt -r scripts/requirements.txt
+      - name: Run portable contract and bootstrap tests
+        run: |
+          python -m unittest skills/tests/test_skills_orchestrator.py -v
+          python -m unittest discover -s docs/tests -p 'test_standalone_bootstrap.py' -v
+          python -m unittest discover -s scripts/tests -p 'test_*.py' -v
+          (cd web && python -m unittest discover -s tests -v)
+          git diff --check
+      - name: Generate compatibility and rehearsal evidence
+        run: |
+          python scripts/compatibility_report.py --output artifacts/compatibility-report.json
+          python scripts/release_evidence.py --mode rehearsal --run-checks --include-web --compatibility-report artifacts/compatibility-report.json --output artifacts/release-evidence.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: skills-release-evidence-ubuntu
+          path: artifacts/
+  windows-install-surface:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install web test dependencies
+        run: python -m pip install -r web/requirements.txt -r scripts/requirements.txt
+      - name: Run Windows installer and contract tests
+        shell: pwsh
+        run: |
+          python -m unittest skills/tests/test_skills_orchestrator.py -v
+          python -m unittest discover -s docs/tests -p 'test_standalone_bootstrap.py' -v
+          python -m unittest discover -s scripts/tests -p 'test_*.py' -v
+          Push-Location web
+          python -m unittest discover -s tests -v
+          Pop-Location
+          git diff --check
+      - name: Generate Windows compatibility and rehearsal evidence
+        shell: pwsh
+        run: |
+          python scripts/compatibility_report.py --output artifacts/compatibility-report-windows.json
+          python scripts/release_evidence.py --mode rehearsal --run-checks --include-web --compatibility-report artifacts/compatibility-report-windows.json --output artifacts/release-evidence-windows.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: skills-release-evidence-windows
+          path: artifacts/

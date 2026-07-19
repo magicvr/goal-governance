@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 1.1.0
+version: 1.4.0
 ---
 
 # 执行记录 · GOAL-008
@@ -95,12 +95,55 @@ version: 1.1.0
 - I-002 的复核触发为首次支持新的宿主/版本或首次对外/可复现发布；I-003 与 F-005 的复核触发为首次对外/可复现发布。目标状态和进度保持 `active / 20%`。
 - 本次治理记录变更后，运行 `python -m unittest skills/tests/test_skills_orchestrator.py -v`（30 passed）、`python -m unittest discover -s docs/tests -p "test_standalone_bootstrap.py" -v`（3 passed）及在 `web/` 使用根 `.venv` 的 Web 回归（20 passed / 1 Windows symlink-permission skipped）；`git diff --check` 无空白错误。
 
+### 2026-07-19 · 用户重启完整发布一致性关门路径
+
+- 用户明确要求完整关门 GOAL-008，并确认在核心文档与 Skills 完整完成前不推进 Web 深化；据此记录 D-005，解除 D-004 对 I-002 / I-003 / F-005 的延期。
+- 现场只读探测当前机器：`claude --version` 返回 `2.1.215 (Claude Code)`；`grok --version` 返回 `0.2.103 (89c3d36fb6)`；`code --version` 返回 `1.129.1` / commit `8a7abeba6e03ea3af87bfbce9a1b7e48fed567b8`。VS Code 内置 GitHub Copilot Chat package 为 `0.57.0` build `1`，其 `package.json` SHA-256 为 `4304D865FF058792AE0AA5304014534FA61447C08D966429FB4AD38A0CC17AC0`。
+- `code --list-extensions --show-versions` 未列出 Copilot 是因为该包为内置扩展；版本以 VS Code 安装目录的 package manifest 为证，不将空列表误写为扩展缺失。
+- 本次仅恢复 required 门禁、固定基线并开始实现自动化；尚未重新验证候选发行物的 `/govern` / `/audit` runtime，也未创建 CI、tag 或 release。
+
+### 2026-07-19 · 实现兼容矩阵、CI 与发行证据 rehearsal
+
+- 新增 canonical compatibility matrix 与 JSON Schema：`docs/contracts/skills-consumer-compatibility-matrix.json`、`skills-consumer-compatibility-matrix.schema.json`，并逐字节同步 `skills/contracts/` 镜像。矩阵固定 Claude Code `2.1.215`、Grok Build `0.2.103 (89c3d36fb6)`、VS Code `1.129.1` / Copilot Chat `0.57.0` 和 Web parser 行；三宿主 `/govern` / `/audit` 均保持 `pending-runtime-validation`，Web 保持 `pending-ci-replay`。
+- 新增 `unsupported-protocol-0.2.0.json` 与 `fabricated-predecessor-0.0.0.json` 两类 negative fixtures，并在 canonical 与 Skills 镜像中同步；报告验证它们分别确实超出 `0.1.x` 支持区间和真实伪造 `previousSupportedProtocol`，不以文件名或存在性代替语义。
+- 新增 `scripts/compatibility_report.py`：验证 contract/matrix schema、SemVer 区间、required entrypoints、负例语义、仓库内 evidence 路径、canonical/Skills 全文件镜像、当前 Git commit，并生成显式 uncovered 列表。
+- 新增 `scripts/release_evidence.py`、`docs/releases/release-evidence.schema.json` 与 `docs/releases/README.md`：区分 `rehearsal` 与 `release-candidate`；正式候选要求 annotated `vX.Y.Z` tag 指向 HEAD、矩阵 `candidateRevision` 等于 tag、工作树干净、CHANGELOG 同版本节、coverage ready、镜像一致且内部固定检查全过。工具不推送 tag、不创建 GitHub Release。
+- 新增 `.github/workflows/ci.yml`，Ubuntu 与 Windows job 都安装 `jsonschema`、运行 Skills、standalone、发行工具和 Web 回归，并生成 compatibility / rehearsal artifacts；新增 `scripts/requirements.txt`、`CHANGELOG.md` 与 `.gitignore` 的 `artifacts/` / `.claude/worktrees/` 忽略项。
+- 首轮完整本地验证曾因 A-010 段落的 Markdown 行尾空格使 `diff-whitespace` 失败；已机械清除，随后 `git diff --check` 通过。
+
+### 2026-07-19 · 收紧 rehearsal 可信度并核对 runtime 自动化边界
+
+- 独立实现核验发现两类 rehearsal 假阳性风险：调用方可注入任意“通过” checks，以及 rehearsal 对传入 compatibility report 只比对 commit/contract/matrix digest。已修改 `generate_evidence()` 只执行内部 checks，并要求所有模式下传入报告与当前 HEAD 重新生成的 source、contract、matrix、mirror 和 coverage 全部一致。
+- 将 compatibility matrix schema 的 `candidateRevision` 限定为 `unreleased`、40 位 Git commit 或 `v` 前缀 SemVer tag；`release-candidate` 要求其与 annotated tag 精确相等，并在 release evidence 的 `protocol.candidateRevision` 中显式记录。相关回归增至 19 项并全部通过。
+- 以 D-006 固化历史 contract `verified` 与候选 readiness 分层；同步更新 matrix `evidenceScope`、Skills README、发行说明和 canonical hash 台账。当前 `docs/contracts/` 与 `skills/contracts/` 的 matrix/schema 字节一致。
+- 只读 runtime 探测确认：Claude Code `-p /govern` 能识别入口但未产生足以证明真实 dispatch 的 headless 输出；Grok headless 调用仍因本机后端 `502 unknown provider for model grok-build` 失败；VS Code CLI 没有可替代 Copilot Chat 的 agent/skill dispatch 路径。因此 6 个宿主入口不能由本轮自动化关闭。
+- 当前 compatibility report 仍为 `coverage.status = pending`，uncovered 为 Claude/Grok/Copilot 的 `/govern`、`/audit` 六个单元及 Web parser `pending-ci-replay` 一个单元；release evidence 仍只能是 `rehearsal`，无 annotated tag，工作树也尚未成为可发布的干净提交状态。
+- 最终重放命令 `python scripts/compatibility_report.py --output artifacts/compatibility-report.json` 与 `python scripts/release_evidence.py --mode rehearsal --run-checks --include-web --compatibility-report artifacts/compatibility-report.json --output artifacts/release-evidence.json` 均 exit `0`。报告记录 commit `b7653c378d55f3f12d961fb636dd3774c627c696`、mirror `true`、coverage `pending` / 7 uncovered；rehearsal 记录 5/5 固定 checks 通过、`checksPassed: true`、`candidateRevision: unreleased`、`workingTree.clean: false`。
+- 当前事实关闭 A-010 F-001（执行台账漂移）、F-004（verified 语义风险）与 F-005（过时摘要）；A-010 F-002、F-003 及 I-002、I-003、GOAL-001 F-005 保持开放 required。
+
 ## 当前事实与门禁
 
 - 已完成目标设立、范围记录、信息需求登记、高层路线图，以及 I-001 的行业实践收集、设计、schema/manifest、镜像同步和契约测试。
 - I-001 已关闭；D-003 已冻结 I-002 的初始协议与声明/承诺范围，且三宿主已取得固定版本的 `/govern` 可观察 dispatch 通过。当前只据此声明最低可用；CI 重放、release tag 或阶段 5 发布验收尚未取得。
-- I-002、I-003 与 F-005 均为 `deferred required`：它们不阻断当前最低可用范围，却在其复核触发或受影响门禁到达时阻断完整兼容验收、阶段 5 发布验收、阶段 7 验收与根目标关门。不得把 `govern` current fixture 的局部运行时通过扩大为 `/audit`、manifest 解析或产品发布通过。
+- I-002、I-003 与 F-005 均为 `collecting / required`：D-005 已恢复完整关门路径。矩阵/negative fixtures/自动化/CI/rehearsal 已实施，Claude/Grok 四个候选 runtime 单元已验证；Copilot 两个入口与 Web CI replay 共 3 个 candidate 单元仍未覆盖，且无可追溯 release tag。它们阻断完整兼容验收、阶段 5 发布验收、GOAL-008 关门、阶段 6 Web 深化、阶段 7 验收与根目标关门。
 
 ## 进度评估
 
-**20%**：首项成功标准已由 D-002 的 canonical schema/manifest、镜像和契约测试完成；I-001 已 `verified`。D-003 已收敛 I-002 的支持边界，三宿主 `govern` current 矩阵行也已获得可观察 dispatch 证据。完整矩阵、自动化重放、CI 与 I-003 未完成但已按用户裁决 `deferred required`，故不调整百分比，也不把三条局部运行时验证误作跨宿主兼容验收。
+**20%**：首项成功标准已由 D-002 的 canonical schema/manifest、镜像和契约测试完成；I-001 已 `verified`。D-005 后的矩阵、negative fixtures、自动化、CI 与 rehearsal 是成功标准 2～4 的部分实施证据，但相应标准仍包含未关闭的真实宿主 runtime、ready coverage、CI 归档/干净候选和发行身份门禁；成功标准 5 尚无 tag/release。因此保持 20%，不以“工具已存在”替代验收完成。
+
+### 2026-07-19 · 增加 Grok provider/model 防漂移保护
+
+- 更新根目录 `AGENTS.md` 的运行时测试硬约束：明确 `grok-build-cli` 是适配器 ID，不是 API model；Grok headless 测试当前必须显式使用 `--model grok-4.5`。
+- 更新 [I-002 runtime fixture](attachments/i-002-runtime-fixture-2026-07-19.md) 的 Grok 可重放命令，加入 `--model grok-4.5`，并记录 endpoint/model 变化时须先同步规则、断言和环境证据。
+- 新增 `scripts/tests/test_grok_runtime_fixture.py`：断言重放命令使用 `grok-4.5`、不把 `grok-build` / `grok-build-cli` 作为 model，并保留历史 `unknown provider` blocked 事实。
+- 本次只增加防误用约束与静态验证，没有重新声称 Grok runtime 兼容通过；GOAL-008 仍为 `active / 20%`，I-002/F-002 继续开放。
+
+### 2026-07-19 · 建立机读 runtime evidence 并验证 Claude/Grok 双入口
+
+- 新增 canonical/Skills 镜像 `runtime-evidence.schema.json`、`scripts/capture_runtime_evidence.py` 与 8 项专用回归：捕获器拒绝路径逃逸，以行为源和 stdout/stderr SHA-256 检测陈旧/篡改，`runtime-verified` 必须引用匹配单元和协议的有效 pass JSON；探针超时写为 `blocked`，本机请求 URL 可脱敏。
+- Claude Code `2.1.215` 的 `/govern`、`/audit` 均在 `plan` 权限下只开放 `Read,Glob,Grep`，实际加载 `.claude/skills/.../SKILL.md`、读取对应核心 prompt/目标记录并输出 `CLAUDE_*_DISPATCH_OK`。归档 transcript 只保留 session init、工具调用、工具结果哈希/计数、可见文本与 process result，不保留 thinking/signature 或完整文件正文。
+- Grok Build `0.2.103 (89c3d36fb6)` 的 `/govern`、`/audit` 均由主 model `grok-4.5` exit `0` 并输出 `GROK_*_DISPATCH_OK`；两份 JSON 继续保留可选 session-title 请求使用 `grok-build` alias 时的 502 warning，同时脱敏本机 `Request URL`，不将辅助失败扩大为主 dispatch 失败。
+- 兼容矩阵 canonical/Skills 镜像已将 Claude/Grok 四个单元改为 `runtime-verified`；当前 compatibility report 为 `coverage: pending`，仅余 Copilot `/govern`、Copilot `/audit` 与 Web parser `pending-ci-replay` 共 3 个 uncovered。
+- product-specific Grok endpoint/model 规则保留在 [runtime fixture 附件](attachments/i-002-runtime-fixture-2026-07-19.md)，不写入根 `AGENTS.md`；静态测试同时验证该范围边界。
+- 最终验证：Skills 31 项、standalone 3 项、scripts 30 项、Web 20 项通过（1 项 Windows symlink 权限跳过）；完整 rehearsal 的 5 个内部 checks 全部通过，仍记录 `candidateRevision: unreleased`、coverage pending、工作树不干净和无 annotated tag。
+- 本轮没有提交、push、tag 或 release，也没有修改目标 `status` / `progress`。I-002/F-002 因 3 个未覆盖单元继续开放；I-003/F-003 与 GOAL-001 F-005 同样保持 required/open。
