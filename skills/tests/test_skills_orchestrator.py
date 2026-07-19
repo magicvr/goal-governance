@@ -49,6 +49,14 @@ MATRIX_SCHEMA_ID = (
 RUNTIME_EVIDENCE_SCHEMA_ID = (
     "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1"
 )
+
+
+def normalized_sha256(path: Path) -> str:
+    """Hash repository text with checkout line endings normalized to LF."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n")
+    return sha256(payload).hexdigest().upper()
+
+
 CONTRACT_MIRROR_FILES = (
     "skills-consumer-contract.schema.json",
     "skills-consumer-contract.json",
@@ -764,8 +772,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
             canonical = CORE_TEMPLATES / name
             mirror = SKILLS_TEMPLATES / name
-            digest = sha256(canonical.read_bytes()).hexdigest().upper()
-            self.assertEqual(digest, sha256(mirror.read_bytes()).hexdigest().upper())
+            digest = normalized_sha256(canonical)
+            self.assertEqual(digest, normalized_sha256(mirror))
             self.assertIn(name, readme)
             self.assertIn(digest, readme)
         for name in (
@@ -777,8 +785,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         ):
             canonical = CORE_CONTRACTS / name
             mirror = SKILLS_CONTRACTS / name
-            digest = sha256(canonical.read_bytes()).hexdigest().upper()
-            self.assertEqual(digest, sha256(mirror.read_bytes()).hexdigest().upper())
+            digest = normalized_sha256(canonical)
+            self.assertEqual(digest, normalized_sha256(mirror))
             self.assertIn(name, readme)
             self.assertIn(digest, readme)
 
