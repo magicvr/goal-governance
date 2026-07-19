@@ -30,7 +30,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+      "sha256": "a79be8ce7178abcdf9d04ec8403cda9daf8ce5a56f8c26a70cf8436007ef2962"
     },
     {
       "path": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-govern.txt",
@@ -69,10 +69,10 @@
     "marker": "GROK_GOVERN_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-19.d/stdout.txt",
-    "stdoutSha256": "a1c40d497d333743d28fb7cff70023e0dd4286507bd518e4105b5c0dc48281d7",
+    "stdoutSha256": "bf7eb2fed3682e30245c707e3821d5864664f8c8b219cb57f12932f42d864dec",
     "stdoutMode": "raw",
     "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-19.d/stderr.txt",
-    "stderrSha256": "ba9a3e416ce4cad1e2cf5b2ef9a6bf4eebcec1b9dfd806d7a4405ec6bcabab4a",
+    "stderrSha256": "b8291d6b7e973be19a4dfacfff47acab01eff09dd4e24cf381e18a1496b8cbc3",
     "stderrMode": "request-url-redacted",
     "warnings": [
       "The optional Grok session-title request for model alias grok-build returned provider 502; the main probe result is evaluated separately."

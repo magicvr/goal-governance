@@ -30,7 +30,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+      "sha256": "a79be8ce7178abcdf9d04ec8403cda9daf8ce5a56f8c26a70cf8436007ef2962"
     },
     {
       "path": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-audit.txt",
@@ -69,10 +69,10 @@
     "marker": "GROK_AUDIT_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-19.d/stdout.txt",
-    "stdoutSha256": "5c2c917197ab7e518e17981e9e76a74a1fd6f5e4880bb866f67a2dab67e1b95d",
+    "stdoutSha256": "2cfc8fcb50e068585fd2b6ed4aadd875a0e3d0621228b802add93d1d634dc277",
     "stdoutMode": "raw",
     "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-19.d/stderr.txt",
-    "stderrSha256": "7d442b04deb9d338cf5449615f1d6557328fc0bfcae7c743ee71821581105507",
+    "stderrSha256": "77f96da77daba0448b09c4ae1800f99cd173d32d84d75733f2a21469c0d0c46c",
     "stderrMode": "request-url-redacted",
     "warnings": [
       "The optional Grok session-title request for model alias grok-build returned provider 502; the main probe result is evaluated separately."

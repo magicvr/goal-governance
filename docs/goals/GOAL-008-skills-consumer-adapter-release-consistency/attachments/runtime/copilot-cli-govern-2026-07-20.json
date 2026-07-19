@@ -18,11 +18,11 @@
   "behaviorSources": [
     {
       "path": "AGENTS.md",
-      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+      "sha256": "a79be8ce7178abcdf9d04ec8403cda9daf8ce5a56f8c26a70cf8436007ef2962"
     },
     {
       "path": ".github/copilot-instructions.md",
-      "sha256": "652ef33324dc6fc5c3a6abcc066de8b9e17cb97dfd80691be2fd543051dc1425"
+      "sha256": "cb4fb1c1fa7f675f12f0d945464fd66871d701e9e6fe70de33dacd7dff8b1ab8"
     },
     {
       "path": "skills/prompts/00-govern-orchestrator.md",
@@ -56,10 +56,10 @@
     "marker": "COPILOT_CLI_GOVERN_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-20.d/stdout.txt",
-    "stdoutSha256": "e5a9d26f380035f836e88f33a52efcea5a72adaedbf9f37c907ff5f18eb851c5",
+    "stdoutSha256": "19c8f547332124d56f17f697a95bfca34b42d1b4fccd692306abcbf127ccad30",
     "stdoutMode": "raw",
     "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-20.d/stderr.txt",
-    "stderrSha256": "3f33c841ff5a5de9c9ab95f0d73b981a699126744bd2417e4776e74242baa6d7",
+    "stderrSha256": "a4910849c2419c629905c2b1118c34f52afc0c2b1b8cb0f6df4576fa492e50f5",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."

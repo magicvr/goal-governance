@@ -30,7 +30,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+      "sha256": "a79be8ce7178abcdf9d04ec8403cda9daf8ce5a56f8c26a70cf8436007ef2962"
     },
     {
       "path": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/claude-govern.txt",
@@ -56,7 +56,7 @@
     "marker": "CLAUDE_GOVERN_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-19.d/stdout.txt",
-    "stdoutSha256": "6575800d025b152f33fa1448c0691c4dd3aadb4c2e94668d7b17ebbdbe3350d5",
+    "stdoutSha256": "dd2dc8af81216dacb205b480f4b8899493d0381aaa0b720f514c611e7c1e191d",
     "stdoutMode": "claude-stream-json-sanitized",
     "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-19.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

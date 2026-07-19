@@ -18,11 +18,11 @@
   "behaviorSources": [
     {
       "path": "AGENTS.md",
-      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+      "sha256": "a79be8ce7178abcdf9d04ec8403cda9daf8ce5a56f8c26a70cf8436007ef2962"
     },
     {
       "path": ".github/copilot-instructions.md",
-      "sha256": "652ef33324dc6fc5c3a6abcc066de8b9e17cb97dfd80691be2fd543051dc1425"
+      "sha256": "cb4fb1c1fa7f675f12f0d945464fd66871d701e9e6fe70de33dacd7dff8b1ab8"
     },
     {
       "path": "skills/prompts/05-independent-audit.md",
@@ -56,10 +56,10 @@
     "marker": "COPILOT_CLI_AUDIT_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-20.d/stdout.txt",
-    "stdoutSha256": "cf4318280214e70dcbad7e5166bb9868f6e6717e9f31eaa9bc4c8a7974a07ea8",
+    "stdoutSha256": "80f1fda3496d72726d41426b7a2d911c8b22ddc0c9f545f53c9d2dc280839e76",
     "stdoutMode": "raw",
     "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-20.d/stderr.txt",
-    "stderrSha256": "c0473aa151a7271265d2c97ef9e955bd7b01f57c530444f421da9aa4e5189477",
+    "stderrSha256": "3ddd25f54fc38a22692eb7182265b5c7d5843ea0843ac9d1b60fec58f748a7f9",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."

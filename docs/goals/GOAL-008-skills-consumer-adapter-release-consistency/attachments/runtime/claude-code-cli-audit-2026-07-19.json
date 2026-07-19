@@ -30,7 +30,7 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+      "sha256": "a79be8ce7178abcdf9d04ec8403cda9daf8ce5a56f8c26a70cf8436007ef2962"
     },
     {
       "path": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/claude-audit.txt",
@@ -56,7 +56,7 @@
     "marker": "CLAUDE_AUDIT_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-19.d/stdout.txt",
-    "stdoutSha256": "3ee3153cd5a77b4dfa19ec819dc7f500459337b56c23ecbf5cc8d6de4e6cad61",
+    "stdoutSha256": "8e586e086fc26d65c2953dfbff30210ae5feadfaee5b079ed8e16fcad31884ed",
     "stdoutMode": "claude-stream-json-sanitized",
     "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-19.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
