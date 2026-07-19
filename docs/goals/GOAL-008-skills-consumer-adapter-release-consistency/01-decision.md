@@ -4,9 +4,21 @@ doc: decision
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
-updated: 2026-07-19
-version: 1.1.0
+updated: 2026-07-20
+version: 1.2.0
 ---
+
+## D-009 - GitHub Copilot CLI as replay evidence source (2026-07-20)
+
+**Status**: accepted
+
+**Decision**:
+
+1. Replace the Copilot adapter id in the canonical and Skills mirror contracts/matrix with `github-copilot-cli`, fixed at version `1.0.71`.
+2. Use the `capture_runtime_evidence.py` JSON artifacts for CLI-only `/govern` and `/audit` replays. Their behavior sources include `AGENTS.md`, Copilot instructions, the core orchestrator/independent-audit prompts, a read-only replay runner, and the prompt file.
+3. Keep VS Code screenshots and package identity as historical facts only. They do not participate in current coverage.
+
+This decision does not turn a CLI replay into Web CI, ready coverage, or release-tag evidence. I-002 remains required until the Web parser CI replay is closed.
 
 # 决策记录 · GOAL-008
 

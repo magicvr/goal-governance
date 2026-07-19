@@ -9,6 +9,10 @@ version: 0.15.0
 
 # Goal Tree
 
+## 2026-07-20 - GOAL-008 evidence synchronization
+
+GOAL-008 remains `active / 20%`. The current Copilot candidate is GitHub Copilot CLI `1.0.71`, with CLI-only `/govern` and `/audit` runtime evidence recorded under the goal attachments. The VS Code plugin is historical context and is not used for this replay. The matrix now has only the Web parser CI replay uncovered; I-002, I-003, and upstream F-005 remain required gates, so the tree status and root close-out do not change.
+
 > 所有目标平铺存放在本目录；层级仅通过各目标 `00-meta.md` 的 `parent` 字段维护。  
 > **新建、修改状态或调整 parent 后，必须同步更新本文件。**
 
@@ -40,7 +44,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | GOAL-001-main-vision | done | 100% | [GOAL-007-information-readiness-governance/](GOAL-007-information-readiness-governance/) |
 | GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | active | 20% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
 
-当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」。GOAL-008 保持 `active / 20%`：I-001 已由 canonical schema/manifest、Skills 镜像、正反 fixtures 与安装/standalone 测试验证为 `verified`；Claude Code `2.1.215` 与 Grok Build `0.2.103` 的 `/govern`、`/audit` 四个候选单元已有机读 runtime evidence。I-002、I-003 与 `F-005` 仍为 `collecting / required`：Copilot VS Code `/govern`、`/audit` 和 Web parser CI replay 共 3 个单元仍 uncovered，且尚无 ready coverage、干净候选与可追溯 annotated tag/release。未关闭前阻断阶段 5 发布验收、阶段 6 Web 深化、阶段 7 验收和根目标关门。`F-006` 保持非阻塞 `recommended / open`；`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
+当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」。GOAL-008 保持 `active / 20%`：I-001 已由 canonical schema/manifest、Skills 镜像、正反 fixtures 与安装/standalone 测试验证为 `verified`；Claude Code `2.1.215`、Grok Build `0.2.103` 与 GitHub Copilot CLI `1.0.71` 的 `/govern`、`/audit` 候选单元已有机读 runtime evidence。I-002、I-003 与 `F-005` 仍为 `collecting / required`：Web parser CI replay 仍 `pending-ci-replay`，且尚无 ready coverage、干净候选与可追溯 annotated tag/release。未关闭前阻断阶段 5 发布验收、阶段 6 Web 深化、阶段 7 验收和根目标关门。`F-006` 保持非阻塞 `recommended / open`；`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
 
 ## 状态图例
 

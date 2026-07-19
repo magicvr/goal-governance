@@ -72,7 +72,7 @@
       "verificationStatus": "verified"
     },
     {
-      "id": "github-copilot-vscode",
+      "id": "github-copilot-cli",
       "supportsProtocol": {
         "minInclusive": "0.1.0",
         "maxExclusive": "0.2.0"

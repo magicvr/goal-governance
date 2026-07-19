@@ -4,10 +4,19 @@ title: Skills 消费适配器跨宿主/跨版本发布一致性
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
-updated: 2026-07-19
-version: 1.2.0
+updated: 2026-07-20
+version: 1.3.0
 progress: 20%
 ---
+
+## 2026-07-20 - CLI evidence correction
+
+GitHub Copilot CLI `1.0.71` is now the Copilot candidate evidence source. The VS Code plugin is historical context only and is not used for this replay. Two bounded, read-only CLI replays passed and are bound to behavior-source and stdout/stderr digests:
+
+- `/govern`: `attachments/runtime/copilot-cli-govern-2026-07-20.json`
+- `/audit`: `attachments/runtime/copilot-cli-audit-2026-07-20.json`
+
+I-002 remains `collecting / required` because the Web parser CI replay is still uncovered. I-003 and upstream GOAL-001 F-005 remain `collecting/open / required` because coverage is not ready and no clean, annotated release candidate is authorized. GOAL-008 therefore remains `active / 20%` and is not eligible for closure.
 
 # GOAL-008 · Skills 消费适配器跨宿主/跨版本发布一致性
 
@@ -69,4 +78,4 @@ progress: 20%
 
 ## 当前状态
 
-本目标已按 D-010 建立。2026-07-19 已完成 I-001 的行业实践收集、设计、schema/manifest、镜像和契约测试；D-003 已冻结 I-002 的初始支持边界。D-005 之后已建立 canonical/Skills 兼容矩阵、负例 fixtures、Ubuntu/Windows CI、兼容/发行报告工具与本地 rehearsal；D-008 又以机读 schema、行为源/输出摘要和脱敏 transcript 验证 Claude Code、Grok Build 的 `/govern` 与 `/audit` 四个候选单元。当前仍有 Copilot 两个入口与 Web CI replay 共 3 个 uncovered 单元，且工作树不干净、无 annotated tag。I-002、I-003 与上游 F-005 继续为 `collecting / required`，阻断阶段 5 发布验收、GOAL-008 关门、阶段 6 Web 深化、阶段 7 验收和根目标关门；因此保持 `active / 20%`。
+本目标已按 D-010 建立。2026-07-19 已完成 I-001 的行业实践收集、设计、schema/manifest、镜像和契约测试；D-003 已冻结 I-002 的初始支持边界。D-005 之后已建立 canonical/Skills 兼容矩阵、负例 fixtures、Ubuntu/Windows CI、兼容/发行报告工具与本地 rehearsal；D-008 又以机读 schema、行为源/输出摘要和脱敏 transcript 验证 Claude Code、Grok Build 的 `/govern` 与 `/audit` 四个候选单元；2026-07-20 已用 GitHub Copilot CLI `1.0.71` 完成 `/govern` 与 `/audit` 机读重放。当前仅 Web CI replay 仍为 uncovered，且工作树不干净、无 annotated tag。I-002、I-003 与上游 F-005 继续为 `collecting / required`，阻断阶段 5 发布验收、GOAL-008 关门、阶段 6 Web 深化、阶段 7 验收和根目标关门；因此保持 `active / 20%`。

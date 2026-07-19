@@ -1,0 +1,18 @@
+{
+  "format": "goal-governance.web-ci-replay-provenance",
+  "formatVersion": "1.0.0",
+  "status": "commit-bound",
+  "candidateRevision": "v0.7.0",
+  "workflow": ".github/workflows/ci.yml",
+  "workflowTrigger": "push or workflow_dispatch",
+  "jobs": [
+    "contract-and-report",
+    "windows-install-surface"
+  ],
+  "requiredWebCommand": "python -m unittest discover -s tests -v (cwd: web)",
+  "artifactNames": [
+    "skills-release-evidence-ubuntu",
+    "skills-release-evidence-windows"
+  ],
+  "binding": "The successful run URL, run id, head SHA, artifact archive digests, and compatibility/release JSON digests are appended after the workflow completes for the annotated candidate tag."
+}

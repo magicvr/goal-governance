@@ -14,7 +14,7 @@ version: 1.1.0
 
 Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/)；本包内的 `templates/goal-folder/` 是用于离线复制和安装脚本的同步镜像。消费适配器的机读版本/兼容声明以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 是逐字节分发镜像。安装到其他仓库后，镜像必须自包含可用。
 
-**当前候选支持范围（GOAL-008 D-005 / I-002）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot **VS Code** 插件均以固定的当前机器版本列为 `committed` 支持基线。三者 manifest 的 `verificationStatus: verified` 仍只表示历史 `0.1.0` current `/govern` 子范围；候选矩阵中 Claude Code 与 Grok Build 的 `/govern`、`/audit` 已有机读 runtime 证据，Copilot 两个入口与 Web CI replay 仍待补齐。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
+**当前候选支持范围（GOAL-008 D-005 / I-002）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot CLI `1.0.71` 均列为 `committed` 支持基线。三者 manifest 的 `verificationStatus: verified` 表示已记录的受限运行时范围；候选矩阵中的三个 CLI 均有 `/govern`、`/audit` 机读 runtime 证据，Web CI replay 仍待补齐。VS Code 插件不作为本轮 Copilot 重放证据来源。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
 ## 产品模型（必读）
 
@@ -32,7 +32,7 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 |------|----------|------|--------------|
 | Claude Code CLI | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / candidate runtime-verified` |
 | Grok Build CLI | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / candidate runtime-verified*` |
-| GitHub Copilot VS Code 插件 | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` | `committed / candidate pending` |
+| GitHub Copilot CLI `1.0.71` | `.github/copilot-instructions.md` + repository prompt sources | `/govern` · `/audit` | `committed / runtime-verified` |
 
 核心行为：
 

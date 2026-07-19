@@ -4,9 +4,31 @@ doc: audit
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
-updated: 2026-07-19
-version: 1.4.0
+updated: 2026-07-20
+version: 1.6.0
 ---
+
+## A-014 - Independent replay: GitHub Copilot CLI 1.0.71 (2026-07-20)
+
+- **source**: independent
+- **auditor**: GitHub Copilot CLI `1.0.71`
+- **scope**: GOAL-008 I-002 runtime coverage and closure readiness
+- **verdict**: conditional
+
+Both CLI artifacts have `verdict: pass`, exit `0`, and observed markers. The replay is bound to `AGENTS.md`, `.github/copilot-instructions.md`, the core governance prompt, the independent-audit prompt, the read-only runner, and the prompt files. It explicitly did not use VS Code or an IDE plugin.
+
+- **Closed in this scope**: Copilot CLI `/govern` and `/audit` matrix cells are `runtime-verified`.
+- **Open required**: Web parser CI replay remains `pending-ci-replay`; I-002 remains `collecting / required`.
+- **Open required**: I-003 and upstream GOAL-001 F-005 still lack ready coverage, a clean candidate archive, and an authorized annotated release tag. GOAL-008 is not eligible for `done`.
+
+## A-015 - Response A-014: CLI evidence entered in the governance ledger (2026-07-20)
+
+- **source**: self
+- **auditor**: Codex `/govern`
+- **scope**: response to A-014 and the user request to close GOAL-008
+- **verdict**: conditional
+
+The CLI replays are accepted as current Copilot runtime evidence and the VS Code plugin is removed from the candidate matrix. Existing self and independent opinions agree; no P-004 conflict is present. Required Web CI and release-identity findings remain open, so status stays `active / 20%` and no close-out transition is claimed.
 
 # 审计 · GOAL-008
 

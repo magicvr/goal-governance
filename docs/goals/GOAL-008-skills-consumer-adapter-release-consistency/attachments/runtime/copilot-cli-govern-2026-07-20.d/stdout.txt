@@ -1,0 +1,217 @@
+I'll conduct a read-only governance scan of GOAL-008. Let me start by reading the governance
+documents and then GOAL-008's records.
+
+● Read goal-tree.md
+  │ docs\goals\goal-tree.md
+  └ 60 lines read
+
+● Read AGENTS.md
+  └ 284 lines read
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 280 lines read
+
+Now let me read the Skills orchestrator to understand the /govern semantics:
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:100 (100 lines read)
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L100:200 (101 lines read)
+
+Now let me read GOAL-008's record files:
+
+● List directory docs\goals\GOAL-008-skills-consumer-adapter-release-consistency
+  └ 5 files found
+
+/ Search (glob)
+  │ "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/*"
+  └ 4 files found
+
+● Read 01-decision.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\01-decision.md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.md
+  └ 72 lines read
+
+● Read 02-execution.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\02-execution.md
+  └ 1 line read
+
+● Read 03-audit.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\03-audit.md
+  └ 1 line read
+
+● Read 01-decision.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\01-decision.md
+  └ L1:100 (99 lines read)
+
+● Read 02-execution.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\02-execution.md
+  └ L1:150 (134 lines read)
+
+● Read 03-audit.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\03-audit.md
+  └ L1:150 (149 lines read)
+
+● Request failed due to a transient API error. Retrying...
+
+Let me continue reading the 02-execution and 03-audit sections:
+
+● Read 02-execution.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\02-execution.md
+  └ L136:250 (14 lines read)
+
+● Read 03-audit.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\03-audit.md
+  └ L150:300 (151 lines read)
+
+● Read 03-audit.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\03-audit.md
+  └ L300:500 (201 lines read)
+
+● Read 03-audit.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\03-audit.md
+  └ L500:600 (100 lines read)
+
+Now let me get the final section to complete the audit summary:
+
+● Read 03-audit.md
+  │ docs\goals\GOAL-008-skills-consumer-adapter-release-consistency\03-audit.md
+  └ L600:700 (57 lines read)
+
+Based on my read-only governance scan of GOAL-008 using the repository's governance sources, here is
+ the current status:
+
+-----------------------------------------------------------------------------------------------
+
+COPILOT CLI GOVERN DISPATCH · REPLAY SCAN
+
+Goal Identity
+
+ - ID: GOAL-008-skills-consumer-adapter-release-consistency
+ - Parent: GOAL-001-main-vision
+ - Status: active
+ - Progress: 20% (unchanged; consistent with partial completion facts)
+ - Created/Updated: 2026-07-19
+
+Scope & Range (P-001)
+
+ - In: Protocol/template versioning, multi-host compatibility matrix, fixtures, CI verification,
+release evidence
+ - Out: Web deep-dive (stage 6), real-world adoption trial, three-surface final release acceptance
+(stage 7)
+ - Series: Stages A–D; currently partial A/B/C/D implementation with 3 candidate units uncovered
+
+Information Readiness Gates (P-005)
+
+┌───────┬──────────────┬───────────────┬───────────────────────────────────────────────────────┐
+│ ID    │ Status       │ Impact        │ Evidence                                              │
+├───────┼──────────────┼───────────────┼───────────────────────────────────────────────────────┤
+│ I-001 │ verified     │ Method &      │ docs/contracts/ schema/manifest + mirror + fixtures + │
+│       │              │ release scope │ 32 passed tests (Skills 29 + standalone 3)            │
+│       │              │ frozen        │                                                       │
+├───────┼──────────────┼───────────────┼───────────────────────────────────────────────────────┤
+│ I-002 │ collecting / │ Host          │ Matrix structure + negative fixtures exist;           │
+│       │ required     │ compatibility │ Claude/Grok /govern+/audit verified (A-013); Copilot  │
+│       │              │ acceptance    │ 2 entries + Web CI replay remain                      │
+│       │              │ BLOCKED       │ pending-runtime-validation (7 uncovered units)        │
+├───────┼──────────────┼───────────────┼───────────────────────────────────────────────────────┤
+│ I-003 │ collecting / │ Phase 5       │ CI workflow + compatibility/release scripts +         │
+│       │ required     │ release       │ rehearsal automation exist; NO annotated tag/release; │
+│       │              │ acceptance    │ working tree unclean (4 untracked file categories);   │
+│       │              │ BLOCKED       │ coverage status = pending                             │
+└───────┴──────────────┴───────────────┴───────────────────────────────────────────────────────┘
+
+Audit Findings · Blockers & Required Closures
+
+A-010 (independent / Grok /audit) verdict: conditional — Identifies three required findings:
+
+┌────────────┬──────────┬────────┬─────────────────────────────────────────────────────────────┐
+│ ID         │ Level    │ Status │ Blocks                                                      │
+├────────────┼──────────┼────────┼─────────────────────────────────────────────────────────────┤
+│ F-002      │ required │ OPEN   │ I-002 complete; Claude/Grok 4 units verified (A-013); 3     │
+│            │ · high   │        │ units remain: Copilot /govern, Copilot /audit, Web parser   │
+│            │          │        │ CI replay                                                   │
+├────────────┼──────────┼────────┼─────────────────────────────────────────────────────────────┤
+│ F-003      │ required │ OPEN   │ I-003 complete; No clean release commit, no annotated       │
+│            │ · high   │        │ SemVer tag, no CI archive ready; blocks phase 5 publish     │
+│            │          │        │ acceptance, GOAL-008 closure, phase 6, phase 7, root        │
+│            │          │        │ closure                                                     │
+├────────────┼──────────┼────────┼─────────────────────────────────────────────────────────────┤
+│ Upstream   │ open ·   │ OPEN   │ Dependency: awaits GOAL-008 I-002/I-003 closure evidence +  │
+│ GOAL-001   │ required │        │ root response                                               │
+│ F-005      │          │        │                                                             │
+└────────────┴──────────┴────────┴─────────────────────────────────────────────────────────────┘
+
+F-001, F-004, F-005: CLOSED by A-011 (execution ledger aligned; verified semantics clarified; text
+references updated)
+
+Closure Eligibility (P-003, P-004)
+
+NOT ELIGIBLE for stage 5 publish acceptance, GOAL-008 closure (status: done), phase 6, phase 7, or
+root goal closure.
+
+Reasons:
+
+ 1. I-002 open/required: 3 candidate runtime units (Copilot×2 + Web×1) lack verifiable dispatch
+proof; matrix cannot pass acceptance with pending coverage
+ 2. I-003 open/required: No verifiable release artifact (rehearsal ≠ release); no annotated tag;
+working tree unclean; user authorization for tag/release not yet exercised
+ 3. F-005 upstream: GOAL-001 depends on GOAL-008 completion; no conflict in verdict, but upstream
+gate remains active
+ 4. P-005 compliance: All three open/required items impact decision (proposal/plan freeze),
+implementation, acceptance, and close-out gates; no user-authored residual risk acceptance on file
+
+Path to Closure
+
+Next steps (per A-010/A-011/A-013 recommendations):
+
+ 1. F-002 mitigation: User provides fresh Copilot /govern + /audit runtime evidence (version +
+environment + output hash); execute Web parser CI replay on clean runner
+ 2. Update matrix: Move Copilot 2 units from pending-runtime-validation to runtime-verified or
+blocked; update report coverage.status from pending
+ 3. F-003 mitigation: Maintenance authorization for SemVer tag; clean working tree commit; generate
+annotated release tag; form release-candidate evidence with all checks passing
+ 4. Stage self-audit: Respond to F-002/F-003 closure in new A-014/A-015
+ 5. Suggest independent finding-closure review before final stage 5 close-out
+
+P-004 User Discretion Points
+
+No user decision conflict detected:
+
+ - Independent A-010 and self-audit A-011/A-013 aligned on "no false closure"; no verdict
+contradiction
+ - Self-audit already completed (A-001–A-009); independent review provided (A-010); no "independent
+only, no self" scenario
+ - F-002/F-003 are factual gaps, not discretionary trade-offs
+ - No residual risk acceptance on record for any open/required items
+
+Repository Observation (default policies not fully confirmed)
+
+┌────────────┬─────────────────────────────────────────────────────┬───────────────────────────┐
+│ Item       │ Signal                                              │ Stance                    │
+├────────────┼─────────────────────────────────────────────────────┼───────────────────────────┤
+│ Code       │ Web in web/; Skills in skills/; core docs in docs/  │ Per project standard (not │
+│ layout     │                                                     │ default)                  │
+├────────────┼─────────────────────────────────────────────────────┼───────────────────────────┤
+│ Skills     │ skills/ contains prompts/, contracts/, install/,    │ SKILLS_PKG confirmed as   │
+│ package    │ tests/                                              │ skills/                   │
+├────────────┼─────────────────────────────────────────────────────┼───────────────────────────┤
+│ Project    │ Documentation-driven governance + Tools (Skills,    │ Clear; not awaiting       │
+│ nature     │ Web)                                                │ confirmation              │
+└────────────┴─────────────────────────────────────────────────────┴───────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+Summary: GOAL-008 remains active / 20% with honest reporting of partial progress. Closure is blocked
+ by three required gates (F-002: 3 host units; F-003: release artifact; F-005: upstream). No false
+advancement of status. Ready for /govern escalation to user for runtime evidence collection &
+authorization decisions.
+
+COPILOT_CLI_GOVERN_DISPATCH_OK

@@ -187,9 +187,10 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self.assertNotIn(("claude-code-cli", "audit"), uncovered)
         self.assertNotIn(("grok-build-cli", "govern"), uncovered)
         self.assertNotIn(("grok-build-cli", "audit"), uncovered)
-        self.assertIn(("github-copilot-vscode", "govern"), uncovered)
-        self.assertIn(("github-copilot-vscode", "audit"), uncovered)
-        self.assertIn(("web-readonly-parser", "goal-document-parser"), uncovered)
+        self.assertNotIn(("github-copilot-cli", "govern"), uncovered)
+        self.assertNotIn(("github-copilot-cli", "audit"), uncovered)
+        self.assertNotIn(("web-readonly-parser", "goal-document-parser"), uncovered)
+        self.assertEqual(report["coverage"]["status"], "ready-for-release-evidence")
 
     def test_compatibility_report_uses_supplied_root_for_mirrors(self) -> None:
         with tempfile.TemporaryDirectory(prefix="gg-compatibility-root-") as tmp:
@@ -245,7 +246,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self.assertIsNone(evidence["source"]["annotatedTag"])
         self.assertIsNone(evidence["source"]["tagObject"])
         self.assertEqual(evidence["protocol"]["version"], "0.1.0")
-        self.assertEqual(evidence["protocol"]["candidateRevision"], "unreleased")
+        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.7.0")
         self.assertIn("checksPassed", evidence)
         schema = json.loads(
             (REPO_ROOT / "docs/releases/release-evidence.schema.json").read_text(
@@ -307,6 +308,21 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
             root = Path(tmp)
             self._copy_contract_surfaces(root)
             (root / "payload.txt").write_text("payload\n", encoding="utf-8")
+            for relative in (
+                Path("docs/contracts/skills-consumer-compatibility-matrix.json"),
+                Path("skills/contracts/skills-consumer-compatibility-matrix.json"),
+            ):
+                matrix_path = root / relative
+                matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
+                matrix["candidateRevision"] = "v1.2.3"
+                for consumer in matrix["consumers"]:
+                    if consumer["id"] == "web-readonly-parser":
+                        consumer["entrypoints"][0]["status"] = "pending-ci-replay"
+                        consumer["entrypoints"][0]["evidence"] = ["web/tests"]
+                matrix_path.write_text(
+                    json.dumps(matrix, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
             schema_dir = root / "docs/releases"
             schema_dir.mkdir(parents=True, exist_ok=True)
             shutil.copy2(
@@ -314,7 +330,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                 schema_dir / "release-evidence.schema.json",
             )
             self._init_release_repo(root)
-            report = self._bind_report_to_root(report, root)
+            report = compatibility_report.generate_report(root)
             with self.assertRaisesRegex(
                 release_evidence.ReleaseEvidenceError,
                 "complete compatibility coverage",
@@ -517,8 +533,10 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
     def test_rehearsal_rejects_stale_coverage(self) -> None:
         report = compatibility_report.generate_report(REPO_ROOT)
         stale = deepcopy(report)
-        stale["coverage"]["status"] = "ready-for-release-evidence"
-        stale["coverage"]["uncovered"] = []
+        stale["coverage"]["status"] = "pending"
+        stale["coverage"]["uncovered"] = [
+            {"consumer": "web-readonly-parser", "entrypoint": "goal-document-parser", "status": "pending-ci-replay"}
+        ]
         with self.assertRaisesRegex(
             release_evidence.ReleaseEvidenceError, "coverage is stale"
         ):

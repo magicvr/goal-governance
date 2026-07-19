@@ -1,0 +1,70 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-07-19T18:20:26.911373Z",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.71",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "b61ed6a1110e11f9db785560d0bd6621841d903c31634cb4be93dfabb5db46e8"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "652ef33324dc6fc5c3a6abcc066de8b9e17cb97dfd80691be2fd543051dc1425"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "bf8450e2d8608971f168f726068b2654860138d733a76fcb8f5a113da724e21e"
+    },
+    {
+      "path": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
+      "sha256": "759d7da95b222109554452e8a582cb038c3710d6572e167b4ebbad640871ab91"
+    },
+    {
+      "path": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-govern.txt",
+      "sha256": "3590eb98486d3bab4b7edf369886270b170d8962a8e6dc8331de63d15e21c41c"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 180.0,
+    "inputSha256": "3590eb98486d3bab4b7edf369886270b170d8962a8e6dc8331de63d15e21c41c",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker COPILOT_CLI_GOVERN_DISPATCH_OK after repository-backed skill execution."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "COPILOT_CLI_GOVERN_DISPATCH_OK",
+    "markerObserved": true,
+    "stdoutPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-20.d/stdout.txt",
+    "stdoutSha256": "e5a9d26f380035f836e88f33a52efcea5a72adaedbf9f37c907ff5f18eb851c5",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-20.d/stderr.txt",
+    "stderrSha256": "3f33c841ff5a5de9c9ab95f0d73b981a699126744bd2417e4776e74242baa6d7",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

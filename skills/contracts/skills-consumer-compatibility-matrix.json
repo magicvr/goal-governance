@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
   "format": "goal-governance.skills-consumer-compatibility-matrix",
   "formatVersion": "1.0.0",
-  "candidateRevision": "unreleased",
+  "candidateRevision": "v0.7.0",
   "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
   "protocol": {
     "current": "0.1.0",
@@ -98,16 +98,13 @@
       "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only. Candidate /govern and /audit are runtime-verified by machine-readable Grok Build CLI probes bound to current behavior-source and raw-output digests. Both probes preserve an auxiliary session-title alias 502 warning while the main grok-4.5 process exited 0 and emitted the required repository-backed dispatch marker. Release readiness still requires complete matrix coverage."
     },
     {
-      "id": "github-copilot-vscode",
+      "id": "github-copilot-cli",
       "kind": "host-adapter",
       "host": {
-        "product": "VS Code with built-in GitHub Copilot Chat",
-        "version": "1.129.1",
-        "build": "1",
-        "commit": "8a7abeba6e03ea3af87bfbce9a1b7e48fed567b8",
-        "packageSha256": "4304D865FF058792AE0AA5304014534FA61447C08D966429FB4AD38A0CC17AC0",
+        "product": "GitHub Copilot CLI",
+        "version": "1.0.71",
         "platform": "Windows 11",
-        "installationSurface": ".github/copilot-instructions.md and .github/prompts"
+        "installationSurface": "%APPDATA%/npm/@github/copilot"
       },
       "supportsProtocol": {
         "minInclusive": "0.1.0",
@@ -118,18 +115,20 @@
       "entrypoints": [
         {
           "name": "govern",
-          "status": "pending-runtime-validation",
+          "status": "runtime-verified",
           "evidence": [
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/copilot-vscode-govern-runtime-2026-07-19.png"
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-20.json"
           ]
         },
         {
           "name": "audit",
-          "status": "pending-runtime-validation",
-          "evidence": []
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-20.json"
+          ]
         }
       ],
-      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only; release readiness is determined by this matrix entrypoint status plus compatibility report coverage. Candidate release requires fresh runtime evidence after source changes."
+      "evidenceScope": "GitHub Copilot CLI 1.0.71 non-interactive plan-safe replays used the repository AGENTS.md, Copilot instructions, core govern/audit prompts, and GOAL-008 records as behavior sources. Machine-readable JSON binds both entrypoints to stdout/stderr digests and dispatch markers. The replay is CLI-only and does not rely on VS Code or an IDE plugin; release readiness still requires Web CI replay and release identity evidence."
     },
     {
       "id": "web-readonly-parser",
@@ -149,13 +148,14 @@
       "entrypoints": [
         {
           "name": "goal-document-parser",
-          "status": "pending-ci-replay",
+          "status": "automated-verified",
           "evidence": [
-            "web/tests"
+            "web/tests",
+            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/web-parser-ci-replay-2026-07-20.json"
           ]
         }
       ],
-      "evidenceScope": "Web parses goal documents only; it is not a manifest adapter."
+      "evidenceScope": "Web parses goal documents only; it is not a manifest adapter. The automated-verified cell is bound to the repository CI workflow and its commit-scoped artifact replay record."
     }
   ]
 }

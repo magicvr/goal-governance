@@ -9,7 +9,7 @@ version: 0.6.0
 
 # GitHub Copilot 项目指令 · 目标治理
 
-> **适用工具**：GitHub Copilot（VS Code / GitHub）  
+> **适用工具**：GitHub Copilot CLI（以及可选的 VS Code / GitHub 表面）
 > 将本文件放在目标项目的 `.github/copilot-instructions.md`。  
 > 按项目实际情况修改路径与可选节；未使用的可选节可删除。
 

@@ -482,11 +482,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(len(by_id), len(adapters), msg="adapter ids must be unique")
         self.assertEqual(
             set(by_id),
-            {"claude-code-cli", "grok-build-cli", "github-copilot-vscode"},
+            {"claude-code-cli", "grok-build-cli", "github-copilot-cli"},
         )
         self.assertEqual(by_id["claude-code-cli"]["supportCommitment"], "committed")
         self.assertEqual(
-            by_id["github-copilot-vscode"]["supportCommitment"], "committed"
+            by_id["github-copilot-cli"]["supportCommitment"], "committed"
         )
         self.assertEqual(by_id["grok-build-cli"]["supportCommitment"], "committed")
         for adapter in by_id.values():
@@ -497,7 +497,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertEqual(adapter["entrypoints"], ["govern", "audit"])
         self.assertEqual(by_id["claude-code-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
-        self.assertEqual(by_id["github-copilot-vscode"]["verificationStatus"], "verified")
+        self.assertEqual(by_id["github-copilot-cli"]["verificationStatus"], "verified")
         self.assertNotIn("web-readonly-parser", by_id)
 
     def test_candidate_compatibility_matrix_keeps_runtime_coverage_explicit(self) -> None:
@@ -544,14 +544,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             {
                 "claude-code-cli",
                 "grok-build-cli",
-                "github-copilot-vscode",
+                "github-copilot-cli",
                 "web-readonly-parser",
             },
         )
         self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.215")
         self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.103")
-        self.assertEqual(consumers["github-copilot-vscode"]["host"]["version"], "1.129.1")
-        self.assertEqual(consumers["github-copilot-vscode"]["host"]["build"], "1")
+        self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.71")
+        self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         for consumer_id in ("claude-code-cli", "grok-build-cli"):
             entrypoints = {entry["name"]: entry for entry in consumers[consumer_id]["entrypoints"]}
             self.assertEqual(
@@ -565,24 +565,18 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 self.assertTrue(
                     any(path.endswith(".json") for path in entrypoint["evidence"])
                 )
-        copilot = consumers["github-copilot-vscode"]
+        copilot = consumers["github-copilot-cli"]
         copilot_entrypoints = {
             entry["name"]: entry for entry in copilot["entrypoints"]
         }
         self.assertEqual(copilot["contractVerificationStatus"], "verified")
-        self.assertEqual(
-            copilot_entrypoints["govern"]["status"],
-            "pending-runtime-validation",
-        )
-        self.assertEqual(
-            copilot_entrypoints["audit"]["status"],
-            "pending-runtime-validation",
-        )
+        self.assertEqual(copilot_entrypoints["govern"]["status"], "runtime-verified")
+        self.assertEqual(copilot_entrypoints["audit"]["status"], "runtime-verified")
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")
         self.assertEqual(web["contractVerificationStatus"], "not-applicable")
-        self.assertEqual(web["entrypoints"][0]["status"], "pending-ci-replay")
+        self.assertEqual(web["entrypoints"][0]["status"], "automated-verified")
 
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""

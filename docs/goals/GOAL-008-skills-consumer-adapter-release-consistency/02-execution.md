@@ -4,9 +4,17 @@ doc: execution
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
-updated: 2026-07-19
-version: 1.4.0
+updated: 2026-07-20
+version: 1.5.0
 ---
+
+### 2026-07-20 - Install GitHub Copilot CLI and complete CLI replay
+
+- Installed with `npm install -g @github/copilot`. Node `v22.17.0` and npm `10.9.2` were present; `Get-Command copilot` points to `%APPDATA%/npm/copilot.ps1`; `copilot version` returns `GitHub Copilot CLI 1.0.71`. Raw installation facts are recorded in `attachments/copilot-cli-install-2026-07-20.md`.
+- The non-interactive `-p/--prompt` surface was used with a read-only runner. File writes were denied and no VS Code or IDE plugin was used. Authentication was supplied to the process through `gh auth token` and is not stored in evidence.
+- `/govern` and `/audit` both passed through `scripts/capture_runtime_evidence.py` with exit `0` and observed markers. JSON, stdout/stderr, and SHA-256 digests are recorded at `attachments/runtime/copilot-cli-govern-2026-07-20.json` and `attachments/runtime/copilot-cli-audit-2026-07-20.json`.
+- Canonical/mirror contracts, compatibility matrix, negative fixtures, tests, and `skills/README.md` now use `github-copilot-cli`. The compatibility report is still `coverage: pending` with the Web parser CI replay as the uncovered cell.
+- Copilot's two I-002 cells are closed for current runtime evidence, but I-002, I-003, and upstream F-005 remain open because Web CI, ready coverage, a clean candidate, and an authorized annotated release tag are still missing.
 
 # 执行记录 · GOAL-008
 
