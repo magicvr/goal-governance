@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.4.0
+version: 0.4.1
 ---
 
 # 治理原则
@@ -191,4 +191,4 @@ version: 0.4.0
 | P-004 | 第 6b 节 | `00` 用户裁决点（GOAL-005 B） |
 | P-005 | 第 6b 节 | `00` 信息就绪扫描与门禁；`01`～`05` 记录、实施与审计 |
 
-关联决策：GOAL-005 [01-decision.md](../goals/GOAL-005-skills-closed-loop-audit/01-decision.md) D-002～D-006。
+关联决策：[GOAL-001 D-009](../goals/GOAL-001-main-vision/01-decision.md#d-009--将信息就绪纳入核心闭环2026-07-19)；[GOAL-005 D-002～D-006](../goals/GOAL-005-skills-closed-loop-audit/01-decision.md)；[GOAL-007 D-001～D-002](../goals/GOAL-007-information-readiness-governance/01-decision.md)。
