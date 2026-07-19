@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.9.0
+version: 1.0.0
 ---
 
 # Skills
@@ -14,7 +14,7 @@ version: 0.9.0
 
 Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/)；本包内的 `templates/goal-folder/` 是用于离线复制和安装脚本的同步镜像。消费适配器的机读版本/兼容声明以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 是逐字节分发镜像。安装到其他仓库后，镜像必须自包含可用。
 
-**当前契约范围（D-003）**：Claude Code CLI 与 GitHub Copilot **VS Code** 插件为 `committed`；Grok Build CLI 为已纳入 manifest 的 `declared` 范围。三者当前都仍是 `unverified`：安装文件和官方发现语义不能替代固定产品版本的运行时验证。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json)。
+**当前契约范围（D-003 / I-002）**：Claude Code CLI 与 GitHub Copilot **VS Code** 插件为 `committed`；Grok Build CLI 为已纳入 manifest 的 `declared` 范围。三者都已有固定产品版本下实际调度 `/govern` 的运行时证据，故 manifest 的 `verificationStatus` 为 `verified`。该标记仅覆盖 `0.1.0` current `/govern` fixture，不替代 `/audit`、manifest 解析、CI 或 release 验收。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json)。
 
 ## 产品模型（必读）
 
@@ -30,9 +30,9 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
-| Claude Code CLI | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / unverified` |
-| Grok Build CLI | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `declared / unverified` |
-| GitHub Copilot VS Code 插件 | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` | `committed / unverified` |
+| Claude Code CLI | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / verified` |
+| Grok Build CLI | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `declared / verified` |
+| GitHub Copilot VS Code 插件 | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` | `committed / verified` |
 
 核心行为：
 

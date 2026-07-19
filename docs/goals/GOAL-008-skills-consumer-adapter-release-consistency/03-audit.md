@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.6.0
+version: 0.9.0
 ---
 
 # 审计 · GOAL-008
@@ -15,7 +15,7 @@ version: 0.6.0
 | ID | 级别 | 状态 | 影响门禁 | 当前证据 | 结论 |
 |----|------|------|----------|----------|------|
 | I-001 | required | verified | 方案与发布范围冻结 | [D-002](01-decision.md#d-002--i-001-单一机读版本声明契约2026-07-19)；`docs/contracts/`、`skills/contracts/`；[A-002](#a-002--i-001-契约实现与验证复审2026-07-19) | 已创建 canonical schema/manifest、镜像、正反 fixtures 与安装/bootstrapping 契约测试；此门禁已通过 |
-| I-002 | required | collecting | 受影响实施与兼容验收 | [D-003](01-decision.md#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)；[I-002 宿主与契约证据](attachments/i-002-host-compatibility-evidence-2026-07-19.md)；canonical manifest 已声明三行 adapter，但均为 `unverified` | 初始范围冻结子问题已关闭；实际 host release / runtime fixture 未关闭，不可通过兼容验收 |
+| I-002 | required | collecting | 受影响实施与兼容验收 | [D-003](01-decision.md#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)；[宿主与契约证据](attachments/i-002-host-compatibility-evidence-2026-07-19.md)；[runtime fixture 结果](attachments/i-002-runtime-fixture-2026-07-19.md) | Claude `2.1.215`、Grok `0.2.103` 与 Copilot VS Code `1.129.1` / `copilot-chat 0.57.0` 都已有 current `/govern` 可观察 dispatch，三条 adapter 为 `verified`；完整矩阵、其他入口与兼容验收仍开放 |
 | I-003 | required | collecting | 阶段 5 发布验收、F-005 关闭和阶段 7 输入 | D-010；当前尚无 release tag 和可重放发行证据 | 未关闭；不可通过阶段 5 发布验收 |
 
 当前没有用户接受的 residual risk；`collecting` 不等同于 `verified`。
@@ -39,15 +39,16 @@ version: 0.6.0
 - 已收集并审视 I-001 的 SemVer、JSON Schema 和行为测试实践，形成 D-002 与可核对的 [调研附件](attachments/i-001-industry-practice-research-2026-07-19.md)。
 - 已实现 D-002 的 canonical schema/manifest、Skills 镜像、正反 fixtures 与安装/standalone bootstrap 断言，并以 A-002 复审 I-001。
 - 已收集 I-002 的仓库安装/解析证据与宿主公开资料，形成 [I-002 宿主与契约证据](attachments/i-002-host-compatibility-evidence-2026-07-19.md)；D-003 已据此冻结 `0.1.0` 首个基线、无上一版本、三宿主的声明/承诺层级及 Web 只读边界，但未越过宿主运行时证据边界。
+- 已执行并补齐 [版本固定 runtime fixture](attachments/i-002-runtime-fixture-2026-07-19.md)：Claude Code `2.1.215`、Grok Build `0.2.103` 与 Copilot VS Code `1.129.1` / built-in `copilot-chat 0.57.0` 的实际 `/govern` dispatch 均有归档证据；Web 20 项解析测试通过、1 项 Windows symlink 测试跳过。
 
 ### 偏差与注意点
 
-- 本次已实施 I-001 协议契约及其测试，并完成 I-002 初始范围冻结；尚没有精确外部宿主 release 的运行时矩阵、跨宿主 fixture、CI 或发行演练，不能据此关闭 I-002、I-003 或 `F-005`。
+- 本次已实施 I-001 协议契约及其测试、完成 I-002 初始范围冻结并取得三宿主的 `/govern` current 运行时证据；这仍不是 `/audit`、manifest 解析、完整矩阵、CI 或发行演练，不能据此关闭 I-002、I-003 或 `F-005`。
 - 目标为 `active / 20%`；I-001 已通过，不得把该局部门禁通过写成跨宿主兼容验收、阶段 5 实施完成或发布范围已全面冻结。
 
 ### 建议
 
-- D-003 已裁决初始/上一协议基线、声明/承诺层级和 Web 边界；下一步以精确 Claude Code CLI、Grok Build CLI 和 Copilot VS Code 环境执行 current/negative fixture，记录实际结果并保留无上一版本的事实。
+- D-003 已裁决初始/上一协议基线、声明/承诺层级和 Web 边界；三宿主的 `govern` current fixture 已具备版本化证据。下一步应扩展到未覆盖入口与自动化重放，再复审 I-002。
 - 在阶段验收前形成 I-003 所需的可重放 CI、报告、变更日志与 tag/release 证据，并邀请阶段审计复核 `F-005`。
 
 ## 审计结论
@@ -259,3 +260,88 @@ Grok Build 应继续作为 I-002 候选矩阵行，而非“无官方支持资�
 ### 结论 + 建议下一步
 
 D-003 的声明/承诺边界已可作为范围内实施输入，但不能作为 host runtime pass。下一步应为 Claude Code CLI、Grok Build CLI 和 GitHub Copilot VS Code 分别记录精确版本与环境，执行 `0.1.0` current / negative fixture；Web 只运行其目标文档解析测试。随后再以阶段审视核对 I-002 是否具备兼容验收证据。
+
+## A-006 · I-002 版本固定 Runtime Fixture 阶段复核（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex `/govern`
+- **类型 / scope**：stage / D-003 冻结范围内的 Claude Code CLI、Grok Build CLI、GitHub Copilot VS Code 与 Web 目标文档解析器的 `0.1.0` current/negative runtime evidence；不审 I-003 发布证据或阶段 5 关门。
+- **verdict**：conditional
+
+### 范围与区间
+
+本条核对本轮是否取得精确宿主版本、安装 source、fixture 输入和实际结果，并区分 CLI 成功退出、模型的 prompt-directed 回答、provider 失败、用户人工发现和 Web parser 测试。协议首个基线为 `0.1.0`；`previousSupportedProtocol: null`，所以没有 previous fixture。
+
+### 成果（有证据）
+
+- [runtime fixture 结果](attachments/i-002-runtime-fixture-2026-07-19.md) 记录 Windows 11 环境、manifest/schema/installed-skill SHA-256、Claude `2.1.215`、Grok `0.2.103`、VS Code `1.129.1` 的实际信息与可重放命令。
+- Claude 的 current 与 negative headless `/govern` 调用都以 `plan` 权限完成并返回预期边界文本；没有写入工作区。
+- Grok current 调用到达其 Responses API，但得到 `502 Bad Gateway: unknown provider for model grok-build`；此失败被保留为阻断证据，而非被 exit code `0` 掩盖。
+- 用户提供的 [Copilot VS Code Chat screenshot](attachments/copilot-vscode-govern-runtime-2026-07-19.png) 显示 `/GOVERN GOAL-008` 的实际输出；该证据仍未给出 Copilot 扩展版本。
+- Web 使用仓库 `web/.venv` 的规范命令通过 20 项测试，1 项因为 Windows symlink 权限跳过；它仍不作为 manifest adapter。
+
+### 对照成功标准
+
+| 标准 | 状态 | 证据 |
+|------|------|------|
+| 覆盖三宿主与 Web 的兼容矩阵 | 部分 | 三条 adapter 与 Web 均已有版本/事实行，但 Copilot 环境指纹和 Grok 成功运行仍缺失。 |
+| 当前/上一协议 fixtures 与跨宿主消费测试 | 部分 | `0.1.0` current 与无 predecessor negative 语义已执行/记录；没有 previous fixture，Claude 输出尚非可观察 dispatch 证据，Grok 未成功执行。 |
+| 区分已验证与未覆盖范围 | 已完成（本次 scope） | attachment 将 Claude probe、Grok blocked、Copilot manual-discovery、Web parser 结果与 canonical `unverified` 分开。 |
+| CI 漂移校验、报告与发行物身份 | 未开始 | I-003 / 阶段 C。 |
+
+### Findings
+
+本次没有新增 F-00N。I-002 的 required 信息仍开放：
+
+- Claude current/negative 的返回内容受 prompt 指定，尚缺能够观察项目 skill 实际 dispatch 的独立断言。
+- Grok 的 provider 配置使实际 fixture 无法完成。
+- Copilot 已有 `/GOVERN GOAL-008` 的可观察 dispatch 与 VS Code `1.129.1` 工作区截图，但仍缺精确 Copilot extension 版本。
+
+### 必改项汇总
+
+- I-002：`required / collecting`；三个 adapter 继续保持 manifest `unverified`，兼容验收仍被阻断。
+- I-003 与 `GOAL-001 F-005`：保持 `open / required`，未受本轮影响。
+
+### 结论 + 建议下一步
+
+本轮成功把“没有运行时事实”缩小为可复现的三类缺口，没有产生任何虚假的 `verified`。Copilot slash dispatch 已有实际 screenshot，下一步只需补齐其 extension 版本；同时在可用 Grok provider 上重跑，并对 Claude 使用可观察的 skill-dispatch 机制（例如宿主公开的 skill-load event 或不依赖模型复述的受控 marker）后，再考虑更新对应 adapter 状态。
+
+## A-007 · I-002 三宿主 `/govern` Runtime Dispatch 复核（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex `/govern`
+- **类型 / scope**：stage / D-003 的 `0.1.0` current `/govern` fixture；仅核对 Claude Code CLI、Grok Build CLI 与 GitHub Copilot VS Code 是否在固定版本环境中实际调度主入口。
+- **verdict**：pass
+
+### 范围与区间
+
+本条响应 A-006 的三个可观察 dispatch 缺口。它不重写 A-006 当时的事实：Grok headless provider 502 仍是该调用配置的失败记录；本次核对的是用户补充的交互式宿主证据，以及本机补齐的 Copilot built-in package 指纹。`previousSupportedProtocol: null` 保持不变，没有 previous fixture。
+
+### 成果（有证据）
+
+- [Claude Code screenshot](attachments/claude-code-govern-runtime-2026-07-19.png)（SHA-256 `5B6D05DCC5555AE888EBADA8382A9A728505C59AF44095DC782E758AA46BE791`）显示 Claude Code `2.1.215` 在本仓库运行 `/govern` 后检索 `**/03-audit.md`。
+- [Grok Build screenshot](attachments/grok-build-govern-runtime-2026-07-19.png)（SHA-256 `A3123997316830338985233E0A94C4F160D0D0BE3234225E3A9DB39400C22531`）显示 Grok Build `0.2.103 (89c3d36fb6)` 的仓库 `/govern` 正在输出实际扫描结果。
+- [Copilot runtime screenshot](attachments/copilot-vscode-govern-runtime-2026-07-19.png) 记录 VS Code 中 `/GOVERN GOAL-008` 的实际输出；VS Code `1.129.1` 的 built-in `GitHub / copilot-chat` package manifest 记录版本 `0.57.0`、build `1`、SHA-256 `4304D865FF058792AE0AA5304014534FA61447C08D966429FB4AD38A0CC17AC0`。
+- canonical manifest 和 Skills mirror 的三条 adapter `verificationStatus` 已同步为 `verified`；契约仍保持 `adapterCompatibilityStatus: declared`，因为 I-002 的完整矩阵/验收并未完成。
+
+### 对照成功标准
+
+| 标准 | 状态 | 证据 |
+|------|------|------|
+| 三宿主固定版本的 current `/govern` runtime fixture | 已完成（本 scope） | 三张归档 runtime screenshot、版本/环境指纹与 [runtime fixture 结果](attachments/i-002-runtime-fixture-2026-07-19.md)。 |
+| 当前/上一协议 fixtures 与跨宿主消费测试 | 部分 | `0.1.0` current 的 `/govern` 已验证；previous 明确不适用；`/audit` 与自动化重放未覆盖。 |
+| 区分已验证与未覆盖范围 | 已完成（本 scope） | manifest `verified` 明确限定为 current `/govern`，未扩大为 parser、CI、release 或完整兼容验收。 |
+| CI 漂移校验、报告与发行物身份 | 未开始 | I-003 / 阶段 C。 |
+
+### Findings
+
+本次 scope 内无新的 F-00N。I-002 仍是 `required / collecting`，因为全量 compatibility matrix 和重放证据尚未完成；这不是已关闭的 I-002 被重新打开。
+
+### 必改项汇总
+
+- I-002：current `/govern` 子范围已通过；完整兼容验收仍为 `required / collecting`。
+- I-003 与 `GOAL-001 F-005`：保持 `open / required`，未受本条影响。
+
+### 结论 + 建议下一步
+
+三个已声明 adapter 的固定版本 `/govern` 运行时证据已足以将对应 manifest 行标为 `verified`。下一步应针对未覆盖入口和自动化重放扩展 I-002，而不是将本条局部通过误写为阶段 5 发布验收。

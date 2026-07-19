@@ -56,7 +56,7 @@
         "audit"
       ],
       "supportCommitment": "committed",
-      "verificationStatus": "unverified"
+      "verificationStatus": "verified"
     },
     {
       "id": "grok-build-cli",
@@ -69,7 +69,7 @@
         "audit"
       ],
       "supportCommitment": "declared",
-      "verificationStatus": "unverified"
+      "verificationStatus": "verified"
     },
     {
       "id": "github-copilot-vscode",
@@ -82,7 +82,7 @@
         "audit"
       ],
       "supportCommitment": "committed",
-      "verificationStatus": "unverified"
+      "verificationStatus": "verified"
     }
   ]
 }

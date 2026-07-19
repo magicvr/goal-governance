@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.4.0
+version: 0.7.0
 ---
 
 # 决策记录 · GOAL-008
@@ -17,7 +17,7 @@ version: 0.4.0
 | ID | 级别 | 所需信息 / 假设 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|------------------|------|-------------|-------------|
 | I-001 | required | 机读协议/模板版本、兼容声明的 canonical 位置、字段和演进语义 | 方案与发布范围冻结 | 方案冻结前 | 按 D-002 创建 canonical schema/manifest、同步分发镜像并以正反 fixtures、适配器契约测试验证 | verified | 已于方案审视复核 | [D-002](#d-002--i-001-单一机读版本声明契约2026-07-19)；`docs/contracts/`、`skills/contracts/`；29 项 Skills 契约测试与 3 项 core bootstrap 测试通过；见 [02-execution.md](02-execution.md) 与 [A-002](03-audit.md#a-002--i-001-契约实现与验证复审2026-07-19) |
-| I-002 | required | 当前/上一协议版本需支持的宿主、wrapper、Web 解析器及 fixtures 边界 | 受影响实施与兼容验收 | 实施前冻结支持范围；验收前完成 fixtures | 按 D-003 固化 `0.1.0` 首个基线、无上一版本、adapter 层级和 Web 边界；再以精确 host release、fixture 与实际调用完成验证 | collecting | 实施前、验收前复核 | [D-003](#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)；canonical manifest 已为 Claude Code CLI / GitHub Copilot VS Code 记录 `committed`，为 Grok Build CLI 记录 `declared`，三者均 `unverified`；30 项 Skills 契约测试与 3 项 standalone bootstrap 测试通过 |
+| I-002 | required | 当前/上一协议版本需支持的宿主、wrapper、Web 解析器及 fixtures 边界 | 受影响实施与兼容验收 | 按 D-003 固化 `0.1.0` 首个基线、无上一版本、adapter 层级和 Web 边界；再以精确 host release、可观察 dispatch、fixture 与实际调用完成验证 | collecting | 实施前、验收前复核 | [D-003](#d-003--i-002-首个支持基线与分层宿主范围2026-07-19)；[runtime fixture 结果](attachments/i-002-runtime-fixture-2026-07-19.md)：Claude Code `2.1.215`、Grok Build CLI `0.2.103 (89c3d36fb6)`、Copilot VS Code `1.129.1` / built-in `GitHub copilot-chat 0.57.0` 的 current `/govern` 均已有实际 dispatch 证据，三条 adapter 为 `verified`；Web 20 passed / 1 skipped。验证不扩展到 `/audit`、manifest 解析、CI 或 release。 |
 | I-003 | required | 发行物唯一身份及 CI 重放 canonical/mirror、报告、变更日志、tag/release 的方式 | 阶段 5 验收、F-005 关闭、阶段 7 输入 | 方案冻结前定义契约；验收前形成实际证据 | 定义流水线产物，实施 CI 和发布演练，核对 tag/release 追溯 | collecting | 方案冻结、阶段验收复核 | D-010；当前无 release tag |
 
 ## D-001 · 承接 D-010 的阶段 5 发布一致性边界（2026-07-19）
@@ -87,7 +87,7 @@ version: 0.4.0
 - 将 Web 写入/完整闭环、manifest 消费或 Skills 与 Web 的相互依赖纳入当前承诺；这些均超出当前只读解析器范围。
 - 凭空生成上一协议版本 fixture；不存在可追溯前身，且会污染兼容矩阵。
 
-**影响与后续**：D-003 关闭 I-002 中“首个/上一协议策略、声明/承诺范围和 Web 是否为 adapter”的范围冻结子问题，并授权同步 canonical schema/manifest、镜像、fixtures 与契约测试。I-002 整体仍为 `required / collecting`：具体 Claude Code / Grok Build / Copilot VS Code release、运行环境与 actual runtime fixture 仍须在兼容验收前收集；I-003、F-005 及发布证据不受本决定放行。
+**影响与后续**：D-003 关闭 I-002 中“首个/上一协议策略、声明/承诺范围和 Web 是否为 adapter”的范围冻结子问题，并授权同步 canonical schema/manifest、镜像、fixtures 与契约测试。I-002 整体仍为 `required / collecting`：其固定版本 current `/govern` 运行时证据已在后续执行中收集，但其余入口、自动化重放、完整矩阵与兼容验收仍须在门禁前完成；I-003、F-005 及发布证据不受本决定放行。
 
 ## 门禁结论
 

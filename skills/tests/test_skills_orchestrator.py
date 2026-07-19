@@ -451,7 +451,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 )
 
     def test_d003_declares_baseline_and_tiered_adapter_scope(self) -> None:
-        """D-003 separates committed support from declared-but-unverified scope."""
+        """D-003 keeps commitment separate from version-fixed runtime evidence."""
         manifest = self._load_json(CORE_CONTRACTS / "skills-consumer-contract.json")
         self.assertEqual(manifest["contractFormatVersion"], "0.2.0")
         self.assertEqual(
@@ -482,7 +482,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 {"minInclusive": "0.1.0", "maxExclusive": "0.2.0"},
             )
             self.assertEqual(adapter["entrypoints"], ["govern", "audit"])
-            self.assertEqual(adapter["verificationStatus"], "unverified")
+        self.assertEqual(by_id["claude-code-cli"]["verificationStatus"], "verified")
+        self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
+        self.assertEqual(by_id["github-copilot-vscode"]["verificationStatus"], "verified")
         self.assertNotIn("web-readonly-parser", by_id)
 
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:

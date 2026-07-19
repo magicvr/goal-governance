@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # docs/ · 文档体系
@@ -106,11 +106,11 @@ version: 0.1.0
 | 模板 | `02-execution.md` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` |
 | 模板 | `03-audit.md` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` |
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
-| 契约 | `skills-consumer-contract.json` | `519DCB7456065D4E475B6D3D3478D5F68215F701C7F7D932AAE4EC047ED7F51C` | `519DCB7456065D4E475B6D3D3478D5F68215F701C7F7D932AAE4EC047ED7F51C` |
+| 契约 | `skills-consumer-contract.json` | `F49FE4A3C5BDBAC5E9DA6EDF180619E0F5CA175638E7B68CDF775E5A7D9019DA` | `F49FE4A3C5BDBAC5E9DA6EDF180619E0F5CA175638E7B68CDF775E5A7D9019DA` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。
 
-`contractSchemaId` 指向 schema 的 canonical `$id`；安装包中的 manifest 通过 `canonical.schemaPath` 指向随包的本地 schema。`supportBaseline` 记录首个/上一支持协议，adapter 的 `supportCommitment` 区分已声明范围与当前承诺，`verificationStatus` 仍只表示运行时证据是否已经取得。该 `$id` 是 schema 身份而不是当前 release 的承诺；I-003 仍负责把提交、tag/release、digest 和可重放证据关联起来。
+`contractSchemaId` 指向 schema 的 canonical `$id`；安装包中的 manifest 通过 `canonical.schemaPath` 指向随包的本地 schema。`supportBaseline` 记录首个/上一支持协议，adapter 的 `supportCommitment` 区分已声明范围与当前承诺，`verificationStatus` 只表示版本固定的实际入口运行时证据是否已经取得；它不替代其他入口、manifest 解析、CI 或 release 验收。该 `$id` 是 schema 身份而不是当前 release 的承诺；I-003 仍负责把提交、tag/release、digest 和可重放证据关联起来。
 
 ## 三层交付关系
 

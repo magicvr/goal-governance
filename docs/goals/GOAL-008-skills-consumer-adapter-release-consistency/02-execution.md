@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 0.7.0
+version: 1.0.0
 ---
 
 # 执行记录 · GOAL-008
@@ -71,12 +71,29 @@ version: 0.7.0
 - 解析 `docs/contracts/` 与 `skills/contracts/` 的全部 JSON，并核对 9 个 contract/schema/fixture 镜像文件逐字节一致；`git diff --check` 通过（仅有工作树 LF/CRLF 转换提示，无空白错误）。
 - 本次没有调用 Claude Code CLI、Grok Build CLI 或 Copilot VS Code 的真实产品环境；三条 adapter 仍保持 `unverified`。
 
+### 2026-07-19 · 执行 I-002 版本固定 Runtime Fixture
+
+- 直接探测并固定本机环境：Claude Code CLI `2.1.215`、Grok Build CLI `0.2.103 (89c3d36fb6)`、VS Code `1.129.1` / commit `8a7abeba6e03ea3af87bfbce9a1b7e48fed567b8`。根目录 `.claude/.grok` 的 `govern/SKILL.md` 分别与 `skills/install/claude|grok/` source 的 SHA-256 一致。
+- Claude 以 `-p`、`--no-session-persistence`、`--permission-mode plan`、`--max-turns 3` 执行 `0.1.0` current 与“无 previous fixture”negative prompt，均 exit `0` 并返回预期边界文本；由于输出可受 prompt 直接引导，记录为 project-context runtime probe，而不是 `verified` compatibility pass。
+- Grok 用相同 current 语义加 `--no-subagents --no-memory --disable-web-search` 实际调用，Responses API 返回 `502 Bad Gateway: unknown provider for model grok-build`。即使 CLI 最终 exit `0` 并回显 prompt，也以 API 错误作为 fixture `blocked` 结果，不将其写成通过。
+- 用户补充并提供 screenshot：GitHub Copilot VS Code Chat 中 `/GOVERN GOAL-008` 已实际输出 I-002 / A-006 摘要，故升级该子证据为 `slash-dispatch observed / unverified`。本机 `code --list-extensions --show-versions` 未列出该扩展，screenshot 也未显示扩展版本，因此仍不可标完整 adapter `verified`。
+- Web 的首次根目录 system-Python 执行因错误 cwd 与缺少依赖失败；按 [web README](../../../web/README.md) 使用 `web/.venv`、从 `web/` 目录复跑后，20 项通过、1 项因 Windows `WinError 1314` symlink 权限跳过。该结果仅验证 Web 目标文档解析器。
+- 详细命令、环境、哈希、输出和边界见 [I-002 runtime fixture 结果](attachments/i-002-runtime-fixture-2026-07-19.md)。本轮没有改动 adapter 的 `verificationStatus`。
+
+### 2026-07-19 · 收齐三宿主的 `/govern` 运行时调度证据
+
+- 用户补充的 [Claude Code screenshot](attachments/claude-code-govern-runtime-2026-07-19.png)（SHA-256 `5B6D05DCC5555AE888EBADA8382A9A728505C59AF44095DC782E758AA46BE791`）显示 Claude Code `2.1.215` 在本仓库工作目录实际运行 `/govern`，并开始检索 `**/03-audit.md`；这补足了先前 headless probe 缺少的可观察 slash-dispatch 信号。
+- 用户补充的 [Grok Build screenshot](attachments/grok-build-govern-runtime-2026-07-19.png)（SHA-256 `A3123997316830338985233E0A94C4F160D0D0BE3234225E3A9DB39400C22531`）显示本仓库工作目录中的 `/govern` 正在响应，并输出 goal-tree、`skills/`、canonical/mirror contract 与 S2 / I-002 门禁扫描结果。该 UI 证据与 `grok --version` 的 `0.2.103 (89c3d36fb6)` 共同固定本条 fixture；先前 `grok -p` 的 provider 502 仍保留为该 headless 调用配置的失败事实，不再被扩展为“Grok 宿主不能运行”。
+- 已归档的 [Copilot runtime screenshot](attachments/copilot-vscode-govern-runtime-2026-07-19.png)（SHA-256 `BE9E28996BD4BB39DA75FA226B6225BB0C6462F33CD462F1F83B82B0601BA713`）和 [extension screenshot](attachments/copilot-vscode-extension-2026-07-19.png)（SHA-256 `7AC4B47EA2E6D2C49D91CE9BB65716F9EA46984D6700BC92D3708293FD9C274F`）记录 `/GOVERN GOAL-008` 的实际输出与 built-in `github.copilot-chat` 表面；本机 VS Code `1.129.1` 的内置 package manifest 进一步确认 `GitHub / copilot-chat` `0.57.0`、build `1`、`engines.vscode: ^1.129.1`，package JSON SHA-256 为 `4304D865FF058792AE0AA5304014534FA61447C08D966429FB4AD38A0CC17AC0`。因此 `code --list-extensions` 未列出它不表示扩展缺失。
+- 将 canonical manifest 与 Skills mirror 的 Claude、Grok、Copilot 三条 `verificationStatus` 更新为 `verified`，并同步契约测试与说明。该状态严格指向上述 `0.1.0` current `/govern` fixture 的实际调度，不涵盖 `/audit`、manifest 解析、CI 或 release 验收。
+- I-002 仍为 `required / collecting`，progress 保持 `20%`：本次完成的是首要入口的版本固定运行时行，完整矩阵/自动化重放和 I-003 发行证据尚未完成。
+
 ## 当前事实与门禁
 
 - 已完成目标设立、范围记录、信息需求登记、高层路线图，以及 I-001 的行业实践收集、设计、schema/manifest、镜像同步和契约测试。
-- I-001 已关闭；D-003 已冻结 I-002 的初始协议与声明/承诺范围，但尚未完成精确宿主版本的跨宿主/跨版本运行时测试、CI 重放、release tag 或阶段 5 发布验收。
-- I-002 未关闭前，不通过受影响的兼容验收，也不把声明或承诺改写为产品运行时通过；I-003 与 F-005 未关闭前，不通过阶段 5 发布验收。
+- I-001 已关闭；D-003 已冻结 I-002 的初始协议与声明/承诺范围，且三宿主已取得固定版本的 `/govern` 可观察 dispatch 通过。CI 重放、release tag 或阶段 5 发布验收尚未取得。
+- I-002 未关闭前，不通过完整兼容验收，也不把 `govern` current fixture 的局部运行时通过扩大为 `/audit`、manifest 解析或产品发布通过；I-003 与 F-005 未关闭前，不通过阶段 5 发布验收。
 
 ## 进度评估
 
-**20%**：首项成功标准已由 D-002 的 canonical schema/manifest、镜像和契约测试完成；I-001 已 `verified`。D-003 已收敛 I-002 的支持边界，但兼容矩阵单元、宿主运行时证据与 I-003 仍未完成；下一步应执行已冻结范围内的 fixtures/运行时验证，不得把现有声明误作跨宿主兼容验收。
+**20%**：首项成功标准已由 D-002 的 canonical schema/manifest、镜像和契约测试完成；I-001 已 `verified`。D-003 已收敛 I-002 的支持边界，三宿主 `govern` current 矩阵行也已获得可观察 dispatch 证据；但完整矩阵、自动化重放、CI 与 I-003 仍未完成，故不调整百分比或把这三条局部运行时验证误作跨宿主兼容验收。
