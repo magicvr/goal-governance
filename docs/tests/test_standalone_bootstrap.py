@@ -29,6 +29,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
             "来源",
             "生成路径",
             "核对结果",
+            "P-005",
+            "信息需求表",
         ):
             self.assertIn(phrase, guide)
 
@@ -36,7 +38,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         entry = (REPO_ROOT / "docs" / "README.md").read_text(encoding="utf-8")
         for phrase in (
             "核心包版本",
-            "0.4.0",
+            "0.5.0",
             "canonical → Skills",
             "SHA-256",
             "docs/templates/goal-folder/",
@@ -55,6 +57,34 @@ class StandaloneBootstrapTests(unittest.TestCase):
             self._materialize_root(target)
 
             self._assert_root_shape(target)
+            self.assertIn("P-005", (target / "AGENTS.md").read_text(encoding="utf-8"))
+            principles = (target / "docs" / "architecture" / "principles.md").read_text(
+                encoding="utf-8"
+            )
+            for phrase in (
+                "P-005",
+                "设立许可",
+                "规划门禁",
+                "实施门禁",
+                "关门门禁",
+                "accepted-residual",
+                "子目标拆分",
+                "required",
+                "non-blocking",
+                "deferred",
+                "有界实验",
+                "目标可以创建为 `draft` 或 `active`，即使信息表仍有开放项",
+                "有界实验只能进入其明确的**信息收集范围**",
+                "暂停受影响范围、记录事实，并回流到信息表、决策或路线图",
+                "不是每个目标的固定两个子目标",
+            ):
+                self.assertIn(phrase, principles)
+            self.assertIn(
+                "信息就绪与未知项",
+                (target / "docs" / "templates" / "goal-folder" / "00-meta.md").read_text(
+                    encoding="utf-8"
+                ),
+            )
             self.assertFalse((target / "skills").exists())
             self.assertFalse((target / "web").exists())
             result = subprocess.run(

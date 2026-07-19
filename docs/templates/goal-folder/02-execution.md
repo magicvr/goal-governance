@@ -4,13 +4,15 @@ doc: execution
 status: active
 parent: GOAL-040-docs-quality
 created: 2026-03-01
-updated: 2026-03-12
-version: 0.1.0
+updated: 2026-07-19
+version: 0.2.0
 ---
 
 # 执行记录 · GOAL-042
 
 ## 时间线
+
+> 涉及 P-005 信息项时，记录本次收集/验证的实际动作、I-00N、级别、证据路径，以及新发现的未知。计划中的收集动作必须明确标为计划，不能把 `open`、`deferred` 或 `accepted-residual` 写成已验证事实。
 
 ### 2026-03-01 · 目标立项
 

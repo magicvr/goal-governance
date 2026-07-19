@@ -3,9 +3,9 @@ title: /update-execution · 更新执行进度（Copilot wrapper · advanced pri
 description: 原语入口。默认请用 /govern。按 03-update-execution 更新进度。
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.1
+version: 0.3.0
 slash: /update-execution
 role: advanced
 ---
@@ -19,7 +19,7 @@ role: advanced
 
 > **默认请使用 `/govern`。** 本命令仅在你已明确只要「更新执行」原子操作时使用。
 
-你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`），包括 P-005 信息就绪与未知项门禁。
 
 ---
 
@@ -32,6 +32,7 @@ role: advanced
 1. **优先读取** `docs/goals/goal-tree.md`：哪些目标 active / blocked，当前 progress。
 2. **必要时**读取候选目标的：
    - `00-meta.md`（成功标准、progress、status）
+   - `01-decision.md`（I-00N 信息项、级别、阶段门禁与残余风险）
    - `02-execution.md`（最近时间线条目，避免重复空话、保持风格）
 3. 解析用户在 `/update-execution` 后已写的「今天做了什么」：提取**事实条目**与可能路径/产物名。
 4. **尝试推断**：
@@ -70,6 +71,7 @@ role: advanced
 | 必须确认 | 本次实际完成的工作 | 条目列表；尽量带路径/产物；必须是事实 |
 | 可默认 | 今日日期 | 已推断则默认 |
 | 可默认 | 阻塞 / 风险 | 默认「无」 |
+| 可选 | 关联 I-00N | 收集、验证、新发现或状态变化；没有证据不得标 `verified` |
 | 可选 | 下一步计划 | 标明为计划，非已完成 |
 | 可默认 | 进度百分比 | 默认保持；若调整须给依据（对照成功标准） |
 | 可默认 | status | 默认保持；取值 `draft` \| `active` \| `blocked` \| `done` \| `cancelled` |
@@ -99,6 +101,7 @@ role: advanced
 6. **与 decision 分工**：取舍论证写入 `01-decision.md`，不要塞进 execution。
 7. **扁平存储与编号**：不嵌套目标文件夹；不擅自改 Root / parent 却不更新 goal-tree。
 8. **归属正确**：工作属于另一目标时改记正确 ID，勿堆错目标。
+9. **P-005 信息事实**：记录收集/验证的实际动作和证据；新未知须登记级别与最晚阶段。到期 `required` 项未处理时不得以进度更新掩盖受影响门禁。
 
 ---
 

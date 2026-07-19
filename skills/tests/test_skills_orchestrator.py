@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from hashlib import sha256
 from pathlib import Path
 
 SKILLS_ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +34,8 @@ INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
 CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
 SKILLS_TEMPLATES = SKILLS_ROOT / "templates" / "goal-folder"
+CORE_PRINCIPLES = SKILLS_ROOT.parent / "docs" / "architecture" / "principles.md"
+CORE_AGENTS = SKILLS_ROOT.parent / "AGENTS.md"
 
 
 class TestSkillsOrchestratorPackage(unittest.TestCase):
@@ -46,6 +49,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("设立目标", text)
         self.assertIn("推进", text)
         self.assertRegex(text, r"审计|关门")
+        self.assertRegex(text, r"信息发现|信息就绪")
+        self.assertIn("I-00N", text)
+        self.assertRegex(text, r"最晚需要阶段|信息门禁")
         # Classification / scan
         self.assertIn("goal-tree", text)
         self.assertRegex(text, r"S0|情境|分类")
@@ -71,6 +77,16 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"independent|交叉")
         self.assertRegex(text, r"S4|审计响应")
         self.assertIn("05-independent-audit", text)
+        self.assertRegex(text, r"P-005|未知项")
+        for marker in (
+            "信息就绪台账",
+            "到期 required 信息项",
+            "不机械创建两个信息子目标",
+            "accepted-residual",
+            "non-blocking",
+            "deferred",
+        ):
+            self.assertIn(marker, text)
 
     def test_primitives_exist_and_marked(self) -> None:
         for fname in (
@@ -91,6 +107,19 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(audit04, r"source")
         self.assertRegex(audit04, r"verdict")
         self.assertRegex(audit04, r"independent|self")
+        for fname in (
+            "01-create-new-goal.md",
+            "02-record-decision.md",
+            "03-update-execution.md",
+            "04-write-audit.md",
+            "05-independent-audit.md",
+        ):
+            text = (PROMPTS / fname).read_text(encoding="utf-8")
+            self.assertRegex(
+                text,
+                r"P-005|信息项|信息需求|I-00N",
+                msg=f"{fname} must consume the information-readiness protocol",
+            )
 
     def test_independent_audit_prompt_exists(self) -> None:
         path = PROMPTS / "05-independent-audit.md"
@@ -130,10 +159,114 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 mirror.read_bytes(),
                 f"template mirror drift: {canonical} != {mirror}",
             )
+        self.assertIn(
+            "信息就绪与未知项",
+            (CORE_TEMPLATES / "00-meta.md").read_text(encoding="utf-8"),
+        )
+        self.assertIn(
+            "信息需求与阶段门禁",
+            (CORE_TEMPLATES / "01-decision.md").read_text(encoding="utf-8"),
+        )
+        self.assertIn(
+            "信息就绪核对",
+            (CORE_TEMPLATES / "03-audit.md").read_text(encoding="utf-8"),
+        )
         docs_readme = CORE_TEMPLATES.parent / "README.md"
         skills_readme = SKILLS_ROOT / "README.md"
         self.assertIn("canonical", docs_readme.read_text(encoding="utf-8").lower())
         self.assertIn("分发镜像", skills_readme.read_text(encoding="utf-8"))
+
+    def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
+        """Keep P-005's actual gates from regressing to a keyword-only policy."""
+        if not (CORE_PRINCIPLES.is_file() and CORE_AGENTS.is_file()):
+            self.skipTest("core methodology is not present in a standalone Skills copy")
+
+        principles = CORE_PRINCIPLES.read_text(encoding="utf-8")
+        p005 = principles.split("## P-005", 1)[1].split(
+            "## 原则与落地文档对照", 1
+        )[0]
+        for marker in (
+            "### 信息需求登记",
+            "### 设立与阶段门禁",
+            "### 残余风险与用户裁决",
+            "### 子目标拆分",
+            "目标可以创建为 `draft` 或 `active`，即使信息表仍有开放项",
+            "不得伪造完整方案",
+            "| 级别 |",
+            "required",
+            "non-blocking",
+            "| 影响门禁 |",
+            "| 最晚需要阶段 |",
+            "| 验证 / 收集动作 |",
+            "| 状态 |",
+            "| 延期 / 复核 |",
+            "| 证据 / 结论 |",
+            "规划门禁",
+            "实施门禁",
+            "关门门禁",
+            "有界实验只能进入其明确的**信息收集范围**",
+            "不等同于验证通过",
+            "不得放行实验范围之外的实施",
+            "暂停受影响范围、记录事实，并回流到信息表、决策或路线图",
+            "编排器不得静默推断",
+            "适用期限",
+            "缓解/监控方式",
+            "不等同于 `verified`",
+            "`deferred required` 自动按开放 required 处理并阻断受影响门禁",
+            "不是每个目标的固定两个子目标",
+            "独立范围、依赖、产物证据、持续时间或并行价值",
+            "低风险、可逆",
+        ):
+            self.assertIn(marker, p005, msg=f"P-005 semantic contract lost: {marker}")
+
+        agents = CORE_AGENTS.read_text(encoding="utf-8")
+        for marker in (
+            "允许带未知立项",
+            "信息需求登记",
+            "阶段门禁",
+            "发现后的回流",
+            "按规模拆分",
+            "禁止为每个低风险问题机械创建两个子目标",
+        ):
+            self.assertIn(marker, agents, msg=f"AGENTS P-005 summary drifted: {marker}")
+
+    def test_p005_operational_contract_guards_prompts_and_templates(self) -> None:
+        """Prompts/templates must operationalize gates, not merely name P-005."""
+        orchestrator = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
+        for marker in (
+            "没有表时，不假定“没有未知”",
+            "到达最晚需要阶段的 `deferred required`",
+            "有到期 required 信息项时，停止自动放行",
+            "有界实验只允许其明确收集范围，I-00N 保持 `collecting`",
+            "不因“以后再收集”自动创建两个子目标",
+            "`accepted-residual` 有用户书面接受、范围和复审触发",
+        ):
+            self.assertIn(
+                marker,
+                orchestrator,
+                msg=f"orchestrator P-005 gate lost: {marker}",
+            )
+
+        meta = (SKILLS_TEMPLATES / "00-meta.md").read_text(encoding="utf-8")
+        decision = (SKILLS_TEMPLATES / "01-decision.md").read_text(encoding="utf-8")
+        execution = (SKILLS_TEMPLATES / "02-execution.md").read_text(encoding="utf-8")
+        audit = (SKILLS_TEMPLATES / "03-audit.md").read_text(encoding="utf-8")
+        self.assertIn("P-005 不要求设立目标时已经知道一切", meta)
+        self.assertIn("required / non-blocking", meta)
+        self.assertIn("<deferred 时填理由、责任人、复核触发>", meta)
+        self.assertIn("必须指向用户的书面决策或审计响应", decision)
+        self.assertIn("不等同于 `verified`", decision)
+        self.assertIn(
+            "不能把 `open`、`deferred` 或 `accepted-residual` 写成已验证事实",
+            execution,
+        )
+        self.assertIn("未关闭的 required 信息项应作为 finding", audit)
+
+        audit_prompt = (PROMPTS / "04-write-audit.md").read_text(encoding="utf-8")
+        self.assertIn(
+            "若 required 信息项已到期、影响 scope、或 `accepted-residual` 没有用户书面接受，应作为 finding",
+            audit_prompt,
+        )
 
     def test_copilot_govern_wrapper_is_primary(self) -> None:
         path = COPILOT_PROMPTS / "govern.md"
@@ -179,6 +312,52 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             r"应用代码仅在 `\{\{APP_DIR\}\}`",
             msg="template must not force APP_DIR-only application code",
         )
+
+    def test_information_readiness_is_shipped_to_all_rule_surfaces(self) -> None:
+        """P-005 must survive the reusable rule and host-install surfaces."""
+        paths = (
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+            CLAUDE_GOVERN_SKILL,
+            GROK_GOVERN_SKILL,
+            COPILOT_PROMPTS / "govern.md",
+            CLAUDE_AUDIT_SKILL,
+            GROK_AUDIT_SKILL,
+            COPILOT_PROMPTS / "audit.md",
+        )
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            self.assertRegex(
+                text,
+                r"P-005|信息就绪|I-00N",
+                msg=f"missing P-005 information-readiness contract: {path}",
+            )
+
+        advanced = (
+            COPILOT_PROMPTS / "new-goal.md",
+            COPILOT_PROMPTS / "log-decision.md",
+            COPILOT_PROMPTS / "update-execution.md",
+            COPILOT_PROMPTS / "write-audit.md",
+        )
+        for path in advanced:
+            text = path.read_text(encoding="utf-8")
+            self.assertRegex(
+                text,
+                r"P-005|信息就绪|I-00N",
+                msg=f"advanced Copilot primitive drifted from P-005: {path}",
+            )
+
+    def test_docs_readme_hash_ledger_matches_template_bytes(self) -> None:
+        """The published canonical/mirror ledger must describe the shipped bytes."""
+        readme = (SKILLS_ROOT.parent / "docs" / "README.md").read_text(encoding="utf-8")
+        for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
+            canonical = CORE_TEMPLATES / name
+            mirror = SKILLS_TEMPLATES / name
+            digest = sha256(canonical.read_bytes()).hexdigest().upper()
+            self.assertEqual(digest, sha256(mirror.read_bytes()).hexdigest().upper())
+            self.assertIn(name, readme)
+            self.assertIn(digest, readme)
 
     def test_portability_skills_pkg_and_optional_architecture(self) -> None:
         """Reusable package must not require ./skills name or architecture/."""
@@ -371,6 +550,51 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
             self.assertIn("00-govern-orchestrator", govern)
             self.assertIn("05-independent-audit", audit)
+
+    @unittest.skipUnless(sys.platform.startswith("win"), "advanced install smoke is Windows-first")
+    def test_install_ps1_with_primitives_keeps_information_readiness(self) -> None:
+        """Optional Copilot primitives must not silently fall behind P-005."""
+        pwsh = shutil.which("powershell") or shutil.which("pwsh")
+        if not pwsh:
+            self.skipTest("PowerShell not found on PATH")
+
+        with tempfile.TemporaryDirectory(prefix="gg-skills-primitives-") as tmp:
+            target = Path(tmp)
+            cmd = [
+                pwsh,
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                str(INSTALL_PS1),
+                "-All",
+                "-WithPrimitives",
+                "-SkillsDir",
+                str(target / "skills"),
+            ]
+            proc = subprocess.run(
+                cmd,
+                cwd=str(target),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=180,
+                env={**os.environ, "TERM": "dumb"},
+            )
+            combined = (proc.stdout or "") + "\n" + (proc.stderr or "")
+            self.assertEqual(proc.returncode, 0, msg=combined)
+            for name in (
+                "new-goal.prompt.md",
+                "log-decision.prompt.md",
+                "update-execution.prompt.md",
+                "write-audit.prompt.md",
+            ):
+                text = (target / ".github" / "prompts" / name).read_text(
+                    encoding="utf-8"
+                )
+                self.assertRegex(text, r"P-005|信息就绪|I-00N", msg=name)
 
 
 def main() -> int:

@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.4
+version: 0.2.7
 ---
 
 # 审计 · GOAL-001
@@ -179,3 +179,72 @@ version: 0.2.4
 ### 结论 + 建议下一步
 
 本响应 scope 为 `pass`：A-002 的两个 required finding 已闭环，阶段 4 现已具备按 P-001 创建一个可执行子目标的前置边界。GOAL-001 继续保持 `active`，阶段 4 继续进行中；下一步由用户决定是否以 `GOAL-006` 承接 D-008 的最小交付包。若需要独立复核关闭证据，可再运行 `/audit`，但本条不把它当成阶段 4 已完成或阶段 5 已放行。
+
+## A-004 · 核心闭环的信息就绪审视（2026-07-19）
+
+- **source**：self
+- **auditor**：govern orchestrator（Codex）
+- **类型 / scope**：goal-definition + design-plan / P-001～P-004 对初始信息不全目标的覆盖性
+- **verdict**：conditional
+
+### 范围与区间
+
+本审视判断当前核心闭环是否把“设立目标时尚未知悉全部必需信息”当作可治理状态。它不否定既有历史关门审计的证据范围，也不改变 GOAL-001 的 `active` 状态。
+
+### 成果（有证据）
+
+- P-001 已避免在范围或步骤不明时过早批量拆分；P-002 已定义目标、方案、实施事实与关门的审视/整改环。
+- 根目标的既有路线图已按阶段延后细粒度立项，证明协议可处理范围逐步明晰。
+
+### Findings
+
+#### F-004 · 缺少信息需求与阶段就绪门禁
+
+- **严重度**：med
+- **建议**：required
+- **状态**：open
+- **证据**：P-001 只要求路线图；P-002 直接从目标质量进入方案/计划。AGENTS、canonical 五件套和 `/govern` 没有统一记录“未知什么、影响哪个门禁、最晚何时需要、用何种证据关闭”的字段或流程。
+- **影响**：信息不足可能被误写为目标边界或成功标准；发现只能依赖后续反馈/审计，无法阻止过早规划、实施或关门。
+- **关闭要求**：新增可独立使用的 P-005；在规则、模板、Skills 与审计中实现未知项登记、阶段门禁、用户接受残余风险和按规模拆分信息工作；留下可重复测试证据。
+
+### 必改项汇总
+
+- `F-004`：由 `GOAL-007-information-readiness-governance` 处理；关闭前不得声称核心闭环已覆盖初始信息不全情形。
+
+### 结论 + 建议下一步
+
+当前闭环对范围不确定和实施偏差有治理能力，但对知识不确定只有隐式、被动的处理，故本 scope 为 `conditional`。先完成 GOAL-007 的 P-005、模板、Skills 与测试，再以响应记录关闭 F-004。
+
+## A-005 · 响应 A-004 / F-004 信息就绪协议缺口（2026-07-19）
+
+- **source**：self
+- **auditor**：govern orchestrator（Codex）
+- **类型 / scope**：response + close-out evidence / A-004 的 F-004 与 GOAL-007 交付范围
+- **verdict**：pass
+
+### 范围与区间
+
+本条只核对 F-004 要求的 P-005、未知项登记、阶段门禁、残余风险、按规模拆分和可重复测试是否已经落地。它不宣称根目标、阶段 5 的完整发布一致性或 Web 写入能力已经完成。
+
+### 成果（有证据）
+
+- [GOAL-007](../GOAL-007-information-readiness-governance/00-meta.md) 已将 P-005 写入根规则、核心原则、独立启用说明、canonical 五件套模板及 Skills 镜像；其 [D-001](../GOAL-007-information-readiness-governance/01-decision.md#d-001--采用-p-005信息就绪与未知项门禁) 和根 [D-009](01-decision.md#d-009--将信息就绪纳入核心闭环2026-07-19) 留有用户确认和协议取舍。
+- `required` / `non-blocking`、最晚需要阶段、`deferred` 复核、`accepted-residual` 的用户书面接受，以及有界实验仅用于信息收集，均已成为可核对规则；信息澄清/收集仅在具有独立范围、依赖、证据或并行价值时才拆分为子目标。
+- `/govern`、`/audit`、`01`～`04` 原语及 Claude/Grok/Copilot 安装入口已同步；canonical 与 Skills 镜像由契约测试和 `docs/README.md` 哈希台账核对。
+- `python skills/tests/test_skills_orchestrator.py` 通过 26 项（含 P-005 核心门禁、prompts 和模板语义契约）、`python -m unittest discover -s docs/tests -p 'test_standalone_bootstrap.py' -v` 通过 3 项、Web 回归通过 20 项（1 skipped），且 `git diff --check` 通过。
+- [GOAL-007 A-001](../GOAL-007-information-readiness-governance/03-audit.md#a-001--p-005-关门自审2026-07-19) 已关闭其实施中发现的 F-001、F-002，并确认 scope 内无开放 required finding。
+
+### 关闭证据
+
+| Finding | 状态 | 证据 |
+|---|---|---|
+| A-004 / F-004 | closed | GOAL-007 的 P-005 规则、模板/镜像、Skills/宿主入口、26 + 3 + 20 项测试结果，以及 GOAL-007 A-001 close-out |
+
+### Findings
+
+- **无开放 required finding（本响应 scope）**。F-004 的关闭要求已由规则、模板、Skills 和测试共同覆盖；GOAL-007 的 I-001 为 `non-blocking / verified`，不构成关门阻断。
+- 阶段 5 的完整发布一致性和阶段 6 的 Web 深化仍是根目标路线图中的后续工作，不是 F-004 未关闭的替代描述。
+
+### 结论 + 建议下一步
+
+**pass**：A-004 / F-004 已关闭，核心闭环现在明确覆盖“设立目标时信息不全”的情形。GOAL-001 保持 `active`；下一步应在阶段 5 的边界明确后，再按 P-001 创建其可执行子目标。

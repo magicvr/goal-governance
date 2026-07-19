@@ -3,9 +3,9 @@ title: /new-goal · 创建新目标（Copilot wrapper · advanced primitive）
 description: 原语入口。默认请用 /govern。先读 goal-tree 后按 01-create-new-goal 创建五件套。
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.1
+version: 0.3.0
 slash: /new-goal
 role: advanced
 ---
@@ -20,7 +20,7 @@ role: advanced
 
 > **默认请使用 `/govern`。** 本命令仅在你已明确只要「创建目标」原子操作时使用。
 
-你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。**P-001** 以 AGENTS 为准（大目标先路线图）；architecture 文档可选。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。**P-001**（大目标先路线图）与 **P-005**（信息就绪与未知项门禁）以 AGENTS 为准；architecture 文档可选。
 
 ---
 
@@ -43,6 +43,7 @@ role: advanced
 | 初始 status | 未说明时默认 `draft` |
 | slug | 若用户给了中文标题，可**建议**英文短横线 slug，待确认 |
 | 是否需拆解 | 根据标题/概述粗判，但须请用户确认 |
+| 信息需求 | 从用户描述、父目标与已知假设提取 I-00N；标出 `required`/`non-blocking` 与最晚需要阶段 |
 
 ### B. 向用户汇报推断结果
 
@@ -68,6 +69,7 @@ role: advanced
 | 必须确认 | 一句话概述 | 要解决什么 |
 | 必须确认 | 成功标准 | 2～5 条可验证勾选项 |
 | 建议确认 | 是否需拆解 | 是 / 否；「是」→ 本回合只写路线图，不批量建子目标 |
+| 建议确认 | 信息需求与级别 | I-00N、`required`/`non-blocking`、最晚需要阶段、收集动作；`deferred` 须有复核触发 |
 | 可默认 | 初始状态 | `draft`（或用户说的 `active`） |
 | 可默认 | 今日日期 | 已推断则默认，仅在异常时再问 |
 
@@ -95,8 +97,9 @@ role: advanced
 4. **层级唯一来源**：仅 `00-meta.md` 的 `parent` 字段；值为父目标**完整 id**（含 slug），不是 `GOAL-001` 这种缺 slug 写法。
 5. **五件套一次建齐**：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`；`id` = 文件夹名。
 6. **P-001**：范围大、步骤不明、需多子目标交付时，**先**在 `00-meta` 或 `01-decision` 写高层路线图（阶段 + 先后），**禁止**本回合批量创建细粒度子目标并开工。
-7. **同步 goal-tree**：新建后必须更新 ASCII 树 **与** 状态表；只建文件夹不改 goal-tree 视为未完成。
-8. **真实记录**：不编造决策、进度或审计结论；不确定标「待确认」。
+7. **P-005**：目标可带未知立项，但登记 I-00N 的级别、门禁、最晚阶段、收集动作与证据；到期 `required` 项只能先澄清/收集或经用户接受残余风险，不得伪造完整方案。不要机械创建两个信息子目标。
+8. **同步 goal-tree**：新建后必须更新 ASCII 树 **与** 状态表；只建文件夹不改 goal-tree 视为未完成。
+9. **真实记录**：不编造决策、进度或审计结论；不确定标「待确认」。
 
 ---
 
@@ -106,5 +109,6 @@ role: advanced
 
 - 编号、路径、parent、status
 - 是否写了路线图（若适用 P-001）
+- 已识别信息项与到期 `required` 门禁是否已登记
 - `goal-tree.md` 是否已同步
 - 检查清单勾选结果

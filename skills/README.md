@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # Skills
@@ -23,9 +23,9 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 | **主入口（primary）** | 编排器：扫描 / 意见台账 / 分类 / P-004 裁决 / 确认 / 原语 | **`/govern`** |
 | **交叉入口** | 独立审计：只出意见（`source: independent`） | **`/audit`** |
 | **原语（primitives）** | 创建目标、记决策、更执行、写审计 | 由编排器调用；Copilot advanced 可选 |
-| **规则** | AGENTS / copilot-instructions | 结构、编号、P-001～P-004、goal-tree |
+| **规则** | AGENTS / copilot-instructions | 结构、编号、P-001～P-005、goal-tree |
 
-生命周期：**设立 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。  
+生命周期：**设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。
 交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
 
 | 工具 | 安装位置 | 斜杠 |
@@ -179,6 +179,7 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 | 层级 | 仅 `parent` 字段 |
 | 总览 | 变更后更新 `goal-tree.md` |
 | 五件套 | meta / decision / execution / audit / attachments |
+| 信息就绪 | 可带未知立项；登记 I-00N、阶段门禁、证据与用户接受的残余风险 |
 | 代码布局 | 普遍在仓库根；子目录仅项目自定 |
 | 包目录名 | 常为 `skills/`，可改名；按含 `prompts/00-…` 定位 |
 

@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.3
+version: 0.2.5
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -20,7 +20,7 @@ version: 0.2.3
 
 ### 1. 核心方法论与文档协议
 
-- 生命周期、P-001～P-004、目标元数据和五件套写作约定。
+- 生命周期、P-001～P-005、目标元数据和五件套写作约定。
 - canonical 文档入口：`docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/`。
 - `docs/templates/goal-folder/` 是规范模板；`skills/templates/goal-folder/` 是供离线安装与复制的同步分发镜像。
 
@@ -39,7 +39,7 @@ version: 0.2.3
 | 标准 | 当前状态 |
 |------|----------|
 | 核心方法论、文档协议和 canonical 模板可独立复制使用 | 已完成（GOAL-006 done / 100%；A-005 close-out pass） |
-| Skills 能按核心协议安装并驱动 AI 闭环 | 当前 `/govern` + `/audit` 基线已交付；待完成核心契约对齐验收 |
+| Skills 能按核心协议安装并驱动 AI 闭环 | `/govern` + `/audit` 基线及 P-005 协议对齐已交付（GOAL-007 done / 100%）；完整发布一致性验收仍待阶段 5 |
 | Web 能只读浏览目标并展示文档/树诊断，且不产生第二真相源 | 当前基线已完成（GOAL-004） |
 | 三个交付面共享同一版本化协议，并有一致性/发布证据 | 尚未开始 |
 | 至少一个子目标走完可审计的阶段性闭环 | 已由既有 GOAL-003、GOAL-004、GOAL-005 留有证据 |
@@ -62,6 +62,10 @@ version: 0.2.3
 
 阶段 4 的最小交付包、canonical 所有者、独立复制场景、版本同步策略、非目标、验收证据和进入阶段 5 的门槛，由 [D-008](01-decision.md#d-008--阶段-4-产品化与退出契约2026-07-19) 定义。本契约已满足以 `GOAL-006` 承接阶段 4 的 P-001 前置条件；GOAL-006 后续以 A-005 self close-out 与 A-004 independent targeted 复审完成阶段 4，阶段 5 仍待另行立项。
 
+### 跨阶段协议修订：信息就绪
+
+[A-004](03-audit.md) 发现当前闭环只处理范围和实施质量，未把“尚未掌握哪些必需信息、何时必须掌握”写成协议。该 required 缺口已由 [GOAL-007-information-readiness-governance](../GOAL-007-information-readiness-governance/00-meta.md) 完成，并由 [A-005](03-audit.md#a-005--响应-a-004--f-004-信息就绪协议缺口2026-07-19) 关闭 F-004；它是阶段 5 前的核心协议修订，不把历史阶段 4 交付重写为未完成。
+
 ## 子目标
 
 | ID | 标题 | 状态 |
@@ -71,8 +75,9 @@ version: 0.2.3
 | GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | done |
 | GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | done |
 | GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | done |
+| GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | done |
 
-`GOAL-006` 已在 D-008 的阶段 4 契约下完成最小交付包、独立复制验证、镜像核验与关门审计（A-001～A-005）；除该可执行子目标外，未提前批量创建细粒度目标。阶段 5 仍需另行立项并保留其自身审计证据。
+`GOAL-006` 已在 D-008 的阶段 4 契约下完成最小交付包、独立复制验证、镜像核验与关门审计（A-001～A-005）。`GOAL-007` 已完成单一跨阶段协议修订，并以 A-001 / 根目标 A-005 关闭 A-004 的 required finding；阶段 5 仍需另行立项并保留其自身审计证据。
 
 ## 相关路径
 

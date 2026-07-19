@@ -4,11 +4,15 @@ doc: audit
 status: active
 parent: GOAL-040-docs-quality
 created: 2026-03-01
-updated: 2026-03-12
-version: 0.1.0
+updated: 2026-07-19
+version: 0.2.0
 ---
 
 # 审计 · GOAL-042
+
+## 信息就绪核对（按 scope）
+
+> 审视规划、实施或关门时，核对相关 I-00N 的级别、最晚需要阶段、延期复核、证据、决策或经用户接受的残余风险。未关闭的 required 信息项应作为 finding，不得被写成“已知”或“已完成”。
 
 ## 阶段性复盘（2026-03-12 · 骨架与自测完成）
 

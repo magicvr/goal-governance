@@ -2,9 +2,9 @@
 title: 提示词 · 写审计意见 / 阶段复盘
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.3.0
+version: 0.4.0
 role: primitive
 ---
 
@@ -28,7 +28,7 @@ role: primitive
 
 ```markdown
 # 角色
-你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`（含 §6b / P-002～P-004）。
+你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`（含 §6b / P-002～P-005）。
 
 # 任务
 在指定目标的 `03-audit.md` **追加**一条编号审计意见（保留历史）。基于 meta / decision / execution **已有事实**；禁止编造成果。
@@ -44,15 +44,16 @@ role: primitive
   - `ad-hoc` 其他指定 scope
 - **scope**：审什么（如「阶段 A」「目标定义」「F-008 关闭证据」）
 - audit_type（可选）：goal-definition | design-plan | execution-facts | close-out | ad-hoc
+- 相关信息项 / 信息门禁（可选）：【I-00N；目标定义 / 方案 / 实施 / 验收 / 关门】
 - 你认为的成果/偏差（可选，可先由文档归纳再确认）：
 - 是否调整 status/progress：【否 / 是，说明】— **response/independent 默认否**
 - auditor（可选）：工具或模型名
 
 # 步骤
 
-1. 通读 `00-meta`、`01-decision`、`02-execution`、现有 `03-audit`。
+1. 通读 `00-meta`、`01-decision`（含信息需求与残余风险）、`02-execution`、现有 `03-audit`。
 2. 新编号 = 文件中已有最大 `A-NNN` + 1（自审与独立审**共用**序列）。
-3. 对照成功标准与 scope：已达成 / 部分 / 未开始 / 证据不足。
+3. 对照成功标准、scope 与相关 I-00N：已达成 / 部分 / 未开始 / 证据不足；核对 `required`/`non-blocking`、最晚需要阶段、状态、延期复核与证据。
 4. 追加一节，**最小头字段强制**：
 
    ## A-NNN · <标题>（YYYY-MM-DD）
@@ -73,12 +74,14 @@ role: primitive
    - 描述 + 证据
    - 状态：open（默认）| closed（仅当本条即关闭声明且有证据）
 
+   若 required 信息项已到期、影响 scope、或 `accepted-residual` 没有用户书面接受，应作为 finding；不要把未知本身误记为失败事实。
+
    ### 必改项汇总（required 列表）
    ### 结论 + 建议下一步
 
 5. **response 模式额外**：
    - 写明响应哪些 A-00N / F-00N
-   - 关闭证据表（finding | 状态 | 证据路径）
+   - 关闭证据表（finding / I-00N | 状态 | 证据路径）
    - 仍开放项
    - 冲突裁决（若有）指向 decision 编号
 
@@ -86,10 +89,10 @@ role: primitive
 7. 立刻跟进可记入 execution（标为计划）；正式取舍写入 decision。
 8. **仅当用户确认且模式允许时**调整 status/progress，并同步 meta 与 goal-tree。  
    - independent 代贴或纯审计意见：**禁止**擅自改 status/progress。
-9. 语气具体、可验证；证据不足写明缺口。
+9. 语气具体、可验证；证据不足写明缺口。关门审计还须确认没有开放的关门 required 信息项，或每个 residual 都有用户接受范围与复审触发。
 
 # Verdict 尺度
-- **pass**：scope 内无 high 级未关闭 required；可进入下一步/关闭该门禁
+- **pass**：scope 内无 high 级未关闭 required，也无到期且影响该 scope 的 required 信息项；可进入下一步/关闭该门禁
 - **conditional**：总体可用，有 med required 或应改项；可带开放项清单推进仅当用户接受并留痕
 - **fail**：关键成功标准名不副实，或证据严重不足，或阻断项未解决
 
@@ -98,6 +101,7 @@ role: primitive
 - [ ] 头字段含 source、scope、verdict  
 - [ ] 成果/findings 可指回证据  
 - [ ] required 与 recommended 可区分  
+- [ ] 相关 I-00N、最晚阶段、证据与残余风险接受已核对
 - [ ] 未越权改 status（除非用户确认）  
 - [ ] 长文若用附件，03-audit 有索引节 + 链接  
 ```

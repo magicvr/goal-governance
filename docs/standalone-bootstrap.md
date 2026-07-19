@@ -4,7 +4,7 @@ status: active
 created: 2026-07-19
 updated: 2026-07-19
 parent: null
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 核心包独立启用说明
@@ -19,7 +19,7 @@ version: 0.1.0
 |------|----------------|------|
 | `AGENTS.md` | 根目录 `AGENTS.md` | AI 与协作者的强制规则 |
 | `docs/README.md` | `docs/README.md` | 核心文档入口与协议索引 |
-| `docs/architecture/` | `docs/architecture/` | 架构约定与 P-001～P-004 |
+| `docs/architecture/` | `docs/architecture/` | 架构约定与 P-001～P-005 |
 | `docs/templates/` | `docs/templates/` | canonical 五件套模板 |
 
 `skills/` 是后续的消费适配器与分发镜像，`web/` 是可选的人类工作台；两者都不是本场景的前置条件。
@@ -77,6 +77,8 @@ progress: 0%
 ```
 
 四个 Markdown 文件和 `attachments/` 必须全部保留。`01-decision.md`、`02-execution.md` 与 `03-audit.md` 的 `id`、`parent`、日期和版本也要与 Root 对齐；模板中的示例 `GOAL-042`、`GOAL-040` 不能原样留下。
+
+若 Root 已识别出尚未知悉的关键事实，在 `00-meta.md` 或 `01-decision.md` 立即建立 P-005 信息需求表：写清问题、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核和证据。目标可带未知立项，但不可把未知写成已验证结论；影响当前阶段的 required 信息项应先澄清或获得用户书面接受的残余风险。
 
 ## 3. 建立 `goal-tree.md`
 

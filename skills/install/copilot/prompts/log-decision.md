@@ -3,9 +3,9 @@ title: /log-decision · 记录决策（Copilot wrapper · advanced primitive）
 description: 原语入口。默认请用 /govern。按 02-record-decision 写入决策。
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.1
+version: 0.3.0
 slash: /log-decision
 role: advanced
 ---
@@ -19,7 +19,7 @@ role: advanced
 
 > **默认请使用 `/govern`。** 本命令仅在你已明确只要「记录决策」原子操作时使用。
 
-你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`），包括 P-005 信息就绪与未知项门禁。
 
 ---
 
@@ -30,7 +30,7 @@ role: advanced
 ### A. 先分析上下文（必做，再问用户）
 
 1. **优先读取** `docs/goals/goal-tree.md`：现有目标、status、progress，便于锁定「记在哪个目标下」。
-2. **必要时**读取候选目标的 `00-meta.md` 与现有 `01-decision.md`：
+2. **必要时**读取候选目标的 `00-meta.md` 与现有 `01-decision.md`（含 I-00N 信息表）：
    - 确认目标存在、范围是否匹配本次决策
    - 已有 `D-NNN` 编号，推断下一条为最大 + 1
    - 风格与结构保持一致
@@ -73,6 +73,7 @@ role: advanced
 | 可默认/可选 | 未选方案 | 重要取舍尽量写；无则「无」 |
 | 可默认/可选 | 影响范围 | 无则「无」 |
 | 可默认/可选 | 后续动作 | 无则「无」 |
+| 可默认/可选 | 关联 I-00N | 新建、验证、延期、残余风险接受或关闭时必填 |
 | 可默认 | 今日日期 | 已推断则默认 |
 
 一条命令可记多条决策：请用户分条列清，或你分条复述后再写入。  
@@ -101,6 +102,7 @@ role: advanced
 6. **同步 goal-tree**：若 status / progress / parent 变化，**必须**更新 `docs/goals/goal-tree.md`（树 + 表）。
 7. **编号与扁平存储**：不改 Root 编号；不嵌套目标文件夹；`parent` 仅用完整 id。
 8. **历史可追溯**：过时决策用新条目 `superseded` 旧条目，不要静默删除历史。
+9. **P-005 信息决策**：变更 I-00N 时同步级别、门禁、最晚阶段、证据与延期复核；`accepted-residual` 要有用户书面范围/期限/触发，不能写成 `verified`。
 
 ---
 

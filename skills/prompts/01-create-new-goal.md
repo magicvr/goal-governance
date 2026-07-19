@@ -2,9 +2,9 @@
 title: 提示词 · 创建新目标
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.0
+version: 0.3.0
 role: primitive
 ---
 
@@ -25,7 +25,7 @@ role: primitive
 # 角色
 
 你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`。  
-P-001（大目标先路线图）以 AGENTS 为准；若存在 architecture 原则文档，可作补充。
+P-001（大目标先路线图）与 P-005（信息就绪与未知项门禁）以 AGENTS 为准；若存在 architecture 原则文档，可作补充。
 
 # 任务
 
@@ -37,9 +37,11 @@ P-001（大目标先路线图）以 AGENTS 为准；若存在 architecture 原�
 - 英文短 slug（小写、短横线）：【如 improve-auth】
 - 父目标完整 ID：【如 GOAL-001-my-root-slug；Root 则 null】
 - 一句话概述：
-- 成功标准（2～5 条可验证项）：
+- 初始成功标准（2～5 条可验证项；尚受信息项影响的可标“暂定”）：
 - 是否需要高层路线图（范围大/步骤不明）？【是 / 否】
   - 若是：本回合在 00-meta 或 01-decision 写阶段与先后；子目标留待后续阶段
+- 已识别的信息需求 / 假设：【I-00N、`required`/`non-blocking`、问题、影响门禁、最晚需要阶段、验证/收集动作；`deferred` 另给理由、责任人和复核触发；无则明确“当前未识别”】
+- 是否存在到期 required 信息门禁？【是 / 否；若是，本目标只能先执行澄清/收集或有界实验，不得伪造完整方案】
 - 初始状态：draft 或 active（默认 draft）
 - 今日日期：【会话/系统 YYYY-MM-DD】
 
@@ -52,8 +54,8 @@ P-001（大目标先路线图）以 AGENTS 为准；若存在 architecture 原�
 5. Frontmatter 至少：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。
    - Root 的 slug 使用用户确认的名称。
 6. 正文：
-   - meta：概述、成功标准、parent 链接；需要时含路线图
-   - decision：已有取舍则写「决定 + 为什么」；否则「待立项后补充」
+   - meta：概述、成功标准、parent 链接；需要时含路线图与信息就绪概览
+   - decision：已有取舍则写「决定 + 为什么」；信息需求、阶段门禁、残余风险接受也在此记录；否则「待立项后补充」
    - execution：只记已发生事实（如「今日创建目标」）
    - audit：可写「尚未到达复盘节点」
 7. 更新 `goal-tree.md` 的 ASCII 树与状态表。
@@ -65,6 +67,7 @@ P-001（大目标先路线图）以 AGENTS 为准；若存在 architecture 原�
 - [ ] 五件套齐全；parent 为完整 id 或 null  
 - [ ] goal-tree 树与表已更新  
 - [ ] 大目标已写路线图（若适用）  
+- [ ] 已识别信息项已登记；到期 required 项没有被伪装成已验证或可直接实施
 - [ ] 内容真实，无虚构完成项  
 ```
 
@@ -72,6 +75,6 @@ P-001（大目标先路线图）以 AGENTS 为准；若存在 architecture 原�
 
 ## 使用注意事项
 
-- 缺信息时先确认再写入。
+- 缺信息时先确认并登记：目标可带未知立项，但要写明影响门禁与最晚需要阶段；只有信息工作有独立范围或证据时才拆出子目标。
 - 创建后建议用 03 追加一条「目标已创建」执行记录。
 - Root：`GOAL-001` + `parent: null`；slug 由用户定。

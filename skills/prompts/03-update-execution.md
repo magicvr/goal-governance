@@ -2,9 +2,9 @@
 title: 提示词 · 更新执行进度
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.0
+version: 0.3.0
 role: primitive
 ---
 
@@ -23,7 +23,7 @@ role: primitive
 
 ```markdown
 # 角色
-你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`。
+你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`，包括 P-005 的信息就绪与未知项门禁。
 
 # 任务
 在 `02-execution.md` 按时间线追加**已发生事实**；确有进展时同步 progress / status 与 goal-tree。
@@ -34,12 +34,13 @@ role: primitive
 - 本次实际完成（具体条目，含路径/产物更佳）：
   1. …
 - 阻塞 / 风险：【或「无」】
+- 关联信息项（可选）：【I-00N；收集 / 验证 / 新发现 / 状态变化】
 - 下一步计划（可选，标明为计划）：
 - progress：【保持 / 调整为 N%，并给依据】
 - status：【保持 / draft|active|blocked|done|cancelled】
 
 # 步骤
-1. 读 `00-meta.md`、`02-execution.md`、`goal-tree.md`。
+1. 读 `00-meta.md`（含信息需求）、`01-decision.md`、`02-execution.md`、`goal-tree.md`。
 2. 在时间线追加：
 
    ### YYYY-MM-DD · <短标题>
@@ -48,10 +49,11 @@ role: primitive
    - 下一步（计划单独标注）
 
 3. 条目具体可核对；计划与已完成分开写。
-4. 刷新 `updated`。
-5. 调整 progress/status 时：同步 meta 与 goal-tree（树 + 表）。
-6. 完成某条成功标准时：勾选 meta 并在 execution 点明。
-7. 决策论证写入 `01-decision`；execution 保持时间线事实。
+4. 涉及 I-00N 时：记录实际收集/验证动作与证据路径；新发现的未知追加到信息表，并写明 `required`/`non-blocking`、影响门禁和最晚需要阶段。`deferred` 要保留理由、责任人与复核触发；没有证据时不得把状态改为 `verified`。
+5. 刷新 `updated`。
+6. 调整 progress/status 时：同步 meta 与 goal-tree（树 + 表）；关门前确认没有未处理的关门 required 信息项。
+7. 完成某条成功标准时：勾选 meta 并在 execution 点明。
+8. 决策论证写入 `01-decision`；execution 保持时间线事实。
 
 # 进度说明（建议）
 文末一两句说明百分比依据（对照成功标准）。
@@ -61,6 +63,7 @@ role: primitive
 - [ ] updated 已刷新  
 - [ ] progress/status 与 meta、goal-tree 一致（若有变更）  
 - [ ] 成功标准勾选与事实一致  
+- [ ] I-00N 状态与可核对证据一致；新未知没有被遗漏或伪装为已知
 ```
 
 ---

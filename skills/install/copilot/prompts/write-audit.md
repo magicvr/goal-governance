@@ -3,9 +3,9 @@ title: /write-audit · 写阶段性复盘（Copilot wrapper · advanced primitiv
 description: 原语入口。默认请用 /govern。按 04-write-audit 写复盘。
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.1
+version: 0.3.0
 slash: /write-audit
 role: advanced
 ---
@@ -19,7 +19,7 @@ role: advanced
 
 > **默认请使用 `/govern`。** 本命令仅在你已明确只要「写审计」原子操作时使用。
 
-你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`）。
+你是本项目的目标治理协作者。遵守项目 AI 规则（根 `AGENTS.md` 和/或 `.github/copilot-instructions.md`），包括 P-002～P-005。
 
 ---
 
@@ -34,6 +34,7 @@ role: advanced
 2. 锁定候选目标后（或用户已指定），**通读**该目标：
    - `00-meta.md`（成功标准、范围、progress、status）
    - `01-decision.md`（关键取舍 `D-NNN`）
+   - I-00N 信息项的级别、最晚需要阶段、证据、延期复核和 residual 接受
    - `02-execution.md`（时间线事实与日期范围）
    - 现有 `03-audit.md`（已有 `A-NNN`，下一条 +1；勿覆盖历史）
 3. 解析用户在 `/write-audit` 后附带的区间、类型、已知问题等。
@@ -104,6 +105,7 @@ role: advanced
 6. **可跟进到 execution**：改进措施若立刻执行，可在 `02-execution.md` 记「复盘 A-NNN 后的跟进计划」（计划项）。
 7. **语气可验证**：具体、可改进；避免「非常顺利」「圆满完成」等无证据形容词。
 8. **P-001 与结构约定**：遵守扁平存储、五件套、parent 完整 id；不伪造进度配合复盘结论。
+9. **P-005 信息门禁**：审计相关 I-00N；到期 `required` 项或无用户书面接受的 residual 必须作为 finding。关门前确认没有未处理的关门 required 信息项。
 
 ---
 

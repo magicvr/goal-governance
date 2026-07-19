@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.4.0
+version: 0.5.0
 ---
 
 # docs/ · 文档体系
@@ -52,8 +52,9 @@ docs/
    - `attachments/` — 附件（可为空，保留目录）
 7. **可执行性与路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识；独立审计出意见、编排器响应全部意见；「是否自审」与意见冲突由用户裁决（编排器给建议）。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
-9. **核心模板与分发镜像**：规范模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 是供安装脚本和离线复制使用的同步镜像。新目标实例仍写入 `docs/goals/`，不把模板目录当作目标状态。
-10. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal。
+9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
+10. **核心模板与分发镜像**：规范模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 是供安装脚本和离线复制使用的同步镜像。新目标实例仍写入 `docs/goals/`，不把模板目录当作目标状态。
+11. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal。
 
 ## Frontmatter 约定
 
@@ -85,24 +86,24 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **核心包版本**：`0.4.0`，与本入口文档的 `version` 一致。
+- **核心包版本**：`0.5.0`，与本入口文档的 `version` 一致。
 - **快照日期**：2026-07-19。
-- **快照身份**：绑定到 2026-07-19 的已提交基线 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；该基线没有指向它的 release tag，且本包不声明为 release。
-- **当前工作树边界**：A-002 响应及后续治理台账修正发生在该基线之后，属于未发布修正，不计入 `0.4.0` 快照内容；后续语义变更仍应递增本入口版本并刷新本台账。
-- **本轮变更范围**：新增 `standalone-bootstrap.md`、`tests/test_standalone_bootstrap.py` 与 GOAL-006 验收附件；更新本入口及 GOAL-006 的决策、执行、进度和目标树记录；`docs/templates/goal-folder/` 与 `skills/templates/goal-folder/` 的模板内容未改动。
+- **快照身份**：`0.4.0` 的已提交基线为 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；`0.5.0` 是该基线之后工作树中的协议演进，尚未建立 release tag，且本包不声明为 release。
+- **当前工作树边界**：本轮将 P-005、目标模板与 Skills 适配器同步纳入未发布的核心协议更新；发布时应记录对应提交与 tag。
+- **本轮变更范围**：新增信息需求、阶段门禁、残余风险接受和按规模拆分信息工作的核心规则；更新 canonical 五件套及 Skills 镜像、编排/审计提示词、宿主规则源、独立启用说明和契约测试。
 
 ### canonical → Skills 同步台账
 
-`docs/templates/goal-folder/` 仍是唯一上游。本轮没有 canonical 内容变更，因此没有执行覆盖式复制；已在 2026-07-19 运行字节级一致性核验，确认分发镜像保持同步：
+`docs/templates/goal-folder/` 仍是唯一上游。本轮先更新 canonical 五件套以承载 P-005 信息项和审计核对，再同步覆盖 `skills/templates/goal-folder/`；以下为同步后的字节级台账：
 
 | 文件 | canonical SHA-256 | Skills mirror SHA-256 |
 |------|------------------|----------------------|
-| `00-meta.md` | `876375F56EE57F15DAEA3A67C43EDFAAF651B4BB1CF16DB24376FAEC3424AB43` | `876375F56EE57F15DAEA3A67C43EDFAAF651B4BB1CF16DB24376FAEC3424AB43` |
-| `01-decision.md` | `C4A35BA90099026154072D41D0385066F160B37C08D985E08058E45C617FED9B` | `C4A35BA90099026154072D41D0385066F160B37C08D985E08058E45C617FED9B` |
-| `02-execution.md` | `B9BAB71636E3F3AF49192430DC4DE8A62859481B41D716D08F4997D320078D4F` | `B9BAB71636E3F3AF49192430DC4DE8A62859481B41D716D08F4997D320078D4F` |
-| `03-audit.md` | `E5FB3681F0ED9C332E6EF3C2C486E150718C842352E7D2831823172C9E52F2BE` | `E5FB3681F0ED9C332E6EF3C2C486E150718C842352E7D2831823172C9E52F2BE` |
+| `00-meta.md` | `EE7021F128B1953F0ADF1365A52006742F494DEB13E80C75EB6A57076AB9E51A` | `EE7021F128B1953F0ADF1365A52006742F494DEB13E80C75EB6A57076AB9E51A` |
+| `01-decision.md` | `F91712AED7E050206B15DE88775FDFCE3A00AEA68B3F2BCEFAF98520A70216AA` | `F91712AED7E050206B15DE88775FDFCE3A00AEA68B3F2BCEFAF98520A70216AA` |
+| `02-execution.md` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` |
+| `03-audit.md` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` |
 
-核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（21 项通过，包含模板镜像断言）；当前工作树的 `git diff --name-status HEAD -- docs/templates skills/templates` 为空，作为“模板未变更、镜像已核对”的范围证据。
+核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板镜像与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。
 
 ## 三层交付关系
 

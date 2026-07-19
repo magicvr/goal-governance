@@ -2,9 +2,9 @@
 title: 提示词 · 记录决策
 status: active
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 parent: null
-version: 0.2.0
+version: 0.3.0
 role: primitive
 ---
 
@@ -23,7 +23,7 @@ role: primitive
 
 ```markdown
 # 角色
-你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`。P-001 以 AGENTS 为准。
+你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`。P-001 与 P-005 以 AGENTS 为准。
 
 # 任务
 为指定目标在 `01-decision.md` 追加真实决策：写清「决定了什么」与「为什么」。
@@ -36,10 +36,11 @@ role: primitive
 - 未选方案（建议有）：【方案 + 简短理由】
 - 影响范围（可选）：
 - 后续动作（可选）：
+- 关联信息项 / 门禁（可选）：【I-00N；`required`/`non-blocking`、新建、更新、验证、延期、接受残余风险或关闭】
 - 今日日期：【YYYY-MM-DD】
 
 # 步骤
-1. 读 `00-meta.md` 与现有 `01-decision.md`，延续编号风格。
+1. 读 `00-meta.md` 与现有 `01-decision.md`，包括信息需求表与相关 I-00N，延续编号风格。
 2. 追加条目（D-001 起递增）：
 
    ### D-NNN · <决策标题>
@@ -47,7 +48,7 @@ role: primitive
    - **决定** / **理由** / **未选方案** / **影响** / **后续**
 
 3. 刷新 `updated`；小改可保持 version。
-4. 若决策改变范围、成功标准或路线图：同步 `00-meta`，并在 `02-execution` 记一句「记录决策 D-NNN：…」。
+4. 若决策改变范围、成功标准、路线图或信息门禁：同步 `00-meta` / 信息需求表，并在 `02-execution` 记一句「记录决策 D-NNN：…」。`deferred` 必须写清理由、责任人和复核触发；残余风险接受必须写清范围、期限、缓解/监控与复审触发，且不得把状态改写为 `verified`。
 5. 若 status/progress 变化：同步 `goal-tree.md`。
 6. 过程流水账写在 execution；decision 保持可执行结论。
 
@@ -55,6 +56,7 @@ role: primitive
 - [ ] 条目含决定 + 理由；重要取舍含未选方案  
 - [ ] 编号连续；updated 已刷新  
 - [ ] meta / execution / goal-tree 在需要时已对齐  
+- [ ] 若涉及 I-00N，信息表状态、受影响门禁和残余风险留痕已对齐
 - [ ] 不确定处标「待确认」；内容为真实取舍  
 ```
 

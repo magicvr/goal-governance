@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.4.0
+version: 0.5.0
 ---
 
 # prompts/ · 目标治理提示词
@@ -21,7 +21,7 @@ version: 0.4.0
 | `/govern` | Claude / Grok skill；Copilot `govern.prompt.md` |
 | `/audit` | Claude / Grok skill；Copilot `audit.prompt.md` |
 
-**生命周期**：设立 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门。  
+**生命周期**：设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门。
 **交叉意见**由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
 
 ## 原语（primitives / advanced）
@@ -55,7 +55,8 @@ version: 0.4.0
 | 目的优先 | 辅助达到目的，而非辅助填表 |
 | 主入口 + 交叉入口 | `/govern` 生命周期；`/audit` 独立意见 |
 | 原语可组合 | 01～04 保证文档结构一致 |
-| 遵守 AGENTS | 扁平存储、parent、goal-tree、P-001～P-004 |
+| 信息就绪 | P-005：登记未知、最晚需要阶段、证据与残余风险；按规模拆信息工作 |
+| 遵守 AGENTS | 扁平存储、parent、goal-tree、P-001～P-005 |
 | 真实 | 禁止编造进度与空话 |
 
 ## 与其他交付物

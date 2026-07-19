@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.5
+version: 0.2.8
 ---
 
 # 执行记录 · GOAL-001
@@ -65,13 +65,13 @@ version: 0.2.5
 |------|------|------|
 | 核心方法论与模板 | 已完成（GOAL-006 done / 100%） | `docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/`、独立启用说明与 A-005 close-out 已形成核心交付；跨面联合发布仍留给后续阶段 |
 | Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互明确留待后续目标 |
-| Skills / 提示词 | 当前基线已交付，对齐验收待做 | GOAL-003、GOAL-005 均为 done；`skills/templates/goal-folder/` 是核心模板的分发镜像；F-019 为 GOAL-005 结项后 recommended residual |
+| Skills / 提示词 | P-005 协议对齐已完成，发布一致性验收待做 | GOAL-003、GOAL-005、GOAL-007 均为 done；`skills/templates/goal-folder/` 是核心模板的分发镜像；F-019 为 GOAL-005 结项后 recommended residual |
 | 核心数据模型 | 已完成 | GOAL-004 done 100%；阶段 A～D 与关门路径均已完成 |
 
 ## 下一步（根目标视角）
 
 1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已由 `GOAL-006` 完成；A-005 self close-out 与 A-004 independent targeted 复审通过，满足阶段 4 → 5 门槛。
-2. 阶段 5 复核 Skills 的规则、模板镜像、安装产物与核心协议版本一致性。
+2. 阶段 5 尚未立项；P-005 的规则、模板镜像、安装产物与核心协议对齐已由 GOAL-007 完成，后续仍须定义并验收完整发布一致性范围。
 3. 阶段 6 保持 Web 只读，先完善人类浏览/诊断体验；任何写入另立子目标并保留审计证据。
 4. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
 5. F-019 待具备 Linux/macOS CI 或 Unix 环境时单独补证，不阻塞当前路线。
@@ -105,3 +105,16 @@ version: 0.2.5
 - GOAL-006 完成 A-001 阶段 self 审计、A-002 independent 条件审计、A-003 编排响应、A-004 F-002 targeted independent 复审和 A-005 self close-out。
 - F-002 已关闭；F-003 保留为非阻塞 recommended residual。GOAL-006 状态同步为 `done / 100%`，阶段 4 → 5 门槛满足，阶段 5 尚未启动。
 - `goal-tree.md` 与 GOAL-001 的阶段/子目标摘要已同步；`0.4.0` 仍绑定无 release tag 的基线 commit，不创建 tag。
+
+### 2026-07-19 · 立项信息就绪协议修订
+
+- 对核心闭环进行自审，确认现有 P-001～P-004 未将目标设立后的信息发现、分阶段收集与信息门禁表达为正式协议。
+- 用户确认采用 P-005，并创建 [GOAL-007-information-readiness-governance](../GOAL-007-information-readiness-governance/00-meta.md) 承接该 required 修订。
+- GOAL-007 已先写高层路线图与信息需求 I-001；本轮不自动创建“澄清”和“收集”两个子目标，待信息工作量和依赖明确后再按 P-001 判断。
+
+### 2026-07-19 · 完成信息就绪协议修订并关闭 F-004
+
+- [GOAL-007-information-readiness-governance](../GOAL-007-information-readiness-governance/00-meta.md) 已完成 P-005、canonical / Skills 模板镜像、编排与审计 prompts、Claude/Grok/Copilot 安装分发面和契约测试，状态为 `done / 100%`。
+- 实施过程中的两轮核验发现并修正信息项等级/延期语义与 Copilot 高级原语同步两个缺口；GOAL-007 A-001 已留下关闭证据。
+- 验证结果为 Skills 契约测试 26 项通过（其中两项防止 P-005 退化为仅关键词存在的语义契约）、独立启用测试 3 项通过、Web 回归 20 项通过（1 项因 Windows 符号链接权限跳过），`git diff --check` 通过。
+- 本轮未改动 Web 业务代码或 Markdown 数据合同；其测试仅用于确认协议层改动未造成回归。根目标 A-005 据此关闭 A-004 / F-004，当前焦点回到阶段 5 的后续立项。

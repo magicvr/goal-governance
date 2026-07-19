@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 技术栈
@@ -13,7 +13,7 @@ version: 0.2.0
 
 | 层 | 路径 | 说明 |
 |----|------|------|
-| 方法论 | `docs/architecture/` | P-001～P-004、架构与长期约定 |
+| 方法论 | `docs/architecture/` | P-001～P-005、架构与长期约定 |
 | 文档规范 | `docs/README.md` | 目标实例、五件套和同步规则 |
 | 模板 | `docs/templates/goal-folder/` | canonical 五件套模板；不保存运行状态 |
 | 实例真相源 | `docs/goals/` | 目标、决策、执行、审计和附件 |
