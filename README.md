@@ -24,11 +24,13 @@ goal-governance/
 │   ├── README.md
 │   ├── goals/                # 目标平铺 + goal-tree.md
 │   ├── templates/            # 核心 canonical 文档模板
+│   ├── contracts/            # 消费适配器的 canonical 机读兼容契约
 │   ├── architecture/
 │   └── _index/
 ├── skills/                   # AI/Agent 消费适配器与分发包
 │   ├── prompts/
 │   ├── templates/            # docs/templates 的分发镜像
+│   ├── contracts/            # docs/contracts 的分发镜像
 │   └── install.*
 ├── web/                      # FastAPI Web 应用
 │   ├── main.py
@@ -40,7 +42,7 @@ goal-governance/
 └── .gitignore
 ```
 
-- **核心文档层**：`docs/README.md`、`docs/architecture/` 与 `docs/templates/` 定义方法论、协议和模板；`docs/goals/` 保存具体目标实例。
+- **核心文档层**：`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 定义方法论、协议、模板和消费适配器兼容契约；`docs/goals/` 保存具体目标实例。
 - **`skills/`**：AI/Agent 消费核心协议的编排、审计、原语、宿主适配和离线分发包。
 - **`web/`**：FastAPI + Jinja2 + Tailwind CSS + HTMX 的人类工作台；当前直接读取 `docs/goals/`，提供只读浏览与文档树诊断，不维护独立状态，也不提供 Web 写入、创建/更新或后台同步入口。
 - **三层交付共享一个真相源**：Skills 按协议读写、Web 当前读取同一套 `docs/goals` 文档，不建立独立状态。
@@ -56,7 +58,8 @@ goal-governance/
 当前目标：
 
 - **GOAL-001-main-vision**：交付可复用的目标治理方法论、文档协议与消费工具
-- **GOAL-002～005**：初始化、Skills 闭环、Goal 数据模型与 Web 只读基线均已结项；下一阶段按路线图从 `GOAL-006` 起立项
+- **GOAL-002～007**：初始化、Skills 闭环、Goal 数据模型、核心方法论与信息就绪治理均已结项。
+- **GOAL-008**：正在实现跨宿主/跨版本发布一致性；I-001 的 canonical 机读契约已验证，后续继续 I-002 兼容矩阵与 fixtures。
 
 ## Web 应用快速启动
 

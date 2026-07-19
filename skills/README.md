@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.7.0
+version: 0.9.0
 ---
 
 # Skills
@@ -12,9 +12,9 @@ version: 0.7.0
 本目录提供可复制到**其他项目**的目标治理约定与模板。  
 本仓库运行中的强制规则仍以根目录 [AGENTS.md](../AGENTS.md) 为准；此处是提炼后的**可复用交付物**。
 
-Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/)；本包内的 `templates/goal-folder/` 是用于离线复制和安装脚本的同步镜像。安装到其他仓库后，镜像必须自包含可用。
+Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/)；本包内的 `templates/goal-folder/` 是用于离线复制和安装脚本的同步镜像。消费适配器的机读版本/兼容声明以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 是逐字节分发镜像。安装到其他仓库后，镜像必须自包含可用。
 
-**支持的目标工具**：Claude Code、Grok Build、GitHub Copilot。
+**当前契约范围（D-003）**：Claude Code CLI 与 GitHub Copilot **VS Code** 插件为 `committed`；Grok Build CLI 为已纳入 manifest 的 `declared` 范围。三者当前都仍是 `unverified`：安装文件和官方发现语义不能替代固定产品版本的运行时验证。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json)。
 
 ## 产品模型（必读）
 
@@ -28,11 +28,11 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 生命周期：**设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。
 交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
 
-| 工具 | 安装位置 | 斜杠 |
-|------|----------|------|
-| Claude Code | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` |
-| Grok Build | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` |
-| GitHub Copilot | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` |
+| 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
+|------|----------|------|--------------|
+| Claude Code CLI | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / unverified` |
+| Grok Build CLI | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `declared / unverified` |
+| GitHub Copilot VS Code 插件 | `.github/prompts/govern.prompt.md` + `audit.prompt.md` | `/govern` · `/audit` | `committed / unverified` |
 
 核心行为：
 
@@ -62,8 +62,9 @@ skills/
 │   ├── 00-govern-orchestrator.md       # PRIMARY core
 │   ├── 01–04 …                         # primitives
 │   └── 05-independent-audit.md         # cross-audit core
-├── tests/
-└── templates/goal-folder/          # docs/templates 的分发镜像
+├── templates/goal-folder/              # docs/templates 的分发镜像
+├── contracts/                          # docs/contracts 的分发镜像
+└── tests/
 ```
 
 ## 安装
@@ -82,7 +83,7 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
-**默认产品面**（与脚本一致）：每个宿主都装 **`/govern` + `/audit`**。填表类 advanced slash 仍为可选。
+**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit`**。这描述可复制文件，不提升上表的声明/承诺层级或 `unverified` 运行时状态；填表类 advanced slash 仍为可选。
 
 #### Claude Code
 
@@ -144,7 +145,7 @@ install/copilot/prompts/audit.md
 | `--grok` / `-Grok` | `.grok/skills/govern` + **`audit`**（`/govern` + `/audit`） |
 | `--copilot` / `-Copilot` | copilot-instructions + **默认双入口** `govern` + `audit` prompts |
 | `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
-| `--all` / `-All` | Claude + Grok + Copilot + prompts/templates |
+| `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts |
 | `--skills-dir` / `-SkillsDir` | 默认 `./skills` |
 
 ```bash
@@ -202,4 +203,4 @@ Windows 上 `test_install_ps1_isolated_all_produces_govern_and_audit` 会在临�
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
 
-当前交付：**核心协议的 Skills 适配规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 多宿主安装脚本 + 模板分发镜像**。核心 canonical 方法论与模板见仓库 `docs/` 层。
+当前交付：**核心协议的 Skills 适配规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 多宿主安装脚本 + 模板与机读契约分发镜像**。核心 canonical 方法论、模板与契约见仓库 `docs/` 层。

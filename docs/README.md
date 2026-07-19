@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.5.0
+version: 0.6.0
 ---
 
 # docs/ · 文档体系
@@ -30,6 +30,9 @@ docs/
 ├── templates/                # 核心 canonical 文档模板
 │   ├── README.md
 │   └── goal-folder/          # 五件套模板
+├── contracts/                # 消费适配器的 canonical 机读兼容契约
+│   ├── skills-consumer-contract.schema.json
+│   └── skills-consumer-contract.json
 ├── architecture/             # 架构与技术约定
 │   ├── overview.md
 │   ├── principles.md         # 治理原则（元规则）
@@ -53,7 +56,7 @@ docs/
 7. **可执行性与路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识；独立审计出意见、编排器响应全部意见；「是否自审」与意见冲突由用户裁决（编排器给建议）。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
-10. **核心模板与分发镜像**：规范模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 是供安装脚本和离线复制使用的同步镜像。新目标实例仍写入 `docs/goals/`，不把模板目录当作目标状态。
+10. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/goal-folder/`，消费适配器契约位于 `docs/contracts/`；`skills/templates/goal-folder/` 与 `skills/contracts/` 是供安装脚本和离线复制使用的同步镜像。新目标实例仍写入 `docs/goals/`，不把镜像目录当作目标状态或第二版本真相。
 11. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal。
 
 ## Frontmatter 约定
@@ -86,33 +89,37 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **核心包版本**：`0.5.0`，与本入口文档的 `version` 一致。
+- **核心包版本**：`0.6.0`，与本入口文档的 `version` 一致。
 - **快照日期**：2026-07-19。
-- **快照身份**：`0.4.0` 的已提交基线为 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；`0.5.0` 是该基线之后工作树中的协议演进，尚未建立 release tag，且本包不声明为 release。
-- **当前工作树边界**：本轮将 P-005、目标模板与 Skills 适配器同步纳入未发布的核心协议更新；发布时应记录对应提交与 tag。
-- **本轮变更范围**：新增信息需求、阶段门禁、残余风险接受和按规模拆分信息工作的核心规则；更新 canonical 五件套及 Skills 镜像、编排/审计提示词、宿主规则源、独立启用说明和契约测试。
+- **快照身份**：`0.4.0` 的已提交基线为 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；`0.6.0` 是该基线之后工作树中的协议演进，尚未建立 release tag，且本包不声明为 release。
+- **当前工作树边界**：本轮将 P-005、目标模板、Skills 适配器和 D-002 的机读兼容契约同步纳入未发布的核心协议更新；发布时应记录对应提交与 tag。
+- **本轮变更范围**：新增信息需求、阶段门禁、残余风险接受和按规模拆分信息工作的核心规则；更新 canonical 五件套与消费适配器契约、Skills 镜像、编排/审计提示词、宿主规则源、独立启用说明和契约测试。
 
 ### canonical → Skills 同步台账
 
-`docs/templates/goal-folder/` 仍是唯一上游。本轮先更新 canonical 五件套以承载 P-005 信息项和审计核对，再同步覆盖 `skills/templates/goal-folder/`；以下为同步后的字节级台账：
+`docs/templates/goal-folder/` 与 `docs/contracts/` 分别是模板和消费适配器兼容契约的唯一上游。本轮先更新 canonical 层，再同步覆盖 `skills/templates/goal-folder/` 与 `skills/contracts/`；以下为同步后的字节级台账：
 
-| 文件 | canonical SHA-256 | Skills mirror SHA-256 |
-|------|------------------|----------------------|
-| `00-meta.md` | `EE7021F128B1953F0ADF1365A52006742F494DEB13E80C75EB6A57076AB9E51A` | `EE7021F128B1953F0ADF1365A52006742F494DEB13E80C75EB6A57076AB9E51A` |
-| `01-decision.md` | `F91712AED7E050206B15DE88775FDFCE3A00AEA68B3F2BCEFAF98520A70216AA` | `F91712AED7E050206B15DE88775FDFCE3A00AEA68B3F2BCEFAF98520A70216AA` |
-| `02-execution.md` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` |
-| `03-audit.md` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` |
+| 类别 | 文件 | canonical SHA-256 | Skills mirror SHA-256 |
+|------|------|------------------|----------------------|
+| 模板 | `00-meta.md` | `EE7021F128B1953F0ADF1365A52006742F494DEB13E80C75EB6A57076AB9E51A` | `EE7021F128B1953F0ADF1365A52006742F494DEB13E80C75EB6A57076AB9E51A` |
+| 模板 | `01-decision.md` | `F91712AED7E050206B15DE88775FDFCE3A00AEA68B3F2BCEFAF98520A70216AA` | `F91712AED7E050206B15DE88775FDFCE3A00AEA68B3F2BCEFAF98520A70216AA` |
+| 模板 | `02-execution.md` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` | `236D5174D33FD96DC9C3ECA2CF75B90E3D94D80315C8BA42542C87E2817CE59F` |
+| 模板 | `03-audit.md` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` | `CBBE40A145526F851EFE98D4569D670C8EF2862BF6CE7E50C13B03581E99C970` |
+| 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
+| 契约 | `skills-consumer-contract.json` | `519DCB7456065D4E475B6D3D3478D5F68215F701C7F7D932AAE4EC047ED7F51C` | `519DCB7456065D4E475B6D3D3478D5F68215F701C7F7D932AAE4EC047ED7F51C` |
 
-核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板镜像与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。
+核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。
+
+`contractSchemaId` 指向 schema 的 canonical `$id`；安装包中的 manifest 通过 `canonical.schemaPath` 指向随包的本地 schema。`supportBaseline` 记录首个/上一支持协议，adapter 的 `supportCommitment` 区分已声明范围与当前承诺，`verificationStatus` 仍只表示运行时证据是否已经取得。该 `$id` 是 schema 身份而不是当前 release 的承诺；I-003 仍负责把提交、tag/release、digest 和可重放证据关联起来。
 
 ## 三层交付关系
 
 | 形态 | 职责 | 路径 |
 |------|------|------|
-| 核心方法论与模板 | 生命周期、治理原则、文档协议与 canonical 五件套模板 | `docs/README.md`、`docs/architecture/`、`docs/templates/` |
+| 核心方法论、模板与契约 | 生命周期、治理原则、文档协议、canonical 五件套模板与消费适配器兼容契约；可独立应用，不依赖 Skills 或 Web | `docs/README.md`、`docs/architecture/`、`docs/templates/`、`docs/contracts/` |
 | 文档实例 | 目标与过程的权威记录 | `docs/goals/` |
-| Web 应用 | 浏览目标与文档诊断（当前只读；写入待后续阶段） | `web/` |
-| Skills / 提示词 | AI 按核心协议读写与推进目标 | `skills/`、根目录 `AGENTS.md` 等 |
+| Web 应用 | 当前仅解析/浏览目标文档；完整闭环能力留待后续阶段，且与 Skills 为独立辅助工具体系 | `web/` |
+| Skills / 提示词 | 独立的 AI 辅助闭环工具体系，按核心协议读写与推进目标，并分发模板/契约镜像 | `skills/`、根目录 `AGENTS.md` 等 |
 
 ## 推荐阅读顺序
 
@@ -121,4 +128,5 @@ version: 0.1.0
 3. [architecture/overview.md](architecture/overview.md) — 架构概览  
 4. [architecture/principles.md](architecture/principles.md) — 治理原则  
 5. [templates/README.md](templates/README.md) — 核心文档模板
-6. 仓库根 [AGENTS.md](../AGENTS.md) — AI 协作强制规则
+6. [contracts/skills-consumer-contract.json](contracts/skills-consumer-contract.json) — 消费适配器版本与兼容声明
+7. 仓库根 [AGENTS.md](../AGENTS.md) — AI 协作强制规则

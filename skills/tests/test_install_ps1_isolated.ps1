@@ -40,7 +40,9 @@ try {
         (Join-Path $TempRoot '.github\prompts\govern.prompt.md'),
         (Join-Path $TempRoot '.github\prompts\audit.prompt.md'),
         (Join-Path $SkillsDest 'prompts\00-govern-orchestrator.md'),
-        (Join-Path $SkillsDest 'prompts\05-independent-audit.md')
+        (Join-Path $SkillsDest 'prompts\05-independent-audit.md'),
+        (Join-Path $SkillsDest 'contracts\skills-consumer-contract.schema.json'),
+        (Join-Path $SkillsDest 'contracts\skills-consumer-contract.json')
     )
 
     $missing = @()

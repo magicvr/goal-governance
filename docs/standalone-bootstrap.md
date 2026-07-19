@@ -4,7 +4,7 @@ status: active
 created: 2026-07-19
 updated: 2026-07-19
 parent: null
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 核心包独立启用说明
@@ -13,7 +13,7 @@ version: 0.2.0
 
 ## 适用边界
 
-复制来源只有以下四类：
+复制来源只有以下五类：
 
 | 来源 | 复制到目标仓库 | 用途 |
 |------|----------------|------|
@@ -21,6 +21,7 @@ version: 0.2.0
 | `docs/README.md` | `docs/README.md` | 核心文档入口与协议索引 |
 | `docs/architecture/` | `docs/architecture/` | 架构约定与 P-001～P-005 |
 | `docs/templates/` | `docs/templates/` | canonical 五件套模板 |
+| `docs/contracts/` | `docs/contracts/` | canonical 机读协议/模板版本与兼容声明 |
 
 `skills/` 是后续的消费适配器与分发镜像，`web/` 是可选的人类工作台；两者都不是本场景的前置条件。
 
@@ -40,6 +41,7 @@ Copy-Item (Join-Path $source 'AGENTS.md') (Join-Path $target 'AGENTS.md')
 Copy-Item (Join-Path $source 'docs/README.md') (Join-Path $target 'docs/README.md')
 Copy-Item -Recurse (Join-Path $source 'docs/architecture') (Join-Path $target 'docs/architecture')
 Copy-Item -Recurse (Join-Path $source 'docs/templates') (Join-Path $target 'docs/templates')
+Copy-Item -Recurse (Join-Path $source 'docs/contracts') (Join-Path $target 'docs/contracts')
 ```
 
 复制完成后，目标仓库不应出现 `skills/` 或 `web/`。若目标已有同名核心文件，应先确认版本与变更范围，再决定是否覆盖。
@@ -111,7 +113,7 @@ GOAL-001-main-vision · <项目总目标> [active 0%]
 
 完成独立启用时，在执行记录或交付报告中留下以下事实：
 
-1. **来源**：列出复制的 `AGENTS.md`、`docs/README.md`、`docs/architecture/` 与 `docs/templates/` 的来源路径和版本。
+1. **来源**：列出复制的 `AGENTS.md`、`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 的来源路径和版本。
 2. **生成路径**：列出目标仓库、`docs/goals/goal-tree.md`、Root 文件夹及五件套路径。
 3. **核对结果**：确认 `git -C <target> rev-parse --is-inside-work-tree` 为 `true`，Root `parent: null`，`id` 与文件夹名一致，四个 Markdown 文件和 `attachments/` 均存在。
 4. **边界**：确认没有依赖 `skills/` 或 `web/`；本验证不代表 Skills 安装或 Web 发布已经完成。

@@ -7,6 +7,7 @@ Run from repo root or skills/: python skills/tests/test_skills_orchestrator.py
 
 from __future__ import annotations
 
+import json
 import os
 import re
 import shutil
@@ -34,8 +35,28 @@ INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
 CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
 SKILLS_TEMPLATES = SKILLS_ROOT / "templates" / "goal-folder"
+CORE_CONTRACTS = SKILLS_ROOT.parent / "docs" / "contracts"
+SKILLS_CONTRACTS = SKILLS_ROOT / "contracts"
 CORE_PRINCIPLES = SKILLS_ROOT.parent / "docs" / "architecture" / "principles.md"
 CORE_AGENTS = SKILLS_ROOT.parent / "AGENTS.md"
+CONTRACT_SCHEMA_ID = (
+    "https://github.com/magicvr/goal-governance/schema/skills-consumer-contract/v1"
+)
+CONTRACT_MIRROR_FILES = (
+    "skills-consumer-contract.schema.json",
+    "skills-consumer-contract.json",
+    "fixtures/valid/manifest-0.1.0.json",
+    "fixtures/valid/declared-adapter-0.1.0.json",
+    "fixtures/invalid/missing-contract-schema-id.json",
+    "fixtures/invalid/missing-support-baseline.json",
+    "fixtures/invalid/declared-adapter-without-commitment.json",
+    "fixtures/invalid/reversed-protocol-range.json",
+    "fixtures/invalid/unstable-cross-minor-range.json",
+)
+SEMVER_RE = re.compile(
+    r"^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)"
+    r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
+)
 
 
 class TestSkillsOrchestratorPackage(unittest.TestCase):
@@ -85,6 +106,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             "accepted-residual",
             "non-blocking",
             "deferred",
+            "contracts/skills-consumer-contract.json",
         ):
             self.assertIn(marker, text)
 
@@ -175,6 +197,293 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         skills_readme = SKILLS_ROOT / "README.md"
         self.assertIn("canonical", docs_readme.read_text(encoding="utf-8").lower())
         self.assertIn("分发镜像", skills_readme.read_text(encoding="utf-8"))
+
+    @staticmethod
+    def _load_json(path: Path) -> dict[str, object]:
+        with path.open(encoding="utf-8") as handle:
+            value = json.load(handle)
+        if not isinstance(value, dict):
+            raise AssertionError(f"contract JSON root must be an object: {path}")
+        return value
+
+    def _semver_core(self, value: object, label: str) -> tuple[int, int, int]:
+        self.assertIsInstance(value, str, msg=f"{label} must be a string")
+        match = SEMVER_RE.fullmatch(value)
+        self.assertIsNotNone(match, msg=f"{label} is not a SemVer value: {value!r}")
+        assert match is not None
+        return tuple(int(match.group(name)) for name in ("major", "minor", "patch"))
+
+    def _assert_semver_range(self, value: object, label: str) -> tuple[tuple[int, int, int], tuple[int, int, int]]:
+        self.assertIsInstance(value, dict, msg=f"{label} must be an object")
+        assert isinstance(value, dict)
+        self.assertEqual(set(value), {"minInclusive", "maxExclusive"}, msg=label)
+        minimum = self._semver_core(value["minInclusive"], f"{label}.minInclusive")
+        maximum = self._semver_core(value["maxExclusive"], f"{label}.maxExclusive")
+        self.assertLess(minimum, maximum, msg=f"{label} must not be reversed")
+        if minimum[0] == 0:
+            self.assertEqual(maximum[0], 0, msg=f"{label} must not cross 0.x major")
+            self.assertEqual(
+                maximum[1],
+                minimum[1] + 1,
+                msg=f"{label} must stay within one unstable 0.y line",
+            )
+            self.assertEqual(maximum[2], 0, msg=f"{label} must end at the next minor")
+        return minimum, maximum
+
+    def _assert_contract_instance(self, payload: dict[str, object], schema: dict[str, object]) -> None:
+        self.assertEqual(
+            set(payload),
+            {
+                "contractSchemaId",
+                "contractFormat",
+                "contractFormatVersion",
+                "canonical",
+                "protocol",
+                "supportBaseline",
+                "templateSet",
+                "adapterCompatibilityStatus",
+                "adapters",
+            },
+        )
+        self.assertEqual(payload["contractSchemaId"], schema["$id"])
+        self.assertEqual(payload["contractFormat"], "goal-governance.skills-consumer-contract")
+        self._semver_core(payload["contractFormatVersion"], "contractFormatVersion")
+
+        canonical = payload["canonical"]
+        self.assertIsInstance(canonical, dict)
+        assert isinstance(canonical, dict)
+        self.assertEqual(
+            canonical,
+            {
+                "owner": "docs/contracts",
+                "manifestPath": "docs/contracts/skills-consumer-contract.json",
+                "schemaPath": "docs/contracts/skills-consumer-contract.schema.json",
+            },
+        )
+
+        protocol = payload["protocol"]
+        self.assertIsInstance(protocol, dict)
+        assert isinstance(protocol, dict)
+        self.assertEqual(set(protocol), {"version", "versionPolicy", "publicContract"})
+        protocol_version = self._semver_core(protocol["version"], "protocol.version")
+        self.assertEqual(protocol["versionPolicy"], "semver-2.0.0")
+        public_contract = protocol["publicContract"]
+        self.assertIsInstance(public_contract, dict)
+        assert isinstance(public_contract, dict)
+        self.assertEqual(
+            public_contract,
+            {
+                "goalTemplateFiles": [
+                    "00-meta.md",
+                    "01-decision.md",
+                    "02-execution.md",
+                    "03-audit.md",
+                ],
+                "requiredFrontmatter": [
+                    "status",
+                    "created",
+                    "updated",
+                    "parent",
+                    "version",
+                ],
+                "hostEntrypoints": ["govern", "audit"],
+            },
+        )
+
+        support_baseline = payload["supportBaseline"]
+        self.assertIsInstance(support_baseline, dict)
+        assert isinstance(support_baseline, dict)
+        self.assertEqual(
+            set(support_baseline),
+            {"firstSupportedProtocol", "previousSupportedProtocol"},
+        )
+        first_supported = self._semver_core(
+            support_baseline["firstSupportedProtocol"],
+            "supportBaseline.firstSupportedProtocol",
+        )
+        self.assertLessEqual(first_supported, protocol_version)
+        previous_supported = support_baseline["previousSupportedProtocol"]
+        if previous_supported is not None:
+            previous = self._semver_core(
+                previous_supported,
+                "supportBaseline.previousSupportedProtocol",
+            )
+            self.assertLess(previous, first_supported)
+
+        template_set = payload["templateSet"]
+        self.assertIsInstance(template_set, dict)
+        assert isinstance(template_set, dict)
+        self.assertEqual(
+            set(template_set),
+            {"version", "implementsProtocol", "canonicalPath", "mirrorPath"},
+        )
+        self._semver_core(template_set["version"], "templateSet.version")
+        minimum, maximum = self._assert_semver_range(
+            template_set["implementsProtocol"], "templateSet.implementsProtocol"
+        )
+        self.assertLessEqual(minimum, protocol_version)
+        self.assertLess(protocol_version, maximum)
+        self.assertEqual(template_set["canonicalPath"], "docs/templates/goal-folder")
+        self.assertEqual(template_set["mirrorPath"], "skills/templates/goal-folder")
+
+        status = payload["adapterCompatibilityStatus"]
+        self.assertIn(status, {"I-002-pending", "declared", "verified"})
+        adapters = payload["adapters"]
+        self.assertIsInstance(adapters, list)
+        assert isinstance(adapters, list)
+        if status == "I-002-pending":
+            self.assertEqual(adapters, [])
+        else:
+            self.assertTrue(adapters, msg=f"{status} requires declared adapters")
+        adapter_ids = [adapter.get("id") for adapter in adapters if isinstance(adapter, dict)]
+        self.assertEqual(len(adapter_ids), len(set(adapter_ids)), msg="adapter ids must be unique")
+        for adapter in adapters:
+            self.assertIsInstance(adapter, dict)
+            assert isinstance(adapter, dict)
+            self.assertEqual(
+                set(adapter),
+                {
+                    "id",
+                    "supportsProtocol",
+                    "entrypoints",
+                    "supportCommitment",
+                    "verificationStatus",
+                },
+            )
+            self.assertRegex(str(adapter["id"]), r"^[a-z0-9][a-z0-9-]*$")
+            adapter_minimum, adapter_maximum = self._assert_semver_range(
+                adapter["supportsProtocol"], f"adapter {adapter['id']} supportsProtocol"
+            )
+            self.assertLessEqual(adapter_minimum, protocol_version)
+            self.assertLess(protocol_version, adapter_maximum)
+            self.assertTrue(
+                set(adapter["entrypoints"]).issubset(
+                    set(public_contract["hostEntrypoints"])
+                )
+            )
+            self.assertIn(adapter["supportCommitment"], {"declared", "committed"})
+            self.assertIn(adapter["verificationStatus"], {"unverified", "verified"})
+        if status == "verified":
+            self.assertTrue(
+                all(adapter["verificationStatus"] == "verified" for adapter in adapters),
+                msg="verified status requires every declared adapter to be verified",
+            )
+
+    def test_core_contracts_are_mirrored_by_skills_package(self) -> None:
+        """The distributed contract must remain a byte-for-byte mirror of canonical docs."""
+        if not CORE_CONTRACTS.is_dir():
+            self.skipTest("canonical docs/contracts layer is not present in a standalone Skills copy")
+        self.assertTrue(SKILLS_CONTRACTS.is_dir(), f"missing Skills contract mirror: {SKILLS_CONTRACTS}")
+        for relative_name in CONTRACT_MIRROR_FILES:
+            canonical = CORE_CONTRACTS / relative_name
+            mirror = SKILLS_CONTRACTS / relative_name
+            self.assertTrue(canonical.is_file(), f"missing canonical contract: {canonical}")
+            self.assertTrue(mirror.is_file(), f"missing Skills contract mirror: {mirror}")
+            self.assertEqual(
+                canonical.read_bytes(),
+                mirror.read_bytes(),
+                f"contract mirror drift: {canonical} != {mirror}",
+            )
+
+    def test_contract_schema_manifest_and_fixtures_enforce_d002_semantics(self) -> None:
+        """Validate D-002/D-003 schema identity, fields, and boundary fixtures."""
+        schema = self._load_json(CORE_CONTRACTS / "skills-consumer-contract.schema.json")
+        self.assertEqual(schema["$schema"], "https://json-schema.org/draft/2020-12/schema")
+        self.assertEqual(schema["$id"], CONTRACT_SCHEMA_ID)
+        self.assertFalse(schema["additionalProperties"])
+        self.assertEqual(
+            set(schema["required"]),
+            {
+                "contractSchemaId",
+                "contractFormat",
+                "contractFormatVersion",
+                "canonical",
+                "protocol",
+                "supportBaseline",
+                "templateSet",
+                "adapterCompatibilityStatus",
+                "adapters",
+            },
+        )
+        properties = schema["properties"]
+        self.assertEqual(properties["contractSchemaId"]["const"], CONTRACT_SCHEMA_ID)
+        self.assertEqual(
+            properties["protocol"]["properties"]["versionPolicy"]["const"],
+            "semver-2.0.0",
+        )
+        self.assertEqual(
+            schema["allOf"][0]["then"]["properties"]["adapters"]["maxItems"],
+            0,
+        )
+        self.assertEqual(
+            set(schema["properties"]["supportBaseline"]["required"]),
+            {"firstSupportedProtocol", "previousSupportedProtocol"},
+        )
+        self.assertEqual(
+            set(schema["$defs"]["adapter"]["required"]),
+            {
+                "id",
+                "supportsProtocol",
+                "entrypoints",
+                "supportCommitment",
+                "verificationStatus",
+            },
+        )
+
+        self._assert_contract_instance(
+            self._load_json(CORE_CONTRACTS / "skills-consumer-contract.json"), schema
+        )
+        for name in ("manifest-0.1.0.json", "declared-adapter-0.1.0.json"):
+            self._assert_contract_instance(
+                self._load_json(CORE_CONTRACTS / "fixtures" / "valid" / name), schema
+            )
+        for name in (
+            "missing-contract-schema-id.json",
+            "missing-support-baseline.json",
+            "declared-adapter-without-commitment.json",
+            "reversed-protocol-range.json",
+            "unstable-cross-minor-range.json",
+        ):
+            with self.assertRaises(AssertionError, msg=name):
+                self._assert_contract_instance(
+                    self._load_json(CORE_CONTRACTS / "fixtures" / "invalid" / name),
+                    schema,
+                )
+
+    def test_d003_declares_baseline_and_tiered_adapter_scope(self) -> None:
+        """D-003 separates committed support from declared-but-unverified scope."""
+        manifest = self._load_json(CORE_CONTRACTS / "skills-consumer-contract.json")
+        self.assertEqual(manifest["contractFormatVersion"], "0.2.0")
+        self.assertEqual(
+            manifest["supportBaseline"],
+            {
+                "firstSupportedProtocol": "0.1.0",
+                "previousSupportedProtocol": None,
+            },
+        )
+        self.assertEqual(manifest["adapterCompatibilityStatus"], "declared")
+        adapters = manifest["adapters"]
+        self.assertIsInstance(adapters, list)
+        assert isinstance(adapters, list)
+        by_id = {adapter["id"]: adapter for adapter in adapters}
+        self.assertEqual(len(by_id), len(adapters), msg="adapter ids must be unique")
+        self.assertEqual(
+            set(by_id),
+            {"claude-code-cli", "grok-build-cli", "github-copilot-vscode"},
+        )
+        self.assertEqual(by_id["claude-code-cli"]["supportCommitment"], "committed")
+        self.assertEqual(
+            by_id["github-copilot-vscode"]["supportCommitment"], "committed"
+        )
+        self.assertEqual(by_id["grok-build-cli"]["supportCommitment"], "declared")
+        for adapter in by_id.values():
+            self.assertEqual(
+                adapter["supportsProtocol"],
+                {"minInclusive": "0.1.0", "maxExclusive": "0.2.0"},
+            )
+            self.assertEqual(adapter["entrypoints"], ["govern", "audit"])
+            self.assertEqual(adapter["verificationStatus"], "unverified")
+        self.assertNotIn("web-readonly-parser", by_id)
 
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""
@@ -284,6 +593,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(sh, r"00-govern-orchestrator|/govern")
         self.assertRegex(ps1, r"00-govern-orchestrator|/govern")
 
+    def test_install_all_ships_contract_mirror(self) -> None:
+        sh = INSTALL_SH.read_text(encoding="utf-8")
+        ps1 = INSTALL_PS1.read_text(encoding="utf-8")
+        self.assertIn("CONTRACTS_SRC", sh)
+        self.assertIn('"$SKILLS_DIR/contracts"', sh)
+        self.assertIn("$ContractsSrc", ps1)
+        self.assertIn("'contracts'", ps1)
+
     def test_install_default_slash_is_govern_and_audit_opt_in_primitives(self) -> None:
         """Default install: /govern + /audit; form-fill primitives stay opt-in."""
         sh = INSTALL_SH.read_text(encoding="utf-8")
@@ -358,6 +675,16 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertEqual(digest, sha256(mirror.read_bytes()).hexdigest().upper())
             self.assertIn(name, readme)
             self.assertIn(digest, readme)
+        for name in (
+            "skills-consumer-contract.schema.json",
+            "skills-consumer-contract.json",
+        ):
+            canonical = CORE_CONTRACTS / name
+            mirror = SKILLS_CONTRACTS / name
+            digest = sha256(canonical.read_bytes()).hexdigest().upper()
+            self.assertEqual(digest, sha256(mirror.read_bytes()).hexdigest().upper())
+            self.assertIn(name, readme)
+            self.assertIn(digest, readme)
 
     def test_portability_skills_pkg_and_optional_architecture(self) -> None:
         """Reusable package must not require ./skills name or architecture/."""
@@ -396,6 +723,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"Claude|\.claude")
         self.assertRegex(text, r"Grok|\.grok")
         self.assertIn("SKILL.md", text)
+        self.assertIn("contracts/", text)
 
     def test_skills_readme_default_install_documents_govern_and_audit(self) -> None:
         """F-017 guard: README manual/script sections must match default govern+audit surface."""
@@ -480,6 +808,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("install.ps1", text)
         self.assertIn("audit", text)
         self.assertIn("govern", text)
+        self.assertIn("contracts", text)
 
     @unittest.skipUnless(sys.platform.startswith("win"), "F-018 PS1 install smoke is Windows-first")
     def test_install_ps1_isolated_all_produces_govern_and_audit(self) -> None:
@@ -532,6 +861,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 target / ".github" / "prompts" / "audit.prompt.md",
                 skills_dest / "prompts" / "00-govern-orchestrator.md",
                 skills_dest / "prompts" / "05-independent-audit.md",
+                skills_dest / "contracts" / "skills-consumer-contract.schema.json",
+                skills_dest / "contracts" / "skills-consumer-contract.json",
             ]
             missing = [str(p) for p in required if not p.is_file()]
             self.assertEqual(missing, [], msg=f"missing install outputs: {missing}")
@@ -550,6 +881,15 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
             self.assertIn("00-govern-orchestrator", govern)
             self.assertIn("05-independent-audit", audit)
+            for name in (
+                "skills-consumer-contract.schema.json",
+                "skills-consumer-contract.json",
+            ):
+                self.assertEqual(
+                    (skills_dest / "contracts" / name).read_bytes(),
+                    (SKILLS_CONTRACTS / name).read_bytes(),
+                    msg=f"installed contract drift: {name}",
+                )
 
     @unittest.skipUnless(sys.platform.startswith("win"), "advanced install smoke is Windows-first")
     def test_install_ps1_with_primitives_keeps_information_readiness(self) -> None:

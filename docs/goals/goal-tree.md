@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.6.9
+version: 0.9.0
 ---
 
 # Goal Tree
@@ -14,7 +14,7 @@ version: 0.6.9
 
 ## 树状结构
 
-> 根目标当前采用“三层交付、一个真相源”：核心方法论与模板、Skills 消费适配器、Web 人类工作台。核心 canonical 模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 为分发镜像。
+> 根目标当前采用“三层交付、一个真相源”：核心方法论与模板、Skills 消费适配器、Web 人类工作台。核心 canonical 模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 为分发镜像。阶段 5 已按 D-010 由 GOAL-008 承接。
 
 ```text
 GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议与消费工具 [active]
@@ -23,7 +23,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-004-core-data-model · 实现核心数据模型与 Goal 基础管理 [done 100%]
 ├── GOAL-005-skills-closed-loop-audit · Skills 治理闭环与交叉审计 [done 100%]
 ├── GOAL-006-core-methodology-template-productization · 核心方法论、文档协议与 canonical 模板产品化 [done 100%]
-└── GOAL-007-information-readiness-governance · 信息就绪与未知项治理 [done 100%]
+├── GOAL-007-information-readiness-governance · 信息就绪与未知项治理 [done 100%]
+└── GOAL-008-skills-consumer-adapter-release-consistency · Skills 消费适配器跨宿主/跨版本发布一致性 [active 20%]
 ```
 
 ## 状态总览
@@ -37,8 +38,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | GOAL-001-main-vision | done | 100% | [GOAL-005-skills-closed-loop-audit/](GOAL-005-skills-closed-loop-audit/) |
 | GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | GOAL-001-main-vision | done | 100% | [GOAL-006-core-methodology-template-productization/](GOAL-006-core-methodology-template-productization/) |
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | GOAL-001-main-vision | done | 100% | [GOAL-007-information-readiness-governance/](GOAL-007-information-readiness-governance/) |
+| GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | active | 20% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
 
-当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」的后续立项。GOAL-007 已完成 P-005、canonical/mirror 模板、Skills 门禁与契约测试，并由根目标 A-005 关闭 A-004 / F-004；阶段 5 仍未启动。`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
+当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」。GOAL-008 为 `active / 20%`：I-001 已由 canonical schema/manifest、Skills 镜像、正反 fixtures 与安装/standalone 测试验证为 `verified`，可放行其方案与发布范围冻结门禁；I-002 仍为 `required / collecting` 并阻断受影响实施，I-003 与 `F-005` 继续阻断阶段验收与关门；`F-006` 保持非阻塞 `recommended / open`。`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
 
 ## 状态图例
 
@@ -53,6 +55,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-008`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-009`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

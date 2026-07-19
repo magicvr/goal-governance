@@ -49,7 +49,7 @@ Options:
                            and default slashes -> govern + audit
   -WithPrimitives / --with-primitives
                            Also install advanced Copilot form-fill slash wrappers. Opt-in only.
-  -All / --all             Install Claude + Grok + Copilot + prompts/templates under -SkillsDir
+  -All / --all             Install Claude + Grok + Copilot + prompts/templates/contracts under -SkillsDir
   -SkillsDir / --skills-dir DIR
                            Skills package / destination directory (default: .\skills)
   -Help / --help           Show this help
@@ -60,6 +60,7 @@ Behavior:
   - Default Copilot slash surface: /govern + /audit
   - Core orchestrator: prompts\00-govern-orchestrator.md
   - Cross-audit core: prompts\05-independent-audit.md
+  - Compatibility contract mirror: contracts\skills-consumer-contract.json
   - Offline only; prompts before overwriting
 
 Examples:
@@ -167,6 +168,7 @@ Next steps:
   3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
      - Core: $SkillsDir\prompts\00-govern-orchestrator.md
      - Cross: $SkillsDir\prompts\05-independent-audit.md
+     - Contract: $SkillsDir\contracts\skills-consumer-contract.json
      - Claude: /govern + /audit under .\.claude\skills\
      - Grok:   /govern + /audit under .\.grok\skills\
      - Copilot: govern.prompt.md + audit.prompt.md
@@ -238,12 +240,16 @@ $CopilotSrc = Join-Path $PackageRoot 'install\copilot\copilot-instructions.md'
 $CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
 $TemplatesSrc = Join-Path $PackageRoot 'templates'
+$ContractsSrc = Join-Path $PackageRoot 'contracts'
 
 if (-not (Test-Path -LiteralPath $PromptsSrc -PathType Container)) {
     Write-Err "Missing package directory: $PromptsSrc"
 }
 if (-not (Test-Path -LiteralPath $TemplatesSrc -PathType Container)) {
     Write-Err "Missing package directory: $TemplatesSrc"
+}
+if (-not (Test-Path -LiteralPath $ContractsSrc -PathType Container)) {
+    Write-Err "Missing package directory: $ContractsSrc"
 }
 if (-not (Test-Path -LiteralPath $TargetDir -PathType Container)) {
     Write-Err "Current working directory is not a directory: $TargetDir"
@@ -330,6 +336,7 @@ if ($installExtras) {
     }
     Copy-DirMerge -Source $PromptsSrc -Destination (Join-Path $SkillsDirResolved 'prompts') -Label 'prompts'
     Copy-DirMerge -Source $TemplatesSrc -Destination (Join-Path $SkillsDirResolved 'templates') -Label 'templates'
+    Copy-DirMerge -Source $ContractsSrc -Destination (Join-Path $SkillsDirResolved 'contracts') -Label 'contracts'
 }
 
 Show-NextSteps -TargetDir $TargetDir -SkillsDir $SkillsDirResolved -PackageRoot $PackageRoot

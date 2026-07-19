@@ -21,6 +21,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         )
         for phrase in (
             "docs/templates/",
+            "docs/contracts/",
             "docs/goals/goal-tree.md",
             "GOAL-001",
             "git init",
@@ -38,11 +39,13 @@ class StandaloneBootstrapTests(unittest.TestCase):
         entry = (REPO_ROOT / "docs" / "README.md").read_text(encoding="utf-8")
         for phrase in (
             "核心包版本",
-            "0.5.0",
+            "0.6.0",
             "canonical → Skills",
             "SHA-256",
             "docs/templates/goal-folder/",
             "skills/templates/goal-folder/",
+            "docs/contracts/",
+            "skills/contracts/",
         ):
             self.assertIn(phrase, entry)
 
@@ -85,6 +88,12 @@ class StandaloneBootstrapTests(unittest.TestCase):
                     encoding="utf-8"
                 ),
             )
+            contract_manifest = target / "docs" / "contracts" / "skills-consumer-contract.json"
+            contract_schema = target / "docs" / "contracts" / "skills-consumer-contract.schema.json"
+            self.assertTrue(contract_manifest.is_file())
+            self.assertTrue(contract_schema.is_file())
+            self.assertIn("contractSchemaId", contract_manifest.read_text(encoding="utf-8"))
+            self.assertIn('"$id"', contract_schema.read_text(encoding="utf-8"))
             self.assertFalse((target / "skills").exists())
             self.assertFalse((target / "web").exists())
             result = subprocess.run(
@@ -112,6 +121,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         shutil.copy2(source_docs / "README.md", target / "docs" / "README.md")
         shutil.copytree(source_docs / "architecture", target / "docs" / "architecture")
         shutil.copytree(source_docs / "templates", target / "docs" / "templates")
+        shutil.copytree(source_docs / "contracts", target / "docs" / "contracts")
 
     @staticmethod
     def _frontmatter(fields: dict[str, str], body: str) -> str:

@@ -49,8 +49,8 @@ Options:
                         and default slashes → govern.prompt.md + audit.prompt.md
   --with-primitives     Also install advanced Copilot slash wrappers (new-goal, …).
                         Opt-in only — avoids form-menu UX.
-  --all                 Install Claude + Grok + Copilot + ensure prompts/ and
-                        templates/ under --skills-dir; primary entry remains /govern
+  --all                 Install Claude + Grok + Copilot + ensure prompts/, templates/ and
+                        contracts/ under --skills-dir; primary entry remains /govern
   --skills-dir DIR      Skills package / destination directory (default: ./skills)
                         Relative paths are resolved from the current working directory.
   --help, -h            Show this help
@@ -63,7 +63,7 @@ Behavior:
   - Advanced form-filling slashes are NOT installed unless --with-primitives
   - Core orchestrator: prompts/00-govern-orchestrator.md
   - Cross-audit core: prompts/05-independent-audit.md
-  - prompts/ and templates/ are placed under --skills-dir (with --all)
+  - prompts/, templates/ and contracts/ are placed under --skills-dir (with --all)
   - Source files are read from the package next to this script
   - Prompts before overwriting existing files
   - Offline only; no network calls
@@ -149,6 +149,7 @@ Next steps:
   3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
      - Core: $SKILLS_DIR/prompts/00-govern-orchestrator.md
      - Cross: $SKILLS_DIR/prompts/05-independent-audit.md
+     - Contract: $SKILLS_DIR/contracts/skills-consumer-contract.json
      - Claude: /govern + /audit under ./.claude/skills/
      - Grok:   /govern + /audit under ./.grok/skills/
      - Copilot: govern.prompt.md + audit.prompt.md
@@ -235,9 +236,11 @@ COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
 TEMPLATES_SRC="$PACKAGE_ROOT/templates"
+CONTRACTS_SRC="$PACKAGE_ROOT/contracts"
 
 [[ -d "$PROMPTS_SRC" ]] || die "Missing package directory: $PROMPTS_SRC"
 [[ -d "$TEMPLATES_SRC" ]] || die "Missing package directory: $TEMPLATES_SRC"
+[[ -d "$CONTRACTS_SRC" ]] || die "Missing package directory: $CONTRACTS_SRC"
 [[ -d "$TARGET_DIR" ]] || die "Current working directory is not a directory: $TARGET_DIR"
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
@@ -300,6 +303,7 @@ if [[ "$INSTALL_EXTRAS" -eq 1 ]]; then
   mkdir -p "$SKILLS_DIR"
   copy_dir_merge "$PROMPTS_SRC" "$SKILLS_DIR/prompts" "prompts"
   copy_dir_merge "$TEMPLATES_SRC" "$SKILLS_DIR/templates" "templates"
+  copy_dir_merge "$CONTRACTS_SRC" "$SKILLS_DIR/contracts" "contracts"
 fi
 
 print_next_steps

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 目录布局
@@ -22,6 +22,9 @@ goal-governance/
 │   ├── templates/
 │   │   ├── README.md            # 核心模板层说明
 │   │   └── goal-folder/         # canonical 五件套模板
+│   ├── contracts/               # canonical 机读协议/模板版本与兼容声明
+│   │   ├── skills-consumer-contract.schema.json
+│   │   └── skills-consumer-contract.json
 │   ├── architecture/
 │   │   ├── overview.md
 │   │   ├── principles.md     # 治理原则（元规则）
@@ -31,6 +34,7 @@ goal-governance/
 ├── skills/                    # AI/Agent 消费适配器与分发包
 │   ├── prompts/
 │   ├── templates/             # docs/templates 的同步镜像
+│   ├── contracts/             # docs/contracts 的同步镜像
 │   └── install.*
 └── web/
     ├── main.py
@@ -45,3 +49,4 @@ goal-governance/
 - `docs/goals/GOAL-*` 之间**不得**再嵌套目标目录。
 - 新目标只新增同级文件夹，并改 `parent` + `goal-tree.md`。
 - `docs/templates/goal-folder/` 是核心 canonical 模板；`skills/templates/goal-folder/` 只用于 Skills 离线分发，不保存目标状态。
+- `docs/contracts/` 是消费适配器版本与兼容声明的 canonical；`skills/contracts/` 只用于离线分发，必须逐字节同步且不得另立版本真相。

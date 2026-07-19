@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.4.0
+version: 0.5.0
 role: primary
 ---
 
@@ -81,6 +81,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 - 更新执行 → `<SKILLS_PKG>/prompts/03-update-execution.md`
 - 写审计 / 自审 / 响应记录 → `<SKILLS_PKG>/prompts/04-write-audit.md`
 - 交叉审计（独立入口用）→ `<SKILLS_PKG>/prompts/05-independent-audit.md`（**本编排器不调用自己当独立审**）
+- 消费适配器契约（若包内存在）→ `<SKILLS_PKG>/contracts/skills-consumer-contract.json`。它是 `docs/contracts/` 的分发镜像；扫描跨宿主/跨版本一致性时可读取，但不得在镜像中另立版本或兼容真相。
 
 # 流程
 
@@ -90,8 +91,9 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 2. 若有 goal-tree：读取 id、title、parent、status、progress。
 3. 按需打开未关门目标的 `00-meta`、`01-decision`（含信息需求）、近期 `02-execution` / **`03-audit`（全部 A-00N）**。
 4. 定位 **SKILLS_PKG**，记下实际目录名。
-5. 记录仓库**观察信号**（信号用于汇报，结论以前表默认策略 + 用户确认为准）。
-6. 吸收用户本轮意图（总目的、焦点 ID、想关门、要响应某次审计等）。
+5. 若焦点是消费适配器或发布一致性，检查包内 `contracts/skills-consumer-contract.json` 是否存在，并区分其中已声明、已验证与仍待信息项关闭的范围。
+6. 记录仓库**观察信号**（信号用于汇报，结论以前表默认策略 + 用户确认为准）。
+7. 吸收用户本轮意图（总目的、焦点 ID、想关门、要响应某次审计等）。
 
 ## 1b. 意见台账（焦点目标）
 
