@@ -1,20 +1,27 @@
 ---
 id: GOAL-008-skills-consumer-adapter-release-consistency
 doc: execution
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-20
-version: 1.5.0
+version: 1.6.0
 ---
 
-### 2026-07-20 - Install GitHub Copilot CLI and complete CLI replay
+### 2026-07-20 - Install GitHub Copilot CLI and complete CLI replay (历史记录)
 
 - Installed with `npm install -g @github/copilot`. Node `v22.17.0` and npm `10.9.2` were present; `Get-Command copilot` points to `%APPDATA%/npm/copilot.ps1`; `copilot version` returns `GitHub Copilot CLI 1.0.71`. Raw installation facts are recorded in `attachments/copilot-cli-install-2026-07-20.md`.
 - The non-interactive `-p/--prompt` surface was used with a read-only runner. File writes were denied and no VS Code or IDE plugin was used. Authentication was supplied to the process through `gh auth token` and is not stored in evidence.
 - `/govern` and `/audit` both passed through `scripts/capture_runtime_evidence.py` with exit `0` and observed markers. JSON, stdout/stderr, and SHA-256 digests are recorded at `attachments/runtime/copilot-cli-govern-2026-07-20.json` and `attachments/runtime/copilot-cli-audit-2026-07-20.json`.
 - Canonical/mirror contracts, compatibility matrix, negative fixtures, tests, and `skills/README.md` now use `github-copilot-cli`. The compatibility report is still `coverage: pending` with the Web parser CI replay as the uncovered cell.
 - Copilot's two I-002 cells are closed for current runtime evidence, but I-002, I-003, and upstream F-005 remain open because Web CI, ready coverage, a clean candidate, and an authorized annotated release tag are still missing.
+
+### 2026-07-20 - CI replay, annotated candidate, and close-out
+
+- GitHub Actions run `29700051047` replayed the workflow on commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8`; Ubuntu and Windows jobs both passed the contract, standalone, release-tool, Web parser, and whitespace checks.
+- The run uploaded `skills-release-evidence-ubuntu` (artifact `8446173390`, archive SHA-256 `bb21872af6e0fcf2f1bd2c039c4a5da2fd64230800d17bafd199b3bfb08c56ff`) and `skills-release-evidence-windows` (artifact `8446177156`, archive SHA-256 `0920a213097d59e3105ccdc3ca4fe4170d8ce2762b65e888401106403c23e931`). Detailed report digests are recorded in `attachments/runtime/web-parser-ci-replay-2026-07-20.json`.
+- Created and pushed annotated `v0.7.0` at the same commit. `scripts/release_evidence.py --mode release --tag v0.7.0 --run-checks --include-web` passed with `releaseStatus: release-candidate`, `coverageStatus: ready-for-release-evidence`, `checksPassed: true`, and a clean working tree. Summary: `attachments/runtime/release-candidate-v0.7.0-2026-07-20.json`.
+- I-002 and I-003 are verified; GOAL-001 F-005 is responded to by the root close-out entry. No VS Code plugin evidence participates in the final candidate.
 
 # 执行记录 · GOAL-008
 

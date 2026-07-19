@@ -1,11 +1,11 @@
 ---
 id: GOAL-008-skills-consumer-adapter-release-consistency
 doc: audit
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-20
-version: 1.6.0
+version: 1.7.0
 ---
 
 ## A-014 - Independent replay: GitHub Copilot CLI 1.0.71 (2026-07-20)
@@ -21,18 +21,38 @@ Both CLI artifacts have `verdict: pass`, exit `0`, and observed markers. The rep
 - **Open required**: Web parser CI replay remains `pending-ci-replay`; I-002 remains `collecting / required`.
 - **Open required**: I-003 and upstream GOAL-001 F-005 still lack ready coverage, a clean candidate archive, and an authorized annotated release tag. GOAL-008 is not eligible for `done`.
 
-## A-015 - Response A-014: CLI evidence entered in the governance ledger (2026-07-20)
+## A-015 - Response A-014: CLI evidence entered in the governance ledger (历史响应，2026-07-20)
 
 - **source**: self
 - **auditor**: Codex `/govern`
 - **scope**: response to A-014 and the user request to close GOAL-008
 - **verdict**: conditional
 
-The CLI replays are accepted as current Copilot runtime evidence and the VS Code plugin is removed from the candidate matrix. Existing self and independent opinions agree; no P-004 conflict is present. Required Web CI and release-identity findings remain open, so status stays `active / 20%` and no close-out transition is claimed.
+The CLI replays were accepted as current Copilot runtime evidence and the VS Code plugin was removed from the candidate matrix. At that audit point, Web CI and release identity were still open; A-016 records their later closure.
+
+## A-016 - Self close-out audit (2026-07-20)
+
+- **source**: self
+- **auditor**: Codex `/govern`
+- **scope**: GOAL-008 I-001/I-002/I-003, A-014 response, release-candidate and upstream F-005 close-out
+- **verdict**: pass
+
+The final candidate is commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8`, bound to annotated tag `v0.7.0`. GitHub Actions run `29700051047` passed on Ubuntu and Windows, uploaded both platform artifacts, and reported `ready-for-release-evidence` with no uncovered cells. The CLI-only Copilot `1.0.71` `/govern` and `/audit` evidence remains pass and does not use VS Code.
+
+| Gate / finding | Final status | Closing evidence |
+|---------------|--------------|------------------|
+| I-001 | **verified** | Canonical/mirror schema, fixtures and contract tests. |
+| I-002 / A-014 required Web gap | **verified / closed** | `attachments/runtime/web-parser-ci-replay-2026-07-20.json`; run `29700051047`; six CLI cells plus Web CI cell are covered. |
+| I-003 / A-015 release-identity gap | **verified / closed** | `attachments/runtime/release-candidate-v0.7.0-2026-07-20.json`; release mode checks passed with clean tree and `candidateRevision: v0.7.0`. |
+| GOAL-001 F-005 | **ready for root response** | All GOAL-008 required evidence is now present; root response is recorded in GOAL-001 A-013. |
+
+There are no open required findings and no accepted residual risk. GOAL-008 transitions to `done / 100%`; this close-out does not claim stage 7 or GOAL-001 completion.
 
 # 审计 · GOAL-008
 
-## 信息就绪核对
+The original sections below preserve the historical implementation review. The final close-out ledger above is authoritative for current gate status.
+
+## 信息就绪核对（历史实施快照）
 
 | ID | 级别 | 状态 | 影响门禁 | 当前证据 | 结论 |
 |----|------|------|----------|----------|------|
@@ -53,7 +73,7 @@ The CLI replays are accepted as current Copilot runtime evidence and the VS Code
 | [A-008](../GOAL-001-main-vision/03-audit.md#a-008--合并响应-a-006--a-007-与阶段-5-立项门禁2026-07-19) | self | conditional | 允许立项；I-001～I-003 collecting，F-005 仍开放必改 |
 | [A-009](../GOAL-001-main-vision/03-audit.md) | self | conditional | 当前最低可用范围通过；F-005 与 I-002 / I-003 保持 `deferred required`，不关门 |
 
-## 阶段性复盘
+## 阶段性复盘（历史实施快照）
 
 ### 成果
 

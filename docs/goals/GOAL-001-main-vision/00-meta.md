@@ -4,11 +4,15 @@ title: 交付可复用的目标治理方法论、文档协议与消费工具
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-19
-version: 0.2.8
+updated: 2026-07-20
+version: 0.2.9
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
+
+## 2026-07-20 · 阶段 5 关门交接
+
+GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 100%`。I-001～I-003 与 F-005 均有关闭证据：GitHub Copilot CLI `1.0.71` 提供当前 Copilot runtime replay，GitHub Actions run `29700051047` 绑定候选 commit `8a33ecd...` 完成 Ubuntu/Windows Web replay，annotated `v0.7.0` 通过 release-candidate checks。GOAL-001 仍保持 `active`；阶段 6 Web 深化可按路线图另行立项，F-006 继续为非阻塞 recommended。
 
 ## 概述
 
@@ -34,7 +38,7 @@ version: 0.2.8
 - 面向人浏览目标、查看决策/执行/审计并诊断文档树。
 - 当前阶段保持只读，从 `docs/goals/` 加载数据；任何未来写入都必须遵守同一协议并另立可审计子目标。
 
-## 成功标准（高层）
+## 成功标准（高层，历史快照）
 
 | 标准 | 当前状态 |
 |------|----------|
@@ -44,7 +48,7 @@ version: 0.2.8
 | 三个交付面共享同一版本化协议，并有一致性/发布证据 | 进行中（矩阵、报告与 rehearsal 已形成；coverage pending / 3 uncovered，尚无 annotated tag） |
 | 至少一个子目标走完可审计的阶段性闭环 | 已由既有 GOAL-003、GOAL-004、GOAL-005 留有证据 |
 
-## 高层路线图
+## 高层路线图（历史快照）
 
 > 既有 GOAL-002～005 是本次重基线前完成的基础与验证历史；它们不被改写为核心产品已经关门。后续按阶段立项，先路线图、后创建细粒度子目标。
 
@@ -66,7 +70,7 @@ version: 0.2.8
 
 [A-004](03-audit.md) 发现当前闭环只处理范围和实施质量，未把“尚未掌握哪些必需信息、何时必须掌握”写成协议。该 required 缺口已由 [GOAL-007-information-readiness-governance](../GOAL-007-information-readiness-governance/00-meta.md) 完成，并由 [A-005](03-audit.md#a-005--响应-a-004--f-004-信息就绪协议缺口2026-07-19) 关闭 F-004；它是阶段 5 前的核心协议修订，不把历史阶段 4 交付重写为未完成。
 
-## 子目标
+## 子目标（历史快照）
 
 | ID | 标题 | 状态 |
 |----|------|------|

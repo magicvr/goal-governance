@@ -2,16 +2,16 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.15.0
+version: 0.16.0
 ---
 
 # Goal Tree
 
-## 2026-07-20 - GOAL-008 evidence synchronization
+## 2026-07-20 - GOAL-008 close-out
 
-GOAL-008 remains `active / 20%`. The current Copilot candidate is GitHub Copilot CLI `1.0.71`, with CLI-only `/govern` and `/audit` runtime evidence recorded under the goal attachments. The VS Code plugin is historical context and is not used for this replay. The matrix now has only the Web parser CI replay uncovered; I-002, I-003, and upstream F-005 remain required gates, so the tree status and root close-out do not change.
+GOAL-008 is now `done / 100%`. GitHub Copilot CLI `1.0.71` supplies the CLI-only `/govern` and `/audit` runtime evidence; the VS Code plugin is historical context only. GitHub Actions run `29700051047` completed the Web parser replay on candidate commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8`, and annotated `v0.7.0` plus release-candidate evidence close I-002, I-003 and upstream F-005. GOAL-001 remains active for later stages.
 
 > 所有目标平铺存放在本目录；层级仅通过各目标 `00-meta.md` 的 `parent` 字段维护。  
 > **新建、修改状态或调整 parent 后，必须同步更新本文件。**
@@ -28,7 +28,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-005-skills-closed-loop-audit · Skills 治理闭环与交叉审计 [done 100%]
 ├── GOAL-006-core-methodology-template-productization · 核心方法论、文档协议与 canonical 模板产品化 [done 100%]
 ├── GOAL-007-information-readiness-governance · 信息就绪与未知项治理 [done 100%]
-└── GOAL-008-skills-consumer-adapter-release-consistency · Skills 消费适配器跨宿主/跨版本发布一致性 [active 20%]
+└── GOAL-008-skills-consumer-adapter-release-consistency · Skills 消费适配器跨宿主/跨版本发布一致性 [done 100%]
 ```
 
 ## 状态总览
@@ -42,9 +42,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-005-skills-closed-loop-audit | Skills 治理闭环与交叉审计 | GOAL-001-main-vision | done | 100% | [GOAL-005-skills-closed-loop-audit/](GOAL-005-skills-closed-loop-audit/) |
 | GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | GOAL-001-main-vision | done | 100% | [GOAL-006-core-methodology-template-productization/](GOAL-006-core-methodology-template-productization/) |
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | GOAL-001-main-vision | done | 100% | [GOAL-007-information-readiness-governance/](GOAL-007-information-readiness-governance/) |
-| GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | active | 20% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
+| GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | done | 100% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
 
-当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」。GOAL-008 保持 `active / 20%`：I-001 已由 canonical schema/manifest、Skills 镜像、正反 fixtures 与安装/standalone 测试验证为 `verified`；Claude Code `2.1.215`、Grok Build `0.2.103` 与 GitHub Copilot CLI `1.0.71` 的 `/govern`、`/audit` 候选单元已有机读 runtime evidence。I-002、I-003 与 `F-005` 仍为 `collecting / required`：Web parser CI replay 仍 `pending-ci-replay`，且尚无 ready coverage、干净候选与可追溯 annotated tag/release。未关闭前阻断阶段 5 发布验收、阶段 6 Web 深化、阶段 7 验收和根目标关门。`F-006` 保持非阻塞 `recommended / open`；`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
+当前根目标已完成阶段 5「Skills 消费适配器与发布一致性」：GOAL-008 为 `done / 100%`，I-001～I-003 与上游 `F-005` 均有关闭证据。候选 commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8` 由 GitHub Actions run `29700051047` 在 Ubuntu/Windows 重放，annotated `v0.7.0` 与 release-candidate summary 相互绑定；Copilot 证据只来自 GitHub Copilot CLI，不使用 VS Code 插件。阶段 6 Web 深化可按根路线图另行推进；GOAL-001 仍为 `active`，`F-006` 保持非阻塞 `recommended / open`，`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
 
 ## 状态图例
 

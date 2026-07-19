@@ -4,13 +4,19 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-19
-version: 0.3.3
+updated: 2026-07-20
+version: 0.3.4
 ---
 
 # 执行记录 · GOAL-001
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
+
+## 2026-07-20 · GOAL-008 阶段 5 关门
+
+- GOAL-008 完成 I-002/I-003：GitHub Actions run `29700051047` 在同一候选 commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8` 通过 Ubuntu/Windows Web parser replay，coverage ready 且无 uncovered 单元。
+- 已创建并推送 annotated `v0.7.0`，release mode evidence checks 全部通过；GOAL-008 `03-audit.md` A-016 与本目标 A-013 关闭阶段 5 required 门禁和 F-005。
+- GOAL-001 保持 `active`，阶段 6 Web 深化未在本次范围内启动。
 
 ## 时间线
 

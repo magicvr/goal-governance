@@ -1,0 +1,28 @@
+{
+  "format": "goal-governance.release-candidate-summary",
+  "formatVersion": "1.0.0",
+  "releaseStatus": "release-candidate",
+  "tag": "v0.7.0",
+  "tagObject": "bf7fc860b274b65a9fc594ed4fa903902cbc8be2",
+  "commit": "8a33ecd21d9183a680c9c0d63e471469f5e515a8",
+  "protocol": {
+    "version": "0.1.0",
+    "contractSha256": "5624f92da6a7ed0bd3b72083619437452daabfa5441adcd52af5e0784ef6177d",
+    "matrixSha256": "193669ce7357ab014d6cf7d3e01a0bdb800513c02f46728d8a632ca87f5162d2",
+    "candidateRevision": "v0.7.0"
+  },
+  "compatibility": {
+    "coverageStatus": "ready-for-release-evidence",
+    "uncovered": [],
+    "mirrorPassed": true
+  },
+  "checks": {
+    "skills-contract-tests": true,
+    "standalone-bootstrap-tests": true,
+    "release-evidence-tool-tests": true,
+    "diff-whitespace": true,
+    "web-parser-tests": true
+  },
+  "releaseEvidenceSha256": "3f430a613e6668901f266433d4cdf4bf74b99ded6818cffe23cf7735c7c91eb0",
+  "generatedFrom": "artifacts/release-evidence-v0.7.0.json"
+}

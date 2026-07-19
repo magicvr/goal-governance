@@ -1,11 +1,11 @@
 ---
 id: GOAL-008-skills-consumer-adapter-release-consistency
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-20
-version: 1.2.0
+version: 1.3.0
 ---
 
 ## D-009 - GitHub Copilot CLI as replay evidence source (2026-07-20)
@@ -20,11 +20,25 @@ version: 1.2.0
 
 This decision does not turn a CLI replay into Web CI, ready coverage, or release-tag evidence. I-002 remains required until the Web parser CI replay is closed.
 
+## D-010 - Close-out candidate identity and evidence binding (2026-07-20)
+
+**Status**: accepted
+
+**Decision**:
+
+1. Close I-002 with the successful GitHub Actions run `29700051047`, whose head SHA is the candidate commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8` and whose Ubuntu/Windows artifacts report ready coverage with no uncovered cells.
+2. Close I-003 with annotated tag `v0.7.0`, matrix `candidateRevision: v0.7.0`, clean-tree release mode evidence, and the release-candidate summary attachment.
+3. Keep the Web surface read-only and keep VS Code plugin material historical; neither expands the current adapter evidence source.
+
+This decision closes GOAL-008 at `done / 100%` and supplies GOAL-001 F-005's response. Stage 6 Web deepening and stage 7 final acceptance remain outside this goal.
+
 # 决策记录 · GOAL-008
 
-## 信息需求与阶段门禁
+## 信息需求与阶段门禁（历史立项台账）
 
 本表承接 [GOAL-001 D-010](../GOAL-001-main-vision/01-decision.md#d-010--p-004-自审裁决与阶段-5-发布一致性立项边界2026-07-19)；权威登记与当前状态见 [00-meta.md](00-meta.md)。
+
+最终状态以 D-010、00-meta final ledger 和 A-016 close-out 为准；下表保留实施期间的 collecting 记录。
 
 | ID | 级别 | 所需信息 / 假设 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|------------------|------|-------------|-------------|

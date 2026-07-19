@@ -555,3 +555,21 @@ D-010 同时登记 I-001～I-003 为 `required / collecting`。这些信息项�
 既有 independent A-006 与 self A-007/A-008、GOAL-008 A-010/A-013 对 F-005 的方向同向，没有冲突，也没有 residual risk 接受。
 
 **conditional**：F-005 的关闭路径已从 7 个 candidate 缺口缩小到 3 个，但 required 条件仍未满足。继续阻断阶段 5 发布验收、GOAL-008 `done`、阶段 6 Web 深化、阶段 7 验收与 GOAL-001 关门。下一步是 Copilot 双入口和 Web CI replay；其后仍需维护者授权的版本/tag 与 release-candidate 复审。
+
+## A-013 · GOAL-008 发布一致性与 F-005 关门响应（2026-07-20）
+
+- **source**：self
+- **auditor**：Codex `/govern`
+- **类型 / scope**：close-out response / 响应 GOAL-008 A-016，核对 I-002、I-003 和上游 F-005 的最终证据；不作 GOAL-001 总目标关门审计。
+- **verdict**：pass
+
+GOAL-008 的 required 关闭证据现已齐全：Claude Code、Grok Build、GitHub Copilot CLI `1.0.71` 的六个 CLI runtime cells 通过机读证据；GitHub Actions run `29700051047` 在同一候选 commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8` 上完成 Ubuntu/Windows Web parser CI replay，coverage 为 `ready-for-release-evidence` 且 uncovered 为空；annotated `v0.7.0` 指向该 commit，release-candidate checks 全部通过且工作树干净。VS Code 插件只保留为历史事实，不是当前证据来源。
+
+| finding / gate | 最终状态 | 关闭证据 |
+|----------------|----------|----------|
+| GOAL-008 I-002 | **verified / closed** | `GOAL-008/00-meta.md` final ledger；Web replay JSON；run `29700051047` artifact digests。 |
+| GOAL-008 I-003 | **verified / closed** | `v0.7.0` tag、release-candidate summary 与内部 checks。 |
+| GOAL-001 F-005 | **closed** | GOAL-008 A-016 与本条；阶段 5 发布一致性门禁已满足。 |
+| F-006 | recommended / open | 真实消费者采用度试点仍按原范围留待阶段 7 复盘，不阻断本次关闭。 |
+
+本条关闭 F-005，不改变 GOAL-001 的 `active` 状态，也不声明阶段 6/7 或根目标完成。GOAL-008 已同步为 `done / 100%`，阶段 6 Web 深化可按根路线图另行推进。
