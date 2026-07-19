@@ -1,0 +1,802 @@
+---
+id: GOAL-005-skills-closed-loop-audit
+doc: audit
+status: done
+parent: GOAL-001-main-vision
+created: 2026-07-18
+updated: 2026-07-18
+version: 0.2.9
+---
+
+# 审计 · GOAL-005
+
+## A-001 · 阶段 A 中期检查（原则定稿）（2026-07-18）
+
+- **source**：`self`
+- **类型**：阶段结束（阶段 A）
+- **verdict**：pass（阶段 A 范围）
+
+### 范围与区间
+
+阶段 A：原则与产品语义定稿（不含提示词实现与实践压测）。
+
+### 成果（有证据）
+
+| 成果 | 证据 |
+|------|------|
+| P-002～P-004 全文 | [principles.md](../../architecture/principles.md) v0.2.0 |
+| AGENTS 操作摘要 §6b | [AGENTS.md](../../../AGENTS.md) v0.4.0；template / install 同步 |
+| 决策与原则对齐 | [01-decision.md](01-decision.md) D-002～D-006 |
+| 成功标准第 1 条 | [00-meta.md](00-meta.md) 已勾选 |
+
+### 对照成功标准
+
+| 标准 | 状态 | 说明 |
+|------|------|------|
+| 原则/AGENTS 写明交叉审计与用户裁决 | 已达成 | 阶段 A |
+| 编排器实现裁决点 | 未开始 | 阶段 B |
+| 04 意见结构 | 未开始 | 阶段 B |
+| 独立审计路径 | 未开始 | 阶段 B |
+| 安装与 README 产品面 | 部分 | 规则安装源已同步；Skills README/`/audit` 属 B/C |
+| 实践记录 | 未开始 | 阶段 D |
+
+### 偏差与改进
+
+- 无阶段 A 范围外的硬偏差。
+- 注意：原则已生效于规则层，但编排器提示词尚未引用 P-002～P-004，**会话行为可能仍偏旧**，直至阶段 B。
+
+### 结论
+
+阶段 A 可关闭。建议下一步进入阶段 B：改 `00-govern-orchestrator` 与 `04-write-audit`，并设计 `/audit` 最小入口。
+
+> **后续标注（2026-07-18 · D-008）**：本条 `pass` 被独立审计 A-002 挑战。用户/编排器裁决**采纳 A-002 `conditional`**，不再维持本条无条件 pass。详见下方 A-003 响应记录。
+
+---
+
+## A-002 · 阶段 A 独立交叉审计（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`goal-definition` + 阶段交付质量
+- **scope**：GOAL-005 阶段 A（原则与产品语义定稿）
+- **verdict**：conditional
+- **完整意见**：[attachments/audit-A-002-independent.md](attachments/audit-A-002-independent.md)
+
+### 摘要
+
+阶段 A 的原则正文和主要 AGENTS 分发源总体达标，且没有把阶段 B/C/D 虚报为完成；但存在两个中等级必改缺口：
+
+1. 当前仓库实际生效的 `.github/copilot-instructions.md` 仍为 v0.3.4，缺少 §6b，与 v0.4.0 Copilot 安装源及根 AGENTS 不一致。
+2. `principles.md` 明确“必改项未关闭前不得假装放行”，但 AGENTS §6b 及其分发副本未保留这一一般门禁；无 architecture 场景可能只汇总意见而未阻止带开放必改项推进。
+
+阶段 B 未实现的边界披露真实：`00-govern-orchestrator`、`04-write-audit`、独立 `/audit` 路径和实践验证均未被标成完成；25% 进度与只完成成功标准第 1 条基本合理。
+
+### 必改项
+
+1. 同步当前 `.github/copilot-instructions.md` 至 v0.4.0 的 P-002～P-004 / §6b 语义，或明确登记为待处理开放项。
+2. 在 AGENTS §6b、工作流或检查清单中明确：存在未关闭 required/必改项时，不得推进门禁或关门；同步 template 与两个安装源。
+3. 阶段 B 实现前定义“相关意见”“开放/关闭”“冲突”和关闭证据的最小判定流程。
+
+### 与 A-001 的冲突
+
+A-001 为 `self/pass`，本意见为 `independent/conditional`。冲突点是 A-001 未披露当前 Copilot 项目规则漂移和一般性开放必改项门禁缺失。建议用户采纳 `conditional`，先登记并处理上述 required 项；按 P-004，该 verdict 冲突应由用户通过编排器裁决并留痕。
+
+### 声明
+
+本意见不修改目标 `status` / `progress`；响应、修正与是否维持阶段 A“已完成”由用户通过编排器（`/govern`）处理。
+
+---
+
+## A-003 · 编排响应 A-002（2026-07-18）
+
+- **source**：`self`（编排响应，非交叉审计）
+- **类型**：审计意见响应 / 整改记录
+- **scope**：GOAL-005 阶段 A · 响应 A-002
+- **关联决策**：[D-008](01-decision.md)
+
+### P-004 冲突裁决
+
+| 意见 | verdict | 裁决 |
+|------|---------|------|
+| A-001 self | pass | **不再维持无条件 pass**（保留历史，加注） |
+| A-002 independent | conditional | **采纳** |
+
+### Findings 关闭状态
+
+| ID | 原建议 | 状态 | 关闭证据 |
+|----|--------|------|----------|
+| F-002 | required · 响应并裁决 | **已关闭** | 本条 + D-008 |
+| F-008 | required · §6b 开放必改门禁 | **已关闭** | `AGENTS.md` v0.4.2 §6b / 工作流 / 检查清单；template + install 同步；`principles.md` v0.2.2 |
+| F-010 | required · 同步 `.github/copilot-instructions.md` | **已关闭** | `.github/copilot-instructions.md` ← install 源，现 v0.4.2 含 §6b |
+| F-012 | required · 随 F-008 | **已关闭** | 同 F-008（无 architecture 时 §6b 含门禁） |
+| F-015 | required · 00/04 意见状态流程 | **部分关闭 / 余项开放** | 规则层已写「意见状态最小约定」；`00`/`04` 完整流程 → **阶段 B 开放项** |
+| F-001, F-003～F-007, F-009, F-011, F-013, F-014 | recommended | 无需强制关闭 | 阶段 B 参考 |
+| F-016 | 优先级说明 | 已响应 | 先 F-008/F-010，再 B 做 F-015 余项 |
+
+### 阶段 A 结论（响应后）
+
+- 原则/AGENTS 语义定稿 + 落盘规则 + 门禁摘要 + 项目侧 Copilot 指令同步：**阶段 A required 项已处理**。  
+- 进入阶段 B **不再**被 F-008/F-010 阻塞。  
+- **仍开放（归阶段 B）**：F-015 在提示词 `00`/`04` 中的完整实现；独立 `/audit` 入口；实践验证。
+
+### 建议下一步
+
+1. 开始 GOAL-005 阶段 B（改编排器与 `04`，落地 `/audit`）。  
+2. 可选：阶段 B 开工前请独立审快速确认 F-008/F-010 关闭（非强制）。
+
+---
+
+## A-004 · 独立复审 F-008 / F-010 关闭证据（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：整改复审 / finding closure verification
+- **scope**：A-002 的 F-008、F-010 关闭证据
+- **verdict**：pass（本复审范围）
+- **subject_refs**：`principles.md` v0.2.2；`AGENTS.md`、template、Claude/Copilot install、`.github/copilot-instructions.md` v0.4.2；D-008；A-003；执行记录
+
+### 复核结果
+
+| Finding | 结论 | 可核对证据 |
+|---------|------|------------|
+| F-008 · §6b 开放必改门禁 | **已关闭** | [principles.md](../../architecture/principles.md) P-003 明确：未关闭 required/必改项时不得放行或关门，且门禁不依赖意见是否冲突；[AGENTS.md](../../../AGENTS.md) v0.4.2 §6b、工作流第 5 步、硬约束、完成前检查清单均写入同一门禁；`skills/AGENTS.template.md`、Claude install、Copilot install、项目 `.github/copilot-instructions.md` 均同步。 |
+| F-010 · 项目 Copilot 指令漂移 | **已关闭** | 项目 [.github/copilot-instructions.md](../../../.github/copilot-instructions.md) 已为 v0.4.2，包含 §6b / P-002～P-004；与 [Copilot 安装源](../../../skills/install/copilot/copilot-instructions.md) 的 SHA-256 均为 `639CAAEDC5E28D429408D3D9DE2043B3FF15C419637EE6B16ADA922D8456503D`，内容完全一致。 |
+
+### 一致性检查
+
+- `AGENTS.md`、`skills/AGENTS.template.md`、Claude install、Copilot install、项目 `.github/copilot-instructions.md` 均为 **v0.4.2**。
+- 五份规则文件均同时包含：开放必改门禁、工作流阻断步骤、硬约束、完成前“无未关闭必改项”检查。
+- [D-008](01-decision.md) 已记录采纳 A-002 `conditional` 的用户裁决；[A-003](03-audit.md) 已逐项登记关闭证据；[02-execution.md](02-execution.md) 已记录实际修正路径。
+- 最近提交 `cfb351e` 的文件范围包含上述原则、规则副本、项目 Copilot 指令及 GOAL-005 响应记录；工作区复核时无未提交变更。
+
+### 残留项与边界
+
+- F-015 的提示词侧完整流程仍是阶段 B 开放项；本次复审不将其误判为已完成。
+- F-015 不影响 F-008/F-010 的关闭真实性，也不重新阻塞阶段 A 的这两个 finding。
+- 本复审未审计阶段 B 的 `00` / `04` / `/audit` 实现质量。
+
+### 结论
+
+确认 A-003 对 **F-008、F-010 已关闭**的声明有充分、可重复核对的文件证据。本复审范围内无开放 required finding；这两项不再阻塞进入阶段 B。
+
+### 声明
+
+本意见不修改目标 `status` / `progress`；阶段推进仍由用户通过编排器（`/govern`）处理。
+
+---
+
+## A-005 · 编排响应 A-004（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：审计意见响应
+- **scope**：响应 A-004 独立复审（F-008 / F-010 关闭证据）
+- **关联**：A-002、A-003、D-008、A-004
+
+### 意见汇总
+
+| 意见 | source | scope | verdict | 与既有结论 |
+|------|--------|-------|---------|------------|
+| A-003 | self · 响应 | F-008/F-010 等关闭声明 | （响应记录） | 声明已关闭 |
+| A-004 | independent | F-008/F-010 关闭复审 | **pass** | **确认** A-003 关闭真实 |
+
+### P-004
+
+- **无冲突**：A-004 与 A-003 同向；不触发用户裁决分支。
+- **有独立、无新自审**：本条为对复审结果的响应记录，不另起自审（用户已要求响应审计意见）。
+
+### Findings 台账（更新）
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| F-008 | **已关闭（独立复审确认）** | A-003 关闭 + A-004 pass |
+| F-010 | **已关闭（独立复审确认）** | A-003 关闭 + A-004 pass（含 install 与 `.github` 哈希一致） |
+| F-015 | **开放 · 阶段 B** | A-004 明确未将其误判完成；`00`/`04` 完整流程待做 |
+| 其它 A-002 recommended | 不强制 | 阶段 B 参考 |
+
+### 门禁与推进
+
+- A-004 范围内：**无未关闭 required**。
+- 进入阶段 B：**不被 F-008/F-010 阻塞**（独立证据已齐）。
+- 不因 A-004 单独上调整体目标 `done`；GOAL-005 其余成功标准仍待 B/C/D。
+
+### 结论
+
+接受 A-004。F-008、F-010 关闭结论升级为「编排响应 + 独立复审双确认」。建议下一步：**启动阶段 B**。
+
+---
+
+## A-006 · 阶段 B 自检（提示词与入口）（2026-07-18）
+
+- **source**：`self`
+- **类型**：`stage` 阶段结束
+- **scope**：GOAL-005 阶段 B
+- **verdict**：pass（阶段 B 范围）
+
+### 成果（有证据）
+
+| 成果 | 证据 |
+|------|------|
+| 编排器意见台账 + P-004 + 开放必改 | `skills/prompts/00-govern-orchestrator.md` v0.3.0 |
+| 04 结构化意见 | `skills/prompts/04-write-audit.md` v0.3.0 |
+| 交叉审计核心 + 入口 | `05-independent-audit.md`；install `audit` skill/slash |
+| 产品面文档 | `skills/README.md` v0.5.0；默认 govern+audit |
+| 契约测试 | `skills/tests/test_skills_orchestrator.py` 17 OK |
+| F-015 提示词侧 | `00` 意见状态表 + `04`/`05` 字段 |
+
+### Findings
+
+- 无阶段 B 范围 required 开放项。
+- **recommended**：阶段 D 用真实 `/audit`→`/govern` 会话再压一轮（非阻塞 B 完成）。
+
+### 结论
+
+阶段 B 可关闭。成功标准 2～5 已满足。整体目标关门仍待阶段 D 可选加强验证后由用户决定。
+
+> **后续标注（2026-07-18 · D-009）**：本条无条件 `pass` 被 A-007 挑战。用户/编排器**采纳 A-007 `conditional`**。详见 A-008。
+
+---
+
+## A-007 · 阶段 B 独立交付复审（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`design-plan` + `execution-facts`
+- **scope**：GOAL-005 阶段 B（编排器、04/05、宿主入口、安装与文档、契约测试）
+- **verdict**：conditional
+
+### 范围与区间
+
+复审 A-006 所列阶段 B 交付，核对 `00-govern-orchestrator`、`04-write-audit`、`05-independent-audit`、Claude/Grok/Copilot wrapper、安装脚本、README 与测试证据；不审阶段 D 的正式压测与整体关门条件。
+
+### 成果（有证据）
+
+| 成果 | 结论 | 证据 |
+|------|------|------|
+| 编排器意见台账、P-004 与开放必改门禁 | 已实现 | `skills/prompts/00-govern-orchestrator.md` v0.3.0：§1b、§3、S4、关门检查 |
+| 04 结构化审计与响应 | 已实现 | `skills/prompts/04-write-audit.md` v0.3.0：source、scope、verdict、findings、required/recommended、response 模式 |
+| 独立审计核心与职责分离 | 已实现 | `skills/prompts/05-independent-audit.md`；三类宿主 audit wrapper 均要求 `source: independent`、只写意见、交回 `/govern` |
+| PowerShell 默认安装面 | 已验证 | 在全新临时目录执行 `skills/install.ps1 -All`，实际生成 Claude/Grok 的 govern+audit、Copilot 的 govern+audit、00/05 prompts 与模板 |
+| 契约测试 | 已复现 | `.venv` Python 3.11.9 运行 `skills/tests/test_skills_orchestrator.py`：17 tests OK |
+
+### 对照成功标准
+
+| 阶段 B 相关标准 | 状态 | 说明 |
+|-----------------|------|------|
+| `00` 实现意见汇总、裁决与响应路径 | 已达成 | 核心提示词有明确流程与门禁 |
+| `04` 支持最小意见结构 | 已达成 | 字段、模式与关闭证据要求齐全 |
+| 独立 `/audit` 路径可用 | 已达成 | 核心与三宿主入口均已落地 |
+| 安装与 README/prompts 产品面一致 | **部分达成** | 脚本与 prompts 一致；`skills/README.md` 的参数表和手动安装示例仍遗漏默认 `/audit` |
+
+### Findings
+
+#### F-017 · README 默认安装说明与实际分发不一致
+
+- **严重度**：med
+- **建议**：required
+- **状态**：open
+- **描述**：`skills/README.md` 的产品模型和脚本行为均为默认安装 `/govern + /audit`，但“脚本安装”参数表仍把 `--copilot` / `-Copilot` 写成“仅 govern prompt”；Claude/Grok 手动安装映射与命令也只复制 govern skill。读者按手动步骤执行会缺少 `/audit`，按参数表理解也会得到错误产品面。
+- **证据**：`skills/README.md`“手动安装”“脚本安装”两节；`skills/install.ps1` 的 `$wrapperNames = @('govern', 'audit')`；`skills/install.sh` 的 `WRAPPER_NAMES=(govern audit)`；本次隔离 PowerShell 安装结果。
+
+#### F-018 · 现有测试未覆盖真实安装与 README 语义一致性
+
+- **严重度**：low
+- **建议**：recommended
+- **状态**：open
+- **描述**：17 项测试均为文件内容/正则结构契约，能防止入口消失，但不能发现 F-017 这类文档语义漂移，也不执行安装脚本。PowerShell 本次人工隔离安装通过；当前 Windows 环境的 WSL 无 `/bin/bash`，无法执行 `install.sh`，其运行证据仍不足。
+- **证据**：`skills/tests/test_skills_orchestrator.py`；本次 `install.ps1 -All` 临时目录验证；`bash -n skills/install.sh` 因本机 WSL 缺少 `/bin/bash` 未能运行。
+
+### 必改项汇总
+
+1. 关闭 F-017：统一 `skills/README.md` 的手动安装示例与参数表，明确 Claude、Grok、Copilot 默认均安装 `/govern + /audit`；advanced 原语仍保持 opt-in。
+
+### 与既有意见的异同
+
+- 与 A-006 一致：00/04/05 核心、宿主入口、PowerShell 分发和 17 项契约测试均有证据，未发现职责分离或开放必改门禁回退。
+- 与 A-006 冲突：A-006 判定阶段 B `pass` 且“无 required 开放项”；本意见发现 F-017，故为 `conditional`。按 P-004，应由用户通过 `/govern` 裁决并留痕；裁决前不应把阶段 B 视为无条件通过。
+
+### 结论 + 建议给编排器/用户的下一步
+
+阶段 B 的实现主体可用，当前缺口集中在 README 分发说明，修正成本低但直接影响可安装性承诺。建议通过 `/govern` 采纳 A-007 `conditional`，修正文档并补一条精确契约测试后，再追加响应记录关闭 F-017；F-018 可并入阶段 D 或 CI 加强项。
+
+### 声明
+
+本意见不修改 `status` / `progress`；响应、冲突裁决与 finding 关闭由 `/govern` 处理。
+
+---
+
+## A-008 · 编排响应 A-007（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response`
+- **scope**：响应 A-007；关闭 F-017；F-018 → 阶段 D
+- **关联决策**：[D-009](01-decision.md)
+
+### P-004 冲突裁决
+
+| 意见 | verdict | 裁决 |
+|------|---------|------|
+| A-006 self | pass（阶段 B） | **不再维持无条件 pass**（加注） |
+| A-007 independent | conditional | **采纳**（用户 `/govern` 指令） |
+
+### Findings 关闭状态
+
+| ID | 状态 | 证据 |
+|----|------|------|
+| F-017 | **已关闭** | `skills/README.md` v0.5.1：手动安装含 Claude/Grok/Copilot 的 audit 路径与命令；脚本参数表写明默认 govern+audit；契约测试 `test_skills_readme_default_install_documents_govern_and_audit` |
+| F-018 | **开放 · 阶段 D** | 真实安装执行 / 更广自动化仍属 D；不阻塞 F-017 关闭 |
+
+### 结论
+
+A-007 已响应。阶段 B 质量结论为 **conditional → required 已关**；可进入阶段 D（含 F-018 与正式压测）。  
+`status` 仍为 `active`（整体目标未关门）。
+
+---
+
+## A-009 · 独立复审 F-017 关闭证据（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`finding-closure`
+- **scope**：A-007 的 F-017 关闭证据（不含 F-018 / 阶段 D 整体）
+- **verdict**：pass（本复审范围）
+- **subject_refs**：`skills/README.md` v0.5.1；`skills/tests/test_skills_orchestrator.py`；`skills/install.sh` / `install.ps1`；D-009；A-008；执行记录
+
+### 范围与区间
+
+仅复核 A-008 对 **F-017「README 默认安装说明与实际分发不一致」** 的关闭声明是否可重复核对；不审阶段 D、不重开 F-018、不评判 GOAL-005 整体关门。
+
+### 成果（有证据）
+
+| 检查项 | 结论 | 可核对证据 |
+|--------|------|------------|
+| README 版本与默认产品面 | **通过** | [skills/README.md](../../../skills/README.md) v0.5.1：产品模型、工具表均为 `/govern` · `/audit`；§1 写明「默认产品面…每个宿主都装 `/govern` + `/audit`」 |
+| 手动安装含 audit | **通过** | Claude：`…/skills/audit/SKILL.md` 映射与 `cp`；Grok：同结构；Copilot：`audit.prompt.md` + wrapper 表中 audit 为 **默认** |
+| 脚本参数表与脚本一致 | **通过** | 参数表：`--claude`/`--grok` 写明 govern+audit；`--copilot` 写「默认双入口」；脚本仍为 `WRAPPER_NAMES=(govern audit)` / `$wrapperNames = @('govern', 'audit')` |
+| 旧「仅 govern」表述已清除 | **通过** | README 中无「仅 govern prompt」类表述；与 A-007 指出的缺口对位消除 |
+| 防回退契约测试 | **通过** | `test_skills_readme_default_install_documents_govern_and_audit` 存在且本轮复现：**18 tests OK**（含 F-017 guard） |
+| 决策与响应留痕 | **通过** | [D-009](01-decision.md) 采纳 A-007 + 关 F-017；[A-008](03-audit.md) 登记关闭证据；[02-execution](02-execution.md) 记 v0.5.1 与测试 |
+
+### 对照成功标准 / Finding 定义
+
+| Finding 原要求（A-007） | 关闭充分性 |
+|-------------------------|------------|
+| 统一手动安装示例，Claude/Grok/Copilot 默认均装 `/govern` + `/audit` | **满足** |
+| 脚本参数表明确默认双入口；advanced 仍 opt-in | **满足**（`--with-primitives` 仍单独列出） |
+| （A-007 建议）补精确契约测试防回退 | **满足**（guard 测试 + 全量 18 OK） |
+
+### Findings
+
+本复审范围内 **无新 required finding**。
+
+| ID | 严重度 | 建议 | 状态 | 说明 |
+|----|--------|------|------|------|
+| F-017 | med | required | **已关闭（独立复审确认）** | 关闭证据充分、可重复核对 |
+| F-018 | low | recommended | **仍开放 · 阶段 D** | 真实安装执行 / 更广自动化不在 F-017 关闭范围内；A-008 归 D 合理，本次不误判完成 |
+
+### 必改项汇总
+
+- **无**（F-017 范围内）。
+
+### 与既有意见的异同
+
+- 与 **A-008** 同向：确认其对 F-017「已关闭」的声明真实。  
+- 与 **A-007** 一致：原缺口（手动步骤与参数表遗漏 audit）在文档侧已消除；脚本默认面此前已正确。  
+- **无冲突**，不触发 P-004 用户裁决分支。  
+- 边界：内容/正则契约测试不能替代 F-018 的真实安装运行证据——这不影响 F-017 关闭真实性。
+
+### 结论 + 建议给编排器/用户的下一步
+
+确认 **F-017 已关闭**。阶段 B 的 required 缺口（A-007 所列）在本复审范围内无残留。建议用 **`/govern`** 响应本条（台账升级为「独立复审确认」），再按路线图进入阶段 D（含 F-018 与正式压测）；**不要**仅因本 pass 将 GOAL-005 标为 `done`。
+
+### 声明
+
+本意见不修改目标 `status` / `progress`；响应与推进由 `/govern` 处理。
+
+---
+
+## A-010 · 编排响应 A-009 + 进入阶段 D（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response` + 阶段推进
+- **scope**：响应 A-009；台账升级；启动阶段 D（含 F-018）
+- **关联**：A-007、A-008、D-009、A-009
+
+### 意见汇总
+
+| 意见 | source | scope | verdict | 关系 |
+|------|--------|-------|---------|------|
+| A-008 | self · 响应 | F-017 关闭声明 | （响应） | 声明已关闭 |
+| A-009 | independent | F-017 关闭复审 | **pass** | **确认** A-008 |
+
+### P-004
+
+- **无冲突**（A-009 与 A-008 同向）。
+- 用户指令明确：确认 pass、升级台账、进入阶段 D → 直接执行。
+
+### Findings 台账（升级）
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| F-017 | **已关闭（独立复审确认）** | A-008 关闭 + **A-009 pass**（双确认） |
+| F-018 | **开放 · 阶段 D 进行中** | 真实安装执行 / 更广文档-脚本自动化；不在 F-017 范围内 |
+| 历史 F-008/F-010 | 已关闭（独立复审确认） | 见 A-004 / A-005 |
+| 历史 F-015 | 已关闭（提示词侧） | 见阶段 B |
+
+### 阶段推进
+
+| 阶段 | 动作 |
+|------|------|
+| B | required 无残留；**不**因 A-009 单独 `done` 整体目标 |
+| **D** | **正式进入**（进行中）：含 F-018 + 正式压测/关门路径 |
+
+### 阶段 D 工作包（登记）
+
+1. **F-018**：在可行环境加强安装/README 一致性证据（优先 PowerShell 隔离安装自动化或 CI；`install.sh` 在有 bash 的环境补跑）。
+2. 正式压测：至少一轮 `/audit` → `/govern` 响应（可复用历史会话证据并补缺口）。
+3. 关门审计（`close-out`）：对照成功标准；无未关闭 required 后提议 `done`。
+
+### 结论
+
+接受 A-009。F-017 关闭结论升级为「编排响应 + 独立复审双确认」。GOAL-005 **进入阶段 D**；`status` 仍为 `active`。
+
+---
+
+## A-011 · 阶段 D · F-018 PowerShell 隔离安装（2026-07-18）
+
+- **source**：`self`
+- **类型**：`stage` / finding closure
+- **scope**：F-018 · PowerShell 真实隔离安装自动化
+- **verdict**：pass（F-018 PS 范围）
+
+### 成果（有证据）
+
+| 成果 | 证据 |
+|------|------|
+| 隔离安装冒烟脚本 | `skills/tests/test_install_ps1_isolated.ps1`（本机 exit 0） |
+| unittest 真实执行 install.ps1 | `test_install_ps1_isolated_all_produces_govern_and_audit`；全量 **20 tests OK** |
+| 断言默认产品面 | Claude/Grok govern+audit skill；Copilot govern+audit prompt；`00`/`05` 已复制；**无** new-goal 默认安装 |
+| install.ps1 非交互修复 | `RemainingArgs` null-safe 解析（修复 `-File` 调用 NullArray） |
+| README 测试说明 | `skills/README.md` 测试节 |
+
+### Findings 台账
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| F-018 | **已关闭**（PS 主路径） | 真实安装已纳入自动化；内容契约 + 执行冒烟 |
+| residual | recommended | `install.sh` 真实执行仍建议在 bash/CI 环境补跑（非 Windows 阻塞项） |
+
+### 结论
+
+F-018 在阶段 D 的 PowerShell 目标已满足。阶段 D 仍开放：**关门审计**（及可选 bash 安装证据）。不因本条将 GOAL-005 标 `done`。
+
+---
+
+## A-012 · 独立复审 F-018 关闭证据（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`finding-closure`
+- **scope**：A-007 的 F-018 关闭证据（PowerShell 主路径；不含整体关门）
+- **verdict**：pass（本复审范围）
+- **subject_refs**：A-007、A-010、A-011；`skills/tests/test_install_ps1_isolated.ps1`；`skills/tests/test_skills_orchestrator.py`；`skills/install.ps1`；`skills/README.md`
+
+### 范围与区间
+
+仅复核 A-011 对 **F-018「现有测试未覆盖真实安装与 README 语义一致性」** 的关闭声明是否有充分、可重复核对的证据。复审范围以 Windows / PowerShell 主路径为准；不把 `install.sh` 真实执行、阶段 D 关门审计或 GOAL-005 整体结项纳入本次 pass。
+
+### 成果（有证据）
+
+| 检查项 | 结论 | 可核对证据 |
+|--------|------|------------|
+| 真实隔离安装 | **通过** | `test_install_ps1_isolated.ps1` 创建随机临时项目目录，从该目录调用 `install.ps1 -All -SkillsDir <temp>/skills`，不是在当前仓库原地检查已有产物 |
+| 默认产品面断言 | **通过** | 冒烟脚本断言 Claude/Grok 的 govern+audit skills、Copilot govern+audit prompts、项目规则、`00`/`05` 核心提示词均已生成 |
+| advanced 默认排除 | **通过** | 冒烟脚本与 unittest 均断言未使用 `-WithPrimitives` 时不存在 `new-goal.prompt.md` |
+| 入口内容有效性 | **通过** | 安装后的 Claude govern/audit skill 分别包含 `00-govern-orchestrator` / `05-independent-audit` 引用 |
+| 非交互执行缺陷修正 | **通过** | `install.ps1` 对 `RemainingArgs` 先判空再构造数组，消除 `@($null)` 导致的 `NullArray` 失败 |
+| README 语义一致性 guard | **通过** | `test_skills_readme_default_install_documents_govern_and_audit` 核对三宿主默认 `/govern + /audit`、audit 路径及旧「仅 govern」表述不回退 |
+| 本轮复现 | **通过** | 独立执行 `test_install_ps1_isolated.ps1`：exit 0；执行 `test_skills_orchestrator.py`：**20 tests OK**，包含 README guard 与真实 PowerShell 安装测试 |
+
+### 对照 Finding 定义
+
+| F-018 原缺口 | 关闭充分性 |
+|--------------|------------|
+| 自动化未执行真实安装脚本 | **满足**：独立 PS1 冒烟与 unittest 均在临时项目中实际执行 `install.ps1 -All` |
+| 自动化无法发现 README / 默认分发语义漂移 | **满足（当前产品面）**：README 精确 guard 与安装产物断言共同覆盖默认双入口和 advanced opt-in 边界 |
+| `install.sh` 缺少真实运行证据 | **保留为 recommended residual**：当前 Windows 主证据不声称覆盖 bash；不影响 PowerShell 主路径关闭真实性 |
+
+### Findings
+
+| ID | 严重度 | 建议 | 状态 | 说明 |
+|----|--------|------|------|------|
+| F-018 | low | recommended | **已关闭（独立复审确认，PowerShell 主路径）** | A-011 的关闭证据充分且本轮可重复复现 |
+| residual · bash | low | recommended | **开放（非阻塞）** | 可在具备 bash 的 CI / Unix 环境补充 `install.sh` 隔离执行；本次未误写为已验证 |
+
+### 必改项汇总
+
+- **无**（本复审范围内无开放 required finding）。
+
+### 与既有意见的异同
+
+- 与 **A-011** 同向：确认 F-018 的 PowerShell 主路径关闭声明真实。
+- 与 **A-007** 一致：原意见要求补足真实安装与文档语义自动化；当前证据已覆盖 Windows 主路径，且明确保留 bash 边界。
+- **无冲突**，不触发 P-004 用户裁决分支。
+- 当前证据文件处于工作区变更中；本结论针对本轮实际复现的工作区快照，不声称对应某个已提交版本。
+
+### 结论 + 建议给编排器/用户的下一步
+
+确认 **F-018 已关闭（PowerShell 主路径，独立复审确认）**。本范围内无未关闭 required finding；bash 真实执行仅为 recommended residual。建议用 **`/govern`** 响应 A-012、升级 finding 台账，并继续阶段 D 的关门审计；**不要**仅因本条 pass 将 GOAL-005 标为 `done`。
+
+### 声明
+
+本意见不修改 `status` / `progress`；响应、阶段推进与结项由 `/govern` 处理。
+
+---
+
+## A-013 · 编排响应 A-012 + 进入阶段 D 关门审计（2026-07-18）
+
+- **source**：`self`（编排响应，非独立审计）
+- **类型**：`response` + 阶段推进
+- **scope**：响应 A-012；升级 F-018 台账；进入阶段 D 关门审计
+- **verdict**：pass（A-012 响应与 F-018 PowerShell 主路径范围；**非**整体 close-out verdict）
+- **关联**：A-007、A-010、A-011、A-012
+
+### 意见汇总
+
+| 意见 | source | scope | verdict | 关系 |
+|------|--------|-------|---------|------|
+| A-011 | self | F-018 PowerShell 真实隔离安装自动化 | pass | 声明 PS 主路径已关闭 |
+| A-012 | independent | F-018 关闭证据复审（PowerShell 主路径） | **pass** | **确认** A-011；保留 bash 边界 |
+
+### P-004 与门禁检查
+
+- **无冲突**：A-012 与 A-011 同向，不触发冲突裁决。
+- 同 scope 已有 A-011 `self`，不存在「仅有独立审计、尚无自审计」的待决问题。
+- 用户已明确指令：接受 A-012 `pass`、升级 F-018 台账、保留 bash residual，并进入阶段 D 关门审计。
+- 本响应范围内开放 required：**0**。
+
+### Findings 台账（升级）
+
+| ID | 建议 | 状态 | 证据 / 边界 |
+|----|------|------|-------------|
+| F-018 | recommended | **已关闭（独立复审确认，PowerShell 主路径）** | A-011 关闭声明 + A-012 独立复审 `pass`；`test_install_ps1_isolated.ps1` exit 0；本轮 `/govern` 复跑全量 **20 tests OK** |
+| residual · bash 隔离执行 | recommended | **开放（非阻塞）** | 在具备 bash 的 CI / Unix 环境补充 `install.sh` 隔离执行；当前未声称已验证 |
+
+### 阶段推进
+
+- F-018 不再阻塞阶段 D 关门路径。
+- bash residual 保持 **recommended**，不升级为 required，不阻塞关门审计。
+- 阶段 D 当前焦点转入 **close-out 关门审计**：下一条审计须对照全部成功标准、历史 required 关闭状态、实践证据与 residual 边界，形成整体 verdict。
+- GOAL-005 继续保持 `status: active`、`progress: 85%`；本条不将目标标为 `done`。
+
+### 结论
+
+接受 A-012。F-018 台账升级为「**已关闭（独立复审确认，PowerShell 主路径）**」；bash 隔离执行保留为 recommended residual。阶段 D 进入关门审计，整体结项须等待单独的 close-out 结论与后续用户确认。
+
+---
+
+## A-014 · 阶段 D close-out 关门审计（2026-07-18）
+
+- **source**：`self`
+- **类型**：`close-out`
+- **scope**：GOAL-005 整体目标；阶段 A～D；全部成功标准；历史 required finding；实践记录与 residual
+- **verdict**：**pass**
+- **subject_refs**：`00-meta.md`、`01-decision.md`、`02-execution.md`、A-001～A-013；`AGENTS.md`；`docs/architecture/principles.md`；`skills/prompts/00`～`05`；三宿主入口；安装脚本、README 与测试
+
+### 范围与区间
+
+本次审计核对 GOAL-005 从原则定稿、提示词与交叉入口、安装和文档同步，到独立审计响应、整改复审和阶段 D 安装执行证据的完整闭环。审计对象为当前工作区快照；本条只给出关门结论与状态变更建议，不直接修改 `status` / `progress`。
+
+### 成果（有证据）
+
+| 交付面 | 结论 | 主要证据 |
+|--------|------|----------|
+| 治理原则与规则 | 已达成 | `docs/architecture/principles.md` P-002～P-004；`AGENTS.md` §6b；F-008/F-010 由 A-004/A-005 独立复审确认关闭 |
+| `/govern` 编排闭环 | 已达成 | `skills/prompts/00-govern-orchestrator.md`：意见台账、S4、P-004、开放必改门禁、close-out 检查；Claude/Grok/Copilot govern wrapper |
+| `04` 结构化审计 | 已达成 | `skills/prompts/04-write-audit.md`：source、scope、verdict、findings、required/recommended、stage/close-out/response 模式 |
+| 独立 `/audit` 路径 | 已达成 | `skills/prompts/05-independent-audit.md`；三宿主 audit wrapper 均声明 `source: independent` 且默认不改状态 |
+| 安装与文档产品面 | 已达成 | `skills/README.md` 默认 `/govern + /audit`；`install.ps1` / `install.sh` 默认双入口、advanced opt-in；F-017 由 A-009/A-010 独立复审确认关闭 |
+| 实践与运行证据 | 已达成 | A-002→D-008/A-003、A-007→D-009/A-008、A-012→A-013；F-018 PowerShell 隔离安装由 A-011/A-012 双确认 |
+
+### 对照成功标准
+
+| # | 成功标准 | 状态 | 证据 |
+|---|----------|------|------|
+| 1 | 原则/AGENTS 写明交叉审计、全部开放意见响应、冲突裁决与自审询问 | **已达成** | principles P-002～P-004；AGENTS §6b；A-003～A-005 |
+| 2 | `00` / `/govern` 实现裁决点与意见汇总/响应 | **已达成** | `00-govern-orchestrator.md` §1b、§3、S4、关门检查；宿主 govern wrapper |
+| 3 | `04` 支持最小审计意见结构和 source 区分 | **已达成** | `04-write-audit.md` v0.3.0；A-011、A-013、A-014 实际使用 |
+| 4 | 独立交叉审计路径可用且默认不改状态 | **已达成** | `05-independent-audit.md` + Claude/Grok/Copilot audit wrapper；A-002、A-004、A-007、A-009、A-012 |
+| 5 | 安装与 README/prompts 和产品面一致 | **已达成** | README guard；三宿主默认双入口；A-009；PowerShell 隔离安装测试 |
+| 6 | 至少一轮书面实践覆盖独立审计→编排响应或冲突裁决 | **已达成（超额）** | A-002→D-008/A-003；A-007→D-009/A-008；A-012→A-013 |
+
+### 历史 required findings 关闭核对
+
+| Finding | 原级别 | 最终状态 | 关闭证据 |
+|---------|--------|----------|----------|
+| F-002 | required | **已关闭** | D-008 + A-003（A-001/A-002 冲突裁决） |
+| F-008 | required | **已关闭（独立复审确认）** | A-003 修正；A-004/A-005 pass |
+| F-010 | required | **已关闭（独立复审确认）** | `.github/copilot-instructions.md` 与安装源同步；A-004/A-005 |
+| F-012 | required | **已关闭** | 随 F-008 的无 architecture 门禁修正；A-003 |
+| F-015 | required | **已关闭（提示词侧）** | `00`/`04`/`05` 完整流程；A-006；A-010 台账确认 |
+| F-017 | required | **已关闭（独立复审确认）** | README v0.5.1 + guard 测试；A-008～A-010 |
+
+- 当前开放 required finding：**0**。
+- 历史 verdict 冲突均已有用户裁决：A-001 vs A-002 → D-008；A-006 vs A-007 → D-009。
+
+### 本轮复验
+
+| 检查 | 结果 | 说明 |
+|------|------|------|
+| `python skills/tests/test_skills_orchestrator.py` | **20 tests OK** | 包含临时目录真实执行 `install.ps1 -All`、默认双入口、advanced 排除和 README guard |
+| `bash -n skills/install.sh` | **exit 0** | Bash 语法检查通过；不等于 Unix/CI 真实隔离安装 |
+| `git diff --check` | **通过** | 无空白/格式错误；仅 Git 行尾转换提示 |
+| 规则副本一致性 | **通过（按宿主）** | 根 `AGENTS.md` 与 Claude 安装源哈希一致；Copilot 安装源与项目 `.github/copilot-instructions.md` 哈希一致 |
+
+### Findings
+
+#### F-019 · Bash / Unix 真实隔离安装证据
+
+- **严重度**：low
+- **建议**：recommended
+- **状态**：open（非阻塞 residual）
+- **描述**：`install.sh` 已通过语法检查，内容/契约测试覆盖默认入口，但本轮未在 CI / Unix 环境执行与 PowerShell 对等的临时目录真实安装。该缺口不影响已验证的 Windows / PowerShell 主路径，也不是现有成功标准中的 required 条件。
+- **建议后续**：在 Linux/macOS CI 增加 `install.sh --all` 临时目录冒烟；完成后可追加 finding-closure 审计，但无需因此重开 GOAL-005。
+
+### 必改项汇总
+
+- **无**。全部历史 required findings 已关闭；F-019 为 recommended residual。
+
+### 关门判定
+
+- 成功标准：**6 / 6 已达成**。
+- 开放 required：**0**。
+- 阶段/关门向审计：**已具备**（本条 self close-out；另有多轮 independent finding/stage 复审）。
+- residual：F-019 为 low / recommended / 非阻塞，边界已明确且未误写为已完成。
+- **整体 verdict：pass**。
+
+### 结论 + 状态建议
+
+GOAL-005 已满足关门条件。建议用户确认后由 `/govern`：
+
+1. 将 `00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md` 的 `status` 更新为 `done`；
+2. 将 `00-meta.md` 的 `progress` 更新为 `100%`，路线图阶段 D 标为已完成；
+3. 同步 `docs/goals/goal-tree.md` 的树与状态表；
+4. 在执行记录追加结项事实，并保留 F-019 为结项后的 recommended residual。
+
+本条**仅提议**上述状态变更，尚未执行；等待用户明确确认。
+
+---
+
+## A-015 · 编排响应 A-014 + 正式结项（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response` + close-out acceptance
+- **scope**：接受 A-014 整体 `pass`；执行 GOAL-005 状态关门
+- **verdict**：pass（结项响应）
+- **关联**：A-014；F-019
+
+### 用户确认
+
+用户通过 `/govern` 明确接受 A-014 的 `pass`，并授权：
+
+1. 将 GOAL-005 标为 `done / 100%`；
+2. 同步四份目标 Markdown 的 `status`；
+3. 将阶段 D 路线图标为完成并同步 `goal-tree.md`；
+4. 保留 F-019 为结项后的 recommended residual。
+
+### 状态变更
+
+| 对象 | 变更后状态 |
+|------|------------|
+| `00-meta.md` | `status: done`；`progress: 100%`；阶段 A～D 全部完成 |
+| `01-decision.md` | `status: done` |
+| `02-execution.md` | `status: done`；记录 A-015 结项事实 |
+| `03-audit.md` | `status: done`；本条为最终编排响应 |
+| `docs/goals/goal-tree.md` | 树与状态表同步为 `done / 100%` |
+
+### Findings 最终状态
+
+- 历史 required：**全部已关闭**。
+- F-018：**已关闭（独立复审确认，PowerShell 主路径）**。
+- F-019：**open / recommended / 非阻塞 residual**；保留在结项台账中，不影响 `done`。后续若补齐 Linux/macOS CI 或 Unix 隔离安装，可追加 finding-closure 记录，目标无需重开。
+
+### 结论
+
+A-014 的 close-out `pass` 已获用户接受并执行状态关门。GOAL-005 正式结项：`done / 100%`。
+
+---
+
+## A-016 · GOAL-005 关门审计独立复核（2026-07-18）
+
+- **source**：`independent`
+- **auditor**：GitHub Copilot
+- **类型**：`close-out` + `execution-facts`
+- **scope**：GOAL-005 整体关门条件；A-014/A-015 的成功标准、历史 required finding 关闭状态、当前 Skills 交付与可执行验证
+- **verdict**：**pass**
+- **subject_refs**：`00-meta.md`、`01-decision.md`、`02-execution.md`、A-001～A-015；`skills/prompts/00-govern-orchestrator.md`、`04-write-audit.md`、`05-independent-audit.md`；`skills/tests/test_skills_orchestrator.py`
+
+### 范围与区间
+
+复核已执行的 A-014 self close-out 与 A-015 结项响应。审计对象为当前暂存工作区快照；核对目标成功标准、审计台账的 required finding 关闭证据、核心提示词职责边界，以及 Windows / PowerShell 安装主路径的可执行证据。
+
+### 成果（有证据）
+
+| 检查项 | 结论 | 可核对证据 |
+|--------|------|------------|
+| 成功标准与路线图 | **通过** | [00-meta.md](00-meta.md) 的 6 项成功标准均已勾选，阶段 A～D 均完成；[A-014](03-audit.md) 对每项给出对照证据。 |
+| required finding 门禁与关闭台账 | **通过** | A-014 列出 F-002、F-008、F-010、F-012、F-015、F-017 的关闭依据；A-003/A-005/A-008/A-010/A-013 留有响应与独立复审证据。当前无开放 required。 |
+| `/govern` 闭环与用户裁决 | **通过** | [00-govern-orchestrator.md](../../../skills/prompts/00-govern-orchestrator.md) 的意见台账、P-004 裁决和开放 required 门禁明确阻断未关闭必改项的推进或关门。 |
+| 审计职责分离 | **通过** | [04-write-audit.md](../../../skills/prompts/04-write-audit.md) 规定 self/response 结构；[05-independent-audit.md](../../../skills/prompts/05-independent-audit.md) 与 Copilot audit wrapper 均要求 `source: independent` 且默认不改 `status` / `progress`。 |
+| 安装与默认产品面 | **通过** | 本轮执行 `skills/tests/test_skills_orchestrator.py`：**20 tests OK**，包括临时目录内真实执行 `install.ps1 -All`、三宿主 `/govern + /audit` 产物、advanced 原语默认不安装，以及 README 默认产品面 guard。 |
+| 暂存快照完整性 | **通过** | 本轮 `git diff --cached --check` 无输出；暂存变更覆盖 GOAL-005 台账、README、安装脚本与对应测试。 |
+
+### 对照成功标准
+
+| # | 成功标准 | 状态 | 复核结论 |
+|---|----------|------|----------|
+| 1 | 原则与规则写明交叉审计、意见响应与用户裁决 | 已达成 | `principles.md`、AGENTS 及 A-003～A-005 支持该结论。 |
+| 2 | `00` / `/govern` 落地汇总、裁决与响应 | 已达成 | 核心提示词含意见台账、P-004 和 S4。 |
+| 3 | `04` 支持结构化意见与 source 区分 | 已达成 | `04` 的最小字段、response 与 finding 结构可核对。 |
+| 4 | `/audit` 可用且默认不改状态 | 已达成 | `05` 与宿主 wrapper 明确独立职责；本条按该入口流程写入。 |
+| 5 | 安装、README 与 prompts 一致 | 已达成 | README guard 与隔离 `install.ps1 -All` 执行测试均通过。 |
+| 6 | 有独立审计到编排响应或冲突裁决的书面实践 | 已达成 | A-002→A-003/D-008、A-007→A-008/D-009 和 A-012→A-013 均已落盘。 |
+
+### Findings
+
+本次复核未发现新的 required finding。
+
+| ID | 严重度 | 建议 | 状态 | 说明 |
+|----|--------|------|------|------|
+| F-019 · Bash / Unix 真实隔离安装证据 | low | recommended | **open（非阻塞 residual）** | `install.sh` 已有语法与内容契约覆盖，但尚无 Linux/macOS 临时目录真实安装执行证据；该边界已在 A-014/A-015 如实保留，且不属于当前成功标准 required 条件。 |
+
+### 必改项汇总
+
+- **无**。当前审计范围内的 required finding 为 0；F-019 保持结项后的 recommended residual。
+
+### 与既有意见的异同
+
+- 与 A-014 self close-out 的 `pass` 同向：本轮直接复验了其所述的 20 项测试，并抽查核心门禁与独立审计职责边界。
+- 与 A-015 结项响应一致：状态变更已有用户确认与台账记录；本条不改写该状态。
+- 无相反 verdict 或互斥必改项，不触发 P-004 冲突裁决。
+- 本审计为入口和职责分离级的独立复核，不构成法定第三方鉴证。
+
+### 结论 + 建议给编排器/用户的下一步
+
+确认 A-014 的关门 `pass` 与 A-015 的 `done / 100%` 状态具有充分的当前证据支撑。无需重开 GOAL-005；F-019 可在具备 Linux/macOS CI 或 Unix 环境时作为单独的 finding-closure 复核处理。
+
+### 声明
+
+本意见不修改 `status` / `progress` / 方案正文；对本条意见的响应由 `/govern` 处理。
+
+---
+
+## A-017 · 编排响应 A-016（2026-07-18）
+
+- **source**：`self`（编排响应）
+- **类型**：`response`
+- **scope**：响应 A-016 GOAL-005 关门独立复核
+- **verdict**：pass（响应范围）
+- **关联**：A-014、A-015、A-016；F-019
+
+### 意见汇总与 P-004
+
+| 意见 | source | scope | verdict | 关系 |
+|------|--------|-------|---------|------|
+| A-014 | self | GOAL-005 整体 close-out | pass | 判定满足关门条件 |
+| A-015 | self · 响应 | 接受 A-014 并执行结项 | pass | 状态已更新为 `done / 100%` |
+| A-016 | independent | 关门条件与结项状态复核 | **pass** | 独立确认 A-014/A-015 |
+
+- **无冲突**：A-016 与 A-014/A-015 同向，不触发 P-004 冲突裁决。
+- 同 scope 已有 A-014 self close-out，不存在「仅有独立审计、尚无自审计」问题。
+- 用户明确指令接受 A-016 `pass`，无需重开目标。
+
+### Findings 台账
+
+| ID | 状态 | 说明 |
+|----|------|------|
+| 历史 required | **全部已关闭** | A-016 复核未发现新的 required finding |
+| F-018 | **已关闭（独立复审确认，PowerShell 主路径）** | 结论保持 |
+| F-019 | **open / recommended / 非阻塞 residual** | 保留为结项后改进项；不改变 `done / 100%` |
+
+### 结论
+
+接受 A-016 的独立复核 `pass`。GOAL-005 的关门结论升级为 self close-out + independent close-out 双确认；目标继续保持 `done / 100%`，F-019 继续作为结项后的 recommended residual。

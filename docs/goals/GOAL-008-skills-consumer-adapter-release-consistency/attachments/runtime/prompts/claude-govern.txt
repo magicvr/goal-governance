@@ -1,0 +1,10 @@
+/govern GOAL-008
+
+This is a read-only runtime dispatch probe. Do not modify files, launch subagents, or ask the user questions. Load the installed govern skill and follow its scan phase only. Use repository reads to report:
+
+1. literal marker CLAUDE_GOVERN_DISPATCH_OK;
+2. the loaded skill title and actual source path;
+3. the orchestrator prompt path named by that skill;
+4. GOAL-008 classification, progress, and current open required gates.
+
+Only emit the marker after reading the installed skill, its orchestrator prompt, and current GOAL-008 governance records. A prompt echo is not sufficient.

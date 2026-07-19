@@ -1,0 +1,32 @@
+Running a read-only govern scan for GOAL-008: loading the skill, locating the orchestrator prompt, and reading the minimum goal sources.## Govern scan (read-only · phase 1 only)
+
+**GROK_GOVERN_DISPATCH_OK**
+
+| Item | Value |
+|------|--------|
+| **Loaded skill title** | `govern · 目标治理编排（Grok Build skill）` (metadata: Goal-governance orchestrator, primary entry) |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+| **Orchestrator prompt** | `skills/prompts/00-govern-orchestrator.md` (SKILLS_PKG = `skills/`) |
+
+### GOAL-008 classification
+
+| Field | Value |
+|-------|--------|
+| **ID** | `GOAL-008-skills-consumer-adapter-release-consistency` |
+| **Status / progress** | `active` / `20%` |
+| **Parent** | `GOAL-001-main-vision` |
+| **Orchestrator class** | **S2** (open unfinished goals) **+ S4 overlay** (open required findings / due required info gates) — S4 takes priority over unconstrained advance |
+
+### Current open required gates
+
+| Gate | Level | State | Blocks |
+|------|--------|--------|--------|
+| **I-002** | required | `collecting` | Compatibility acceptance (stage 5). Claude/Grok `/govern`+`/audit` runtime-verified; **3 uncovered**: Copilot `/govern`, Copilot `/audit`, Web parser CI replay |
+| **I-003** | required | `collecting` | Stage 5 release acceptance; no ready coverage, clean CI archive, or annotated tag/release bound to matrix `candidateRevision` |
+| **A-010 F-002** | required | **open** (partially closed) | Full I-002 matrix; remaining 3 uncovered units |
+| **A-010 F-003** | required | **open** | I-003 / release path; rehearsal ≠ release |
+| **GOAL-001 F-005** | open / required | **open** | Stage 5 release acceptance, GOAL-008 close-out, stage 6/7 and root close (depends on I-002 + I-003) |
+
+**Not open required (closed or non-blocking):** I-001 `verified`; A-010 F-001 / F-004 / F-005 closed; F-006 recommended only.
+
+**Residual risk:** none accepted. No files modified; scan only.

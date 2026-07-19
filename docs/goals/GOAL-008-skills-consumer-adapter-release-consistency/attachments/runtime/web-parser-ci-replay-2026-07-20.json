@@ -1,0 +1,39 @@
+{
+  "format": "goal-governance.web-ci-replay-provenance",
+  "formatVersion": "1.0.0",
+  "status": "pass",
+  "candidateRevision": "v0.7.0",
+  "runId": 29700051047,
+  "runUrl": "https://github.com/magicvr/goal-governance/actions/runs/29700051047",
+  "headSha": "8a33ecd21d9183a680c9c0d63e471469f5e515a8",
+  "workflow": ".github/workflows/ci.yml",
+  "workflowTrigger": "push or workflow_dispatch",
+  "jobs": [
+    "contract-and-report",
+    "windows-install-surface"
+  ],
+  "requiredWebCommand": "python -m unittest discover -s tests -v (cwd: web)",
+  "artifactNames": [
+    "skills-release-evidence-ubuntu",
+    "skills-release-evidence-windows"
+  ],
+  "artifactArchives": {
+    "skills-release-evidence-ubuntu": {
+      "artifactId": 8446173390,
+      "archiveSha256": "bb21872af6e0fcf2f1bd2c039c4a5da2fd64230800d17bafd199b3bfb08c56ff",
+      "compatibilityReportSha256": "7da1c2663e2e95346f30bfd59e3602a613117a3550a4f1c8acac1f4ee34c14b7",
+      "releaseEvidenceSha256": "61778ac15bcc2339d25b06d0cc2077ed59a6d73dd32173330e21c8c81ebfc1cf"
+    },
+    "skills-release-evidence-windows": {
+      "artifactId": 8446177156,
+      "archiveSha256": "0920a213097d59e3105ccdc3ca4fe4170d8ce2762b65e888401106403c23e931",
+      "compatibilityReportSha256": "076ed0530ad949258019d0dcc003a8ac0eff4ce1bf1804613d80b655029b3d23",
+      "releaseEvidenceSha256": "aefa553d2bf08833fdbf96bfce15c23eb9eacea3c42264073eff2835966993c1"
+    }
+  },
+  "results": {
+    "ubuntu": {"coverageStatus": "ready-for-release-evidence", "checksPassed": true},
+    "windows": {"coverageStatus": "ready-for-release-evidence", "checksPassed": true}
+  },
+  "binding": "The run head SHA equals the annotated v0.7.0 candidate commit; both platform artifacts contain ready coverage and passing rehearsal evidence."
+}

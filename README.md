@@ -1,118 +1,90 @@
-# Goal Governance
+﻿# Goal Governance
 
-一个基于 FastAPI、Jinja2、Tailwind CSS 和 HTMX 的目标治理框架 Web 应用基础骨架。
+目标治理框架：交付可复用的核心方法论、文档协议与模板，并提供面向 AI/仓库协作的 Skills 和面向人的 Web 工作台，贯通 **目标 → 决策 → 执行 → 审计**。
 
-当前应用包含三个核心模块：
+## 从这里开始
 
-- **Decision（决策）**：明确目标、权衡取舍并记录关键决策。
-- **Execution（执行）**：将目标拆解为行动并持续跟踪进展。
-- **Audit（审计）**：回顾过程与结果，沉淀可复用的经验。
+| 想了解… | 去读 |
+|---------|------|
+| 全局目标与进展 | [docs/goals/goal-tree.md](docs/goals/goal-tree.md) |
+| 文档怎么写、规则是什么 | [docs/README.md](docs/README.md) |
+| 核心模板怎么用 | [docs/templates/README.md](docs/templates/README.md) |
+| AI 必须遵守什么 | [AGENTS.md](AGENTS.md) |
+| Skills 如何安装 | [skills/README.md](skills/README.md) |
+| 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
+| Web 如何启动 | [web/README.md](web/README.md) |
 
-当前版本仅提供页面与路由骨架，暂不包含数据库、认证或 AI 功能。
-
-## 项目结构
+## 仓库结构
 
 ```text
 goal-governance/
+├── README.md                 # 本文件
+├── AGENTS.md                 # Agent / AI 协作强制规则
+├── docs/                     # 目标与架构文档（source of truth）
+│   ├── README.md
+│   ├── goals/                # 目标平铺 + goal-tree.md
+│   ├── templates/            # 核心 canonical 文档模板
+│   ├── contracts/            # 消费适配器的 canonical 机读兼容契约
+│   ├── architecture/
+│   └── _index/
+├── skills/                   # AI/Agent 消费适配器与分发包
+│   ├── prompts/
+│   ├── templates/            # docs/templates 的分发镜像
+│   ├── contracts/            # docs/contracts 的分发镜像
+│   └── install.*
+├── web/                      # FastAPI Web 应用
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── README.md
+│   ├── static/
+│   └── templates/
 ├── .editorconfig
-├── .gitignore
-├── main.py
-├── requirements.txt
-├── README.md
-├── static/
-│   └── .gitkeep
-└── templates/
-    ├── base.html
-    ├── index.html
-    ├── decision.html
-    ├── execution.html
-    └── audit.html
+└── .gitignore
 ```
 
-## 环境要求
+- **核心文档层**：`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 定义方法论、协议、模板和消费适配器兼容契约；`docs/goals/` 保存具体目标实例。
+- **`skills/`**：AI/Agent 消费核心协议的编排、审计、原语、宿主适配和离线分发包。
+- **`web/`**：FastAPI + Jinja2 + Tailwind CSS + HTMX 的人类工作台；当前直接读取 `docs/goals/`，提供只读浏览与文档树诊断，不维护独立状态，也不提供 Web 写入、创建/更新或后台同步入口。
+- **三层交付共享一个真相源**：Skills 按协议读写、Web 当前读取同一套 `docs/goals` 文档，不建立独立状态。
 
-- Python 3.10+
-- pip
+## 目标模型（摘要）
 
-## 安装
+1. 目标全部平铺在 `docs/goals/`，不用嵌套文件夹表示层级。
+2. `GOAL-001` 为总目标（Root Goal）；其后顺序编号。
+3. 层级写在每个目标 `00-meta.md` 的 `parent` 字段。
+4. 树状与状态总览维护在 `docs/goals/goal-tree.md`。
+5. 每个目标固定：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。
 
-建议始终在本项目的 **Python 虚拟环境** 中安装依赖与启动服务，避免污染系统或其他项目的全局 Python 环境。
+当前目标：
 
-在项目根目录创建虚拟环境：
+- **GOAL-001-main-vision**：交付可复用的目标治理方法论、文档协议与消费工具
+- **GOAL-002～007**：初始化、Skills 闭环、Goal 数据模型、核心方法论与信息就绪治理均已结项。
+- **GOAL-008**：当前三宿主 `/govern` 的最低可用已验证；完整跨宿主/跨版本发布一致性保持 deferred required，在首次支持新宿主/版本或首次对外/可复现发布时复核。
 
-```bash
+## Web 应用快速启动
+
+详细说明见 [web/README.md](web/README.md)。
+
+```powershell
+# 1. 在项目根目录创建/激活虚拟环境（首次）
 python -m venv .venv
-```
-
-激活虚拟环境：
-
-Windows PowerShell：
-
-```powershell
 .\.venv\Scripts\Activate.ps1
-```
+pip install -r web\requirements.txt
 
-macOS / Linux：
-
-```bash
-source .venv/bin/activate
-```
-
-激活成功后，终端提示符前通常会显示 `(.venv)`。然后安装依赖：
-
-```bash
-pip install -r requirements.txt
-```
-
-## 启动
-
-**请先激活本项目的虚拟环境**（见上方），再启动服务。这样会使用 `.venv` 内的 `uvicorn` 与依赖，不会干涉系统或其他环境。
-
-Windows PowerShell：
-
-```powershell
-.\.venv\Scripts\Activate.ps1
+# 2. 启动（任选其一）
+cd web
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
 
-macOS / Linux：
-
-```bash
-source .venv/bin/activate
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
-
-也可以不先 `activate`，直接用虚拟环境里的解释器启动（同样不会影响其他环境）：
-
-Windows PowerShell：
-
-```powershell
-.\.venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
-
-macOS / Linux：
-
-```bash
-.venv/bin/python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
+# 或在根目录：
+# uvicorn main:app --app-dir web --reload --host 127.0.0.1 --port 8000
 ```
 
 启动后访问：<http://127.0.0.1:8000>
 
-也可以直接使用以下地址查看各模块页面：
+## 当前 Web 模块
 
-- <http://127.0.0.1:8000/decision>
-- <http://127.0.0.1:8000/execution>
-- <http://127.0.0.1:8000/audit>
+- **目标概览**：展示目标、状态、进度及目标树 / 文档诊断。
+- **目标详情**：展示成功标准、附件、Decision、Execution 和 Audit 的基础信息，并在需要时回退到原始 Markdown。
+- **兼容入口**：`/decision`、`/execution`、`/audit` 会跳回目标工作台。
 
-退出虚拟环境（可选）：
-
-```bash
-deactivate
-```
-
-## 技术说明
-
-- FastAPI 路由使用 `async def`。
-- Jinja2 模板通过 `base.html` 统一继承基础布局。
-- Tailwind CSS 和 HTMX 当前通过 CDN 加载，不需要 Node.js 或构建工具。
-- `static/` 已挂载到 `/static`，后续可以放置 CSS、JavaScript、图片和 favicon 等资源。
+当前 Web 是读取运行中目标文档的只读工作台，而非仅有页面与路由骨架。它直接以 `docs/goals/` 为真相源，不使用独立数据库或第二状态层，因此没有需要与目标文件“同步”的副本；当前也不提供 Web 写入、创建/更新或写入同步。任何写入能力须由独立目标实现，并遵守同一文档协议与审计约束。

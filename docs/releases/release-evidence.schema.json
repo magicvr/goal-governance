@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/magicvr/goal-governance/schema/release-evidence/v1",
+  "title": "Goal Governance Release Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaId",
+    "format",
+    "formatVersion",
+    "generatedAt",
+    "releaseStatus",
+    "source",
+    "protocol",
+    "compatibilityReport",
+    "checks",
+    "checksPassed",
+    "digests",
+    "workingTree"
+  ],
+  "properties": {
+    "schemaId": {
+      "const": "https://github.com/magicvr/goal-governance/schema/release-evidence/v1"
+    },
+    "format": { "const": "goal-governance.release-evidence" },
+    "formatVersion": { "const": "1.0.0" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "releaseStatus": { "enum": ["rehearsal", "release-candidate"] },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "branch", "annotatedTag", "tagObject"],
+      "properties": {
+        "commit": { "$ref": "#/$defs/commit" },
+        "branch": { "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }] },
+        "annotatedTag": { "anyOf": [{ "$ref": "#/$defs/semverTag" }, { "type": "null" }] },
+        "tagObject": { "anyOf": [{ "$ref": "#/$defs/commit" }, { "type": "null" }] }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "contractSha256", "matrixSha256", "candidateRevision"],
+      "properties": {
+        "version": { "$ref": "#/$defs/semver" },
+        "contractSha256": { "$ref": "#/$defs/sha256" },
+        "matrixSha256": { "$ref": "#/$defs/sha256" },
+        "candidateRevision": {
+          "anyOf": [
+            { "const": "unreleased" },
+            { "$ref": "#/$defs/commit" },
+            { "$ref": "#/$defs/semverTag" }
+          ]
+        }
+      }
+    },
+    "compatibilityReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coverageStatus", "uncovered", "mirrorPassed"],
+      "properties": {
+        "coverageStatus": { "enum": ["pending", "ready-for-release-evidence"] },
+        "uncovered": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["consumer", "entrypoint", "status"],
+            "properties": {
+              "consumer": { "type": "string", "minLength": 1 },
+              "entrypoint": { "type": "string", "minLength": 1 },
+              "status": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "mirrorPassed": { "type": "boolean" }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/check" }
+    },
+    "checksPassed": { "type": "boolean" },
+    "digests": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/digest" }
+    },
+    "workingTree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statusShort", "clean"],
+      "properties": {
+        "statusShort": { "type": "array", "items": { "type": "string" } },
+        "clean": { "type": "boolean" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "checks": { "maxItems": 0 } } },
+      "then": { "properties": { "checksPassed": { "const": false } } }
+    },
+    {
+      "if": { "properties": { "releaseStatus": { "const": "rehearsal" } } },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "annotatedTag": { "type": "null" },
+              "tagObject": { "type": "null" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "releaseStatus": { "const": "release-candidate" } } },
+      "then": {
+        "properties": {
+          "checks": { "minItems": 1 },
+          "checksPassed": { "const": true },
+          "protocol": {
+            "properties": {
+              "candidateRevision": { "$ref": "#/$defs/semverTag" }
+            }
+          },
+          "source": {
+            "properties": {
+              "annotatedTag": { "$ref": "#/$defs/semverTag" },
+              "tagObject": { "$ref": "#/$defs/commit" }
+            }
+          },
+          "compatibilityReport": {
+            "properties": {
+              "coverageStatus": { "const": "ready-for-release-evidence" },
+              "uncovered": { "maxItems": 0 },
+              "mirrorPassed": { "const": true }
+            }
+          },
+          "workingTree": {
+            "properties": {
+              "statusShort": { "maxItems": 0 },
+              "clean": { "const": true }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "semverTag": {
+      "type": "string",
+      "pattern": "^v(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "command", "cwd", "exitCode", "passed", "outputSha256", "output", "outputTail"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "command": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "cwd": { "type": "string", "minLength": 1 },
+        "exitCode": { "type": "integer" },
+        "passed": { "type": "boolean" },
+        "outputSha256": { "$ref": "#/$defs/sha256" },
+        "output": { "type": "string" },
+        "outputTail": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "passed": { "const": true } } },
+          "then": { "properties": { "exitCode": { "const": 0 } } }
+        },
+        {
+          "if": { "properties": { "passed": { "const": false } } },
+          "then": { "properties": { "exitCode": { "not": { "const": 0 } } } }
+        }
+      ]
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

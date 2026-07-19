@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}{{ goal.title }} · Goal Governance{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('home') }}" class="text-sm font-medium text-teal-700 hover:text-teal-900">← 返回目标概览</a>
+
+<section class="mt-5 border-b border-zinc-200 pb-6">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+            <p class="font-mono text-xs text-zinc-500">{{ goal.id }}</p>
+            <h1 class="mt-2 text-3xl font-semibold text-zinc-950">{{ goal.title }}</h1>
+            {% if goal.summary %}
+            <p class="mt-3 max-w-3xl text-sm leading-6 text-zinc-600">{{ goal.summary }}</p>
+            {% endif %}
+        </div>
+        <div class="flex shrink-0 items-center gap-2">
+            {{ status_badge(goal.status) }}
+            {% if goal.progress %}<span class="border border-zinc-200 bg-white px-2 py-0.5 text-xs font-medium text-zinc-700">{{ goal.progress }}</span>{% endif %}
+        </div>
+    </div>
+
+    <dl class="mt-6 grid border border-zinc-200 bg-white sm:grid-cols-2 lg:grid-cols-4 rounded-lg">
+        <div class="border-b border-zinc-200 p-4 sm:border-r lg:border-b-0">
+            <dt class="text-xs font-medium text-zinc-500">父目标</dt>
+            <dd class="mt-1 break-all font-mono text-sm text-zinc-800">{{ goal.parent_id or '—' }}</dd>
+        </div>
+        <div class="border-b border-zinc-200 p-4 lg:border-b-0 lg:border-r">
+            <dt class="text-xs font-medium text-zinc-500">创建</dt>
+            <dd class="mt-1 text-sm text-zinc-800">{{ goal.created }}</dd>
+        </div>
+        <div class="border-b border-zinc-200 p-4 sm:border-r lg:border-b-0">
+            <dt class="text-xs font-medium text-zinc-500">更新</dt>
+            <dd class="mt-1 text-sm text-zinc-800">{{ goal.updated }}</dd>
+        </div>
+        <div class="p-4">
+            <dt class="text-xs font-medium text-zinc-500">版本</dt>
+            <dd class="mt-1 text-sm text-zinc-800">{{ goal.version }}</dd>
+        </div>
+    </dl>
+</section>
+
+{% if issues %}
+<section class="mt-6 border border-amber-200 bg-amber-50 p-4 rounded-lg" aria-label="读取提醒">
+    <h2 class="font-medium text-amber-950">读取提醒</h2>
+    <ul class="mt-2 space-y-1 text-sm text-amber-900">
+        {% for issue in issues %}<li>{{ issue.message }}</li>{% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+<section class="mt-8" data-tabs>
+    <div class="overflow-x-auto border-b border-zinc-200" role="tablist" aria-label="目标详情视图">
+        <div class="flex min-w-max gap-5">
+            <button id="overview-tab" type="button" role="tab" aria-selected="true" aria-controls="overview-panel" data-tab="overview" class="border-b-2 border-teal-700 px-1 py-3 text-sm font-medium text-zinc-950">概览</button>
+            <button id="decision-tab" type="button" role="tab" aria-selected="false" aria-controls="decision-panel" data-tab="decision" class="border-b-2 border-transparent px-1 py-3 text-sm font-medium text-zinc-600 hover:border-zinc-300 hover:text-zinc-950">决策{% if goal.decision.entries %} · {{ goal.decision.entries|length }}{% endif %}</button>
+            <button id="execution-tab" type="button" role="tab" aria-selected="false" aria-controls="execution-panel" data-tab="execution" class="border-b-2 border-transparent px-1 py-3 text-sm font-medium text-zinc-600 hover:border-zinc-300 hover:text-zinc-950">执行{% if goal.execution.entries %} · {{ goal.execution.entries|length }}{% endif %}</button>
+            <button id="audit-tab" type="button" role="tab" aria-selected="false" aria-controls="audit-panel" data-tab="audit" class="border-b-2 border-transparent px-1 py-3 text-sm font-medium text-zinc-600 hover:border-zinc-300 hover:text-zinc-950">审计</button>
+        </div>
+    </div>
+
+    <section id="overview-panel" role="tabpanel" aria-labelledby="overview-tab" data-tab-panel="overview" class="py-6">
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+            <div>
+                <h2 class="text-lg font-semibold text-zinc-950">成功标准</h2>
+                {% if goal.success_criteria %}
+                <ul class="mt-4 divide-y divide-zinc-200 border-y border-zinc-200">
+                    {% for criterion in goal.success_criteria %}
+                    <li class="py-3 text-sm text-zinc-700">{{ criterion }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="mt-4 text-sm text-zinc-500">未解析到成功标准。</p>
+                {% endif %}
+
+                <details class="mt-6 border border-zinc-200 bg-white p-4 rounded-lg">
+                    <summary class="cursor-pointer text-sm font-medium text-zinc-800">查看目标原文</summary>
+                    <pre class="mt-4 overflow-x-auto whitespace-pre-wrap break-words text-xs leading-6 text-zinc-700">{{ goal.meta.body_markdown }}</pre>
+                </details>
+            </div>
+
+            <aside class="border-l border-zinc-200 pl-0 lg:pl-6">
+                <h2 class="text-lg font-semibold text-zinc-950">附件</h2>
+                {% if goal.attachments %}
+                <ul class="mt-4 divide-y divide-zinc-200 border-y border-zinc-200">
+                    {% for attachment in goal.attachments %}
+                    <li class="py-3">
+                        <p class="break-all text-sm font-medium text-zinc-800">{{ attachment.name }}</p>
+                        <p class="mt-1 font-mono text-xs text-zinc-500">{{ attachment.relative_path }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="mt-4 text-sm text-zinc-500">无附件。</p>
+                {% endif %}
+            </aside>
+        </div>
+    </section>
+
+    <section id="decision-panel" role="tabpanel" aria-labelledby="decision-tab" data-tab-panel="decision" hidden class="py-6">
+        {% if goal.decision.entries %}
+        <div class="divide-y divide-zinc-200 border-y border-zinc-200">
+            {% for entry in goal.decision.entries %}
+            <article class="py-5">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                        <p class="font-mono text-xs text-zinc-500">{{ entry.id }}</p>
+                        <h2 class="mt-1 text-lg font-semibold text-zinc-950">{{ entry.title }}</h2>
+                    </div>
+                    {% if entry.status %}<span class="border border-zinc-200 bg-white px-2 py-0.5 text-xs text-zinc-700">{{ entry.status }}</span>{% endif %}
+                </div>
+                {% if entry.decided %}<div class="mt-4"><p class="text-xs font-medium text-zinc-500">决定</p><p class="mt-1 text-sm leading-6 text-zinc-700">{{ entry.decided }}</p></div>{% endif %}
+                {% if entry.rationale %}<div class="mt-4"><p class="text-xs font-medium text-zinc-500">理由</p><p class="mt-1 text-sm leading-6 text-zinc-700">{{ entry.rationale }}</p></div>{% endif %}
+                {% if entry.rejected %}<div class="mt-4"><p class="text-xs font-medium text-zinc-500">未选方案</p><p class="mt-1 text-sm leading-6 text-zinc-700">{{ entry.rejected }}</p></div>{% endif %}
+                <details class="mt-4"><summary class="cursor-pointer text-sm font-medium text-teal-700">查看原始记录</summary><pre class="mt-3 overflow-x-auto whitespace-pre-wrap break-words border-l-2 border-zinc-200 pl-4 text-xs leading-6 text-zinc-700">{{ entry.raw_markdown }}</pre></details>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-sm text-zinc-500">未解析到决策条目。</p>
+        <details class="mt-4 border border-zinc-200 bg-white p-4 rounded-lg"><summary class="cursor-pointer text-sm font-medium text-zinc-800">查看决策原文</summary><pre class="mt-4 overflow-x-auto whitespace-pre-wrap break-words text-xs leading-6 text-zinc-700">{{ goal.decision.body_markdown }}</pre></details>
+        {% endif %}
+    </section>
+
+    <section id="execution-panel" role="tabpanel" aria-labelledby="execution-tab" data-tab-panel="execution" hidden class="py-6">
+        {% if goal.execution.entries %}
+        <ol class="divide-y divide-zinc-200 border-y border-zinc-200">
+            {% for entry in goal.execution.entries %}
+            <li class="grid gap-2 py-5 sm:grid-cols-[8rem_minmax(0,1fr)]">
+                <time datetime="{{ entry.date }}" class="text-sm font-medium text-teal-700">{{ entry.date }}</time>
+                <div>
+                    <h2 class="text-lg font-semibold text-zinc-950">{{ entry.title }}</h2>
+                    <pre class="mt-3 whitespace-pre-wrap break-words text-sm leading-6 text-zinc-700">{{ entry.raw_markdown }}</pre>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p class="text-sm text-zinc-500">未解析到执行时间线。</p>
+        <details class="mt-4 border border-zinc-200 bg-white p-4 rounded-lg"><summary class="cursor-pointer text-sm font-medium text-zinc-800">查看执行原文</summary><pre class="mt-4 overflow-x-auto whitespace-pre-wrap break-words text-xs leading-6 text-zinc-700">{{ goal.execution.body_markdown }}</pre></details>
+        {% endif %}
+    </section>
+
+    <section id="audit-panel" role="tabpanel" aria-labelledby="audit-tab" data-tab-panel="audit" hidden class="py-6">
+        <div class="flex flex-col gap-3 border-b border-zinc-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h2 class="text-lg font-semibold text-zinc-950">审计结论</h2>
+                <p class="mt-1 text-sm text-zinc-600">从明确结论区段或 frontmatter 推导</p>
+            </div>
+            {{ audit_badge(goal.audit.conclusion_state) }}
+        </div>
+        <pre class="mt-5 overflow-x-auto whitespace-pre-wrap break-words text-sm leading-6 text-zinc-700">{{ goal.audit.body_markdown }}</pre>
+    </section>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.querySelectorAll('[data-tabs]').forEach((container) => {
+        const tabs = Array.from(container.querySelectorAll('[role="tab"]'));
+        const panels = Array.from(container.querySelectorAll('[data-tab-panel]'));
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                const selected = tab.dataset.tab;
+                tabs.forEach((candidate) => {
+                    const active = candidate === tab;
+                    candidate.setAttribute('aria-selected', String(active));
+                    candidate.classList.toggle('border-teal-700', active);
+                    candidate.classList.toggle('text-zinc-950', active);
+                    candidate.classList.toggle('border-transparent', !active);
+                    candidate.classList.toggle('text-zinc-600', !active);
+                });
+                panels.forEach((panel) => {
+                    panel.hidden = panel.dataset.tabPanel !== selected;
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
