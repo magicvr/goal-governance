@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-19
-version: 0.2.5
+updated: 2026-07-20
+version: 0.2.6
 ---
 
 # 决策记录 · GOAL-001
@@ -283,3 +283,25 @@ version: 0.2.5
 - 将最低可用 runtime 或 CI 绿灯单独视为 F-005 已关闭：缺少完整矩阵、发行物身份与 tag/release 证据。
 
 **影响与后续**：GOAL-001 继续 `active`，阶段 5 保持当前焦点；本条不关闭 F-005、不改变 GOAL-008 progress，也不触发阶段 7 或根目标关门。
+
+## D-013 · 阶段性整合 `dev` 到 `main` 并在验证后删除 `dev`（2026-07-20）
+
+**状态**：accepted
+
+**确认来源**：用户在本对话接受 `dev` 到 `main` 的分阶段 PR、合并与删除分支建议，并明确要求开始执行。
+
+**决定**：
+
+1. 从 `dev` 创建到 `main` 的 Pull Request，先完成 PR CI 和平台合并检查，再使用普通 merge commit 合入；不使用 squash 或 rebase merge。
+2. 合并后必须等待并核对 `main` 上对应提交的 CI 成功，确认 `main` 已包含 `dev` 的提交链后，才删除远端与本地 `dev` 分支。
+3. 本次整合仅收束已完成的阶段 5 发布一致性和其 close-out 记录；GOAL-001 保持 `active`，阶段 6/7 和 F-006 的后续范围不因分支整合而变更。
+
+**为什么**：annotated `v0.7.0` 指向候选提交 `8a33ecd21d9183a680c9c0d63e471469f5e515a8`，该提交是当前 `dev` 的祖先。普通 merge 保留原提交图和 tag 的可追溯性；在 `main` CI 成功前保留 `dev` 也保留回退和诊断锚点。
+
+**未选方案**：
+
+- **直接推送 `dev` 内容到 `main`**：绕过 PR 的变更审阅与合并前 CI 观察。
+- **squash 或 rebase merge**：会重写候选提交身份，使 tag、digest 和 release evidence 需要重新绑定。
+- **在合并前或未验证 `main` CI 时删除 `dev`**：会失去尚未被 `main` 证实的恢复路径。
+
+**影响与后续**：本决定不改变目标状态、进度、信息项或审计 finding，因此不更新 `goal-tree.md`。执行记录只在 PR 创建、合并、`main` CI 与分支删除实际发生后追加对应事实和链接。
