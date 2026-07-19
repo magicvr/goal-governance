@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-20
-version: 0.3.4
+version: 0.3.5
 ---
 
 # 执行记录 · GOAL-001
@@ -17,6 +17,13 @@ version: 0.3.4
 - GOAL-008 完成 I-002/I-003：GitHub Actions run `29700051047` 在同一候选 commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8` 通过 Ubuntu/Windows Web parser replay，coverage ready 且无 uncovered 单元。
 - 已创建并推送 annotated `v0.7.0`，release mode evidence checks 全部通过；GOAL-008 `03-audit.md` A-016 与本目标 A-013 关闭阶段 5 required 门禁和 F-005。
 - GOAL-001 保持 `active`，阶段 6 Web 深化未在本次范围内启动。
+
+## 2026-07-20 · `dev` 到 `main` 阶段性整合
+
+- 按 [D-013](01-decision.md#d-013--阶段性整合-dev-到-main-并在验证后删除-dev2026-07-20) 创建并合并 [PR #1](https://github.com/magicvr/goal-governance/pull/1)。PR head 为 `491152a64e2d2f27d148367f5a9c6bad4439273b`；两套 PR 检查的 `contract-and-report` 与 `windows-install-surface` 均为 `SUCCESS`。
+- 使用普通 merge 生成 commit `2662c2551ea92a1d046d9658b0b9b55885f3e57f`，保留 annotated `v0.7.0` 及其候选提交 `8a33ecd21d9183a680c9c0d63e471469f5e515a8` 在 `main` 的祖先链中。
+- `main` 的 GitHub Actions run `29701936833` 通过，包含 portable contract/report 与 Windows install-surface 两项 job；确认 `main` 包含 PR head 和 `v0.7.0` 后，删除 `origin/dev` 与本地 `dev`（原 head `491152a`）。
+- 本次只完成分支整合与执行留痕；GOAL-001 继续 `active`，不改变阶段 6/7、F-006 或目标树状态。
 
 ## 时间线
 
