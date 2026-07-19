@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.3.0
+version: 0.3.1
 ---
 
 # 执行记录 · GOAL-001
@@ -65,13 +65,13 @@ version: 0.3.0
 |------|------|------|
 | 核心方法论与模板 | 已完成（GOAL-006 done / 100%） | `docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/`、独立启用说明与 A-005 close-out 已形成核心交付；跨面联合发布仍留给后续阶段 |
 | Web 应用 | 可用（只读） | 首页、目标详情和文档诊断已接入 `docs/goals/`；写入交互明确留待后续目标 |
-| Skills / 提示词 | P-005 协议对齐已完成，发布一致性验收待做 | GOAL-003、GOAL-005、GOAL-007 均为 done；`skills/templates/goal-folder/` 是核心模板的分发镜像；F-019 为 GOAL-005 结项后 recommended residual |
+| Skills / 提示词 | 当前三宿主 `/govern` 最低可用已证；发布一致性 deferred | GOAL-003、GOAL-005、GOAL-007 均为 done；GOAL-008 active / 20%，I-002 / I-003 / F-005 保持 deferred required，触发时再复核 |
 | 核心数据模型 | 已完成 | GOAL-004 done 100%；阶段 A～D 与关门路径均已完成 |
 
 ## 下一步（根目标视角）
 
 1. 阶段 4（核心方法论、文档协议与 canonical 模板产品化）已由 `GOAL-006` 完成；A-005 self close-out 与 A-004 independent targeted 复审通过，满足阶段 4 → 5 门槛。
-2. 阶段 5 尚未立项；P-005 的规则、模板镜像、安装产物与核心协议对齐已由 GOAL-007 完成，后续仍须定义并验收完整发布一致性范围。
+2. 阶段 5 已由 GOAL-008 承接：当前只声明三宿主 `/govern` 最低可用；I-002 / I-003 / F-005 在首次支持新宿主/版本或首次对外/可复现发布时恢复复核，届时再推进完整发布一致性范围。
 3. 阶段 6 保持 Web 只读，先完善人类浏览/诊断体验；任何写入另立子目标并保留审计证据。
 4. F-001～F-003 分别在文档投影维护、具备符号链接权限的 CI/环境、以及可靠性/并发策略范围内继续跟踪。
 5. F-019 待具备 Linux/macOS CI 或 Unix 环境时单独补证，不阻塞当前路线。
@@ -137,3 +137,10 @@ version: 0.3.0
 - 本次只完成阶段 5 子目标设立、边界记录和门禁移交；没有冻结发布范围、进入受影响实施、关闭 `F-005` 或放行阶段 7/GOAL-001 关门。
 
 **下一步（计划）**：GOAL-008 先收集并审视 I-001，之后按 I-002 / I-003 的最晚阶段形成兼容范围、fixtures 与可追溯发行证据。
+
+### 2026-07-19 · 用户确认当前最低可用并延期发布一致性
+
+- 用户确认当前“Skills 能安装、能使用”已经足够；现有 canonical 契约、安装分发测试和三宿主固定版本 current `/govern` dispatch 证据可作为有界最低可用结论。
+- 记录 [D-011](01-decision.md#d-011--当前最低可用基线与发布一致性延期2026-07-19)：I-002、I-003 和 `F-005` 保持 `required`，但在当前没有对外/可复现发布或新增宿主/版本计划时为 `deferred`；本轮没有接受 residual risk、关闭 F-005 或改变 GOAL-001 / GOAL-008 状态。
+- `GOAL-008` 的 [D-004](../GOAL-008-skills-consumer-adapter-release-consistency/01-decision.md#d-004--当前最低可用基线与发布一致性延期2026-07-19) 与 [A-008](../GOAL-008-skills-consumer-adapter-release-consistency/03-audit.md#a-008--当前最低可用裁决与发布一致性延期响应2026-07-19) 已记录最低可用边界、责任人与触发；首次对外/可复现发布时先恢复 I-003 / F-005，首次支持新宿主/版本时先恢复 I-002。
+- 对本轮治理记录运行 Skills 契约测试（30 passed）、独立启用测试（3 passed）和 Web 回归（20 passed / 1 Windows symlink-permission skipped）；`git diff --check` 无空白错误。

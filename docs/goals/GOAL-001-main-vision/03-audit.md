@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-19
-version: 0.2.9
+version: 0.3.0
 ---
 
 # 审计 · GOAL-001
@@ -383,6 +383,8 @@ A-006 已把协议版本、兼容范围和发行物身份明确为待回答问�
 - **类型 / scope**：response / A-006 independent + A-007 self 的组合战略结论、F-005/F-006 与阶段 5 立项边界
 - **verdict**：conditional
 
+> **历史响应状态**：本条记录 D-010 立项时的 `collecting` / `open` 状态；当前最低可用范围以及 I-002、I-003、F-005 的 deferred 状态以 [D-011](01-decision.md#d-011--当前最低可用基线与发布一致性延期2026-07-19) 和 [A-009](#a-009--当前最低可用裁决与-f-005-延期响应2026-07-19) 为准。
+
 ### P-004 裁决与意见合并
 
 用户已明确选择「先自审，然后合并响应审计结果」。A-007 已作为覆盖同 scope 的 `source: self` 审计完成，P-004 的“是否自审”裁决点因此关闭；本条再合并两条意见，而不是把响应记录本身算作自审。
@@ -430,3 +432,41 @@ D-010 同时登记 I-001～I-003 为 `required / collecting`。这些信息项�
 ### 结论 + 建议下一步
 
 **conditional**：A-006 与 A-007 已完成 P-004 所要求的双意见汇总，且无冲突；阶段 5 的立项边界和信息门禁已经可执行，但 F-005 及 I-001～I-003 仍开放。本响应完成“裁决与定界”，不冒充 finding 关闭。下一步可用 `/govern` 按 D-010 创建当前下一编号的阶段 5 子目标，再在其方案、实施和审计中逐项形成关闭证据。
+
+## A-009 · 当前最低可用裁决与 F-005 延期响应（2026-07-19）
+
+- **source**：self
+- **auditor**：Codex `/govern`
+- **类型 / scope**：response / 响应 A-006 / A-007 / A-008 的 F-005 门禁，并核对 D-011 对 GOAL-008 当前最低可用范围、I-002、I-003 的影响；不作阶段 5 发布验收或根目标关门审计。
+- **verdict**：conditional
+
+### 范围与区间
+
+本条记录用户对当前投入范围的书面裁决：现有安装、canonical 契约和三宿主 current `/govern` 证据足够支持当前最低可用；不把这项有界结论扩大为跨版本兼容、`/audit` 运行时、CI 或 release 成功。A-006 的 independent 与 A-007 的 self 已覆盖同一 F-005 scope，未触发新的“是否自审”裁决点。
+
+### 成果（有证据）
+
+- [GOAL-008 D-004](../GOAL-008-skills-consumer-adapter-release-consistency/01-decision.md#d-004--当前最低可用基线与发布一致性延期2026-07-19) 记录三宿主固定版本 `0.1.0` current `/govern` 最低可用的边界、未选方案与触发条件。
+- [GOAL-008 A-007](../GOAL-008-skills-consumer-adapter-release-consistency/03-audit.md#a-007--i-002-三宿主-govern-runtime-dispatch-复核2026-07-19) 留有 Claude Code `2.1.215`、Grok Build `0.2.103`、Copilot VS Code `1.129.1` / `copilot-chat 0.57.0` 的实际 dispatch 证据；I-001 继续为 `verified`。
+- [D-011](01-decision.md#d-011--当前最低可用基线与发布一致性延期2026-07-19) 将 I-002、I-003、F-005 的 required 级别、责任人和复核触发同步到根目标。
+
+### 关闭证据与仍开放项
+
+| finding / I-00N | 状态 | 证据 |
+|-----------------|------|------|
+| 当前最低可用范围 | 本 scope 通过 | GOAL-008 I-001 `verified`；A-007 三宿主 current `/govern` runtime fixture。 |
+| I-002 | deferred / required | D-011；首次支持新宿主/版本或首次对外/可复现发布时复核。 |
+| I-003 | deferred / required | D-011；首次对外/可复现发布时复核。 |
+| F-005 | open / required（deferred） | D-011；首次对外/可复现发布时复核。 |
+
+### Findings
+
+本次没有新增 finding。F-005 没有关闭：延期只停止当前投入，不解除阶段 5 发布验收、阶段 7 验收或 GOAL-001 关门门禁。
+
+### 必改项汇总
+
+- F-005、I-002、I-003 保持 `required`；触发到来时必须以当时的宿主/版本与发行范围重新收集证据，不得沿用最低可用结论替代发布验收。
+
+### 结论 + 建议下一步
+
+**conditional**：当前最低可用范围可用，GOAL-008 与 GOAL-001 均保持 active；完整发布一致性已正式延期而非完成。下一步仅在首次支持新宿主/版本或首次对外/可复现发布时恢复 `/govern GOAL-008`，重新检查 I-002、I-003 与 F-005。

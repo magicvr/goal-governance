@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-19
 parent: null
-version: 0.12.0
+version: 0.13.0
 ---
 
 # Goal Tree
@@ -40,7 +40,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | GOAL-001-main-vision | done | 100% | [GOAL-007-information-readiness-governance/](GOAL-007-information-readiness-governance/) |
 | GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | active | 20% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
 
-当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」。GOAL-008 为 `active / 20%`：I-001 已由 canonical schema/manifest、Skills 镜像、正反 fixtures 与安装/standalone 测试验证为 `verified`，可放行其方案与发布范围冻结门禁；I-002 仍为 `required / collecting`，但 D-003 的范围冻结和三宿主固定版本 current `/govern` runtime fixture 已完成（Claude Code `2.1.215`、Grok Build `0.2.103`、Copilot VS Code `1.129.1` / `copilot-chat 0.57.0` 均为 adapter `verified`；Web parser 20 passed / 1 skipped）。当前阻断的是完整兼容验收、自动化重放与 I-003，而非该首要入口的运行时收集；I-003 与 `F-005` 继续阻断阶段验收与关门；`F-006` 保持非阻塞 `recommended / open`。`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
+当前根目标焦点：阶段 5「Skills 消费适配器与发布一致性」。GOAL-008 为 `active / 20%`：I-001 已由 canonical schema/manifest、Skills 镜像、正反 fixtures 与安装/standalone 测试验证为 `verified`；三宿主固定版本 current `/govern` runtime fixture 已完成（Claude Code `2.1.215`、Grok Build `0.2.103`、Copilot VS Code `1.129.1` / `copilot-chat 0.57.0` 均为 adapter `verified`），可声明当前最低可用。I-002、I-003 与 `F-005` 保持 `deferred required`：前者在首次支持新宿主/版本或首次对外/可复现发布时复核，后两者在首次对外/可复现发布时复核；它们未关闭，仍阻断阶段 5 发布验收、阶段 7 验收和根目标关门。`F-006` 保持非阻塞 `recommended / open`；`GOAL-006` 的 F-003 保持非阻塞 recommended/open residual。
 
 ## 状态图例
 

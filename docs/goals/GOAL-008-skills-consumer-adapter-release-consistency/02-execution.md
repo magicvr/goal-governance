@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-19
-version: 1.0.0
+version: 1.1.0
 ---
 
 # 执行记录 · GOAL-008
@@ -88,12 +88,19 @@ version: 1.0.0
 - 将 canonical manifest 与 Skills mirror 的 Claude、Grok、Copilot 三条 `verificationStatus` 更新为 `verified`，并同步契约测试与说明。该状态严格指向上述 `0.1.0` current `/govern` fixture 的实际调度，不涵盖 `/audit`、manifest 解析、CI 或 release 验收。
 - I-002 仍为 `required / collecting`，progress 保持 `20%`：本次完成的是首要入口的版本固定运行时行，完整矩阵/自动化重放和 I-003 发行证据尚未完成。
 
+### 2026-07-19 · 用户确认当前最低可用并延期发布一致性门禁
+
+- 用户在核对现有安装、契约测试与三宿主 current `/govern` runtime fixture 后，确认当前“可安装、可使用”的最低基线已经足够，不继续投入完整兼容矩阵、自动化重放、CI 或 tag/release。
+- 记录 [D-004](01-decision.md#d-004--当前最低可用基线与发布一致性延期2026-07-19)：I-002、I-003 和上游 `F-005` 保留 `required`，状态改为 `deferred`；本轮没有接受 residual risk，也没有将其写为 `verified` 或关闭。
+- I-002 的复核触发为首次支持新的宿主/版本或首次对外/可复现发布；I-003 与 F-005 的复核触发为首次对外/可复现发布。目标状态和进度保持 `active / 20%`。
+- 本次治理记录变更后，运行 `python -m unittest skills/tests/test_skills_orchestrator.py -v`（30 passed）、`python -m unittest discover -s docs/tests -p "test_standalone_bootstrap.py" -v`（3 passed）及在 `web/` 使用根 `.venv` 的 Web 回归（20 passed / 1 Windows symlink-permission skipped）；`git diff --check` 无空白错误。
+
 ## 当前事实与门禁
 
 - 已完成目标设立、范围记录、信息需求登记、高层路线图，以及 I-001 的行业实践收集、设计、schema/manifest、镜像同步和契约测试。
-- I-001 已关闭；D-003 已冻结 I-002 的初始协议与声明/承诺范围，且三宿主已取得固定版本的 `/govern` 可观察 dispatch 通过。CI 重放、release tag 或阶段 5 发布验收尚未取得。
-- I-002 未关闭前，不通过完整兼容验收，也不把 `govern` current fixture 的局部运行时通过扩大为 `/audit`、manifest 解析或产品发布通过；I-003 与 F-005 未关闭前，不通过阶段 5 发布验收。
+- I-001 已关闭；D-003 已冻结 I-002 的初始协议与声明/承诺范围，且三宿主已取得固定版本的 `/govern` 可观察 dispatch 通过。当前只据此声明最低可用；CI 重放、release tag 或阶段 5 发布验收尚未取得。
+- I-002、I-003 与 F-005 均为 `deferred required`：它们不阻断当前最低可用范围，却在其复核触发或受影响门禁到达时阻断完整兼容验收、阶段 5 发布验收、阶段 7 验收与根目标关门。不得把 `govern` current fixture 的局部运行时通过扩大为 `/audit`、manifest 解析或产品发布通过。
 
 ## 进度评估
 
-**20%**：首项成功标准已由 D-002 的 canonical schema/manifest、镜像和契约测试完成；I-001 已 `verified`。D-003 已收敛 I-002 的支持边界，三宿主 `govern` current 矩阵行也已获得可观察 dispatch 证据；但完整矩阵、自动化重放、CI 与 I-003 仍未完成，故不调整百分比或把这三条局部运行时验证误作跨宿主兼容验收。
+**20%**：首项成功标准已由 D-002 的 canonical schema/manifest、镜像和契约测试完成；I-001 已 `verified`。D-003 已收敛 I-002 的支持边界，三宿主 `govern` current 矩阵行也已获得可观察 dispatch 证据。完整矩阵、自动化重放、CI 与 I-003 未完成但已按用户裁决 `deferred required`，故不调整百分比，也不把三条局部运行时验证误作跨宿主兼容验收。
