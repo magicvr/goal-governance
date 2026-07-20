@@ -5,14 +5,14 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-20
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-本目标已形成四条 independent 意见（A-001、A-002、A-005、A-006）、一次同范围 self 审视（A-003）及三次 `/govern` 响应（A-004、A-007、A-008）。A-005 暴露的共享资料区术语/来源问题已由 D-004 与 A-007 记录修订；F-004/I-010 以及 F-001～F-005、F-007/F-008 的其余适用门禁仍开放，没有 residual risk 接受或阶段放行。
+本目标已形成四条 independent 意见（A-001、A-002、A-005、A-006）、一次同范围 self 审视（A-003）及四次 `/govern` 响应（A-004、A-007、A-008、A-009）。A-005 暴露的共享资料区术语/来源问题已由 D-004 与 A-007 记录修订；F-004/I-010 以及 F-001～F-005、F-007/F-008 的其余适用门禁仍开放，没有 residual risk 接受或阶段放行。
 
 当前焦点为 R-001 和经 A-007 重定义的 R-003：收集 I-001/I-011 的单用户工作流、三页信息架构和最小垂直旅程，并定义 I-009/I-010 的工作区隔离及共享资料区模型/验证。后续审视至少核对：
 
@@ -522,3 +522,29 @@ A-005/A-006 已完成记录层面的合并响应，旧语义不再是当前基�
 ### 结论
 
 GOAL-010 已提供 R-003 的可引用 core/Skills 基线，且没有把它伪装为产品能力。A-008 不关闭 finding、不修改 GOAL-009 status/progress，也不替代后续 `/audit` 或用户对导航例外、产品模型和风险取舍的裁决。
+
+## A-009 · GOAL-011 显式工作区目录输入交接（2026-07-20）
+
+- **source**：self
+- **auditor**：`/govern`（Codex）
+- **类型**：response / dependency handoff
+- **scope**：记录 GOAL-011 的当前项目目录迁移与共享资料候选索引，判断它对 R-003 的输入作用及其不放行边界。
+- **verdict**：conditional
+
+### 已交付输入
+
+- 当前项目已经从 `docs/goals/` 迁至 `docs/workspace-001-goal-governance/`；该工作区根包含 `workspace.md`、`goal-tree.md` 与 11 个平铺目标。
+- `docs/shared-materials/` 与 `rebuild_shared_materials_index.py` 可盘点用户手工复制文件的相对路径、字节数和 SHA-256；索引明确标记 `inventoryOnly: true`，不自动形成固定引用或事实。
+- core、Skills 和当前 Web 默认读取根均已同步，并有 docs、Skills、scripts 与 Web 回归测试证据。
+
+### 不放行范围
+
+| 项目 | 状态 | 原因 |
+|------|------|------|
+| I-009 / F-003 | `required / collecting`、open | 当前只有一个迁移后的工作区根；没有多工作区产品实体、创建/归档、导航例外、跨工作区读写拒绝策略或验证。 |
+| I-010 / F-004 | `required / collecting`、open | 候选库存不等于资料模型、用户 CRUD、AI 读取、版本/引用/删除/安全契约或访问验证。 |
+| R-003 与路线图 B | 未放行 | 仍须收集并审视产品/操作契约及正反验证证据。 |
+
+### 结论
+
+GOAL-011 是 R-003 的可引用目录与资料盘点输入，不是产品能力关闭证据。A-009 不修改 GOAL-009 status/progress，也不替代用户对导航例外、产品模型和风险取舍的裁决。

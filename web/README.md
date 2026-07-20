@@ -2,7 +2,7 @@
 
 基于 FastAPI、Jinja2、Tailwind CSS 和 HTMX 的目标治理 Web 应用。它是核心方法论与文档协议的**人类消费适配器**，不拥有独立的目标状态或生命周期定义。
 
-当前版本提供只读的目标工作台，直接从仓库 `docs/goals/` 的 Markdown 真相源加载数据：
+当前版本提供只读的目标工作台，直接从仓库唯一已配置工作区 `docs/workspace-001-goal-governance/` 的 Markdown 真相源加载数据：
 
 - **目标概览**：展示可读取 Goal、状态、进度和文档/目标树诊断。
 - **目标详情**：展示成功标准、附件、Decision、Execution 和 Audit 的基础信息与原始 Markdown 回退内容。
@@ -132,7 +132,7 @@ macOS / Linux：
 ## 技术说明
 
 - `main.py` 通过 `Path(__file__).resolve().parent` 定位 `static/` 与 `templates/`，可在任意工作目录启动。
-- 首页与 `/goals/{goal_id}` 通过 `GoalsRepository` 读取 `docs/goals/`；目录扫描为运行时列表权威，`goal-tree.md` 的差异会显示为诊断。
+- 首页与 `/goals/{goal_id}` 通过 `GoalsRepository` 读取当前工作区根；目录扫描为运行时列表权威，`goal-tree.md` 的差异会显示为诊断。多工作区选择器不在当前 Web 范围内。
 - Tailwind CSS 和 HTMX 当前通过 CDN 加载。
 - `static/` 已挂载到 `/static`。
 - `services/goals_repo.py` 提供目标的 List/Get/Create/Update 与 `repair_goal_tree()`；本阶段 Web 只接入只读 List/Get，写入交互留待后续目标。

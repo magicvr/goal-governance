@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.7.0
+version: 0.8.0
 ---
 
 # AGENTS.md
@@ -18,21 +18,21 @@ version: 0.7.0
 
 | 内容 | 路径 | 要求 |
 |------|------|------|
-| 目标与过程记录 | `docs/goals/` | 唯一长期存储 |
-| 目标树与状态 | `docs/goals/goal-tree.md` | **必读、必更新** |
+| 目标与过程记录 | `docs/workspace-<NNN>-<slug>/` | 当前工作区内的唯一长期存储 |
+| 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
 | 架构约定 | `docs/architecture/` | 若项目启用 |
 | 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001～P-005 |
 | 文档使用规范 | `docs/README.md` | 若存在 |
 | 核心方法论与模板 | `{{CORE_TEMPLATES_DIR}}` | 若项目采用独立核心层；canonical 模板优先 |
-| 工作区与共享资料协议 | `docs/workspace.md`、`docs/architecture/workspace-protocol.md` | 前者存在时必读；目标状态仍以 `docs/goals/` 为准 |
+| 工作区与共享资料协议 | `<workspace-root>/workspace.md`、`docs/architecture/workspace-protocol.md` | 前者存在时必读；目标状态仍以该工作区根为准 |
 
-冲突时以 `docs/goals/` 与本文件为准。
+冲突时以已验证的工作区 canonical root 与本文件为准。
 
 ## 2. 目标存储与编号
 
-1. **扁平存储**：所有目标文件夹平铺在 `docs/goals/`，**禁止**用子文件夹表达父子关系。
-2. **Root**：`GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
-3. **编号**：先读 `goal-tree.md`（或扫描 `docs/goals/`），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。
+1. **工作区内扁平存储**：所有目标文件夹平铺在 `docs/workspace-<NNN>-<slug>/` 根，**禁止**用子文件夹表达父子关系。
+2. **Root**：每个工作区的 `GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
+3. **编号**：先读当前工作区 `goal-tree.md`（或扫描其 canonical root），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
 5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
 6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
@@ -43,7 +43,7 @@ version: 0.7.0
 ## 3. 目标五件套（创建时一次建齐）
 
 ```text
-docs/goals/GOAL-NNN-short-slug/
+docs/workspace-001-example/GOAL-NNN-short-slug/
 ├── 00-meta.md
 ├── 01-decision.md
 ├── 02-execution.md
@@ -158,17 +158,17 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 6c. 工作区与共享资料边界
 
-若仓库存在 `docs/workspace.md`，先按 `docs/architecture/workspace-protocol.md`（若存在）校验其 `root_goal`、`canonical_scope` 和共享资料引用：
+先定位当前 `docs/workspace-<NNN>-<slug>/workspace.md`，再按 `docs/architecture/workspace-protocol.md`（若存在）校验其 `root_goal`、`canonical_scope` 和共享资料引用。多个工作区而用户未指定焦点时必须 fail closed：
 
 1. 工作区绑定一个 `parent: null` 的 Root Goal 与其 canonical 目标范围；它不是 `parent` 层级、审计 scope 或第二套状态。
 2. 同一项目的 MVP、二阶段、三阶段等通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
-3. 没有 `docs/workspace.md` 时，只按当前仓库的 `docs/goals/` 使用隐式单工作区；禁止自动发现、读取、混合或写入其他工作区上下文。
+3. 没有显式工作区根、但存在 `docs/goals/` 时，只按该 legacy 目录使用隐式单工作区；禁止自动发现、读取、混合或写入其他工作区上下文。
 4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
 5. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
 
 ## 7. 必须同步更新 goal-tree.md
 
-以下任一操作后，**必须**更新 `docs/goals/goal-tree.md`：
+以下任一操作后，**必须**更新当前工作区的 `goal-tree.md`：
 
 - 新建目标
 - 修改 `status` / `progress`
@@ -181,7 +181,7 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 8. 代码与文档边界
 
-- **目标真相源**：长期过程记录在 `docs/goals/`（本包约定）。业务代码与 UI 可以引用目标，长期存储以 `docs/goals/` 为准。
+- **目标真相源**：长期过程记录在已验证工作区的 canonical root。业务代码与 UI 可以引用目标，但不得建立全局 `docs/goals/` 或第二状态源。
 - **代码布局（默认策略）**：
   - 默认：应用/库代码可在**仓库根**，或按该语言/生态惯例分布。
   - 若项目已约定子目录（如 `web/`、`app/`、`services/`）：按该约定；`{{APP_DIR}}` 仅在有约定时填写。
@@ -199,7 +199,7 @@ docs/goals/GOAL-NNN-short-slug/
 
 默认：**文档驱动的目标治理**；代码与可视化应用按项目实际叠加。
 
-1. **文档体系（本包约定）**：`docs/goals/` + `goal-tree.md`
+1. **文档体系（本包约定）**：`docs/workspace-<NNN>-<slug>/` + 工作区内 `goal-tree.md`
 2. **产品/代码（常见）**：仓库根或项目实际目录
 3. **独立可视化应用（可选）**：有则按项目路径
 4. **Skills 包（可选）**：`{{SKILLS_DIR}}`
@@ -215,7 +215,7 @@ docs/goals/GOAL-NNN-short-slug/
 ## 10. 变更工作流
 
 ```text
-1. 读 `docs/workspace.md`（若有）→ 校验 Root Goal/canonical 范围/资料引用；再读 goal-tree.md → 编号、parent、未关门目标
+1. 定位当前工作区 `workspace.md` → 校验 Root Goal/canonical 范围/资料引用；再读该工作区 goal-tree.md → 编号、parent、未关门目标
 2. 未指定原子操作时 → 优先编排器
 3. 尚不可直接执行 → 先高层路线图（P-001）；存在影响门禁的未知 → 先登记信息需求与最晚需要阶段（P-005）
 4. 推进时检查相关审计意见与信息就绪门禁；P-004 情形先询问用户
@@ -283,8 +283,8 @@ docs/goals/GOAL-NNN-short-slug/
 ## 快速链接（按项目填写）
 
 - 文档说明：`{{DOCS_README_PATH}}`
-- 目标树：`docs/goals/goal-tree.md`
-- Root Goal：`docs/goals/{{ROOT_GOAL_FOLDER}}/00-meta.md`
+- 目标树：`{{WORKSPACE_ROOT}}/goal-tree.md`
+- Root Goal：`{{WORKSPACE_ROOT}}/{{ROOT_GOAL_FOLDER}}/00-meta.md`
 - 核心模板目录：`{{CORE_TEMPLATES_DIR}}`（若项目采用独立核心层）
 - 架构说明：`{{ARCHITECTURE_PATH}}`
 - 治理原则：AGENTS 第 6 / 6b 节；`docs/architecture/principles.md`（若存在，P-001～P-005）

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -30,6 +31,7 @@ REFERENCE_FIELDS = (
     "status",
 )
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+WORKSPACE_SCOPE_RE = re.compile(r"^docs/workspace-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*/$")
 
 
 def parse_frontmatter(path: Path) -> dict[str, str]:
@@ -71,8 +73,8 @@ def validate_workspace_context(path: Path) -> None:
         raise ValueError(f"missing context fields: {sorted(missing)}")
     if not re.fullmatch(r"GOAL-001-[a-z0-9-]+", fields["root_goal"]):
         raise ValueError("root_goal must be a complete GOAL-001 id")
-    if fields["canonical_scope"] != "docs/goals/":
-        raise ValueError("canonical_scope must be docs/goals/")
+    if not WORKSPACE_SCOPE_RE.fullmatch(fields["canonical_scope"]):
+        raise ValueError("canonical_scope must be a workspace root")
 
     references = parse_reference_rows(path)
     if fields["shared_materials_catalog"] == "none" and references:
@@ -94,17 +96,30 @@ def validate_workspace_context(path: Path) -> None:
 
 
 class WorkspaceProtocolTests(unittest.TestCase):
+    def test_current_project_uses_one_explicit_workspace_root(self) -> None:
+        workspace = REPO_ROOT / "docs" / "workspace-001-goal-governance"
+        context = workspace / "workspace.md"
+
+        self.assertTrue(workspace.is_dir())
+        self.assertFalse((REPO_ROOT / "docs" / "goals").exists())
+        validate_workspace_context(context)
+        fields = parse_frontmatter(context)
+        self.assertEqual(fields["root_goal"], "GOAL-001-main-vision")
+        self.assertEqual(fields["canonical_scope"], "docs/workspace-001-goal-governance/")
+        self.assertTrue((workspace / "goal-tree.md").is_file())
+        self.assertTrue((workspace / fields["root_goal"]).is_dir())
+
     def test_protocol_has_core_and_legacy_boundaries(self) -> None:
         protocol = (
             REPO_ROOT / "docs" / "architecture" / "workspace-protocol.md"
         ).read_text(encoding="utf-8")
         for phrase in (
-            "docs/workspace.md",
-            "隐式单工作区",
+            "工作区根",
+            "legacy 隐式单工作区",
             "Root Goal",
             "串行子目标",
             "fail-closed",
-            "不得形成第二套目标状态",
+            "第二套状态",
             "GOAL-009 R-003",
         ):
             self.assertIn(phrase, protocol)
@@ -127,6 +142,20 @@ class WorkspaceProtocolTests(unittest.TestCase):
     def test_unfixed_workspace_reference_is_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "invalid sha256"):
             validate_workspace_context(FIXTURES / "invalid-workspace-sha256.md")
+
+    def test_legacy_scope_cannot_be_declared_by_an_explicit_workspace(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "workspace.md"
+            text = (FIXTURES / "valid-workspace.md").read_text(encoding="utf-8")
+            path.write_text(
+                text.replace(
+                    "canonical_scope: docs/workspace-001-alpha/",
+                    "canonical_scope: docs/goals/",
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "workspace root"):
+                validate_workspace_context(path)
 
 
 if __name__ == "__main__":

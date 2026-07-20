@@ -18,7 +18,7 @@ version: 0.2.0
 
 - 从模板复制本目标五件套，设定 `parent: GOAL-040-docs-quality`。
 - 在决策中确认 README 定位：入口信息 + 链到 docs（见 [01-decision.md](01-decision.md) D-001）。
-- 同步更新 `docs/goals/goal-tree.md` 登记本目标。
+- 同步更新当前工作区 `goal-tree.md` 登记本目标。
 
 ### 2026-03-05 · 重写根 README 骨架
 

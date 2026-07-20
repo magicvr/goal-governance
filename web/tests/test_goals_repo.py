@@ -6,6 +6,7 @@ import tempfile
 import unittest
 
 from services.goals_repo import (
+    DEFAULT_GOALS_DIR,
     GoalRecoveryRequiredError,
     GoalValidationError,
     GoalWriteError,
@@ -19,6 +20,11 @@ VALID_FIXTURE = FIXTURES / "valid-goals"
 
 
 class GoalsRepositoryTests(unittest.TestCase):
+    def test_default_scope_is_the_current_explicit_workspace_root(self) -> None:
+        self.assertEqual(DEFAULT_GOALS_DIR.name, "workspace-001-goal-governance")
+        self.assertTrue((DEFAULT_GOALS_DIR / "workspace.md").is_file())
+        self.assertTrue((DEFAULT_GOALS_DIR / "goal-tree.md").is_file())
+
     def test_valid_list_get_parses_documents_and_attachments(self) -> None:
         repo = GoalsRepository(VALID_FIXTURE)
 

@@ -3,7 +3,7 @@ id: alpha-workspace
 title: Alpha Workspace
 status: active
 root_goal: GOAL-001-alpha-root
-canonical_scope: docs/goals/
+canonical_scope: docs/workspace-001-alpha/
 shared_materials_catalog: https://example.invalid/shared-materials/
 created: 2026-07-20
 updated: 2026-07-20

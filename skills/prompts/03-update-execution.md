@@ -30,7 +30,7 @@ role: primitive
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：
-- 工作区上下文（若存在）：【`docs/workspace.md` 的 id / root_goal；没有则“隐式单工作区”】
+- 工作区上下文（若存在）：【当前 `docs/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；只有 legacy `docs/goals/` 时才写“隐式单工作区”】
 - 今日日期：【YYYY-MM-DD】
 - 本次实际完成（具体条目，含路径/产物更佳）：
   1. …
@@ -42,7 +42,7 @@ role: primitive
 - status：【保持 / draft|active|blocked|done|cancelled】
 
 # 步骤
-1. 读 `docs/workspace.md`（若有）、`00-meta.md`（含信息需求）、`01-decision.md`、`02-execution.md`、`goal-tree.md`。若 workspace Root Goal/canonical 范围与目标不匹配，停止受影响写入；没有 context 文档时只处理当前仓库隐式单工作区。
+1. 读当前 `docs/workspace-<NNN>-<slug>/workspace.md`、`00-meta.md`（含信息需求）、`01-decision.md`、`02-execution.md`、`goal-tree.md`。若 workspace Root Goal/canonical 范围与目标不匹配，停止受影响写入；没有显式工作区根时只处理 legacy 隐式单工作区。
 2. 在时间线追加：
 
    ### YYYY-MM-DD · <短标题>

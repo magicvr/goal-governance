@@ -11,7 +11,7 @@ version: 0.5.0
 
 本文件记录 Goal Governance 核心方法论的**元规则**（跨目标、跨交付形态长期适用的原则）。具体操作细则见根目录 [AGENTS.md](../../AGENTS.md)、[docs/README.md](../README.md) 与 canonical 模板 [docs/templates/](../templates/)。Skills 编排落地见 [GOAL-005-skills-closed-loop-audit](../goals/GOAL-005-skills-closed-loop-audit/00-meta.md) 及 `skills/prompts/`；Skills 与 Web 都是消费适配器，不改变这些规则的权威性。
 
-工作区与共享资料固定引用的操作协议见 [workspace-protocol.md](workspace-protocol.md)。它把 P-001 的路线图/串行阶段、P-002 的证据意识与 P-005 的信息门禁应用到跨工作区边界，不新增第二套生命周期或状态真相。
+工作区与共享资料固定引用的操作协议见 [workspace-protocol.md](workspace-protocol.md)。它把 P-001 的路线图/串行阶段、P-002 的证据意识与 P-005 的信息门禁应用到跨工作区边界，不新增第二套生命周期或状态真相；目标状态只在各自工作区根内保存。
 
 | 编号 | 标题 | 一句话 |
 |------|------|--------|
@@ -90,7 +90,7 @@ version: 0.5.0
 
 | 规则 | 约定 |
 |------|------|
-| **权威落点** | 被审计目标的 `docs/goals/GOAL-…/03-audit.md`（**唯一**正式意见台账） |
+| **权威落点** | 被审计目标的 `<workspace-root>/GOAL-…/03-audit.md`（**唯一**正式意见台账） |
 | **编号** | 与自审共用序列：`A-001`、`A-002`…（按该文件内已有最大编号 +1） |
 | **条目头（最小）** | `source: self \| independent`、日期、scope（审什么）、`verdict`（pass / conditional / fail）；建议含 auditor（工具/模型） |
 | **正文** | 短报告直接写在该节；须含 findings 与（若 fail/conditional）必改/建议项 |

@@ -816,7 +816,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         ))
         for path in core_prompts:
             text = path.read_text(encoding="utf-8")
-            self.assertIn("docs/workspace.md", text, msg=f"missing workspace scan: {path}")
+            self.assertIn(
+                "docs/workspace-<NNN>-<slug>/workspace.md",
+                text,
+                msg=f"missing workspace scan: {path}",
+            )
             self.assertRegex(
                 text,
                 r"Root Goal|root_goal|canonical 范围|canonical_scope",
@@ -836,7 +840,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         )
         for path in rule_surfaces:
             text = path.read_text(encoding="utf-8")
-            self.assertIn("docs/workspace.md", text, msg=f"missing workspace rule: {path}")
+            self.assertIn(
+                "docs/workspace-<NNN>-<slug>/workspace.md",
+                text,
+                msg=f"missing workspace rule: {path}",
+            )
             self.assertRegex(
                 text,
                 r"隐式单工作区|fail closed|工作区上下文",

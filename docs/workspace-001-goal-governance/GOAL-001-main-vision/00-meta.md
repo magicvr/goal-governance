@@ -22,11 +22,15 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 
 用户要求将工作区与共享资料区从 Web 产品发现中提升为核心文档协议，并先由 Skills 适配。[GOAL-010-core-workspace-shared-materials-protocol](../GOAL-010-core-workspace-shared-materials-protocol/00-meta.md) 已以 `done / 100%` 完成该跨层工作：它定义工作区到独立 Root Goal/canonical 范围的绑定、串行阶段子目标与共享资料固定引用规则。GOAL-010 不改写 GOAL-006/GOAL-008 的历史关门，也不替代 GOAL-009 对 I-009/I-010、F-003/F-004、Web 访问或产品验证的责任。
 
+## 2026-07-20 · 显式工作区目录迁移
+
+[GOAL-011-multi-workspace-directory-migration](../GOAL-011-multi-workspace-directory-migration/00-meta.md) 已完成当前项目从全局 `docs/goals/` 到 `docs/workspace-001-goal-governance/` 的迁移。该工作区根现在承载本 Root Goal、`goal-tree.md` 和全部目标实例；`docs/shared-materials/` 只承载候选资料库存，不形成目标状态或关闭 GOAL-009 的产品门禁。
+
 ## 概述
 
 本仓库的**根目标（Root Goal）**：建立一套可复用、可审计的目标治理方法论与文档协议，把「目标 → 决策 → 执行 → 审计」固化为可追踪、可复盘、可协作的工作流，并提供两类消费适配器：面向 AI / Git 仓库协作的 Skills，以及面向人的 Web 工作台。
 
-核心方法论与文档模板必须能够脱离 AI 宿主和 Web 独立使用；`docs/goals/` 保存具体项目的目标实例与过程事实，是运行时唯一真相源。
+核心方法论与文档模板必须能够脱离 AI 宿主和 Web 独立使用；已验证工作区根保存其具体项目的目标实例与过程事实，是运行时唯一真相源。
 
 ## 三层交付
 
@@ -44,7 +48,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 ### 3. Web
 
 - 面向人完成目标治理工作，并由 AI 提供上下文发现、方案候选、门禁提示、证据追溯与受控变更协助。
-- `docs/goals/` 继续是唯一 runtime truth source。Web 可以在后续经验证的阶段提出和执行受人确认的变更，但不得自建生命周期、状态库或绕过同一协议、事务保护和审计证据。
+- 当前工作区根继续是唯一 runtime truth source。Web 可以在后续经验证的阶段提出和执行受人确认的变更，但不得自建生命周期、状态库或绕过同一协议、事务保护和审计证据。
 
 ## 当前阶段状态（2026-07-20）
 
@@ -119,6 +123,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 |----|------|------|------|
 | GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | active / 0% | 阶段 6 的产品定义、信息发现和高层路线图；不直接宣布实现放行。 |
 | GOAL-010-core-workspace-shared-materials-protocol | 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 | done / 100% | 已交付跨层协议与 Skills 适配；为 GOAL-009 R-003 提供输入，不替代 Web 的产品/实现门禁。 |
+| GOAL-011-multi-workspace-directory-migration | 完成多工作区目录迁移与共享资料索引骨架 | done / 100% | 已将当前项目迁入显式工作区根，并提供共享资料候选库存；不实现 GOAL-009 的多工作区产品操作。 |
 
 ## 相关路径
 

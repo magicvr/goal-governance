@@ -30,7 +30,7 @@ role: advanced
 
 ### A. 先分析上下文（必做，再问用户）
 
-1. **优先读取** `docs/goals/goal-tree.md`：哪些目标 active / done / 进度变化大，适合复盘。
+1. **优先读取** `<workspace-root>/goal-tree.md`：哪些目标 active / done / 进度变化大，适合复盘。
 2. 锁定候选目标后（或用户已指定），**通读**该目标：
    - `00-meta.md`（成功标准、范围、progress、status）
    - `01-decision.md`（关键取舍 `D-NNN`）
@@ -100,7 +100,7 @@ role: advanced
 1. **锚定事实**：成果须能指向文件路径、决策编号 `D-NNN` 或 execution 时间线条目。
 2. **对照成功标准**：逐条判定已达成 / 部分 / 未开始 / 证据不足；禁止无证据勾完成。
 3. **追加不覆盖**：在 `03-audit.md` 新增 `A-NNN` 章节，保留历史复盘。
-4. **同步 meta + goal-tree**：结论导致 status / progress 变化时，更新 `00-meta.md` 并**必须**同步 `docs/goals/goal-tree.md`。
+4. **同步 meta + goal-tree**：结论导致 status / progress 变化时，更新 `00-meta.md` 并**必须**同步 `<workspace-root>/goal-tree.md`。
 5. **重大取舍进 decision**：正式取舍写入 `01-decision.md`，不要只留在 audit。
 6. **可跟进到 execution**：改进措施若立刻执行，可在 `02-execution.md` 记「复盘 A-NNN 后的跟进计划」（计划项）。
 7. **语气可验证**：具体、可改进；避免「非常顺利」「圆满完成」等无证据形容词。

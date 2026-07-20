@@ -75,11 +75,11 @@ try {
         Write-Host 'FAIL: Claude audit skill missing 05-independent-audit ref'
         $contentOk = $false
     }
-    if ($governText -notmatch 'docs/workspace.md') {
+    if ($governText -notmatch 'workspace-<NNN>-<slug>/workspace\.md') {
         Write-Host 'FAIL: Claude govern skill missing workspace context ref'
         $contentOk = $false
     }
-    if ($auditText -notmatch 'docs/workspace.md') {
+    if ($auditText -notmatch 'workspace-<NNN>-<slug>/workspace\.md') {
         Write-Host 'FAIL: Claude audit skill missing workspace context ref'
         $contentOk = $false
     }

@@ -36,7 +36,7 @@ P-001（大目标先路线图）与 P-005（信息就绪与未知项门禁）以
 - 目标标题：【用户语言】
 - 英文短 slug（小写、短横线）：【如 improve-auth】
 - 父目标完整 ID：【如 GOAL-001-my-root-slug；Root 则 null】
-- 工作区上下文：【若有 `docs/workspace.md`，给出其 id / root_goal；没有则注明“隐式单工作区”】
+- 工作区上下文：【当前 `docs/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；若仅有 legacy `docs/goals/` 则注明“隐式单工作区”】
 - 一句话概述：
 - 初始成功标准（2～5 条可验证项；尚受信息项影响的可标“暂定”）：
 - 是否需要高层路线图（范围大/步骤不明）？【是 / 否】
@@ -48,9 +48,9 @@ P-001（大目标先路线图）与 P-005（信息就绪与未知项门禁）以
 
 # 步骤
 
-1. 先读 `docs/workspace.md`（若有）和 `docs/goals/goal-tree.md`：校验 `root_goal` 指向 `parent: null` 的 Root Goal、`canonical_scope` 覆盖当前 `docs/goals/`。没有 context 文档时只按当前仓库隐式单工作区处理；不得猜测外部工作区。
+1. 先定位当前工作区 `workspace.md` 和其 `goal-tree.md`：校验 `root_goal` 指向 `parent: null` 的 Root Goal、`canonical_scope` 覆盖当前工作区根。没有显式工作区根时只可处理 legacy `docs/goals/` 隐式单工作区；不得猜测外部工作区。
 2. 新编号 = 当前工作区目标树最大编号 + 1（三位）。Root 固定为 GOAL-001。
-3. 创建 `docs/goals/GOAL-NNN-<slug>/`（与现有目标平铺，层级只写在 parent）。不得把目标创建到其他工作区、共享资料目录或目录嵌套中。
+3. 创建 `<workspace-root>/GOAL-NNN-<slug>/`（与现有目标平铺，层级只写在 parent）。不得把目标创建到其他工作区、共享资料目录或目录嵌套中。
 4. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。
 5. 优先定位项目的核心模板层 `docs/templates/goal-folder/`；若目标仓库没有独立核心层，再定位 **SKILLS_PKG**（含 `prompts/01-create-new-goal.md` 或 `templates/goal-folder/` 的目录）并参考包内镜像 `templates/goal-folder/`。两者结构必须一致。
 6. Frontmatter 至少：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。

@@ -5,11 +5,15 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-20
-version: 0.2.0
+version: 0.3.0
 progress: 100%
 ---
 
 # GOAL-010 · 建立工作区与共享资料区核心协议，并完成 Skills 首先适配
+
+## 2026-07-20 · 后续物理目录迁移说明
+
+GOAL-011 后续将当前项目从全局 `docs/goals/` 迁入显式 `docs/workspace-001-goal-governance/` 根，并补充共享资料候选索引。该变更实现了本目标当时明确排除的物理目录拓扑；GOAL-010 的逻辑绑定、固定引用和 Skills-first 交付仍作为历史 core 基线保持 `done / 100%`，没有被重新打开或误记为 Web 产品验证。
 
 ## 2026-07-20 · 关门结论
 

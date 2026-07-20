@@ -42,7 +42,13 @@ from services.parse_md import (
     parse_section_document,
 )
 
-DEFAULT_GOALS_DIR = Path(__file__).resolve().parents[2] / "docs" / "goals"
+DEFAULT_WORKSPACE_DIR = (
+    Path(__file__).resolve().parents[2]
+    / "docs"
+    / "workspace-001-goal-governance"
+)
+# The repository API keeps its historical goals_dir parameter name; the scope is now a workspace root.
+DEFAULT_GOALS_DIR = DEFAULT_WORKSPACE_DIR
 _GOAL_NUMBER_RE = re.compile(r"^GOAL-(\d+)-")
 _TREE_HEADER_RE = re.compile(r"^\|\s*ID\s*\|", re.IGNORECASE)
 _SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")

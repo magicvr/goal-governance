@@ -28,7 +28,7 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 生命周期：**设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。
 交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
 
-工作区协议：若存在 `docs/workspace.md`，`/govern` 和 `/audit` 先校验其 Root Goal、canonical 范围和共享资料固定引用；不匹配时 fail closed。没有该文件的既有项目仍按当前仓库 `docs/goals/` 的隐式单工作区工作，Skills 不会自动发现或混合外部工作区。共享资料引用只补充来源，资料内容仍须经用户确认才能成为事实、证据或 finding 关闭依据。
+工作区协议：`/govern` 和 `/audit` 先定位当前 `docs/workspace-<NNN>-<slug>/workspace.md`，校验其 Root Goal、canonical 范围和共享资料固定引用；不匹配或多个工作区未指定焦点时 fail closed。没有显式工作区根的旧项目才按 `docs/goals/` 的 legacy 隐式单工作区工作，Skills 不会自动发现或混合外部工作区。共享资料候选库存只补充文件摘要，资料内容仍须经用户确认才能成为事实、证据或 finding 关闭依据。
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
@@ -67,7 +67,7 @@ skills/
 │   ├── 01–04 …                         # primitives
 │   └── 05-independent-audit.md         # cross-audit core
 ├── templates/goal-folder/              # docs/templates 的五件套分发镜像
-├── templates/workspace-context.md      # 可选 docs/workspace.md 分发镜像
+├── templates/workspace-context.md      # workspace-<NNN>-<slug>/workspace.md 分发镜像
 ├── contracts/                          # docs/contracts 的分发镜像
 └── tests/
 ```
@@ -172,8 +172,8 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 ## 在其他项目中快速启用
 
 1. 安装规则 + `/govern` + `/audit` skill（见上）。  
-2. 建立 `docs/goals/goal-tree.md`（可先空）。  
-3. 需要显式工作区边界时，从 `templates/workspace-context.md` 创建 `docs/workspace.md`，绑定 Root Goal 与 `docs/goals/`；否则保持隐式单工作区。
+2. 建立 `docs/workspace-001-<slug>/goal-tree.md`（可先空）。
+3. 从 `templates/workspace-context.md` 创建 `docs/workspace-001-<slug>/workspace.md`，绑定 Root Goal 与该工作区根；旧 `docs/goals/` 只用于 legacy 单工作区兼容。
 4. 调用 `/govern`：扫描并引导总目的，或分析未关门目标的下一步。
 5. 调用 `/audit`：对指定目标写独立审计意见（不改 status）。
 
@@ -181,12 +181,12 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 
 | 规则 | 说明 |
 |------|------|
-| 扁平存储 | 目标平铺在 `docs/goals/`（本包约定） |
+| 扁平存储 | 目标平铺在当前 `docs/workspace-<NNN>-<slug>/` 根（本包约定） |
 | 编号 | `GOAL-001` 为 Root；slug 自定 |
 | 层级 | 仅 `parent` 字段 |
 | 总览 | 变更后更新 `goal-tree.md` |
 | 五件套 | meta / decision / execution / audit / attachments |
-| 工作区 | 可选 `docs/workspace.md` 绑定 Root Goal 与 canonical 范围；缺失时为隐式单工作区 |
+| 工作区 | `docs/workspace-<NNN>-<slug>/workspace.md` 绑定 Root Goal 与 canonical 范围；仅 legacy `docs/goals/` 缺失显式根时为隐式单工作区 |
 | 共享资料 | 只使用匹配工作区的固定 `material_id` / source / version / SHA-256 引用；不成为第二状态或事实捷径 |
 | 信息就绪 | 可带未知立项；登记 I-00N、阶段门禁、证据与用户接受的残余风险 |
 | 代码布局 | 普遍在仓库根；子目录仅项目自定 |

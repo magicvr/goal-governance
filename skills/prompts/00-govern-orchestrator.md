@@ -41,7 +41,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 # 工作方式（优先遵守）
 
 1. **一条主路径**：用户说「帮我推进」「治理」「下一步」或调用 `/govern` 时，直接走本流程。按情境选用 create / decision / execution / audit，用户无需先选「填哪张表」。
-2. **文档驱动**：以 `docs/goals/goal-tree.md` 与目标五件套为真相源；若存在 `docs/workspace.md`，先校验其 Root Goal 与 canonical 范围，再处理当前工作区；进度与结论只写已发生的事实；不确定标「待确认」。
+2. **文档驱动**：以当前工作区根的 `goal-tree.md` 与目标五件套为真相源；先定位 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验其 Root Goal 与 canonical 范围，再处理当前工作区；进度与结论只写已发生的事实；不确定标「待确认」。
 3. **扫描 → 意见台账 → 分类 → 提议 → 确认 → 写入**：写入前先建议并确认（用户本轮已明确写入指令时可直接执行）。
 4. **大目标先路线图（P-001）**：范围大或步骤不明时，先在 meta/decision 写高层阶段与先后关系，再按阶段立项；本回合聚焦一个清晰下一步。
 5. **信息就绪（P-005）**：不假定设立时已知一切。识别信息项、影响门禁与最晚需要阶段；允许先推进澄清/收集，但不把开放 required 信息项写成已知或默许越过受影响门禁。
@@ -85,20 +85,20 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 
 # 工作区与共享资料协议（若仓库提供）
 
-若仓库存在 `docs/workspace.md`，先按 `docs/architecture/workspace-protocol.md`（若存在）读取并校验：
+先按 `docs/architecture/workspace-protocol.md`（若存在）定位当前 `docs/workspace-<NNN>-<slug>/workspace.md` 并读取校验：
 
-1. `root_goal` 必须指向当前 `docs/goals/` 中唯一的 `parent: null` Root Goal；`canonical_scope` 必须是当前受管目标范围。绑定不匹配时，停止受影响的创建、写入、审计或放行，报告可核对缺口。
+1. `root_goal` 必须指向当前工作区根中唯一的 `parent: null` Root Goal；`canonical_scope` 必须是当前受管目标范围。绑定不匹配时，停止受影响的创建、写入、审计或放行，报告可核对缺口。
 2. 只处理当前工作区。不得自动发现、加载、合并或写入其他工作区的目标、候选、草稿、审计意见或 AI 上下文。
 3. 资料引用只有同时具备匹配的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256` 时，才可作为带来源的候选输入；缺失、摘要不一致、目录为 `none` 或来源无法固定时 fail closed。资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
-4. 若没有 context 文档，按当前 `docs/goals/` 的隐式单工作区兼容路径工作；不得猜测外部工作区或共享资料位置。
+4. 若没有显式工作区根、但存在 `docs/goals/`，只按该 legacy 隐式单工作区兼容路径工作；不得猜测外部工作区或共享资料位置。
 5. 同一项目的 MVP、后续阶段和扩展工作通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际改变时才修改 Root Goal 定义并记录决策。
 
 # 流程
 
 ## 1. 扫描
 
-1. 检查 `docs/workspace.md`（若有），校验工作区 ID、Root Goal、canonical 范围与共享资料引用；若无，记录“隐式单工作区”。
-2. 检查 `docs/goals/` 与 `docs/goals/goal-tree.md`。
+1. 定位当前工作区 `workspace.md`，校验工作区 ID、Root Goal、canonical 范围与共享资料引用；多个工作区而用户未指定焦点时 fail closed。
+2. 检查当前工作区根与其中的 `goal-tree.md`；仅在没有显式工作区根时检查 legacy `docs/goals/`。
 3. 若有 goal-tree：读取 id、title、parent、status、progress，并核对显式工作区的 Root Goal 绑定。
 4. 按需打开未关门目标的 `00-meta`、`01-decision`（含信息需求）、近期 `02-execution` / **`03-audit`（全部 A-00N）**。
 5. 定位 **SKILLS_PKG**，记下实际目录名。
@@ -277,8 +277,8 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 
 # 硬约束（安全栏）
 
-- 层级只用 `parent` 完整 id；目标文件夹平铺在 `docs/goals/`。  
-- 存在 `docs/workspace.md` 时，工作区绑定不匹配或资料引用未固定/不匹配必须 fail closed；不得自动混合其他工作区上下文。
+- 层级只用 `parent` 完整 id；目标文件夹平铺在当前工作区根。
+- 存在显式工作区根时，工作区绑定不匹配或资料引用未固定/不匹配必须 fail closed；不得自动混合其他工作区上下文。
 - Root 编号保持 `GOAL-001`；新编号 = 当前最大 + 1。  
 - 新建目标一次建齐五件套；有变更则更新 goal-tree（树 + 表）。  
 - 只记录真实决策、执行与审计；编造进度视为失败。  

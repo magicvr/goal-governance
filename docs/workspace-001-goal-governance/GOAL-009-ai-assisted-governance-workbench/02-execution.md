@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-20
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 执行记录 · GOAL-009
@@ -49,6 +49,12 @@ version: 0.5.0
 - GOAL-010 已交付 [工作区与共享资料区协议](../../architecture/workspace-protocol.md)、[工作区上下文模板](../../templates/workspace-context.md) 与 Skills 消费规则。它定义一个工作区绑定一个 Root Goal/`docs/goals/` canonical 范围、串行阶段承接方式、资料固定版本/哈希引用和 fail-closed 条件。
 - 这些是 R-003 的 core/Skills 输入，不是产品实现事实：未建立工作区实体或平台索引、共享资料物理存储/用户 CRUD、AI 读取执行、删除历史、导航例外、访问/安全契约或跨工作区正反测试。
 - 因此 I-009/I-010、F-003/F-004 与路线图 B 的门禁继续保持原状态；本条不改变 GOAL-009 的 `active / 0%`，详细边界见 [A-008](03-audit.md#a-008--goal-010-core-skills-协议输入交接2026-07-20)。
+
+### 2026-07-20 · GOAL-011 显式目录迁移输入交接
+
+- GOAL-011 已将当前项目目标记录迁入 `docs/workspace-001-goal-governance/`，新增该工作区 `workspace.md`，并建立 `docs/shared-materials/` 与候选 SHA-256 索引脚本。
+- 这消除了当前项目全局 `docs/goals/` 单树的物理布局，但不建立多个工作区的产品实体、创建/归档流程、平台导航例外、共享资料 CRUD/AI 读取契约或跨工作区正反访问测试。
+- 因此 I-009/I-010、F-003/F-004 与 R-003 保持 `required / collecting` 和 open；本条不改变 GOAL-009 的 `active / 0%`，详细边界见 [A-009](03-audit.md#a-009--goal-011-显式工作区目录输入交接2026-07-20)。
 
 ## 下一步（计划）
 

@@ -137,7 +137,7 @@
           "status": "automated-verified",
           "evidence": [
             "web/tests",
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/web-parser-ci-replay-2026-07-20.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/web-parser-ci-replay-2026-07-20.json"
           ]
         }
       ],

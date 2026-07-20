@@ -29,7 +29,7 @@ role: independent-audit
 
 ## 行为要点
 
-- 写入被审目标 `03-audit.md`（A-00N）；长文可 attachments + 索引。若 scope 涉及阶段推进或关门，核对 I-00N 的最晚阶段、证据与残余风险接受；有 `docs/workspace.md` 时同时核对 Root Goal/canonical 范围与共享资料固定引用。
+- 写入被审目标 `03-audit.md`（A-00N）；长文可 attachments + 索引。若 scope 涉及阶段推进或关门，核对 I-00N 的最晚阶段、证据与残余风险接受；有 `docs/workspace-<NNN>-<slug>/workspace.md` 时同时核对 Root Goal/canonical 范围与共享资料固定引用。
 - 不读取或比较其他工作区上下文；无 context 时只审当前仓库隐式单工作区。
 - 结束后请用户用 **`/govern`** 响应。  
 

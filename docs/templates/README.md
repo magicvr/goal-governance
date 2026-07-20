@@ -4,7 +4,7 @@ status: active
 created: 2026-07-19
 updated: 2026-07-20
 parent: null
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 核心目标文档模板
@@ -21,11 +21,11 @@ version: 0.3.0
 - `03-audit.md`：阶段复盘、信息就绪核对与 `self` / `independent` 审计意见
 - `attachments/`：可选证据附件目录
 
-`workspace-context.md` 是可选的工作区上下文模板。显式工作区将其复制为 `docs/workspace.md`，绑定一个 Root Goal、`docs/goals/` canonical 范围与共享资料固定引用；它不替代目标五件套或保存目标状态。
+`workspace-context.md` 是显式工作区上下文模板。将其复制为 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal、该工作区根 canonical 范围与共享资料固定引用；它不替代目标五件套或保存目标状态。
 
 ## 使用边界
 
-- 新目标实例仍创建在 `docs/goals/`，并遵守根目录 `AGENTS.md` 与 `goal-tree.md`。
+- 新目标实例创建在当前工作区根 `docs/workspace-<NNN>-<slug>/`，并遵守根目录 `AGENTS.md` 与该工作区 `goal-tree.md`。
 - 本目录只定义可复用的文档结构与写作起点，不是运行中的目标记录。
 - 工作区仍以一个 Root Goal 为长期锚点；MVP、后续阶段和扩展目标写入 Root Goal 路线图并作为串行子目标承接，不要求在创建 Root Goal 时穷尽未来计划。
 - 共享资料只在工作区上下文中以版本/哈希固定引用；资料内容不是 canonical 事实，也不得作为跨工作区目标状态或上下文混合通道。详见 [workspace protocol](../architecture/workspace-protocol.md)。
