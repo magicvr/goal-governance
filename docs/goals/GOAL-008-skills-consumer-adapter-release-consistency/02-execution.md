@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-20
-version: 1.6.0
+version: 1.8.0
 ---
 
 ### 2026-07-20 - Install GitHub Copilot CLI and complete CLI replay (历史记录)
@@ -27,8 +27,11 @@ version: 1.6.0
 
 ### 2026-07-20 · 未发布工作区协议变更的运行时证据边界
 
-- GOAL-010 修改了 `skills/install/claude/skills/govern/SKILL.md`，加入显式工作区上下文的读取与 fail-closed 校验；当前源摘要已不同于 `v0.7.0` 时的 Claude `/govern` runtime evidence。`scripts/compatibility_report.py` 因而拒绝将旧运行时输出用于当前源，报出 `runtime evidence behavior source is stale`。
-- 该拒绝是预期的 release-evidence 安全栏：不得只改 JSON 摘要或报告来伪造新行为已在真实宿主运行。下一次发布包含该源时，先同步安装的宿主 skill，再捕获真实 Claude `/govern`（以及受影响的其他宿主）运行时输出/摘要，并据此重生成兼容性和 release evidence。
+- 用户安装 CPython `3.14.6` 后，项目 `.venv` 已按该解释器重建；`python --version` 返回 `Python 3.14.6`，`pip check` 返回 `No broken requirements found.`。这修复了此前指向缺失 Python 3.11 的开发环境，但不改变 release-evidence 语义。
+- GOAL-010 修改了当前 Claude、Grok 与 Copilot 的安装源/行为规则，加入显式工作区上下文读取和 fail-closed 校验。首次运行 `scripts/compatibility_report.py` 在 `skills/install/claude/skills/govern/SKILL.md` 报出 `runtime evidence behavior source is stale`，证明旧 `v0.7.0` JSON 不能代表当前源。
+- 按 D-011 将 canonical/Skills 两份矩阵改为 `candidateRevision: unreleased`，并将三宿主的 `/govern`、`/audit` 六个入口改为 `pending-runtime-validation` 且清空 `evidence`；归档 runtime JSON、截图与 `v0.7.0` release artifact 保留但不再被当前候选引用。Web parser 维持已有 `automated-verified` CI 证据。
+- 已将仓库内 `.claude/`、`.grok/` 与 `.github/` 的相应安装副本同步到 GOAL-010 的工作区/共享资料规则；没有调用 Claude、Grok 或 Copilot 进行新 runtime capture，也没有把静态验证写成宿主 runtime 事实。
+- Python `3.14.6` 回归结果：scripts `30`、Skills `32`、core docs `8` 项测试通过；Web 运行 `20` 项，其中 `19` 项通过、1 项 Windows symlink 权限场景按环境能力跳过。重新生成的 compatibility report 为 `coverage: pending` 且只列六个宿主入口；带该报告的 release rehearsal `checksPassed: true`、`releaseStatus: rehearsal`、`candidateRevision: unreleased`，未生成 release claim。
 - GOAL-008 的 `v0.7.0` 历史关门结论不被当前未发布工作树改写；本条只记录未来 release 的复核触发条件，不将 GOAL-010 的 core/Skills 测试通过外推成新的宿主 runtime 或 release 证据。
 
 ## 时间线

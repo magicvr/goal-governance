@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-20
-version: 1.4.0
+version: 1.5.0
 progress: 100%
 ---
 
@@ -17,6 +17,12 @@ GitHub Copilot CLI `1.0.71` is now the Copilot candidate evidence source. The VS
 - `/audit`: `attachments/runtime/copilot-cli-audit-2026-07-20.json`
 
 The Web parser CI replay passed on GitHub Actions run `29700051047` for candidate commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8`, with both Ubuntu and Windows artifacts reporting ready coverage and passing checks. The annotated `v0.7.0` tag points to that same commit, and release-candidate evidence is summarized at `attachments/runtime/release-candidate-v0.7.0-2026-07-20.json`. I-002 and I-003 are verified; GOAL-008 is closed at `done / 100%`. The VS Code plugin remains historical context only.
+
+## 当前未发布候选的复核边界（2026-07-20）
+
+`v0.7.0` 的历史关门结论和归档证据保持不变。GOAL-010 随后改变了当前 Skills 行为源，因此它不能继续被 `v0.7.0` 的宿主 runtime JSON 代表。两份兼容矩阵现在以 `candidateRevision: unreleased` 表示当前候选；Claude、Grok 与 Copilot 的 `/govern`、`/audit` 六个单元均为 `pending-runtime-validation` 且不再引用旧证据。Web parser 仍保持已有的 `automated-verified` CI 证据。
+
+项目 `.venv` 已针对用户安装的 CPython `3.14.6` 重建，并已通过 `pip check`。这只是当前开发环境修复，不改变历史发布的解释器或证据绑定。下一次发布包含这些行为源时，必须重新同步宿主安装副本并取得新的宿主 runtime evidence；在此之前不得把 `unreleased` 候选写成 runtime-verified 或 release-ready。
 
 ## Final information ledger (2026-07-20)
 

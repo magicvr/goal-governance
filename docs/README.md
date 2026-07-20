@@ -95,11 +95,11 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **当前核心文档版本**：`0.8.0`。本工作树新增工作区与共享资料固定引用协议，尚未宣称已形成新的 release。
+- **当前核心文档版本**：`0.8.0`。本工作树新增工作区与共享资料固定引用协议，且将受影响的宿主 runtime 矩阵明确标为未发布候选；尚未宣称已形成新的 release。
 - **最近发布基线**：`0.7.0`，对应 annotated `v0.7.0` release-candidate tag。
 - **快照日期**：2026-07-19。
 - **快照身份**：`0.4.0` 的已提交基线为 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；`0.7.0` 候选 commit 为 `8a33ecd21d9183a680c9c0d63e471469f5e515a8`，由 `v0.7.0` annotated tag 绑定。
-- **当前工作树边界**：`v0.7.0` 的发布证据绑定矩阵 `candidateRevision`、候选 commit、CI 报告、变更日志和 annotated tag；后续未发布治理记录不改写该候选身份。
+- **当前工作树边界**：`v0.7.0` 的发布证据继续绑定其历史 `candidateRevision`、候选 commit、CI 报告、变更日志和 annotated tag；GOAL-010 改变行为源后，当前矩阵为 `candidateRevision: unreleased`，受影响宿主入口须重新取得 runtime evidence，且不改写历史候选身份。
 - **本轮变更范围**：新增信息需求、阶段门禁、残余风险接受和按规模拆分信息工作的核心规则；更新 canonical 五件套、消费适配器契约与矩阵、Skills 镜像、编排/审计提示词、宿主规则源、独立启用说明、CI/发行证据工具和契约测试。
 
 ### canonical → Skills 同步台账
@@ -116,7 +116,7 @@ version: 0.1.0
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
 | 契约 | `skills-consumer-contract.json` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |
-| 契约 | `skills-consumer-compatibility-matrix.json` | `193669CE7357AB014D6CF7D3E01A0BDB800513C02F46728D8A632CA87F5162D2` | `193669CE7357AB014D6CF7D3E01A0BDB800513C02F46728D8A632CA87F5162D2` |
+| 契约 | `skills-consumer-compatibility-matrix.json` | `CF97EDFB267CCD0D2704C78CE3F9F9285C32130783626BA9746579CF613B6B07` | `CF97EDFB267CCD0D2704C78CE3F9F9285C32130783626BA9746579CF613B6B07` |
 | 契约 | `runtime-evidence.schema.json` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。

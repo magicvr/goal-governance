@@ -549,6 +549,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
+        self.assertEqual(matrix["candidateRevision"], "unreleased")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -592,19 +593,19 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 {adapter["id"]: adapter for adapter in manifest["adapters"]}[consumer_id]["verificationStatus"],
             )
             self.assertEqual(set(entrypoints), {"govern", "audit"})
-            self.assertEqual(entrypoints["govern"]["status"], "runtime-verified")
-            self.assertEqual(entrypoints["audit"]["status"], "runtime-verified")
+            self.assertEqual(entrypoints["govern"]["status"], "pending-runtime-validation")
+            self.assertEqual(entrypoints["audit"]["status"], "pending-runtime-validation")
             for entrypoint in entrypoints.values():
-                self.assertTrue(
-                    any(path.endswith(".json") for path in entrypoint["evidence"])
-                )
+                self.assertEqual(entrypoint["evidence"], [])
         copilot = consumers["github-copilot-cli"]
         copilot_entrypoints = {
             entry["name"]: entry for entry in copilot["entrypoints"]
         }
         self.assertEqual(copilot["contractVerificationStatus"], "verified")
-        self.assertEqual(copilot_entrypoints["govern"]["status"], "runtime-verified")
-        self.assertEqual(copilot_entrypoints["audit"]["status"], "runtime-verified")
+        self.assertEqual(copilot_entrypoints["govern"]["status"], "pending-runtime-validation")
+        self.assertEqual(copilot_entrypoints["audit"]["status"], "pending-runtime-validation")
+        self.assertEqual(copilot_entrypoints["govern"]["evidence"], [])
+        self.assertEqual(copilot_entrypoints["audit"]["evidence"], [])
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")

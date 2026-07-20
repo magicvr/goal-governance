@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-20
-version: 1.7.0
+version: 1.9.0
 ---
 
 ## A-014 - Independent replay: GitHub Copilot CLI 1.0.71 (2026-07-20)
@@ -47,6 +47,24 @@ The final candidate is commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8`, bound 
 | GOAL-001 F-005 | **ready for root response** | All GOAL-008 required evidence is now present; root response is recorded in GOAL-001 A-013. |
 
 There are no open required findings and no accepted residual risk. GOAL-008 transitions to `done / 100%`; this close-out does not claim stage 7 or GOAL-001 completion.
+
+## A-017 - Self review: historical evidence freshness response (2026-07-20)
+
+- **source**: self
+- **auditor**: Codex `/govern`
+- **scope**: The `v0.7.0` GOAL-008 close-out, GOAL-010 behavior-source changes, the current unreleased candidate matrix, and the CPython 3.14.6 development-environment repair. This review does not retest any host runtime or release a new candidate.
+- **verdict**: pass
+
+### Findings and evidence
+
+- The rebuilt project `.venv` runs CPython `3.14.6` and `pip check` has no broken requirements. The current compatibility failure is the expected stale behavior-source error, not a Python 3.14 compatibility failure.
+- The freshness guard correctly rejects use of `v0.7.0` runtime JSON for changed Skills sources. Preserving those artifacts while marking the current candidate `unreleased` with six `pending-runtime-validation` host cells is the truthful representation.
+- Local Claude, Grok, and Copilot installation surfaces have been synchronized to the changed Skills sources. No new host execution, remote CI, tag, or release evidence was fabricated or claimed.
+- On CPython `3.14.6`, scripts (30), Skills (32), and core-docs (8) regressions passed; the Web suite ran 20 cases with 19 passed and one Windows symlink permission skip. The regenerated report is `coverage: pending`; the checked rehearsal is `checksPassed: true`, `releaseStatus: rehearsal`, and `candidateRevision: unreleased`.
+
+### Conclusion
+
+The evidence transition is bounded to the next candidate release. It does not invalidate the historical `v0.7.0` tag or reopen GOAL-008, and it does not close any future host-runtime gate. There is no P-004 conflict or residual-risk acceptance in this response; fresh authorized host replays remain the required evidence before a later candidate can be release-ready.
 
 # 审计 · GOAL-008
 

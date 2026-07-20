@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
   "format": "goal-governance.skills-consumer-compatibility-matrix",
   "formatVersion": "1.0.0",
-  "candidateRevision": "v0.7.0",
+  "candidateRevision": "unreleased",
   "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
   "protocol": {
     "current": "0.1.0",
@@ -46,21 +46,16 @@
       "entrypoints": [
         {
           "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/claude-code-govern-runtime-2026-07-19.png",
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-19.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         },
         {
           "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-19.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only. Candidate /govern and /audit are runtime-verified by Claude Code CLI stream-json probes using only Read, Glob, and Grep in plan mode. Machine evidence stores a sanitized transcript with session initialization, tool-call/result summaries, final markers, and process success while excluding thinking blocks and full file contents. Release readiness still requires complete matrix coverage."
+      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only. The v0.7.0 Claude Code CLI /govern and /audit artifacts remain archived historical release evidence. The current unreleased candidate changed behavior sources and must collect fresh machine-readable /govern and /audit evidence before it can be runtime-verified. Release readiness still requires complete matrix coverage."
     },
     {
       "id": "grok-build-cli",
@@ -81,21 +76,16 @@
       "entrypoints": [
         {
           "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/grok-build-govern-runtime-2026-07-19.png",
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-19.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         },
         {
           "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-19.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only. Candidate /govern and /audit are runtime-verified by machine-readable Grok Build CLI probes bound to current behavior-source and raw-output digests. Both probes preserve an auxiliary session-title alias 502 warning while the main grok-4.5 process exited 0 and emitted the required repository-backed dispatch marker. Release readiness still requires complete matrix coverage."
+      "evidenceScope": "contractVerificationStatus records the historical fixed-version current /govern sub-scope only. The v0.7.0 Grok Build CLI /govern and /audit artifacts remain archived historical release evidence. The current unreleased candidate changed behavior sources and must collect fresh machine-readable /govern and /audit evidence before it can be runtime-verified. Release readiness still requires complete matrix coverage."
     },
     {
       "id": "github-copilot-cli",
@@ -115,20 +105,16 @@
       "entrypoints": [
         {
           "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-20.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         },
         {
           "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-20.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "GitHub Copilot CLI 1.0.71 non-interactive plan-safe replays used the repository AGENTS.md, Copilot instructions, core govern/audit prompts, and GOAL-008 records as behavior sources. Machine-readable JSON binds both entrypoints to stdout/stderr digests and dispatch markers. The replay is CLI-only and does not rely on VS Code or an IDE plugin; release readiness still requires Web CI replay and release identity evidence."
+      "evidenceScope": "GitHub Copilot CLI 1.0.71's v0.7.0 non-interactive plan-safe /govern and /audit replays remain archived historical release evidence. The current unreleased candidate changed behavior sources and must collect fresh machine-readable evidence before either entrypoint can be runtime-verified. The replay remains CLI-only and does not rely on VS Code or an IDE plugin; release readiness still requires Web CI replay and release identity evidence."
     },
     {
       "id": "web-readonly-parser",

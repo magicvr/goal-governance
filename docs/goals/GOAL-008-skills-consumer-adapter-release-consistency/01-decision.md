@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-20
-version: 1.3.0
+version: 1.4.0
 ---
 
 ## D-009 - GitHub Copilot CLI as replay evidence source (2026-07-20)
@@ -31,6 +31,21 @@ This decision does not turn a CLI replay into Web CI, ready coverage, or release
 3. Keep the Web surface read-only and keep VS Code plugin material historical; neither expands the current adapter evidence source.
 
 This decision closes GOAL-008 at `done / 100%` and supplies GOAL-001 F-005's response. Stage 6 Web deepening and stage 7 final acceptance remain outside this goal.
+
+## D-011 - Historical release evidence and the current unreleased candidate (2026-07-20)
+
+**Status**: accepted
+
+**Decision**:
+
+1. Preserve the `v0.7.0` tag, release-candidate artifact, runtime JSON, screenshots, hashes, and GOAL-008 `done / 100%` conclusion as historical release facts. Do not rewrite their source digests to match newer files.
+2. Represent the changed worktree as `candidateRevision: unreleased`. Clear the six host `/govern` and `/audit` evidence references from the current canonical and Skills matrices and set their states to `pending-runtime-validation`; retain the Web parser's existing automated CI evidence.
+3. Keep `compatibility_report.py`'s freshness validation unchanged. Updating an old JSON digest or weakening the check would falsely claim that a newer behavior source had run in a real host.
+4. Retain CPython `3.14.6` as the project environment: the rebuilt `.venv` and `pip check` are healthy, and the stale-evidence failure is independent of the interpreter version.
+
+**Not selected**: reverting the host Python to 3.11, altering historical evidence hashes, or treating GOAL-010's static tests as replacement host-runtime proof.
+
+**Effect**: this is a bounded next-release trigger, not a reopening of the historical `v0.7.0` close-out. A future candidate must synchronize its installed host surfaces and collect fresh per-entrypoint runtime evidence before release evidence can become ready again.
 
 # 决策记录 · GOAL-008
 
