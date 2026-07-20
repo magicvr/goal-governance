@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-20
-version: 0.3.0
+version: 0.5.0
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -17,6 +17,10 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 ## 2026-07-20 · 阶段 6 方向重定向
 
 用户明确拒绝将 Web 发展成“完善的只读工具”。阶段 6 的目标改为**供人类实际治理工作时获得 AI 协助的 Web 工作台**：它应帮助发现上下文、提出可审查的下一步、生成决策/执行/审计候选、展示影响与证据，并在明确的人类确认后受控写入 canonical `docs/goals/`。Web 不取得独立状态所有权，也不得自动裁决 P-004、关闭 required finding 或把目标标为 `done`。本方向由 D-014 和 [GOAL-009-ai-assisted-governance-workbench](../GOAL-009-ai-assisted-governance-workbench/00-meta.md) 承接；当前仅进入产品规划与信息发现，不把写入、鉴权、AI 提案或部署写成已实现事实。
+
+## 2026-07-20 · 工作区与共享资料区跨层协议
+
+用户要求将工作区与共享资料区从 Web 产品发现中提升为核心文档协议，并先由 Skills 适配。[GOAL-010-core-workspace-shared-materials-protocol](../GOAL-010-core-workspace-shared-materials-protocol/00-meta.md) 已以 `done / 100%` 完成该跨层工作：它定义工作区到独立 Root Goal/canonical 范围的绑定、串行阶段子目标与共享资料固定引用规则。GOAL-010 不改写 GOAL-006/GOAL-008 的历史关门，也不替代 GOAL-009 对 I-009/I-010、F-003/F-004、Web 访问或产品验证的责任。
 
 ## 概述
 
@@ -46,8 +50,8 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 
 | 交付面 | 当前状态 | 结论 |
 |--------|----------|------|
-| 核心方法论与模板 | GOAL-006 `done / 100%` | canonical 文档、模板、独立启用与关门证据已形成。 |
-| Skills 消费适配器 | GOAL-008 `done / 100%` | A-016、GitHub Actions run `29700051047` 与 annotated `v0.7.0` 关闭阶段 5 required 门禁。 |
+| 核心方法论与模板 | GOAL-006 `done / 100%`；GOAL-010 `done / 100%` | GOAL-010 已形成工作区/共享资料固定引用协议、模板、独立启用与关门证据。 |
+| Skills 消费适配器 | GOAL-008 `done / 100%`；GOAL-010 `done / 100%` | GOAL-010 已按 core-first 原则完成工作区与共享资料协议的 Skills 适配和安装验证；下一次包含新行为的发布仍须刷新 GOAL-008 runtime evidence。 |
 | Web 工作台 | GOAL-009 `active / 0%` | 开始规划 AI 协助的人类工作形态；现有只读页面只是历史基线，不是产品终态。 |
 
 ## 成功标准（历史快照）
@@ -81,6 +85,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 | 顺序 | 阶段 | 目标与退出条件 | 承接 |
 |------|------|----------------|------|
 | 6A | 产品形态与信息发现 | 明确人类角色、核心工作流、AI 协作边界、成功标准和 required 信息门禁；不冻结未验证技术方案。 | GOAL-009 |
+| 6A-P | 跨层工作区与共享资料协议 | 已完成：定义可脱离 Web 使用的工作区 Root Goal 绑定、串行阶段规则、共享资料固定引用和 Skills 首先适配；仅提供 R-003 输入，不放行 Web 门禁。 | GOAL-010 `done / 100%` |
 | 6B | 可信读模型与 AI 协作面 | 定义从 canonical 文档得到的结构化当前状态、历史显示规则、AI 上下文与可引用建议；不得产生第二状态源。 | 待 GOAL-009 完成后立项 |
 | 6C | 受控变更契约 | 定义预览/diff、人类确认、P-004 处理、身份授权、事务/恢复和 AI 提案溯源；相关 required 信息关闭前不得开放写入。 | 待 GOAL-009 完成后立项 |
 | 6D | 首个端到端工作流 | 交付一个能让人和 AI 共同完成的治理流程，并以真实证据、负向测试和阶段审视验证。 | 待路线图冻结后立项 |
@@ -113,6 +118,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 | ID | 标题 | 状态 | 作用 |
 |----|------|------|------|
 | GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | active / 0% | 阶段 6 的产品定义、信息发现和高层路线图；不直接宣布实现放行。 |
+| GOAL-010-core-workspace-shared-materials-protocol | 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 | done / 100% | 已交付跨层协议与 Skills 适配；为 GOAL-009 R-003 提供输入，不替代 Web 的产品/实现门禁。 |
 
 ## 相关路径
 

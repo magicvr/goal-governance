@@ -2,9 +2,9 @@
 title: AGENTS 模板 · 目标治理 AI 规则
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # AGENTS.md
@@ -24,6 +24,7 @@ version: 0.6.0
 | 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001～P-005 |
 | 文档使用规范 | `docs/README.md` | 若存在 |
 | 核心方法论与模板 | `{{CORE_TEMPLATES_DIR}}` | 若项目采用独立核心层；canonical 模板优先 |
+| 工作区与共享资料协议 | `docs/workspace.md`、`docs/architecture/workspace-protocol.md` | 前者存在时必读；目标状态仍以 `docs/goals/` 为准 |
 
 冲突时以 `docs/goals/` 与本文件为准。
 
@@ -155,6 +156,16 @@ docs/goals/GOAL-NNN-short-slug/
 - **发现后的回流**：实施中发现新的关键未知时，暂停受影响范围，记录事实，并回到信息登记、决策或路线图；信息冲突、是否以有界实验收集信息、或是否接受残余风险由用户按 P-004 裁决。到达最晚需要阶段时，未获 residual 接受的 `deferred required` 视为开放 required 并阻断受影响门禁。
 - **按规模拆分**：先登记并设定门禁；只有澄清/收集工作具有独立范围、依赖、交付证据或并行价值时，才创建“信息澄清/验证”或“信息收集”子目标。禁止为每个低风险问题机械创建两个子目标。
 
+## 6c. 工作区与共享资料边界
+
+若仓库存在 `docs/workspace.md`，先按 `docs/architecture/workspace-protocol.md`（若存在）校验其 `root_goal`、`canonical_scope` 和共享资料引用：
+
+1. 工作区绑定一个 `parent: null` 的 Root Goal 与其 canonical 目标范围；它不是 `parent` 层级、审计 scope 或第二套状态。
+2. 同一项目的 MVP、二阶段、三阶段等通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
+3. 没有 `docs/workspace.md` 时，只按当前仓库的 `docs/goals/` 使用隐式单工作区；禁止自动发现、读取、混合或写入其他工作区上下文。
+4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
+5. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
+
 ## 7. 必须同步更新 goal-tree.md
 
 以下任一操作后，**必须**更新 `docs/goals/goal-tree.md`：
@@ -204,7 +215,7 @@ docs/goals/GOAL-NNN-short-slug/
 ## 10. 变更工作流
 
 ```text
-1. 读 goal-tree.md → 编号、parent、未关门目标
+1. 读 `docs/workspace.md`（若有）→ 校验 Root Goal/canonical 范围/资料引用；再读 goal-tree.md → 编号、parent、未关门目标
 2. 未指定原子操作时 → 优先编排器
 3. 尚不可直接执行 → 先高层路线图（P-001）；存在影响门禁的未知 → 先登记信息需求与最晚需要阶段（P-005）
 4. 推进时检查相关审计意见与信息就绪门禁；P-004 情形先询问用户
@@ -247,6 +258,7 @@ docs/goals/GOAL-NNN-short-slug/
 - [ ] `parent` 为完整父 id 或 `null`
 - [ ] 五件套齐全（若新建）
 - [ ] 大目标路线图已写/更新（若适用）
+- [ ] 若存在工作区上下文，Root Goal/canonical 范围已校验；共享资料引用未被当成跨工作区状态或未确认事实
 - [ ] 已识别的未知项已登记；本次要推进的阶段没有开放 required 信息门禁，或残余风险已获用户书面接受
 - [ ] `goal-tree.md` 已同步
 - [ ] `updated` / `progress` / `status` 与事实一致

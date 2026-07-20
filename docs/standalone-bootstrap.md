@@ -2,14 +2,14 @@
 title: 核心包独立启用说明
 status: active
 created: 2026-07-19
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 核心包独立启用说明
 
-本说明验证 Goal Governance 的核心方法论、文档协议与 canonical 模板可以在一个**空 Git 仓库**中独立使用。它只复制核心文档层，不安装 `skills/`，也不启动 `web/`。
+本说明验证 Goal Governance 的核心方法论、文档协议与 canonical 模板可以在一个**空 Git 仓库**中独立使用。它只复制核心文档层，不安装 `skills/`，也不启动 `web/`。工作区上下文模板随 `docs/templates/` 一起复制，但显式 `docs/workspace.md` 不是单工作区启用的强制前置。
 
 ## 适用边界
 
@@ -20,7 +20,7 @@ version: 0.3.0
 | `AGENTS.md` | 根目录 `AGENTS.md` | AI 与协作者的强制规则 |
 | `docs/README.md` | `docs/README.md` | 核心文档入口与协议索引 |
 | `docs/architecture/` | `docs/architecture/` | 架构约定与 P-001～P-005 |
-| `docs/templates/` | `docs/templates/` | canonical 五件套模板 |
+| `docs/templates/` | `docs/templates/` | canonical 五件套与可选工作区上下文模板 |
 | `docs/contracts/` | `docs/contracts/` | canonical 机读协议/模板版本与兼容声明 |
 
 `skills/` 是后续的消费适配器与分发镜像，`web/` 是可选的人类工作台；两者都不是本场景的前置条件。
@@ -82,6 +82,16 @@ progress: 0%
 
 若 Root 已识别出尚未知悉的关键事实，在 `00-meta.md` 或 `01-decision.md` 立即建立 P-005 信息需求表：写清问题、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核和证据。目标可带未知立项，但不可把未知写成已验证结论；影响当前阶段的 required 信息项应先澄清或获得用户书面接受的残余风险。
 
+### 可选：建立显式工作区上下文
+
+单一项目可不创建 `docs/workspace.md`，此时它按当前 `docs/goals/` 和 Root Goal 使用隐式单工作区模式。需要明确工作区边界或共享资料固定引用时，在 Root Goal 已存在后从模板创建上下文：
+
+```powershell
+Copy-Item (Join-Path $target 'docs/templates/workspace-context.md') (Join-Path $target 'docs/workspace.md')
+```
+
+把 `id`、`root_goal`、`canonical_scope` 和 `shared_materials_catalog` 改为真实值。`root_goal` 必须等于刚创建的 Root ID，`canonical_scope` 保持 `docs/goals/`；共享资料只记录版本和哈希固定引用，不能保存目标状态或替代事实确认。物理资料存储、用户 CRUD、AI 读取执行和 Web 访问边界不由 standalone core 启用流程定义。
+
 ## 3. 建立 `goal-tree.md`
 
 在 `docs/goals/goal-tree.md` 写入包含 Root 的树和状态表。最小可用骨架如下：
@@ -116,7 +126,7 @@ GOAL-001-main-vision · <项目总目标> [active 0%]
 1. **来源**：列出复制的 `AGENTS.md`、`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 的来源路径和版本。
 2. **生成路径**：列出目标仓库、`docs/goals/goal-tree.md`、Root 文件夹及五件套路径。
 3. **核对结果**：确认 `git -C <target> rev-parse --is-inside-work-tree` 为 `true`，Root `parent: null`，`id` 与文件夹名一致，四个 Markdown 文件和 `attachments/` 均存在。
-4. **边界**：确认没有依赖 `skills/` 或 `web/`；本验证不代表 Skills 安装或 Web 发布已经完成。
+4. **边界**：确认没有依赖 `skills/` 或 `web/`；若已建立 `docs/workspace.md`，记录其 Root Goal 绑定与共享资料目录指针。本验证不代表 Skills 安装、共享资料物理访问或 Web 发布已经完成。
 
 仓库内可重复运行的验证为：
 

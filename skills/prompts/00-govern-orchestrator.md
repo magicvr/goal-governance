@@ -2,9 +2,9 @@
 title: 提示词 · 目标治理编排器（主入口）
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.5.0
+version: 0.6.0
 role: primary
 ---
 
@@ -41,7 +41,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 # 工作方式（优先遵守）
 
 1. **一条主路径**：用户说「帮我推进」「治理」「下一步」或调用 `/govern` 时，直接走本流程。按情境选用 create / decision / execution / audit，用户无需先选「填哪张表」。
-2. **文档驱动**：以 `docs/goals/goal-tree.md` 与目标五件套为真相源；进度与结论只写已发生的事实；不确定标「待确认」。
+2. **文档驱动**：以 `docs/goals/goal-tree.md` 与目标五件套为真相源；若存在 `docs/workspace.md`，先校验其 Root Goal 与 canonical 范围，再处理当前工作区；进度与结论只写已发生的事实；不确定标「待确认」。
 3. **扫描 → 意见台账 → 分类 → 提议 → 确认 → 写入**：写入前先建议并确认（用户本轮已明确写入指令时可直接执行）。
 4. **大目标先路线图（P-001）**：范围大或步骤不明时，先在 meta/decision 写高层阶段与先后关系，再按阶段立项；本回合聚焦一个清晰下一步。
 5. **信息就绪（P-005）**：不假定设立时已知一切。识别信息项、影响门禁与最晚需要阶段；允许先推进澄清/收集，但不把开放 required 信息项写成已知或默许越过受影响门禁。
@@ -83,17 +83,28 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 - 交叉审计（独立入口用）→ `<SKILLS_PKG>/prompts/05-independent-audit.md`（**本编排器不调用自己当独立审**）
 - 消费适配器契约（若包内存在）→ `<SKILLS_PKG>/contracts/skills-consumer-contract.json`。它是 `docs/contracts/` 的分发镜像；扫描跨宿主/跨版本一致性时可读取，但不得在镜像中另立版本或兼容真相。
 
+# 工作区与共享资料协议（若仓库提供）
+
+若仓库存在 `docs/workspace.md`，先按 `docs/architecture/workspace-protocol.md`（若存在）读取并校验：
+
+1. `root_goal` 必须指向当前 `docs/goals/` 中唯一的 `parent: null` Root Goal；`canonical_scope` 必须是当前受管目标范围。绑定不匹配时，停止受影响的创建、写入、审计或放行，报告可核对缺口。
+2. 只处理当前工作区。不得自动发现、加载、合并或写入其他工作区的目标、候选、草稿、审计意见或 AI 上下文。
+3. 资料引用只有同时具备匹配的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256` 时，才可作为带来源的候选输入；缺失、摘要不一致、目录为 `none` 或来源无法固定时 fail closed。资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
+4. 若没有 context 文档，按当前 `docs/goals/` 的隐式单工作区兼容路径工作；不得猜测外部工作区或共享资料位置。
+5. 同一项目的 MVP、后续阶段和扩展工作通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际改变时才修改 Root Goal 定义并记录决策。
+
 # 流程
 
 ## 1. 扫描
 
-1. 检查 `docs/goals/` 与 `docs/goals/goal-tree.md`。
-2. 若有 goal-tree：读取 id、title、parent、status、progress。
-3. 按需打开未关门目标的 `00-meta`、`01-decision`（含信息需求）、近期 `02-execution` / **`03-audit`（全部 A-00N）**。
-4. 定位 **SKILLS_PKG**，记下实际目录名。
-5. 若焦点是消费适配器或发布一致性，检查包内 `contracts/skills-consumer-contract.json` 是否存在，并区分其中已声明、已验证与仍待信息项关闭的范围。
-6. 记录仓库**观察信号**（信号用于汇报，结论以前表默认策略 + 用户确认为准）。
-7. 吸收用户本轮意图（总目的、焦点 ID、想关门、要响应某次审计等）。
+1. 检查 `docs/workspace.md`（若有），校验工作区 ID、Root Goal、canonical 范围与共享资料引用；若无，记录“隐式单工作区”。
+2. 检查 `docs/goals/` 与 `docs/goals/goal-tree.md`。
+3. 若有 goal-tree：读取 id、title、parent、status、progress，并核对显式工作区的 Root Goal 绑定。
+4. 按需打开未关门目标的 `00-meta`、`01-decision`（含信息需求）、近期 `02-execution` / **`03-audit`（全部 A-00N）**。
+5. 定位 **SKILLS_PKG**，记下实际目录名。
+6. 若焦点是消费适配器或发布一致性，检查包内 `contracts/skills-consumer-contract.json` 是否存在，并区分其中已声明、已验证与仍待信息项关闭的范围。
+7. 记录仓库**观察信号**（信号用于汇报，结论以前表默认策略 + 用户确认为准）。
+8. 吸收用户本轮意图（总目的、焦点 ID、想关门、要响应某次审计等）。
 
 ## 1b. 意见台账（焦点目标）
 
@@ -181,6 +192,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 用简短结构回复：
 
 > **治理扫描**：…  
+> **工作区上下文**：显式/隐式；Root Goal 与 canonical 范围；资料引用是否可用；跨工作区请求是否已 fail closed
 > **仓库观察**（默认策略未确认前仅作参考）：…  
 > **情境**：S0 / S1 / S2 / S3 / S4  
 > **树摘要**：Root=…；未关门：…；已关门：…  
@@ -206,7 +218,8 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 ### S2 · 推进
 
 1. 先处理 §3 裁决点、开放 required finding 与到期 required 信息项（若有）。
-2. 再据 goal-tree 与 meta 提出**一条**主下一步，例如：
+2. 工作区绑定或共享资料引用不合格时，只提议修复上下文、资料引用或信息项；不得借当前目标推进跨工作区范围、写入或放行。
+3. 再据 goal-tree 与 meta 提出**一条**主下一步，例如：
     - 缺路线图 → 决策/路线图（02 + meta）
     - 缺信息需求表 / 到期信息门禁 → 先记录 I-00N 与最晚阶段（02 + meta）；需要独立范围时创建信息澄清/收集目标（01 + P-001）
    - 缺方案/实施计划且范围不小 → 决策或附件设计（02）
@@ -216,9 +229,9 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
    - 路线图进入新阶段 → 创建子目标（01 + P-001）
    - `blocked` → 先澄清阻塞
     - 用户要关门 → 先跑意见与信息台账 + 关门条件检查，再 **04** close-out
-3. 说明焦点 ID、动作、文档依据。
-4. 确认后调用对应原语；保证五件套与 goal-tree 一致。
-5. 收尾：说明已做改动与建议的下一句输入。
+4. 说明焦点 ID、动作、文档依据。
+5. 确认后调用对应原语；保证五件套与 goal-tree 一致。
+6. 收尾：说明已做改动与建议的下一句输入。
 
 ### S3 · 维护
 
@@ -246,7 +259,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 
 ## 6. 会话上下文（写入与口头一致）
 
-每轮保持：焦点目标 ID、情境类、意见/信息台账摘要、待确认裁决、本轮调用的原语。
+每轮保持：工作区 ID/隐式状态、Root Goal 与 canonical 范围、焦点目标 ID、情境类、意见/信息台账摘要、待确认裁决、本轮调用的原语。
 用户继续对话或 `/govern` 即可；交叉审查请用户用 `/audit`（或等价独立入口）。
 
 # 完成标准（每轮）
@@ -265,6 +278,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 # 硬约束（安全栏）
 
 - 层级只用 `parent` 完整 id；目标文件夹平铺在 `docs/goals/`。  
+- 存在 `docs/workspace.md` 时，工作区绑定不匹配或资料引用未固定/不匹配必须 fail closed；不得自动混合其他工作区上下文。
 - Root 编号保持 `GOAL-001`；新编号 = 当前最大 + 1。  
 - 新建目标一次建齐五件套；有变更则更新 goal-tree（树 + 表）。  
 - 只记录真实决策、执行与审计；编造进度视为失败。  

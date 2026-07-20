@@ -2,14 +2,16 @@
 title: 治理原则
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.4.1
+version: 0.5.0
 ---
 
 # 治理原则
 
 本文件记录 Goal Governance 核心方法论的**元规则**（跨目标、跨交付形态长期适用的原则）。具体操作细则见根目录 [AGENTS.md](../../AGENTS.md)、[docs/README.md](../README.md) 与 canonical 模板 [docs/templates/](../templates/)。Skills 编排落地见 [GOAL-005-skills-closed-loop-audit](../goals/GOAL-005-skills-closed-loop-audit/00-meta.md) 及 `skills/prompts/`；Skills 与 Web 都是消费适配器，不改变这些规则的权威性。
+
+工作区与共享资料固定引用的操作协议见 [workspace-protocol.md](workspace-protocol.md)。它把 P-001 的路线图/串行阶段、P-002 的证据意识与 P-005 的信息门禁应用到跨工作区边界，不新增第二套生命周期或状态真相。
 
 | 编号 | 标题 | 一句话 |
 |------|------|--------|
@@ -192,3 +194,9 @@ version: 0.4.1
 | P-005 | 第 6b 节 | `00` 信息就绪扫描与门禁；`01`～`05` 记录、实施与审计 |
 
 关联决策：[GOAL-001 D-009](../goals/GOAL-001-main-vision/01-decision.md#d-009--将信息就绪纳入核心闭环2026-07-19)；[GOAL-005 D-002～D-006](../goals/GOAL-005-skills-closed-loop-audit/01-decision.md)；[GOAL-007 D-001～D-002](../goals/GOAL-007-information-readiness-governance/01-decision.md)。
+
+## 补充协议：工作区与共享资料引用
+
+- 工作区是 Root Goal 与 canonical 范围的上下文，不是新的目标层级；同一项目的串行阶段继续由路线图和子目标承接。
+- 共享资料固定引用只提供可追溯来源，不能替代用户确认、审计证据、P-004 裁决或 P-005 门禁。
+- 工作区绑定或资料引用不完整时，受影响的读取、推理、写入和放行应 fail closed；物理资料存储、用户 CRUD、AI 访问执行和 Web 安全模型留给相应消费适配器的验证门禁。

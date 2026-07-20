@@ -35,6 +35,8 @@ INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
 CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
 SKILLS_TEMPLATES = SKILLS_ROOT / "templates" / "goal-folder"
+CORE_WORKSPACE_TEMPLATE = SKILLS_ROOT.parent / "docs" / "templates" / "workspace-context.md"
+SKILLS_WORKSPACE_TEMPLATE = SKILLS_ROOT / "templates" / "workspace-context.md"
 CORE_CONTRACTS = SKILLS_ROOT.parent / "docs" / "contracts"
 SKILLS_CONTRACTS = SKILLS_ROOT / "contracts"
 CORE_PRINCIPLES = SKILLS_ROOT.parent / "docs" / "architecture" / "principles.md"
@@ -201,6 +203,29 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 mirror.read_bytes(),
                 f"template mirror drift: {canonical} != {mirror}",
             )
+        self.assertTrue(
+            CORE_WORKSPACE_TEMPLATE.is_file(),
+            f"missing canonical workspace template: {CORE_WORKSPACE_TEMPLATE}",
+        )
+        self.assertTrue(
+            SKILLS_WORKSPACE_TEMPLATE.is_file(),
+            f"missing Skills workspace template mirror: {SKILLS_WORKSPACE_TEMPLATE}",
+        )
+        self.assertEqual(
+            CORE_WORKSPACE_TEMPLATE.read_bytes(),
+            SKILLS_WORKSPACE_TEMPLATE.read_bytes(),
+            "workspace context template mirror drift",
+        )
+        workspace_template = CORE_WORKSPACE_TEMPLATE.read_text(encoding="utf-8")
+        for marker in (
+            "root_goal",
+            "canonical_scope",
+            "shared_materials_catalog",
+            "reference_id",
+            "workspace_id",
+            "sha256",
+        ):
+            self.assertIn(marker, workspace_template)
         self.assertIn(
             "信息就绪与未知项",
             (CORE_TEMPLATES / "00-meta.md").read_text(encoding="utf-8"),
@@ -766,6 +791,57 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 msg=f"advanced Copilot primitive drifted from P-005: {path}",
             )
 
+    def test_workspace_protocol_is_shipped_to_skills_surfaces(self) -> None:
+        """Workspace isolation and fixed-reference rules must not remain core-doc-only."""
+        protocol = (
+            SKILLS_ROOT.parent / "docs" / "architecture" / "workspace-protocol.md"
+        ).read_text(encoding="utf-8")
+        for marker in (
+            "隐式单工作区",
+            "canonical_scope",
+            "sha256",
+            "fail-closed",
+            "串行子目标",
+        ):
+            self.assertIn(marker, protocol)
+
+        core_prompts = tuple(PROMPTS / name for name in (
+            "00-govern-orchestrator.md",
+            "01-create-new-goal.md",
+            "02-record-decision.md",
+            "03-update-execution.md",
+            "04-write-audit.md",
+            "05-independent-audit.md",
+        ))
+        for path in core_prompts:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("docs/workspace.md", text, msg=f"missing workspace scan: {path}")
+            self.assertRegex(
+                text,
+                r"Root Goal|root_goal|canonical 范围|canonical_scope",
+                msg=f"missing workspace binding: {path}",
+            )
+
+        rule_surfaces = (
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+            CLAUDE_GOVERN_SKILL,
+            GROK_GOVERN_SKILL,
+            COPILOT_PROMPTS / "govern.md",
+            CLAUDE_AUDIT_SKILL,
+            GROK_AUDIT_SKILL,
+            COPILOT_PROMPTS / "audit.md",
+        )
+        for path in rule_surfaces:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("docs/workspace.md", text, msg=f"missing workspace rule: {path}")
+            self.assertRegex(
+                text,
+                r"隐式单工作区|fail closed|工作区上下文",
+                msg=f"missing fail-closed compatibility behavior: {path}",
+            )
+
     def test_docs_readme_hash_ledger_matches_template_bytes(self) -> None:
         """The published canonical/mirror ledger must describe the shipped bytes."""
         readme = (SKILLS_ROOT.parent / "docs" / "README.md").read_text(encoding="utf-8")
@@ -776,6 +852,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertEqual(digest, normalized_sha256(mirror))
             self.assertIn(name, readme)
             self.assertIn(digest, readme)
+        workspace_digest = normalized_sha256(CORE_WORKSPACE_TEMPLATE)
+        self.assertEqual(workspace_digest, normalized_sha256(SKILLS_WORKSPACE_TEMPLATE))
+        self.assertIn("workspace-context.md", readme)
+        self.assertIn(workspace_digest, readme)
         for name in (
             "skills-consumer-contract.schema.json",
             "skills-consumer-contract.json",

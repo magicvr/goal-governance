@@ -41,6 +41,7 @@ try {
         (Join-Path $TempRoot '.github\prompts\audit.prompt.md'),
         (Join-Path $SkillsDest 'prompts\00-govern-orchestrator.md'),
         (Join-Path $SkillsDest 'prompts\05-independent-audit.md'),
+        (Join-Path $SkillsDest 'templates\workspace-context.md'),
         (Join-Path $SkillsDest 'contracts\skills-consumer-contract.schema.json'),
         (Join-Path $SkillsDest 'contracts\skills-consumer-contract.json')
     )
@@ -72,6 +73,14 @@ try {
     }
     if ($auditText -notmatch '05-independent-audit') {
         Write-Host 'FAIL: Claude audit skill missing 05-independent-audit ref'
+        $contentOk = $false
+    }
+    if ($governText -notmatch 'docs/workspace.md') {
+        Write-Host 'FAIL: Claude govern skill missing workspace context ref'
+        $contentOk = $false
+    }
+    if ($auditText -notmatch 'docs/workspace.md') {
+        Write-Host 'FAIL: Claude audit skill missing workspace context ref'
         $contentOk = $false
     }
 

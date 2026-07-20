@@ -2,9 +2,9 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 1.1.0
+version: 1.2.0
 ---
 
 # Skills
@@ -12,7 +12,7 @@ version: 1.1.0
 本目录提供可复制到**其他项目**的目标治理约定与模板。  
 本仓库运行中的强制规则仍以根目录 [AGENTS.md](../AGENTS.md) 为准；此处是提炼后的**可复用交付物**。
 
-Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/)；本包内的 `templates/goal-folder/` 是用于离线复制和安装脚本的同步镜像。消费适配器的机读版本/兼容声明以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 是逐字节分发镜像。安装到其他仓库后，镜像必须自包含可用。
+Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/) 与可选的 [`docs/templates/workspace-context.md`](../docs/templates/workspace-context.md)；本包内对应模板是用于离线复制和安装脚本的同步镜像。消费适配器的机读版本/兼容声明以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 是逐字节分发镜像。安装到其他仓库后，镜像必须自包含可用。
 
 **当前候选支持范围（GOAL-008 D-005 / I-002）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot CLI `1.0.71` 均列为 `committed` 支持基线。三者 manifest 的 `verificationStatus: verified` 表示已记录的受限运行时范围；候选矩阵中的三个 CLI 均有 `/govern`、`/audit` 机读 runtime 证据，Web CI replay 仍待补齐。VS Code 插件不作为本轮 Copilot 重放证据来源。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
@@ -27,6 +27,8 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 
 生命周期：**设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。
 交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
+
+工作区协议：若存在 `docs/workspace.md`，`/govern` 和 `/audit` 先校验其 Root Goal、canonical 范围和共享资料固定引用；不匹配时 fail closed。没有该文件的既有项目仍按当前仓库 `docs/goals/` 的隐式单工作区工作，Skills 不会自动发现或混合外部工作区。共享资料引用只补充来源，资料内容仍须经用户确认才能成为事实、证据或 finding 关闭依据。
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
@@ -64,7 +66,8 @@ skills/
 │   ├── 00-govern-orchestrator.md       # PRIMARY core
 │   ├── 01–04 …                         # primitives
 │   └── 05-independent-audit.md         # cross-audit core
-├── templates/goal-folder/              # docs/templates 的分发镜像
+├── templates/goal-folder/              # docs/templates 的五件套分发镜像
+├── templates/workspace-context.md      # 可选 docs/workspace.md 分发镜像
 ├── contracts/                          # docs/contracts 的分发镜像
 └── tests/
 ```
@@ -170,8 +173,9 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 
 1. 安装规则 + `/govern` + `/audit` skill（见上）。  
 2. 建立 `docs/goals/goal-tree.md`（可先空）。  
-3. 调用 `/govern`：扫描并引导总目的，或分析未关门目标的下一步。  
-4. 调用 `/audit`：对指定目标写独立审计意见（不改 status）。
+3. 需要显式工作区边界时，从 `templates/workspace-context.md` 创建 `docs/workspace.md`，绑定 Root Goal 与 `docs/goals/`；否则保持隐式单工作区。
+4. 调用 `/govern`：扫描并引导总目的，或分析未关门目标的下一步。
+5. 调用 `/audit`：对指定目标写独立审计意见（不改 status）。
 
 ## 核心约定（摘要）
 
@@ -182,6 +186,8 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 | 层级 | 仅 `parent` 字段 |
 | 总览 | 变更后更新 `goal-tree.md` |
 | 五件套 | meta / decision / execution / audit / attachments |
+| 工作区 | 可选 `docs/workspace.md` 绑定 Root Goal 与 canonical 范围；缺失时为隐式单工作区 |
+| 共享资料 | 只使用匹配工作区的固定 `material_id` / source / version / SHA-256 引用；不成为第二状态或事实捷径 |
 | 信息就绪 | 可带未知立项；登记 I-00N、阶段门禁、证据与用户接受的残余风险 |
 | 代码布局 | 普遍在仓库根；子目录仅项目自定 |
 | 包目录名 | 常为 `skills/`，可改名；按含 `prompts/00-…` 定位 |

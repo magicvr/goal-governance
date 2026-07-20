@@ -2,9 +2,9 @@
 title: 提示词 · 独立交叉审计
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.2.0
+version: 0.3.0
 role: independent-audit
 ---
 
@@ -45,18 +45,20 @@ role: independent-audit
 # 用户输入（缺项先问清）
 
 - 目标 ID / 路径：
+- 工作区上下文（若存在）：【`docs/workspace.md` 的 id / root_goal；没有则“隐式单工作区”】
 - scope：【如：阶段 A；目标定义；F-008/F-010 关闭复审；方案与计划】
 - audit_type：goal-definition | design-plan | execution-facts | close-out | ad-hoc | finding-closure
 - 关注的成功标准或 finding（可选）：
 - 关注的信息项 / 阶段门禁（可选）：【I-00N；目标定义 / 方案 / 实施 / 验收 / 关门】
+- 关注的共享资料引用（可选）：【`reference_id`、`material_id`、`source`、`version`、`sha256`】
 - 今日日期：
 - auditor：【本工具/模型名，若可知】
 
 # 步骤
 
-1. **只读**扫描：goal-tree 定位目标；通读该目标 `00-meta`、`01-decision`（含信息需求）、`02-execution`、`03-audit`；按 scope 打开 principles / AGENTS / 代码或附件等**相关**文件。
+1. **只读**扫描：先读 `docs/workspace.md`（若有）与 goal-tree，核对 workspace Root Goal/canonical 范围；再定位目标并通读其 `00-meta`、`01-decision`（含信息需求）、`02-execution`、`03-audit`；按 scope 打开 principles / AGENTS / workspace protocol / 代码或附件等**相关**文件。没有 context 文档时只审当前仓库隐式单工作区；不得读取或比较其他工作区内容。
 2. 新编号 = `03-audit` 中最大 A-NNN + 1。
-3. 按 scope 逐项核对；若涉及 P-005，核对 I-00N 的 `required`/`non-blocking`、最晚需要阶段、状态、延期复核、证据、残余风险接受与受影响门禁；每条 finding 必须有证据路径。
+3. 按 scope 逐项核对；若涉及 P-005，核对 I-00N 的 `required`/`non-blocking`、最晚需要阶段、状态、延期复核、证据、残余风险接受与受影响门禁；若涉及共享资料，核对 `workspace_id`、`material_id`、`source`、`version` 和有效 `sha256`。工作区绑定或资料引用不合格时，作为可证实的范围缺口；每条 finding 必须有证据路径。
 4. 追加 `03-audit.md` 一节：
 
    ## A-NNN · <标题>（YYYY-MM-DD）
@@ -90,6 +92,7 @@ role: independent-audit
 - [ ] 已落盘到正确目标 03-audit（非仅聊天）  
 - [ ] source=independent；含 scope、verdict、findings  
 - [ ] 若 scope 涉及 P-005，已核对信息项、阶段门禁、证据与残余风险接受
+- [ ] 工作区范围已校验；共享资料引用（若有）未被当成跨工作区权限、canonical 事实或自动关闭证据
 - [ ] 未擅自改目标状态  
 - [ ] 用户知道如何用 /govern 闭环  
 ```

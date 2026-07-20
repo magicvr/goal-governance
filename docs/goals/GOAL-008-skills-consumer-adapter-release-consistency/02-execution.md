@@ -25,6 +25,12 @@ version: 1.6.0
 
 # 执行记录 · GOAL-008
 
+### 2026-07-20 · 未发布工作区协议变更的运行时证据边界
+
+- GOAL-010 修改了 `skills/install/claude/skills/govern/SKILL.md`，加入显式工作区上下文的读取与 fail-closed 校验；当前源摘要已不同于 `v0.7.0` 时的 Claude `/govern` runtime evidence。`scripts/compatibility_report.py` 因而拒绝将旧运行时输出用于当前源，报出 `runtime evidence behavior source is stale`。
+- 该拒绝是预期的 release-evidence 安全栏：不得只改 JSON 摘要或报告来伪造新行为已在真实宿主运行。下一次发布包含该源时，先同步安装的宿主 skill，再捕获真实 Claude `/govern`（以及受影响的其他宿主）运行时输出/摘要，并据此重生成兼容性和 release evidence。
+- GOAL-008 的 `v0.7.0` 历史关门结论不被当前未发布工作树改写；本条只记录未来 release 的复核触发条件，不将 GOAL-010 的 core/Skills 测试通过外推成新的宿主 runtime 或 release 证据。
+
 ## 时间线
 
 ### 2026-07-19 · 按 D-010 创建目标
