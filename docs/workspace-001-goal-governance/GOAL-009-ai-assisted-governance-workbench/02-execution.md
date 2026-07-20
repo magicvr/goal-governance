@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
-updated: 2026-07-20
-version: 0.8.0
+updated: 2026-07-21
+version: 0.10.0
 ---
 
 # 执行记录 · GOAL-009
@@ -68,9 +68,21 @@ version: 0.8.0
 - 收敛不等于实现：未新增路由、页面、AI 调用、共享资料 CRUD、跨工作区导航或 canonical 写入。`Candidate`、`Proposal`、`Confirmation`、`ExecutionReceipt` 仍是 I-003/I-004/I-006 下待定义和验证的契约对象。
 - I-001/I-011 保持 `required / collecting`，但其证据栏已记录本轮用户审视；I-002/I-008/I-009/I-010、F-001～F-005、F-007/F-008 继续开放。仅范围拖宽的 recommended F-009 由 A-010 响应。
 
+### 2026-07-21 · R-004 受控变更契约收集稿
+
+- 用户明确授权“起草 R-004 契约收集稿”。已新增 [受控变更与可核对操作身份契约（收集稿）](attachments/r-004-controlled-change-contract.md)，作为 I-003/I-004/I-006 的共同候选设计输入。
+- 收集稿把 D-006 已确认的首切片范围与 AI 提出的待审视内容分开：`Candidate`、`Proposal`、`Confirmation`、`ExecutionReceipt` 的候选字段、状态迁移、基线/确认绑定和负向验证矩阵均标为待用户审视。
+- 未修改 `web/`、未新增运行时状态、路由、AI 调用或 canonical 写入；I-003/I-004/I-006 仍为 `required / collecting`，F-007/F-008 与其他开放 findings 仍未关闭，GOAL-009 保持 `active / 0%`。
+
+### 2026-07-21 · 用户裁决 A-011 与 R-004 设计响应
+
+- 用户明确选择跳过 A-011/R-004 的同范围 self 审视，并接受逐项裁决包。该 P-004 裁决已记录在 [D-007](01-decision.md#d-007--接受-r-004a-011-的首切片设计裁决包2026-07-21)。
+- 已修订 [R-004](attachments/r-004-controlled-change-contract.md)，将线性对象流、三层门禁、单文件追加与 meta/tree 摘要约束、非 canonical receipt、并发、local trust_context、内容契约及负向案例列为用户接受的设计约束；并在 [A-012](03-audit.md#a-012--对-a-011-的-r-004-设计裁决响应2026-07-21) 响应其 F-013～F-019。
+- 本轮只形成用户裁决和文档设计响应：未实现代码、未创建 ops 目录、未执行契约测试或试点，未将 I-003/I-004/I-006 标为 `verified`。F-007/F-008 继续 open，未开放 Web 或 AI 写入，GOAL-009 仍为 `active / 0%`。
+
 ## 下一步（计划）
 
-1. 先为 D-006 的四类对象收集 I-003/I-004/I-006 所需的字段、状态机、基线绑定、operation id、失败/恢复与负向验证要求；这不放行 Web 写入。
+1. 将 D-007/R-004 的设计约束转化为可审视的契约测试计划与实现前门禁清单；在单独的实现目标具备前，不创建运行时状态、ops 目录或受控写入能力。
 2. 并行收集 I-008/I-002/I-006（R-002）与 I-009/I-010/I-004（经 A-007 重定义的 R-003），形成事实确认、AI 工具同意、工作区隔离和共享资料区模型/访问/安全边界的可核对设计输入。
 3. 仅在路线图 B/C 的 required 信息足以审视后，基于 D-006 的受限动作形成单独的实现子目标；在此之前不把设计稿、计划修订或 service 现有能力当作 Web 功能完成。
 
