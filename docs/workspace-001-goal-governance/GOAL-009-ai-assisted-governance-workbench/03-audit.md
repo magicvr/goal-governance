@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-20
-version: 0.9.0
+version: 0.10.0
 ---
 
 # 审计 · GOAL-009
@@ -548,3 +548,37 @@ GOAL-010 已提供 R-003 的可引用 core/Skills 基线，且没有把它伪装
 ### 结论
 
 GOAL-011 是 R-003 的可引用目录与资料盘点输入，不是产品能力关闭证据。A-009 不修改 GOAL-009 status/progress，也不替代用户对导航例外、产品模型和风险取舍的裁决。
+
+## A-010 · R-001 首切片收敛的用户裁决响应（2026-07-20）
+
+- **source**：self
+- **auditor**：`/govern`（Codex）
+- **类型**：response / design-plan
+- **scope**：响应 A-002 的 F-009，以及 R-001 在首个垂直切片、三页 IA、AI 与共享资料区范围上的用户裁决。
+- **verdict**：conditional
+
+### 裁决与可核对成果
+
+- 用户明确接受 [D-006](01-decision.md#d-006--收敛首个垂直切片与设计契约2026-07-20)：首个价值切片只处理一个显式选定的既有工作区和既有目标，由用户提供候选执行事实，并只允许未来形成向 `02-execution.md` 追加该事实的受限提案。
+- 已更新 [R-001](attachments/r-001-single-user-workflow-ia-vertical-journey.md) 以将工作区详情和目标树定为首切片主界面；总览/工作区列表保留为 I-009 未决前的后续 IA 候选。AI、网络/本地工具和共享资料区完整能力不进入该切片。
+- 已将 `Candidate`、`Proposal`、`Confirmation`、`ExecutionReceipt` 记为 I-003/I-004/I-006 下待定义的设计对象。没有新增 Web 路由、API、应用状态、AI 调用或 canonical 写入。
+
+### Finding 响应与仍开放项
+
+| Finding / 信息项 | 状态 | 证据与边界 |
+|-----------------|------|------------|
+| F-009 | closed | D-006 和 R-001 已由用户接受并收敛首个垂直动作；不再把三页、多工作区、共享资料、AI 和完整写入同时纳入第一个切片。 |
+| F-001 / I-001 | open / required collecting | 单一用户边界已记录，但长期工作流、成功标准和可用性证据尚未充分审视，不能据一次范围收敛关门。 |
+| F-005 / I-011 | open / required collecting | 工作区详情的首切片范围已接受；后续 IA、状态设计和首个端到端实现范围仍需可核对设计与验证。 |
+| F-002 / I-008、F-003 / I-009、F-004 / I-010 | open / required collecting | 本裁决不定义事实来源契约、多工作区产品模型或共享资料模型/访问验证。 |
+| F-007 / I-003、F-008 / I-004 | open / required collecting | 四类对象只有设计命名和边界，确认绑定、operation id、并发、幂等、恢复和审计原子性尚无契约或负向验证。 |
+
+### 信息门禁与阶段状态
+
+- I-001/I-011 的证据栏已记录本轮用户审视，但状态仍为 `collecting`；I-002、I-003、I-004、I-006、I-008、I-009、I-010 仍是开放 required，且没有 `accepted-residual`。
+- A-001/A-002/A-003 的既有 required finding 继续阻断相应路线图门禁。F-009 是 recommended 范围风险，其关闭不放行路线图 A、B、C 或 D。
+- GOAL-009 保持 `active / 0%`；本响应未创建实现子目标，也不更新 `goal-tree.md`。
+
+### 结论与建议下一步
+
+范围拖宽风险已得到用户裁决和可追溯响应。下一条治理动作应收集 D-006 四类对象的字段、状态机、基线/确认绑定和负向验证矩阵，并并行保持 I-009/I-010 的工作区与共享资料区门禁收集；在此之前不得实现或放行 canonical 写入。
