@@ -1,12 +1,12 @@
 ---
 id: GOAL-012-first-slice-workspace-detail
 title: 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内）
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-21
 updated: 2026-07-21
-version: 0.2.0
-progress: 90%
+version: 0.4.0
+progress: 100%
 planning_source: GOAL-009-ai-assisted-governance-workbench
 ---
 
@@ -23,10 +23,10 @@ planning_source: GOAL-009-ai-assisted-governance-workbench
 - [x] Web 通过**显式配置**绑定数据根 / 工作区路径；默认**不**静默加载本仓 dogfood；开发可用显式开关
 - [x] 工作区详情以目标树为核心，只读展示所选产品工作区内目标的 canonical 上下文（与计算视图区分）
 - [x] 用户可提交 `user-provided` 候选执行事实，形成受限提案 diff（写集仅目标 `02-execution.md` 追加）
-- [x] Service 级契约对齐 R-004：隔离合成 fixture 上可运行正反测试（成功追加 + missing/source/write-set/drift/open-finding/split/prod-gate 等）
-- [x] **生产路径**上的 `decide_and_execute` 在产品门禁默认开放时拒绝写入；测试可单独授权
+- [x] Service 级契约覆盖 R-004 **关键路径**（非 CT-001～018 全矩阵）：隔离合成 fixture 上可运行正反测试（成功追加 + missing/source/write-set/drift/open-finding/split/prod-gate/进程内幂等/digest mismatch 等）
+- [x] **生产路径**上的 `decide_and_execute` 在产品门禁默认开放时拒绝写入（含 HTTP decide 负向）；测试可单独授权
 - [x] 无 AI 调用、无共享资料 CRUD、无跨工作区 N1 列表产品化、无 SQLite 依赖；receipt 在 `ops/receipts/` 非五件套
-- [x] 发布/安装说明写明：不含本仓过程树；合成 fixture 不使用真实 GOAL-001～011 过程数据当客户样例
+- [x] 发布/安装说明写明：不含本仓过程树；合成 fixture 不使用真实 GOAL-001～011 过程数据当客户样例；幂等语义标明为 α 进程内 residual
 
 ## 交付要点
 
@@ -45,13 +45,22 @@ planning_source: GOAL-009-ai-assisted-governance-workbench
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | 配置键名、默认 fail-closed、DEV_DOGFOOD | 实现启动 | 编码前 | README / .env.example | verified | 无 | 见 README 配置表 |
 | I-002 | required | CT fixture 与运行命令 | 契约测试验收 | 首次 CT 合并前 | unittest | verified | 无 | `python -m unittest discover -s tests -v` |
-| I-003 | required | 生产写入启用检查清单 | 开放生产写入 | 启用前 | README 清单 + 环境门禁 | collecting | 待 GOAL-009 F-007/F-008 | 默认仍阻断 |
+| I-003 | required | 生产写入启用检查清单 | 开放生产写入 | 启用前 | README 清单 + 环境门禁 | collecting | 待 GOAL-009 F-007/F-008 | 默认仍阻断；清单见 web/README |
 | I-004 | non-blocking | 详情页 UX | 试点 | 试点前 | 模板迭代 | open | 试点 | 基础表单已有 |
+| I-005 | non-blocking | 跨进程幂等/receipt 恢复（A-001 F-003） | 生产写入放行 | 启用生产写入前 | 持久化 operation 索引 + 跨重启 CT | accepted-residual | 用户 `/govern` 接受 α residual；复审触发=关闭 GOAL-009 F-008 或开放生产写入前 | α 仅进程内幂等；文档已标明；不解除生产门禁 |
 
 ## 依赖与门禁
 
 - 生产 Web 写入仍受 GOAL-009 F-007/F-008 与 I-003/I-004/I-006 阻断（`PRODUCT_GATES_OPEN` 默认 true）。
 - 打包：实现与文档遵守 D-011。
+
+## 有界关门（2026-07-21）
+
+本目标已 `done / 100%`，关闭的是 **α 实现范围**（见成功标准与 [A-003](03-audit.md#a-003--有界关门审计-close-out2026-07-21)）。**不**构成：
+
+1. 生产 Web/AI 写入放行（I-003 仍 `collecting`；GOAL-009 F-007/F-008 仍 open）。
+2. CT-001～018 全矩阵 `verified` 或 GOAL-009 I-003/I-004/I-006 `verified`。
+3. **F-003 / I-005 residual 消失**——跨进程幂等仍为 accepted-residual；复审触发 = 开放生产写入前或 GOAL-009 F-008 关闭路径。
 
 ## 父目标
 

@@ -8,6 +8,8 @@
 - **工作区详情**：以**目标树**为主要导航，展示所选工作区内目标的 canonical 上下文（诊断为计算视图）。
 - **受限提案**：用户可提交 `user-provided` 候选执行事实，生成仅追加 `02-execution.md` 的提案 diff。
 - **受控写入门禁**：生产路径 `decide_and_execute` 在 GOAL-009 **F-007/F-008 仍 open**（`GOAL_GOVERNANCE_PRODUCT_GATES_OPEN=true` 默认）时**拒绝写入**；契约测试可用 `test_authorized` / `GOAL_GOVERNANCE_TEST_WRITE_MODE`。
+- **R-004 覆盖边界（α）**：Service 级覆盖**关键**正反路径（成功追加、缺字段、非法 source、写集、baseline drift、open finding 保持、split execute、prod gate、进程内幂等、digest mismatch、preview=write）；**不是** CT-001～018 全矩阵已通过。完整矩阵与 GOAL-009 I-003/I-004/I-006 `verified` / F-007/F-008 关闭仍开放。
+- **幂等语义（α residual）**：相同 `operation_id` 的成功重放当前为**进程内**内存索引；`ops/receipts/*.json` 落盘供核对，但**跨进程重启**不保证自动从磁盘恢复幂等表。生产放行前须补持久化重放（GOAL-009 F-008 / CT-007）。
 - **非目标**：无 AI、无共享资料 CRUD、无多工作区 N1 列表产品化、无 SQLite；发布物不含 dogfood 过程树；fixture 使用合成 `GOAL-001-fixture-target`（`web/tests/fixtures/r004/workspace-ok/`，非本仓过程数据），不用真实 GOAL-001～011 过程树当客户样例。
 
 ## 工作区配置（fail closed）

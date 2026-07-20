@@ -1,11 +1,11 @@
 ---
 id: GOAL-012-first-slice-workspace-detail
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-21
 updated: 2026-07-21
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 决策记录 · GOAL-012
@@ -31,3 +31,24 @@ version: 0.1.0
 - 首切片引入 SQLite：D-011 已排除。
 
 **影响**：创建本五件套并开始编码准备；不自动开放生产写入。
+
+## D-002 · 有界关门：α 实现完成，生产写入与 F-003 residual 不随关门解除（2026-07-21）
+
+**状态**：accepted
+
+**确认来源**：用户在 `/govern` 关门审视后明确「OK 按有界条件关门 GOAL-012」；条件为「生产写入仍关 + F-003 residual 不随关门消失」。
+
+**决定**：
+
+1. 将 GOAL-012 标为 `done / 100%`：α 成功标准已有可核对实现与测试证据（A-001/A-002/A-003）。
+2. **关门范围仅限 α**：配置化产品工作区详情 + 门禁内 `append-execution-fact` + R-004 关键路径测试；不宣称生产写入、全矩阵 CT 或 GOAL-009 规划门禁关闭。
+3. **生产 Web/AI 写入保持关闭**：继续绑定 GOAL-009 F-007/F-008 与 I-003/I-004/I-006；本目标 I-003 保持 `collecting`。
+4. **F-003 / I-005 residual 在关门后仍有效**：幂等为进程内；`ops/receipts` 落盘但不保证跨重启重放；复审触发 = 开放生产写入前或 GOAL-009 F-008 关闭路径。
+5. 关闭后不得把本目标 `done` 误读为「Web 工作台已可生产写入」。
+
+**未选方案**：
+
+- 因 F-003 residual 暂缓关门：非 α 成功标准必达项，会拖住已可交付切片。
+- 关门时顺带宣称生产写入或关闭 GOAL-009 F-007/F-008：越权且证据不足。
+
+**影响**：status/progress 与 goal-tree 同步；A-003 close-out 落盘；规划台账回 GOAL-009。

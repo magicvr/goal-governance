@@ -63,6 +63,42 @@ class GoalWebRoutesTests(unittest.TestCase):
         self.assertIn("提案 digest", response.text)
         self.assertIn("02-execution.md", response.text)
 
+    def test_decide_http_rejects_when_product_gates_open(self) -> None:
+        """HTTP decide path must surface ERR_PRODUCT_GATE_OPEN (GOAL-012 A-001 F-004)."""
+        import re
+        import shutil
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "workspace-ok"
+            shutil.copytree(R004_FIXTURE, root)
+            app.dependency_overrides[get_goals_repository] = lambda: GoalsRepository(root)
+            proposal = self.client.post(
+                "/goals/GOAL-001-fixture-target/proposal",
+                data={
+                    "content": "Must not commit under open product gates",
+                    "source_statement": "http decide gate test",
+                },
+            )
+            self.assertEqual(proposal.status_code, 200)
+            match = re.search(r"sha256:[0-9a-f]{64}", proposal.text)
+            self.assertIsNotNone(match, "proposal digest missing from preview HTML")
+            digest = match.group(0)
+            exec_before = (root / "GOAL-001-fixture-target" / "02-execution.md").read_text(
+                encoding="utf-8"
+            )
+            decide = self.client.post(
+                "/goals/GOAL-001-fixture-target/decide",
+                data={"proposal_digest": digest, "action": "affirm"},
+            )
+            self.assertEqual(decide.status_code, 200)
+            self.assertIn("rejected", decide.text)
+            self.assertIn("ERR_PRODUCT_GATE_OPEN", decide.text)
+            exec_after = (root / "GOAL-001-fixture-target" / "02-execution.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertEqual(exec_before, exec_after)
+
     def test_goal_detail_renders_decision_execution_and_audit(self) -> None:
         response = self.client.get("/goals/GOAL-002-child")
 

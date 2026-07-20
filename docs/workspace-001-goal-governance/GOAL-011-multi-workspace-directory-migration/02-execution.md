@@ -4,8 +4,8 @@ doc: execution
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
-updated: 2026-07-20
-version: 0.2.0
+updated: 2026-07-21
+version: 0.3.0
 ---
 
 # 执行记录 · GOAL-011
@@ -26,6 +26,11 @@ version: 0.2.0
 - 已验证：`python -m unittest discover -s docs/tests` 通过 10 项；`python -m unittest skills/tests/test_skills_orchestrator.py` 通过 32 项；`.venv\\Scripts\\python.exe -m unittest discover -s scripts/tests` 通过 36 项；在 `web/` 运行 `..\\.venv\\Scripts\\python.exe -m unittest discover -s tests` 通过 21 项。两个符号链接用例因 Windows 权限限制跳过；系统 Python 缺少 `jsonschema`，因此 scripts 套件使用项目虚拟环境复跑。
 - `git diff --check` 通过；工作区根扫描确认包含 11 个 `GOAL-*` 目录及共享资料 `index.json`。
 
+### 2026-07-21 · 响应 A-003 F-001（现时入口标注）
+
+- `/govern` 在 [goal-tree.md](../goal-tree.md) 增加「路径语义说明」：现时 canonical = 本工作区根；历史 `docs/goals/` = 迁移前叙述。
+- A-004 关闭 A-002/A-003 recommended F-001；**未**批量改写已关门目标历史附件；status 保持 `done / 100%`。
+
 ## 进度评估
 
-**100%**：本目标的目录迁移、共享资料候选索引、消费适配器同步和关门验证均有可核对产物与测试证据。I-004 保持 non-blocking/open，已明确留给 GOAL-009 的后续产品工作。
+**100%**：本目标的目录迁移、共享资料候选索引、消费适配器同步和关门验证均有可核对产物与测试证据。I-004 保持 non-blocking/open，已明确留给 GOAL-009 的后续产品工作。F-001（文档一致性）已于 2026-07-21 关闭。

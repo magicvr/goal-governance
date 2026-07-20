@@ -5,17 +5,16 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.18.0
+version: 0.20.0
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-本目标已形成六条 independent 意见与多次 self/response（至 A-019）。**F-001、F-005 closed**。A-019/D-012：接受建议选项；立项 [GOAL-012](../GOAL-012-first-slice-workspace-detail/00-meta.md)。**F-002～F-004、F-007/F-008 仍 open**；I-003/I-004/I-006 未 `verified`；生产写入未开放。进度 **25%**。
+本目标已形成六条 independent 意见与多次 self/response（至 **A-020**）。**F-001、F-005 closed**。GOAL-012 已有界关门。**F-002～F-004、F-007/F-008 仍 open**；I-003/I-004/I-006 未 `verified`；生产写入未开放。进度 **32%**。
 
-当前焦点：GOAL-012 实现（配置/fixture/只读/门禁内 CT）；本台账继续 F-002～F-004 与写入门禁。
-
+当前焦点：**写入门禁证据台账（A-020）** — F-007/F-008 缺口已列出；**不**放行生产写入。F-002～F-004 仍为路线图 B 开放项。路线图 E 未开始。
 ## A-001 · Web 第一阶段产品边界与计划一致性审计（2026-07-20）
 
 - **source**：independent
@@ -1102,3 +1101,109 @@ GOAL-009 是纪律良好的产品发现与契约收集目标，但 required 门�
 ### 声明
 
 无 residual；无生产写入；F-007/F-008 保持 open。
+
+## A-020 · GOAL-012 证据吸收与 F-007/F-008 缺口清单（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / information-readiness（写入门禁）
+- **scope**：路径 A——将 GOAL-012 α 实现与门禁内 CT 证据对照 CT-001～018 与 F-007/F-008 关闭要求；形成已覆盖/部分/缺口台账。**不**关闭 F-007/F-008；**不**将 I-003/I-004/I-006 标 `verified`；**不**开放生产写入。
+- **verdict**：conditional（证据进步，关闭条件未满足）
+
+### 用户意图
+
+`OK 路径 A：写 A-020 证据台账与 F-007/F-008 缺口清单（不放行生产写入）`
+
+### 证据来源（可核对）
+
+| 来源 | 路径 / 命令 |
+|------|-------------|
+| GOAL-012 有界关门 | [GOAL-012 A-003](../GOAL-012-first-slice-workspace-detail/03-audit.md#a-003--有界关门审计-close-out2026-07-21) · `done / 100%` |
+| 受控变更实现 | `web/services/controlled_change.py`、`web/services/workspace_config.py` |
+| Service CT | `web/tests/test_controlled_change.py` |
+| HTTP / 配置 | `web/tests/test_main.py`（含 decide 门禁）、`test_workspace_config.py` |
+| 本轮回归 | `web/` unittest **44 passed, 1 skipped**（2026-07-21） |
+| CT 计划权威 | [r-004-contract-test-plan.md](attachments/r-004-contract-test-plan.md) |
+| 规格包 | [r-004-executable-contract-spec.md](attachments/r-004-executable-contract-spec.md)（D-010 已接受） |
+| α residual | GOAL-012 F-003 / I-005：幂等 = **进程内** only |
+
+### CT-001～018 覆盖矩阵（相对 GOAL-012）
+
+| CT | 覆盖 | 证据（测试 / 行为） | 缺口说明 |
+|----|------|---------------------|----------|
+| CT-001 | **部分** | `test_missing_fields`（空 `source_statement` / content） | 未单独断言缺 `content_digest` 绑定、缺 workspace 字段的全套 missing 矩阵 |
+| CT-002 | **覆盖** | `test_non_user_source_rejected` → `ERR_INVALID_SOURCE` | — |
+| CT-003 | **缺口** | 仅有同 fixture 内 goal 存在性 `_assert_goal_in_scope` | 无跨 workspace 请求、无「不返回他区内容」断言 |
+| CT-004 | **覆盖** | `test_invalid_write_set`；operation 固定 `append-execution-fact` | — |
+| CT-005 | **覆盖** | `test_baseline_drift`（execution；meta/tree 亦参与校验） | — |
+| CT-006 | **部分** | `action=reject` 路径存在 | 无过期、撤回、decision digest 不匹配的专用用例 |
+| CT-007 | **部分** | `test_idempotent_replay_returns_same_receipt` | **仅进程内**；跨重启不读 `ops/receipts`（GOAL-012 F-003 residual） |
+| CT-008 | **缺口** | — | 无「同 operation_id + 不同请求摘要 → 冲突」用例 |
+| CT-009 | **缺口** | — | 无并发/竞态 baseline 用例 |
+| CT-010 | **部分** | `GoalsRepository` 有文件替换 recovery 基础 | R-004 受控写入路径无 `recovery_pending` 门禁集成测试 |
+| CT-011 | **部分** | receipt 含 pre/post digest 并落盘 | 无「缺 audit linkage / 不可复核则禁止显示成功」专用用例 |
+| CT-012 | **部分** | `_FORBIDDEN_CONTENT` + 部分关键字 | **无**专用内容契约测试矩阵（frontmatter 篡改、改既有条目等） |
+| CT-013 | **覆盖** | `test_production_gate_blocks_*`、`test_decide_http_rejects_when_product_gates_open`；默认 `PRODUCT_GATES_OPEN=true` | 生产门禁仍 open = **正确保持阻断** |
+| CT-014 | **部分** | 写集强制仅 `02-execution.md`；成功路径 meta/tree/audit 不变 | 无「payload 试图改 status/progress」的专用拒绝用例 |
+| CT-015 | **缺口** | trust_context 默认 local-loopback | 无外部访问继承 trust 的拒绝用例 |
+| CT-016 | **覆盖** | `test_open_finding_append_keeps_finding` / success 路径 | — |
+| CT-017 | **覆盖** | `test_normalize_and_digest_crlf`、`test_digest_mismatch_caller` | — |
+| CT-018 | **覆盖** | `test_split_execute_rejected`；`decide_and_execute` 同请求 | — |
+
+**汇总**：覆盖约 7；部分约 6；缺口约 5。关键路径足以支撑 α 有界交付，**不足以**关闭 F-007/F-008 或标 I-003/I-004/I-006 `verified`。
+
+### Finding 状态（本响应）
+
+| Finding | 本拍动作 | 结果 |
+|---------|----------|------|
+| F-007 | 吸收确认绑定相关证据；列出仍缺用例 | **open / required** |
+| F-008 | 吸收 operation/receipt/drift 证据；列出幂等/并发/恢复缺口 | **open / required** |
+| F-002～F-004 | 不在本 scope | **open**（不变） |
+| F-001 / F-005 | — | closed（不变） |
+
+### F-007 关闭前缺口清单（必做）
+
+1. 确认状态机与信任边界可测断言完整：CT-006 全套（过期/撤回/digest 不匹配）、CT-015（外部 trust 拒绝）。  
+2. 跨 workspace/goal 隔离负向：CT-003。  
+3. 内容/治理篡改专用负向：CT-012、CT-014 完整矩阵。  
+4. CT-001 missing 字段矩阵补全（含 digest/workspace 绑定）。  
+5. 用户/规划审视：上述用例有可重复运行证据并写入本台账关闭证据后，方可关闭 F-007。
+
+### F-008 关闭前缺口清单（必做）
+
+1. **跨进程幂等 / receipt 恢复**（GOAL-012 F-003 residual）：磁盘 receipt 参与重放；跨重启 CT。  
+2. CT-008 operation_id 冲突。  
+3. CT-009 并发/竞态。  
+4. CT-010 recovery_pending 与受控写入路径集成。  
+5. CT-011 audit linkage / 不可复核禁止成功展示。  
+6. 关闭证据须可指向测试 ID、fixture、命令与退出码；**不得**仅用 α 关键路径或规格接受冒充关闭。
+
+### 信息门禁
+
+| ID | 状态 | 本拍 |
+|----|------|------|
+| I-003 | collecting | 证据栏更新为「关键路径有运行证据 + A-020 缺口」；**仍不** `verified` |
+| I-004 | collecting | 同上；跨进程幂等 residual 明确挂接 F-008 |
+| I-006 | collecting | 未新增 fail-closed 全矩阵执行；保持 open |
+| 生产写入 | **阻断** | `PRODUCT_GATES_OPEN` 默认 true；未改环境门禁 |
+
+### 硬边界（本拍）
+
+- **禁止**将 A-020 解读为生产写入放行。  
+- **禁止**关闭 F-007/F-008。  
+- **禁止**因 GOAL-012 `done` 而认定路线图 C 退出。  
+- CT-013 的「门禁仍 open → 拒绝写入」继续为**正确的运行时事实**，直到关闭条件满足。
+
+### 结论 + 下一步
+
+**verdict: conditional** — GOAL-012 已提供可核对的关键路径证据；F-007/F-008 关闭条件与缺口已冻结在本台账。
+
+建议下一拍（择一）：
+
+1. 立项 **GOAL-013**（或等价）：按本缺口清单补 CT/跨进程幂等（仍默认生产门禁关闭）。  
+2. 或并行推进 F-002～F-004 验证计划（路径 B）。  
+3. 缺口补齐并经审视后再议 F-007/F-008 关闭与 I-003/I-004/I-006 `verified`。
+
+### 声明
+
+本意见为编排响应与证据台账；不修改生产门禁；不关闭 required finding；不将 residual 写成已验证。
