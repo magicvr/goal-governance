@@ -4,17 +4,19 @@ status: active
 created: 2026-07-21
 updated: 2026-07-21
 parent: GOAL-009-ai-assisted-governance-workbench
-version: 0.1.0
+version: 0.2.0
 type: information-collection
-review_state: pending-user-review
+review_state: govern-accepted-with-minor-revisions
 specification_of: r-004-contract-test-plan.md
+accepted_by: D-010
 ---
 
 # R-004 · 最小可执行契约规格包（收集稿）
 
 > 本规格包响应 A-014 **F-023**：把 CT-001～CT-018 下沉为可审视的 fixture、service-level 操作入口、错误/结果码、receipt 字段与 digest 算法说明。  
-> **非实现、非测试通过、非 Web/AI 写入授权**。用户审视通过 ≠ I-003/I-004/I-006 `verified` ≠ F-007/F-008 关闭。  
-> 权威设计约束仍以 [R-004 §6](r-004-controlled-change-contract.md#6-用户接受的首切片设计约束d-0072026-07-21) 与 [D-007](../01-decision.md#d-007--接受-r-004a-011-的首切片设计裁决包2026-07-21) 为准。
+> **非实现、非测试通过、非 Web/AI 写入授权**。规格接受 ≠ I-003/I-004/I-006 `verified` ≠ F-007/F-008 关闭。  
+> 权威设计约束仍以 [R-004 §6](r-004-controlled-change-contract.md#6-用户接受的首切片设计约束d-0072026-07-21) 与 [D-007](../01-decision.md#d-007--接受-r-004a-011-的首切片设计裁决包2026-07-21) 为准。  
+> **2026-07-21 审视**：`/govern` 按用户指令接受本规格包与 CT-016～CT-018 为实现前基线，并纳入下列小修订（D-010 / A-017）。
 
 ## 1. 范围与非目标
 
@@ -60,6 +62,31 @@ fixtures/r004/
 3. open-finding fixture（CT-016）在 `03-audit` 保留与本次追加无关的 required finding；操作成功后 finding 仍 open，`00-meta`/`goal-tree` digest 不变。
 4. 禁止 fixture 预置 `ops/receipts/` 成功记录伪装为历史运行证据。
 
+### 案例 JSON 最小示例（CT-016）
+
+```json
+{
+  "case_id": "CT-016-open-finding-append",
+  "ct_id": "CT-016",
+  "operation_id": "op_ct016_001",
+  "workspace_id": "workspace-ok-fixture",
+  "goal_id": "GOAL-999-fixture-target",
+  "input_summary": {
+    "operation_kind": "append-execution-fact",
+    "source_kind": "user-provided",
+    "open_finding_in_fixture": "F-TEST-OPEN"
+  },
+  "expected": {
+    "result": "committed",
+    "error_code": null,
+    "canonical_write": ["02-execution.md"],
+    "finding_F-TEST-OPEN": "still_open",
+    "meta_digest": "unchanged",
+    "tree_digest": "unchanged"
+  }
+}
+```
+
 ## 3. Service-level 操作入口（候选）
 
 首切片不定义公开 HTTP API。候选 service 边界（名称可调整，语义不得削弱）：
@@ -77,6 +104,7 @@ fixtures/r004/
 1. **禁止**独立的 `execute_proposal` / `commit` 第二步写入口（CT-018）。
 2. **禁止**在 F-007/F-008 或 I-003/I-004/I-006 未闭环时暴露 `decide_and_execute` 为生产能力（CT-013）。
 3. 所有入口必须携带 `workspace_id` + `goal_id`；跨范围请求 fail closed 且不得泄漏另一工作区内容（CT-003）。
+4. **中间对象非 canonical**（小修订）：`CandidateRevision` / `Proposal` / 进行中的 `UserDecision` 草稿只可存在于进程内存或未来非 canonical ops 旁路；**不得**写入五件套或 `goal-tree.md` 充当状态。
 
 ## 4. 结果码与错误码（候选枚举）
 
@@ -100,7 +128,6 @@ fixtures/r004/
 | `ERR_INVALID_WRITE_SET` | CT-004、CT-014 | 非 append-execution-fact 或写集扩大 |
 | `ERR_BASELINE_DRIFT` | CT-005 | 确认前 baseline / meta / tree digest 变化 |
 | `ERR_DECISION_INVALID` | CT-006 | 过期、撤回、拒绝、digest 不匹配 |
-| `ERR_IDEM_REPLAY` | CT-007 | 同 operation_id + 同请求摘要 → 返回原 receipt（非错误也可作 `result=committed` 幂等） |
 | `ERR_IDEM_CONFLICT` | CT-008 | 同 operation_id + 不同摘要 |
 | `ERR_CONCURRENT_WRITE` | CT-009 | 同 baseline 竞争 |
 | `ERR_RECOVERY_PENDING` | CT-010 | 恢复未决 |
@@ -112,7 +139,9 @@ fixtures/r004/
 | `ERR_DIGEST_MISMATCH` | CT-017 | 调用方摘要 ≠ UTF-8/LF 规范化后摘要 |
 | `ERR_SPLIT_EXECUTE` | CT-018 | 拆分 affirm 与无重校验执行 |
 
-`ERR_IDEM_REPLAY` 在实现中可表现为“成功返回既有 receipt”而非 HTTP 4xx；契约要求是**不重复写入**。
+**幂等重放（CT-007，小修订）**：同 `operation_id` + 同请求摘要的规范路径是  
+`result = committed`（或原终态）并返回**既有**不可变 receipt，**canonical 不重复写入**。  
+不再使用 `ERR_IDEM_REPLAY` 作为成功重放码，以免 fixture 把幂等成功误标为错误。
 
 ## 5. Digest 算法说明（候选）
 
@@ -184,12 +213,23 @@ fixtures/r004/
 
 ## 8. 实现前门禁（再次声明）
 
-- [ ] 用户审视并接受本规格包（或书面修订后接受）
+- [x] 用户指令下 `/govern` 审视并接受本规格包（含小修订；D-010）
 - [ ] I-003/I-004/I-006 有正反测试证据并 `verified`
 - [ ] F-007/F-008 由后续审视关闭
-- [ ] F-005 关闭前不立项实现子目标；F-007/F-008 关闭前不开放 Web/AI 写入
+- [ ] F-005 关闭前不立项实现子目标；F-007/F-008 关闭且 I-003/I-004/I-006 `verified` 前不开放 Web/AI 写入
 - [ ] 未创建生产 `ops/receipts/` 或把本附件当作运行证据
 
-## 9. 当前结论
+## 9. 审视结论（2026-07-21）
 
-本附件是 **待用户审视** 的最小可执行契约规格收集稿，用于关闭 A-014 F-023 的“形成规格包”要求。它不执行 CT、不修改 `web/`、不放行写入、不关闭 F-007/F-008。
+| 维度 | 结论 |
+|------|------|
+| 总评 | **接受（含小修订）** — 足以作为首切片契约实现与 CT 的规格基线 |
+| CT-016 | **接受** — open finding 下受限追加且不关 finding/不改 status，对齐 D-007 三层门禁 |
+| CT-017 | **接受** — UTF-8/LF 规范化后摘要；`ERR_DIGEST_MISMATCH` |
+| CT-018 | **接受** — 唯一写入口 `decide_and_execute`；禁止拆分无重校验执行 |
+| 小修订 | ① 幂等重放为成功路径非错误码；② 中间对象非 canonical；③ CT-016 案例 JSON 示例 |
+| 不构成 | 测试通过、`verified`、F-007/F-008 关闭、Web/AI 写入放行、实现子目标立项 |
+
+## 10. 当前结论
+
+本附件是 **已接受（含小修订）** 的最小可执行契约规格收集稿。它不执行 CT、不修改 `web/`、不放行写入、不关闭 F-007/F-008。

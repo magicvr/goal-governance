@@ -4,10 +4,11 @@ status: active
 created: 2026-07-21
 updated: 2026-07-21
 parent: GOAL-009-ai-assisted-governance-workbench
-version: 0.2.0
+version: 0.3.0
 type: information-collection
 review_state: govern-approved-collection-plan
-specification_state: pending-user-review
+specification_state: govern-accepted-with-minor-revisions
+accepted_by: D-010
 ---
 
 # R-004 · 负向契约测试计划与实现前门禁清单
@@ -74,5 +75,6 @@ specification_state: pending-user-review
 - 本计划是 R-004 的可审视收集输入，覆盖 I-003/I-004/I-006 的负向验证范围；未执行任何测试。
 - F-007/F-008 仍为 `open / required`；I-003/I-004/I-006 仍为 `required / collecting`。
 - 已新增 CT-016～CT-018，以覆盖 open finding 下的受限事实追加、UTF-8/LF 规范化摘要，以及 affirm 与执行同请求三个 D-007 边界。它们仍未执行。D-009/A-016 将本增补记为 A-014 F-020 的计划覆盖关闭证据（非测试通过）。
-- 配套规格见 [r-004-executable-contract-spec.md](r-004-executable-contract-spec.md)（F-023；`pending-user-review`）。
-- 下一步：用户审视本计划与规格包；只有相关 required 信息充分、F-005 关闭后另立实现目标并完成测试，才可重新评估受控写入。F-007/F-008 关闭前不得开放 Web/AI 写入。
+- 配套规格见 [r-004-executable-contract-spec.md](r-004-executable-contract-spec.md)（F-023；D-010 **接受含小修订**）。
+- **2026-07-21 审视**：CT-016～CT-018 与规格包一并接受为实现前测试范围基线；幂等 CT-007 的规范断言为“返回既有 receipt + 不重复写入”，不以错误码表示成功重放。
+- 下一步：并行推进 R-001/R-002/R-003 证据；**F-005 关闭前**不另立实现目标；**F-007/F-008 关闭且 I-003/I-004/I-006 `verified` 前**不得开放 Web/AI 写入。

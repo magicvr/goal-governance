@@ -5,23 +5,16 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.15.0
+version: 0.18.0
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-本目标已形成六条 independent 意见（A-001、A-002、A-005、A-006、A-011、A-014）、两次同范围 self 审视（A-003、A-015）及九次 `/govern` 响应（A-004、A-007、A-008、A-009、A-010、A-012、A-013、A-016）。A-005 暴露的共享资料区术语/来源问题已由 D-004 与 A-007 记录修订；F-004/I-010、F-001～F-005、F-007/F-008 仍开放。A-012 以 D-007 与修订后的 R-004 关闭 A-011 在设计审视 scope 内的 F-013～F-019；A-013 将其下一步建议转为测试计划收集稿。A-014 复核整体就绪后新增 F-020～F-024；A-015 同范围 self 确认后，A-016/D-009 关闭 F-020～F-024 在“计划/规格/排期/文档同步”scope 内的要求，**不**关闭 F-007/F-008，**不**将 I-003/I-004/I-006 标为 verified，**不**立项实现或开放写入。
+本目标已形成六条 independent 意见与多次 self/response（至 A-019）。**F-001、F-005 closed**。A-019/D-012：接受建议选项；立项 [GOAL-012](../GOAL-012-first-slice-workspace-detail/00-meta.md)。**F-002～F-004、F-007/F-008 仍 open**；I-003/I-004/I-006 未 `verified`；生产写入未开放。进度 **25%**。
 
-当前焦点包括：R-001（D-006 已收敛首切片，待 F-001/F-005 审视证据）、R-004（设计 + CT-001～CT-018 + 待用户审视的规格包）、R-002/R-003 并行收集，以及经 A-007 重定义的 I-009/I-010。后续审视至少核对：
-
-- I-001～I-006 是否在其最晚需要阶段前有可核对证据；
-- 规格包与 CT-016～CT-018 是否经用户审视并可落到实现目标的 fixture；
-- R-001 审视与 R-002/R-003 收集是否被 R-004 深度绕过（F-022 排期）；
-- AI 建议、人类确认、P-004、状态/关门门禁是否被明确区分；
-- canonical 文档、事务/恢复和审计证据是否不会被 Web 的便利性绕过；
-- 任何实现声明是否有测试、可用性或实际试点事实支撑。
+当前焦点：GOAL-012 实现（配置/fixture/只读/门禁内 CT）；本台账继续 F-002～F-004 与写入门禁。
 
 ## A-001 · Web 第一阶段产品边界与计划一致性审计（2026-07-20）
 
@@ -966,3 +959,146 @@ GOAL-009 是纪律良好的产品发现与契约收集目标，但 required 门�
 ### 声明
 
 本响应不修改 GOAL-009 的 `status`、`progress` 或 `goal-tree.md`；不将 I-00N 标为 verified；无 residual risk 接受。
+
+## A-017 · 规格包审视、I-001/I-011 结论与 R-002/R-003 起草（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / design-plan
+- **scope**：响应本轮用户 `/govern` 指令——审视 R-004 规格包与 CT-016～CT-018；I-001/I-011 可核对结论（瞄准 F-001/F-005）；起草 R-002/R-003；重申硬禁令。不审计运行时实现、不放行写入、不立项实现。
+- **verdict**：conditional
+
+### 响应依据
+
+- 用户指令明确，构成写入授权；无 P-004 意见冲突；无 residual risk 接受。
+- 工作区：`workspace-001-goal-governance` / Root `GOAL-001-main-vision`；未混合其他工作区；固定资料引用表为空。
+
+### 成果（有证据）
+
+1. **规格包 + CT-016～CT-018**：接受为实现前基线；小修订写入 [规格包 v0.2](attachments/r-004-executable-contract-spec.md) 与 [测试计划](attachments/r-004-contract-test-plan.md)（幂等成功路径、中间对象非 canonical、CT-016 JSON 示例）。见 [D-010](01-decision.md#d-010--接受-r-004-规格包i-001i-011-审视结论并启动-r-002r-003-收集2026-07-21)。
+2. **I-001 / F-001**：[R-001 §7.1](attachments/r-001-single-user-workflow-ia-vertical-journey.md#71-对照-f-001单用户无角色边界) 可核对对照 → **F-001 closed**。
+3. **I-011 / F-005**：[R-001 §7.2](attachments/r-001-single-user-workflow-ia-vertical-journey.md#72-对照-f-005三页-ia--端到端旅程--立项前) → **F-005 保持 open**；关闭路径 α/β 已写明。
+4. **R-002 / R-003** 收集稿已创建：  
+   - [r-002-fact-admission-ai-collaboration.md](attachments/r-002-fact-admission-ai-collaboration.md)  
+   - [r-003-workspace-shared-materials.md](attachments/r-003-workspace-shared-materials.md)
+
+### Finding 响应与关闭证据
+
+| Finding | 状态 | 本轮证据与边界 |
+|---------|------|----------------|
+| F-001 | **closed** | D-002/D-006/R-001 页面场景 + §7.1 对照表；单用户无角色边界满足 A-001 关闭要求。≠ 路线图 A 全退出；≠ I-001 `verified`。 |
+| F-005 | **open / required** | 首切片旅程可核对，但三页 IA / I-009 导航例外未决；硬禁令：关闭前不立项实现。 |
+| F-002 | open | R-002 仅为收集起点，待用户审视与验证。 |
+| F-003 / F-004 | open | R-003 仅为收集起点；GOAL-010/011 仍只是输入。 |
+| F-007 / F-008 | open / required | 规格接受 ≠ 测试运行；无写入放行。 |
+| F-020～F-024 | 保持 A-016 closed scope | 本轮不重开。 |
+| F-006 | open / recommended | 试点保障后置。 |
+
+### 信息门禁
+
+| 项 | 状态 |
+|----|------|
+| I-001 / I-011 | `required / collecting`（证据增强；不标 verified） |
+| I-002 / I-008 / I-009 / I-010 | `required / collecting`（R-002/R-003 草稿） |
+| I-003 / I-004 / I-006 | `required / collecting`（规格已接受，无运行测试） |
+| Web/AI 写入、实现子目标 | 未开始（D-010 硬禁令） |
+
+### 结论与建议下一步
+
+1. 用户审视 R-002 / R-003（尤其 R-003 的 N0–N2 与存储 A–C）。  
+2. 裁决 F-005 路径 α 或 β 后，方可讨论实现子目标立项。  
+3. 硬禁令不变：F-005 open → 不立项；F-007/F-008 open 或 I-003/I-004/I-006 未 verified → 不开放 Web/AI 写入。  
+4. 可选：`/audit` 复审 F-001 关闭证据与规格接受边界。
+
+### 声明
+
+本响应不修改 GOAL-009 的 `status`、`progress` 或 `goal-tree.md`；无 residual risk 接受；不将除 F-001 外的 required finding 标为关闭。
+
+## A-018 · 打包分栏落盘与导航·存储·SQLite 再审视（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / design-plan
+- **scope**：落盘用户对「可分发产品 vs 本仓过程记录」的澄清；审视澄清对导航/存储/F-005 建议的影响；评估 Web 第一阶段 SQLite 用于结构性数据的取舍。不实现、不放行写入、不关闭 F-005（仅定关闭条件）。
+- **verdict**：conditional
+
+### 成果（有证据）
+
+1. [D-011](01-decision.md#d-011--产品打包与-dogfood-分栏并确认导航存储f-005-与-sqlite-立场2026-07-21) 写入打包三层、实例级共享资料语义、配置 fail closed、合成 fixture 规则。  
+2. [R-003 v0.2](attachments/r-003-workspace-shared-materials.md)、[R-001 §8](attachments/r-001-single-user-workflow-ia-vertical-journey.md#8-产品工作区-vs-本仓-dogfoodd-011)、`00-meta` 边界与 I-005/I-009/I-010/I-011 证据栏、D-005 部分限定。  
+3. 再审视结论已接受为设计默认：**N1**、存储 **A（部署旁路）**、F-005 **路径 α**；SQLite 见下。
+
+### 澄清是否改变导航/存储建议
+
+| 建议 | 是否改变 | 说明 |
+|------|----------|------|
+| N1 | **方向不变，主语收紧** | 列表=实例配置内工作区，非 dogfood 扫描 |
+| 存储 A | **方向不变，主语收紧** | 消费方/部署旁路目录，非本仓资料外发 |
+| F-005 α | **方向不变，更必要** | 首实现必须绑产品工作区配置，禁止默认真过程树 |
+| N2 / 存储 C / 首切片 SQLite 必选 | 仍不推荐 | 第二状态源或过早基础设施 |
+
+### SQLite 评估（结论）
+
+| 问题 | 结论 |
+|------|------|
+| 是否「Web 第一阶段就直接上 SQLite 存各种结构性数据」算好选择？ | **部分好、分层用**：**不要**作为首切片与 canonical 写入依赖；**可以**在更广产品阶段作 N1/资料元数据等**可重建索引** |
+| 为何不首切片必选 | 垂直切片只需单工作区文件 + ops receipt；DB 增加双写/迁移/Skills 不一致风险，无助于 F-007/F-008 证明 |
+| 硬约束 | 目标生命周期状态禁止 DB 权威；库在部署数据根；不进发布物；冲突以 Markdown 为准 |
+
+### Finding 状态（本轮）
+
+| Finding | 状态 | 说明 |
+|---------|------|------|
+| F-001 | closed | 不变 |
+| F-005 | **open** | D-011 将 α 定为关闭**条件**；关闭须另一步对齐成功标准后执行 |
+| F-002～F-004、F-007/F-008 | open | 不变 |
+| 无新增 F 编号 | — | 打包缺口以决策与 R-003 修订响应，不另开 finding |
+
+### 结论与下一步
+
+打包边界已与多工作区产品模型分栏，设计主轴未偏。建议用户下一步任选：`/govern 按 α 关闭 F-005`（并改成功标准范围句）；或继续审视 R-002。硬禁令：F-005 关闭前不立项；写入门禁不变。
+
+### 声明
+
+不修改 `status`/`progress`/`goal-tree.md`；无 residual；无 Web/AI 写入；无实现子目标。
+
+## A-019 · 关闭 F-005 并立项 GOAL-012（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / design-plan
+- **scope**：用户接受建议选项并开始推进；关闭 F-005（路径 α）；接受 R-002 设计默认；创建 GOAL-012。不关闭 F-007/F-008，不开放生产写入。
+- **verdict**：conditional
+
+### 成果
+
+1. [D-012](01-decision.md#d-012--接受建议选项关闭-f-005α并立项-goal-0122026-07-21) 全盘接受 N1/A/α/打包分栏/SQLite 分层/R-002 默认。  
+2. **F-005 closed**（见下表）。  
+3. 新建 [GOAL-012-first-slice-workspace-detail](../GOAL-012-first-slice-workspace-detail/00-meta.md) 五件套；goal-tree 同步。  
+4. GOAL-009 `progress: 25%`；路线图 D = 已立项。
+
+### Finding 响应
+
+| Finding | 状态 | 证据与边界 |
+|---------|------|------------|
+| F-005 | **closed** | α 范围写入成功标准与 D-012；首实现=产品工作区详情+受限追加；三页完整产品后置；GOAL-012 已创建。≠ 实现完成 ≠ 写入放行。 |
+| F-001 | closed | 不变 |
+| F-002～F-004 | open | R-002/R-003 默认≠验证 |
+| F-007/F-008 | open / required | 阻断生产写入；GOAL-012 须遵守 |
+| F-006 | open / recommended | 试点后置 |
+
+### 信息门禁
+
+| 项 | 状态 |
+|----|------|
+| I-011 立项相关子集 | α 满足；整项仍 collecting |
+| I-003/I-004/I-006 | collecting；待 GOAL-012 CT 证据后由本台账或 GOAL-012 回写 verified 条件 |
+| 生产 Web/AI 写入 | 未开放 |
+
+### 结论与下一步
+
+规划层已放行 α 实现立项。下一拍在 **GOAL-012**：配置 fail-closed、合成 fixture、只读详情、门禁内契约测试。GOAL-009 不宣称 Web 功能已交付。
+
+### 声明
+
+无 residual；无生产写入；F-007/F-008 保持 open。

@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.12.0
+version: 0.15.0
 ---
 
 # 执行记录 · GOAL-009
@@ -94,12 +94,34 @@ version: 0.12.0
 - 测试计划增补 CT-016～CT-018；新增 [最小可执行契约规格包](attachments/r-004-executable-contract-spec.md)（`pending-user-review`）；R-001 §2.1 命名映射；D-001 路径澄清为工作区 canonical 根。
 - A-016 在各自 scope 关闭 F-020～F-024；**未**关闭 F-001～F-005、F-007、F-008；**未**将 I-003/I-004/I-006 标为 `verified`；**未**修改 `web/`、未创建 `ops/receipts/`、未执行 CT、未改 status/progress/`goal-tree.md`。GOAL-009 保持 `active / 0%`。
 
+### 2026-07-21 · 规格包审视、I-001/I-011 结论、R-002/R-003 起草
+
+- 用户以 `/govern` 指令：审视规格包 + CT-016～018；I-001/I-011 可核对结论（瞄准 F-001/F-005）；起草 R-002/R-003；硬禁令保持。
+- 已记录 [D-010](01-decision.md#d-010--接受-r-004-规格包i-001i-011-审视结论并启动-r-002r-003-收集2026-07-21)；响应见 [A-017](03-audit.md#a-017--规格包审视i-001i-011-结论与-r-002r-003-起草2026-07-21)。
+- 规格包修订为 v0.2 并接受（幂等成功路径、中间对象非 canonical、CT-016 案例示例）；测试计划 `specification_state` 同步。
+- R-001 增补 §7 审视结论：**F-001 closed**；**F-005 open**（路径 α/β）。
+- 新增 [R-002](attachments/r-002-fact-admission-ai-collaboration.md)、[R-003](attachments/r-003-workspace-shared-materials.md)（均 `pending-user-review`）。
+- **未**修改 `web/`、**未**创建 `ops/receipts/`、**未**执行 CT、**未**立项实现、**未**开放 Web/AI 写入；F-007/F-008 仍 open；I-003/I-004/I-006 仍 `collecting`。GOAL-009 保持 `active / 0%`。
+
+### 2026-07-21 · 打包/dogfood 分栏落盘与导航·存储·SQLite 再审视
+
+- 用户澄清并要求落盘：Web/Skills/模板可分发；本仓工作区与共享资料过程记录不复制、他项目不知悉；他项目自有工作区与资料。并要求审视澄清对导航/存储建议的影响，以及 Web 第一阶段是否宜上 SQLite。
+- 已记录 [D-011](01-decision.md#d-011--产品打包与-dogfood-分栏并确认导航存储f-005-与-sqlite-立场2026-07-21)；[A-018](03-audit.md#a-018--打包分栏落盘与导航存储sqlite-再审视2026-07-21)；[R-003 v0.2](attachments/r-003-workspace-shared-materials.md)；R-001 §8；D-005 第 1 项部分限定。
+- 设计默认确认：**N1**、存储 **A（部署旁路）**、F-005 关闭条件 **路径 α**（**尚未**执行 F-005 关闭）；SQLite **非**首切片必选，仅允许后续作非 canonical 可重建结构索引。
+- **未**改 `web/`、**未**立项、**未**开放写入；F-005/F-007/F-008 仍 open（F-001 仍 closed）。GOAL-009 保持 `active / 0%`。
+
+### 2026-07-21 · 接受建议选项、关闭 F-005、立项 GOAL-012
+
+- 用户确认「接受建议选项，开始推进」。
+- [D-012](01-decision.md#d-012--接受建议选项关闭-f-005α并立项-goal-0122026-07-21) / [A-019](03-audit.md#a-019--关闭-f-005并立项-goal-0122026-07-21)：**F-005 closed**；R-002 设计默认接受；创建 [GOAL-012-first-slice-workspace-detail](../GOAL-012-first-slice-workspace-detail/00-meta.md)。
+- 进度调至 **25%**（规划足以立项实现；B/C 验证与 E 试点未完成）。**未**关闭 F-007/F-008；**未**开放生产写入；**未**在本目标改 `web/`。
+
 ## 下一步（计划）
 
-1. 用户审视 CT-016～CT-018 与 [规格包](attachments/r-004-executable-contract-spec.md)；在单独的实现目标具备前，不创建运行时状态、ops 目录或受控写入能力。
-2. 并行：完成 R-001 对 F-001/F-005 的可核对审视证据；收集 R-002（I-002/I-008/I-006）与 R-003（I-009/I-010）设计输入；不得以 R-004 深度替代。
-3. **硬禁令（D-009）**：F-005 仍 open 时不创建实现子目标；F-007/F-008 仍 open 或 I-003/I-004/I-006 未 `verified` 时不开放 Web/AI 写入。仅在路线图 B/C 的 required 信息足以审视后，基于 D-006 的受限动作另立实现目标。
+1. 实现推进改由 **GOAL-012** 执行（配置、fixture、只读详情、门禁内契约测试）。
+2. GOAL-009 继续台账：F-002～F-004、F-007/F-008 与相关 I-00N。
+3. **硬禁令**：F-007/F-008 关闭且 I-003/I-004/I-006 `verified` 前不开放生产 Web/AI 写入。
 
 ## 进度评估
 
-**0%**：已完成立项、方向确认、未知项登记、R-001/R-004 收集与 A-014 响应（计划/规格/排期）；但 required 信息验证、实现交付与阶段退出均未完成，尚不足以提升进度。
+**25%**：产品发现与 α 立项条件已满足并创建 GOAL-012；事实/工作区/资料验证、写入契约运行证据与试点未完成，故不更高估。
