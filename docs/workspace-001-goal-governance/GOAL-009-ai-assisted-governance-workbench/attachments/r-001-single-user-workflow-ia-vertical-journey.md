@@ -2,9 +2,9 @@
 title: R-001 · 单用户工作流、三页信息架构与最小垂直旅程（收集稿）
 status: active
 created: 2026-07-20
-updated: 2026-07-20
+updated: 2026-07-21
 parent: GOAL-009-ai-assisted-governance-workbench
-version: 0.3.0
+version: 0.4.0
 type: information-collection
 ---
 
@@ -42,6 +42,19 @@ type: information-collection
 | `ExecutionReceipt` | 关联 operation id、实际写入、审计证据及失败/恢复结果。 | 幂等、并发、恢复和可核对呈现。 |
 
 这些对象是待定义的设计名词，绝不表示当前仓库已拥有应用状态、API 或写入能力。
+
+### 2.1 D-007 对象映射与实现优先级
+
+本稿第 2 节保留 D-006 收敛时使用的 Candidate 与 Confirmation 名称，便于追溯历史。后续规格、fixture、API/服务边界和 UX 文案必须以 R-004 第 6.1 节的用户接受线性流为准：
+
+| 本稿历史名称 | D-007 / R-004 第 6.1 节的优先名称 | 约束 |
+|--------------|------------------------------------|------|
+| Candidate | CandidateRevision | 可编辑草稿；提交后固定 content digest，旧修订不能继续形成提案。 |
+| Proposal | Proposal | 绑定不可变候选修订与 proposal digest。 |
+| Confirmation | UserDecision | 只对一个 proposal digest 作 affirm、reject 或 cancel；affirm 在同一受控请求中触发重校验和执行。 |
+| ExecutionReceipt | ExecutionReceipt | 只记录一次执行终态，不扩展为重叠的权威状态机。 |
+
+本映射只同步已接受的 D-007 设计约束；它不定义实现接口、不把四类对象标为现有应用状态，也不关闭 I-003/I-004/I-006 或 F-007/F-008。
 
 ## 3. 后续信息架构的单用户核心工作流
 

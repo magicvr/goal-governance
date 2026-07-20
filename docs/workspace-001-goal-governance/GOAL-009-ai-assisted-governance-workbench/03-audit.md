@@ -5,19 +5,20 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.12.0
+version: 0.15.0
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-本目标已形成五条 independent 意见（A-001、A-002、A-005、A-006、A-011）、一次同范围 self 审视（A-003）及六次 `/govern` 响应（A-004、A-007、A-008、A-009、A-010、A-012）。A-005 暴露的共享资料区术语/来源问题已由 D-004 与 A-007 记录修订；F-004/I-010、F-001～F-005、F-007/F-008 仍开放。A-012 以 D-007 与修订后的 R-004 关闭 A-011 在设计审视 scope 内的 F-013～F-019；这不构成实现、测试、阶段放行或 F-007/F-008 的关闭证据。
+本目标已形成六条 independent 意见（A-001、A-002、A-005、A-006、A-011、A-014）、两次同范围 self 审视（A-003、A-015）及九次 `/govern` 响应（A-004、A-007、A-008、A-009、A-010、A-012、A-013、A-016）。A-005 暴露的共享资料区术语/来源问题已由 D-004 与 A-007 记录修订；F-004/I-010、F-001～F-005、F-007/F-008 仍开放。A-012 以 D-007 与修订后的 R-004 关闭 A-011 在设计审视 scope 内的 F-013～F-019；A-013 将其下一步建议转为测试计划收集稿。A-014 复核整体就绪后新增 F-020～F-024；A-015 同范围 self 确认后，A-016/D-009 关闭 F-020～F-024 在“计划/规格/排期/文档同步”scope 内的要求，**不**关闭 F-007/F-008，**不**将 I-003/I-004/I-006 标为 verified，**不**立项实现或开放写入。
 
-当前焦点包括：R-001（D-006 已收敛首切片）、R-004（I-003/I-004/I-006 的已裁决设计输入，仍待契约测试）以及经 A-007 重定义的 R-003（I-009/I-010）。后续审视至少核对：
+当前焦点包括：R-001（D-006 已收敛首切片，待 F-001/F-005 审视证据）、R-004（设计 + CT-001～CT-018 + 待用户审视的规格包）、R-002/R-003 并行收集，以及经 A-007 重定义的 I-009/I-010。后续审视至少核对：
 
 - I-001～I-006 是否在其最晚需要阶段前有可核对证据；
-- R-004 门禁分层、追加语义与 ops 存放是否经用户裁决并可测；
+- 规格包与 CT-016～CT-018 是否经用户审视并可落到实现目标的 fixture；
+- R-001 审视与 R-002/R-003 收集是否被 R-004 深度绕过（F-022 排期）；
 - AI 建议、人类确认、P-004、状态/关门门禁是否被明确区分；
 - canonical 文档、事务/恢复和审计证据是否不会被 Web 的便利性绕过；
 - 任何实现声明是否有测试、可用性或实际试点事实支撑。
@@ -729,3 +730,239 @@ R-004 是**合格收集起点**，方向合理，但尚不可冻结为路线图 
 ### 结论与建议下一步
 
 A-011 的 R-004 设计 scope 已得到用户裁决和可核对响应，故其 F-013～F-019 在该 scope 内关闭；A-011 整体 verdict 仍为 `conditional`，因为 F-007/F-008 及相关 required 信息项继续阻断路线图 C、首个 Web 写入和验收。下一步应在单独的实现前收集/验证工作中把 R-004 的负向案例转为可执行契约测试计划，期间不得开放写入。
+
+## A-013 · 对 A-012 下一步建议的 R-004 契约测试计划响应（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Codex）
+- **类型**：response / design-plan
+- **scope**：响应 A-012 关于将 R-004 负向案例转为可执行契约测试计划的建议；覆盖 I-003/I-004/I-006 与 F-007/F-008 的实现前门禁，不审计运行时实现或写入。
+- **verdict**：conditional
+
+### 响应依据与 P-004 状态
+
+- 用户确认采用本轮提议，形成 [D-008](01-decision.md#d-008--将-r-004-负向案例转为契约测试计划2026-07-21)。本响应记录已发生的计划整理，不新增同范围 independent 审计，也不把本条伪装为独立意见。
+- D-007 对 A-011 同范围 self 的跳过选择仍有效；本轮没有 verdict 或必改项冲突，也没有 residual risk 接受。GOAL-009 的 status/progress、路线图和 `goal-tree.md` 不变。
+
+### 成果（有证据）
+
+- 新增 [R-004 负向契约测试计划与实现前门禁清单](attachments/r-004-contract-test-plan.md)，包含 CT-001～CT-015、实现前门禁清单和后续证据记录格式。
+- [D-008](01-decision.md#d-008--将-r-004-负向案例转为契约测试计划2026-07-21) 记录该计划的范围、理由、未选方案和非实现边界；`02-execution.md` 记录了文件产物及未执行事项。
+- 以上是可审视的设计/收集证据；没有契约测试、恢复演练、运行时 receipt、Web/AI 路由或 canonical 写入事实。
+
+### 对照门禁与关闭证据
+
+| 项目 | 当前状态 | 本轮证据与边界 |
+|------|----------|----------------|
+| I-003 | required / collecting | CT-001～CT-008、CT-013 的测试范围计划；无 API/UX 或运行结果，未 verified。 |
+| I-004 | required / collecting | CT-004～CT-011、CT-014 的写集/基线/事务/恢复/幂等/并发计划；无执行证据，未 verified。 |
+| I-006 | required / collecting | CT-001～CT-006、CT-009～CT-015 的 fail-closed 范围；无负向运行证据，未 verified。 |
+| F-007 | open / required | 计划覆盖确认、来源、基线、信任和内容边界；仍无实现或后续审视关闭证据。 |
+| F-008 | open / required | 计划覆盖 operation id、receipt、恢复、幂等和并发；仍无实现、重放或恢复证据。 |
+
+### 新增 Findings
+
+本响应不新增 finding，也不关闭 F-007/F-008 或其他 required finding。CT-001～CT-015 是测试计划编号，不是审计 finding 编号。
+
+### 仍开放项与结论
+
+- A-001～A-012 的历史意见保留；A-012 已关闭的 F-013～F-019 仍只表示 R-004 设计 scope 的裁决响应完成，不代表实现或验收完成。
+- F-001～F-005、F-007、F-008 仍为开放 required；I-001～I-006、I-008～I-011 仍未全部达到路线图对应阶段的 verified 条件。
+- 本计划足以作为下一轮 fixture、接口和运行证据格式审视的输入，但不能放行路线图 C、首个 Web 写入、AI 写入或目标关门。下一步按 D-008 审视测试 fixture、契约接口、错误码和机器可读证据；完成后再决定是否另立实现子目标或请求 `/audit` 复审。
+
+## A-014 · GOAL-009 当前整体就绪与门禁一致性审计（2026-07-21）
+
+- **source**：independent
+- **auditor**：GitHub Copilot · Grok 4.5
+- **类型**：design-plan / ad-hoc
+- **scope**：目标 9 整体现状——产品边界、路线图、信息门禁、开放 findings、R-001/R-004 与 D-006～D-008 响应、以及与现有只读 `web/` 的一致性。不审计实现运行时、试点或关门。
+- **verdict**：conditional
+- **完整意见**：[attachments/audit-A-014-independent.md](attachments/audit-A-014-independent.md)
+
+### 范围与区间
+
+- 工作区：`workspace-001-goal-governance`（Root `GOAL-001-main-vision`）；未读取或比较其他工作区。
+- 主对象：`00-meta` / `01-decision` / `02-execution` / `03-audit`（A-001～A-013）、R-001、R-004、R-004 测试计划、`web/main.py`、`GoalsRepository`、`web/.env.example`、工作区目录（无 `ops/receipts/`）。
+- 不重开已关闭的 F-009～F-019；不关闭 F-001～F-005、F-007、F-008；不将 I-00N 标为 verified。
+
+### 成果（有证据）
+
+1. 产品方向与 fail-closed 纪律一致；`active / 0%` 与“无 Web 写入、无 AI 调用、无 ops/receipts”的实现面一致（仅 GET 路由）。
+2. A-011→D-007/A-012 的设计裁决与“设计关闭 ≠ 实现证据”边界诚实；A-013/D-008 正确选择测试计划而非实现。
+3. GOAL-010/011 经 A-008/A-009 仅作 R-003 输入；`workspace.md` 固定资料引用表为空，未把共享资料索引当事实。
+4. 无 residual risk 接受、无错误关门、无把 CT 计划写成测试通过。
+
+### 对照门禁
+
+| 项 | 判断 |
+|----|------|
+| 路线图 A | 进行中；F-001 仍阻断退出 |
+| 路线图 B | 未开始；F-002～F-004 开放 |
+| 路线图 C / 写入 | 未开始；F-007/F-008 与 I-003/I-004/I-006 开放 |
+| 路线图 D 立项 | F-005 仍 open |
+| R-004 设计 F-013～F-019 | 设计 scope 已 closed；非实现 |
+
+### Findings
+
+#### F-020 · CT 计划未显式覆盖 D-007 关键边界场景（required / medium）
+
+- **关联**：I-003/I-004/I-006；F-007/F-008 关闭路径
+- **要点**：缺“open required finding 时仍可受限追加且不得关闭 finding”的独立 CT；缺内容规范化（UTF-8/LF）与 affirm-同请求执行的契约断言。
+- **关闭要求**：修订测试计划新增上述案例/接口约束（仍为计划，不是测试通过）。
+
+#### F-021 · R-001/D-006 与 D-007 对象命名未同步（recommended / medium）
+
+- **关联**：I-001/I-003/I-011
+- **要点**：权威流为 CandidateRevision/UserDecision；R-001 等仍写 Candidate/Confirmation。
+- **建议**：增加映射表或“实现以 R-004 §6 为准”的交叉引用。
+
+#### F-022 · 收集重心偏向 R-004，R-001/R-002/R-003 不足以支撑对应阶段退出（required / medium）
+
+- **关联**：I-001/I-002/I-008/I-009/I-010/I-011；F-001～F-005
+- **要点**：不得仅凭 R-004 深度绕过 F-001/F-005 或 R-002/R-003 门禁。
+- **关闭要求**：编排排期显式保留 R-001 审视与 R-002/R-003 收集（或书面延后范围）；F-005 open 时禁止实现子目标。
+
+#### F-023 · 测试计划尚未下沉为可执行契约规格（required / medium）
+
+- **关联**：I-003/I-004/I-006；F-007/F-008
+- **要点**：无 fixture 布局、操作入口、错误码枚举、receipt 示例、digest 算法说明。
+- **关闭要求**：实现前形成用户可审视的最小规格包；规格审视 ≠ 测试通过 ≠ 写入放行。
+
+#### F-024 · D-001 等仍写 `docs/goals/` 为当前真相源路径（recommended / low）
+
+- **关联**：I-009
+- **要点**：canonical 已迁至 `docs/workspace-001-goal-governance/`；原则未变，路径表述应澄清。
+- **建议**：在 D-001 影响说明或窄决策中注明当前 workspace 根路径。
+
+### 必改项汇总
+
+| Finding | 级别 | 影响 |
+|---------|------|------|
+| F-020 | required | CT 覆盖不完整则 F-007/F-008 验收标准不完整 |
+| F-022 | required | 禁止用 R-004 深度替代 F-001/F-005 与 R-002/R-003 |
+| F-023 | required | 无规格下沉则不得声称契约可测或关闭 F-007/F-008 |
+| F-021、F-024 | recommended | 命名与路径术语同步 |
+
+既有 **F-001～F-005、F-007、F-008** 保持 open。
+
+### 与既有意见的异同
+
+- 与 A-001～A-013 **同向不冲突**：确认未违规放行；补充裁决后的下游完整性（CT 覆盖、规格下沉、并行收集）。
+- 不重开 F-013～F-019；新增 F-020～F-024。
+- 是否需要同范围 self 审视由 `/govern` 按 P-004 询问用户。
+
+### 结论 + 建议给编排器/用户的下一步
+
+GOAL-009 是纪律良好的产品发现与契约收集目标，但 required 门禁远未满足任何阶段退出或写入放行 → **conditional**。
+
+请用 **`/govern`** 响应 A-014：
+
+1. P-004：是否对 A-014 做同范围 self 审视。
+2. 优先响应 F-020/F-023（补 CT 边界 + fixture/接口/错误码规格）。
+3. 并行处理 F-022（R-001 审视与 R-002/R-003，或书面延后范围）。
+4. 可选处理 F-021/F-024。
+5. F-007/F-008 关闭且 I-003/I-004/I-006 verified 前不得开放 Web/AI 写入；F-005 关闭前不得立项实现子目标。
+
+### 声明
+
+本独立意见不修改 GOAL-009 的 `status`、`progress`、方案正文或 `goal-tree.md`。finding 响应与阶段推进归 `/govern` 与用户。
+
+## A-015 · 同范围自审：A-014 整体就绪与门禁一致性（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（GitHub Copilot · Grok 4.5）
+- **类型**：design-plan / ad-hoc
+- **scope**：与 A-014 相同——GOAL-009 产品边界、路线图 A～E、I-00N、开放 findings、R-001/R-004、D-006～D-008 与只读 `web/` 一致性；不审计实现运行时、试点或关门。
+- **verdict**：conditional
+
+### 范围与证据
+
+- 用户于 2026-07-21 以 `/govern` 明确选择：响应 A-014 时**先**做同范围 self 审视，再补 F-020/F-023、并行 F-022、可选 F-021/F-024。该选择满足 P-004。
+- 复核 [00-meta](00-meta.md)、[01-decision](01-decision.md) D-001～D-008、[02-execution](02-execution.md)、A-001～A-014、[R-001](attachments/r-001-single-user-workflow-ia-vertical-journey.md)、[R-004](attachments/r-004-controlled-change-contract.md)、[测试计划](attachments/r-004-contract-test-plan.md)、工作区 `workspace.md` 与现有只读 Web 边界。
+- 未读取或混合其他工作区；共享资料固定引用表为空，未当作事实或关闭证据。
+
+### 成果与对照
+
+| 方面 | 自审判断 | 证据与缺口 |
+|------|----------|------------|
+| 方向与纪律 | 与 A-014 同向 | 人主导、canonical 真相、未偷跑实现；`active / 0%` 诚实 |
+| 实现面 | 仍只读 | GET 首页/详情；无 ops/receipts；无 approval/operation_id |
+| A-011 设计响应 | 有效且有边界 | D-007/A-012 关闭 F-013～F-019 仅设计 scope |
+| A-013 测试计划 | 正确收集增量 | CT-001～CT-015 为计划；A-014 指出边界缺口 |
+| 阶段门禁 | 均未退出 | F-001～F-005、F-007、F-008 仍 open；I-00N 未 verified |
+
+### Findings
+
+本次 self **不新增** F 编号，确认 A-014 的 F-020～F-024 与既有 F-001～F-005、F-007、F-008、F-006 状态判断成立且**无意见冲突**（同向，非一要一否）。
+
+| Finding | 自审 | 说明 |
+|---------|------|------|
+| F-020 | open / required（进入响应前） | CT 缺 open-finding 正向边界、规范化 digest、affirm 同请求断言 |
+| F-021 | open / recommended | 命名漂移风险真实；可用映射表关闭，无需重写历史 |
+| F-022 | open / required | 不得用 R-004 深度替代 R-001/R-002/R-003 与 F-001/F-005 |
+| F-023 | open / required | 缺 fixture/接口/错误码/receipt 规格下沉 |
+| F-024 | open / recommended | D-001 路径表述需标注 workspace 根替代 |
+| F-001～F-005、F-007、F-008 | 仍 open / required | A-014 正确未关闭；本自审无新关闭证据 |
+| F-006 | open / recommended | 试点保障后置合理 |
+| F-009～F-019 | 保持原 closed scope | 不重开 |
+
+没有证据支持：把 CT 计划当作测试通过、把 D-007 设计当作 F-007/F-008 关闭、把 GOAL-010/011 当作 F-003/F-004 关闭，或立项实现/开放写入。
+
+### 结论与建议下一步
+
+自审与 A-014 **同向**：GOAL-009 是纪律良好的发现/契约收集目标，verdict **conditional**。进入 A-016 时按用户指令：响应 F-020/F-023 → 并行书面排期 F-022 → 可选 F-021/F-024；**F-005 open 不立项实现；F-007/F-008 open 不开放写入**。
+
+## A-016 · 对 A-014/A-015 的响应：CT 边界、规格包与并行排期（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（GitHub Copilot · Grok 4.5）
+- **类型**：response / design-plan
+- **scope**：响应 A-014 与同范围 self A-015；关闭 F-020～F-024 在计划修订、规格收集、排期与文档同步 scope 内的要求；不审计运行时、不放行写入、不立项实现。
+- **verdict**：conditional
+
+### 响应依据与 P-004
+
+- P-004：用户要求先同范围 self → 已完成 [A-015](#a-015--同范围自审a-014-整体就绪与门禁一致性2026-07-21)，verdict `conditional`，与 A-014 无冲突。
+- 响应方案由用户指令与 [D-009](01-decision.md#d-009--响应-a-014并补齐-ct边界规格包与并行收集排期2026-07-21) 固定；本条不冒充 independent。
+
+### 成果（有证据）
+
+1. 测试计划增补 **CT-016～CT-018**（open finding 受限追加、UTF-8/LF digest、affirm 同请求）→ [r-004-contract-test-plan.md](attachments/r-004-contract-test-plan.md)。
+2. 新增 **最小可执行契约规格包** → [r-004-executable-contract-spec.md](attachments/r-004-executable-contract-spec.md)（fixture / service 入口 / 错误码 / receipt / digest；`pending-user-review`）。
+3. R-001 §2.1 增加 D-007 对象命名映射（F-021）。
+4. D-001 第 3 点路径澄清 + D-009 排期与硬禁令（F-022/F-024）。
+5. 未修改 `web/`、未创建 `ops/receipts/`、未执行 CT、未改 status/progress/goal-tree。
+
+### Finding 响应与关闭证据
+
+| Finding | 状态 | 本轮关闭证据与边界 |
+|---------|------|----------------------|
+| F-020 | **closed**（计划覆盖 scope） | CT-016～CT-018 显式编号 D-007 关键边界；仍未执行测试，不关闭 F-007/F-008。 |
+| F-021 | **closed**（文档同步 scope） | R-001 §2.1 映射表；历史 Candidate/Confirmation 仅追溯，实现以 R-004 §6 为准。 |
+| F-022 | **closed**（排期/门禁 scope） | D-009 书面保留 R-001 审视与 R-002/R-003 下一收集；硬禁令：F-005 open 不立项、F-007/F-008 open 不写入。不关闭 F-001～F-005。 |
+| F-023 | **closed**（规格包形成 scope） | 规格包附件已形成且待用户审视；审视通过 ≠ 测试通过 ≠ 写入放行。 |
+| F-024 | **closed**（路径术语 scope） | D-001 影响说明 + D-009：原则为工作区 canonical 根 + goal-tree，当前路径 `docs/workspace-001-goal-governance/`。 |
+
+上述 closed **仅**表示 A-014 对各 finding 的关闭要求在所述 scope 已满足；不等于阶段退出、实现或验收。
+
+### 仍开放的门禁与信息项
+
+| 项目 | 状态 | 原因 |
+|------|------|------|
+| F-001～F-005 | open / required | 旅程/工作区/资料/IA 证据未完成 |
+| F-007 / F-008 | open / required | 无实现与契约测试运行证据 |
+| F-006 | open / recommended | 试点保障后置 |
+| I-001～I-006、I-008～I-011 | required / collecting | 计划/规格/裁决 ≠ verified |
+| I-007、I-012 | non-blocking / open | 不阻断当前发现 |
+| Web/AI 写入、实现子目标、部署 | 未开始 | D-009 硬禁令 |
+
+### 结论与建议下一步
+
+1. 用户审视 [规格包](attachments/r-004-executable-contract-spec.md) 与 CT-016～CT-018；可修订后接受，仍不执行写入。
+2. 并行：推进 R-001 可核对审视结论（F-001/F-005）；起草 R-002（事实/AI）与 R-003（工作区/共享资料产品契约）收集稿。
+3. **F-005 关闭前**不创建实现子目标；**F-007/F-008 关闭且 I-003/I-004/I-006 verified 前**不开放 Web/AI 写入。
+4. 可选：规格与并行收集有实质证据后请求 `/audit` 复审。
+
+### 声明
+
+本响应不修改 GOAL-009 的 `status`、`progress` 或 `goal-tree.md`；不将 I-00N 标为 verified；无 residual risk 接受。

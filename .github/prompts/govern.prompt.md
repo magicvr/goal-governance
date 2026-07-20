@@ -32,7 +32,7 @@ P-001 与 P-002～P-005（§6b）以 AGENTS 为准；若存在 architecture 原�
 
 ## 行为要点
 
-- 先读 `docs/workspace.md`（若有）并校验 Root Goal/canonical 范围/资料固定引用，再读 `docs/goals/goal-tree.md`、焦点 `03-audit` 与信息需求/阶段门禁；没有 context 时只处理当前仓库隐式单工作区。
+- 先读 `docs/workspace-<NNN>-<slug>/workspace.md`（若有）并校验 Root Goal/canonical 范围/资料固定引用，再读 `<workspace-root>/goal-tree.md`、焦点 `03-audit` 与信息需求/阶段门禁；没有 context 时只处理当前仓库隐式单工作区。
 - 用户确认后再调用 `<SKILLS_PKG>/prompts/01`～`04`。  
 - 不在本入口冒充 `source: independent`。  
 - 工作区绑定或共享资料引用不匹配时 fail closed，不自动发现、混合或写入其他工作区上下文。
