@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-21
 parent: null
-version: 0.22.0
+version: 0.23.0
 ---
 
 # Goal Tree
@@ -44,7 +44,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-009-ai-assisted-governance-workbench · 规划 AI 协助的人类目标治理 Web 工作台 [active 25%]
 ├── GOAL-010-core-workspace-shared-materials-protocol · 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 [done 100%]
 ├── GOAL-011-multi-workspace-directory-migration · 完成多工作区目录迁移与共享资料索引骨架 [done 100%]
-└── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [active 0%]
+└── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [active 90%]
 ```
 
 ## 状态总览
@@ -62,9 +62,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | GOAL-001-main-vision | active | 25% | [GOAL-009-ai-assisted-governance-workbench/](GOAL-009-ai-assisted-governance-workbench/) |
 | GOAL-010-core-workspace-shared-materials-protocol | 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 | GOAL-001-main-vision | done | 100% | [GOAL-010-core-workspace-shared-materials-protocol/](GOAL-010-core-workspace-shared-materials-protocol/) |
 | GOAL-011-multi-workspace-directory-migration | 完成多工作区目录迁移与共享资料索引骨架 | GOAL-001-main-vision | done | 100% | [GOAL-011-multi-workspace-directory-migration/](GOAL-011-multi-workspace-directory-migration/) |
-| GOAL-012-first-slice-workspace-detail | 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） | GOAL-001-main-vision | active | 0% | [GOAL-012-first-slice-workspace-detail/](GOAL-012-first-slice-workspace-detail/) |
+| GOAL-012-first-slice-workspace-detail | 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） | GOAL-001-main-vision | active | 90% | [GOAL-012-first-slice-workspace-detail/](GOAL-012-first-slice-workspace-detail/) |
 
-阶段 6：GOAL-009 规划 `active / 25%`（F-001/F-005 closed；F-007/F-008 仍阻断生产写入）；GOAL-012 实现 `active / 0%`。GOAL-001 仍为 `active`。
+阶段 6：GOAL-009 规划 `active / 25%`（F-001/F-005 closed；F-007/F-008 仍阻断生产写入）；GOAL-012 实现 `active / 90%`（配置/详情/门禁内 R-004 已落地）。GOAL-001 仍为 `active`。
 
 ## 状态图例
 

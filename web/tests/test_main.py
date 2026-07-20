@@ -12,6 +12,7 @@ from services.models import FieldMismatch, IssueSeverity, TreeValidationReport, 
 
 
 VALID_FIXTURE = Path(__file__).parent / "fixtures" / "valid-goals"
+R004_FIXTURE = Path(__file__).parent / "fixtures" / "r004" / "workspace-ok"
 
 
 class GoalWebRoutesTests(unittest.TestCase):
@@ -27,11 +28,40 @@ class GoalWebRoutesTests(unittest.TestCase):
         response = self.client.get("/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("目标概览", response.text)
+        self.assertIn("工作区详情", response.text)
         self.assertIn("Root Goal", response.text)
         self.assertIn("Child Goal", response.text)
         self.assertIn("/goals/GOAL-001-root", response.text)
-        self.assertIn("文档诊断", response.text)
+        self.assertIn("目标树", response.text)
+
+    def test_unconfigured_workspace_fail_closed(self) -> None:
+        app.dependency_overrides[get_goals_repository] = lambda: GoalsRepository.from_config({})
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("工作区未配置", response.text)
+        self.assertIn("fail closed", response.text)
+        self.assertNotIn("GOAL-001-main-vision", response.text)
+
+    def test_health_reports_gate_state(self) -> None:
+        response = self.client.get("/api/health")
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertTrue(payload["ok"])
+        self.assertIn("controlled_write_enabled", payload)
+        self.assertIn("product_gates_open", payload)
+
+    def test_proposal_preview_on_fixture_workspace(self) -> None:
+        app.dependency_overrides[get_goals_repository] = lambda: GoalsRepository(R004_FIXTURE)
+        response = self.client.post(
+            "/goals/GOAL-001-fixture-target/proposal",
+            data={
+                "content": "Preview only fact",
+                "source_statement": "web form",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("提案 digest", response.text)
+        self.assertIn("02-execution.md", response.text)
 
     def test_goal_detail_renders_decision_execution_and_audit(self) -> None:
         response = self.client.get("/goals/GOAL-002-child")
@@ -107,6 +137,13 @@ class _StaticRepository:
     def __init__(self, results: tuple[object, ...], tree: object) -> None:
         self._results = results
         self._tree = tree
+        self.goals_dir = VALID_FIXTURE
+        self.config_error = None
+        self.config_source = "explicit"
+
+    @property
+    def is_configured(self) -> bool:
+        return True
 
     def list_goals(self) -> tuple[object, ...]:
         return self._results
