@@ -119,15 +119,26 @@ class ControlledChangeTests(unittest.TestCase):
             )
         self.assertEqual(ctx.exception.code, "ERR_MISSING_FIELD")
 
-    def test_non_user_source_rejected(self) -> None:
+    def test_invalid_source_kind_rejected(self) -> None:
         with self.assertRaises(ControlledChangeError) as ctx:
             self.svc.prepare_candidate_revision(
                 goal_id=GOAL_ID,
                 content="from ai",
                 source_statement="model",
-                source_kind="ai-retrieval",
+                source_kind="not-a-real-kind",
             )
         self.assertEqual(ctx.exception.code, "ERR_INVALID_SOURCE")
+
+    def test_ai_knowledge_source_allowed_with_fa(self) -> None:
+        """GOAL-014: confirmed AI kinds may enter prepare after FA (not disguised)."""
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="AI suggested execution note",
+            source_statement="model knowledge via test; candidate only",
+            source_kind="ai-knowledge",
+        )
+        self.assertEqual(cand.source_kind, "ai-knowledge")
+        self.assertTrue(cand.produced_by_ai)
 
     def test_invalid_write_set(self) -> None:
         cand = self.svc.prepare_candidate_revision(
@@ -636,6 +647,57 @@ class ControlledChangeTests(unittest.TestCase):
         assert loaded is not None
         self.assertEqual(loaded.result, "failed")
         self.assertEqual(loaded.error_code, "ERR_RECEIPT_UNVERIFIABLE")
+
+    def test_f026_hot_path_imports_fact_admission_ws_sm(self) -> None:
+        """F-026: controlled_change composes FA / WS / SM modules (not test-only)."""
+        import services.controlled_change as cc
+
+        src = Path(cc.__file__).read_text(encoding="utf-8")
+        self.assertIn("from services.fact_admission import", src)
+        self.assertIn("from services.workspace_isolation import", src)
+        self.assertIn("from services.shared_materials import", src)
+        self.assertIn("_assert_fact_admission", src)
+        self.assertIn("_assert_workspace_isolation_access", src)
+        self.assertIn("_assert_sm_execution_write_boundary", src)
+
+    def test_f026_fa_disguise_rejected_on_prepare(self) -> None:
+        """F-026/FA-003: user-provided + AI signals rejected on prepare hot path."""
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.prepare_candidate_revision(
+                goal_id=GOAL_ID,
+                content="Looks user-typed but is AI",
+                source_statement="claimed user",
+                produced_by_ai=True,
+            )
+        self.assertEqual(ctx.exception.code, "ERR_FA_SOURCE_KIND_DISGUISE")
+
+    def test_f026_ws_isolation_on_cross_workspace_prepare(self) -> None:
+        """F-026/WS-003: foreign workspace_id rejected via isolation helper."""
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.prepare_candidate_revision(
+                goal_id=GOAL_ID,
+                content="cross workspace attempt",
+                source_statement="test",
+                workspace_id="other-workspace",
+            )
+        # Binding check may fire first (ERR_SCOPE_MISMATCH) or WS code; both refuse write.
+        self.assertIn(ctx.exception.code, {"ERR_SCOPE_MISMATCH", "ERR_WS_CROSS_WORKSPACE_ACCESS"})
+
+    def test_f026_happy_path_still_commits_with_hot_gates(self) -> None:
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="F-026 hot path still allows honest user-provided",
+            source_statement="operator",
+        )
+        prop = self.svc.build_proposal(candidate=cand)
+        receipt = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_f026_hot_001",
+        )
+        self.assertEqual(receipt.result, "committed")
+        body = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        self.assertIn("F-026 hot path still allows honest user-provided", body)
 
 
 if __name__ == "__main__":

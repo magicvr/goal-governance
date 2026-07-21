@@ -96,10 +96,37 @@ web/
 
 建议在项目根目录维护 `.venv`。
 
-## AI API 本地配置（预留）
+## AI API 本地配置（GOAL-014 阶段 B）
 
-范例字段见 `.env.example`。当前应用**不会**为 AI 调用加载密钥；无 AI 页面。真实密钥不得提交。
+范例字段见 `.env.example`。服务端可通过 `load_web_dotenv()` 加载 `web/.env`（unittest 不加载）。
 
+| 变量 | 说明 |
+|------|------|
+| `GOAL_GOVERNANCE_AI_ENABLED` | 总开关；默认 `false` → 所有 AI 调用 fail closed |
+| `GOAL_GOVERNANCE_AI_PROVIDER` | 提供方标识（如 `openai-compatible`） |
+| `GOAL_GOVERNANCE_AI_BASE_URL` | API 根（…/v1） |
+| `GOAL_GOVERNANCE_AI_API_KEY` | 密钥；**禁止**提交仓库或写入日志/HTML |
+| `GOAL_GOVERNANCE_AI_MODEL` | 模型名 |
+| `GOAL_GOVERNANCE_AI_REQUEST_TIMEOUT_SECONDS` | 超时，默认 30 |
+
+实现：
+
+- `web/services/ai_config.py` — 解析 + `public_dict` 无密钥  
+- `web/services/ai_broker.py` — 门禁 + FakeTransport / OpenAI-compatible  
+- `web/services/ai_candidates.py` — 进程内候选台账 + FA 确认 + R-004 提案  
+
+`/api/health` 含 `ai` 对象（**无** key 明文）。  
+
+**阶段 C UI/API**（目标详情 · 执行页）：
+
+| 路由 | 作用 |
+|------|------|
+| `POST /goals/{id}/ai/suggest` | 用户触发生成 AI 候选（不写盘） |
+| `POST /goals/{id}/ai/confirm` | FA + 生成受限提案（仍须 decide 才写） |
+| `POST /goals/{id}/ai/reject` | 拒绝候选 |
+| `POST /api/goals/{id}/ai/complete` | JSON 友好 suggest |
+
+测试可用 `GOAL_GOVERNANCE_AI_TEST_TRANSPORT=fake` 注入 FakeTransport。真实密钥不得提交。
 ## 安装
 
 ```powershell

@@ -2,16 +2,108 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-21
+updated: 2026-07-22
 parent: null
-version: 0.42.0
+version: 0.65.0
 ---
 
 # Goal Tree
 
+## 2026-07-22 · GOAL-009 有界关门
+
+D-031-A / A-056：路径 A；`done / 100%`；**R-009-X** accepted；R-E-3-X closed。Root 仍 active。
+
+## 2026-07-22 · 审视 GOAL-009 有界关门（待裁决）
+
+A-055 / D-031 proposed：可有界关门；其后用户选 A。
+
+## 2026-07-22 · GOAL-009 AI 成功标准有界勾选
+
+D-030-A / A-054：AI 成功标准 **[x] 有界**；progress **98%**；仍 active。
+
+## 2026-07-22 · 审视 GOAL-009 AI 成功标准勾选（待裁决）
+
+A-053 / D-030 proposed：可有界勾选；其后用户选 A。
+
+## 2026-07-22 · GOAL-014 有界关门
+
+D-007 / A-006：GOAL-014 `done / 100%`；GOAL-009 仍 active。
+
+## 2026-07-22 · GOAL-014 D-skip 关闭 R-014-D
+
+D-006 / A-005：R-014-D closed；progress 当时 **85%**。
+
+## 2026-07-22 · GOAL-014 阶段审视（不关门）
+
+A-004 / D-005：阶段审 conditional；progress 当时 **75%**。
+
+## 2026-07-22 · GOAL-014 阶段 C 候选确认链
+
+D-004 / A-003：候选确认链；progress 当时 **65%**。
+
+## 2026-07-22 · GOAL-014 阶段 B broker 骨架
+
+D-003 / A-002：broker 骨架；progress 当时 **35%**。
+
+## 2026-07-22 · GOAL-014 阶段 A 边界冻结
+
+D-002 / A-001：R-014-A 冻结；progress 当时 **15%**。
+
+## 2026-07-22 · 创建 GOAL-014（X-AI）
+
+D-029 / A-052：创建 GOAL-014 · 当时 `active / 0%`。GOAL-009 仍 active **97%**。
+
+## 2026-07-22 · GOAL-009 扩展立项选项（保持 active）
+
+D-028 / A-051：扩展选项表；其后 R1 已建 GOAL-014。
+
+## 2026-07-22 · GOAL-009 阶段审视（不关门）
+
+A-050：self stage · **conditional**；α 有界交付可用；**禁止** done（R-E-3-X）。progress **97%**。
+
+## 2026-07-22 · GOAL-009 R-E-3 有界关闭 + R-E-3-X
+
+D-027-A / A-049：**R-E-3 closed（有界）**；**R-E-3-X accepted**。progress 当时 **96%**。
+
+## 2026-07-22 · GOAL-009 审视 R-E-3 有界关闭（待裁决）
+
+A-048 / D-027 proposed：可有界关闭；路径待确认。progress 当时 **95%**。
+
+## 2026-07-22 · GOAL-009 R-E-2 有界关闭 + R-E-2-H
+
+D-026-A / A-047：**R-E-2 closed（有界）**；**R-E-2-H accepted**。progress **95%**。
+
+## 2026-07-22 · GOAL-009 审视 R-E-2 有界关闭（待裁决）
+
+A-046 / D-026 proposed：可有界关闭；路径待确认。progress 当时 **94%**。
+
+## 2026-07-22 · GOAL-009 R-E-1 HTTP 表单冒烟
+
+D-025 / A-045：**R-E-1 closed**；HTTP proposal→decide **committed**。progress **94%**。
+
+## 2026-07-22 · GOAL-009 F-026 热路径挂接
+
+D-024 / A-044：**F-026 closed**；FA/WS/SM 组合进 `controlled_change`。progress 当时 **92%**。
+
+## 2026-07-22 · GOAL-009 路线图 E 有界退出（E-α）
+
+D-023-A / A-043：路径 A；**E 有界退出（E-α）** + R-E-1～3 accepted；GOAL-009 仍 active。progress 当时 **90%**。
+
+## 2026-07-22 · GOAL-009 审视路线图 E 有界退出（待裁决）
+
+A-042 / D-023 proposed：E-α 证据支持有界退出；路径待确认。GOAL-009 progress 当时 **85%**。
+
+## 2026-07-22 · GOAL-009 E-α 受控追加冒烟
+
+D-022 / A-041：产品根生产路径 append **committed**（`op_e_alpha_smoke_20260722`）；E 全文未退出。GOAL-009 progress **85%**。
+
+## 2026-07-22 · GOAL-009 响应 A-039（F-025 / E-α）
+
+D-021 / A-040：**F-025 closed**；F-027 closed；F-026 open recommended；E-α 入口已定。GOAL-009 progress 当时 **82%**。
+
 ## 2026-07-21 · GOAL-009 F-003/F-004 有界关闭
 
-D-020-A / A-038：路径 A；**F-003/F-004 closed** + R-F003/R-F004 residual；路线图 B finding 有界退出。GOAL-009 progress **80%**。
+D-020-A / A-038：路径 A；**F-003/F-004 closed** + R-F003/R-F004 residual；路线图 B finding 有界退出。GOAL-009 progress 当时 **80%**。
 
 ## 2026-07-21 · GOAL-009 WS+SM 核心矩阵执行
 
@@ -137,11 +229,12 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-006-core-methodology-template-productization · 核心方法论、文档协议与 canonical 模板产品化 [done 100%]
 ├── GOAL-007-information-readiness-governance · 信息就绪与未知项治理 [done 100%]
 ├── GOAL-008-skills-consumer-adapter-release-consistency · Skills 消费适配器跨宿主/跨版本发布一致性 [done 100%]
-├── GOAL-009-ai-assisted-governance-workbench · 规划 AI 协助的人类目标治理 Web 工作台 [active 80%]
+├── GOAL-009-ai-assisted-governance-workbench · 规划 AI 协助的人类目标治理 Web 工作台 [done 100%]
 ├── GOAL-010-core-workspace-shared-materials-protocol · 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 [done 100%]
 ├── GOAL-011-multi-workspace-directory-migration · 完成多工作区目录迁移与共享资料索引骨架 [done 100%]
 ├── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [done 100%]
-└── GOAL-013-write-gate-ct-durable-idempotency · 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） [done 100%]
+├── GOAL-013-write-gate-ct-durable-idempotency · 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） [done 100%]
+└── GOAL-014-ai-collaboration-runtime · 实现 AI 协作运行时与用户确认链（有界） [done 100%]
 ```
 
 ## 状态总览
@@ -156,13 +249,14 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | GOAL-001-main-vision | done | 100% | [GOAL-006-core-methodology-template-productization/](GOAL-006-core-methodology-template-productization/) |
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | GOAL-001-main-vision | done | 100% | [GOAL-007-information-readiness-governance/](GOAL-007-information-readiness-governance/) |
 | GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | done | 100% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
-| GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | GOAL-001-main-vision | active | 80% | [GOAL-009-ai-assisted-governance-workbench/](GOAL-009-ai-assisted-governance-workbench/) |
+| GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | GOAL-001-main-vision | done | 100% | [GOAL-009-ai-assisted-governance-workbench/](GOAL-009-ai-assisted-governance-workbench/) |
 | GOAL-010-core-workspace-shared-materials-protocol | 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 | GOAL-001-main-vision | done | 100% | [GOAL-010-core-workspace-shared-materials-protocol/](GOAL-010-core-workspace-shared-materials-protocol/) |
 | GOAL-011-multi-workspace-directory-migration | 完成多工作区目录迁移与共享资料索引骨架 | GOAL-001-main-vision | done | 100% | [GOAL-011-multi-workspace-directory-migration/](GOAL-011-multi-workspace-directory-migration/) |
 | GOAL-012-first-slice-workspace-detail | 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） | GOAL-001-main-vision | done | 100% | [GOAL-012-first-slice-workspace-detail/](GOAL-012-first-slice-workspace-detail/) |
 | GOAL-013-write-gate-ct-durable-idempotency | 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） | GOAL-001-main-vision | done | 100% | [GOAL-013-write-gate-ct-durable-idempotency/](GOAL-013-write-gate-ct-durable-idempotency/) |
+| GOAL-014-ai-collaboration-runtime | 实现 AI 协作运行时与用户确认链（有界） | GOAL-001-main-vision | done | 100% | [GOAL-014-ai-collaboration-runtime/](GOAL-014-ai-collaboration-runtime/) |
 
-阶段 6：GOAL-009 `active / 80%`（A-038：**F-002～F-004 closed 有界**；路线图 B finding 有界退出；α 写入门禁已闭环）；GOAL-012/013 `done / 100%`。GOAL-001 仍为 `active`。
+阶段 6：GOAL-009 `done / 100%`（有界规划/α/X-AI；**R-009-X** 扩展 residual）；GOAL-012/013/014 `done / 100%`。下一编号 **GOAL-015**。GOAL-001 仍为 `active`（阶段 6 终态见 R-009-X）。
 
 ## 状态图例
 
@@ -177,6 +271,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-014`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-015`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

@@ -2,19 +2,21 @@
 title: R-004 · 负向契约测试计划与实现前门禁清单（收集稿）
 status: active
 created: 2026-07-21
-updated: 2026-07-21
+updated: 2026-07-22
 parent: GOAL-009-ai-assisted-governance-workbench
-version: 0.3.0
+version: 0.4.0
 type: information-collection
-review_state: govern-approved-collection-plan
+review_state: historical-plan-plus-execution-index
 specification_state: govern-accepted-with-minor-revisions
 accepted_by: D-010
+execution_index: GOAL-009 A-020～A-030; GOAL-013; web/tests
 ---
 
 # R-004 · 负向契约测试计划与实现前门禁清单
 
-> 本文档是 D-008 记录的测试范围收集稿。所有 CT-001～CT-018 都是待实现、待执行、待审视的计划案例，不是测试通过事实，不关闭 F-007/F-008，也不把 I-003/I-004/I-006 标为 `verified`。CT-016～CT-018 按 D-007 的已接受边界补入；其接口和错误码细节仍以待用户审视的规格包为候选，不是运行时事实。
-
+> **执行状态索引（A-040 / F-025 · 2026-07-22）**：下文大量段落保留 **D-008 起草时**的「待执行 / 非关闭证据」措辞，属于历史计划正文，**不要**当作当前台账事实。  
+> **当前事实**：CT-001～CT-018 的关键负向路径已在 GOAL-012/013 与 `web/tests` 中执行；**F-007/F-008 closed**；**I-003/I-004/I-006 verified（α）**；生产双门闩见 A-030。权威关闭与证据索引：GOAL-009 `03-audit` A-020～A-030、GOAL-013 五件套、[00-meta R-004 节](../00-meta.md#r-004-收集产物)。  
+> 本文档是 D-008 记录的测试范围收集稿。CT-016～CT-018 按 D-007 边界补入。
 ## 1. 范围与非目标
 
 本计划把 [R-004 受控变更契约](r-004-controlled-change-contract.md) 第 6 节及 D-007 的用户接受约束转成可执行的负向契约测试范围，服务于首个受限动作：在一个显式选定的既有工作区和既有目标中，向 `02-execution.md` 追加一条用户确认的执行事实。

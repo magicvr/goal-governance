@@ -8,6 +8,9 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from services.ai_broker import AiBroker, FakeTransport
+from services.ai_candidates import AiCandidateService
+from services.ai_config import resolve_ai_config
 from services.controlled_change import (
     ControlledChangeError,
     ControlledChangeService,
@@ -20,6 +23,7 @@ from services.workspace_config import (
     production_product_gates_open,
     resolve_workspace_config,
 )
+import os
 
 BASE_DIR = Path(__file__).resolve().parent
 # Local deploy: load web/.env when present (does not override process env).
@@ -54,6 +58,8 @@ templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 # Process-local service cache for proposal digests (non-canonical).
 _change_services: dict[str, ControlledChangeService] = {}
+_ai_broker: AiBroker | None = None
+_ai_candidate_svc: AiCandidateService | None = None
 
 
 def get_goals_repository() -> GoalsRepository:
@@ -63,9 +69,28 @@ def get_goals_repository() -> GoalsRepository:
 RepositoryDependency = Annotated[GoalsRepository, Depends(get_goals_repository)]
 
 
+def get_ai_broker() -> AiBroker:
+    """Process-local broker; FakeTransport when AI_TEST_TRANSPORT=fake."""
+    global _ai_broker
+    if _ai_broker is None:
+        transport = None
+        if os.environ.get("GOAL_GOVERNANCE_AI_TEST_TRANSPORT", "").strip().lower() == "fake":
+            transport = FakeTransport()
+        _ai_broker = AiBroker(transport=transport)
+    return _ai_broker
+
+
+def get_ai_candidate_service() -> AiCandidateService:
+    global _ai_candidate_svc
+    if _ai_candidate_svc is None:
+        _ai_candidate_svc = AiCandidateService(broker=get_ai_broker())
+    return _ai_candidate_svc
+
+
 def _base_context(repository: GoalsRepository | None = None) -> dict[str, Any]:
     cfg = resolve_workspace_config()
     write_ok = controlled_write_authorized()
+    ai = resolve_ai_config()
     ctx: dict[str, Any] = {
         "status_labels": STATUS_LABELS,
         "audit_labels": AUDIT_LABELS,
@@ -75,9 +100,29 @@ def _base_context(repository: GoalsRepository | None = None) -> dict[str, Any]:
         "workspace_error": repository.config_error if repository else cfg.error,
         "product_gates_open": production_product_gates_open(),
         "controlled_write_enabled": write_ok,
+        "ai_enabled": ai.enabled,
+        "ai_ready": ai.ready,
+        "ai_status": ai.public_dict(),
     }
     return ctx
 
+
+def _goal_context_blocks(repository: GoalsRepository, goal_id: str) -> tuple[str, ...]:
+    """Bounded read-only context for AI (R-014-A §4)."""
+    blocks: list[str] = []
+    result = repository.get_goal(goal_id)
+    if result.goal is not None:
+        g = result.goal
+        blocks.append(
+            f"Goal {g.id}\nTitle: {g.title}\nStatus: {g.status}\n"
+            f"Progress: {g.progress or '—'}\nSummary: {g.summary or '—'}"
+        )
+        if g.execution and g.execution.body_markdown:
+            body = g.execution.body_markdown
+            if len(body) > 2000:
+                body = body[:2000] + "\n…(truncated)"
+            blocks.append("Execution excerpt:\n" + body)
+    return tuple(blocks)
 
 def _tree_diagnostic_count(report: TreeValidationReport) -> int:
     """Count the distinct tree-validation findings surfaced by the overview."""
@@ -183,7 +228,153 @@ async def goal_detail(
             "proposal": None,
             "proposal_error": None,
             "receipt": None,
+            "ai_candidate": None,
+            "ai_error": None,
         },
+    )
+
+
+@app.post("/goals/{goal_id}/ai/suggest", name="goal_ai_suggest")
+async def goal_ai_suggest(
+    request: Request,
+    goal_id: str,
+    repository: RepositoryDependency,
+    prompt: Annotated[str, Form()],
+):
+    """User-triggered AI candidate (no canonical write)."""
+    if not repository.is_configured:
+        raise HTTPException(status_code=503, detail="工作区未配置。")
+    result = repository.get_goal(goal_id)
+    if result.goal is None:
+        raise HTTPException(status_code=404, detail="目标不存在或无法读取。")
+    ai_svc = get_ai_candidate_service()
+    stored, completion = ai_svc.suggest(
+        prompt=prompt,
+        workspace_id=repository.goals_dir.name,
+        goal_id=goal_id,
+        context_blocks=_goal_context_blocks(repository, goal_id),
+    )
+    ai_error = None if completion.ok else f"{completion.code}: {completion.message}"
+    results = repository.list_goals()
+    tree = repository.build_tree_index(results)
+    return templates.TemplateResponse(
+        request=request,
+        name="goal_detail.html",
+        context={
+            **_base_context(repository),
+            "active_page": "home",
+            "goal": result.goal,
+            "issues": result.issues,
+            "tree": tree,
+            "proposal": None,
+            "proposal_error": None,
+            "receipt": None,
+            "ai_candidate": stored.to_public() if stored else None,
+            "ai_error": ai_error,
+            "ai_prompt": prompt,
+        },
+    )
+
+
+@app.post("/goals/{goal_id}/ai/confirm", name="goal_ai_confirm")
+async def goal_ai_confirm(
+    request: Request,
+    goal_id: str,
+    repository: RepositoryDependency,
+    candidate_id: Annotated[str, Form()],
+    content_digest: Annotated[str, Form()],
+):
+    """FA + build R-004 proposal from AI candidate (still no write until decide)."""
+    if not repository.is_configured:
+        raise HTTPException(status_code=503, detail="工作区未配置。")
+    result = repository.get_goal(goal_id)
+    if result.goal is None:
+        raise HTTPException(status_code=404, detail="目标不存在或无法读取。")
+    change = _change_service(repository)
+    ai_svc = get_ai_candidate_service()
+    cand, proposal, err, msg = ai_svc.confirm_for_proposal(
+        candidate_id=candidate_id,
+        bound_digest=content_digest,
+        change_svc=change,
+    )
+    proposal_error = f"{err}: {msg}" if err else None
+    results = repository.list_goals()
+    tree = repository.build_tree_index(results)
+    return templates.TemplateResponse(
+        request=request,
+        name="goal_detail.html",
+        context={
+            **_base_context(repository),
+            "active_page": "home",
+            "goal": result.goal,
+            "issues": result.issues,
+            "tree": tree,
+            "proposal": proposal,
+            "proposal_error": proposal_error,
+            "receipt": None,
+            "ai_candidate": cand.to_public() if cand else None,
+            "ai_error": None,
+        },
+    )
+
+
+@app.post("/goals/{goal_id}/ai/reject", name="goal_ai_reject")
+async def goal_ai_reject(
+    request: Request,
+    goal_id: str,
+    repository: RepositoryDependency,
+    candidate_id: Annotated[str, Form()],
+):
+    if not repository.is_configured:
+        raise HTTPException(status_code=503, detail="工作区未配置。")
+    result = repository.get_goal(goal_id)
+    if result.goal is None:
+        raise HTTPException(status_code=404, detail="目标不存在或无法读取。")
+    ai_svc = get_ai_candidate_service()
+    cand = ai_svc.reject(candidate_id)
+    results = repository.list_goals()
+    tree = repository.build_tree_index(results)
+    return templates.TemplateResponse(
+        request=request,
+        name="goal_detail.html",
+        context={
+            **_base_context(repository),
+            "active_page": "home",
+            "goal": result.goal,
+            "issues": result.issues,
+            "tree": tree,
+            "proposal": None,
+            "proposal_error": None,
+            "receipt": None,
+            "ai_candidate": cand.to_public() if cand else None,
+            "ai_error": None if cand else "ERR_AI_CANDIDATE_NOT_FOUND: unknown candidate",
+        },
+    )
+
+
+@app.post("/api/goals/{goal_id}/ai/complete", name="api_ai_complete")
+async def api_ai_complete(
+    goal_id: str,
+    repository: RepositoryDependency,
+    prompt: Annotated[str, Form()],
+):
+    """JSON-friendly suggest API (form body)."""
+    if not repository.is_configured:
+        raise HTTPException(status_code=503, detail="workspace not configured")
+    result = repository.get_goal(goal_id)
+    if result.goal is None:
+        raise HTTPException(status_code=404, detail="goal not found")
+    stored, completion = get_ai_candidate_service().suggest(
+        prompt=prompt,
+        workspace_id=repository.goals_dir.name,
+        goal_id=goal_id,
+        context_blocks=_goal_context_blocks(repository, goal_id),
+    )
+    return JSONResponse(
+        {
+            "completion": completion.public_dict(),
+            "candidate": stored.to_public() if stored else None,
+        }
     )
 
 
@@ -229,6 +420,8 @@ async def goal_proposal(
             "receipt": None,
             "form_content": content,
             "form_source": source_statement,
+            "ai_candidate": None,
+            "ai_error": None,
         },
     )
 
@@ -271,6 +464,8 @@ async def goal_decide(
             "proposal": None,
             "proposal_error": proposal_error,
             "receipt": receipt,
+            "ai_candidate": None,
+            "ai_error": None,
         },
     )
 
@@ -278,6 +473,7 @@ async def goal_decide(
 @app.get("/api/health", name="health")
 async def health(repository: RepositoryDependency):
     cfg = resolve_workspace_config()
+    ai = resolve_ai_config()
     return JSONResponse(
         {
             "ok": True,
@@ -287,6 +483,8 @@ async def health(repository: RepositoryDependency):
             "product_gates_open": production_product_gates_open(),
             "controlled_write_enabled": controlled_write_authorized(),
             "dev_dogfood": cfg.dev_dogfood,
+            # GOAL-014 stage B: AI status without secrets (R-014-A §3).
+            "ai": ai.public_dict(),
         }
     )
 

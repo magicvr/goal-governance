@@ -18,8 +18,18 @@ import threading
 from typing import Any, Mapping
 from uuid import uuid4
 
+from services.fact_admission import (
+    SOURCE_KINDS as FA_SOURCE_KINDS,
+    CandidateSnapshot,
+    validate_confirm_or_proposal,
+)
 from services.goals_repo import GoalsRepository
+from services.shared_materials import ERR_SM_GOAL_PATH_VIA_MATERIALS
 from services.workspace_config import controlled_write_authorized
+from services.workspace_isolation import (
+    AccessRequest,
+    validate_cross_workspace_access,
+)
 
 OPERATION_KIND = "append-execution-fact"
 SOURCE_USER = "user-provided"
@@ -106,6 +116,11 @@ class CandidateRevision:
     content: str
     content_digest: str
     created_at: str
+    # Provenance signals for FA-003 (default empty; α path must not set for user-provided).
+    produced_by_ai: bool = False
+    tool_call_ids: tuple[str, ...] = ()
+    retrieval_refs: tuple[str, ...] = ()
+    derivation_chain: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -181,6 +196,10 @@ class ControlledChangeService:
         source_kind: str = SOURCE_USER,
         workspace_id: str | None = None,
         candidate_id: str | None = None,
+        produced_by_ai: bool = False,
+        tool_call_ids: tuple[str, ...] = (),
+        retrieval_refs: tuple[str, ...] = (),
+        derivation_chain: tuple[str, ...] = (),
     ) -> CandidateRevision:
         ws = workspace_id if workspace_id is not None else self.workspace_id
         if not source_statement or not str(source_statement).strip():
@@ -191,27 +210,40 @@ class ControlledChangeService:
             raise ControlledChangeError("ERR_MISSING_FIELD", "goal_id is required")
         if not ws or not str(ws).strip():
             raise ControlledChangeError("ERR_MISSING_FIELD", "workspace_id is required")
-        if source_kind != SOURCE_USER:
+        if source_kind not in FA_SOURCE_KINDS:
             raise ControlledChangeError(
                 "ERR_INVALID_SOURCE",
-                f"source_kind must be {SOURCE_USER!r} for first slice",
+                f"source_kind must be one of {sorted(FA_SOURCE_KINDS)}",
             )
-        self._assert_workspace_binding(str(ws).strip())
-        self._assert_goal_in_scope(goal_id)
+        # Honest AI kinds must not look like pure user-provided (FA-003).
+        if source_kind.startswith("ai-"):
+            produced_by_ai = True
+        ws_s = str(ws).strip()
+        goal_s = goal_id.strip()
+        self._assert_workspace_binding(ws_s)
+        self._assert_goal_in_scope(goal_s)
+        self._assert_workspace_isolation_access(ws_s, goal_s, action="write")
         self._assert_content_contract(content)
+        self._assert_sm_execution_write_boundary(goal_s)
 
         cid = candidate_id or f"cand_{uuid4().hex[:12]}"
         dig = digest_text(content)
         candidate = CandidateRevision(
             candidate_id=cid,
-            workspace_id=str(ws).strip(),
-            goal_id=goal_id.strip(),
+            workspace_id=ws_s,
+            goal_id=goal_s,
             source_kind=source_kind,
             source_statement=source_statement.strip(),
             content=normalize_text(content),
             content_digest=dig,
             created_at=_utc_now(),
+            produced_by_ai=produced_by_ai,
+            tool_call_ids=tuple(tool_call_ids),
+            retrieval_refs=tuple(retrieval_refs),
+            derivation_chain=tuple(derivation_chain),
         )
+        # F-026: FA admission on hot path (proposal gate).
+        self._assert_fact_admission(candidate, status="proposal_requested")
         self._candidates[cid] = candidate
         return candidate
 
@@ -244,6 +276,12 @@ class ControlledChangeService:
 
         self._assert_workspace_binding(cand.workspace_id)
         self._assert_goal_in_scope(cand.goal_id)
+        self._assert_workspace_isolation_access(
+            cand.workspace_id, cand.goal_id, action="write"
+        )
+        self._assert_sm_execution_write_boundary(cand.goal_id)
+        # F-026: re-check FA at proposal build (digest/source binding).
+        self._assert_fact_admission(cand, status="proposal_requested")
         paths = self._goal_paths(cand.goal_id)
         baseline = file_digest(paths["execution"])
         meta_d = file_digest(paths["meta"])
@@ -390,10 +428,17 @@ class ControlledChangeService:
         if proposal is None:
             raise ControlledChangeError("ERR_DECISION_INVALID", "unknown proposal_digest")
 
-        # CT-003: proposal workspace must match service binding.
+        # CT-003 + F-026: workspace isolation, SM write boundary, FA re-check on affirm path.
         try:
             self._assert_workspace_binding(proposal.workspace_id)
             self._assert_goal_in_scope(proposal.goal_id)
+            self._assert_workspace_isolation_access(
+                proposal.workspace_id, proposal.goal_id, action="write"
+            )
+            self._assert_sm_execution_write_boundary(proposal.goal_id)
+            cand = self._candidates.get(proposal.candidate_id)
+            if cand is not None:
+                self._assert_fact_admission(cand, status="proposal_requested")
         except ControlledChangeError as exc:
             return self._reject_receipt(
                 operation_id=op_id,
@@ -750,6 +795,77 @@ class ControlledChangeService:
             raise ControlledChangeError(
                 "ERR_SCOPE_MISMATCH",
                 "workspace_id does not match the configured service workspace",
+            )
+
+    def _assert_workspace_isolation_access(
+        self, workspace_id: str, goal_id: str, *, action: str
+    ) -> None:
+        """F-026 / WS-003: hot-path cross-workspace access check (workspace_isolation)."""
+        req = AccessRequest(
+            bound_workspace_id=self.workspace_id,
+            target_workspace_id=workspace_id,
+            target_path=f"{goal_id}/02-execution.md",
+            action=action,
+        )
+        result = validate_cross_workspace_access(req)
+        if not result.ok:
+            raise ControlledChangeError(
+                result.code or "ERR_WS_CROSS_WORKSPACE_ACCESS",
+                result.message or "cross-workspace access denied",
+            )
+
+    def _assert_sm_execution_write_boundary(self, goal_id: str) -> None:
+        """F-026 / SM-006 complement: controlled write targets goal files, never materials root."""
+        target = (self.goals_dir / goal_id / "02-execution.md").resolve()
+        root = self.goals_dir.resolve()
+        if root not in target.parents and target != root:
+            raise ControlledChangeError(
+                "ERR_SCOPE_MISMATCH",
+                "execution write target escapes workspace root",
+            )
+        # Refuse if target resolves under a sibling shared-materials tree.
+        materials_candidates = (
+            self.goals_dir.parent / "shared-materials",
+            self.goals_dir / "shared-materials",
+        )
+        for materials_root in materials_candidates:
+            try:
+                resolved_sm = materials_root.resolve()
+            except OSError:
+                continue
+            try:
+                target.relative_to(resolved_sm)
+            except ValueError:
+                continue
+            raise ControlledChangeError(
+                ERR_SM_GOAL_PATH_VIA_MATERIALS,
+                "controlled execution write must not target shared-materials paths",
+            )
+
+    def _assert_fact_admission(
+        self, cand: CandidateRevision, *, status: str = "proposal_requested"
+    ) -> None:
+        """F-026: fact_admission validate_confirm_or_proposal on the write pipeline."""
+        snap = CandidateSnapshot(
+            candidate_id=cand.candidate_id,
+            revision=1,
+            workspace_id=cand.workspace_id,
+            goal_id=cand.goal_id,
+            source_kind=cand.source_kind,
+            source_statement=cand.source_statement,
+            content=cand.content,
+            content_digest=cand.content_digest,
+            status=status,
+            produced_by_ai=cand.produced_by_ai,
+            tool_call_ids=cand.tool_call_ids,
+            retrieval_refs=cand.retrieval_refs,
+            derivation_chain=cand.derivation_chain,
+        )
+        result = validate_confirm_or_proposal(snap, cand.content_digest)
+        if not result.ok:
+            raise ControlledChangeError(
+                result.code or "ERR_FA_ADMISSION",
+                result.message or "fact admission rejected",
             )
 
     def _assert_goal_in_scope(self, goal_id: str) -> None:

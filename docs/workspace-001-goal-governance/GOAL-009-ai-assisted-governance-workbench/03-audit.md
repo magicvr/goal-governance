@@ -1,20 +1,21 @@
 ---
 id: GOAL-009-ai-assisted-governance-workbench
 doc: audit
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
-updated: 2026-07-21
-version: 0.37.0
+updated: 2026-07-22
+version: 1.0.0
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-本目标已形成 self/response 至 **A-038**。**F-001～F-005、F-007、F-008 closed**（F-002/F-003/F-004/F-008 有界 + residual）。**I-003/I-004/I-006 verified（α）**。**生产受控写入已授权**。路线图 B required findings **有界退出**。I-002/I-009/I-010 仍 collecting。进度 **80%**。
-
-当前焦点：路线图 E 试点 / residual 复审触发；或 R-F002～F004 residual 按需；可选资料/多区产品立项。
+- **有界关门**：`done / 100%`（D-031-A / **A-056**）。
+- 关闭范围：规划台账 + α 实现闭环 + X-AI 有界定义/交付。
+- **R-E-3-X closed**；**R-009-X accepted**（扩展/终态）；R-E-2-H 并入 R-009-X。
+- **不**等于阶段 6 Web 产品终态或 Root 关门。
 ## A-001 · Web 第一阶段产品边界与计划一致性审计（2026-07-20）
 
 - **source**：independent
@@ -2456,3 +2457,1099 @@ A-037 后用户明确选择：**`OK A：F-003 与 F-004 有界关闭 + R-F003-1�
 ### 声明
 
 已有界关闭 F-003 与 F-004 并接受 residual；**未**将 I-009/I-010 标 verified；**未**实现资料 CRUD 产品；**未**改生产 env。
+
+## A-039 · 独立复审：A-038 后就绪度与有界关闭证据一致性（2026-07-22）
+
+- **source**：independent
+- **auditor**：Grok（`/audit` · Grok Build）
+- **类型**：finding-closure / design-plan / ad-hoc
+- **scope**：GOAL-009 在 A-038 之后的整体就绪度；复审 **F-002 / F-003 / F-004 有界关闭**与 residual 是否可核对；对照成功标准、路线图 B「finding 有界退出」、I-00N 门禁、生产写授权、FA/WS/SM 证据与当前 `web/` 实现边界。工作区：`workspace-001-goal-governance` / Root `GOAL-001-main-vision` / canonical `docs/workspace-001-goal-governance/`。不审 GOAL-001 关门；不扩展为 AI 接入或资料 CRUD 产品验收。
+- **verdict**：**conditional**
+
+### 范围与区间
+
+| 输入 | 用途 |
+|------|------|
+| [00-meta](00-meta.md) / [01-decision](01-decision.md) / [02-execution](02-execution.md) / A-001～A-038 | 台账与关闭声明 |
+| [fa-evidence-001-006](attachments/fa-evidence-001-006-2026-07-21.md)、[ws-sm-evidence-001-006](attachments/ws-sm-evidence-001-006-2026-07-21.md) | F-002 / F-003 / F-004 负向证据 |
+| R-002 / R-003 验证包、R-004 规格与 CT 计划 | 契约与 residual 边界 |
+| `web/services/{fact_admission,workspace_isolation,shared_materials,controlled_change,workspace_config}.py` | 实现是否与声明 scope 一致 |
+| `web` unittest（本轮复跑） | 证据可重复性 |
+| [workspace.md](../workspace.md) | Root / canonical / 共享资料固定引用表（空表，无不当跨区引用） |
+
+### 成果（有证据）
+
+1. **有界关闭声明链完整**：D-018-A / A-034（F-002 + R-F002-1～3）、D-020-A / A-038（F-003/F-004 + R-F003/R-F004）、D-014-A / A-027（F-008 residual）均有用户路径选择与 residual 表，非口头关闭。  
+2. **核心负向可复跑**：本轮 `cd web` → `.venv` `python -m unittest discover -s tests -q` → **80 passed, 1 skipped**，与 A-036/A-038 声明一致。  
+3. **证据文件与代码路径存在**：`fact_admission.py`、`workspace_isolation.py`、`shared_materials.py`；FA-001～006 / WS-001～006 / SM-001～006 分项表与测试方法名可对读。  
+4. **α 写入与生产双门闩仍诚实**：`controlled_change` 将 α `source_kind` 限制为 `user-provided`；`workspace_config` 默认 `production_product_gates_open=false`，`ALLOW_CONTROLLED_WRITE` 默认 false；README 检查清单与 A-030 一致。  
+5. **成功标准未伪装 AI 全文**：初始成功标准第 3 项（AI 职责/上下文/确认边界全文）仍为未勾选；I-002 仍 collecting + R-F002-3。  
+6. **工作区边界**：`workspace.md` 绑定正确；固定共享资料引用表为空（无假引用当事实）。  
+7. **路线图 B 措辞谨慎**：meta 将 B 标为 **有界退出（finding）** 并写明 I-002/I-009/I-010 仍 collecting、资料 CRUD 未交付——与「finding 关 ≠ I verified」一致。
+
+### 对照成功标准 / 关闭要求（F-002～F-004）
+
+| 项 | 有界 scope 判断 | 说明 |
+|----|-----------------|------|
+| F-002 数据/交互契约 + 无来源/未确认/来源变更负向 | **满足（有界）** | FA-001～006 纯函数层；UI/AI 运行时在 residual |
+| F-003 映射 / 索引边界 / 跨区拒绝 | **满足（有界）** | WS-001～006 服务层；多区 UI / 发布验收 residual |
+| F-004 固定引用 / 哈希 / 删除门禁 / AI 不执行 / 路径隔离 | **满足（有界）** | SM-001～006；全量 CRUD/AI 读运行时 residual |
+| 路线图 B 全文「读模型 + AI 协作设计」退出 | **未主张 / 不可主张** | 仅 finding 侧有界退出；I-002 等仍开 |
+
+**独立结论**：不推翻 A-034 / A-038 的有界关闭；不要求把 residual 改回 open finding，除非用户撤销 residual 接受。
+
+### Findings
+
+#### F-025 · 权威索引面存在可误导的过期陈述（台账漂移）
+
+- **级别**：**required**；**严重度**：medium  
+- **关联**：I-003/I-004（R-004 索引）、路线图 A/B 表述、P-002 事实可指回  
+- **证据**：  
+  1. [00-meta.md](00-meta.md) **R-004 收集产物**写「CT-001～CT-018；**未执行**」——与 A-022～A-030、GOAL-013 CT 执行、F-007/F-008 关闭及本轮 **80 passed** 矛盾。  
+  2. 同文件路线图 **阶段 A** 退出说明仍写「F-003/F-004 与路线图 B **仍开放**」——与阶段 B「有界退出」及 A-038 矛盾。  
+  3. [r-004-contract-test-plan.md](attachments/r-004-contract-test-plan.md) 仍声明全部 CT「待执行、不是测试通过」——作为历史收集稿可理解，但被 meta 索引引用时会像当前事实。  
+- **影响**：编排器/人类若只扫 meta 索引，可能误判「写入 CT 未做」或「B 仍被 F-003/F-004 阻断」，干扰门禁与进度决策。  
+- **关闭要求**：修订 `00-meta`（至少 R-004 索引句 + 路线图 A 行）使与 A-022～A-038 一致；对 CT 计划可加「历史计划态；执行证据见 A-02x / GOAL-013」注记，禁止把过期「未执行」留在权威索引。
+
+#### F-026 · FA / WS / SM 校验模块未挂入 α 请求热路径（库测 ≠ 产品路径强制）
+
+- **级别**：**recommended**；**严重度**：medium  
+- **关联**：I-008、I-009、I-010；R-F002-1、R-F003-1、R-F004-1  
+- **证据**：`web` 内 `from services.fact_admission|workspace_isolation|shared_materials` **仅出现于**对应 `tests/test_*.py`；`main.py` / `controlled_change.py` **未** import 三模块。α 写路径另有 `source_kind == user-provided` 与 `workspace_config` fail-closed，与 FA/WS/SM 库并行存在。  
+- **影响**：有界关闭声明 scope（纯函数/服务层）本身成立；但若后续把「F-003/F-004 closed」读成「生产路径已强制 WS/SM」，会高估防护。扩展多来源候选、多工作区或资料 API 前若不组合，会出现「测试绿、路径空」。  
+- **建议**：在 residual 复审触发（UI/CRUD/AI）或扩写动作集之前，将 FA admission 与相关 WS/SM 校验组合进 proposal / decide_and_execute（或显式文档「α 仅靠平行门禁」并挂 residual）。**不**因本条要求立即回退 F-002～F-004 closed。
+
+#### F-027 · I-00N「最晚需要阶段 = 路线图 B 结束前」与「B finding 有界退出」未在信息表对齐
+
+- **级别**：**recommended**；**严重度**：medium  
+- **关联**：I-002、I-008、I-009、I-010；P-005  
+- **证据**：四项 required 信息仍为 `collecting`，最晚阶段均为「路线图 B 结束前」；D-020-A / meta 同时宣称路线图 B 在 **required finding 侧**有界退出，并允许 I 继续收集。  
+- **影响**：P-005 扫描可能把「B 已结束 + I 仍 collecting」判为逾期 open required，或反过来误以为 B 全文已退出可接 AI/资料产品。  
+- **建议**：更新 I-002/I-008/I-009/I-010 的最晚阶段/延期栏，写明「B finding 退出不解除 I 门禁；I 门禁改挂 AI 接入 / 多区 UI / 资料产品 / 发布验收」；或书面 residual 接受「B 退出时 I 仍 collecting」并指向现有 R-F00x。
+
+### 必改项汇总
+
+| Finding | 级别 | 阻断建议 |
+|---------|------|----------|
+| **F-025** | required / med | 响应前应修正 meta 索引漂移；**不**据此重开 F-002～F-004 |
+| F-026 | recommended | 扩 scope 前组合热路径；α 单用户追加可暂缓 |
+| F-027 | recommended | 对齐 I 最晚阶段与 B 有界退出语义 |
+
+**开放 required**：F-025。  
+**不**将 F-002～F-004、F-007/F-008 改回 open。
+
+### 与既有意见的异同
+
+| 对照 | 关系 |
+|------|------|
+| A-034 / A-038 | **同向**：有界关闭 + residual 在声明 scope 内证据充分；本条为独立复审确认 |
+| A-036 | 测试规模 **80 passed, 1 skipped** 本轮复现 |
+| A-001 原文关闭要求 | 全文产品/生命周期未交付部分已诚实落入 residual；不按全文产品重新 fail 有界关闭 |
+| A-014 时代门禁全开 | 已实质推进；本条不再重复 F-007/F-008 缺口 |
+
+无同 scope 的对立 independent 结论冲突；响应 A-039 时 `/govern` 可按 P-004 询问是否需要同范围 self（建议：F-025 为文档修正，可跳过冗长 self，由用户一句话确认即可）。
+
+### 结论 + 建议给编排器/用户的下一步
+
+GOAL-009 在 **α 规划 + 有界 finding 台账 + 受控写入授权** 上纪律良好；A-038 后的 **F-002～F-004 有界关闭在声明范围内可独立复核**。因权威索引仍含过期「CT 未执行 / F-003·F-004 仍开放」陈述，且验证库未挂热路径、I 门禁阶段字段未与 B 有界退出对齐，verdict 为 **conditional**——**不可**无条件当作「路线图 B 全文完成 + 试点/扩展无文档债」。
+
+建议 `/govern`：
+
+1. **先响应 F-025**：改 `00-meta` R-004 索引与路线图 A 行（可选注记 CT 计划历史态）。  
+2. 记录 F-026/F-027 为 recommended（组合热路径 / 对齐 I 最晚阶段），不阻塞 α 内试点准备。  
+3. **再**择一：路线图 E 有界试点（产品工作区冒烟）/ residual 复审 / I-002 深化；**勿**因 finding 有界退出宣称 AI 或资料 CRUD 已 verified。
+
+### 声明
+
+本意见 **source: independent**；**不**修改 GOAL-009 的 `status` / `progress` / goal-tree 状态列；**不**关闭或重开 finding（关闭权归 `/govern`）。响应、索引修正与阶段推进由用户通过 **`/govern`** 处理。
+
+## A-040 · 响应 A-039：F-025 关闭、F-026/F-027 登记、E-α 入口（2026-07-22）
+
+- **source**：self（response / orchestrator）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close / path-decision
+- **scope**：响应用户指令与 [A-039](#a-039--独立复审a-038-后就绪度与有界关闭证据一致性2026-07-22)；关闭 F-025；登记并处理 F-026/F-027；在 E 试点与 residual-only 之间选定入口。裁决见 [D-021](01-decision.md#d-021--响应-a-039关闭-f-025登记-f-026f-027并定-e-α-入口2026-07-22)。
+- **verdict**：pass（A-039 required 已关；E-α 入口已定；冒烟未执行）
+
+### P-004
+
+- 相关意见：A-039 independent，`conditional`。  
+- 同 scope self：无；用户书面指令跳过自审、直接响应。  
+- 冲突：无。
+
+### 响应的 findings
+
+| Finding | 本拍结果 | 证据 |
+|---------|----------|------|
+| **F-025** | **closed** | [00-meta](00-meta.md) 路线图 A 行 + R-004 索引；[r-004-contract-test-plan](attachments/r-004-contract-test-plan.md) 文首执行状态索引；D-021 |
+| **F-026** | **open / recommended** | 已登记：热路径未组合 FA/WS/SM；α 平行门禁仍有效；E-α 不强制先挂接 |
+| **F-027** | **closed** | I-002/I-008/I-009/I-010「最晚需要阶段」已改挂 AI/UI·多区/资料产品门禁；B finding 退出不解除 I |
+
+### 路径裁决：E 试点 vs residual
+
+| 选项 | 结果 |
+|------|------|
+| **E-α 有界冒烟入口** | **选用**（D-021）；路线图 E 状态 →「入口已定 · 冒烟未执行」 |
+| residual-only 搁置 | 未选 |
+| E 全文退出 | 未选 |
+
+**不**因本条：执行产品数据写入；将 I-002 等标 verified；关闭 F-026；改生产 env 默认值；重开 F-002～F-004。
+
+### 仍开放 / 跟踪
+
+| 项 | 状态 |
+|----|------|
+| F-026 | open recommended |
+| R-F002-1～3 / R-F003-1～2 / R-F004-1～3 / R-F008-1～3 | accepted residual（复审触发不变） |
+| I-002 / I-008 / I-009 / I-010 | collecting |
+| E-α 冒烟 | **计划**；待下一句执行 |
+
+### 进度
+
+GOAL-009 **progress 82%**（F-025 索引债清 + E 入口已定；冒烟与 E 退出未完成）。
+
+### 结论与下一步
+
+A-039 的开放 required **已关闭**。建议下一句：
+
+```text
+/govern 执行 E-α 产品工作区受控追加冒烟
+```
+
+或 residual 触发出现时：`/govern 复审 residual R-F00x`。
+
+### 声明
+
+本条为编排响应（self）；**不**冒充 independent。已关闭 F-025/F-027；**未**执行 E-α 冒烟；**未**改生产默认门禁。
+
+## A-041 · E-α 受控追加冒烟执行证据（2026-07-22）
+
+- **source**：self（response / execution-facts）
+- **auditor**：`/govern`（Grok）
+- **类型**：execution-facts / stage
+- **scope**：执行 D-021 定义的 E-α：产品工作区生产路径 `append-execution-fact` 冒烟 + health 等价检查 + 门禁负向抽检。裁决 [D-022](01-decision.md#d-022--执行-e-α-产品工作区受控追加冒烟2026-07-22)。
+- **verdict**：pass（E-α 范围）
+- **完整证据**：[attachments/e-alpha-smoke-2026-07-22.md](attachments/e-alpha-smoke-2026-07-22.md)
+
+### 范围与区间
+
+- 工作区：`data/product-workspace`（非 dogfood）。  
+- 路径：`ControlledChangeService(..., test_authorized=False)`。  
+- 目标：`GOAL-001-fixture-target`；op=`op_e_alpha_smoke_20260722`。  
+- **非**范围：浏览器 E2E、E 全文退出、AI/资料 CRUD、F-026 关闭。
+
+### 成果（有证据）
+
+| 检查 | 结果 |
+|------|------|
+| Health：configured / write enabled / dogfood false / gates closed | **pass** |
+| `decide_and_execute` → committed | **pass** |
+| 标记写入产品根 `02-execution.md` | **pass** |
+| meta / goal-tree digest 不变 | **pass** |
+| receipt `ops/receipts/op_e_alpha_smoke_20260722.json` | **pass** |
+| 负向：`PRODUCT_GATES_OPEN=true` 阻断 production write allow | **pass** |
+| 事后 unittest | **80 passed, 1 skipped** |
+
+### Findings
+
+本拍 **无**新 required finding。  
+**F-026** 仍 open recommended（本冒烟为 service 生产路径，未要求浏览器/热路径组合 FA/WS/SM）。
+
+### 结论与下一步
+
+E-α **pass**。路线图 E 不因本条全文退出。建议：
+
+1. residual 触发时复审  
+2. 可选 `/govern` 推进 F-026 或 HTTP 冒烟  
+3. 更多真实使用后再做 E 阶段审视  
+
+### 声明
+
+已记录冒烟事实；**未**改 GOAL-009 `status` 为 done；**未**关闭 residual 或 F-026。
+
+## A-042 · 审视路线图 E 是否有界退出（路径 A–D · 待裁决）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / stage-exit-review
+- **scope**：对照路线图 E 原文退出条件、D-021/D-022 E-α 定义、A-041 冒烟证据与 A-039 residual，判断路线图 E **可否有界退出**及范围。**本拍不**将 E 标为有界/全文退出；**不**静默接受 residual（P-004）。
+- **verdict**：conditional（可有界退出；须用户选定路径）
+
+### 用户意图
+
+`/govern 审视路线图 E 是否有界退出`
+
+### 原文 / 有效退出条件
+
+| 来源 | 退出条件（有效基线） |
+|------|----------------------|
+| 路线图 E（初设） | 有**真实使用证据**、**负向测试**、**审计结论**和**后续整改/扩展判断** |
+| D-021 / meta 现时 | E-α = α 产品根生产路径受控追加冒烟 + 门禁负向；**非** E 全文退出；全文仍须持续使用/全矩阵/关门审 |
+| A-041 非声明 | 不关 residual；不 verified I-002 等；不关 F-026；非浏览器 E2E |
+
+### 条件对照
+
+| # | 条件 | 证据 | 判断 |
+|---|------|------|------|
+| 1 | 真实使用（α 生产写一次） | A-041；`op_e_alpha_smoke_20260722` **committed**；产品根 `02-execution` + receipt | **满足（有界）** — 单次 service 生产路径；**非**多日人类日常使用 |
+| 2 | 负向测试（门禁 + 回归） | 门禁 `PRODUCT_GATES_OPEN` 阻断；unittest **80 passed, 1 skipped**；CT/FA/WS/SM 历史矩阵 | **满足（有界）** — 非 AI 不可用/审计冲突 UX 全矩阵 |
+| 3 | 审计结论 | A-041 `pass`（E-α）；本条 A-042 审视 | **满足（有界）** — 非 GOAL-009 关门审 |
+| 4 | 后续整改/扩展判断 | residual R-F* 已登记；F-026 recommended open；I-002/I-008/I-009/I-010 改挂后续门禁 | **部分** — 扩展清单可写 residual；**未**用户书面接受 E 侧 residual |
+| 5 | HTTP/浏览器受控追加 E2E | 未跑 | **不满足全文**；可 residual **R-E-1** |
+| 6 | 持续/多会话试点与 I-007/I-012 | I-007/I-012 open；无多会话使用日志 | **不满足全文**；可 residual **R-E-2** |
+| 7 | 试点后阶段关门 / 扩展产品立项齐套 | GOAL-009 仍 active；AI/资料/多区未交付 | **不满足全文**；可 residual **R-E-3**；**≠** 关 GOAL-009 |
+
+### 与既有 residual / finding
+
+| 项 | 与 E 退出关系 |
+|----|----------------|
+| R-F002～F004 / R-F008 | **保持** accepted；E 有界退出**不**撤销 |
+| F-026 recommended | **不阻断** E-α 有界退出；扩热路径前仍 open |
+| I-002/I-008/I-009/I-010 collecting | 门禁已改挂后续；**不**因 E 有界退出标 verified |
+| I-005 collecting | 阻断「首次部署/外部访问」全文，**不**阻断 E-α 本地产品根冒烟退出 |
+| I-007 / I-012 non-blocking | 全文 E 体验标准仍 open → residual 或继续收集 |
+
+### 可选路径（P-004 · 须用户书面确认）
+
+| 路径 | 含义 | 路线图 E 状态（若选） |
+|------|------|------------------------|
+| **A（推荐）** | **有界退出（E-α）** + residual R-E-1～3；GOAL-009 **仍 active**；progress 可小幅上调 | **有界退出（E-α）** |
+| **B** | 先补 HTTP/UI 冒烟，再审视有界退出 | 保持「冒烟已完成 · 全文未退出」 |
+| **C** | 不声明有界退出；E 继续等更多试点 | 同上 |
+| **D（不推荐）** | E **全文**退出、无 residual | 全文退出（证据不足，易伪装） |
+
+#### Residual 定义（路径 A）
+
+| ID | 残余范围 | 复审触发（任一则 residual 须重新审视） |
+|----|----------|----------------------------------------|
+| **R-E-1** | HTTP/表单或浏览器 E2E 受控追加路径未跑 | UI 合并验收前；或宣称「页面写入已试点」前 |
+| **R-E-2** | 多会话/持续真实人类使用；I-007/I-012 试点标准未收集 | 受控试点扩大或体验验收前 |
+| **R-E-3** | E 全文：整改环、扩展产品（AI/资料/多区）齐套与 GOAL-009 阶段/关门审 | 宣称阶段 6 规划目标可关门或扩展产品放行前 |
+
+### 推荐理由（路径 A）
+
+- 与 F-002/F-008/路线图 B 的「有界退出 + residual」纪律一致。  
+- E-α 声明范围内证据可核对（A-041）；全文条件明确未满足，用 residual 防止伪装。  
+- 有界退出 **≠** GOAL-009 `done`；后续仍可推进 F-026、I-002、资料 CRUD 立项等。
+
+### Finding 台账（本拍）
+
+本拍 **不**新增 required finding；**不**关闭/重开既有 finding。  
+路线图 E：**仍未**有界退出声明（待路径）。
+
+### 结论与建议下一步
+
+**可有界退出，不可全文退出。** 请用户书面确认路径，例如：
+
+```text
+OK A：E-α 有界退出 + R-E-1～3
+```
+
+或 `OK B` / `OK C` / `OK D`。
+
+确认后由 `/govern` 写 D-023-A / A-043 正式改路线图 E 状态与 residual 台账。
+
+### 声明
+
+本条仅审视与路径包；**未**修改路线图 E 退出状态；**未**接受 residual；**未**改 progress 宣称 E 完成。
+
+## A-043 · 路径 A：有界退出路线图 E（E-α）并接受 R-E-1～3（2026-07-22）
+
+- **source**：self（response / stage-exit）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / stage-exit
+- **scope**：按用户选择路径 A，有界退出路线图 **E（E-α）**，书面接受 residual R-E-1～3。裁决见 [D-023-A](01-decision.md#d-023-a--接受-r-e-13-residual-并有界退出路线图-e-e-α2026-07-22)。**不**关 GOAL-009；**不**关 F-026；**不** verified I-002 等。
+- **verdict**：pass（E-α 有界退出 + residual 留痕）
+
+### 用户意图与 P-004
+
+A-042 后用户明确选择：**`OK A：E-α 有界退出 + R-E-1～3`**。
+
+### 关闭 / 退出证据
+
+| 要求 | 证据 |
+|------|------|
+| 真实使用（α） | A-041；`op_e_alpha_smoke_20260722` **committed**；产品根 execution + receipt |
+| 负向 | 门禁抽检 + unittest **80 passed, 1 skipped** |
+| 审计 | A-041 pass（E-α）；A-042 条件对照 |
+| 用户 residual 接受 | 本条 + D-023-A |
+
+### 退出 scope（有界）
+
+路线图 E 在 **E-α** 范围内退出：α 产品根、生产路径、单次 user-provided 受控追加冒烟 + 门禁负向 + 阶段审计结论。
+
+### Residual 台账（accepted）
+
+| ID | 残余 | 复审触发 | 状态 |
+|----|------|----------|------|
+| **R-E-1** | HTTP/浏览器 E2E 受控追加 | UI 合并验收前；宣称页面写入已试点前 | accepted |
+| **R-E-2** | 多会话使用；I-007/I-012 试点标准 | 扩大试点或体验验收前 | accepted |
+| **R-E-3** | E 全文 / 扩展齐套 / GOAL-009 关门审 | 宣称阶段 6 可关门或扩展放行前 | accepted |
+
+### 台账结果
+
+| 项 | 结果 |
+|----|------|
+| 路线图 E | **有界退出（E-α）** |
+| GOAL-009 status | **仍 active**（不变） |
+| F-026 | open recommended（不变） |
+| R-F002～F004 / R-F008 | accepted（不变） |
+| I-002/I-008/I-009/I-010 | collecting（不变） |
+| progress | **90%** |
+
+### 结论与下一步
+
+路线图 A～E 在 α/有界交付侧均已退出或完成。GOAL-009 仍为规划台账目标，扩展与 residual 复审开放。
+
+建议：
+
+1. residual 触发时 `/govern 复审 residual R-E-x`  
+2. 可选 F-026 / I-002 / 资料·多区立项  
+3. R-E-3 触发前再开 GOAL-009 阶段或关门审  
+
+### 声明
+
+已有界退出路线图 E 并接受 R-E-1～3；**未**将 GOAL-009 标 `done`；**未**关闭 F-026；**未**将 I-002 等标 verified。
+
+## A-044 · 关闭 F-026：热路径挂接证据（2026-07-22）
+
+- **source**：self（response / finding-close）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close / execution-facts
+- **scope**：响应 A-039 **F-026**（recommended）：将 FA / WS / SM 校验组合进 `controlled_change` 热路径。裁决 [D-024](01-decision.md#d-024--推进-f-026热路径挂接-fa--ws--sm2026-07-22)。
+- **verdict**：pass
+- **完整证据**：[attachments/f-026-hot-path-composition-2026-07-22.md](attachments/f-026-hot-path-composition-2026-07-22.md)
+
+### 关闭证据
+
+| 要求 | 证据 |
+|------|------|
+| FA 进热路径 | `prepare` / `build_proposal` / affirm 前 `_assert_fact_admission` → `validate_confirm_or_proposal` |
+| WS 进热路径 | `_assert_workspace_isolation_access` → `validate_cross_workspace_access` |
+| SM 边界 | `_assert_sm_execution_write_boundary`；材料路径拒写 |
+| 可重复测试 | `test_f026_*`；**84 passed, 1 skipped** |
+
+### Finding 台账
+
+| Finding | 结果 |
+|---------|------|
+| **F-026** | **closed** |
+| R-F002-1（UI E2E） | **仍 accepted residual**（不变） |
+| 其余 closed findings | 不变 |
+
+### 结论与下一步
+
+F-026 不再以「仅库测」描述 α 写路径。建议：R-E-1 HTTP 冒烟、或 residual / 扩展立项。
+
+### 声明
+
+已关闭 F-026；**未**关 GOAL-009；**未** verified I-002/I-008。
+
+## A-045 · 关闭 R-E-1：HTTP 表单冒烟证据（2026-07-22）
+
+- **source**：self（response / residual-close）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / residual-close / execution-facts
+- **scope**：执行并关闭 D-023-A residual **R-E-1**（HTTP/表单受控追加路径）。裁决 [D-025](01-decision.md#d-025--执行-r-e-1-http-受控追加冒烟并关闭-residual2026-07-22)。
+- **verdict**：pass
+- **完整证据**：[attachments/r-e1-http-smoke-2026-07-22.md](attachments/r-e1-http-smoke-2026-07-22.md)
+
+### 关闭证据
+
+| 要求 | 证据 |
+|------|------|
+| HTTP 表单 proposal | `POST /goals/.../proposal` → digest in HTML |
+| HTTP 表单 decide | `POST /goals/.../decide` affirm → **committed** |
+| 产品根写入 | marker in `data/product-workspace/.../02-execution.md`；receipt `op_ed694c6922dd` |
+| 可重复单测 | `test_r_e1_http_form_commit_when_write_authorized`；**85 passed** |
+| 门禁负向 | `test_decide_http_rejects_when_product_gates_open`；health 门禁 |
+
+### Residual 台账
+
+| ID | 结果 |
+|----|------|
+| **R-E-1** | **closed** |
+| R-E-2 / R-E-3 | accepted（不变） |
+| R-F* | 不变 |
+
+### 结论与下一步
+
+R-E-1 不再阻断「页面/HTTP 写入未试点」声明（表单路径已证）。全浏览器 DOM 多会话仍属 R-E-2。建议：扩大试点或扩展立项。
+
+### 声明
+
+已关闭 R-E-1；**未**关 GOAL-009；**未**关 R-E-2/R-E-3。
+
+## A-046 · 审视 R-E-2 是否可有界关闭（路径 A–D · 待裁决）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / residual-close-review
+- **scope**：对照 D-023-A residual **R-E-2** 原文、E-α / R-E-1 冒烟证据、I-007/I-012 状态，判断可否有界关闭。**本拍不**关闭 R-E-2；**不**静默接受新 residual（P-004）。
+- **verdict**：conditional（可有界关闭；全文不可；须用户选定路径）
+
+### 用户意图
+
+`/govern 审视 R-E-2 是否可有界关闭`
+
+### 原文 residual 范围（D-023-A / A-043）
+
+| 项 | 内容 |
+|----|------|
+| **R-E-2** | 多会话/持续真实人类使用；I-007/I-012 试点标准未收集 |
+| 复审触发 | 受控试点扩大或体验验收前 |
+
+### 条件对照
+
+| # | 条件 | 现有证据 | 判断 |
+|---|------|----------|------|
+| 1 | 至少一次生产路径写入试点 | A-041 E-α service **committed** | **满足（有界）** |
+| 2 | HTTP/表单路径写入试点 | A-045 R-E-1 **committed** + 单测 | **满足（有界）** — 可视为第二独立写入通道/会话 |
+| 3 | 多会话 **真实人类** 日常使用日志 | 无独立操作者多日/多会话记录；两次均为自动化/编排冒烟 | **不满足全文** |
+| 4 | I-007 模型/成本/延迟/可观测 | meta 仍 **open**；无试点矩阵 | **不满足** |
+| 5 | I-012 非 AI 路径/无障碍/导出/活动记录试点标准 | meta 仍 **open**；无用户反馈清单 | **不满足** |
+| 6 | 持续使用 / 体验验收 | 无 | **不满足全文** |
+
+### 分析
+
+- **全文关闭 R-E-2** 会把「自动化双路径冒烟」伪装成「多会话真实人类试点 + I-007/I-012」，**不推荐（路径 D）**。  
+- **有界关闭**可行，当且仅当用户书面收窄 R-E-2 的关闭 scope 为：**α 双路径受控写入试点使用**（service 生产路径 + HTTP 表单路径，各 ≥1 次 committed），并把「人类多会话 + I-007/I-012」**拆出**为新 residual **R-E-2-H**。  
+- 这与 R-E-1 关闭纪律一致：关闭已证子集，残余显式留痕。
+
+### 可选路径（P-004 · 须用户书面确认）
+
+| 路径 | 含义 | R-E-2 | 新 residual |
+|------|------|-------|-------------|
+| **A（推荐）** | 有界关闭：scope = α 双路径试点使用（A-041 + A-045） | **closed（有界）** | **R-E-2-H**：多会话真实人类使用；I-007/I-012 试点标准收集；复审触发 = 体验验收或扩大试点前 |
+| **B** | 先补人类多会话清单 / I-007·I-012 最小草稿，再审视 | open | — |
+| **C** | 保持 R-E-2 accepted open | open | — |
+| **D（不推荐）** | 全文关闭、无新 residual | closed 全文 | 无（证据不足） |
+
+### Residual 草案（仅路径 A）
+
+| ID | 残余 | 复审触发 |
+|----|------|----------|
+| **R-E-2-H** | 多会话/持续真实人类使用；I-007/I-012 试点标准未收集 | 扩大试点、体验验收、或宣称「人类试点完成」前 |
+
+### Finding / 信息项
+
+本拍 **不**改 I-007/I-012 状态（仍 open / non-blocking）；路径 A 关闭 R-E-2 **不**等于 I verified。
+
+### 结论与建议下一步
+
+**不可全文关闭；可有界关闭。** 请用户确认，例如：
+
+```text
+OK A：R-E-2 有界关闭 + R-E-2-H
+```
+
+或 `OK B` / `OK C` / `OK D`。
+
+确认后由 `/govern` 写 D-026-A / A-047 正式改 residual 台账。
+
+### 声明
+
+本条仅审视与路径包；**未**关闭 R-E-2；**未**创建 R-E-2-H；**未**改 progress 宣称体验试点完成。
+
+## A-047 · 路径 A：有界关闭 R-E-2 并接受 R-E-2-H（2026-07-22）
+
+- **source**：self（response / residual-close）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / residual-close
+- **scope**：按用户选择路径 A，有界关闭 **R-E-2**，书面接受 **R-E-2-H**。裁决 [D-026-A](01-decision.md#d-026-a--有界关闭-r-e-2并接受-r-e-2-h2026-07-22)。
+- **verdict**：pass（R-E-2 有界 closed + R-E-2-H 留痕）
+
+### 用户意图与 P-004
+
+A-046 后用户明确选择：**`OK A：R-E-2 有界关闭 + R-E-2-H`**。
+
+### 关闭证据（有界 scope）
+
+| 路径 | 证据 |
+|------|------|
+| service 生产写 | A-041；`op_e_alpha_smoke_20260722` **committed** |
+| HTTP 表单写 | A-045；`op_ed694c6922dd` **committed** + `test_r_e1_*` |
+
+### 关闭 scope（有界）
+
+**R-E-2** = α **双路径**受控写入试点使用（自动化/编排冒烟，非人类多会话日常）。
+
+### Residual 台账
+
+| ID | 结果 |
+|----|------|
+| **R-E-2** | **closed（有界）** |
+| **R-E-2-H** | **accepted** — 多会话真实人类使用；I-007/I-012 试点标准；复审触发见 D-026-A |
+| R-E-1 | closed（不变） |
+| R-E-3 | accepted（不变） |
+
+### 信息项
+
+| ID | 结果 |
+|----|------|
+| I-007 / I-012 | **仍 open**；延期栏改挂 **R-E-2-H**；**不** verified |
+
+### 进度
+
+GOAL-009 **progress 95%**。
+
+### 结论与下一步
+
+α 双路径试点 residual 已有界关闭。人类体验与 I-007/I-012 跟踪 **R-E-2-H**。建议：人类多会话清单，或扩展立项 / R-E-3 审视。
+
+### 声明
+
+已有界关闭 R-E-2 并接受 R-E-2-H；**未**关 GOAL-009；**未**关 R-E-3；**未** verified I-007/I-012。
+
+## A-048 · 审视 R-E-3 是否可有界关闭（路径 A–D · 待裁决）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / residual-close-review
+- **scope**：对照 D-023-A residual **R-E-3** 原文、路线图 A～E、开放成功标准/I-00N、R-E-1/2/2-H 状态，判断可否有界关闭。**本拍不**关闭 R-E-3；**不**静默接受新 residual；**不**将 GOAL-009 标 `done`（P-004 / 开放必改）。
+- **verdict**：conditional（可有界关闭；全文/关门不可；须用户选定路径）
+
+### 用户意图
+
+`/govern 审视 R-E-3 是否可有界关闭`
+
+### 原文 residual 范围（D-023-A / A-043）
+
+| 项 | 内容 |
+|----|------|
+| **R-E-3** | E 全文：整改环、扩展产品（AI/资料/多区）齐套与 GOAL-009 阶段/关门审 |
+| 复审触发 | 宣称阶段 6 规划目标可关门或扩展产品放行前 |
+
+### 条件对照
+
+| # | 条件 | 现有证据 | 判断 |
+|---|------|----------|------|
+| 1 | E 阶段 α 整改环（有界） | 路线图 E 有界退出；R-E-1 closed；R-E-2 有界 closed；F-026 热路径；生产写双门闩；A-041/A-045 冒烟 | **满足（有界）** — α 声明范围内整改/验证已闭环 |
+| 2 | E **全文**（持续人类试点 + 全矩阵） | R-E-2-H 仍 open；I-007/I-012 open | **不满足全文** |
+| 3 | 扩展产品：AI 协作运行时 | 成功标准第 3 项 **未勾**；I-002 collecting；无 AI 加载 | **不满足** |
+| 4 | 扩展产品：资料 CRUD / 多区 UI | I-009/I-010 collecting；R-F003/R-F004 residual；产品未交付 | **不满足** |
+| 5 | GOAL-009 阶段/关门审 | 无 close-out A-00N；status **active**；progress 95% ≠ 100% | **不满足** |
+| 6 | 阶段 6 产品终态可宣称 | Root 仍 active；Web「AI 协助工作台」未全文交付 | **不满足** |
+
+### 分析
+
+- **全文关闭 R-E-3** ≈ 默许「可关 GOAL-009 / 可宣称扩展齐套」——与开放 AI 成功标准、I-002 及 R-E-2-H **冲突**，**路径 D 禁止**。  
+- **有界关闭**可行：将 R-E-3 关闭 scope 收窄为 **「α E 阶段整改环在已声明 α 产品范围内完成」**（规划 A～E 有界退出 + α 写路径可验证 + 相关 required finding 台账闭环），并把「GOAL-009 关门审 + 扩展产品齐套 + 阶段 6 终态宣称」拆为 **R-E-3-X**。  
+- 有界关闭 **≠** `status: done`；关门仍须独立 close-out 与开放 required/residual 检查。
+
+### 可选路径（P-004 · 须用户书面确认）
+
+| 路径 | 含义 | R-E-3 | 新 residual |
+|------|------|-------|-------------|
+| **A（推荐）** | 有界关闭：α E 整改环完成 | **closed（有界）** | **R-E-3-X**：GOAL-009 阶段/关门审；AI/资料/多区扩展齐套；阶段 6 产品终态宣称；复审触发 = 拟关门或扩展放行前 |
+| **B** | 先做 GOAL-009 阶段/关门自审（04），再审视 | open | — |
+| **C** | 保持 R-E-3 accepted open | open | — |
+| **D（不推荐）** | 全文关闭、无新 residual | closed 全文 | 无（证据不足，易伪装可关门） |
+
+### Residual 草案（仅路径 A）
+
+| ID | 残余 | 复审触发 |
+|----|------|----------|
+| **R-E-3-X** | GOAL-009 正式阶段/关门审未做；AI 运行时/资料 CRUD/多区产品未齐套；成功标准 AI 项未勾；不得宣称阶段 6 Web 终态 | 拟将 GOAL-009 标 `done`、或扩展产品放行、或宣称阶段 6 终态前 |
+
+### 与 R-E-2-H 关系
+
+R-E-2-H（人类多会话 + I-007/I-012）**独立**于 R-E-3；路径 A **不**关闭 R-E-2-H。关门审时两者均须汇总。
+
+### 结论与建议下一步
+
+**不可全文关闭 / 不可据此关门；可有界关闭 α E 整改环。** 请确认：
+
+```text
+OK A：R-E-3 有界关闭 + R-E-3-X
+```
+
+或 `OK B` / `OK C` / `OK D`。
+
+确认后由 `/govern` 写 D-027-A / A-049。
+
+### 声明
+
+本条仅审视与路径包；**未**关闭 R-E-3；**未**创建 R-E-3-X；**未**将 GOAL-009 标 `done`。
+
+## A-049 · 路径 A：有界关闭 R-E-3 并接受 R-E-3-X（2026-07-22）
+
+- **source**：self（response / residual-close）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / residual-close
+- **scope**：按用户选择路径 A，有界关闭 **R-E-3**，书面接受 **R-E-3-X**。裁决 [D-027-A](01-decision.md#d-027-a--有界关闭-r-e-3并接受-r-e-3-x2026-07-22)。
+- **verdict**：pass（R-E-3 有界 closed + R-E-3-X 留痕）
+
+### 用户意图与 P-004
+
+A-048 后用户明确选择：**`OK A：R-E-3 有界关闭 + R-E-3-X`**。
+
+### 关闭证据（有界 scope）
+
+| 项 | 证据 |
+|----|------|
+| 路线图 A～E α/有界 | meta 路线图表；D-012～D-027 链 |
+| 试点 residual | R-E-1 closed；R-E-2 有界 closed；A-041 / A-045 |
+| 写路径与整改 | F-007/F-008 closed；F-026 热路径；A-030 双门闩 |
+
+### 关闭 scope（有界）
+
+**R-E-3** = α **E 阶段整改环**在已声明 α 产品范围内完成。  
+**不**含：GOAL-009 关门、AI/资料/多区扩展齐套、阶段 6 终态宣称。
+
+### Residual 台账
+
+| ID | 结果 |
+|----|------|
+| **R-E-3** | **closed（有界）** |
+| **R-E-3-X** | **accepted** — 关门审 + 扩展齐套 + 终态宣称；复审触发见 D-027-A |
+| R-E-1 / R-E-2 | closed（不变） |
+| R-E-2-H | accepted（不变） |
+
+### 进度与状态
+
+| 项 | 结果 |
+|----|------|
+| progress | **96%** |
+| GOAL-009 status | **仍 active**（**禁止**因本条 `done`） |
+
+### 结论与下一步
+
+α E 整改 residual 已有界关闭。拟关门或扩展前必须响应 **R-E-3-X**（并汇总 R-E-2-H、R-F*、开放 I-00N）。
+
+建议：
+
+1. `/govern` 阶段/关门审（仅当用户明确要关且接受 R-E-3-X 复审）  
+2. 或扩展立项 / 人类试点（R-E-2-H）  
+
+### 声明
+
+已有界关闭 R-E-3 并接受 R-E-3-X；**未**将 GOAL-009 标 `done`；**未**关 R-E-2-H；**未**勾选 AI 成功标准。
+
+## A-050 · 阶段审视：GOAL-009 α 规划与有界交付（不关门）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：stage
+- **scope**：GOAL-009 整体阶段审视——对照成功标准、路线图 A～E、实现子目标 GOAL-012/013、试点 residual、信息台账与当前 `web/` 回归；**明确不做 close-out / 不改 status 为 done**（R-E-3-X 仍 open）。
+- **verdict**：**conditional**
+- **工作区**：`workspace-001-goal-governance` · Root `GOAL-001-main-vision`
+
+### 范围与区间
+
+| 纳入 | 排除 |
+|------|------|
+| 规划台账、有界 finding/I、α 写路径、E-α 试点 residual | 正式关门审（R-E-3-X） |
+| GOAL-012/013 有界关门事实 | AI 运行时产品验收 |
+| 回归 unittest（本拍复跑） | 浏览器多会话人类试点（R-E-2-H） |
+
+### 成果（有证据）
+
+1. **产品方向与边界**：D-001～D-006 确立人机协作、单用户、canonical 真相源、首切片收敛。  
+2. **路线图 A～E（α/有界）均退出或完成**：A 立项条件；B finding 有界；C 写门禁 + I-003/4/6 α verified + A-030；D=GOAL-012；E=E-α + R-E-1/2/3 有界处理。  
+3. **实现子目标**：GOAL-012 / GOAL-013 `done / 100%`（有界）。  
+4. **受控写入**：设计 R-004 + CT + 生产双门闩；service 与 **HTTP 表单**冒烟均 **committed**（A-041 / A-045）。  
+5. **热路径**：F-026 已将 FA/WS/SM 挂入 `controlled_change`（A-044）。  
+6. **纪律**：有界关闭均带 residual；P-004 路径包后用户书面确认；本拍前 **未**伪装 done。  
+7. **回归**：`unittest discover -s tests -q` → **85 passed, 1 skipped**（2026-07-22）。
+
+### 对照成功标准
+
+| 标准 | 状态 | 说明 |
+|------|------|------|
+| 单用户/非目标工作流 | **达成** | F-001 closed |
+| 事实准入模型（有界） | **达成（有界）** | F-002 + FA + 热路径；UI/AI 运行时 residual |
+| AI 职责/上下文/确认全文 | **未达成** | 成功标准未勾；I-002 collecting；R-F002-3 |
+| 多工作区模型（有界） | **达成（有界）** | F-003 + WS；多区 UI residual |
+| 共享资料规则（有界） | **达成（有界）** | F-004 + SM；CRUD 产品 residual |
+| α 首实现范围 | **达成** | F-005 + GOAL-012 |
+| 受控写入（α） | **达成（有界）** | F-007/F-008 + I-003/4/6 α + 生产写授权 |
+| 信息表可追踪 | **达成** | I-001～I-012 台账 |
+| 路线图 + 实现子目标 | **达成** | GOAL-012/013 |
+
+### 路线图快照
+
+| 阶段 | 状态 |
+|------|------|
+| A | 完成（α 立项） |
+| B | finding 有界退出 |
+| C | α 完成 + 生产写授权 |
+| D | α 实现完成（GOAL-012） |
+| E | 有界退出（E-α）；R-E-3 有界 closed + R-E-3-X |
+
+### 开放 residual / 信息门禁（关门阻断）
+
+| 类 | 项 | 关门影响 |
+|----|-----|----------|
+| residual | **R-E-3-X** | **阻断 done** — 须 close-out + 扩展/终态裁决 |
+| residual | **R-E-2-H** | 人类试点；非 α 写路径阻断，但关门审须汇总 |
+| residual | R-F002-1～3、R-F003-1～2、R-F004-1～3、R-F008-1～3 | 扩展/部署形态触发时复审 |
+| required I | I-002、I-008、I-009、I-010（collecting） | 阻断 AI/多区/资料扩展，**不**自动允许 done |
+| required I | I-005 collecting | 阻断首次部署/外部访问全文 |
+| 成功标准 | AI 项未勾 | 全文产品终态不可宣称 |
+
+**无**开放 required **finding** 阻断 α 现状推进；开放项均为 residual / 信息 / 未勾成功标准。
+
+### Findings
+
+#### F-028 · R-001 索引曾残留「F-005 open」过期句（已当场修正）
+
+- **级别**：recommended；**严重度**：low  
+- **证据**：`00-meta` R-001 节在 F-005 已由 D-012/A-019 关闭后仍写「F-005 open」。  
+- **处理**：本拍已改为 **F-005 closed（α）**；I-001/I-011 仍 collecting。  
+- **状态**：**closed**（本条修正即关闭）
+
+无新 required finding。
+
+### 必改项汇总
+
+| 项 | 级别 | 状态 |
+|----|------|------|
+| 无新 required finding | — | — |
+| 关门前必须响应 R-E-3-X | residual | **仍 open**（有意） |
+
+### 结论 + 建议下一步
+
+GOAL-009 作为**阶段 6 规划 + α 垂直切片与写路径验证**目标，在声明的 α 范围内**阶段成果充分、纪律可核对**；verdict **conditional** 仅因：
+
+1. 产品愿景中的 **AI 协助全文**尚未交付（成功标准未勾）；  
+2. **R-E-3-X** 明确禁止无 close-out 即 `done`；  
+3. 扩展与人类试点 residual 仍在。
+
+**本阶段审不授权关门。**
+
+建议用户择一：
+
+1. 保持 `active`，推进扩展（I-002/AI、资料、多区）或人类试点（R-E-2-H）  
+2. 仅在明确授权且 residual 齐备后：`/govern 关门审 GOAL-009`（须响 R-E-3-X）  
+3. 可选 `/audit` 对 A-050 做独立交叉审  
+
+### 声明
+
+本条为 **self · stage**；**未**将 GOAL-009 标 `done`；**未**关闭 R-E-3-X / R-E-2-H；progress 调至 **97%** 仅反映阶段审完成。
+
+## A-051 · 扩展立项选项包（GOAL-009 保持 active）（2026-07-22）
+
+- **source**：self（response / plan）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / design-plan
+- **scope**：响应用户「保持 GOAL-009 active，推进扩展立项选项」；承接 A-050。**不**创建子目标；**不**关门。选项见 [D-028](01-decision.md#d-028--扩展立项选项包proposed--待用户选定2026-07-22)。
+- **verdict**：pass（选项可核对；立项待用户确认）
+
+### 约束（强制）
+
+| 约束 | 状态 |
+|------|------|
+| GOAL-009 `active` | **保持** |
+| R-E-3-X 阻断 `done` | **仍生效** |
+| P-001 大目标先路线图再细拆 | 各候选创建时须写高层路线图（若范围大） |
+| 下一编号 | **GOAL-014** 起 |
+| parent | 默认 `GOAL-001-main-vision`；规划来源记 GOAL-009 |
+
+### 候选扩展目标
+
+| 代号 | 建议 id / 标题方向 | 主要 I / residual | 与 α 关系 | 建议优先级 |
+|------|-------------------|-------------------|-----------|------------|
+| **X-AI** | `GOAL-014-ai-collaboration-runtime` · AI 协作运行时、工具同意、候选确认链 | I-002、I-008；R-F002-2/3；成功标准 AI 项 | 填补愿景缺口；α 切片仍无 AI | **1（推荐先立）** |
+| **X-NAV** | `GOAL-015-n1-workspace-navigation` · N1 列表/选择/归档导航 | I-009、I-011（列表）；R-F003-1 | α 单工作区配置绑定可并存 | 2 |
+| **X-SM** | `GOAL-016-shared-materials-product` · 共享资料上传/CRUD/引用 UX | I-010；R-F004-1～3 | 一期必备产品规则；α 未交付 | 3 |
+| **X-PILOT** | `GOAL-017-human-pilot-feedback` · 人类多会话试点与 I-007/I-012 | R-E-2-H；I-007、I-012 | 可与实现并行 | 4（可并行） |
+| **X-DEPLOY** | `GOAL-018-deployment-ops-hardening` · 部署形态/密钥/备份/恢复 | I-005；R-F008 复审触发相关 | 首次部署/外部访问前 | 5（偏后） |
+
+### 依赖与并行
+
+```text
+X-AI ──(可并行)── X-NAV ──(可并行)── X-SM
+   \                |                /
+    \               |               /
+     └──────── X-PILOT ────────────┘
+                    |
+                 X-DEPLOY（部署/对外前）
+```
+
+- **X-AI** 与 **X-NAV/X-SM** 可并行，但共享「不得第二真相源 / 单用户」边界。  
+- **X-SM** 的 AI 读资料依赖 **X-AI** 边界（R-F004-2）。  
+- **X-PILOT** 不阻塞实现立项，但关门审（R-E-3-X）前宜有人类使用证据。  
+- **X-DEPLOY** 在拟对外或非本机部署前。
+
+### 推荐组合（供用户一键选）
+
+| 组合 | 含义 |
+|------|------|
+| **R1（推荐）** | 仅先立 **X-AI**（对齐未勾成功标准与 I-002） |
+| **R2** | **X-AI + X-PILOT**（实现 + 人类反馈并行） |
+| **R3** | **X-NAV + X-SM**（导航与资料产品，延后 AI） |
+| **R4** | 仅 **X-PILOT**（先人类试点，再定实现序） |
+| **R0** | 本拍不立项，仅保留选项表 |
+
+### 本拍结果
+
+| 项 | 结果 |
+|----|------|
+| 子目标创建 | **无** |
+| GOAL-009 status | **active** |
+| progress | **97%**（不变） |
+
+### 结论与建议下一步
+
+扩展面已选项化，避免无裁决批量立项。请用户确认，例如：
+
+```text
+OK R1：创建 X-AI（GOAL-014 AI 协作运行时）
+```
+
+或 `OK R2` / `OK R3` / `OK R4` / `OK R0`；也可点名：`OK X-NAV + X-SM`。
+
+确认后再走 `01-create-new-goal` 建五件套并同步 goal-tree。
+
+### 声明
+
+本条仅选项台账；**未**创建 GOAL-014+；**未**关门；**未**关闭 R-E-3-X / R-E-2-H。
+
+## A-052 · 响应 R1：创建 GOAL-014（X-AI）（2026-07-22）
+
+- **source**：self（response）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / execution-facts
+- **scope**：用户 `OK R1`；创建 X-AI 实现子目标。裁决 [D-029](01-decision.md#d-029--接受-r1创建-goal-014x-ai2026-07-22)。
+- **verdict**：pass
+
+### 成果
+
+| 项 | 结果 |
+|----|------|
+| 新目标 | [GOAL-014-ai-collaboration-runtime](../GOAL-014-ai-collaboration-runtime/00-meta.md) · `active / 0%` |
+| 五件套 | 齐全；路线图 A～E；I-001～I-006 |
+| GOAL-009 | **仍 active**；**未** done |
+| 其他 X-* | **未**创建 |
+
+### 声明
+
+已立项 X-AI；**未**实现 AI 代码；**未**关 R-E-3-X；**未**勾选 GOAL-009 AI 成功标准。
+
+## A-053 · 审视 AI 成功标准是否可勾选（路径 A–D · 待裁决）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / success-criteria-review
+- **scope**：对照 GOAL-009 初始成功标准第 3 条（AI 职责/上下文/确认边界）、R-002、GOAL-014 有界关门证据，判断可否勾选。**本拍不**勾选；**不**将 I-002 标 verified；**不**关 GOAL-009。
+- **verdict**：conditional（可有界勾选；不可全文宣称 AI 产品终态）
+
+### 用户意图
+
+`/govern 审视 GOAL-009 AI 成功标准是否可勾选`
+
+### 成功标准原文
+
+> 定义 AI 的职责、可见上下文、建议输出、上下文复用、自动获取信息后的确认方式和人类确认边界，明确不得自动裁决 P-004、关闭 required finding、标记 `done` 或在未确认时写入事实。  
+> （括注：R-002 默认；I-002 未 verified；R-F002-3）
+
+### 条件对照
+
+| 子句 | 证据 | 判断 |
+|------|------|------|
+| **定义**职责 | R-002 §5.1；R-014-A §2/§5；GOAL-014 交付 | **满足** |
+| 可见上下文 | R-014-A §4；broker context_blocks 仅本工作区 | **满足（有界）** |
+| 建议输出 | suggest → `ai-knowledge` 候选 | **满足（有界）** |
+| 上下文复用 | 详情页注入 goal/execution 摘录 | **满足（有界）** |
+| 自动获取后的确认 | FA confirm + digest；拒绝不写盘 | **满足** |
+| 人类确认边界 | 确认→提案→decide；禁 AI 直写 | **满足** |
+| 不得自动 P-004 / 关 finding / done / 未确认写入 | R-014-A 硬边界 + 代码路径 | **满足** |
+| 网络工具检索全矩阵 | D-006 明确不做；R-F002-2 | **不在本勾选范围**（有界） |
+| 提供方/模型 verified（R-F002-3 / I-002 全文） | I-002 仍 collecting | **不**因勾选而 verified |
+| 浏览器 E2E / 真联调 | R-014-E2E residual | **不**要求勾选前置 |
+
+### 分析
+
+- 成功标准主干是 **「定义」+ 确认边界**，不是「全量 AI 产品 + 全工具 + 真联调」。  
+- GOAL-014 有界关门后，定义与可运行确认链均已齐；括注中 I-002/R-F002-3 表示**信息项全文**未 verified，应在勾选注释中保留，而非阻塞「定义」勾选。  
+- **勾选 ≠** GOAL-009 `done`（R-E-3-X 仍阻断）。
+
+### 可选路径（P-004）
+
+| 路径 | 含义 | 成功标准第 3 条 | I-002 |
+|------|------|-----------------|-------|
+| **A（推荐）** | **有界勾选**；注释引用 GOAL-014 + R-014-A；I-002 仍 collecting | **[x] 有界** | collecting |
+| **B** | 等真联调/工具后再勾 | 保持 [ ] | collecting |
+| **C** | 不勾选 | 保持 [ ] | collecting |
+| **D（不推荐）** | 勾选并标 I-002 verified / 暗示可关 GOAL-009 | [x] | verified（无充分证据） |
+
+### 结论与建议下一步
+
+**可有界勾选；不可伪装 I-002 全文 verified 或 GOAL-009 可关门。** 请确认：
+
+```text
+OK A：有界勾选 GOAL-009 AI 成功标准
+```
+
+或 `OK B` / `OK C` / `OK D`。
+
+### 声明
+
+本条仅审视；**未**勾选成功标准；**未**改 I-002；**未**关 GOAL-009。
+
+## A-054 · 路径 A：有界勾选 AI 成功标准（2026-07-22）
+
+- **source**：self（response）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / success-criteria
+- **scope**：按用户 `OK A` 有界勾选初始成功标准第 3 条。裁决 [D-030-A](01-decision.md#d-030-a--有界勾选-goal-009-ai-成功标准2026-07-22)。
+- **verdict**：pass
+
+### 用户意图与 P-004
+
+A-053 后用户明确选择：**`OK A：有界勾选 GOAL-009 AI 成功标准`**。
+
+### 勾选证据
+
+| 项 | 证据 |
+|----|------|
+| 定义职责/边界 | R-002；R-014-A |
+| 运行时 + 确认链 | GOAL-014 done（A-006） |
+| 禁自动治理推进 | R-014-A + 实现路径 |
+| 用户裁决 | 本条 + D-030-A |
+
+### 明确未因本条关闭/改变
+
+| 项 | 状态 |
+|----|------|
+| I-002 | **仍 collecting** |
+| R-F002-2 / R-F002-3 | residual 保留 |
+| R-014-E2E | accepted residual |
+| R-E-3-X | 仍阻断 GOAL-009 done |
+| GOAL-009 status | **active** |
+
+### 进度
+
+**98%**（成功标准有界齐；非 done）。
+
+### 声明
+
+已有界勾选 AI 成功标准；**未** verified I-002；**未**关 GOAL-009。
+
+## A-055 · 审视 GOAL-009 是否可有界关门（路径 A–D · 待裁决）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / close-out-review
+- **scope**：对照初始成功标准、路线图 A～E、实现子目标 GOAL-012/013/014、residual R-E-3-X / R-E-2-H / R-F*、开放 I-00N，判断 GOAL-009 **是否可有界关门**。**本拍不**改 status 为 done。
+- **verdict**：conditional（可有界关门；不可全文终态 / 不可无 residual 关）
+
+### 用户意图
+
+`/govern 审视 GOAL-009 是否可有界关门`
+
+### 目标性质澄清
+
+GOAL-009 是 **阶段 6 规划与门禁台账**（含 α 实现立项与扩展编排），**不是**「一期 Web 产品全部功能已交付」目标。有界关门应关闭「规划 + α 闭环 + X-AI 有界」；扩展产品（N1/资料 CRUD/人类多会话全文）须 residual 或另目标。
+
+### 条件对照
+
+| # | 条件 | 证据 | 判断 |
+|---|------|------|------|
+| 1 | 初始成功标准（有界注释）全部勾选 | 00-meta 9 条 [x]；AI 条 D-030-A | **满足（有界）** |
+| 2 | 路线图 A～E 有界退出 | meta 路线图表；R-E-* 台账 | **满足（有界）** |
+| 3 | α 实现 | GOAL-012/013 `done` | **满足** |
+| 4 | X-AI 有界 | GOAL-014 `done` + R-014-E2E residual | **满足（有界）** |
+| 5 | 无 open required finding 阻断规划台账 | F-001～008/025～027 closed | **满足** |
+| 6 | R-E-3-X「关门审」子句 | 本条 A-055 即为关门审审视；正式关须路径 A | **可关闭子句** |
+| 7 | 资料 CRUD 产品 / N1 多区 UI | 未立项交付；I-009/I-010 collecting | **不满足全文** → residual |
+| 8 | 人类多会话试点 | R-E-2-H open | **不满足全文** → residual |
+| 9 | I-002/I-008 全文 verified | 仍 collecting | **不**要求有界关门；**禁止**伪装 verified |
+| 10 | 阶段 6 Web 产品终态 | 三页 IA/资料/AI 工具未齐 | **不满足** → residual |
+
+### 分析
+
+- **有界关门可行**：规划职责完成；α + 有界 AI 运行时已由子目标关门；成功标准在有界注释下齐。  
+- **R-E-3-X** 可拆：关闭「须做关门审」部分（本审 + 用户选 A 后的 close-out）；「扩展齐套 / 终态宣称」迁入 **R-009-X**。  
+- **全文关门（D）禁止**：会把未交付的一期资料/导航/人类试点伪装为已完成。
+
+### 可选路径（P-004）
+
+| 路径 | 含义 | GOAL-009 | R-E-3-X | 新 residual |
+|------|------|----------|---------|-------------|
+| **A（推荐）** | 有界关门：规划+α+X-AI | **done / 100%** | **closed**（关门审完成） | **R-009-X**：N1/资料 CRUD/人类多会话/I-002 全文/阶段 6 终态；复审 = 宣称终态或扩展放行前 |
+| **B** | 先扩展或人类试点再关 | active | open | — |
+| **C** | 保持 active | active | open | — |
+| **D（不推荐）** | 全文关、无扩展 residual | done 全文 | closed | 无 |
+
+### Residual 草案（仅路径 A）
+
+| ID | 残余 | 复审触发 |
+|----|------|----------|
+| **R-009-X** | 多区 N1 产品、共享资料 CRUD 产品、人类多会话试点（R-E-2-H）、I-002/I-008/I-009/I-010 全文 verified、阶段 6 产品终态宣称 | 宣称终态、扩展产品放行、或 Root 阶段 6 终态审前 |
+| **R-E-2-H** | 可并入 R-009-X 或保留独立 | 同左 |
+| R-F* / R-014-E2E | 保持各目标 residual | 原触发 |
+
+### 结论与建议下一步
+
+**可有界关门；不可全文终态。** 请确认：
+
+```text
+OK A：GOAL-009 有界关门 + R-009-X
+```
+
+或 `OK B` / `OK C` / `OK D`。
+
+### 声明
+
+本条仅审视；**未**将 GOAL-009 标 `done`；**未**关闭 R-E-3-X。
+
+## A-056 · 有界关门审计 close-out（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：close-out
+- **scope**：GOAL-009 **有界**关门——规划与门禁台账完成；α（GOAL-012/013）与 X-AI（GOAL-014）有界交付；成功标准有界勾选。接受 **R-009-X**。不宣称一期 Web 终态、不关 Root。
+- **verdict**：**pass**（有界）
+
+### 范围与区间
+
+| 项 | 值 |
+|----|-----|
+| 工作区 | `workspace-001-goal-governance` |
+| 关闭范围 | 规划 + 信息门禁台账 + α 切片 + 受控写门禁 + X-AI 有界定义/运行时 |
+| 非范围 | N1/资料 CRUD 产品、人类多会话全文、I-00N 全文 verified、阶段 6 终态 |
+
+### 成功标准核对
+
+| 标准 | 判断 |
+|------|------|
+| 单用户/非目标 | **pass** |
+| 事实准入（有界） | **pass** |
+| AI 职责/确认边界（有界） | **pass**（D-030-A + GOAL-014） |
+| 多工作区模型（有界） | **pass** |
+| 共享资料规则（有界） | **pass**（产品 CRUD 在 R-009-X） |
+| α 首实现 | **pass**（GOAL-012） |
+| 受控写入（α） | **pass**（F-007/8 + I-003/4/6 α + A-030） |
+| 信息表可追踪 | **pass** |
+| 路线图 + 实现子目标 | **pass**（012/013/014） |
+
+### 子目标证据
+
+| 目标 | 状态 |
+|------|------|
+| GOAL-012 | done 有界 |
+| GOAL-013 | done 有界 |
+| GOAL-014 | done 有界 + R-014-E2E |
+
+### Residual
+
+| ID | 结果 |
+|----|------|
+| R-E-3-X | **closed**（本关门审） |
+| R-E-2-H | **closed（并入 R-009-X）** |
+| **R-009-X** | **accepted** — 扩展/终态（见 D-031-A） |
+| R-F* / R-014-E2E | 保留各目标台账 |
+
+### 开放 required finding
+
+**无**（有界范围内）。
+
+### 结论
+
+GOAL-009 **有界关门 pass**。阶段 6 规划与 α/X-AI 有界闭环成立；扩展产品与终态宣称由 **R-009-X** 约束。
+
+### 声明
+
+`done` 仅覆盖声明的有界范围；**未**关 GOAL-001；**未** verified I-002 全文；**未**取消扩展另立项可能。
