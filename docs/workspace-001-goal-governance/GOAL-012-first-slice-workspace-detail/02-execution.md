@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-21
 updated: 2026-07-21
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 执行记录 · GOAL-012
@@ -41,8 +41,15 @@ version: 0.4.0
 
 - 用户确认：`OK 按有界条件关门 GOAL-012`（生产写入仍关；F-003 residual 不随关门消失）。
 - [D-002](01-decision.md#d-002--有界关门α-实现完成生产写入与-f-003-residual-不随关门解除2026-07-21) / [A-003](03-audit.md#a-003--有界关门审计-close-out2026-07-21)：`status: done` / `progress: 100%`；goal-tree 同步。
-- **未**设置 `PRODUCT_GATES_OPEN=false`；**未**关闭 GOAL-009 F-007/F-008；**未**将 I-003 标 `verified`；I-005 residual 保留。
+- **未**设置 `PRODUCT_GATES_OPEN=false`；**未**关闭 GOAL-009 F-007/F-008；**未**将 I-003 标 `verified`；I-005 residual 当时保留。
+
+### 2026-07-21 · 回写关闭 F-003 residual（GOAL-013 CT-007）
+
+- 用户 `/govern` 回写：F-003 residual + GOAL-009 A-020（CT-007 持久化证据）。
+- [A-004](03-audit.md#a-004--回写关闭-f-003-residualct-007-持久化2026-07-21)：F-003 **closed**；I-005 **verified**。
+- 证据归属 GOAL-013 阶段 B（实现与测试在 `web/`，非本目标重开门编码）。
+- **未**开放生产写入；**未**关闭 GOAL-009 F-007/F-008。
 
 ## 进度评估
 
-**100%（有界）**：α 实现目标关门。生产写入仍阻断；F-003/I-005 residual 在关门后仍有效，复审触发不变。
+**100%（有界）**：α 实现目标关门。F-003 residual 已后置关闭；生产写入仍阻断。

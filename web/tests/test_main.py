@@ -64,7 +64,7 @@ class GoalWebRoutesTests(unittest.TestCase):
         self.assertIn("02-execution.md", response.text)
 
     def test_decide_http_rejects_when_product_gates_open(self) -> None:
-        """HTTP decide path must surface ERR_PRODUCT_GATE_OPEN (GOAL-012 A-001 F-004)."""
+        """HTTP decide path must surface ERR_PRODUCT_GATE_OPEN without ALLOW (or with gates re-open)."""
         import re
         import shutil
         import tempfile

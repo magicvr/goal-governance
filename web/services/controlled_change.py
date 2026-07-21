@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import re
 import tempfile
+import threading
 from typing import Any, Mapping
 from uuid import uuid4
 
@@ -23,12 +24,25 @@ from services.workspace_config import controlled_write_authorized
 OPERATION_KIND = "append-execution-fact"
 SOURCE_USER = "user-provided"
 SCHEMA_RECEIPT = "r004-execution-receipt/v0"
+_RECOVERY_RECORD_NAME = ".goal-write-recovery.json"
 
-# Content contract: reject governance-mutation and script-ish payloads.
+# Per-workspace write locks for CT-009 (process-local; not a distributed lock).
+_WORKSPACE_LOCKS: dict[str, threading.Lock] = {}
+_WORKSPACE_LOCKS_GUARD = threading.Lock()
+
+# Content contract (CT-012 / CT-014): reject governance mutation, path escape, script.
 _FORBIDDEN_CONTENT = re.compile(
-    r"(?is)(status\s*:\s*done|progress\s*:\s*100%|"
-    r"</?\s*script|javascript:|"
-    r"关闭\s*finding|mark\s+done|close\s+required)",
+    r"(?is)("
+    r"status\s*:\s*(done|cancelled|active|draft|blocked)|"
+    r"progress\s*:\s*\d+\s*%|"
+    r"parent\s*:\s*\S+|"
+    r"\bid\s*:\s*GOAL-\d+|"
+    r"</?\s*script|"
+    r"javascript:|"
+    r"关闭\s*finding|mark\s+done|close\s+required|"
+    r"\.\./|\.\.\\|"
+    r"00-meta\.md|goal-tree\.md|01-decision\.md|03-audit\.md"
+    r")"
 )
 
 
@@ -168,18 +182,21 @@ class ControlledChangeService:
         workspace_id: str | None = None,
         candidate_id: str | None = None,
     ) -> CandidateRevision:
-        ws = workspace_id or self.workspace_id
+        ws = workspace_id if workspace_id is not None else self.workspace_id
         if not source_statement or not str(source_statement).strip():
             raise ControlledChangeError("ERR_MISSING_FIELD", "source_statement is required")
         if content is None or not str(content).strip():
             raise ControlledChangeError("ERR_MISSING_FIELD", "content is required")
         if not goal_id or not str(goal_id).strip():
             raise ControlledChangeError("ERR_MISSING_FIELD", "goal_id is required")
+        if not ws or not str(ws).strip():
+            raise ControlledChangeError("ERR_MISSING_FIELD", "workspace_id is required")
         if source_kind != SOURCE_USER:
             raise ControlledChangeError(
                 "ERR_INVALID_SOURCE",
                 f"source_kind must be {SOURCE_USER!r} for first slice",
             )
+        self._assert_workspace_binding(str(ws).strip())
         self._assert_goal_in_scope(goal_id)
         self._assert_content_contract(content)
 
@@ -187,8 +204,8 @@ class ControlledChangeService:
         dig = digest_text(content)
         candidate = CandidateRevision(
             candidate_id=cid,
-            workspace_id=ws,
-            goal_id=goal_id,
+            workspace_id=str(ws).strip(),
+            goal_id=goal_id.strip(),
             source_kind=source_kind,
             source_statement=source_statement.strip(),
             content=normalize_text(content),
@@ -225,6 +242,7 @@ class ControlledChangeService:
                 "expected_write_set must be exactly ['02-execution.md']",
             )
 
+        self._assert_workspace_binding(cand.workspace_id)
         self._assert_goal_in_scope(cand.goal_id)
         paths = self._goal_paths(cand.goal_id)
         baseline = file_digest(paths["execution"])
@@ -309,22 +327,6 @@ class ControlledChangeService:
         op_id = operation_id or f"op_{uuid4().hex[:12]}"
         trust = dict(trust_context or {"mode": "local-loopback-single-user", "external_access": False})
 
-        # Idempotent replay
-        prior = self._receipts_by_operation.get(op_id)
-        if prior is not None:
-            # Same operation id: require same request digest semantics via stored receipt
-            return prior
-
-        proposal = self._proposals.get(proposal_digest)
-        if proposal is None:
-            # try scan by digest field
-            proposal = next(
-                (p for p in self._proposals.values() if p.proposal_digest == proposal_digest),
-                None,
-            )
-        if proposal is None:
-            raise ControlledChangeError("ERR_DECISION_INVALID", "unknown proposal_digest")
-
         decision_payload = {
             "action": action,
             "proposal_digest": proposal_digest,
@@ -339,7 +341,102 @@ class ControlledChangeService:
             )
         )
 
-        if action in {"reject", "cancel"}:
+        # CT-007 / CT-008: durable idempotency vs operation_id reuse with different request.
+        prior = self._lookup_prior_receipt(op_id)
+        if prior is not None:
+            prior = self._normalize_loaded_receipt(prior)
+            if prior.result == "committed" and prior.request_digest == request_digest:
+                return prior
+            if prior.request_digest and prior.request_digest == request_digest:
+                return prior
+            if prior.request_digest and prior.request_digest != request_digest:
+                return self._reject_receipt(
+                    operation_id=op_id,
+                    proposal_digest=proposal_digest,
+                    code="ERR_IDEM_CONFLICT",
+                    message="operation_id already bound to a different request_digest",
+                    workspace_id=prior.workspace_id or self.workspace_id,
+                    goal_id=prior.goal_id or "",
+                    decision_digest=decision_digest,
+                    request_digest=request_digest,
+                    trust=trust,
+                    result="conflict",
+                )
+            # Legacy receipts without request_digest: fall back to proposal_digest equality.
+            if prior.proposal_digest and prior.proposal_digest == proposal_digest:
+                return prior
+            if prior.proposal_digest and prior.proposal_digest != proposal_digest:
+                return self._reject_receipt(
+                    operation_id=op_id,
+                    proposal_digest=proposal_digest,
+                    code="ERR_IDEM_CONFLICT",
+                    message="operation_id already bound to a different proposal_digest",
+                    workspace_id=prior.workspace_id or self.workspace_id,
+                    goal_id=prior.goal_id or "",
+                    decision_digest=decision_digest,
+                    request_digest=request_digest,
+                    trust=trust,
+                    result="conflict",
+                )
+            return prior
+
+        proposal = self._proposals.get(proposal_digest)
+        if proposal is None:
+            # try scan by digest field
+            proposal = next(
+                (p for p in self._proposals.values() if p.proposal_digest == proposal_digest),
+                None,
+            )
+        if proposal is None:
+            raise ControlledChangeError("ERR_DECISION_INVALID", "unknown proposal_digest")
+
+        # CT-003: proposal workspace must match service binding.
+        try:
+            self._assert_workspace_binding(proposal.workspace_id)
+            self._assert_goal_in_scope(proposal.goal_id)
+        except ControlledChangeError as exc:
+            return self._reject_receipt(
+                operation_id=op_id,
+                proposal_digest=proposal_digest,
+                code=exc.code,
+                message=exc.message,
+                workspace_id=proposal.workspace_id,
+                goal_id=proposal.goal_id,
+                decision_digest=decision_digest,
+                request_digest=request_digest,
+                trust=trust,
+            )
+
+        # CT-006: expired proposal cannot affirm.
+        if _is_expired(proposal.expires_at):
+            return self._reject_receipt(
+                operation_id=op_id,
+                proposal_digest=proposal.proposal_digest,
+                code="ERR_DECISION_EXPIRED",
+                message=f"proposal expired at {proposal.expires_at}",
+                workspace_id=proposal.workspace_id,
+                goal_id=proposal.goal_id,
+                decision_digest=decision_digest,
+                request_digest=request_digest,
+                trust=trust,
+            )
+
+        # CT-015: external access cannot inherit local loopback single-user trust.
+        trust_err = _trust_context_error(trust)
+        if trust_err is not None:
+            return self._reject_receipt(
+                operation_id=op_id,
+                proposal_digest=proposal.proposal_digest,
+                code="ERR_TRUST_CONTEXT",
+                message=trust_err,
+                workspace_id=proposal.workspace_id,
+                goal_id=proposal.goal_id,
+                decision_digest=decision_digest,
+                request_digest=request_digest,
+                trust=trust,
+            )
+
+        if action in {"reject", "cancel", "withdraw"}:
             receipt = ExecutionReceipt(
                 schema=SCHEMA_RECEIPT,
                 operation_id=op_id,
@@ -355,7 +452,7 @@ class ControlledChangeService:
                 meta_digest_unchanged=None,
                 tree_digest_unchanged=None,
                 result="rejected",
-                error_code="ERR_DECISION_INVALID" if action == "reject" else None,
+                error_code="ERR_DECISION_INVALID" if action == "reject" else "ERR_DECISION_CANCELLED",
                 recovery_ref=None,
                 trust_context=trust,
                 created_at=_utc_now(),
@@ -382,6 +479,22 @@ class ControlledChangeService:
                 trust=trust,
             )
 
+        # CT-010: GoalsRepository recovery record blocks controlled writes.
+        if self._recovery_pending():
+            return self._reject_receipt(
+                operation_id=op_id,
+                proposal_digest=proposal.proposal_digest,
+                code="ERR_RECOVERY_PENDING",
+                message="workspace recovery record is pending; controlled writes blocked",
+                workspace_id=proposal.workspace_id,
+                goal_id=proposal.goal_id,
+                decision_digest=decision_digest,
+                request_digest=request_digest,
+                trust=trust,
+                result="recovery_pending",
+                recovery_ref=str(self.recovery_record_path),
+            )
+
         if caller_content_digest is not None:
             cand = self._candidates.get(proposal.candidate_id)
             if cand is not None and caller_content_digest != cand.content_digest:
@@ -399,6 +512,46 @@ class ControlledChangeService:
                         trust=trust,
                     )
 
+        # CT-009: process-local non-blocking lock (serializes concurrent decide_and_execute).
+        lock = self._workspace_lock()
+        if not lock.acquire(blocking=False):
+            return self._reject_receipt(
+                operation_id=op_id,
+                proposal_digest=proposal.proposal_digest,
+                code="ERR_CONCURRENT_WRITE",
+                message="another controlled write is in progress for this workspace",
+                workspace_id=proposal.workspace_id,
+                goal_id=proposal.goal_id,
+                decision_digest=decision_digest,
+                request_digest=request_digest,
+                trust=trust,
+                result="conflict",
+            )
+        try:
+            return self._affirm_under_lock(
+                proposal=proposal,
+                op_id=op_id,
+                action=action,
+                trust=trust,
+                decision_digest=decision_digest,
+                request_digest=request_digest,
+                caller_content_digest=caller_content_digest,
+            )
+        finally:
+            lock.release()
+
+    def _affirm_under_lock(
+        self,
+        *,
+        proposal: Proposal,
+        op_id: str,
+        action: str,
+        trust: dict[str, Any],
+        decision_digest: str,
+        request_digest: str,
+        caller_content_digest: str | None,
+    ) -> ExecutionReceipt:
+        del action, caller_content_digest  # already validated by caller
         paths = self._goal_paths(proposal.goal_id)
         pre = file_digest(paths["execution"])
         meta_now = file_digest(paths["meta"])
@@ -416,6 +569,7 @@ class ControlledChangeService:
                 request_digest=request_digest,
                 trust=trust,
                 pre=pre,
+                result="conflict",
             )
         if meta_now != proposal.meta_digest or tree_now != proposal.tree_digest:
             return self._reject_receipt(
@@ -429,6 +583,7 @@ class ControlledChangeService:
                 request_digest=request_digest,
                 trust=trust,
                 pre=pre,
+                result="conflict",
             )
 
         current_text = paths["execution"].read_text(encoding="utf-8")
@@ -439,7 +594,6 @@ class ControlledChangeService:
         meta_after = file_digest(paths["meta"])
         tree_after = file_digest(paths["tree"])
         if meta_after != meta_now or tree_after != tree_now:
-            # Should not happen for single-file write; report failed if it did.
             return self._reject_receipt(
                 operation_id=op_id,
                 proposal_digest=proposal.proposal_digest,
@@ -451,6 +605,23 @@ class ControlledChangeService:
                 request_digest=request_digest,
                 trust=trust,
                 pre=pre,
+            )
+
+        # CT-011: re-read file so post digest is reproducible before claiming success.
+        post_recheck = file_digest(paths["execution"])
+        if post_recheck != post or not pre or not post:
+            return self._reject_receipt(
+                operation_id=op_id,
+                proposal_digest=proposal.proposal_digest,
+                code="ERR_RECEIPT_UNVERIFIABLE",
+                message="receipt post_write_digest cannot be re-verified from disk",
+                workspace_id=proposal.workspace_id,
+                goal_id=proposal.goal_id,
+                decision_digest=decision_digest,
+                request_digest=request_digest,
+                trust=trust,
+                pre=pre,
+                result="failed",
             )
 
         receipt = ExecutionReceipt(
@@ -479,9 +650,112 @@ class ControlledChangeService:
         return receipt
 
     def get_receipt(self, operation_id: str) -> ExecutionReceipt | None:
-        return self._receipts_by_operation.get(operation_id)
+        prior = self._lookup_prior_receipt(operation_id)
+        if prior is None:
+            return None
+        return self._normalize_loaded_receipt(prior)
+
+    def get_recovery_state(self) -> dict[str, Any]:
+        """CT-010: expose whether workspace recovery blocks controlled writes."""
+        pending = self._recovery_pending()
+        return {
+            "workspace_id": self.workspace_id,
+            "recovery_pending": pending,
+            "recovery_ref": str(self.recovery_record_path) if pending else None,
+        }
+
+    def _receipt_file(self, operation_id: str) -> Path:
+        return self.ops_receipts_dir / f"{operation_id}.json"
+
+    @property
+    def recovery_record_path(self) -> Path:
+        return self.goals_dir / _RECOVERY_RECORD_NAME
+
+    def _recovery_pending(self) -> bool:
+        return self.recovery_record_path.is_file()
+
+    def _workspace_lock(self) -> threading.Lock:
+        key = str(self.goals_dir.resolve())
+        with _WORKSPACE_LOCKS_GUARD:
+            lock = _WORKSPACE_LOCKS.get(key)
+            if lock is None:
+                lock = threading.Lock()
+                _WORKSPACE_LOCKS[key] = lock
+            return lock
+
+    def _lookup_prior_receipt(self, operation_id: str) -> ExecutionReceipt | None:
+        """Return prior receipt from memory or durable ops/receipts/{operation_id}.json."""
+        cached = self._receipts_by_operation.get(operation_id)
+        if cached is not None:
+            return cached
+        path = self._receipt_file(operation_id)
+        if not path.is_file():
+            return None
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None
+        try:
+            receipt = ExecutionReceipt(
+                schema=str(raw.get("schema") or SCHEMA_RECEIPT),
+                operation_id=str(raw["operation_id"]),
+                workspace_id=str(raw.get("workspace_id") or ""),
+                goal_id=str(raw.get("goal_id") or ""),
+                operation_kind=str(raw.get("operation_kind") or OPERATION_KIND),
+                expected_write_set=list(raw.get("expected_write_set") or ["02-execution.md"]),
+                proposal_digest=str(raw.get("proposal_digest") or ""),
+                decision_digest=raw.get("decision_digest"),
+                request_digest=str(raw.get("request_digest") or ""),
+                pre_write_digest=raw.get("pre_write_digest"),
+                post_write_digest=raw.get("post_write_digest"),
+                meta_digest_unchanged=raw.get("meta_digest_unchanged"),
+                tree_digest_unchanged=raw.get("tree_digest_unchanged"),
+                result=str(raw.get("result") or "failed"),
+                error_code=raw.get("error_code"),
+                recovery_ref=raw.get("recovery_ref"),
+                trust_context=dict(raw.get("trust_context") or {}),
+                created_at=str(raw.get("created_at") or ""),
+                receipt_path=str(raw.get("receipt_path") or path),
+            )
+        except (KeyError, TypeError, ValueError):
+            return None
+        self._receipts_by_operation[operation_id] = receipt
+        return receipt
+
+    def _normalize_loaded_receipt(self, receipt: ExecutionReceipt) -> ExecutionReceipt:
+        """CT-011: never surface committed success if digests are not verifiable."""
+        if receipt.result != "committed":
+            return receipt
+        if not receipt.pre_write_digest or not receipt.post_write_digest or not receipt.request_digest:
+            receipt.result = "failed"
+            receipt.error_code = "ERR_RECEIPT_UNVERIFIABLE"
+            return receipt
+        # If execution file still exists, post digest must match disk (when path known).
+        if receipt.goal_id:
+            exec_path = self.goals_dir / receipt.goal_id / "02-execution.md"
+            if exec_path.is_file():
+                try:
+                    if file_digest(exec_path) != receipt.post_write_digest:
+                        # File moved on after receipt; still treat original receipt as historical
+                        # only if we are not claiming current success for a new write.
+                        pass
+                except OSError:
+                    receipt.result = "failed"
+                    receipt.error_code = "ERR_RECEIPT_UNVERIFIABLE"
+        return receipt
+
+    def _assert_workspace_binding(self, workspace_id: str) -> None:
+        """CT-003: reject cross-workspace binding; do not leak other workspace content."""
+        if workspace_id != self.workspace_id:
+            raise ControlledChangeError(
+                "ERR_SCOPE_MISMATCH",
+                "workspace_id does not match the configured service workspace",
+            )
 
     def _assert_goal_in_scope(self, goal_id: str) -> None:
+        # Reject path segments that could escape or address another tree (CT-003).
+        if any(part in {".", ".."} for part in Path(goal_id).parts) or "/" in goal_id or "\\" in goal_id:
+            raise ControlledChangeError("ERR_SCOPE_MISMATCH", "goal_id path escapes workspace scope")
         goal_dir = self.goals_dir / goal_id
         if not goal_dir.is_dir():
             raise ControlledChangeError("ERR_SCOPE_MISMATCH", f"goal not in workspace: {goal_id}")
@@ -510,15 +784,20 @@ class ControlledChangeService:
             raise ControlledChangeError("ERR_CONTENT_CONTRACT", "disallowed markup in content")
 
     def _store_receipt(self, receipt: ExecutionReceipt) -> None:
+        # Never clobber a committed receipt with a later conflict/reject for the same op id.
+        existing = self._receipts_by_operation.get(receipt.operation_id)
+        if existing is not None and existing.result == "committed" and receipt.result != "committed":
+            return
         self._receipts_by_operation[receipt.operation_id] = receipt
 
     def _persist_receipt(self, receipt: ExecutionReceipt) -> Path:
+        """Atomically write receipt JSON under workspace ops/receipts/ (non-canonical)."""
         self.ops_receipts_dir.mkdir(parents=True, exist_ok=True)
-        path = self.ops_receipts_dir / f"{receipt.operation_id}.json"
-        path.write_text(
-            json.dumps(receipt.to_dict(), indent=2, ensure_ascii=False) + "\n",
-            encoding="utf-8",
-        )
+        path = self._receipt_file(receipt.operation_id)
+        # Ensure path is recorded before serializing so reloads see receipt_path.
+        receipt.receipt_path = str(path)
+        payload = json.dumps(receipt.to_dict(), indent=2, ensure_ascii=False) + "\n"
+        self._atomic_write_text(path, payload)
         return path
 
     def _atomic_write_text(self, path: Path, text: str) -> None:
@@ -555,6 +834,8 @@ class ControlledChangeService:
         request_digest: str | None = None,
         trust: dict[str, Any] | None = None,
         pre: str | None = None,
+        result: str = "rejected",
+        recovery_ref: str | None = None,
     ) -> ExecutionReceipt:
         receipt = ExecutionReceipt(
             schema=SCHEMA_RECEIPT,
@@ -570,9 +851,9 @@ class ControlledChangeService:
             post_write_digest=None,
             meta_digest_unchanged=None,
             tree_digest_unchanged=None,
-            result="rejected",
+            result=result,
             error_code=code,
-            recovery_ref=None,
+            recovery_ref=recovery_ref,
             trust_context=trust or {"mode": "local-loopback-single-user"},
             created_at=_utc_now(),
         )
@@ -589,6 +870,34 @@ def _utc_plus_hours(hours: int) -> str:
 
     when = datetime.now(timezone.utc) + timedelta(hours=hours)
     return when.replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def _is_expired(expires_at: str) -> bool:
+    """Return True when proposal expires_at is at or before now (CT-006)."""
+    raw = (expires_at or "").strip()
+    if not raw:
+        return False
+    try:
+        if raw.endswith("Z"):
+            exp = datetime.fromisoformat(raw[:-1] + "+00:00")
+        else:
+            exp = datetime.fromisoformat(raw)
+        if exp.tzinfo is None:
+            exp = exp.replace(tzinfo=timezone.utc)
+    except ValueError:
+        return True
+    return datetime.now(timezone.utc) >= exp
+
+
+def _trust_context_error(trust: Mapping[str, Any]) -> str | None:
+    """CT-015: external access cannot inherit local loopback single-user trust."""
+    mode = trust.get("mode", "local-loopback-single-user")
+    external = trust.get("external_access", False)
+    if external is True:
+        return "external_access cannot use local-loopback single-user trust for first slice"
+    if mode not in {"local-loopback-single-user"}:
+        return f"unsupported trust mode for first slice: {mode!r}"
+    return None
 
 
 def _simple_unified_diff(name: str, before: str, after: str) -> str:

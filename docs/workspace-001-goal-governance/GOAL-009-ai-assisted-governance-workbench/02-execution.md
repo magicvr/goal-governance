@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.17.0
+version: 0.27.0
 ---
 
 # 执行记录 · GOAL-009
@@ -128,12 +128,92 @@ version: 0.17.0
 - 复跑 `web/` unittest：**44 passed, 1 skipped**。
 - **未**关闭 F-007/F-008；**未** `verified` I-003/I-004/I-006；**未**改生产门禁。进度 **32%**。
 
+### 2026-07-21 · 立项 GOAL-013（A-020 实现承接）
+
+- 用户确认：按 A-020 立项 GOAL-013（补 CT 缺口与跨进程幂等；生产门禁默认仍关）。
+- 已创建 [GOAL-013-write-gate-ct-durable-idempotency](../GOAL-013-write-gate-ct-durable-idempotency/00-meta.md)；goal-tree 同步。
+- **未**关闭 F-007/F-008；**未**开放生产写入；实现编码改由 GOAL-013 执行。
+
+### 2026-07-21 · A-021 回写 CT-007 与 GOAL-012 F-003 residual
+
+- 用户 `/govern`：回写 GOAL-012 F-003 residual 与 A-020（CT-007 持久化证据）。
+- [A-021](03-audit.md#a-021--回写-a-020--ct-007-持久化与-goal-012-f-003-residual-关闭2026-07-21)：CT-007 → **覆盖**；CT-008 → **部分**；GOAL-012 F-003 **closed**。
+- F-008 缺口「跨进程幂等」标为已满足；**F-007/F-008 整体仍 open**；生产写入仍阻断。进度 **33%**。
+
+### 2026-07-21 · A-022 回写阶段 C CT 覆盖
+
+- 用户 `/govern 回写 GOAL-009 A-020（阶段 C：CT-001/003/006/012/014/015 覆盖）`。
+- [A-022](03-audit.md#a-022--回写-a-020--阶段-c-ct-001003006012014015-覆盖2026-07-21)：上述 CT → **覆盖**；F-007 关闭条件 1–4 有运行证据，**正式关闭未执行**。
+- **F-007/F-008 仍 open**；生产写入仍阻断。进度 **35%**。
+
+### 2026-07-21 · A-023 / A-024 · GOAL-013 阶段 D/E 与门禁审视
+
+- 阶段 D 证据已回写 [A-023](03-audit.md#a-023--回写-a-020--阶段-d-ct-008009010011-覆盖2026-07-21)。
+- 用户 `/govern GOAL-013 阶段 E 的最终回归与门禁审视`。
+- [GOAL-013](../GOAL-013-write-gate-ct-durable-idempotency/00-meta.md) 有界关门 `done / 100%`（A-004）；全量回归 **61 passed, 1 skipped**。
+- [A-024](03-audit.md#a-024--门禁审视--goal-013-阶段-e-最终回归与证据索引2026-07-21)：F-007/F-008 **仍 open**；I-003/I-004/I-006 **非 verified**；生产写入 **仍阻断**。
+- 进度 **38%**（实现证据与门禁台账齐；正式关闭 finding / verified 信息项 / 生产放行均未发生）。
+
+### 2026-07-21 · A-025 正式关闭 F-007
+
+- 用户 `/govern 关闭 GOAL-009 F-007（证据已齐；F-008 仍 open 时写明范围`。
+- [D-013](01-decision.md#d-013--关闭-f-007确认信任边界f-008-仍-open-时写明范围2026-07-21) / [A-025](03-audit.md#a-025--正式关闭-f-007f-008-仍-open-时的范围说明2026-07-21)：**F-007 closed**。
+- **F-008 仍 open**（process-local CT-009、最小 CT-011、多进程/恢复原子性）。I-003/I-004/I-006 **非** `verified`。生产写入 **仍阻断**。进度 **42%**。
+
+### 2026-07-21 · A-026 F-008 residual 审视（待裁决）
+
+- 用户 `/govern 审视 F-008 residual（接受 process-local + 最小 CT-011，或补跨进程协调`。
+- [A-026](03-audit.md#a-026--f-008-residual-审视路径-ab待用户裁决2026-07-21) / [D-014 proposed](01-decision.md#d-014--f-008-residual-路径包proposed--待用户裁决2026-07-21)：路径 A/B/C 已落盘。
+- **未**接受 residual；**未**关闭 F-008；**未**开放生产写入。进度仍 **42%**。
+
+### 2026-07-21 · A-027 路径 A：有界关闭 F-008
+
+- 用户选择路径 A：接受 R-F008-1～3 residual 并有界关闭 F-008。
+- [D-014-A](01-decision.md#d-014-a--接受-r-f008-13-residual-并有界关闭-f-0082026-07-21) / [A-027](03-audit.md#a-027--路径-a接受-r-f008-13-residual-并有界关闭-f-0082026-07-21)：**F-008 closed（有界）**。
+- I-003/I-004/I-006 **非** `verified`。生产写入 **仍阻断**。进度 **48%**。
+
+### 2026-07-21 · A-028 审视 I-003/I-004/I-006 可否 verified
+
+- 用户 `/govern 审视 I-003/I-004/I-006 可否 verified`。
+- [A-028](03-audit.md#a-028--审视-i-003--i-004--i-006-可否-verified2026-07-21) / [D-015 proposed](01-decision.md#d-015--i-003i-004i-006-verified-路径包proposed--待用户裁决2026-07-21)。
+- 回归复核：**61 passed, 1 skipped**。
+- **未**将任一项标 `verified`；**未**开放生产写入。进度仍 **48%**。
+
+### 2026-07-21 · A-029 V1：I-003/I-004/I-006 α verified
+
+- 用户选择 V1。
+- [D-015-V1](01-decision.md#d-015-v1--α-有界将-i-003i-004i-006-标-verified2026-07-21) / [A-029](03-audit.md#a-029--v1i-003i-004i-006-α-有界-verified2026-07-21)：三项 **verified（α 有界）**。
+- **未**修改 `PRODUCT_GATES_OPEN`；生产写入 **默认仍阻断**。进度 **55%**。
+
+### 2026-07-21 · A-030 放行生产受控写入（设 env）
+
+- 用户 `/govern 放行生产受控写入（设 env`。
+- [D-016](01-decision.md#d-016--放行生产受控写入设-env--规划锁默认关闭2026-07-21) / [A-030](03-audit.md#a-030--放行生产受控写入设-env2026-07-21)。
+- 代码：`production_product_gates_open` 默认 **false**；`ALLOW_CONTROLLED_WRITE` 默认仍 **false**。
+- 文档：`web/.env.example`、`web/README.md` 检查清单与推荐 env 片段。
+- 回归：**61 passed, 1 skipped**。
+- 进度 **60%**。
+
+### 2026-07-21 · 本地产品工作区部署（ALLOW=true）
+
+- 用户要求：在产品工作区部署并设 `ALLOW_CONTROLLED_WRITE=true`。
+- 产品数据根：`data/product-workspace/`（由 `web/tests/fixtures/r004/workspace-ok` 复制的合成工作区；**非** `docs/workspace-001-goal-governance` dogfood）。目录在 `.gitignore` 的 `data/` 下。
+- 本地 env：`web/.env`（gitignore）含：
+  - `GOAL_GOVERNANCE_WORKSPACE_DIR=<repo>/data/product-workspace`
+  - `DEV_DOGFOOD=false`
+  - `PRODUCT_GATES_OPEN=false`
+  - `ALLOW_CONTROLLED_WRITE=true`
+- 代码：`main.py` 在非 unittest 路径加载 `web/.env`（`load_web_dotenv`）；测试不加载，避免污染 CT-013。
+- 验证：`/api/health` → `ok=true`，`workspace_configured=true`，`product_gates_open=false`，`controlled_write_enabled=true`，`dev_dogfood=false`。
+- 回归：**61 passed, 1 skipped**。
+- **未**对 dogfood 过程树开启写入。
+
 ## 下一步（计划）
 
-1. 按 A-020 缺口补 CT/跨进程幂等（可另立 GOAL-013），再议 F-007/F-008 关闭。
-2. 或并行 F-002～F-004 验证计划（路径 B）。
-3. **硬禁令**：F-007/F-008 关闭且 I-003/I-004/I-006 `verified` 前不开放生产 Web/AI 写入；须同时处理 GOAL-012 F-003 residual。
+1. 可选：对本机产品工作区做一次受限追加冒烟（或路线图 E 试点）。  
+2. `/govern 推进 F-002～F-004`（路线图 B）。  
+3. 多 worker 部署前复审 R-F008-1～3；紧急阻断可设 `PRODUCT_GATES_OPEN=true`。
 
 ## 进度评估
 
-**32%**：α 实现已关门；写入门禁证据台账与缺口已冻结（A-020）；F-007/F-008 与 B 组 findings 仍 open；生产写入仍阻断。
+**60%**：α 写入门禁闭环；本地产品工作区部署 env 已就绪且 health 显示可写；F-002～F-004 仍 open。

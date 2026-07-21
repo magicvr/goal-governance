@@ -5,18 +5,16 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-21
 updated: 2026-07-21
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 审计 · GOAL-012
 
 ## 当前审视状态
 
-- **有界关门**：`done / 100%`（[D-002](01-decision.md#d-002--有界关门α-实现完成生产写入与-f-003-residual-不随关门解除2026-07-21) / [A-003](#a-003--有界关门审计-close-out2026-07-21)）。
-- 实现事实见 [02-execution.md](02-execution.md)；α 成功标准已勾选（R-004 **关键路径**）。
-- A-001 independent `conditional`（已响应）；A-002 self 阶段 `pass`；A-003 self close-out `pass`。
-- **F-001/F-002/F-004 closed**；**F-003 / I-005 accepted-residual 在关门后仍有效**（进程内幂等；复审=生产写入前 / GOAL-009 F-008）。
-- **生产 Web 写入仍关**（GOAL-009 F-007/F-008；I-003 collecting；`PRODUCT_GATES_OPEN` 默认 true）。
+- **有界关门**：`done / 100%`（D-002 / A-003）；α 范围不变。
+- A-001～A-003 历史结论保留；**A-004** 回写关闭 **F-003 / I-005 residual**（GOAL-013 阶段 B · CT-007 持久化证据）。
+- **F-001/F-002/F-003/F-004 均 closed**；生产 Web 写入仍关（GOAL-009 F-007/F-008；`PRODUCT_GATES_OPEN` 默认 true）。
 
 ## 审计意见
 
@@ -68,11 +66,9 @@ version: 0.4.0
 
 - **关闭证据**：00-meta 成功标准与 `web/README.md` 收窄为「关键路径 / 非 CT 全矩阵」。
 
-#### F-003 · recommended / medium · **accepted-residual**（见 A-002）— 幂等重放仅进程内存
+#### F-003 · recommended / medium · **closed**（见 A-004）— 幂等重放仅进程内存（历史 residual）
 
-- **残余范围**：α 门禁内切片；不覆盖生产写入放行。
-- **复审触发**：GOAL-009 F-008 关闭路径或启用生产 `decide_and_execute` 之前。
-- **证据**：README「幂等语义（α residual）」；I-005 `accepted-residual`。
+- **关闭证据（后置）**：GOAL-013 阶段 B 实现磁盘 receipt 加载与跨实例重放；见 [A-004](#a-004--回写关闭-f-003-residualct-007-持久化2026-07-21)。
 
 #### F-004 · recommended / low · **closed**（见 A-002）— Web HTTP 层缺少 decide 门禁负向用例
 
@@ -242,3 +238,46 @@ version: 0.4.0
 ### 声明
 
 关门不修改生产门禁默认值；不将 residual 写成已验证事实。
+
+## A-004 · 回写关闭 F-003 residual（CT-007 持久化）（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-closure
+- **scope**：关闭 A-001 F-003 / I-005 accepted-residual（进程内幂等）；证据来自 [GOAL-013](../GOAL-013-write-gate-ct-durable-idempotency/00-meta.md) 阶段 B。不开放生产写入；不关闭 GOAL-009 F-007/F-008。
+- **verdict**：pass
+
+### 用户意图
+
+`/govern 回写 GOAL-012 F-003 residual 与 GOAL-009 A-020（CT-007 持久化证据）`
+
+### 关闭台账
+
+| 项 | 原状态 | 现状态 | 关闭证据 |
+|----|--------|--------|----------|
+| A-001 **F-003** | accepted-residual | **closed** | GOAL-013 D-002 / A-001；`controlled_change._lookup_prior_receipt`；`test_durable_idempotent_replay_new_service_instance` |
+| **I-005** | accepted-residual | **verified** | 同上；`ops/receipts/{operation_id}.json` 原子落盘 + 跨实例重放不重复写 |
+
+### 成果（可核对）
+
+| 主张 | 证据路径 |
+|------|----------|
+| 成功路径 receipt 落盘 | `web/services/controlled_change.py` `_persist_receipt` |
+| 新 service 实例加载并幂等返回 | `web/tests/test_controlled_change.py::test_durable_idempotent_replay_new_service_instance` |
+| 同 operation_id 不同 proposal 冲突 | `test_operation_id_conflict_different_proposal` → `ERR_OPERATION_ID_CONFLICT` |
+| 文档 | `web/README.md` 幂等语义；GOAL-013 `02-execution` 阶段 B |
+| 回归 | web unittest **46 passed, 1 skipped**（GOAL-013 阶段 B 记录） |
+
+### 边界（本响应不宣称）
+
+- **不**关闭 GOAL-009 **F-008**（仍缺 CT-009/010/011 等）。
+- **不**将 I-003/I-004/I-006 标 `verified`；**不**开放生产写入。
+- 有界关门 D-002 的「生产写入仍关」条件继续有效；仅 residual 幂等项关闭。
+
+### Findings
+
+无新增 finding。**F-003 closed**；I-005 **verified**。
+
+### 结论
+
+A-001 F-003 residual 在 GOAL-013 实现证据下关闭。GOAL-012 保持 `done / 100%`。

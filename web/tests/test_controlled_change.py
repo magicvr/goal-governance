@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import shutil
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
@@ -155,7 +156,7 @@ class ControlledChangeTests(unittest.TestCase):
             action="affirm",
             operation_id="op_drift_001",
         )
-        self.assertEqual(receipt.result, "rejected")
+        self.assertEqual(receipt.result, "conflict")
         self.assertEqual(receipt.error_code, "ERR_BASELINE_DRIFT")
 
     def test_open_finding_append_keeps_finding(self) -> None:
@@ -201,7 +202,7 @@ class ControlledChangeTests(unittest.TestCase):
             repository=self.repo,
             workspace_id="workspace-ok-fixture",
             test_authorized=False,
-            environ={},  # product gates open by default
+            environ={},  # ALLOW default false → production path blocked
         )
         cand = gated.prepare_candidate_revision(
             goal_id=GOAL_ID,
@@ -244,6 +245,79 @@ class ControlledChangeTests(unittest.TestCase):
         self.assertEqual(body_after_first, body_after_second)
         self.assertEqual(body_after_first.count("idempotent body"), 1)
 
+    def test_durable_idempotent_replay_new_service_instance(self) -> None:
+        """CT-007 durable: new ControlledChangeService loads receipt from disk (GOAL-013 B)."""
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="durable idempotent body",
+            source_statement="t",
+        )
+        prop = self.svc.build_proposal(candidate=cand)
+        r1 = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_durable_001",
+        )
+        self.assertEqual(r1.result, "committed")
+        receipt_path = self.root / "ops" / "receipts" / "op_durable_001.json"
+        self.assertTrue(receipt_path.is_file())
+        body_after_first = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+
+        # Fresh service instance: empty memory, no proposal cache (simulates process restart).
+        svc2 = ControlledChangeService(
+            repository=GoalsRepository(self.root),
+            workspace_id="workspace-ok-fixture",
+            test_authorized=True,
+        )
+        r2 = svc2.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_durable_001",
+        )
+        body_after_second = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        self.assertEqual(r2.result, "committed")
+        self.assertEqual(r2.operation_id, r1.operation_id)
+        self.assertEqual(r2.request_digest, r1.request_digest)
+        self.assertEqual(body_after_first, body_after_second)
+        self.assertEqual(body_after_first.count("durable idempotent body"), 1)
+        loaded = svc2.get_receipt("op_durable_001")
+        self.assertIsNotNone(loaded)
+        assert loaded is not None
+        self.assertEqual(loaded.result, "committed")
+
+    def test_operation_id_conflict_different_proposal(self) -> None:
+        """CT-008 partial: reusing operation_id with a different proposal_digest rejects."""
+        c1 = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="first body",
+            source_statement="t",
+        )
+        p1 = self.svc.build_proposal(candidate=c1)
+        r1 = self.svc.decide_and_execute(
+            proposal_digest=p1.proposal_digest,
+            action="affirm",
+            operation_id="op_conflict_001",
+        )
+        self.assertEqual(r1.result, "committed")
+        body_before = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+
+        c2 = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="second body different",
+            source_statement="t",
+        )
+        p2 = self.svc.build_proposal(candidate=c2)
+        r2 = self.svc.decide_and_execute(
+            proposal_digest=p2.proposal_digest,
+            action="affirm",
+            operation_id="op_conflict_001",
+        )
+        body_after = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        self.assertEqual(r2.result, "conflict")
+        self.assertEqual(r2.error_code, "ERR_IDEM_CONFLICT")
+        self.assertEqual(body_before, body_after)
+        self.assertNotIn("second body different", body_after)
+
     def test_digest_mismatch_caller(self) -> None:
         cand = self.svc.prepare_candidate_revision(
             goal_id=GOAL_ID,
@@ -259,6 +333,309 @@ class ControlledChangeTests(unittest.TestCase):
         )
         self.assertEqual(receipt.result, "rejected")
         self.assertEqual(receipt.error_code, "ERR_DIGEST_MISMATCH")
+
+    # --- GOAL-013 phase C: F-007 CT-001 / 003 / 006 / 012 / 014 / 015 ---
+
+    def test_ct001_missing_goal_and_workspace(self) -> None:
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.prepare_candidate_revision(
+                goal_id="",
+                content="x",
+                source_statement="t",
+            )
+        self.assertEqual(ctx.exception.code, "ERR_MISSING_FIELD")
+        with self.assertRaises(ControlledChangeError) as ctx2:
+            self.svc.prepare_candidate_revision(
+                goal_id=GOAL_ID,
+                content="x",
+                source_statement="t",
+                workspace_id="",
+            )
+        self.assertEqual(ctx2.exception.code, "ERR_MISSING_FIELD")
+
+    def test_ct001_content_digest_mismatch_on_proposal(self) -> None:
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="ok body",
+            source_statement="t",
+        )
+        # Tamper candidate content after digest was fixed (simulate CT-001 digest binding).
+        from dataclasses import replace
+
+        tampered = replace(cand, content="ok body CHANGED")
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.build_proposal(candidate=tampered)
+        self.assertEqual(ctx.exception.code, "ERR_DIGEST_MISMATCH")
+
+    def test_ct003_cross_workspace_rejected(self) -> None:
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.prepare_candidate_revision(
+                goal_id=GOAL_ID,
+                content="cross ws",
+                source_statement="t",
+                workspace_id="other-workspace-id",
+            )
+        self.assertEqual(ctx.exception.code, "ERR_SCOPE_MISMATCH")
+        self.assertNotIn("other workspace secrets", ctx.exception.message)
+
+    def test_ct003_path_escape_goal_rejected(self) -> None:
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.prepare_candidate_revision(
+                goal_id="../outside-goal",
+                content="escape",
+                source_statement="t",
+            )
+        self.assertEqual(ctx.exception.code, "ERR_SCOPE_MISMATCH")
+
+    def test_ct006_expired_proposal_rejected(self) -> None:
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="will expire",
+            source_statement="t",
+        )
+        prop = self.svc.build_proposal(candidate=cand, expires_hours=-1)
+        before = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        receipt = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_expire_001",
+        )
+        after = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        self.assertEqual(receipt.result, "rejected")
+        self.assertEqual(receipt.error_code, "ERR_DECISION_EXPIRED")
+        self.assertEqual(before, after)
+
+    def test_ct006_reject_and_cancel_do_not_write(self) -> None:
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="to reject",
+            source_statement="t",
+        )
+        prop = self.svc.build_proposal(candidate=cand)
+        before = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        r1 = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="reject",
+            operation_id="op_reject_001",
+        )
+        r2 = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="cancel",
+            operation_id="op_cancel_001",
+        )
+        after = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        self.assertEqual(r1.result, "rejected")
+        self.assertEqual(r1.error_code, "ERR_DECISION_INVALID")
+        self.assertEqual(r2.result, "rejected")
+        self.assertEqual(r2.error_code, "ERR_DECISION_CANCELLED")
+        self.assertEqual(before, after)
+
+    def test_ct006_unknown_proposal_digest(self) -> None:
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.decide_and_execute(
+                proposal_digest="sha256:deadbeef" + "0" * 56,
+                action="affirm",
+                operation_id="op_bad_prop_001",
+            )
+        self.assertEqual(ctx.exception.code, "ERR_DECISION_INVALID")
+
+    def test_ct012_content_contract_script_and_path(self) -> None:
+        with self.assertRaises(ControlledChangeError) as ctx:
+            self.svc.prepare_candidate_revision(
+                goal_id=GOAL_ID,
+                content='click <script>alert(1)</script>',
+                source_statement="t",
+            )
+        self.assertEqual(ctx.exception.code, "ERR_CONTENT_CONTRACT")
+        with self.assertRaises(ControlledChangeError) as ctx2:
+            self.svc.prepare_candidate_revision(
+                goal_id=GOAL_ID,
+                content="see ../../secret and 00-meta.md",
+                source_statement="t",
+            )
+        self.assertEqual(ctx2.exception.code, "ERR_CONTENT_CONTRACT")
+
+    def test_ct014_governance_mutation_payload_rejected(self) -> None:
+        cases = [
+            "status: done",
+            "progress: 100%",
+            "parent: GOAL-001-fixture-target",
+            "id: GOAL-999-hack",
+            "mark done and close required",
+        ]
+        for body in cases:
+            with self.subTest(body=body):
+                with self.assertRaises(ControlledChangeError) as ctx:
+                    self.svc.prepare_candidate_revision(
+                        goal_id=GOAL_ID,
+                        content=body,
+                        source_statement="t",
+                    )
+                self.assertEqual(ctx.exception.code, "ERR_CONTENT_CONTRACT")
+
+    def test_ct015_external_trust_rejected(self) -> None:
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="external attempt",
+            source_statement="t",
+        )
+        prop = self.svc.build_proposal(candidate=cand)
+        before = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        receipt = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_trust_001",
+            trust_context={
+                "mode": "local-loopback-single-user",
+                "external_access": True,
+            },
+        )
+        after = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        self.assertEqual(receipt.result, "rejected")
+        self.assertEqual(receipt.error_code, "ERR_TRUST_CONTEXT")
+        self.assertEqual(before, after)
+
+    def test_ct015_unsupported_trust_mode_rejected(self) -> None:
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="bad mode",
+            source_statement="t",
+        )
+        prop = self.svc.build_proposal(candidate=cand)
+        receipt = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_trust_002",
+            trust_context={"mode": "public-internet", "external_access": False},
+        )
+        self.assertEqual(receipt.result, "rejected")
+        self.assertEqual(receipt.error_code, "ERR_TRUST_CONTEXT")
+
+    # --- GOAL-013 phase D: F-008 CT-008/009/010/011 ---
+
+    def test_ct008_same_op_id_different_action_conflicts(self) -> None:
+        """CT-008 full: same operation_id + different request_digest (action) → conflict."""
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="idem request body",
+            source_statement="t",
+        )
+        prop = self.svc.build_proposal(candidate=cand)
+        r1 = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_ct008_full",
+        )
+        self.assertEqual(r1.result, "committed")
+        body = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        r2 = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="reject",
+            operation_id="op_ct008_full",
+        )
+        self.assertEqual(r2.result, "conflict")
+        self.assertEqual(r2.error_code, "ERR_IDEM_CONFLICT")
+        self.assertEqual(body, (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8"))
+        # Committed receipt remains authoritative.
+        loaded = self.svc.get_receipt("op_ct008_full")
+        self.assertIsNotNone(loaded)
+        assert loaded is not None
+        self.assertEqual(loaded.result, "committed")
+
+    def test_ct009_concurrent_write_conflict(self) -> None:
+        """CT-009: second concurrent decide_and_execute loses non-blocking lock."""
+        barrier = threading.Barrier(2)
+        results: list[object] = []
+
+        def hold_lock() -> None:
+            lock = self.svc._workspace_lock()
+            self.assertTrue(lock.acquire(blocking=False))
+            try:
+                barrier.wait(timeout=2)
+                # Hold while other thread attempts decide_and_execute.
+                barrier.wait(timeout=2)
+            finally:
+                lock.release()
+
+        def attempt_write() -> None:
+            cand = self.svc.prepare_candidate_revision(
+                goal_id=GOAL_ID,
+                content="concurrent body",
+                source_statement="t",
+            )
+            prop = self.svc.build_proposal(candidate=cand)
+            barrier.wait(timeout=2)
+            receipt = self.svc.decide_and_execute(
+                proposal_digest=prop.proposal_digest,
+                action="affirm",
+                operation_id="op_ct009_001",
+            )
+            results.append(receipt)
+            barrier.wait(timeout=2)
+
+        t1 = threading.Thread(target=hold_lock)
+        t2 = threading.Thread(target=attempt_write)
+        t1.start()
+        t2.start()
+        t1.join(timeout=5)
+        t2.join(timeout=5)
+        self.assertEqual(len(results), 1)
+        receipt = results[0]
+        self.assertEqual(receipt.result, "conflict")  # type: ignore[attr-defined]
+        self.assertEqual(receipt.error_code, "ERR_CONCURRENT_WRITE")  # type: ignore[attr-defined]
+
+    def test_ct010_recovery_pending_blocks_write(self) -> None:
+        recovery = self.root / ".goal-write-recovery.json"
+        recovery.write_text(json.dumps({"status": "pending"}), encoding="utf-8")
+        state = self.svc.get_recovery_state()
+        self.assertTrue(state["recovery_pending"])
+        cand = self.svc.prepare_candidate_revision(
+            goal_id=GOAL_ID,
+            content="blocked by recovery",
+            source_statement="t",
+        )
+        prop = self.svc.build_proposal(candidate=cand)
+        before = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        receipt = self.svc.decide_and_execute(
+            proposal_digest=prop.proposal_digest,
+            action="affirm",
+            operation_id="op_ct010_001",
+        )
+        after = (self.root / GOAL_ID / "02-execution.md").read_text(encoding="utf-8")
+        self.assertEqual(receipt.result, "recovery_pending")
+        self.assertEqual(receipt.error_code, "ERR_RECOVERY_PENDING")
+        self.assertEqual(before, after)
+
+    def test_ct011_unverifiable_receipt_not_success(self) -> None:
+        """CT-011: incomplete committed receipt must not surface as success."""
+        path = self.root / "ops" / "receipts"
+        path.mkdir(parents=True, exist_ok=True)
+        bad = {
+            "schema": "r004-execution-receipt/v0",
+            "operation_id": "op_ct011_bad",
+            "workspace_id": "workspace-ok-fixture",
+            "goal_id": GOAL_ID,
+            "operation_kind": "append-execution-fact",
+            "expected_write_set": ["02-execution.md"],
+            "proposal_digest": "sha256:abc",
+            "decision_digest": None,
+            "request_digest": "",
+            "pre_write_digest": None,
+            "post_write_digest": None,
+            "meta_digest_unchanged": None,
+            "tree_digest_unchanged": None,
+            "result": "committed",
+            "error_code": None,
+            "recovery_ref": None,
+            "trust_context": {"mode": "local-loopback-single-user"},
+            "created_at": "2026-07-21T00:00:00Z",
+        }
+        (path / "op_ct011_bad.json").write_text(json.dumps(bad), encoding="utf-8")
+        loaded = self.svc.get_receipt("op_ct011_bad")
+        self.assertIsNotNone(loaded)
+        assert loaded is not None
+        self.assertEqual(loaded.result, "failed")
+        self.assertEqual(loaded.error_code, "ERR_RECEIPT_UNVERIFIABLE")
 
 
 if __name__ == "__main__":

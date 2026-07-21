@@ -7,10 +7,13 @@
 - **配置化产品工作区**：通过环境变量绑定工作区根；**默认 fail closed**，不会静默加载本 monorepo 的过程树（dogfood）。
 - **工作区详情**：以**目标树**为主要导航，展示所选工作区内目标的 canonical 上下文（诊断为计算视图）。
 - **受限提案**：用户可提交 `user-provided` 候选执行事实，生成仅追加 `02-execution.md` 的提案 diff。
-- **受控写入门禁**：生产路径 `decide_and_execute` 在 GOAL-009 **F-007/F-008 仍 open**（`GOAL_GOVERNANCE_PRODUCT_GATES_OPEN=true` 默认）时**拒绝写入**；契约测试可用 `test_authorized` / `GOAL_GOVERNANCE_TEST_WRITE_MODE`。
-- **R-004 覆盖边界（α）**：Service 级覆盖**关键**正反路径（成功追加、缺字段、非法 source、写集、baseline drift、open finding 保持、split execute、prod gate、进程内幂等、digest mismatch、preview=write）；**不是** CT-001～018 全矩阵已通过。完整矩阵与 GOAL-009 I-003/I-004/I-006 `verified` / F-007/F-008 关闭仍开放。
-- **幂等语义（α residual）**：相同 `operation_id` 的成功重放当前为**进程内**内存索引；`ops/receipts/*.json` 落盘供核对，但**跨进程重启**不保证自动从磁盘恢复幂等表。生产放行前须补持久化重放（GOAL-009 F-008 / CT-007）。
-- **非目标**：无 AI、无共享资料 CRUD、无多工作区 N1 列表产品化、无 SQLite；发布物不含 dogfood 过程树；fixture 使用合成 `GOAL-001-fixture-target`（`web/tests/fixtures/r004/workspace-ok/`，非本仓过程数据），不用真实 GOAL-001～011 过程树当客户样例。
+- **受控写入门禁（GOAL-009 A-030）**：**F-007/F-008 closed**；**I-003/I-004/I-006 verified（α）**。规划锁默认 **关闭**（`PRODUCT_GATES_OPEN` 默认 `false`）。生产写入仍须第二门闩 `ALLOW_CONTROLLED_WRITE=true`，且数据根为产品工作区（非 dogfood）、单进程 residual（R-F008）。契约测试可用 `test_authorized` / `TEST_WRITE_MODE`。
+- **R-004 覆盖边界**：Service 级关键路径 + GOAL-013 B/C/D CT 证据。CT-009=process-local；CT-011=最小可核对（accepted residual）。
+- **幂等语义（CT-007/008）**：成功 `decide_and_execute` 将 receipt 原子写入工作区 `ops/receipts/{operation_id}.json`（非五件套）。新实例同 `operation_id`+同 request 返回既有 receipt；不同 request → `ERR_IDEM_CONFLICT` / `conflict`，不覆盖已提交 receipt。
+- **F-007 向门禁（阶段 C）**：跨 workspace / path escape → `ERR_SCOPE_MISMATCH`；过期 → `ERR_DECISION_EXPIRED`；外部 trust → `ERR_TRUST_CONTEXT`；治理/脚本/路径内容 → `ERR_CONTENT_CONTRACT`。
+- **F-008 向门禁（阶段 D）**：recovery pending → `ERR_RECOVERY_PENDING` / `recovery_pending`；同进程 workspace 锁竞争 → `ERR_CONCURRENT_WRITE` / `conflict`；不可复核 committed receipt → `ERR_RECEIPT_UNVERIFIABLE` / `failed`。
+- **双门闩**：`PRODUCT_GATES_OPEN=true` **或** `ALLOW_CONTROLLED_WRITE` 未开 → 生产路径拒绝写入。
+- **非目标**：无 AI、无共享资料 CRUD、无多工作区 N1 列表产品化、无 SQLite；发布物不含 dogfood 过程树；fixture 使用合成 `GOAL-001-fixture-target`（`web/tests/fixtures/r004/workspace-ok/`，非本仓过程数据）。
 
 ## 工作区配置（fail closed）
 
@@ -19,8 +22,8 @@
 | `GOAL_GOVERNANCE_WORKSPACE_DIR` | 显式产品工作区根（含 `goal-tree.md` 与 `GOAL-*`） |
 | `GOAL_GOVERNANCE_DATA_ROOT` | 数据根：若内含 `goal-tree.md` 则直接使用；若恰有一个 `workspace-*` 子目录则选用它 |
 | `GOAL_GOVERNANCE_DEV_DOGFOOD` | `true` 时加载本仓库 `docs/workspace-001-goal-governance/`（**仅开发**） |
-| `GOAL_GOVERNANCE_PRODUCT_GATES_OPEN` | 默认 `true`：产品写入门禁仍开放 → 生产写入关闭 |
-| `GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE` | 仅当产品门禁关闭后，显式允许生产受控写入 |
+| `GOAL_GOVERNANCE_PRODUCT_GATES_OPEN` | 默认 `false`（A-030 后）：规划锁关闭。设 `true` 可紧急再阻断生产写入 |
+| `GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE` | 第二门闩；`true` 时允许生产受控写入（须产品数据根，非 dogfood） |
 | `GOAL_GOVERNANCE_TEST_WRITE_MODE` | 测试授权写入（勿用于生产） |
 
 未设置工作区且未开 dogfood 时，首页显示配置错误，**不**读取本仓过程目标。
@@ -43,11 +46,25 @@ $env:GOAL_GOVERNANCE_DEV_DOGFOOD = "true"
 
 在启用生产 `decide_and_execute` 之前必须全部满足：
 
-1. GOAL-009 **F-007** 与 **F-008** 已关闭（有关闭证据）。
-2. I-003 / I-004 / I-006 为 `verified`。
-3. 设置 `GOAL_GOVERNANCE_PRODUCT_GATES_OPEN=false`。
-4. 设置 `GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE=true`。
-5. 部署数据根为客户/产品工作区，**不是**本仓 dogfood 过程树。
+1. GOAL-009 **F-007** 与 **F-008** 均已关闭。**当前：均 closed**（F-008 有界 + residual）。
+2. I-003 / I-004 / I-006 为 `verified`。**当前：均 verified（α，A-029）**。
+3. `GOAL_GOVERNANCE_PRODUCT_GATES_OPEN=false`。**当前：代码默认 false（A-030）**；设 `true` 可再阻断。
+4. `GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE=true`。**当前：默认 false — 部署时显式打开。**
+5. 部署数据根为客户/产品工作区，**不是**本仓 dogfood 过程树（`DEV_DOGFOOD` 不得与生产写入同开）。
+6. 部署形态仍为 **单进程 local-loopback**（或 residual 已按 R-F008 复审通过）。
+
+### 推荐生产 env 片段
+
+```powershell
+$env:GOAL_GOVERNANCE_PRODUCT_GATES_OPEN = "false"
+$env:GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE = "true"
+$env:GOAL_GOVERNANCE_DEV_DOGFOOD = "false"
+$env:GOAL_GOVERNANCE_WORKSPACE_DIR = "C:\path\to\product-workspace"
+```
+
+或复制 `web/.env.example` → `web/.env`（gitignore）后编辑。应用启动时会加载 `web/.env`（不覆盖已有进程环境；unittest 不加载）。
+
+本地示例产品数据根可用仓库内 `data/product-workspace/`（gitignore；由 R-004 fixture 复制，**不是** dogfood 过程树）。
 
 Receipt 写入工作区旁路 `ops/receipts/`（非五件套）。
 

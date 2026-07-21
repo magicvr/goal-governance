@@ -4,10 +4,66 @@ status: active
 created: 2026-07-18
 updated: 2026-07-21
 parent: null
-version: 0.26.0
+version: 0.36.0
 ---
 
 # Goal Tree
+
+## 2026-07-21 · 本地产品工作区部署（ALLOW=true）
+
+配置 `data/product-workspace` + `web/.env`（ALLOW=true，非 dogfood）。`/api/health` 显示 `controlled_write_enabled=true`。GOAL-009 progress **60%**。
+
+## 2026-07-21 · GOAL-009 A-030 生产受控写入授权
+
+D-016/A-030：规划锁默认关闭；须 `ALLOW_CONTROLLED_WRITE=true` + 产品数据根 + 单进程 residual。GOAL-009 progress **60%**。
+
+## 2026-07-21 · GOAL-009 A-029 I-003/I-004/I-006 α verified
+
+用户选 V1：I-003/I-004/I-006 **verified（α 有界）**。F-007/F-008 closed。其后 A-030 授权生产写（见上节）。
+
+## 2026-07-21 · GOAL-009 A-028 审视 I-003/I-004/I-006
+
+A-028 / D-015 proposed；其后用户选 V1（见上节）。
+
+## 2026-07-21 · GOAL-009 A-027 有界关闭 F-008
+
+用户选路径 A：接受 R-F008-1～3 residual；**F-008 closed（有界）**。I-003/I-004/I-006 非 verified；生产写入仍关。GOAL-009 progress **48%**。
+
+## 2026-07-21 · GOAL-009 A-026 F-008 residual 审视
+
+GOAL-009 落盘 F-008 residual 路径 A/B/C（A-026 / D-014 proposed）。其后用户选路径 A（见上节）。
+
+## 2026-07-21 · GOAL-009 A-025 关闭 F-007
+
+GOAL-009 **F-007 closed**（确认/信任边界）。**F-008 仍 open**（process-local CT-009、最小 CT-011 等）。I-003/I-004/I-006 非 verified；生产写入仍关。GOAL-009 progress **42%**。
+
+## 2026-07-21 · GOAL-013 阶段 E 有界关门与 A-024 门禁审视
+
+GOAL-013 `done / 100%`（实现证据交付完成）。最终回归 **61 passed, 1 skipped**。GOAL-009 A-024 当时 F-007/F-008 仍 open；现 F-007 已由 A-025 关闭。
+
+## 2026-07-21 · GOAL-013 阶段 D F-008 CT
+
+GOAL-013 完成 CT-008/009/010/011 可运行证据，progress **75%**；CT-009 明确限于 process-local lock。GOAL-009 F-007/F-008 仍 open，生产写入仍关。
+
+## 2026-07-21 · GOAL-009 A-022 阶段 C CT 回写
+
+GOAL-009 将 CT-001/003/006/012/014/015 标为覆盖（GOAL-013 阶段 C）。**F-007/F-008 仍 open**；生产写入仍关。GOAL-009 progress **35%**。
+
+## 2026-07-21 · GOAL-013 阶段 C F-007 CT
+
+GOAL-013 完成 CT-001/003/006/012/014/015 可运行用例；progress **55%**。生产门禁默认仍关；F-007/F-008 关闭仍归 GOAL-009。
+
+## 2026-07-21 · CT-007 台账回写
+
+GOAL-012 F-003 residual **closed**（A-004）；GOAL-009 A-021 将 CT-007 标为覆盖。**F-007/F-008 仍 open**；生产写入仍关。GOAL-009 progress **33%**。
+
+## 2026-07-21 · GOAL-013 阶段 B 跨进程幂等
+
+GOAL-013 完成 CT-007 持久化重放与 CT-008 部分冲突；progress **30%**。生产门禁默认仍关。F-007/F-008 关闭仍归 GOAL-009。
+
+## 2026-07-21 · GOAL-013 写入门禁 CT 与跨进程幂等立项
+
+按 GOAL-009 A-020 创建 [GOAL-013-write-gate-ct-durable-idempotency](GOAL-013-write-gate-ct-durable-idempotency/)：补 CT 缺口与跨进程幂等；**生产门禁默认仍关**；F-007/F-008 关闭权仍在 GOAL-009 审视。
 
 ## 2026-07-21 · GOAL-009 A-020 写入门禁证据台账
 
@@ -15,7 +71,7 @@ GOAL-009 吸收 GOAL-012 关键路径证据并对照 CT-001～018；**F-007/F-00
 
 ## 2026-07-21 · GOAL-012 有界关门
 
-GOAL-012 标为 `done / 100%`（α 实现：配置化工作区详情 + 门禁内受限执行事实追加 + R-004 关键路径测试）。**生产 Web/AI 写入仍关**（GOAL-009 F-007/F-008 与 I-003/I-004/I-006）。**F-003/I-005 residual（进程内幂等）不随关门消失**；复审触发 = 开放生产写入前或 F-008 关闭路径。
+GOAL-012 标为 `done / 100%`（α 实现）。**生产 Web/AI 写入仍关**。关门时 F-003 residual 后由 GOAL-013/A-004 **关闭**（CT-007 持久化）；不构成 F-008 整体关闭或生产放行。
 
 ## 路径语义说明（迁移后现时入口）
 
@@ -59,10 +115,11 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-006-core-methodology-template-productization · 核心方法论、文档协议与 canonical 模板产品化 [done 100%]
 ├── GOAL-007-information-readiness-governance · 信息就绪与未知项治理 [done 100%]
 ├── GOAL-008-skills-consumer-adapter-release-consistency · Skills 消费适配器跨宿主/跨版本发布一致性 [done 100%]
-├── GOAL-009-ai-assisted-governance-workbench · 规划 AI 协助的人类目标治理 Web 工作台 [active 32%]
+├── GOAL-009-ai-assisted-governance-workbench · 规划 AI 协助的人类目标治理 Web 工作台 [active 60%]
 ├── GOAL-010-core-workspace-shared-materials-protocol · 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 [done 100%]
 ├── GOAL-011-multi-workspace-directory-migration · 完成多工作区目录迁移与共享资料索引骨架 [done 100%]
-└── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [done 100%]
+├── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [done 100%]
+└── GOAL-013-write-gate-ct-durable-idempotency · 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） [done 100%]
 ```
 
 ## 状态总览
@@ -77,12 +134,13 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | GOAL-001-main-vision | done | 100% | [GOAL-006-core-methodology-template-productization/](GOAL-006-core-methodology-template-productization/) |
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | GOAL-001-main-vision | done | 100% | [GOAL-007-information-readiness-governance/](GOAL-007-information-readiness-governance/) |
 | GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | done | 100% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
-| GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | GOAL-001-main-vision | active | 32% | [GOAL-009-ai-assisted-governance-workbench/](GOAL-009-ai-assisted-governance-workbench/) |
+| GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | GOAL-001-main-vision | active | 60% | [GOAL-009-ai-assisted-governance-workbench/](GOAL-009-ai-assisted-governance-workbench/) |
 | GOAL-010-core-workspace-shared-materials-protocol | 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 | GOAL-001-main-vision | done | 100% | [GOAL-010-core-workspace-shared-materials-protocol/](GOAL-010-core-workspace-shared-materials-protocol/) |
 | GOAL-011-multi-workspace-directory-migration | 完成多工作区目录迁移与共享资料索引骨架 | GOAL-001-main-vision | done | 100% | [GOAL-011-multi-workspace-directory-migration/](GOAL-011-multi-workspace-directory-migration/) |
 | GOAL-012-first-slice-workspace-detail | 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） | GOAL-001-main-vision | done | 100% | [GOAL-012-first-slice-workspace-detail/](GOAL-012-first-slice-workspace-detail/) |
+| GOAL-013-write-gate-ct-durable-idempotency | 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） | GOAL-001-main-vision | done | 100% | [GOAL-013-write-gate-ct-durable-idempotency/](GOAL-013-write-gate-ct-durable-idempotency/) |
 
-阶段 6：GOAL-009 规划 `active / 32%`（A-020 证据台账；F-007/F-008 仍阻断生产写入；F-002～F-004 open）；GOAL-012 `done / 100%`（生产写入仍关；F-003 residual 存续）。GOAL-001 仍为 `active`。
+阶段 6：GOAL-009 `active / 60%`（A-030：α 写入门禁闭环 + 生产写双门闩授权；F-002～F-004 仍 open）；GOAL-012/013 `done / 100%`。GOAL-001 仍为 `active`。
 
 ## 状态图例
 
@@ -97,6 +155,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-013`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-014`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

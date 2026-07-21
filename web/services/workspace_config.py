@@ -23,7 +23,39 @@ ENV_PRODUCT_GATES_OPEN = "GOAL_GOVERNANCE_PRODUCT_GATES_OPEN"
 
 # Dogfood path relative to repository root (web/ is one level under root).
 _REPO_ROOT = Path(__file__).resolve().parents[2]
+_WEB_DIR = Path(__file__).resolve().parents[1]
 DOGFOOD_WORKSPACE = _REPO_ROOT / "docs" / "workspace-001-goal-governance"
+_ENV_LOADED = False
+
+
+def load_web_dotenv(*, override: bool = False) -> Path | None:
+    """Load web/.env into os.environ if present.
+
+    Does not override keys already set in the process environment unless
+    override=True. Safe no-op when the file is missing. Not used by unit tests
+    that pass explicit environ= maps.
+    """
+    global _ENV_LOADED
+    path = _WEB_DIR / ".env"
+    if not path.is_file():
+        return None
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return None
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if not key:
+            continue
+        if override or key not in os.environ:
+            os.environ[key] = value
+    _ENV_LOADED = True
+    return path
 
 
 def _env_truthy(name: str, default: bool = False) -> bool:
@@ -165,13 +197,15 @@ def _truthy_map(env: Mapping[str, str], name: str, default: bool = False) -> boo
 
 
 def production_product_gates_open(environ: dict[str, str] | None = None) -> bool:
-    """Whether GOAL-009 product write gates (F-007/F-008 / I-003/I-004/I-006) remain open.
+    """Whether the product planning-gate latch is open (open → production writes blocked).
 
-    Defaults to True (gates open → production writes blocked). Set
-    GOAL_GOVERNANCE_PRODUCT_GATES_OPEN=false only after planning evidence closes those gates.
+    Default is False after GOAL-009 A-030 (F-007/F-008 closed; I-003/I-004/I-006 α verified).
+    Production writes still require GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE=true, a product
+    (non-dogfood) workspace root, and single-process residual scope (R-F008-1～3).
+    Set GOAL_GOVERNANCE_PRODUCT_GATES_OPEN=true to re-block all production controlled writes.
     """
     env = environ if environ is not None else os.environ
-    return _truthy_map(env, ENV_PRODUCT_GATES_OPEN, default=True)
+    return _truthy_map(env, ENV_PRODUCT_GATES_OPEN, default=False)
 
 
 def test_write_mode_enabled(environ: dict[str, str] | None = None) -> bool:

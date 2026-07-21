@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-21
 updated: 2026-07-21
-version: 0.4.0
+version: 0.5.0
 progress: 100%
 planning_source: GOAL-009-ai-assisted-governance-workbench
 ---
@@ -23,10 +23,10 @@ planning_source: GOAL-009-ai-assisted-governance-workbench
 - [x] Web 通过**显式配置**绑定数据根 / 工作区路径；默认**不**静默加载本仓 dogfood；开发可用显式开关
 - [x] 工作区详情以目标树为核心，只读展示所选产品工作区内目标的 canonical 上下文（与计算视图区分）
 - [x] 用户可提交 `user-provided` 候选执行事实，形成受限提案 diff（写集仅目标 `02-execution.md` 追加）
-- [x] Service 级契约覆盖 R-004 **关键路径**（非 CT-001～018 全矩阵）：隔离合成 fixture 上可运行正反测试（成功追加 + missing/source/write-set/drift/open-finding/split/prod-gate/进程内幂等/digest mismatch 等）
+- [x] Service 级契约覆盖 R-004 **关键路径**（非 CT-001～018 全矩阵）：隔离合成 fixture 上可运行正反测试（成功追加 + missing/source/write-set/drift/open-finding/split/prod-gate/幂等/digest mismatch 等）
 - [x] **生产路径**上的 `decide_and_execute` 在产品门禁默认开放时拒绝写入（含 HTTP decide 负向）；测试可单独授权
 - [x] 无 AI 调用、无共享资料 CRUD、无跨工作区 N1 列表产品化、无 SQLite 依赖；receipt 在 `ops/receipts/` 非五件套
-- [x] 发布/安装说明写明：不含本仓过程树；合成 fixture 不使用真实 GOAL-001～011 过程数据当客户样例；幂等语义标明为 α 进程内 residual
+- [x] 发布/安装说明写明：不含本仓过程树；合成 fixture 不使用真实 GOAL-001～011 过程数据当客户样例；幂等语义见 README（**CT-007 持久化已由 GOAL-013 补齐**，见 A-004）
 
 ## 交付要点
 
@@ -47,7 +47,7 @@ planning_source: GOAL-009-ai-assisted-governance-workbench
 | I-002 | required | CT fixture 与运行命令 | 契约测试验收 | 首次 CT 合并前 | unittest | verified | 无 | `python -m unittest discover -s tests -v` |
 | I-003 | required | 生产写入启用检查清单 | 开放生产写入 | 启用前 | README 清单 + 环境门禁 | collecting | 待 GOAL-009 F-007/F-008 | 默认仍阻断；清单见 web/README |
 | I-004 | non-blocking | 详情页 UX | 试点 | 试点前 | 模板迭代 | open | 试点 | 基础表单已有 |
-| I-005 | non-blocking | 跨进程幂等/receipt 恢复（A-001 F-003） | 生产写入放行 | 启用生产写入前 | 持久化 operation 索引 + 跨重启 CT | accepted-residual | 用户 `/govern` 接受 α residual；复审触发=关闭 GOAL-009 F-008 或开放生产写入前 | α 仅进程内幂等；文档已标明；不解除生产门禁 |
+| I-005 | non-blocking | 跨进程幂等/receipt 恢复（A-001 F-003） | 生产写入放行 | 启用生产写入前 | 持久化 operation 索引 + 跨重启 CT | verified | 无 | GOAL-013 阶段 B + [A-004](03-audit.md#a-004--回写关闭-f-003-residualct-007-持久化2026-07-21)；`test_durable_idempotent_replay_new_service_instance` |
 
 ## 依赖与门禁
 
@@ -60,7 +60,8 @@ planning_source: GOAL-009-ai-assisted-governance-workbench
 
 1. 生产 Web/AI 写入放行（I-003 仍 `collecting`；GOAL-009 F-007/F-008 仍 open）。
 2. CT-001～018 全矩阵 `verified` 或 GOAL-009 I-003/I-004/I-006 `verified`。
-3. **F-003 / I-005 residual 消失**——跨进程幂等仍为 accepted-residual；复审触发 = 开放生产写入前或 GOAL-009 F-008 关闭路径。
+
+**后置回写（2026-07-21 A-004）**：关门时登记的 F-003 / I-005 **accepted-residual（进程内幂等）** 已由 GOAL-013 阶段 B 证据关闭；**不**因此开放生产写入或关闭 GOAL-009 F-008。
 
 ## 父目标
 

@@ -50,8 +50,9 @@ class WorkspaceConfigTests(unittest.TestCase):
         self.assertEqual(cfg.workspace_dir.resolve(), DOGFOOD_WORKSPACE.resolve())
         self.assertTrue(cfg.dev_dogfood)
 
-    def test_production_write_gated_when_product_gates_open(self) -> None:
-        self.assertTrue(production_product_gates_open({}))
+    def test_production_write_default_requires_allow_flag(self) -> None:
+        """After A-030: planning latch defaults closed; ALLOW remains second latch."""
+        self.assertFalse(production_product_gates_open({}))
         self.assertFalse(
             controlled_write_authorized(
                 test_authorized=False,
@@ -64,6 +65,16 @@ class WorkspaceConfigTests(unittest.TestCase):
                 environ={},
             )
         )
+        # Explicit re-open of planning latch still blocks production path.
+        self.assertFalse(
+            controlled_write_authorized(
+                test_authorized=False,
+                environ={
+                    "GOAL_GOVERNANCE_PRODUCT_GATES_OPEN": "true",
+                    "GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE": "true",
+                },
+            )
+        )
 
     def test_production_write_requires_closed_gates_and_flag(self) -> None:
         env = {
@@ -72,6 +83,13 @@ class WorkspaceConfigTests(unittest.TestCase):
         }
         self.assertFalse(production_product_gates_open(env))
         self.assertTrue(controlled_write_authorized(test_authorized=False, environ=env))
+        # Default planning latch closed + ALLOW true is enough.
+        self.assertTrue(
+            controlled_write_authorized(
+                test_authorized=False,
+                environ={"GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE": "true"},
+            )
+        )
 
 
 if __name__ == "__main__":

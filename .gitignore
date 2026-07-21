@@ -41,6 +41,7 @@ htmlcov/
 *.log
 *.sqlite3
 *.db
+data/
 
 # IDE and editor files
 .vscode/

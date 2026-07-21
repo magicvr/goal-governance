@@ -16,11 +16,18 @@ from services.goals_repo import GoalsRepository
 from services.models import TreeValidationReport
 from services.workspace_config import (
     controlled_write_authorized,
+    load_web_dotenv,
     production_product_gates_open,
     resolve_workspace_config,
 )
 
 BASE_DIR = Path(__file__).resolve().parent
+# Local deploy: load web/.env when present (does not override process env).
+# Skip under unittest/pytest so local ALLOW=true deploy files do not alter CT-013.
+import sys
+
+if "unittest" not in sys.modules and "pytest" not in sys.modules:
+    load_web_dotenv()
 
 STATUS_LABELS = {
     "draft": "草稿",

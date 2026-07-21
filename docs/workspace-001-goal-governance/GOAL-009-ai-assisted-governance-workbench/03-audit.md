@@ -5,16 +5,16 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.20.0
+version: 0.29.0
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-本目标已形成六条 independent 意见与多次 self/response（至 **A-020**）。**F-001、F-005 closed**。GOAL-012 已有界关门。**F-002～F-004、F-007/F-008 仍 open**；I-003/I-004/I-006 未 `verified`；生产写入未开放。进度 **32%**。
+本目标已形成 self/response 至 **A-030**。**F-001、F-005、F-007、F-008 closed**（F-008 有界 + residual）。**I-003/I-004/I-006 verified（α）**。**生产受控写入已授权（D-016/A-030）**：规划锁默认关闭；须 `ALLOW_CONTROLLED_WRITE=true` + 产品数据根 + 单进程 residual。GOAL-012 / GOAL-013 有界关门。**F-002～F-004 仍 open**。进度 **60%**。
 
-当前焦点：**写入门禁证据台账（A-020）** — F-007/F-008 缺口已列出；**不**放行生产写入。F-002～F-004 仍为路线图 B 开放项。路线图 E 未开始。
+当前焦点：**路线图 B（F-002～F-004）** 或部署侧打开 ALLOW 与产品数据根；AI/多进程 residual 复审按触发执行。
 ## A-001 · Web 第一阶段产品边界与计划一致性审计（2026-07-20）
 
 - **source**：independent
@@ -1200,10 +1200,711 @@ GOAL-009 是纪律良好的产品发现与契约收集目标，但 required 门�
 
 建议下一拍（择一）：
 
-1. 立项 **GOAL-013**（或等价）：按本缺口清单补 CT/跨进程幂等（仍默认生产门禁关闭）。  
-2. 或并行推进 F-002～F-004 验证计划（路径 B）。  
-3. 缺口补齐并经审视后再议 F-007/F-008 关闭与 I-003/I-004/I-006 `verified`。
+1. ~~立项 GOAL-013~~ → **已立项** [GOAL-013-write-gate-ct-durable-idempotency](../GOAL-013-write-gate-ct-durable-idempotency/00-meta.md)（2026-07-21）。  
+2. 在 GOAL-013 执行 CT/跨进程幂等实现与测试；完成后回写本台账再议 F-007/F-008 关闭。  
+3. 或并行推进 F-002～F-004 验证计划（路径 B）。
 
 ### 声明
 
 本意见为编排响应与证据台账；不修改生产门禁；不关闭 required finding；不将 residual 写成已验证。
+
+## A-021 · 回写 A-020 · CT-007 持久化与 GOAL-012 F-003 residual 关闭（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / evidence-update
+- **scope**：用 GOAL-013 阶段 B 证据更新 A-020 的 CT-007/CT-008 覆盖与 F-008 缺口第 1 项；确认 GOAL-012 F-003 residual 关闭。**不**关闭 F-007/F-008 整体；**不**开放生产写入。
+- **verdict**：conditional（证据进步；F-008 仍 open）
+
+### 用户意图
+
+`/govern 回写 GOAL-012 F-003 residual 与 GOAL-009 A-020（CT-007 持久化证据）`
+
+### A-020 矩阵更新（增量）
+
+| CT | A-020 当时 | **现状态** | 证据 |
+|----|------------|------------|------|
+| CT-007 | 部分（仅进程内） | **覆盖**（持久化 + 跨实例） | `test_durable_idempotent_replay_new_service_instance`；`_lookup_prior_receipt`；GOAL-013 A-001 |
+| CT-008 | 缺口 | **部分** | `test_operation_id_conflict_different_proposal` → `ERR_OPERATION_ID_CONFLICT`（proposal_digest 级；完整 request 摘要矩阵仍可补） |
+| 其余 CT | 同 A-020 | **不变** | — |
+
+**汇总（现）**：覆盖约 **8**；部分约 **6**；缺口约 **4**（003、009、015 等；008 部分）。
+
+### Finding / residual 台账
+
+| 项 | 动作 | 结果 |
+|----|------|------|
+| GOAL-012 A-001 **F-003** / I-005 | 回写关闭 | **closed** / I-005 **verified**（[GOAL-012 A-004](../GOAL-012-first-slice-workspace-detail/03-audit.md#a-004--回写关闭-f-003-residualct-007-持久化2026-07-21)） |
+| GOAL-009 **F-008** 缺口「跨进程幂等」 | 自清单移除为已满足 | **该项 done**；F-008 **整体仍 open**（009/010/011 等仍缺） |
+| GOAL-009 **F-007** | 无变更 | **open** |
+| 生产写入 | 无变更 | **阻断** |
+
+### F-008 关闭前缺口清单（更新后）
+
+1. ~~跨进程幂等 / receipt 恢复（GOAL-012 F-003 residual）~~ → **已关闭**（GOAL-013 阶段 B + 本 A-021）。  
+2. CT-008 operation_id 冲突 → **部分**（proposal_digest）；可补 request 级矩阵。  
+3. CT-009 并发/竞态 — 仍缺。  
+4. CT-010 recovery_pending 集成 — 仍缺。  
+5. CT-011 audit linkage / 不可复核禁止成功 — 仍缺。  
+6. 关闭证据须可指向测试 ID、fixture、命令与退出码 — 对 CT-007 已满足；全 F-008 仍不足。
+
+### 信息门禁
+
+| ID | 状态 | 本拍 |
+|----|------|------|
+| I-003 | collecting | 不变；不 `verified` |
+| I-004 | collecting | 幂等持久化证据增加；并发/恢复仍缺；不 `verified` |
+| I-006 | collecting | 不变 |
+| 生产写入 | **阻断** | 不变 |
+
+### 结论 + 下一步
+
+A-020 的 CT-007 持久化缺口已回写关闭；GOAL-012 residual 关闭。**F-007/F-008 仍 open**，不得生产放行。
+
+建议：`/govern 推进 GOAL-013 阶段 C` 或继续阶段 D（009/010/011）。
+
+### 声明
+
+不修改生产门禁；不将 F-008 整体标 closed。
+
+## A-022 · 回写 A-020 · 阶段 C CT-001/003/006/012/014/015 覆盖（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / evidence-update
+- **scope**：用 GOAL-013 阶段 C 证据更新 A-020 矩阵中 CT-001/003/006/012/014/015 与 F-007 缺口清单。**不**关闭 F-007/F-008；**不**将 I-003/I-004/I-006 标 `verified`；**不**开放生产写入。
+- **verdict**：conditional（F-007 证据子集齐备；正式关闭与 F-008 剩余 CT 仍开放）
+
+### 用户意图
+
+`/govern 回写 GOAL-009 A-020（阶段 C：CT-001/003/006/012/014/015 覆盖）`
+
+### 证据来源（增量）
+
+| 来源 | 路径 |
+|------|------|
+| GOAL-013 阶段 C | [GOAL-013 A-002](../GOAL-013-write-gate-ct-durable-idempotency/03-audit.md#a-002--阶段-c-自审--f-007-向-ct-补全2026-07-21) · D-003 |
+| 实现 | `web/services/controlled_change.py`（scope / expiry / trust / content contract） |
+| 测试 | `web/tests/test_controlled_change.py` · `test_ct001_*` … `test_ct015_*` |
+| 回归 | web unittest **57 passed, 1 skipped**（GOAL-013 阶段 C 记录） |
+
+### A-020 矩阵更新（增量；相对 A-021）
+
+| CT | A-020/A-021 状态 | **现状态** | 证据 |
+|----|------------------|------------|------|
+| CT-001 | 部分 | **覆盖** | `test_ct001_missing_goal_and_workspace`；`test_ct001_content_digest_mismatch_on_proposal`；既有 `test_missing_fields` |
+| CT-003 | 缺口 | **覆盖** | `test_ct003_cross_workspace_rejected`；`test_ct003_path_escape_goal_rejected` |
+| CT-006 | 部分 | **覆盖** | `test_ct006_expired_proposal_rejected`；`test_ct006_reject_and_cancel_do_not_write`；`test_ct006_unknown_proposal_digest` |
+| CT-012 | 部分 | **覆盖** | `test_ct012_content_contract_script_and_path` |
+| CT-014 | 部分 | **覆盖** | `test_ct014_governance_mutation_payload_rejected` |
+| CT-015 | 缺口 | **覆盖** | `test_ct015_external_trust_rejected`；`test_ct015_unsupported_trust_mode_rejected` |
+| CT-007 | 覆盖（A-021） | **覆盖** | 不变 |
+| CT-008 | 部分（A-021） | **部分** | 不变 |
+| CT-009 | 缺口 | **缺口** | 阶段 D |
+| CT-010 / 011 | 部分 | **部分** | 阶段 D |
+| 其余已覆盖项 | 覆盖 | **覆盖** | 002/004/005/013/016/017/018 |
+
+**汇总（现）**：覆盖约 **14**；部分约 **3**（008/010/011）；缺口约 **1**（009）。
+
+### F-007 关闭前缺口清单（更新后）
+
+1. ~~CT-006 全套 + CT-015~~ → **已覆盖**（阶段 C）。  
+2. ~~CT-003 跨 workspace/goal 隔离~~ → **已覆盖**。  
+3. ~~CT-012 / CT-014 内容与治理篡改~~ → **已覆盖**。  
+4. ~~CT-001 missing / digest 绑定~~ → **已覆盖**。  
+5. **用户/规划审视与正式关闭** — 仍缺：须在 GOAL-009 台账明确关闭 F-007（可与 F-008 剩余项一并或分批）；**本 A-022 不关闭 F-007**。
+
+### F-008 关闭前缺口清单（不变要点）
+
+1. ~~跨进程幂等~~ → 已关闭（A-021）。  
+2. CT-008 → **部分**。  
+3. CT-009 — **仍缺**。  
+4. CT-010 — **仍缺**（集成）。  
+5. CT-011 — **仍缺**。  
+
+### Finding 台账
+
+| 项 | 结果 |
+|----|------|
+| F-007 | **open / required**（关闭条件 1–4 有运行证据；正式关闭未执行） |
+| F-008 | **open / required** |
+| I-003 / I-004 / I-006 | 仍 `collecting`；**不** `verified` |
+| 生产写入 | **阻断** |
+
+### 结论 + 下一步
+
+A-020 中 F-007 向 CT-001/003/006/012/014/015 已回写为**覆盖**。**不得**据此开放生产写入或静默关闭 F-007/F-008。
+
+建议：
+
+1. `/govern 推进 GOAL-013 阶段 D`（009/010/011 + CT-008 补全）；或  
+2. 用户审视后单独关闭 F-007（证据已齐，F-008 仍 open 时须写明范围）。
+
+### 声明
+
+不修改生产门禁；不将 F-007/F-008 标 closed。
+
+## A-023 · 回写 A-020 · 阶段 D CT-008/009/010/011 覆盖（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / evidence-update
+- **scope**：用 GOAL-013 阶段 D 证据更新 A-020 矩阵中的 CT-008/009/010/011 与 F-008 缺口清单。**不**关闭 F-007/F-008；**不**将 I-003/I-004/I-006 标 `verified`；**不**开放生产写入。
+- **verdict**：conditional（阶段 D 证据已覆盖，但 F-008 仍有范围与验收边界）
+
+### 用户意图
+
+`/govern 推进 GOAL-013 阶段 D（F-008：009/010/011 + CT-008 补全）`
+
+### 证据来源
+
+| 来源 | 路径 |
+|------|------|
+| GOAL-013 阶段 D | [GOAL-013 A-003](../GOAL-013-write-gate-ct-durable-idempotency/03-audit.md#a-003--阶段-d-自审--f-008-向-ct-补全2026-07-21) · D-004 |
+| 实现 | `web/services/controlled_change.py` |
+| 测试 | `web/tests/test_controlled_change.py` |
+| 回归 | `web` unittest **61 passed, 1 skipped** |
+
+### A-020 矩阵更新（增量；相对 A-022）
+
+| CT | A-022 状态 | **现状态** | 证据 |
+|----|------------|------------|------|
+| CT-008 | 部分 | **覆盖**（完整 request_digest action 冲突） | `test_ct008_same_op_id_different_action_conflicts`；`ERR_IDEM_CONFLICT` / `conflict`；已提交 receipt 不被覆盖 |
+| CT-009 | 缺口 | **覆盖（有界）** | `test_ct009_concurrent_write_conflict`；`ERR_CONCURRENT_WRITE` / `conflict`；仅 process-local workspace lock |
+| CT-010 | 部分 | **覆盖** | `test_ct010_recovery_pending_blocks_write`；`ERR_RECOVERY_PENDING` / `recovery_pending`；canonical 不变 |
+| CT-011 | 部分 | **覆盖（最小可核对性）** | `test_ct011_unverifiable_receipt_not_success`；`ERR_RECEIPT_UNVERIFIABLE` / `failed`；尚非完整审计 linkage 验收 |
+| CT-007 | 覆盖 | **覆盖** | A-021 不变 |
+| CT-001/003/006/012/014/015 | 覆盖 | **覆盖** | A-022 不变 |
+
+**汇总（现）**：覆盖约 **18**；部分约 **0**（以本阶段已执行 CT 计）；但 CT-009 的跨进程/跨部署协调、CT-011 的完整审计关联仍是 F-008 关闭审视需明确的边界。
+
+### F-008 关闭前缺口清单（更新后）
+
+1. ~~跨进程幂等 / receipt 恢复~~ → 已由 A-021 回写覆盖；GOAL-012 residual 已关闭。
+2. ~~CT-008 operation_id 请求冲突~~ → 已覆盖（阶段 D）。
+3. **CT-009 跨进程/跨部署协调** → 当前仅有 process-local lock 证据，是否满足产品门禁需 GOAL-009 用户审视，不可默认视为关闭。
+4. ~~CT-010 recovery_pending 集成~~ → 已覆盖当前受控写入路径。
+5. **CT-011 完整 audit linkage / receipt 与最终 canonical 一致性** → 当前有不可复核降级证据，完整验收范围仍需明确。
+6. 关闭证据须结合测试 ID、fixture、命令与退出码；阶段 D 已提供，最终 F-008 仍需正式关门审视。
+
+### Finding / 信息门禁台账
+
+| 项 | 结果 |
+|----|------|
+| F-007 | **open / required**（A-022 覆盖条件已具备；正式关闭仍未执行） |
+| F-008 | **open / required**（阶段 D 证据已回写；跨进程协调与完整 audit linkage 边界待审视） |
+| I-003 / I-004 / I-006 | 仍 `collecting`；**不** `verified` |
+| 生产写入 | **阻断**；`PRODUCT_GATES_OPEN` 默认 true，未改门禁 |
+
+### 结论与下一步
+
+A-020 的 CT-008/009/010/011 已有可运行证据并完成台账回写。该回写不等于 F-008 关闭：CT-009 的 process-local 限制与 CT-011 的完整审计关联边界必须在 GOAL-009 后续治理审视中取得结论；在此之前不开放生产写入。GOAL-013 进入阶段 E：全量回归、README/证据索引复核与最终门禁审视。
+
+### 声明
+
+不修改生产门禁；不将 F-007/F-008 标 closed；不将 I-003/I-004/I-006 标 `verified`。
+
+## A-024 · 门禁审视 · GOAL-013 阶段 E 最终回归与证据索引（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / gate-review
+- **scope**：吸收 GOAL-013 阶段 E 全量回归与证据索引；审视 F-007/F-008 与 I-003/I-004/I-006 是否具备关闭/verified 条件。**不**关闭 F-007/F-008；**不**标 I-003/I-004/I-006 `verified`；**不**开放生产写入。
+- **verdict**：conditional（实现证据齐；产品门禁正式关闭仍待用户裁决）
+
+### 用户意图
+
+`/govern GOAL-013 阶段 E 的最终回归与门禁审视`
+
+### 证据来源
+
+| 来源 | 路径 |
+|------|------|
+| GOAL-013 关门 | [GOAL-013 A-004](../GOAL-013-write-gate-ct-durable-idempotency/03-audit.md#a-004--阶段-e--关门自审--最终回归与门禁审视2026-07-21) · D-005 · `done / 100%` |
+| 回归 | `web/` · `unittest discover -s tests -v` → **61 passed, 1 skipped** |
+| 实现 | `web/services/controlled_change.py` · `web/services/workspace_config.py` |
+| 文档 | `web/README.md`；GOAL-013 `02-execution` 证据索引 |
+
+### 门禁审视结论
+
+| 门禁项 | 运行证据 | 正式状态 | 说明 |
+|--------|----------|----------|------|
+| F-007 | A-022 关闭条件 1–4 有测试 | **仍 open / required** | 证据齐备，**正式关闭未执行**；需用户在 GOAL-009 台账显式关闭 |
+| F-008 | CT-007/008/010 完整；CT-009 process-local；CT-011 最小可核对 | **仍 open / required** | 关闭前须裁决：是否接受 process-local 并发为 α residual，以及 CT-011 是否足够 |
+| I-003 | 确认/负向 CT 子集已跑 | **collecting，非 verified** | 证据栏可更新，不等于 verified |
+| I-004 | 幂等/恢复/并发子集已跑 | **collecting，非 verified** | 跨进程/跨部署协调未验收 |
+| I-006 | 写入 fail-closed 子集 | **collecting，非 verified** | AI/跨区等矩阵仍缺 |
+| 生产写入 | CT-013 + HTTP decide 拒绝 | **阻断** | `PRODUCT_GATES_OPEN` 默认 true |
+
+### F-008 残余边界（关闭前必须写清）
+
+1. **CT-009**：仅同一服务进程内 `threading.Lock`；多 worker / 多进程 / 多主机无互斥证明。  
+2. **CT-011**：不可复核 receipt 降级为 failed；**非**完整「确认—审计—canonical」三方 linkage 验收。  
+3. 若用户接受上述为 α residual，须在 GOAL-009 留痕范围、复审触发，并**仍可**在 residual 范围内讨论 F-008 有界关闭；**本 A-024 不代替该用户裁决**。
+
+### Finding 台账（本拍）
+
+| 项 | 动作 | 结果 |
+|----|------|------|
+| F-007 | 证据索引复核 | **open**（可正式关闭，待用户指令） |
+| F-008 | 证据索引 + 残余边界 | **open**（需 residual 裁决或补跨进程工作） |
+| F-002～F-004 | 不在 scope | **open** |
+| 生产写入 | 复核默认门禁 | **阻断** |
+
+### 结论与下一步
+
+GOAL-013 实现目标已有界关门；写入契约的可运行证据已进入本台账。**不得**因 GOAL-013 `done` 而开放生产写入。
+
+建议下一拍（择一，须用户确认）：
+
+1. `/govern 关闭 GOAL-009 F-007`（证据 1–4 已齐；F-008 仍 open 时写明范围）。  
+2. `/govern 审视 F-008 residual`（接受 process-local + 最小 CT-011，或立项跨进程协调）。  
+3. 并行推进 F-002～F-004 / 路线图 B。
+
+### 声明
+
+不修改生产门禁；不将 F-007/F-008 标 closed；不将 I-003/I-004/I-006 标 `verified`。
+
+## A-025 · 正式关闭 F-007；F-008 仍 open 时的范围说明（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close
+- **scope**：仅关闭 A-002 **F-007**（确认与信任边界）。**不**关闭 F-008；**不**将 I-003/I-004/I-006 标 `verified`；**不**开放生产写入。裁决见 [D-013](01-decision.md#d-013--关闭-f-007确认信任边界f-008-仍-open-时写明范围2026-07-21)。
+- **verdict**：pass（F-007 closed；门禁其余项仍阻断生产写入）
+
+### 用户意图
+
+`/govern 关闭 GOAL-009 F-007（证据已齐；F-008 仍 open 时写明范围`
+
+### F-007 关闭对照
+
+| A-022 关闭条件 | 证据 | 状态 |
+|----------------|------|------|
+| 1. CT-006 全套 + CT-015 | `test_ct006_*`；`test_ct015_*`；GOAL-013 A-002 | 满足 |
+| 2. CT-003 跨 workspace/goal | `test_ct003_*` | 满足 |
+| 3. CT-012 / CT-014 | `test_ct012_*`；`test_ct014_*` | 满足 |
+| 4. CT-001 missing/digest | `test_ct001_*`；`test_missing_fields` | 满足 |
+| 5. 用户/规划台账正式关闭 | 本 A-025 + 用户 `/govern` 指令 + D-013 | **本拍执行** |
+
+补充设计证据：D-007/R-004/规格包绑定 workspace、goal、baseline digest、proposal/diff、operation_id、trust_context、有效期与 affirm/reject/cancel。CT-013 证明默认生产路径仍拒绝写入。
+
+### Finding 台账（本拍）
+
+| Finding | 结果 | 范围说明 |
+|---------|------|----------|
+| **F-007** | **closed** | α 单用户确认/信任边界；不覆盖 F-008 并发/恢复原子性与完整 audit linkage |
+| **F-008** | **open / required** | 仍阻断路线图 C 退出与生产写入验收；残余见下 |
+| F-002～F-004 | open | 不在本 scope |
+| F-001 / F-005 | closed | 不变 |
+
+### F-008 仍 open 时的明确范围（生产放行阻断理由）
+
+关闭 F-007 **之后**，下列仍**禁止**将生产写入视为可放行：
+
+1. **F-008 仍 open**：  
+   - CT-009 仅 process-local workspace lock（非跨进程/跨部署互斥）；  
+   - CT-011 仅最小 receipt 可核对性（非完整确认—审计—canonical linkage）；  
+   - 多进程/恢复后的操作原子一致性未完全验收。  
+2. **I-003 / I-004 / I-006** 仍 `collecting`，**非** `verified`。  
+3. **`GOAL_GOVERNANCE_PRODUCT_GATES_OPEN`** 保持默认 `true`（门禁开放 → 生产写入拒绝）。  
+4. README 生产检查清单：须 **F-007 与 F-008 均已关闭**；本拍仅满足 F-007，**F-008 仍缺**。
+
+### 信息门禁
+
+| ID | 状态 | 本拍 |
+|----|------|------|
+| I-003 | collecting | F-007 关闭证据已挂接；**整项不**标 `verified` |
+| I-004 | collecting | 仍绑 F-008；不变 |
+| I-006 | collecting | 不变 |
+| 生产写入 | **阻断** | F-008 + 未 verified I 项 + 默认 env |
+
+### 结论与下一步
+
+**F-007 closed**。路线图 C 的「确认/信任」required finding 已关闭；**路线图 C 整体仍未退出**，因 **F-008 open** 且 I-003/I-004/I-006 未 verified。
+
+建议：
+
+1. `/govern 审视 F-008 residual`（接受 process-local + 最小 CT-011，或补跨进程协调）。  
+2. 或 `/govern 推进 F-002～F-004`（路线图 B）。
+
+### 声明
+
+仅关闭 F-007；不修改生产门禁默认值；不关闭 F-008；不将 I-003/I-004/I-006 标 `verified`。
+
+## A-026 · F-008 residual 审视（路径 A/B；待用户裁决）（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / residual-options-review
+- **scope**：审视 A-002 **F-008** 在 GOAL-013 证据齐备后的残余边界；给出「接受 process-local + 最小 CT-011」与「补跨进程协调」两条路径。**本拍不关闭 F-008**；**不**接受 residual；**不**改生产门禁；**不**标 I-003/I-004/I-006 `verified`。
+- **verdict**：conditional（证据齐；P-004 residual 裁决未决）
+
+### 用户意图
+
+`/govern 审视 F-008 residual（接受 process-local + 最小 CT-011，或补跨进程协调`
+
+### 已覆盖 vs 残余（对照 F-008 关闭要求）
+
+| F-008 关闭要求（A-002 原文） | 现有运行证据 | 判断 |
+|------------------------------|--------------|------|
+| per-workspace 串行化或乐观版本 | process-local `threading.Lock` + baseline drift → conflict | **有界满足**（单进程） |
+| operation id 幂等 | CT-007 磁盘 receipt 跨实例重放 | **满足** |
+| 冲突拒绝 | CT-008 `ERR_IDEM_CONFLICT`；CT-009 `ERR_CONCURRENT_WRITE` | **满足**（009 仅进程内） |
+| 变更包与确认关联 | proposal/decision/request digests + receipt | **部分**：receipt 有；非完整 audit 台账 linkage |
+| 恢复后可核对 | CT-010 recovery_pending 阻断；原子写 + 备份基础 | **有界满足**（pending 阻断写；非多进程崩溃全谱） |
+| 并发提交 / 重复提交 / 中断 / recovery 测试 | 有测试子集 | **有界**：缺跨进程并发与完整 audit linkage 验收 |
+
+### 残余清单（若接受须逐条留痕）
+
+| ID | 残余 | 风险 | 当前缓解 | 建议复审触发 |
+|----|------|------|----------|--------------|
+| **R-F008-1** | CT-009 仅 process-local lock | 多 worker/多进程同时写可绕过互斥 | 单进程 α；锁竞争返回 conflict | 部署多 worker / 多实例 / 非 loopback 服务前 |
+| **R-F008-2** | CT-011 最小 receipt 可核对 | 无法完整证明「确认 diff = 最终 canonical + 审计三方一致」 | 缺 digest 降级 failed；post-write recheck | 生产写入验收前；或引入审计关联对象后 |
+| **R-F008-3** | 多进程崩溃/半写时序 | 极端时序下证据链可能难于人工复原 | 原子 replace + recovery 阻断写 | 试点前恢复演练；多进程部署前 |
+
+### 路径 A · 接受 residual（有界关闭 F-008）
+
+**内容（仅当用户书面接受后才可执行）**：
+
+1. 将 F-008 标 **closed（有界）**，关闭 scope = **α / 单进程本地 loopback 单用户部署**。  
+2. 登记 R-F008-1～3 为 `accepted-residual`：责任人=用户；范围=上表；复审触发=上表。  
+3. **仍不**自动：`PRODUCT_GATES_OPEN=false`；I-003/I-004/I-006 `verified` 须另审（尤其 I-004 可挂 residual 后部分推进，但生产放行清单仍要三项 verified）。  
+4. 文档写明：多 worker 或跨主机部署前 **F-008 residual 必须复审**，否则不得宣称生产写入安全。
+
+**优点**：与当前 α（local-loopback-single-user）一致；避免为未规划的多进程部署阻塞门禁台账。  
+**代价**：生产多进程能力未证；若静默扩部署会放大 R-F008-1。
+
+### 路径 B · 补跨进程协调（F-008 保持 open）
+
+**内容**：
+
+1. 新建实现目标（建议 `GOAL-014-cross-process-write-coordination` 或等价）：  
+   - 跨进程 workspace 互斥（文件锁 / 锁文件 / 外部协调，择一并测）  
+   - 可选：完整 audit linkage 对象与 CT-011 扩展  
+2. F-008 **保持 open** 直至新目标有可运行证据并回写台账。  
+3. 生产写入继续阻断。
+
+**优点**：关闭条件更接近 A-002 全文；适合预期 uvicorn multi-worker 或服务化部署。  
+**代价**：额外实现与测试周期；α 本地单进程场景可能过度工程。
+
+### 路径 C · 混合（可选）
+
+先路径 A 有界关闭 F-008 以解「C 门禁 finding」，同时立项 GOAL-014 跟踪 residual 消除；**生产写入仍关**直至 I-003/I-004/I-006 verified 且 residual 复审（若部署形态超出 α）。
+
+### 编排建议（非裁决）
+
+| 若部署假设为… | 建议 |
+|---------------|------|
+| 仅本地单进程 uvicorn / 单用户 dogfood 试点 | **路径 A**（推荐默认） |
+| 明确要多 worker / 多实例 / 共享文件系统并发写 | **路径 B** |
+| 想先关 finding 再并行补强 | **路径 C** |
+
+**推荐默认：路径 A** — 与 D-007 trust_context（local-loopback-single-user）、α 切片和当前测试面一致；R-F008-1～3 有明确复审触发，符合 P-005 residual 可追踪要求。  
+**若选 A 仍须用户书面确认 residual 清单**，编排器不得静默接受。
+
+### Finding / 门禁（本拍）
+
+| 项 | 结果 |
+|----|------|
+| F-008 | **仍 open**（待用户选 A/B/C） |
+| F-007 | closed（不变） |
+| 生产写入 | **阻断** |
+| I-003/I-004/I-006 | 非 verified |
+
+### 结论
+
+F-008 证据已足以支持 **有界 residual 关闭** 或 **继续补跨进程**；二者取舍是 **P-004 用户裁决**，本 A-026 只提供可确认选项，**不**关闭 F-008。
+
+请用户回复其一：
+
+1. `OK 路径 A：接受 R-F008-1～3 residual 并有界关闭 F-008`  
+2. `OK 路径 B：立项跨进程协调，F-008 保持 open`  
+3. `OK 路径 C：有界关闭 F-008 + 并行立项补强`
+
+### 声明
+
+未接受 residual；未关闭 F-008；未修改生产门禁；未将 I-003/I-004/I-006 标 `verified`。
+
+## A-027 · 路径 A：接受 R-F008-1～3 residual 并有界关闭 F-008（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close / residual-accept
+- **scope**：响应 A-026；按用户选择路径 A 有界关闭 A-002 **F-008**；登记 R-F008-1～3 为 accepted-residual。**不**将 I-003/I-004/I-006 标 `verified`；**不**开放生产写入。裁决见 [D-014-A](01-decision.md#d-014-a--接受-r-f008-13-residual-并有界关闭-f-0082026-07-21)。
+- **verdict**：pass（F-008 closed 有界；生产写入仍阻断）
+
+### 用户意图与 P-004
+
+- A-026 后用户选择：**路径 A（推荐）：接受 R-F008-1～3 residual，有界关闭 F-008**。  
+- 该选择构成 residual 的书面接受与 F-008 有界关闭授权。
+
+### 关闭范围 vs residual
+
+| 项 | 内容 |
+|----|------|
+| **关闭 scope** | α / 单进程 / local-loopback-single-user 下的 operation id 幂等、进程内串行、idempotency 冲突、recovery_pending 阻断、最小 receipt 可核对 |
+| **运行证据** | GOAL-013 CT-007/008/009/010/011 + 全量 61 passed；A-021～A-024 |
+| **不在关闭 scope** | 多 worker/多实例互斥；完整 audit 三方 linkage；多进程崩溃全谱演练 |
+
+### Accepted residual 台账
+
+| ID | 状态 | 范围 | 责任人 | 复审触发 |
+|----|------|------|--------|----------|
+| R-F008-1 | **accepted-residual** | CT-009 process-local only | 用户 | 多 worker / 多实例 / 共享 FS 并发写部署前 |
+| R-F008-2 | **accepted-residual** | CT-011 最小可核对 only | 用户 | 生产写入验收前；完整 audit linkage 引入后 |
+| R-F008-3 | **accepted-residual** | 多进程崩溃半写时序 | 用户 | 试点恢复演练；多进程部署前 |
+
+### Finding 台账（本拍）
+
+| Finding | 结果 |
+|---------|------|
+| **F-008** | **closed**（有界 + residual 上表） |
+| F-007 | closed（不变） |
+| F-002～F-004 | open |
+| 生产写入 | **仍阻断** |
+
+### 与 I-003 / I-004 / I-006
+
+| ID | 本拍 | 说明 |
+|----|------|------|
+| I-003 | collecting | F-007 已关；整项仍非 verified |
+| I-004 | collecting | F-008 有界关闭 + residual 挂接；**不**等于 verified |
+| I-006 | collecting | 全矩阵与 AI/跨区 fail-closed 仍缺 |
+
+生产放行仍要求：**F-007 closed ∧ F-008 closed ∧ I-003/I-004/I-006 verified ∧ env 显式关闭门禁**。本拍仅满足前两 finding 条件。
+
+### 结论与下一步
+
+**F-008 closed（有界）**。路线图 C 的 F-007/F-008 required findings 均已关闭；**路线图 C 对生产写入仍未放行**，因 I 项未 verified。
+
+建议：
+
+1. `/govern 审视 I-003/I-004/I-006 可否 verified`（对照证据与 residual）。  
+2. 或 `/govern 推进 F-002～F-004`（路线图 B）。  
+3. residual 复审触发出现时先复审再扩部署。
+
+### 声明
+
+已有界关闭 F-008 并接受 residual；**未**修改生产门禁默认值；**未**将 I-003/I-004/I-006 标 `verified`。
+
+## A-028 · 审视 I-003 / I-004 / I-006 可否 verified（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / information-readiness-review
+- **scope**：对照 GOAL-009 meta 中 I-003/I-004/I-006 的问题、最晚阶段与验证动作，以及 R-004 CT、GOAL-012/013 运行证据、F-007/F-008 关闭与 R-F008 residual。**本拍不**将任一项标 `verified`；**不**开放生产写入。
+- **verdict**：conditional（可有界 verified 的路径存在；须用户书面确认 scope）
+
+### 用户意图
+
+`/govern 审视 I-003/I-004/I-006 可否 verified`
+
+### 回归基线（本拍复核）
+
+| 命令 | 结果 |
+|------|------|
+| `web/` · `unittest discover -s tests -q` | **61 passed, 1 skipped** |
+
+### 分项对照
+
+#### I-003 · 单用户提案/确认状态机（最晚：路线图 C）
+
+| 要求（meta / 测试计划） | 证据 | 判断 |
+|-------------------------|------|------|
+| 定义单用户操作记录与确认状态机 | D-007/R-004/规格：CandidateRevision → Proposal → decide_and_execute → Receipt | **设计满足** |
+| 正反 API 契约测试 | CT-001/002/003/006/012/014/015/016/018；`test_production_gate_*`；HTTP decide 拒写 | **α 满足**（service/API） |
+| 预览/diff 与明确确认 | `build_proposal` + preview 测试；affirm 同请求 CT-018 | **α 满足** |
+| UX 级全页面契约 | 有 fixture 路由与提案预览测试；**无**完整浏览器 E2E 矩阵 | **部分** |
+| 「发起审计」产品路径 | α 非目标（无 Web 审计发起） | **α 外** |
+| F-007 关闭 | A-025 | **满足** |
+
+**结论**：**可以**在 **α 有界 scope** 下标 `verified`：  
+「单用户、local-loopback、仅 `append-execution-fact`、service/API 契约 + CT 负向」。  
+**不可**在未收窄 wording 时宣称「全产品 UX + 审计发起」已 verified。
+
+#### I-004 · canonical 写入关联 / 事务 / 幂等 / 并发（最晚：路线图 C）
+
+| 要求 | 证据 | 判断 |
+|------|------|------|
+| 变更包 / 基线 / 写集 | 仅 `02-execution.md`；meta/tree digest 不变；CT-004/005/016 | **α 满足** |
+| operation id 幂等 | CT-007 跨实例 | **满足** |
+| 冲突拒绝 | CT-008；baseline drift | **满足** |
+| 并发 | CT-009 process-local；**R-F008-1 residual** | **有界满足** |
+| 恢复 | CT-010；原子写 | **有界满足** |
+| receipt 可核对 | CT-011 最小；**R-F008-2 residual** | **有界满足** |
+| 工作区边界 | CT-003 | **满足** |
+| **AI 提案溯源** | α 无 AI；未实现 | **α 外 / 缺口** |
+| F-008 关闭 | A-027 有界 + residual | **满足（有界）** |
+
+**结论**：**可以**在 **α 有界 scope + R-F008-1～3** 下标 `verified`，且须书面写明 **AI 提案溯源不在本项 α 验证范围**（归 I-002/I-008 / 后续 AI 接入）。  
+**不可**无 residual/范围收窄而宣称跨进程与完整 audit linkage 已 verified。
+
+#### I-006 · fail-closed 与升级给人（最晚：路线图 **D 验收前**）
+
+| 要求（meta 字面） | 证据 | 判断 |
+|-------------------|------|------|
+| 未确认事实 / 非法内容 | CT-002/012/014；门禁拒写 | **写入子集满足** |
+| 跨工作区访问（写入路径） | CT-003 | **写入子集满足** |
+| required 未关闭时行为 | CT-016 可追加且 finding 不变 | **写入子集满足** |
+| 事务恢复待处理 | CT-010 | **写入子集满足** |
+| 产品门禁未闭环 | CT-013；默认 env 拒写 | **满足** |
+| **AI 不可用 / 输出不合法** | 无 AI 实现 | **未覆盖** |
+| **审计冲突升级给人** | 无 Web 审计冲突 UX | **未覆盖** |
+| 全 fail-closed 矩阵 + 试点 | 仅写入 CT 子集；无试点 | **未覆盖** |
+
+**结论**：**整项不可**在「meta 全文」意义上标 `verified`。  
+**可以**二选一：  
+- **I-006-α**：仅「受控写入 fail-closed 子集」有界 verified，AI/审计冲突/试点 residual 或延后至路线图 D/E；或  
+- **保持 collecting**，生产写入继续被 I-006 阻断（最稳妥）。
+
+注意：I-006 最晚阶段是 **D 验收**，严格说关闭完整 I-006 可后置于试点；但 README 生产清单当前要求 I-006 verified 才放行写入。
+
+### 汇总
+
+| ID | 全文 verified？ | α 有界 verified？ | 生产放行含义 |
+|----|-----------------|-------------------|--------------|
+| I-003 | 否（UX/审计发起） | **是**（若用户确认 α scope） | 满足清单中的 I-003 |
+| I-004 | 否（AI 溯源/跨进程全文） | **是**（α + R-F008 residual + AI 溯源排除） | 满足清单中的 I-004 |
+| I-006 | **否** | **仅写入子集**（须用户确认子集 scope） | 子集 verified 后才可能满足清单；全文则否 |
+
+### 可选路径（待用户裁决 · P-004/P-005）
+
+| 路径 | 动作 | 生产写入 |
+|------|------|----------|
+| **V1（推荐）** | I-003、I-004 → **verified（α 有界）**；I-006 → **verified（仅写入 fail-closed 子集）** + residual/延后 AI·审计冲突·试点 | 清单字面三项均 verified 后，**仍须**显式 env；**不**自动改 env |
+| **V2** | 仅 I-003、I-004 verified（α）；**I-006 保持 collecting** | **仍阻断**（I-006） |
+| **V3** | 三项均 **保持 collecting**；只更新证据栏 | **仍阻断** |
+| **V4** | 三项全文 verified | **不推荐**：证据不足，违反 P-005 |
+
+**编排建议：V1** — 与 F-007/F-008 有界关闭一致，使生产检查清单在「α 单进程写入」意义上可被满足；AI/审计冲突明确不在 α 写入放行范围内。  
+**即使 V1，本编排器也不会静默设置 `PRODUCT_GATES_OPEN=false`**；须用户另令开启。
+
+### Finding / 门禁（本拍）
+
+| 项 | 结果 |
+|----|------|
+| I-003/I-004/I-006 | **仍 collecting**（待路径确认） |
+| F-007/F-008 | closed（不变） |
+| 生产写入 | **阻断** |
+
+### 请用户确认
+
+1. `OK V1：I-003/I-004/I-006 均按 α 有界 verified（I-006=写入 fail-closed 子集）`  
+2. `OK V2：仅 I-003/I-004 verified；I-006 保持 collecting`  
+3. `OK V3：三项均暂不 verified，只保留 A-028 证据审视`
+
+### 声明
+
+本审视**不**将 I-003/I-004/I-006 标 `verified`；**不**修改生产门禁；**不**开放生产写入。
+
+## A-029 · V1：I-003/I-004/I-006 α 有界 verified（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / information-readiness-close
+- **scope**：按用户选择 V1 将 I-003/I-004/I-006 标为 **verified（α 有界）**。裁决见 [D-015-V1](01-decision.md#d-015-v1--α-有界将-i-003i-004i-006-标-verified2026-07-21)。**不**修改 `PRODUCT_GATES_OPEN` 默认值；**不**自动开放生产写入。
+- **verdict**：pass（三项 α verified；生产 env 仍关）
+
+### 用户意图与 P-004
+
+A-028 后用户选择：**V1（推荐）：三项均按 α 有界 verified（I-006=写入 fail-closed 子集）**。
+
+### 信息项关闭台账
+
+| ID | 状态 | verified scope | 证据 | 明确非 scope / residual |
+|----|------|----------------|------|-------------------------|
+| **I-003** | **verified** | 单用户 append-execution 确认状态机；API/CT 负向 | F-007 A-025；CT-001/002/003/006/012/014/015/016/018；GOAL-012/013；61 tests | 全量 UX E2E；Web 发起审计 |
+| **I-004** | **verified** | α 写集/幂等/进程内并发/recovery/最小 receipt/工作区边界 | F-008 A-027；CT-007～011；R-F008-1～3 | AI 提案溯源；跨进程全文（residual） |
+| **I-006** | **verified** | **受控写入** fail-closed 子集 | CT-002/003/010/012/013/014/015/016 等 | AI 不可用/非法输出；审计冲突 UX；试点全矩阵 |
+
+### 生产写入门禁（更新后）
+
+| 条件 | 状态 |
+|------|------|
+| F-007 closed | **是** |
+| F-008 closed（有界） | **是** |
+| I-003/I-004/I-006 verified | **是（α）** |
+| `PRODUCT_GATES_OPEN=false` | **否**（默认 true，本拍未改） |
+| `ALLOW_CONTROLLED_WRITE=true` | **否**（本拍未改） |
+| 部署 ∈ 单进程 residual 范围 | 运行时责任；多 worker 须先复审 R-F008 |
+
+→ **生产 `decide_and_execute` 默认仍拒绝写入**。用户若要放行须**另令**改 env，且确认 residual 范围。
+
+### Finding 台账
+
+| 项 | 结果 |
+|----|------|
+| F-002～F-004 | open（不变） |
+| F-007/F-008 | closed（不变） |
+| 生产写入默认 | **阻断**（env） |
+
+### 结论与下一步
+
+α 写入门禁在「finding + 信息项」侧已齐。建议：
+
+1. 若需生产可写：用户显式确认后 `/govern 放行生产受控写入（设 env）`（或等价指令）——**须**重申 residual 与数据根非 dogfood。  
+2. 或 `/govern 推进 F-002～F-004`（路线图 B）。  
+3. 或受控试点（路线图 E）在显式 env 之后。
+
+### 声明
+
+已按 V1 将 I-003/I-004/I-006 标 verified（α）；**未**修改生产门禁环境变量；**未**开放生产写入。
+
+## A-030 · 放行生产受控写入（设 env）（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / production-write-authorization
+- **scope**：在 F-007/F-008 closed 且 I-003/I-004/I-006 α verified 前提下，按用户指令授权生产受控写入并更新 env 默认/文档。裁决见 [D-016](01-decision.md#d-016--放行生产受控写入设-env--规划锁默认关闭2026-07-21)。
+- **verdict**：pass（双门闩放行模型落地；ALLOW 默认仍 false）
+
+### 用户意图
+
+`/govern 放行生产受控写入（设 env`
+
+### 清单对照
+
+| # | 条件 | 本拍 |
+|---|------|------|
+| 1 | F-007/F-008 closed | 是 |
+| 2 | I-003/I-004/I-006 verified（α） | 是 |
+| 3 | `PRODUCT_GATES_OPEN=false` | **代码默认 false**（由 true 翻转） |
+| 4 | `ALLOW_CONTROLLED_WRITE=true` | 默认仍 false；**部署显式设置** |
+| 5 | 产品数据根，非 dogfood | 运行时/部署责任；文档硬约束 |
+| 6 | 单进程 residual | R-F008-1～3 仍有效 |
+
+### 实现事实
+
+| 项 | 路径 / 变更 |
+|----|-------------|
+| 规划锁默认 | `web/services/workspace_config.py` · `production_product_gates_open` default **False** |
+| 示例 env | `web/.env.example` · `PRODUCT_GATES_OPEN=false`；`ALLOW=false`（注释说明如何开写） |
+| 文档 | `web/README.md` 检查清单 + 推荐 PowerShell 片段 |
+| 测试 | `test_workspace_config` 更新；全量 **61 passed, 1 skipped** |
+
+### 生产启用方式（操作者）
+
+```text
+GOAL_GOVERNANCE_PRODUCT_GATES_OPEN=false   # 默认已是
+GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE=true
+GOAL_GOVERNANCE_DEV_DOGFOOD=false
+GOAL_GOVERNANCE_WORKSPACE_DIR=<product-workspace>
+# 单进程部署；勿对 monorepo dogfood 开 ALLOW
+```
+
+### Residual 提醒
+
+| ID | 仍有效 |
+|----|--------|
+| R-F008-1 | process-local lock；多 worker 前复审 |
+| R-F008-2 | 最小 CT-011 |
+| R-F008-3 | 多进程崩溃半写 |
+
+### 结论与下一步
+
+生产受控写入**已获台账授权**；代码规划锁默认关闭。**空 env 仍不可写**（缺 ALLOW）。建议：部署产品工作区时设 ALLOW；并行 `/govern 推进 F-002～F-004`。
+
+### 声明
+
+已授权并更新默认规划锁与文档；**未**将 ALLOW 默认 true；**未**对 dogfood 过程树开启写入。
