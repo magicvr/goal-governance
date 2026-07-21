@@ -19,6 +19,11 @@
   - Web：`GET /workspaces` 列表、`POST /workspaces/select`、`POST /workspaces/status`（归档/恢复）、`GET /api/workspaces`；多区未选 **fail closed**
   - 归档只改索引 `active|archived`，**不**删除磁盘 canonical；归档当前焦点会清除 cookie
   - 注册表 `{data_root}/workspaces/registry.json` 仅为导航索引，不是目标状态权威
+- **共享资料产品（GOAL-016 A–C）**：
+  - store：`materials_store.py` → `{DATA_ROOT}/shared-materials/`
+  - Web：`GET /materials`、上传、附加到焦点工作区、软删、blob 下载、`GET /api/materials`
+  - 须配置 `GOAL_GOVERNANCE_DATA_ROOT`；引用绑定 N1 焦点（或 α 单区）
+  - 复用 `shared_materials.py` SM 校验；**AI 读资料未交付**（residual `R-016-AI-READ`）；SM-004：当数据、不执行、不外传
 - **非目标**：无 AI、无共享资料 CRUD、无多工作区 N1 列表产品化、无 SQLite；发布物不含 dogfood 过程树；fixture 使用合成 `GOAL-001-fixture-target`（`web/tests/fixtures/r004/workspace-ok/`，非本仓过程数据）。
 
 ## 工作区配置（fail closed）

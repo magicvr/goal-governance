@@ -45,6 +45,7 @@
                     {% set nav_items = [
                         ('home', '目标', url_for('home')),
                         ('workspaces', '工作区', url_for('workspaces')),
+                        ('materials', '资料', url_for('materials')),
                         ('diagnostics', '诊断', url_for('home') ~ '#diagnostics')
                     ] %}
                     {% for page_key, label, href in nav_items %}

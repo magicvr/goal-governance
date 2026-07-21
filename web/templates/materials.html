@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}共享资料 · Goal Governance{% endblock %}
+
+{% block content %}
+<section class="border-b border-zinc-200 pb-6">
+    <p class="text-sm font-medium text-teal-700">X-SM · 共享资料</p>
+    <h1 class="mt-2 text-3xl font-semibold text-zinc-950">资料库</h1>
+    <p class="mt-1 max-w-2xl text-sm text-zinc-600">
+        产品库位于 <code class="font-mono">DATA_ROOT/shared-materials/</code>。固定引用绑定<strong>当前焦点工作区</strong>；资料不是目标状态权威；不执行资料内指令。
+        <strong>AI 自动读资料未交付</strong>（residual <code class="font-mono">R-016-AI-READ</code>）；SM-004 策略：当数据、不执行、不外传。
+    </p>
+    {% if data_root %}
+    <p class="mt-2 font-mono text-xs text-zinc-500">DATA_ROOT · {{ data_root }}</p>
+    {% endif %}
+    {% if materials_focus_workspace_id %}
+    <p class="mt-2 text-xs text-zinc-600">引用焦点 · <span class="font-mono">{{ materials_focus_workspace_id }}</span>
+        · <a href="{{ url_for('workspaces') }}" class="text-teal-700 hover:underline">切换工作区</a>
+    </p>
+    {% else %}
+    <p class="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+        未选定焦点工作区时仍可上传到实例资料库，但<strong>无法附加引用</strong>。请先在工作区列表选择焦点。
+    </p>
+    {% endif %}
+</section>
+
+{% if materials_flash %}
+<section class="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-950" role="status">
+    {% if materials_flash == 'uploaded' %}已上传新版本。
+    {% elif materials_flash == 'attached' %}已附加到当前工作区引用。
+    {% elif materials_flash == 'deleted' %}已软删除（blob 保留；历史已记）。
+    {% else %}{{ materials_flash }}
+    {% endif %}
+</section>
+{% endif %}
+
+{% if materials_store_error %}
+<section class="mt-6 rounded-lg border border-rose-200 bg-rose-50 p-4" role="alert">
+    <p class="text-sm text-rose-950">{{ materials_store_error }}</p>
+</section>
+{% else %}
+
+<section class="mt-8 grid gap-8 lg:grid-cols-2">
+    <div>
+        <h2 class="text-lg font-semibold text-zinc-950">上传</h2>
+        <form method="post" action="{{ url_for('materials_upload') }}" enctype="multipart/form-data"
+              class="mt-4 space-y-3 rounded-lg border border-zinc-200 bg-white p-4">
+            <div>
+                <label class="block text-xs font-medium text-zinc-600" for="display_name">显示名</label>
+                <input id="display_name" name="display_name" type="text"
+                       class="mt-1 w-full rounded border border-zinc-300 px-2 py-1.5 text-sm" placeholder="可选" />
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-zinc-600" for="file">文件（≤16 MiB）</label>
+                <input id="file" name="file" type="file" required
+                       class="mt-1 block w-full text-sm text-zinc-700" />
+            </div>
+            <button type="submit" class="rounded-md bg-teal-700 px-3 py-2 text-sm font-medium text-white hover:bg-teal-800">
+                上传新版本
+            </button>
+        </form>
+    </div>
+
+    <div>
+        <h2 class="text-lg font-semibold text-zinc-950">当前工作区引用</h2>
+        {% if material_refs %}
+        <ul class="mt-4 divide-y divide-zinc-200 overflow-hidden rounded-lg border border-zinc-200 bg-white text-sm">
+            {% for r in material_refs %}
+            <li class="p-3">
+                <p class="font-mono text-xs text-zinc-500">{{ r.reference_id }} · {{ r.status }}</p>
+                <p class="mt-1 font-medium text-zinc-900">{{ r.material_id }} @ {{ r.version }}</p>
+                <p class="mt-1 font-mono text-[10px] text-zinc-500 break-all">sha256:{{ r.sha256 }}</p>
+                <p class="mt-1 text-xs text-zinc-600">{{ r.purpose }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="mt-4 text-sm text-zinc-500">暂无 active 引用。</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="mt-10" aria-labelledby="mat-list-heading">
+    <h2 id="mat-list-heading" class="text-lg font-semibold text-zinc-950">资料列表</h2>
+    {% if materials %}
+    <ul class="mt-4 divide-y divide-zinc-200 overflow-hidden rounded-lg border border-zinc-200 bg-white">
+        {% for m in materials %}
+        <li class="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:justify-between">
+            <div class="min-w-0">
+                <p class="font-medium text-zinc-950">{{ m.display_name }}</p>
+                <p class="mt-1 font-mono text-xs text-zinc-500">{{ m.material_id }} · {{ m.current_version }} · {{ m.version_count }} ver</p>
+                {% if m.current_version %}
+                <a class="mt-1 inline-block text-xs text-teal-700 hover:underline"
+                   href="{{ url_for('api_materials_blob', material_id=m.material_id, version=m.current_version) }}">下载当前版本</a>
+                {% endif %}
+            </div>
+            <div class="flex shrink-0 flex-col gap-2 sm:items-end">
+                {% if materials_focus_workspace_id %}
+                <form method="post" action="{{ url_for('materials_attach') }}" class="flex flex-wrap gap-2">
+                    <input type="hidden" name="material_id" value="{{ m.material_id }}" />
+                    <input type="hidden" name="version" value="{{ m.current_version or '' }}" />
+                    <input type="text" name="purpose" value="workspace-ref" class="w-36 rounded border border-zinc-300 px-2 py-1 text-xs" />
+                    <button type="submit" class="rounded-md bg-teal-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-teal-800">
+                        附加到焦点工作区
+                    </button>
+                </form>
+                {% endif %}
+                <form method="post" action="{{ url_for('materials_delete') }}"
+                      onsubmit="return confirm('软删除资料？活动引用存在时须勾选确认。blob 保留。');"
+                      class="flex items-center gap-2 text-xs text-zinc-600">
+                    <input type="hidden" name="material_id" value="{{ m.material_id }}" />
+                    <label class="inline-flex items-center gap-1">
+                        <input type="checkbox" name="confirm" value="yes" />
+                        确认删除
+                    </label>
+                    <button type="submit" class="rounded border border-zinc-300 bg-white px-2 py-1 hover:bg-zinc-50">删除</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="mt-4 text-sm text-zinc-500">资料库为空。上传第一个文件开始。</p>
+    {% endif %}
+</section>
+{% endif %}
+{% endblock %}

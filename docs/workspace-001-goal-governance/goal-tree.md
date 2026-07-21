@@ -4,10 +4,38 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.74.0
+version: 0.81.0
 ---
 
 # Goal Tree
+
+## 2026-07-22 · GOAL-016 有界关门（X-SM）
+
+D-006 / A-006–A-007：阶段审 + close-out；`done / 100%`；R-016-AI-READ / E2E / UX residual。R-009-X 仍 accepted。全量 **142 passed, 1 skipped**。
+
+## 2026-07-22 · GOAL-016 阶段 D 负向与 AI residual
+
+D-005 / A-005：隔离负向矩阵 + **R-016-AI-READ** accepted；progress 当时 **85%**。
+
+## 2026-07-22 · GOAL-016 阶段 C Web
+
+D-004 / A-004：`/materials` 上传/引用；progress 当时 **65%**。
+
+## 2026-07-22 · GOAL-016 阶段 B service
+
+D-003 / A-003：`materials_store` + tests；progress 当时 **40%**。
+
+## 2026-07-22 · GOAL-016 阶段 A 冻结（R-016-A）
+
+D-002 / A-002：共享资料范围/存储/安全边界冻结；progress 当时 **15%**。
+
+## 2026-07-22 · 创建 GOAL-016（X-SM）
+
+D-036 / A-062：用户 S1；[GOAL-016-shared-materials-product](GOAL-016-shared-materials-product/) · 其后阶段 A 见上节。GOAL-009 仍 `done`；R-009-X 仍 accepted。下一编号 **GOAL-017**。
+
+## 2026-07-22 · R-009-X 下一扩展审视（X-SM / 试点 · 待选定）
+
+D-035 / A-061：选项 S1=X-SM（推荐）/ S2=X-PILOT / S3=SM+PILOT / S4=X-CREATE / S0=不立。其后用户选 S1（见上节）。
 
 ## 2026-07-22 · 响应 GOAL-015 A-008（F-001～F-003）
 
@@ -271,7 +299,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [done 100%]
 ├── GOAL-013-write-gate-ct-durable-idempotency · 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） [done 100%]
 ├── GOAL-014-ai-collaboration-runtime · 实现 AI 协作运行时与用户确认链（有界） [done 100%]
-└── GOAL-015-n1-workspace-navigation · 实现 N1 多工作区导航（列表 / 选择 / 归档） [done 100%]
+├── GOAL-015-n1-workspace-navigation · 实现 N1 多工作区导航（列表 / 选择 / 归档） [done 100%]
+└── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
 ```
 
 ## 状态总览
@@ -293,8 +322,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-013-write-gate-ct-durable-idempotency | 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） | GOAL-001-main-vision | done | 100% | [GOAL-013-write-gate-ct-durable-idempotency/](GOAL-013-write-gate-ct-durable-idempotency/) |
 | GOAL-014-ai-collaboration-runtime | 实现 AI 协作运行时与用户确认链（有界） | GOAL-001-main-vision | done | 100% | [GOAL-014-ai-collaboration-runtime/](GOAL-014-ai-collaboration-runtime/) |
 | GOAL-015-n1-workspace-navigation | 实现 N1 多工作区导航（列表 / 选择 / 归档） | GOAL-001-main-vision | done | 100% | [GOAL-015-n1-workspace-navigation/](GOAL-015-n1-workspace-navigation/) |
+| GOAL-016-shared-materials-product | 实现共享资料区产品（CRUD / 固定引用 / 隔离） | GOAL-001-main-vision | done | 100% | [GOAL-016-shared-materials-product/](GOAL-016-shared-materials-product/) |
 
-阶段 6：GOAL-009 `done / 100%`（有界）；GOAL-012～015 `done`（015=X-NAV 有界 + residual）。下一编号 **GOAL-016**。GOAL-001 仍为 `active`（阶段 6 终态见 R-009-X）。
+阶段 6：GOAL-009 `done`（有界）；GOAL-012～016 `done`（015=X-NAV、016=X-SM 有界 + residual）。下一编号 **GOAL-017**。GOAL-001 仍为 `active`（阶段 6 终态见 R-009-X）。
 
 ## 状态图例
 
@@ -309,6 +339,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-016`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-017`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

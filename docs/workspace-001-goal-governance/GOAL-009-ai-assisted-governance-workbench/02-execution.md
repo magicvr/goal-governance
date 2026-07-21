@@ -55,9 +55,24 @@ version: 1.0.0
 - 新目标：[GOAL-015-n1-workspace-navigation](../GOAL-015-n1-workspace-navigation/00-meta.md) · `active / 0%`。  
 - GOAL-009 仍 `done / 100%`；R-009-X 仍 accepted。
 
+### 2026-07-22 · 审视 R-009-X 下一扩展（X-SM / 试点）
+
+- 用户：`/govern 按 R-009-X 审视下一扩展（X-SM / 试点）`  
+- [D-035](01-decision.md#d-035--r-009-x-下一扩展选项包x-sm--试点proposed--待用户选定2026-07-22) / [A-061](03-audit.md#a-061--审视-r-009-x-下一扩展x-sm--试点2026-07-22)。  
+- **仅选项包**；**未**创建 GOAL-016+。  
+- 推荐 **S1 = X-SM**；待用户 `OK S1`… 或 S2/S3/S4/S0。  
+- 背景：X-AI / X-NAV 已 done（GOAL-014/015）。
+
+### 2026-07-22 · 接受 S1：创建 GOAL-016（X-SM）
+
+- 用户选定 **S1**。  
+- [D-036](01-decision.md#d-036--接受-s1创建-goal-016x-sm2026-07-22) / [A-062](03-audit.md#a-062--响应-s1创建-goal-016x-sm2026-07-22)。  
+- 新目标：[GOAL-016-shared-materials-product](../GOAL-016-shared-materials-product/00-meta.md) · `active / 0%`。  
+- GOAL-009 仍 `done / 100%`；R-009-X 仍 accepted。
+
 ## 进度评估
 
-**100%**（有界规划/α/X-AI 台账范围）；扩展交付槽 **X-NAV → GOAL-015**；R-009-X 其余项仍 open。
+**100%**（有界规划/α/X-AI 台账范围）；扩展：X-NAV→015 done；**X-SM→GOAL-016 active**；试点未立。
 
 ## 详细时间线
 

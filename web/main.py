@@ -3,8 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Annotated, Any
 
-from fastapi import Depends, FastAPI, Form, HTTPException, Request, Response
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -16,6 +16,7 @@ from services.controlled_change import (
     ControlledChangeService,
 )
 from services.goals_repo import GoalsRepository
+from services.materials_store import SharedMaterialsStore
 from services.models import TreeValidationReport
 from services.workspace_binding import (
     build_focus_state,
@@ -159,6 +160,27 @@ def _repo_workspace_id(repository: GoalsRepository) -> str:
     if src.startswith("n1:") and len(src) > 3:
         return src[3:]
     return repository.goals_dir.name
+
+
+def _materials_store() -> SharedMaterialsStore | None:
+    """Product materials store under DATA_ROOT (R-016-A). None if DATA_ROOT unset."""
+    root = resolve_data_root()
+    if root is None:
+        return None
+    return SharedMaterialsStore(root)
+
+
+def _focus_workspace_id_for_materials(
+    request: Request,
+    repository: GoalsRepository,
+) -> str | None:
+    """Workspace id for attaching MaterialRef (focus cookie or α single)."""
+    focus = build_focus_state(request)
+    if focus.focus_workspace_id:
+        return focus.focus_workspace_id
+    if repository.is_configured:
+        return _repo_workspace_id(repository)
+    return None
 
 
 def _change_service(repository: GoalsRepository) -> ControlledChangeService:
@@ -344,6 +366,185 @@ async def api_workspaces(request: Request):
                 if set(row.keys()) - {"workspace_id", "display_name", "root_goal", "status"}:
                     raise HTTPException(status_code=500, detail="N1 contract violated")
     return JSONResponse(payload)
+
+
+@app.get("/materials", name="materials")
+async def materials_page(request: Request, repository: RepositoryDependency):
+    """Shared materials list / upload / attach ref (GOAL-016 stage C)."""
+    base = _base_context(repository, request)
+    store = _materials_store()
+    materials: list[dict[str, Any]] = []
+    refs: list[dict[str, Any]] = []
+    store_error: str | None = None
+    focus_ws = _focus_workspace_id_for_materials(request, repository)
+    if store is None:
+        store_error = "未设置 GOAL_GOVERNANCE_DATA_ROOT；共享资料产品库不可用（R-016-A）。"
+    else:
+        listed = store.list_materials()
+        if listed.ok:
+            materials = list(listed.details.get("materials") or [])
+        else:
+            store_error = listed.message
+        if focus_ws:
+            ref_r = store.list_refs(focus_ws)
+            if ref_r.ok:
+                refs = list(ref_r.details.get("refs") or [])
+    flash = request.query_params.get("msg")
+    return templates.TemplateResponse(
+        request=request,
+        name="materials.html",
+        context={
+            **base,
+            "active_page": "materials",
+            "materials": materials,
+            "material_refs": refs,
+            "materials_store_error": store_error,
+            "materials_focus_workspace_id": focus_ws,
+            "materials_flash": flash,
+        },
+    )
+
+
+@app.post("/materials/upload", name="materials_upload")
+async def materials_upload(
+    request: Request,
+    repository: RepositoryDependency,
+    display_name: Annotated[str, Form()] = "",
+    file: UploadFile = File(...),
+):
+    """Upload a new material version into product shared-materials store."""
+    store = _materials_store()
+    if store is None:
+        raise HTTPException(status_code=400, detail="DATA_ROOT required for materials upload")
+    raw = await file.read()
+    if not raw:
+        raise HTTPException(status_code=400, detail="empty file")
+    # Soft size cap (16 MiB) for stage C
+    if len(raw) > 16 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="file exceeds 16 MiB stage-C limit")
+    name = (display_name or file.filename or "upload").strip()
+    result = store.put_bytes(data=raw, display_name=name)
+    if not result.ok:
+        raise HTTPException(status_code=400, detail=result.message or "upload failed")
+    mid = result.details.get("material_id")
+    return RedirectResponse(
+        url=str(request.url_for("materials")) + f"?msg=uploaded&id={mid}",
+        status_code=303,
+    )
+
+
+@app.post("/materials/attach", name="materials_attach")
+async def materials_attach(
+    request: Request,
+    repository: RepositoryDependency,
+    material_id: Annotated[str, Form()],
+    purpose: Annotated[str, Form()] = "workspace-ref",
+    version: Annotated[str, Form()] = "",
+):
+    """Attach MaterialRef to current focus workspace (fail closed)."""
+    store = _materials_store()
+    if store is None:
+        raise HTTPException(status_code=400, detail="DATA_ROOT required")
+    focus_ws = _focus_workspace_id_for_materials(request, repository)
+    if not focus_ws:
+        raise HTTPException(
+            status_code=400,
+            detail="no focus workspace; select a workspace first",
+        )
+    ver = version.strip() or None
+    result = store.attach_ref(
+        workspace_id=focus_ws,
+        material_id=material_id.strip(),
+        version=ver,
+        purpose=purpose.strip() or "workspace-ref",
+    )
+    if not result.ok:
+        raise HTTPException(status_code=400, detail=result.message or "attach failed")
+    return RedirectResponse(
+        url=str(request.url_for("materials")) + "?msg=attached",
+        status_code=303,
+    )
+
+
+@app.post("/materials/delete", name="materials_delete")
+async def materials_delete(
+    request: Request,
+    repository: RepositoryDependency,
+    material_id: Annotated[str, Form()],
+    confirm: Annotated[str, Form()] = "",
+):
+    """Soft-delete material after user confirmation (SM-005)."""
+    del repository  # focus not required for instance-level materials delete
+    store = _materials_store()
+    if store is None:
+        raise HTTPException(status_code=400, detail="DATA_ROOT required")
+    confirmed = confirm.strip().lower() in {"1", "true", "yes", "on"}
+    result = store.delete_material(material_id.strip(), user_confirmed=confirmed)
+    if not result.ok:
+        raise HTTPException(status_code=400, detail=result.message or "delete failed")
+    return RedirectResponse(
+        url=str(request.url_for("materials")) + "?msg=deleted",
+        status_code=303,
+    )
+
+
+@app.get("/api/materials", name="api_materials")
+async def api_materials(request: Request, repository: RepositoryDependency):
+    """JSON materials metadata + focus workspace refs (no goal bodies)."""
+    store = _materials_store()
+    focus_ws = _focus_workspace_id_for_materials(request, repository)
+    if store is None:
+        return JSONResponse(
+            {
+                "ok": False,
+                "error": "DATA_ROOT not configured",
+                "materials": [],
+                "refs": [],
+            }
+        )
+    listed = store.list_materials()
+    refs: list[dict[str, Any]] = []
+    if focus_ws:
+        ref_r = store.list_refs(focus_ws)
+        if ref_r.ok:
+            refs = list(ref_r.details.get("refs") or [])
+    return JSONResponse(
+        {
+            "ok": listed.ok,
+            "error": None if listed.ok else listed.message,
+            "materials": list(listed.details.get("materials") or []) if listed.ok else [],
+            "focus_workspace_id": focus_ws,
+            "refs": refs,
+        }
+    )
+
+
+@app.get(
+    "/api/materials/{material_id}/versions/{version}/blob",
+    name="api_materials_blob",
+)
+async def api_materials_blob(material_id: str, version: str):
+    """Download material bytes (explicit); path confined to materials store."""
+    store = _materials_store()
+    if store is None:
+        raise HTTPException(status_code=400, detail="DATA_ROOT required")
+    # Reject goal-like ids early
+    if material_id.startswith("GOAL-") or ".." in material_id:
+        raise HTTPException(status_code=400, detail="invalid material_id")
+    got = store.get_version(material_id, version, read_bytes=True)
+    if not got.ok:
+        raise HTTPException(status_code=404, detail=got.message or "not found")
+    data = got.details.get("data")
+    if not isinstance(data, bytes):
+        raise HTTPException(status_code=404, detail="blob missing")
+    return Response(
+        content=data,
+        media_type="application/octet-stream",
+        headers={
+            "Content-Disposition": f'attachment; filename="{material_id}-{version}.bin"',
+            "X-Material-Sha256": str(got.details.get("sha256") or ""),
+        },
+    )
 
 
 @app.get("/goals/{goal_id}", name="goal_detail")

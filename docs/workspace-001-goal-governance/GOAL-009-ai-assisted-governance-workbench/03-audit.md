@@ -15,7 +15,7 @@ version: 1.0.1
 - **有界关门**：`done / 100%`（D-031-A / **A-056** self）。
 - **独立关门复审**：**A-057** · `source: independent` · **verdict: pass**（有界）。
 - **A-057 响应**：**A-058** / D-032 · **F-029 closed** · **F-030 closed**（文档现时叙述 + I 责任方 → R-009-X）。
-- **R-009-X 扩展立项**：**A-059** 审视 → 用户 **E1** → **A-060** / D-034 创建 [GOAL-015](../GOAL-015-n1-workspace-navigation/00-meta.md)（X-NAV · `active / 0%`）。
+- **R-009-X 扩展立项**：A-059→E1→GOAL-015（X-NAV **done**）；A-061→**S1**→**A-062** / D-036 创建 [GOAL-016](../GOAL-016-shared-materials-product/00-meta.md)（X-SM · `active / 0%`）。
 - 关闭范围：规划台账 + α 实现闭环 + X-AI 有界定义/交付。
 - **R-E-3-X closed**；**R-009-X accepted**（扩展/终态）；R-E-2-H 并入 R-009-X。
 - **不**等于阶段 6 Web 产品终态或 Root 关门。
@@ -3802,3 +3802,102 @@ OK E1：创建 X-NAV（GOAL-015 N1 多工作区导航）
 ### 声明
 
 已立项 X-NAV；**未**实现导航代码；**未** verified I-009；**未**关 residual 全文。
+
+## A-061 · 审视 R-009-X 下一扩展（X-SM / 试点）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：design-plan / residual-review
+- **scope**：GOAL-009 有界 `done` + **R-009-X** 下，审视下一扩展 **X-SM** 与 **X-PILOT**（及可选 X-CREATE）；**不**创建目标；**不**关 Root；**不**宣称终态。
+- **verdict**：conditional（选项可核对；立项待用户裁决）
+- **裁决包**：[D-035](01-decision.md#d-035--r-009-x-下一扩展选项包x-sm--试点proposed--待用户选定2026-07-22)
+
+### 基线（有证据）
+
+| 项 | 状态 |
+|----|------|
+| GOAL-009 | `done / 100%` 有界；R-009-X accepted |
+| X-AI | GOAL-014 `done`（有界 + R-014-E2E） |
+| X-NAV | GOAL-015 `done`（有界 + R-015-E2E / CREATE-UI） |
+| 未关门实现目标 | **无**（仅 Root active） |
+| 下一编号 | **GOAL-016** |
+| 开放 required finding（GOAL-009） | **无** |
+
+### R-009-X 剩余子范围 ↔ 候选
+
+| residual 子范围 | 候选 | 备注 |
+|-----------------|------|------|
+| 共享资料 CRUD 产品 / I-010 | **X-SM** | 一期必备规则已有；产品未交 |
+| 人类多会话试点 / I-007 / I-012 | **X-PILOT** | 原 R-E-2-H |
+| N1 全文 / E2E | GOAL-015 residual | 不重开 015；R-015-E2E |
+| Web 一键建区 | **X-CREATE** 或 R-015-CREATE-UI | 可选小目标 |
+| 阶段 6 终态 | **禁止**本轮默终态 | Root 终态审前 |
+
+### 逐项可执行性（P-001）
+
+| 代号 | 可否直接细拆 | 说明 |
+|------|--------------|------|
+| **X-SM** | **须先高层路线图** 再细拆 | 存储/版本/哈希/CRUD/删除影响/AI 读安全；D-004 + SM 矩阵为输入 |
+| **X-PILOT** | 可立小目标 | 成功标准=可核对反馈与故障证据；可用 α+AI+N1 |
+| **X-CREATE** | 可立小目标 | 表单调 `create_workspace`；范围边界清 |
+
+### 依赖与并行
+
+```text
+X-NAV (done) ── 利于 ── X-SM 跨区隔离验收
+X-AI (done)  ── 边界 ── X-SM AI 读资料（仍须同意/不执行指令）
+X-PILOT ──(可并行)── X-SM / X-CREATE
+X-DEPLOY ── 对外前后置
+```
+
+### 推荐
+
+| 组合 | 内容 | 何时选 |
+|------|------|--------|
+| **S1（推荐）** | 仅 **X-SM** → 预计 GOAL-016 | 默认：一期资料产品 |
+| **S2** | 仅 **X-PILOT** | 先人类反馈 |
+| **S3** | X-SM + X-PILOT | 双线 |
+| **S4** | 仅 X-CREATE | 补建区表单 |
+| **S0** | 不立项 | 保留选项 |
+
+### 本拍结果
+
+| 项 | 结果 |
+|----|------|
+| 子目标创建 | **无** |
+| GOAL-009 status | **done 不变** |
+| R-009-X | **仍 accepted** |
+
+### 请用户确认
+
+```text
+OK S1：创建 X-SM（GOAL-016 共享资料 CRUD 产品）
+```
+
+或 `OK S2` / `OK S3` / `OK S4` / `OK S0`。
+
+### 声明
+
+**self · 审视**；**未**创建扩展目标；**未** verified I-010；**未**宣称阶段 6 终态。
+## A-062 · 响应 S1：创建 GOAL-016（X-SM）（2026-07-22）
+
+- **source**：self（response）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / create
+- **scope**：按用户 S1 创建 X-SM 实现子目标；GOAL-009 状态不变。
+- **verdict**：pass
+- **裁决**：[D-036](01-decision.md#d-036--接受-s1创建-goal-016x-sm2026-07-22)
+
+### 成果
+
+| 项 | 结果 |
+|----|------|
+| 新目标 | [GOAL-016-shared-materials-product](../GOAL-016-shared-materials-product/00-meta.md) · `active / 0%` |
+| 五件套 | 齐全；路线图 A–E；I-001～I-006 |
+| GOAL-009 | **仍 done / 100%** 有界 |
+| R-009-X | **仍 accepted**（资料 CRUD 交付槽移交 GOAL-016） |
+| X-PILOT / X-CREATE | **未**创建 |
+
+### 声明
+
+已立项 X-SM；**未**实现资料存储/CRUD 代码；**未** verified I-010；**未**关 residual 全文。
