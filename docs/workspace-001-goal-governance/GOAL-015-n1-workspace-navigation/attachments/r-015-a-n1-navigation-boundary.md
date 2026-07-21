@@ -4,9 +4,10 @@ status: active
 created: 2026-07-22
 updated: 2026-07-22
 parent: GOAL-015-n1-workspace-navigation
-version: 1.0.0
+version: 1.0.1
 type: design-freeze
 accepted_by: D-002
+errata: D-007 / A-009 (F-001)
 sources:
   - docs/architecture/workspace-protocol.md
   - GOAL-009 R-003 / 验证包 Q1·§3（N1）
@@ -34,8 +35,11 @@ sources:
 
 ### 1.1 「创建」裁决（I-005）
 
-**纳入本目标（有界）**：用户可在 Web 发起「新建工作区」→ 在**产品数据根**下生成符合 `workspace-protocol` 的最小骨架（`workspace.md`、Root GOAL-001 占位或用户给定 slug、`goal-tree.md`）。  
-**不纳入**：导入外部仓库全量过程树、跨实例联邦、批量迁移向导。
+**纳入本目标（有界 · service）**：在**产品数据根**下，通过 `WorkspaceRegistryService.create_workspace`（及等价 API/调用方）生成符合 `workspace-protocol` 的最小骨架（`workspace.md`、Root GOAL-001 占位或用户给定 slug、`goal-tree.md`）。阶段 B 已交付该 service 与 unittest。
+
+**Web 表单一键建区**：**不**在本目标有界关门范围内交付；见 residual **R-015-CREATE-UI**（`00-meta` / D-006）。历史措辞「用户可在 Web 发起」易被读成 UI 已交付，以本勘误与 residual 为准（A-008 F-001 / D-007）。
+
+**不纳入**：导入外部仓库全量过程树、跨实例联邦、批量迁移向导；物理删除。
 
 ## 2. 硬边界（不可削弱）
 
@@ -132,3 +136,4 @@ sources:
 | 版本 | 日期 | 说明 |
 |------|------|------|
 | 1.0.0 | 2026-07-22 | 阶段 A 初冻；D-002 接受 |
+| 1.0.1 | 2026-07-22 | §1.1 勘误：有界创建=service；Web 表单 → R-015-CREATE-UI（A-008 F-001 / D-007） |

@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.73.0
+version: 0.74.0
 ---
 
 # Goal Tree
+
+## 2026-07-22 · 响应 GOAL-015 A-008（F-001～F-003）
+
+D-007 / A-009：关闭推荐项（R-015-A 勘误、I 证据指针、编号速查→GOAL-016）。GOAL-015 仍 `done / 100%`（不重开）。
 
 ## 2026-07-22 · GOAL-015 有界关门（X-NAV）
 
@@ -305,6 +309,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-015`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-016`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

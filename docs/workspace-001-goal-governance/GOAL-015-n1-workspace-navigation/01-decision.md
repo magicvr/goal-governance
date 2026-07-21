@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-22
 updated: 2026-07-22
-version: 1.0.0
+version: 1.0.1
 ---
 
 # 决策记录 · GOAL-015
@@ -172,3 +172,20 @@ version: 1.0.0
 **未选**：无 residual 全文关；把 I-009 标 verified；物理删除。
 
 **影响**：goal-tree；A-006/A-007；Root 子目标指向。
+
+## D-007 · 响应 A-008：关闭 F-001～F-003（文档对齐，不重开）（2026-07-22）
+
+**状态**：accepted
+
+**确认来源**：用户 `响应 GOAL-015 A-008：关闭推荐项 F-001～F-003（文档对齐，不重开）`。
+
+**决定**：
+
+1. **关闭 F-001**：勘误 [R-015-A §1.1](attachments/r-015-a-n1-navigation-boundary.md) — 有界创建 = **service** `create_workspace`；Web 表单明确 **R-015-CREATE-UI residual**（v1.0.1）。  
+2. **关闭 F-002**：`00-meta` 信息就绪改为完整 P-005 字段 + 证据指针（I-001～I-006）。  
+3. **关闭 F-003**：`goal-tree.md` 编号规则速查「当前下一个」→ **GOAL-016**。  
+4. GOAL-015 **保持** `done / 100%`；**不**重开；**不**改 residual 接受范围（R-015-E2E / CREATE-UI 仍 accepted）。
+
+**为什么**：A-008 independent **pass（有界）**；三项均为 recommended 文档卫生，关闭不改变交付边界。
+
+**影响**：A-009；R-015-A v1.0.1；goal-tree v0.74.0 日志。
