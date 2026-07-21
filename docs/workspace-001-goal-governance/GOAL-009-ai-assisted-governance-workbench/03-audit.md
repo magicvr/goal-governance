@@ -5,16 +5,16 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.29.0
+version: 0.37.0
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-本目标已形成 self/response 至 **A-030**。**F-001、F-005、F-007、F-008 closed**（F-008 有界 + residual）。**I-003/I-004/I-006 verified（α）**。**生产受控写入已授权（D-016/A-030）**：规划锁默认关闭；须 `ALLOW_CONTROLLED_WRITE=true` + 产品数据根 + 单进程 residual。GOAL-012 / GOAL-013 有界关门。**F-002～F-004 仍 open**。进度 **60%**。
+本目标已形成 self/response 至 **A-038**。**F-001～F-005、F-007、F-008 closed**（F-002/F-003/F-004/F-008 有界 + residual）。**I-003/I-004/I-006 verified（α）**。**生产受控写入已授权**。路线图 B required findings **有界退出**。I-002/I-009/I-010 仍 collecting。进度 **80%**。
 
-当前焦点：**路线图 B（F-002～F-004）** 或部署侧打开 ALLOW 与产品数据根；AI/多进程 residual 复审按触发执行。
+当前焦点：路线图 E 试点 / residual 复审触发；或 R-F002～F004 residual 按需；可选资料/多区产品立项。
 ## A-001 · Web 第一阶段产品边界与计划一致性审计（2026-07-20）
 
 - **source**：independent
@@ -1908,3 +1908,551 @@ GOAL_GOVERNANCE_WORKSPACE_DIR=<product-workspace>
 ### 声明
 
 已授权并更新默认规划锁与文档；**未**将 ALLOW 默认 true；**未**对 dogfood 过程树开启写入。
+
+## A-031 · R-002 验证包冻结与 F-002 台账（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / design-freeze
+- **scope**：用户确认推进 F-002（R-002 验证包）。冻结事实准入数据/交互契约与 FA 负向矩阵；**不**关闭 F-002；**不**将 I-002/I-008 标 verified。
+- **verdict**：conditional（契约与计划齐；核心负向验证未跑）
+
+### 用户意图
+
+`OK 推进 F-002（R-002 验证包）`
+
+### 响应的意见 / finding
+
+| 项 | 本拍 |
+|----|------|
+| A-001 **F-002** | 关闭要求中的「契约」侧由验证包覆盖；「负向验证」侧 **未**满足 → **仍 open** |
+| A-004 R-002 | 设计默认（D-012）升级为可测冻结基线（D-017） |
+| F-003 / F-004 | **未**处理；仍 open |
+
+### 成果（有证据）
+
+| 产物 | 路径 |
+|------|------|
+| 验证包 | [attachments/r-002-verification-package.md](attachments/r-002-verification-package.md) |
+| 决策 | [D-017](01-decision.md#d-017--冻结-r-002-验证包不关闭-f-0022026-07-21) |
+| 收集稿索引 | [r-002-fact-admission-ai-collaboration.md](attachments/r-002-fact-admission-ai-collaboration.md) v0.2 |
+| 信息表 | meta I-002 / I-008 证据栏；路线图 B 状态 |
+
+### 冻结要点（摘要）
+
+1. 三类对象：CanonicalFact / Candidate / ComputedView。  
+2. `source_kind` 五类 + 升格规则；α 写仍仅 `user-provided`。  
+3. 确认绑定 `content_digest`；禁止计算视图一键变事实。  
+4. 工具同意：每次敏感调用。  
+5. **FA-001～FA-006** = F-002 关闭最小负向集（当前全部 `planned`）。  
+6. 可选有界关路径 A + residual R-F002-1～3（**本拍未采纳**）。
+
+### Finding 台账
+
+| Finding | 结果 |
+|---------|------|
+| **F-002** | **open / required**（验证计划已冻结；FA 未 pass） |
+| F-003 / F-004 | open（不变） |
+| F-001 / F-005 / F-007 / F-008 | closed（不变） |
+
+### 信息项
+
+| ID | 结果 |
+|----|------|
+| I-008 | collecting；契约冻结，待 FA 证据 |
+| I-002 | collecting；同意粒度冻结，待提供方/加载 |
+| I-003 / I-004 / I-006 | verified（α）（不变） |
+
+### 结论与下一步
+
+路线图 B 的 F-002 子范围从「仅有收集稿」进入「可执行验证包」。**不得**因本拍关闭 F-002 或放行 AI。
+
+建议下一句：
+
+1. `/govern 实现并执行 FA-001～FA-006`  
+2. 或 `/govern 推进 F-003～F-004（R-003 验证包）`  
+3. 证据齐后 `/govern 审视关闭 F-002`
+
+### 声明
+
+已冻结 R-002 验证包；**未**关闭 F-002；**未**执行 FA；**未**接入 AI；**未**修改生产门禁 env。
+
+## A-032 · FA-001～FA-006 执行证据与 F-002 门禁更新（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / verification-execution
+- **scope**：实现并执行 R-002 验证包核心 FA-001～FA-006；更新证据台账。**不**关闭 F-002；**不**将 I-002/I-008 标 verified。
+- **verdict**：conditional（核心 FA pass；finding 关闭声明与 I 项 verified 仍缺）
+
+### 用户意图
+
+`/govern 实现并执行 FA-001～FA-006`
+
+### 成果（有证据）
+
+| 产物 | 路径 |
+|------|------|
+| 实现 | `web/services/fact_admission.py` |
+| 测试 | `web/tests/test_fact_admission.py` |
+| 运行 | `unittest discover -s tests -q` → **68 passed, 1 skipped** |
+| 证据附件 | [fa-evidence-001-006-2026-07-21.md](attachments/fa-evidence-001-006-2026-07-21.md) |
+| 验证包 | [r-002-verification-package.md](attachments/r-002-verification-package.md) v0.2（FA 状态列 pass） |
+
+### FA 结果摘要
+
+| ID | 结果 | 拒绝码 / 说明 |
+|----|------|----------------|
+| FA-001 | **pass** | `ERR_FA_MISSING_SOURCE_KIND` |
+| FA-002 | **pass** | `ERR_FA_MISSING_SOURCE_STATEMENT` |
+| FA-003 | **pass** | `ERR_FA_SOURCE_KIND_DISGUISE` |
+| FA-004 | **pass** | `ERR_FA_RENDER_CANONICAL_UNCONFIRMED`（view-model，非 E2E） |
+| FA-005 | **pass** | `ERR_FA_DIGEST_STALE` |
+| FA-006 | **pass** | `ERR_FA_SOURCE_KIND_MUTATION` |
+
+全部为纯函数校验；**无** canonical 工作区文件写入。
+
+### Finding / 信息项台账
+
+| 项 | 结果 |
+|----|------|
+| **F-002** | **open / required** — 关闭条件 #1（契约）与 #2（核心 FA pass）已满足；**#3 关闭声明未写** |
+| F-003 / F-004 | open（不变） |
+| I-008 | collecting；FA 证据已挂接；不标 verified |
+| I-002 | collecting（不变） |
+
+### 可选关闭路径（待用户裁决）
+
+| 路径 | 含义 |
+|------|------|
+| **A（推荐）** | F-002 **closed（有界）** + residual R-F002-1（UI E2E）、R-F002-2（FA-007～012）、R-F002-3（I-002 提供方） |
+| **B** | 等 FA-007～012 / UI 后再关（更长） |
+| **C** | 仅记录证据，F-002 保持 open 直至显式关 |
+
+### 结论与下一步
+
+核心负向验证已执行且通过。建议下一句：
+
+1. `/govern 审视关闭 F-002`（推荐路径 A）  
+2. 或 `/govern 推进 F-003～F-004`
+
+### 声明
+
+已实现并执行 FA-001～006 且全量 web 测试 **68 passed, 1 skipped**；**未**关闭 F-002；**未**接入 AI；**未**改生产 env。
+
+## A-033 · 审视关闭 F-002（路径 A/B/C · 待裁决）（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close-review
+- **scope**：对照 A-001 F-002 关闭要求、D-017 验证包、FA-001～006 证据，判断可否关闭及范围。**本拍不**关闭 F-002；**不**静默接受 residual（P-004）。
+- **verdict**：conditional（可有界关闭；须用户选定路径）
+
+### 用户意图
+
+`/govern 审视关闭 F-002`
+
+### F-002 原文关闭要求（A-001）
+
+> 在路线图 B 结束前，以**数据和交互契约**覆盖来源、候选、确认与撤回路径，并对「**无来源**」「**未确认**」「**来源变更**」运行负向验证。
+
+### 条件对照
+
+| # | 条件 | 证据 | 判断 |
+|---|------|------|------|
+| 1 | 数据 + 交互契约 | D-012/D-017；[r-002-verification-package](attachments/r-002-verification-package.md) v0.2 | **满足** |
+| 2 | 负向：无来源 | FA-001、FA-002 **pass** | **满足**（纯函数） |
+| 3 | 负向：未确认混入 | FA-004 **pass**（view-model 契约） | **有界满足**（非浏览器 E2E） |
+| 4 | 负向：来源变更 / 伪装 | FA-003、FA-005、FA-006 **pass** | **满足** |
+| 5 | 确认/撤回路径契约 | 验证包 §4 + FA 门禁 | **设计+校验满足**；运行时候选 UI 未全量接入 |
+| 6 | AI/工具扩展 FA-007～012 | 全部 `planned` | **不满足全文**；可 residual |
+| 7 | 关闭声明落盘 | — | **本拍待路径确认后写** |
+
+回归基线（A-032）：**68 passed, 1 skipped**（未在本审视重跑；证据见 [fa-evidence](attachments/fa-evidence-001-006-2026-07-21.md)）。
+
+### 与 I-008 / I-002
+
+| ID | 关闭 F-002 是否要求 verified？ | 本拍 |
+|----|-------------------------------|------|
+| I-008 | **否**（finding 与 I 项可解耦；I-008 可在有界关 finding 后仍 collecting） | 保持 collecting |
+| I-002 | **否**（提供方/加载属 AI 接入） | 保持 collecting |
+
+**不**因关 F-002 而宣称路线图 B 整段退出（F-003/F-004 仍 open）。
+
+### 可选路径（P-004 · 须用户书面确认）
+
+| 路径 | 动作 | F-002 | 说明 |
+|------|------|-------|------|
+| **A（推荐）** | **closed（有界）** + 接受 residual **R-F002-1～3** | closed | 与 F-008 / I-003 α 风格一致；不伪装 UI E2E 与 AI 运行时已验证 |
+| **B** | 等 FA-007～012 与/或浏览器 FA-004 后再关 | open | 更稳、更慢；阻塞路线图 B 中 F-002 子门禁更久 |
+| **C** | 仅保留 A-032/A-033 证据，不关 finding | open | 适合还想改契约时 |
+| **D（不推荐）** | 全文 closed、无 residual | closed | 证据不足（UI E2E、AI 运行时） |
+
+#### Residual 定义（仅路径 A）
+
+| ID | 内容 | 复审触发 | 缓解 |
+|----|------|----------|------|
+| **R-F002-1** | FA-004 全量 UI/DOM 渲染契约未跑 | 候选面板 UI 合并前；或宣称 UI 验收前 | view-model 契约已 pass；合并时补 UI 测 |
+| **R-F002-2** | FA-007～012 AI/工具运行时未跑 | AI 接入立项或首次工具调用实现前 | 无 AI 时路径不触发；接入前跑 FA |
+| **R-F002-3** | I-002 提供方/模型/加载未 verified | AI 技术方案冻结前 | 不开放 AI 写入直至 I-002 门禁 |
+
+### Finding 台账（本拍）
+
+| 项 | 结果 |
+|----|------|
+| **F-002** | **仍 open**（待路径确认） |
+| F-003 / F-004 | open（不变） |
+
+### 编排建议
+
+**选 A**：核心关闭要求在「契约 + 纯函数负向」层已可核对；残余边界清晰且有复审触发，不扩大 α 写动作或 AI 权限。
+
+### 请用户确认
+
+1. `OK A：F-002 有界关闭 + R-F002-1～3`（推荐）  
+2. `OK B：暂不关闭，等扩展 FA/UI`  
+3. `OK C：仅保留审视记录，finding 仍 open`
+
+确认后下一拍写入关闭声明（或 B/C 响应）并同步 meta / goal-tree。
+
+### 声明
+
+本审视**未**关闭 F-002；**未**接受 residual；**未**将 I-002/I-008 标 verified；**未**接入 AI。
+
+## A-034 · 路径 A：有界关闭 F-002 并接受 R-F002-1～3（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close
+- **scope**：按用户选择路径 A，有界关闭 A-001 **F-002**，书面接受 residual R-F002-1～3。裁决见 [D-018-A](01-decision.md#d-018-a--接受-r-f002-13-residual-并有界关闭-f-0022026-07-21)。**不**将 I-002/I-008 标 verified；**不**退出路线图 B（F-003/F-004）；**不**开放 AI 写入。
+- **verdict**：pass（F-002 有界 closed + residual 留痕）
+
+### 用户意图与 P-004
+
+A-033 后用户明确选择：**`OK A：F-002 有界关闭 + R-F002-1～3`**。
+
+### 关闭证据
+
+| 要求 | 证据 |
+|------|------|
+| 数据/交互契约 | D-012/D-017；[r-002-verification-package](attachments/r-002-verification-package.md) |
+| FA-001～006 pass | [fa-evidence-001-006-2026-07-21.md](attachments/fa-evidence-001-006-2026-07-21.md)；`web/services/fact_admission.py`；**68 passed, 1 skipped** |
+| 用户 residual 接受 | 本条 + D-018-A |
+
+### 关闭 scope（有界）
+
+事实准入模型在**契约 + 纯函数负向**层可核对：来源必填、不可伪装、digest 绑定、revision 不变性、view-model 下未确认不得无标签进 canonical zone。
+
+### Residual 台账（accepted）
+
+| ID | 残余 | 复审触发 | 状态 |
+|----|------|----------|------|
+| **R-F002-1** | FA-004 UI/DOM E2E | 候选面板 UI 合并前 | accepted |
+| **R-F002-2** | FA-007～012 AI/工具运行时 | AI 接入或首次工具调用前 | accepted |
+| **R-F002-3** | I-002 提供方/模型/加载 | AI 技术方案冻结前 | accepted |
+
+### Finding 台账
+
+| Finding | 结果 |
+|---------|------|
+| **F-002** | **closed**（有界 + R-F002-1～3） |
+| F-003 / F-004 | **open**（不变） |
+| F-001 / F-005 / F-007 / F-008 | closed（不变） |
+
+### 信息项
+
+| ID | 结果 |
+|----|------|
+| I-008 | **仍 collecting**（finding 关闭 ≠ I verified；扩展 FA/UI 仍缺） |
+| I-002 | **仍 collecting**（挂接 R-F002-3） |
+
+### 结论与下一步
+
+F-002 不再阻断路线图 B 中「事实准入契约」子门禁。路线图 B 仍被 **F-003/F-004** 阻断。建议：
+
+1. `/govern 推进 F-003～F-004`（R-003 验证包）  
+2. residual 复审触发出现时先复审再扩 AI/UI  
+3. 不因本条开放 AI 写入或改生产 env
+
+### 声明
+
+已有界关闭 F-002 并接受 R-F002-1～3；**未**将 I-002/I-008 标 verified；**未**关闭 F-003/F-004；**未**接入 AI；**未**改生产 env。
+
+## A-035 · R-003 验证包冻结与 F-003/F-004 台账（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / design-freeze
+- **scope**：用户确认推进 F-003～F-004（R-003 验证包）。冻结工作区隔离与共享资料数据/操作契约及 WS/SM 负向矩阵；**不**关闭 F-003/F-004；**不**将 I-009/I-010 标 verified。
+- **verdict**：conditional（契约与计划齐；核心负向未跑）
+
+### 用户意图
+
+`/govern 推进 F-003～F-004（R-003 验证包`
+
+### 响应的意见 / finding
+
+| 项 | 本拍 |
+|----|------|
+| A-001 **F-003** | 关闭要求中的「映射/隔离契约」侧由验证包覆盖；「正反访问测试」侧 **未**满足 → **仍 open** |
+| A-001 **F-004**（经 A-007 重定义） | 共享资料模型与 SM 矩阵冻结；CRUD/访问验证 **未**跑 → **仍 open** |
+| A-004 R-003 | 设计默认（D-011）升级为可测冻结基线（D-019） |
+
+### 成果（有证据）
+
+| 产物 | 路径 |
+|------|------|
+| 验证包 | [attachments/r-003-verification-package.md](attachments/r-003-verification-package.md) |
+| 决策 | [D-019](01-decision.md#d-019--冻结-r-003-验证包不关闭-f-003f-0042026-07-21) |
+| 收集稿索引 | [r-003-workspace-shared-materials.md](attachments/r-003-workspace-shared-materials.md) v0.3 |
+
+### 冻结要点（摘要）
+
+1. 工作区：`workspace_id` / `root_goal` / `canonical_scope`；N1 导航；索引非真相源。  
+2. 共享资料：Material / Version / Ref / Annotation；固定引用 fail closed（D-004）。  
+3. 存储 A + 打包/dogfood 分栏 + SQLite 非 canonical（D-011）。  
+4. **WS-001～006** = F-003 关闭最小负向集（planned）。  
+5. **SM-001～006** = F-004 关闭最小负向集（planned）。  
+6. 旧「只读贡献资料」语义不得用于关 F-004。
+
+### Finding 台账
+
+| Finding | 结果 |
+|---------|------|
+| **F-003** | **open / required**（验证计划已冻结；WS 未 pass） |
+| **F-004** | **open / required**（验证计划已冻结；SM 未 pass） |
+| F-001 / F-002 / F-005 / F-007 / F-008 | closed（不变） |
+
+### 信息项
+
+| ID | 结果 |
+|----|------|
+| I-009 / I-010 | collecting；契约冻结，待 WS/SM 证据 |
+| I-003 / I-004 / I-006 | verified（α）（不变） |
+
+### 结论与下一步
+
+路线图 B 的 F-003/F-004 子范围从「仅有收集稿」进入「可执行验证包」。**不得**因本拍关闭 F-003/F-004 或开放资料 CRUD 产品。
+
+建议下一句：
+
+1. `/govern 实现并执行 WS-001～WS-006`  
+2. `/govern 实现并执行 SM-001～SM-006`  
+3. 或 `/govern 实现并执行 WS+SM 核心矩阵`  
+4. 证据齐后 `/govern 审视关闭 F-003` / `F-004`
+
+### 声明
+
+已冻结 R-003 验证包；**未**关闭 F-003/F-004；**未**执行 WS/SM；**未**实现资料 CRUD 产品；**未**改生产 env。
+
+## A-036 · WS+SM 核心矩阵执行证据与 F-003/F-004 门禁更新（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / verification-execution
+- **scope**：实现并执行 R-003 核心 WS-001～006 与 SM-001～006；更新证据台账。**不**关闭 F-003/F-004；**不**将 I-009/I-010 标 verified。
+- **verdict**：conditional（核心 WS/SM pass；finding 关闭声明仍缺）
+
+### 用户意图
+
+`/govern 实现并执行 WS+SM 核心矩阵`
+
+### 成果（有证据）
+
+| 产物 | 路径 |
+|------|------|
+| 实现 | `web/services/workspace_isolation.py`、`web/services/shared_materials.py` |
+| 测试 | `web/tests/test_workspace_isolation.py`、`test_shared_materials.py` |
+| 运行 | `unittest discover -s tests -q` → **80 passed, 1 skipped** |
+| 证据 | [ws-sm-evidence-001-006-2026-07-21.md](attachments/ws-sm-evidence-001-006-2026-07-21.md) |
+| 验证包 | [r-003-verification-package.md](attachments/r-003-verification-package.md) v0.2 |
+
+### 结果摘要
+
+| 集 | 结果 |
+|----|------|
+| WS-001～006 | **全部 pass** |
+| SM-001～006 | **全部 pass** |
+
+纯函数/服务层；无 canonical 写入；无资料 CRUD 产品。
+
+### Finding / 信息项
+
+| 项 | 结果 |
+|----|------|
+| **F-003** | **open** — 条件 #1+#2 已齐；**#3 关闭声明未写** |
+| **F-004** | **open** — 同上 |
+| I-009 / I-010 | collecting；证据已挂接 |
+
+### 可选关闭路径（待用户裁决）
+
+| 路径 | 含义 |
+|------|------|
+| **A（推荐）** | F-003/F-004 **closed（有界）** + residual（UI/CRUD E2E、扩展 WS/SM） |
+| **B** | 分别审视 / 分批关闭 |
+| **C** | 等扩展用例后再关 |
+
+### 结论与下一步
+
+建议：`/govern 审视关闭 F-003` 与 `F-004`（可合并选路径 A）。
+
+### 声明
+
+已执行核心 WS/SM 且全量 **80 passed, 1 skipped**；**未**关闭 F-003/F-004；**未**实现资料 CRUD 产品；**未**改生产 env。
+
+## A-037 · 审视关闭 F-003 与 F-004（路径 A–D · 待裁决）（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close-review
+- **scope**：对照 A-001 F-003/F-004（F-004 经 A-007 重定义）、D-019 验证包、WS-001～006 与 SM-001～006 证据，判断可否关闭及范围。**本拍不**关闭 finding；**不**静默接受 residual（P-004）。
+- **verdict**：conditional（可有界关闭；须用户选定路径）
+
+### 用户意图
+
+`/govern 审视关闭 F-003 与 F-004`
+
+### 原文关闭要求
+
+| Finding | 关闭要求（有效基线） |
+|---------|----------------------|
+| **F-003** | 工作区 → 独立 Root/canonical 映射、索引边界、跨工作区读写拒绝策略（A-001） |
+| **F-004** | 共享资料：用户 CRUD、版本/哈希固定引用、AI 读边界、删除历史、跨工作区/安全验证（**A-007/D-004**；非旧「只读贡献资料」） |
+
+### 条件对照
+
+#### F-003
+
+| # | 条件 | 证据 | 判断 |
+|---|------|------|------|
+| 1 | 映射/N1/隔离契约 | D-011/D-019；[r-003-verification-package](attachments/r-003-verification-package.md) | **满足** |
+| 2 | WS-001～006 负向 | [ws-sm-evidence](attachments/ws-sm-evidence-001-006-2026-07-21.md)；`workspace_isolation.py` | **满足**（纯函数/服务层） |
+| 3 | 多工作区产品 UI / WS-007～008 | 未跑 | **不满足全文**；可 residual |
+| 4 | 关闭声明 | — | **待路径确认后写** |
+
+#### F-004
+
+| # | 条件 | 证据 | 判断 |
+|---|------|------|------|
+| 1 | 资料模型 + D-004 规则 | D-004/D-019 验证包对象/操作契约 | **满足** |
+| 2 | SM-001～006 负向 | 同上证据；`shared_materials.py` | **满足**（引用/哈希/隔离/删除门禁/AI 不执行） |
+| 3 | 全量用户 CRUD E2E（SM-007） | 未实现产品路径 | **不满足全文**；可 residual |
+| 4 | AI 读运行时 / 发布验收扩展 | SM-008～010 等 planned | **不满足全文**；可 residual |
+| 5 | 关闭声明 | — | **待路径确认后写** |
+
+回归基线（A-036）：**80 passed, 1 skipped**（本审视不重跑）。
+
+### 与 I-009 / I-010 / 路线图 B
+
+| 项 | 本拍 |
+|----|------|
+| I-009 / I-010 | **不**因关 finding 自动 `verified`；可仍 collecting |
+| 路线图 B 退出 | 若 **A** 关 F-003+F-004（有界），路线图 B 的 required finding 侧可视为**有界退出**；I-002 等 AI 接入项仍可在 B/后续收集 |
+| 资料 CRUD 产品 | 关 F-004 **≠** 开放产品实现；实现须另立目标 |
+| 生产写 / α | 不变；不改 env |
+
+### 可选路径（P-004 · 须用户书面确认）
+
+| 路径 | 动作 | F-003 | F-004 |
+|------|------|-------|-------|
+| **A（推荐）** | 两者 **closed（有界）** + residual 下表 | closed | closed |
+| **B** | 仅 F-003 有界关；F-004 保持 open | closed | open |
+| **C** | 仅 F-004 有界关；F-003 保持 open | open | closed |
+| **D** | 两者保持 open（等 UI/CRUD/扩展用例） | open | open |
+| **E（不推荐）** | 全文 closed、无 residual | closed | closed |
+
+#### Residual 定义（路径 A；B/C 仅用对应子集）
+
+| ID | 归属 | 残余 | 复审触发 |
+|----|------|------|----------|
+| **R-F003-1** | F-003 | 多工作区产品 UI / 列表·创建·归档 E2E（WS-008） | 平台导航/多区产品立项或 UI 合并前 |
+| **R-F003-2** | F-003 | 发布物无 dogfood 过程树验收（WS-007） | 正式发布验收前 |
+| **R-F004-1** | F-004 | 全量用户 CRUD E2E + 历史保留（SM-007） | 资料区产品实现验收前 |
+| **R-F004-2** | F-004 | AI 读运行时与提示注入实机路径（SM-004 运行时深化 / SM-009） | AI 读共享资料接入前 |
+| **R-F004-3** | F-004 | 发布/安装资料边界与索引-FS 冲突扩展（SM-008/010） | 含资料的发布或索引实现前 |
+
+### Finding 台账（本拍）
+
+| 项 | 结果 |
+|----|------|
+| **F-003 / F-004** | **仍 open**（待路径确认） |
+| 其余 closed findings | 不变 |
+
+### 编排建议
+
+**选 A**：核心关闭要求在「契约 + 纯函数负向」层已可核对；残余边界清晰；不伪装多区 UI 或资料 CRUD 产品已交付；对齐 F-002 路径 A 风格。
+
+### 请用户确认
+
+1. `OK A：F-003 与 F-004 有界关闭 + R-F003-1～2 / R-F004-1～3`（推荐）  
+2. `OK B：仅 F-003 有界关闭`  
+3. `OK C：仅 F-004 有界关闭`  
+4. `OK D：两者暂不关闭`
+
+确认后下一拍写入关闭声明（或 D 响应）并同步 meta / goal-tree。
+
+### 声明
+
+本审视**未**关闭 F-003/F-004；**未**接受 residual；**未**将 I-009/I-010 标 verified；**未**立项资料 CRUD；**未**改生产 env。
+
+## A-038 · 路径 A：有界关闭 F-003 与 F-004（2026-07-21）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-close
+- **scope**：按用户选择路径 A，有界关闭 A-001 **F-003** 与 **F-004**（F-004 语义以 A-007/D-004 为准），书面接受 R-F003-1～2 与 R-F004-1～3。裁决见 [D-020-A](01-decision.md#d-020-a--接受-r-f003r-f004-residual-并有界关闭-f-003与-f-0042026-07-21)。**不**将 I-009/I-010 标 verified；**不**交付资料 CRUD 产品；**不**改生产 env。
+- **verdict**：pass（F-003/F-004 有界 closed + residual 留痕）
+
+### 用户意图与 P-004
+
+A-037 后用户明确选择：**`OK A：F-003 与 F-004 有界关闭 + R-F003-1～2 / R-F004-1～3`**。
+
+### 关闭证据
+
+| Finding | 契约 | 核心负向 |
+|---------|------|----------|
+| F-003 | D-019 验证包工作区契约 | WS-001～006 pass；[ws-sm-evidence](attachments/ws-sm-evidence-001-006-2026-07-21.md)；`workspace_isolation.py` |
+| F-004 | D-004 + 验证包资料契约 | SM-001～006 pass；同上证据；`shared_materials.py` |
+| 用户 residual | 本条 + D-020-A | — |
+
+回归：**80 passed, 1 skipped**（A-036；本拍不重跑）。
+
+### 关闭 scope（有界）
+
+- **F-003**：映射/N1/跨区拒绝/dogfood 默认拒绝在**服务层契约校验**可核对。  
+- **F-004**：固定引用/哈希/删除门禁/AI 不执行/资料 API 隔离在**服务层契约校验**可核对。
+
+### Residual 台账（accepted）
+
+| ID | 状态 |
+|----|------|
+| R-F003-1 / R-F003-2 | **accepted** |
+| R-F004-1 / R-F004-2 / R-F004-3 | **accepted** |
+
+### Finding 台账
+
+| Finding | 结果 |
+|---------|------|
+| **F-003** | **closed**（有界 + R-F003-1～2） |
+| **F-004** | **closed**（有界 + R-F004-1～3） |
+| F-001 / F-002 / F-005 / F-007 / F-008 | closed（不变） |
+
+### 信息项 / 路线图
+
+| 项 | 结果 |
+|----|------|
+| I-009 / I-010 | **仍 collecting**（finding 关闭 ≠ I verified） |
+| 路线图 B | required findings **有界退出**；I-002 等可继续 |
+| 资料 CRUD 产品 | **未**实现、**未**立项（须另令） |
+
+### 结论与下一步
+
+路线图 B 的 F-002～F-004 台账门禁已齐（有界）。建议：
+
+1. 路线图 E 受控试点，或 residual 复审触发时再开 UI/CRUD/发布验收  
+2. 可选：`/govern` 审视 I-002 / 路线图后续  
+3. 不因本条开放 AI 写入或改生产 env
+
+### 声明
+
+已有界关闭 F-003 与 F-004 并接受 residual；**未**将 I-009/I-010 标 verified；**未**实现资料 CRUD 产品；**未**改生产 env。

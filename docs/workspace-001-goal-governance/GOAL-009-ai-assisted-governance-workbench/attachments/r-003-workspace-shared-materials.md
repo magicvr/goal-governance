@@ -4,9 +4,11 @@ status: active
 created: 2026-07-21
 updated: 2026-07-21
 parent: GOAL-009-ai-assisted-governance-workbench
-version: 0.2.0
+version: 0.3.0
 type: information-collection
 review_state: design-defaults-accepted-d011
+verification_package: r-003-verification-package.md
+verification_accepted_by: D-019
 response_group: R-003
 accepted_defaults: D-011
 ---
@@ -140,9 +142,13 @@ accepted_defaults: D-011
 
 | Finding | 有 | 仍缺 |
 |---------|----|------|
-| F-003 | 映射、N1、隔离、打包分栏 | 配置模型实现、正反访问测试、α 后实现证据 |
-| F-004 | D-004 + A 存储主语澄清 | 模型冻结、CRUD/AI/删除验证 |
+| F-003 | **closed（有界）** D-020-A / A-038 + R-F003-1～2 | 多区 UI / 发布验收 residual |
+| F-004 | **closed（有界）** D-020-A / A-038 + R-F004-1～3 | CRUD 产品 / AI 读 / 发布扩展 residual |
+
+规范与 WS/SM 矩阵见 **[r-003-verification-package.md](r-003-verification-package.md)**。
 
 ## 9. 当前结论
 
-R-003 设计默认已由 **D-011** 接受（N1 / A / α / 打包分栏 / SQLite 立场）。F-003/F-004 与 I-009/I-010 仍开放。硬禁令：F-005 按 α 正式关闭前不立项；F-007/F-008 与 I-003/I-004/I-006 闭环前不开放 Web/AI 写入。
+R-003 设计默认已由 **D-011** 接受；**D-019** 接受验证包为可测冻结基线。  
+**F-003/F-004 closed（有界）**（D-020-A）；I-009/I-010 仍 collecting。  
+α 已实现且生产写有界授权（A-030）；关 finding **不**等于资料 CRUD 产品已交付。

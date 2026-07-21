@@ -4,15 +4,37 @@ status: active
 created: 2026-07-18
 updated: 2026-07-21
 parent: null
-version: 0.36.0
+version: 0.42.0
 ---
 
 # Goal Tree
 
+## 2026-07-21 · GOAL-009 F-003/F-004 有界关闭
+
+D-020-A / A-038：路径 A；**F-003/F-004 closed** + R-F003/R-F004 residual；路线图 B finding 有界退出。GOAL-009 progress **80%**。
+
+## 2026-07-21 · GOAL-009 WS+SM 核心矩阵执行
+
+A-036：WS/SM 核心 **pass**。其后 F-003/F-004 已有界关闭（见上节）。
+
+## 2026-07-21 · GOAL-009 R-003 验证包（F-003/F-004）
+
+D-019/A-035：冻结 R-003 验证包；其后 WS/SM 已执行（见上节）。
+
+## 2026-07-21 · GOAL-009 F-002 有界关闭
+
+D-018-A / A-034：路径 A；**F-002 closed** + R-F002-1～3。其后 R-003 验证包已冻结（见上节）。
+
+## 2026-07-21 · GOAL-009 FA-001～006 执行
+
+A-032：`fact_admission` + unittest；**68 passed, 1 skipped**；FA-001～006 **pass**。其后 F-002 已有界关闭（见上节）。
+
+## 2026-07-21 · GOAL-009 R-002 验证包（F-002）
+
+D-017/A-031：冻结 [r-002-verification-package](GOAL-009-ai-assisted-governance-workbench/attachments/r-002-verification-package.md)；其后 FA 已执行（见上节）。
 ## 2026-07-21 · 本地产品工作区部署（ALLOW=true）
 
-配置 `data/product-workspace` + `web/.env`（ALLOW=true，非 dogfood）。`/api/health` 显示 `controlled_write_enabled=true`。GOAL-009 progress **60%**。
-
+配置 `data/product-workspace` + `web/.env`（ALLOW=true，非 dogfood）。`/api/health` 显示 `controlled_write_enabled=true`。GOAL-009 progress 当时 **60%**。
 ## 2026-07-21 · GOAL-009 A-030 生产受控写入授权
 
 D-016/A-030：规划锁默认关闭；须 `ALLOW_CONTROLLED_WRITE=true` + 产品数据根 + 单进程 residual。GOAL-009 progress **60%**。
@@ -115,7 +137,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-006-core-methodology-template-productization · 核心方法论、文档协议与 canonical 模板产品化 [done 100%]
 ├── GOAL-007-information-readiness-governance · 信息就绪与未知项治理 [done 100%]
 ├── GOAL-008-skills-consumer-adapter-release-consistency · Skills 消费适配器跨宿主/跨版本发布一致性 [done 100%]
-├── GOAL-009-ai-assisted-governance-workbench · 规划 AI 协助的人类目标治理 Web 工作台 [active 60%]
+├── GOAL-009-ai-assisted-governance-workbench · 规划 AI 协助的人类目标治理 Web 工作台 [active 80%]
 ├── GOAL-010-core-workspace-shared-materials-protocol · 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 [done 100%]
 ├── GOAL-011-multi-workspace-directory-migration · 完成多工作区目录迁移与共享资料索引骨架 [done 100%]
 ├── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [done 100%]
@@ -134,13 +156,13 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-006-core-methodology-template-productization | 核心方法论、文档协议与 canonical 模板产品化 | GOAL-001-main-vision | done | 100% | [GOAL-006-core-methodology-template-productization/](GOAL-006-core-methodology-template-productization/) |
 | GOAL-007-information-readiness-governance | 信息就绪与未知项治理 | GOAL-001-main-vision | done | 100% | [GOAL-007-information-readiness-governance/](GOAL-007-information-readiness-governance/) |
 | GOAL-008-skills-consumer-adapter-release-consistency | Skills 消费适配器跨宿主/跨版本发布一致性 | GOAL-001-main-vision | done | 100% | [GOAL-008-skills-consumer-adapter-release-consistency/](GOAL-008-skills-consumer-adapter-release-consistency/) |
-| GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | GOAL-001-main-vision | active | 60% | [GOAL-009-ai-assisted-governance-workbench/](GOAL-009-ai-assisted-governance-workbench/) |
+| GOAL-009-ai-assisted-governance-workbench | 规划 AI 协助的人类目标治理 Web 工作台 | GOAL-001-main-vision | active | 80% | [GOAL-009-ai-assisted-governance-workbench/](GOAL-009-ai-assisted-governance-workbench/) |
 | GOAL-010-core-workspace-shared-materials-protocol | 建立工作区与共享资料区核心协议，并完成 Skills 首先适配 | GOAL-001-main-vision | done | 100% | [GOAL-010-core-workspace-shared-materials-protocol/](GOAL-010-core-workspace-shared-materials-protocol/) |
 | GOAL-011-multi-workspace-directory-migration | 完成多工作区目录迁移与共享资料索引骨架 | GOAL-001-main-vision | done | 100% | [GOAL-011-multi-workspace-directory-migration/](GOAL-011-multi-workspace-directory-migration/) |
 | GOAL-012-first-slice-workspace-detail | 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） | GOAL-001-main-vision | done | 100% | [GOAL-012-first-slice-workspace-detail/](GOAL-012-first-slice-workspace-detail/) |
 | GOAL-013-write-gate-ct-durable-idempotency | 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） | GOAL-001-main-vision | done | 100% | [GOAL-013-write-gate-ct-durable-idempotency/](GOAL-013-write-gate-ct-durable-idempotency/) |
 
-阶段 6：GOAL-009 `active / 60%`（A-030：α 写入门禁闭环 + 生产写双门闩授权；F-002～F-004 仍 open）；GOAL-012/013 `done / 100%`。GOAL-001 仍为 `active`。
+阶段 6：GOAL-009 `active / 80%`（A-038：**F-002～F-004 closed 有界**；路线图 B finding 有界退出；α 写入门禁已闭环）；GOAL-012/013 `done / 100%`。GOAL-001 仍为 `active`。
 
 ## 状态图例
 

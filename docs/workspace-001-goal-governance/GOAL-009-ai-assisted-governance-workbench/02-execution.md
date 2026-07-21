@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-21
-version: 0.27.0
+version: 0.35.0
 ---
 
 # 执行记录 · GOAL-009
@@ -208,12 +208,77 @@ version: 0.27.0
 - 回归：**61 passed, 1 skipped**。
 - **未**对 dogfood 过程树开启写入。
 
+### 2026-07-21 · D-017 / A-031：R-002 验证包（F-002）
+
+- 用户确认：`OK 推进 F-002（R-002 验证包）`。
+- 新增 [r-002-verification-package.md](attachments/r-002-verification-package.md)：数据/交互契约冻结 + FA-001～012 负向矩阵（全部 `planned`）。
+- [D-017](01-decision.md#d-017--冻结-r-002-验证包不关闭-f-0022026-07-21) / [A-031](03-audit.md#a-031--r-002-验证包冻结与-f-002-台账2026-07-21)。
+- 更新 R-002 收集稿索引、meta I-002/I-008 证据栏、路线图 B 状态。
+- **F-002 仍 open**；**未**执行 FA 测试；**未**接入 AI；**未**改生产 env。
+- 进度 **63%**。
+
+### 2026-07-21 · 实现并执行 FA-001～FA-006
+
+- 用户指令：`/govern 实现并执行 FA-001～FA-006`。
+- 实现：`web/services/fact_admission.py`（纯函数 admission 门禁；无 canonical I/O、无 AI）。
+- 测试：`web/tests/test_fact_admission.py`（FA-001～006 + 正例）。
+- 运行：`cd web` → 仓库根 `.venv` `python -m unittest discover -s tests -q` → **68 passed, 1 skipped**。
+- 证据：[attachments/fa-evidence-001-006-2026-07-21.md](attachments/fa-evidence-001-006-2026-07-21.md)；验证包 v0.2 状态列 **pass**。
+- [A-032](03-audit.md#a-032--fa-001fa-006-执行证据与-f-002-门禁更新2026-07-21)：台账更新；**未**关闭 F-002。
+- 进度 **66%**。
+
+### 2026-07-21 · A-033 审视关闭 F-002（待路径裁决）
+
+- 用户：`/govern 审视关闭 F-002`。
+- [A-033](03-audit.md#a-033--审视关闭-f-002路径a--待裁决2026-07-21) / [D-018 proposed](01-decision.md#d-018--f-002-关闭路径包proposed--待用户裁决2026-07-21)。
+- 结论：契约 + FA-001～006 支持**有界关闭**；路径 **A/B/C** 待用户确认；**未**关 F-002。
+- 进度仍 **66%**。
+
+### 2026-07-21 · A-034 路径 A：有界关闭 F-002
+
+- 用户：`OK A：F-002 有界关闭 + R-F002-1～3`。
+- [D-018-A](01-decision.md#d-018-a--接受-r-f002-13-residual-并有界关闭-f-0022026-07-21) / [A-034](03-audit.md#a-034--路径-a有界关闭-f-002并接受-r-f002-132026-07-21)。
+- **F-002 closed**（有界）；residual R-F002-1～3 accepted；I-002/I-008 仍 collecting；F-003/F-004 仍 open。
+- 进度 **70%**。
+
+### 2026-07-21 · D-019 / A-035：R-003 验证包（F-003/F-004）
+
+- 用户确认：`推进 F-003～F-004（R-003 验证包`。
+- 新增 [r-003-verification-package.md](attachments/r-003-verification-package.md)：工作区/资料契约 + WS-001～006 / SM-001～006（全部 `planned`）。
+- [D-019](01-decision.md#d-019--冻结-r-003-验证包不关闭-f-003f-0042026-07-21) / [A-035](03-audit.md#a-035--r-003-验证包冻结与-f-003f-004-台账2026-07-21)。
+- **F-003/F-004 仍 open**；**未**执行 WS/SM；**未**实现资料 CRUD 产品。
+- 进度 **72%**。
+
+### 2026-07-21 · 实现并执行 WS+SM 核心矩阵
+
+- 用户指令：`/govern 实现并执行 WS+SM 核心矩阵`。
+- 实现：`web/services/workspace_isolation.py`、`web/services/shared_materials.py`。
+- 测试：`test_workspace_isolation.py`、`test_shared_materials.py`（WS-001～006 + SM-001～006）。
+- 运行：`unittest discover -s tests -q` → **80 passed, 1 skipped**。
+- 证据：[attachments/ws-sm-evidence-001-006-2026-07-21.md](attachments/ws-sm-evidence-001-006-2026-07-21.md)；验证包 v0.2。
+- [A-036](03-audit.md#a-036--ws-sm-核心矩阵执行证据与-f-003f-004-门禁更新2026-07-21)：**未**关闭 F-003/F-004。
+- 进度 **75%**。
+
+### 2026-07-21 · A-037 审视关闭 F-003 与 F-004（待路径裁决）
+
+- 用户：`/govern 审视关闭 F-003 与 F-004`。
+- [A-037](03-audit.md#a-037--审视关闭-f-003与-f-004路径a--待裁决2026-07-21) / [D-020 proposed](01-decision.md#d-020--f-003f-004-关闭路径包proposed--待用户裁决2026-07-21)。
+- 结论：契约 + WS/SM 支持**有界关闭**；路径 **A/B/C/D** 待确认；**未**关 F-003/F-004。
+- 进度仍 **75%**。
+
+### 2026-07-21 · A-038 路径 A：有界关闭 F-003 与 F-004
+
+- 用户：`OK A：F-003 与 F-004 有界关闭 + R-F003-1～2 / R-F004-1～3`。
+- [D-020-A](01-decision.md#d-020-a--接受-r-f003r-f004-residual-并有界关闭-f-003与-f-0042026-07-21) / [A-038](03-audit.md#a-038--路径-a有界关闭-f-003与-f-0042026-07-21)。
+- **F-003 / F-004 closed**（有界）；residual accepted；I-009/I-010 仍 collecting；路线图 B finding 有界退出。
+- 进度 **80%**。
+
 ## 下一步（计划）
 
-1. 可选：对本机产品工作区做一次受限追加冒烟（或路线图 E 试点）。  
-2. `/govern 推进 F-002～F-004`（路线图 B）。  
-3. 多 worker 部署前复审 R-F008-1～3；紧急阻断可设 `PRODUCT_GATES_OPEN=true`。
+1. 路线图 E 受控试点，或 residual 复审（R-F002 / R-F003 / R-F004 / R-F008）。  
+2. 可选：I-002 / AI 协作深化；资料 CRUD 产品另立目标。  
+3. 可选：产品工作区受限追加冒烟。
 
 ## 进度评估
 
-**60%**：α 写入门禁闭环；本地产品工作区部署 env 已就绪且 health 显示可写；F-002～F-004 仍 open。
+**80%**：α 写入闭环；F-002～F-004 有界 closed；路线图 B finding 有界退出；I-002/I-009/I-010 仍 collecting。

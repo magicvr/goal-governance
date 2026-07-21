@@ -4,9 +4,11 @@ status: active
 created: 2026-07-21
 updated: 2026-07-21
 parent: GOAL-009-ai-assisted-governance-workbench
-version: 0.1.0
+version: 0.2.0
 type: information-collection
 review_state: design-defaults-accepted-d012
+verification_package: r-002-verification-package.md
+verification_accepted_by: D-017
 response_group: R-002
 packaging_boundary: D-011
 accepted_defaults: D-012
@@ -141,20 +143,22 @@ draft → submitted → under_review
 
 | 项 | 本稿提供 | 仍缺 |
 |----|----------|------|
-| F-002 | 来源枚举、确认链、负向清单骨架 | 用户审视接受；交互 mock 或契约测试；与读模型联调证据 |
-| I-008 | 三类对象与状态候选 | 用户接受字段/枚举；正反验证 |
+| F-002 | 来源枚举、确认链、负向清单骨架 | **closed（有界）** D-018-A / A-034 + R-F002-1～3；FA-001～006 pass |
+| I-008 | 三类对象与状态候选 | 字段/枚举已冻结；正反验证证据未齐 |
 | I-002 | 职责矩阵与降级 | 提供方/模型/加载；威胁模型细化 |
-| I-006（AI 子集） | 失败与越权拒绝原则 | 与 R-004 CT 一体的运行证据 |
+| I-006（AI 子集） | 失败与越权拒绝原则 | AI 运行时 FA-007～012 证据 |
 
-## 9. 请用户审视的问题
+规范与 FA 矩阵见 **[r-002-verification-package.md](r-002-verification-package.md)**（权威验证基线）。
 
-1. `source_kind` 五类是否够用？是否需要拆分“用户上传文件”与“用户键入”？
-2. AI 知识回答（`ai-knowledge`）是否允许进入 canonical，还是一律要求可引用检索？
-3. 工具同意是「每会话一次」还是「每次调用」？（建议默认每次敏感调用确认，只读 canonical 复述可免）
-4. 计算视图是否允许一键“采用为事实”，还是必须经候选编辑？
+## 9. 设计审视问题（已由 D-017 冻结）
+
+1. `source_kind` 五类够用；上传文件不拆枚举，用 `source_refs` 区分载体。  
+2. `ai-knowledge` **允许**进 canonical，必须保留标签与 `source_kind`。  
+3. 工具同意：**每次敏感调用**；只读本区 canonical 复述可免。  
+4. 计算视图：**禁止**一键变事实；必须经 Candidate。
 
 ## 10. 当前结论
 
-**D-012** 已接受本稿作为 R-002 **设计默认**（来源枚举、ai-knowledge 标签、工具同意粒度、禁止计算视图一键变事实等）。细节字段仍可迭代。
+**D-012** 接受本稿为设计默认；**D-017** 接受 [验证包](r-002-verification-package.md) 为可测冻结基线。
 
-本稿**不**关闭 F-002，**不**将 I-002/I-008 标为 `verified`，**不**授权 AI 服务或 Web 写入。GOAL-012 首切片**不**接入 AI。硬禁令：F-007/F-008 关闭且 I-003/I-004/I-006 `verified` 前不开放 Web/AI 写入。
+本稿**不**关闭 F-002，**不**将 I-002/I-008 标为 `verified`，**不**授权 AI 服务。α 写入仍仅 `user-provided` + R-004；AI 工具路径另受本包门禁。
