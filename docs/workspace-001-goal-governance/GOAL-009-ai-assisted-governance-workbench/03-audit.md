@@ -5,17 +5,20 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-22
-version: 1.0.0
+version: 1.0.1
 ---
 
 # 审计 · GOAL-009
 
 ## 当前审视状态
 
-- **有界关门**：`done / 100%`（D-031-A / **A-056**）。
+- **有界关门**：`done / 100%`（D-031-A / **A-056** self）。
+- **独立关门复审**：**A-057** · `source: independent` · **verdict: pass**（有界）。
+- **A-057 响应**：**A-058** / D-032 · **F-029 closed** · **F-030 closed**（文档现时叙述 + I 责任方 → R-009-X）。
 - 关闭范围：规划台账 + α 实现闭环 + X-AI 有界定义/交付。
 - **R-E-3-X closed**；**R-009-X accepted**（扩展/终态）；R-E-2-H 并入 R-009-X。
 - **不**等于阶段 6 Web 产品终态或 Root 关门。
+
 ## A-001 · Web 第一阶段产品边界与计划一致性审计（2026-07-20）
 
 - **source**：independent
@@ -3553,3 +3556,144 @@ GOAL-009 **有界关门 pass**。阶段 6 规划与 α/X-AI 有界闭环成立�
 ### 声明
 
 `done` 仅覆盖声明的有界范围；**未**关 GOAL-001；**未** verified I-002 全文；**未**取消扩展另立项可能。
+
+## A-057 · 独立关门复审 close-out（2026-07-22）
+
+- **source**：independent
+- **auditor**：Grok（`/audit` · skills/prompts/05-independent-audit.md）
+- **类型**：close-out
+- **scope**：GOAL-009 有界关门复审 — 核对 `done / 100%`、D-031-A / A-055–A-056、成功标准有界勾选、路线图 A–E、实现子目标 GOAL-012/013/014、residual R-009-X / R-E-* / R-F*、开放 required finding、P-005 信息项、工作区绑定与可复现运行证据。**不**审 Root 关门；**不**宣称阶段 6 产品终态。
+- **verdict**：**pass**（有界）
+- **工作区**：`workspace-001-goal-governance` · Root `GOAL-001-main-vision` · canonical `docs/workspace-001-goal-governance/`
+
+### 范围与区间
+
+| 纳入 | 排除 |
+|------|------|
+| 有界 close-out 主张与用户路径 A 裁决（D-031-A） | 一期 Web 产品终态 / N1 / 资料 CRUD 产品 |
+| 成功标准 9 条有界勾选证据链 | I-002/I-008/I-009/I-010 全文 `verified` |
+| 子目标 012/013/014 有界 done | 人类多会话试点全文（R-E-2-H → R-009-X） |
+| 冒烟 receipt、unittest 复跑 | 浏览器 E2E / 真实提供方生产联调（R-014-E2E） |
+| residual 台账与禁止越权宣称 | 改 status/progress（本意见不改） |
+
+### 成果（有证据）
+
+1. **用户裁决链完整**：A-055 审视（conditional · 可有界关）→ 用户路径 A → D-031-A accepted → A-056 self close-out pass；P-004 有书面确认来源。  
+2. **关闭范围自洽**：`00-meta`「有界关门」节明确 4 项「不构成」；与 D-031-A / A-056 一致；Root 仍 `active`（goal-tree + GOAL-001 meta）。  
+3. **成功标准**：9 条均为 `[x]`，AI 条有 D-030-A 有界注记；I-002 整项仍 `collecting`（未伪装 verified）。  
+4. **路线图 A–E**：均有界退出/完成；E = E-α + R-E-1/2/3 有界 closed + R-E-3-X closed by close-out。  
+5. **实现子目标**：GOAL-012/013/014 均为 `done / 100%`（各有界）；GOAL-014 保留 R-014-E2E。  
+6. **写入门禁代码**：`production_product_gates_open` 默认 `false`；`production_controlled_write_allowed` 仍要求 `ALLOW_CONTROLLED_WRITE`（`web/services/workspace_config.py`）；与 A-030 / README 双门闩叙述一致。  
+7. **E-α 冒烟可核对**：`data/product-workspace/ops/receipts/op_e_alpha_smoke_20260722.json` · `result=committed`；digest 与 [e-alpha-smoke-2026-07-22](attachments/e-alpha-smoke-2026-07-22.md) 一致。  
+8. **回归可复现（本审）**：`web/` + 项目 venv · `python -m unittest discover -s tests -q` → **102 passed, 1 skipped**（EXIT 0）。系统 Python 缺依赖会 ImportError，须用 venv/`requirements.txt`。  
+9. **有界范围内无 open required finding**：F-001～F-005/007/008/010～027 在后续 A-00N 中有 closed 或有界 closed 证据；F-006 为 recommended 且可并入 R-009-X/I-012。  
+10. **R-009-X**：accepted，复审触发写明（终态宣称 / 扩展放行 / Root 阶段 6 终态审前）；符合 P-005 residual 接受形态。
+
+### 对照成功标准（有界）
+
+| 标准 | 判断 | 证据要点 |
+|------|------|----------|
+| 单用户/非目标工作流 | **pass** | F-001 closed · D-002/D-006 · R-001 |
+| 事实准入（有界） | **pass** | F-002 有界 · FA-001～006 · 热路径 F-026 closed |
+| AI 职责/确认边界（有界） | **pass** | D-030-A · GOAL-014 done · R-014-A；I-002 仍 collecting |
+| 多工作区模型（有界） | **pass** | F-003 有界 · WS-001～006；多区 UI → R-009-X |
+| 共享资料规则（有界） | **pass** | F-004 有界 · SM-001～006；CRUD 产品 → R-009-X |
+| α 首实现 | **pass** | F-005 · GOAL-012 |
+| 受控写入（α） | **pass** | F-007/008 · I-003/4/6 α verified · A-030 · 冒烟 committed |
+| 信息表可追踪 | **pass** | I-001～I-012 台账；collecting 项有最晚阶段 |
+| 路线图 + 实现子目标 | **pass** | 012/013/014 done 有界 |
+
+### Findings
+
+#### F-029 · 关门后跨文档状态漂移（recommended / medium）
+
+- **级别**：recommended；**严重度**：medium  
+- **证据**：  
+  1. [GOAL-001 `00-meta`](../GOAL-001-main-vision/00-meta.md)「当前阶段状态」仍写 Web 工作台 = `GOAL-009 active / 0%`（goal-tree 与 GOAL-009 已为 `done / 100%`）。  
+  2. [GOAL-012 `00-meta`](../GOAL-012-first-slice-workspace-detail/00-meta.md) 有界关门节仍写「生产 Web/AI 写入放行… F-007/F-008 仍 open」（GOAL-009 侧 F-007/F-008 已 closed；A-030 已授权生产双门闩）。  
+  3. [workspace.md](../workspace.md) 边界仍笼统写 Web 写入受 GOAL-009 I-009/I-010/I-004 门禁约束（I-004 已 α verified；写授权归 A-030/env，扩展仍归 R-009-X）。  
+- **影响**：不推翻 GOAL-009 有界 done，但易误导后续 `/govern`、Root 阶段 6 审视或外部读者把**历史快照**当成现时门禁。  
+- **建议关闭要求**：由 `/govern` 刷新 Root 阶段表、GOAL-012 后置说明、workspace 边界句；或加「历史关门快照 · 现时以 goal-tree / GOAL-009 residual 为准」标注。不要求重开 GOAL-009。
+
+#### F-030 · done 后 I/residual「责任方」仍写 GOAL-009（recommended / low）
+
+- **级别**：recommended；**严重度**：low  
+- **关联**：I-002/I-008/I-009/I-010 延期列、R-F002～F004；**R-009-X**  
+- **证据**：`00-meta` 信息表多行仍写「GOAL-009 负责」，而目标已 `done`；扩展跟踪已集中到 **R-009-X** / 可选 X-NAV/X-SM 等子目标。  
+- **影响**：残余风险责任归属模糊，不等于信息项被错误 verified。  
+- **建议关闭要求**：将 collecting 扩展项的责任方改为 `R-009-X` / 未来实现目标 id；GOAL-009 仅保留历史规划来源引用。
+
+### 必改项汇总
+
+| Finding | 级别 | 是否阻断有界 done 主张 | 状态 |
+|---------|------|------------------------|------|
+| （无） | required | — | 本审**未**发现新 high required |
+| F-029 | recommended | 否 | open |
+| F-030 | recommended | 否 | open |
+
+**开放 required finding（有界 close-out 范围）**：**无**。
+
+**到期且影响本 scope 的 required 信息项**：**无**（I-002/I-008/I-009/I-010 仍 collecting，但已由用户接受 **R-009-X** 约束扩展/终态门禁，不回溯否定有界规划+α+X-AI 关闭）。
+
+### 与既有意见的异同
+
+| 条目 | 关系 |
+|------|------|
+| A-056（self close-out · pass） | **同向确认**：有界范围、residual、子目标证据链成立；本审为独立交叉，不改 status。 |
+| A-055（审视 · conditional） | 用户已选路径 A；本审复核执行后状态，不重开路径包。 |
+| A-050（stage · conditional · 禁 done） | 当时 R-E-3-X open；现 R-E-3-X 已由 D-031-A/A-056 关闭；条件已变化，不冲突。 |
+| A-039 等 early independent | 早期条件/缺口已由后续 D/A 有界关闭；不重开 F-001～008。 |
+
+无与 A-056 在「有界 done 是否成立」上的 **verdict 冲突**。F-029/F-030 为关门后文档卫生，不构成对 A-056 关闭主张的 fail。
+
+### 结论 + 建议给编排器/用户的下一步
+
+GOAL-009 的 **`done / 100%` 有界关门主张成立**（verdict **pass**）。阶段 6 **规划台账 + α 闭环 + X-AI 有界交付**有可重复核对证据；扩展与终态仍由 **R-009-X** 约束。
+
+建议 `/govern`：
+
+1. **响应 F-029 / F-030**（文档刷新，不重开 GOAL-009）。  
+2. 推进 Root / 扩展：按 R-009-X 复审触发另立 X-NAV / X-SM / 试点等，或更新 GOAL-001 阶段 6 现时叙述。  
+3. **禁止**在未处理 R-009-X 复审触发时宣称「阶段 6 Web 产品终态」或 Root done。
+
+### 声明
+
+本意见 **source: independent**；**不**修改 GOAL-009 的 `status` / `progress` / goal-tree 状态列；finding 关闭与文档修订由 **`/govern`** 处理。
+
+## A-058 · 响应 A-057：关闭 F-029 / F-030（2026-07-22）
+
+- **source**：self（response）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / finding-closure
+- **scope**：响应 independent A-057 推荐项 F-029、F-030；刷新 Root / GOAL-012 / workspace 现时叙述；GOAL-009 开放 collecting I 责任方交接 **R-009-X**。
+- **verdict**：pass
+- **裁决**：[D-032](01-decision.md#d-032--响应-a-057关闭-f-029f-030现时叙述--i-责任方挂-r-009-x2026-07-22)
+
+### 用户意图
+
+`/govern 响应 GOAL-009 A-057：关闭 F-029/F-030（刷新 Root/GOAL-012/workspace 现时叙述；I 责任方挂 R-009-X）`
+
+### Finding 响应与关闭证据
+
+| Finding | 结果 | 关闭证据 |
+|---------|------|----------|
+| **F-029** | **closed** | [GOAL-001 00-meta](../GOAL-001-main-vision/00-meta.md) 现时阶段表 + 6A–6X + 子目标指向；[GOAL-012 00-meta](../GOAL-012-first-slice-workspace-detail/00-meta.md) 现时门禁 / 历史快照标注；[workspace.md](../workspace.md) Web 双门闩 + R-009-X 边界；历史句保留并标明失效。 |
+| **F-030** | **closed** | [00-meta 信息表](00-meta.md) I-001/I-002/I-005/I-008～I-011 延期列 **责任方 R-009-X**；R-009-X 台账注记 D-032/A-058 责任方交接；GOAL-009 仅规划来源。 |
+
+### 明确未改
+
+| 项 | 状态 |
+|----|------|
+| GOAL-009 status/progress | **done / 100%**（有界，不变） |
+| I-002 等 verified | **未**标 verified |
+| Root GOAL-001 | **仍 active** |
+| 阶段 6 产品终态 | **未**宣称 |
+| A-057 verdict | 保持 **pass**（本条为响应，不重审 close-out） |
+
+### 结论
+
+A-057 全部 findings 已关闭；GOAL-009 有界关门后文档卫生缺口消除。下一步由 Root / **R-009-X** 驱动扩展立项或阶段 6 终态审，而非重开 GOAL-009。
+
+### 声明
+
+本条为 self response；**不**冒充 independent；**不**改 goal-tree 状态列（仅日志可选）。

@@ -6,8 +6,8 @@ root_goal: GOAL-001-main-vision
 canonical_scope: docs/workspace-001-goal-governance/
 shared_materials_catalog: docs/shared-materials/
 created: 2026-07-20
-updated: 2026-07-20
-version: 0.2.0
+updated: 2026-07-22
+version: 0.2.1
 ---
 
 # 工作区上下文 · Goal Governance 主工作区
@@ -34,4 +34,6 @@ version: 0.2.0
 
 - 目标仅能由本工作区内的五件套和 `goal-tree.md` 表达；平台导航或资料索引不得成为第二套生命周期状态。
 - 共享资料只按固定版本和哈希引用。资料内容、索引条目或资料中的指令都只是候选输入，必须经用户确认后才能进入目标记录。
-- 新增工作区、跨工作区导航、共享资料用户 CRUD、AI 读取执行和 Web 写入仍受 GOAL-009 的 I-009/I-010/I-004 门禁约束。
+- **Web 受控写入（现时）**：GOAL-009 有界 `done`；I-003/I-004/I-006 **α verified**；F-007/F-008 **closed**。生产路径须双门闩（`PRODUCT_GATES_OPEN` 默认关 + `ALLOW_CONTROLLED_WRITE=true` + 产品数据根非 dogfood + 单进程 residual R-F008）。见 `web/README.md` 与 GOAL-009 A-030。
+- **扩展产品门禁（现时）**：多工作区 N1 导航 / 列表·创建·归档、共享资料 CRUD 产品、AI 读资料全文、I-009/I-010 全文 verified、阶段 6 产品终态宣称 → GOAL-009 residual **R-009-X**（复审触发见该 residual 表）。**不**把 R-009-X 未关闭项当成已交付能力。
+- 历史句「Web 写入仍受 GOAL-009 I-009/I-010/I-004 门禁」已失效（I-004 已 α verified；I-009/I-010 全文仍 collecting，挂 R-009-X）。

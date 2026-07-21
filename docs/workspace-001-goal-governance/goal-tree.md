@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.65.0
+version: 0.66.0
 ---
 
 # Goal Tree
+
+## 2026-07-22 · 响应 GOAL-009 A-057（F-029 / F-030）
+
+D-032 / A-058：关闭推荐项 F-029/F-030。刷新 GOAL-001 / GOAL-012 / workspace 现时叙述；GOAL-009 collecting I 责任方 → **R-009-X**。GOAL-009 仍 `done / 100%`（有界）；Root 仍 active。
 
 ## 2026-07-22 · GOAL-009 有界关门
 

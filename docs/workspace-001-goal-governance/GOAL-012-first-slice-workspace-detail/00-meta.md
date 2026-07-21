@@ -4,8 +4,8 @@ title: 实现首个垂直切片：配置化工作区详情与受控执行事实�
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-21
-updated: 2026-07-21
-version: 0.5.0
+updated: 2026-07-22
+version: 0.5.1
 progress: 100%
 planning_source: GOAL-009-ai-assisted-governance-workbench
 ---
@@ -45,23 +45,35 @@ planning_source: GOAL-009-ai-assisted-governance-workbench
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | 配置键名、默认 fail-closed、DEV_DOGFOOD | 实现启动 | 编码前 | README / .env.example | verified | 无 | 见 README 配置表 |
 | I-002 | required | CT fixture 与运行命令 | 契约测试验收 | 首次 CT 合并前 | unittest | verified | 无 | `python -m unittest discover -s tests -v` |
-| I-003 | required | 生产写入启用检查清单 | 开放生产写入 | 启用前 | README 清单 + 环境门禁 | collecting | 待 GOAL-009 F-007/F-008 | 默认仍阻断；清单见 web/README |
-| I-004 | non-blocking | 详情页 UX | 试点 | 试点前 | 模板迭代 | open | 试点 | 基础表单已有 |
+| I-003 | required | 生产写入启用检查清单 | 开放生产写入 | 启用前 | README 清单 + 环境门禁 | **superseded（现时）** | 见下「现时门禁」 | **关门时** collecting / 待 F-007/F-008。**现时**：GOAL-009 F-007/F-008 closed；I-003/I-004/I-006 α verified；生产写双门闩 A-030 + `web/README`。 |
+| I-004 | non-blocking | 详情页 UX | 试点 | 试点前 | 模板迭代 | open | 试点 / R-009-X | 基础表单已有 |
 | I-005 | non-blocking | 跨进程幂等/receipt 恢复（A-001 F-003） | 生产写入放行 | 启用生产写入前 | 持久化 operation 索引 + 跨重启 CT | verified | 无 | GOAL-013 阶段 B + [A-004](03-audit.md#a-004--回写关闭-f-003-residualct-007-持久化2026-07-21)；`test_durable_idempotent_replay_new_service_instance` |
 
 ## 依赖与门禁
 
-- 生产 Web 写入仍受 GOAL-009 F-007/F-008 与 I-003/I-004/I-006 阻断（`PRODUCT_GATES_OPEN` 默认 true）。
+### 现时（2026-07-22 · A-057 F-029 响应）
+
+- **α 实现**：本目标有界 `done` 不变。
+- **GOAL-009 侧**：F-007 / F-008 **closed**；I-003 / I-004 / I-006 **α verified**；生产受控写已授权（A-030）：规划锁默认关（`PRODUCT_GATES_OPEN` 默认 **false**）；须 `ALLOW_CONTROLLED_WRITE=true` + 产品数据根（非 dogfood）+ 单进程 residual（R-F008）。
+- **扩展 / 终态**：N1、资料 CRUD 产品、人类多会话试点等 → GOAL-009 **R-009-X**（≠ 本目标重开）。
 - 打包：实现与文档遵守 D-011。
+
+### 历史快照（2026-07-21 关门时 · 勿当现时）
+
+> 以下句子保留关门当日措辞，**现时以「现时」节与 goal-tree / GOAL-009 台账为准**。
+
+- 生产 Web 写入仍受 GOAL-009 F-007/F-008 与 I-003/I-004/I-006 阻断（`PRODUCT_GATES_OPEN` 默认 true）。
 
 ## 有界关门（2026-07-21）
 
-本目标已 `done / 100%`，关闭的是 **α 实现范围**（见成功标准与 [A-003](03-audit.md#a-003--有界关门审计-close-out2026-07-21)）。**不**构成：
+本目标已 `done / 100%`，关闭的是 **α 实现范围**（见成功标准与 [A-003](03-audit.md#a-003--有界关门审计-close-out2026-07-21)）。关门当日**不**构成（历史断言）：
 
-1. 生产 Web/AI 写入放行（I-003 仍 `collecting`；GOAL-009 F-007/F-008 仍 open）。
+1. 生产 Web/AI 写入放行（当时 I-003 仍 `collecting`；GOAL-009 F-007/F-008 仍 open）。
 2. CT-001～018 全矩阵 `verified` 或 GOAL-009 I-003/I-004/I-006 `verified`。
 
-**后置回写（2026-07-21 A-004）**：关门时登记的 F-003 / I-005 **accepted-residual（进程内幂等）** 已由 GOAL-013 阶段 B 证据关闭；**不**因此开放生产写入或关闭 GOAL-009 F-008。
+**后置回写（2026-07-21 A-004）**：关门时登记的 F-003 / I-005 **accepted-residual（进程内幂等）** 已由 GOAL-013 阶段 B 证据关闭。
+
+**后置现时（2026-07-22）**：GOAL-009 已关闭 F-007/F-008、α verified I-003/4/6、A-030 生产双门闩，并有界 `done`（R-009-X）。上述第 1–2 条历史「不构成」**不**再描述现时门禁；现时见上节。
 
 ## 父目标
 

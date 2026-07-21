@@ -968,3 +968,22 @@ N0 过严（单用户本机产品受损）；N2 首期不取（易成第二状�
 **未选**：B/C（不关）；D（无 residual 全文关）。
 
 **影响**：goal-tree；A-056。
+
+## D-032 · 响应 A-057：关闭 F-029/F-030（现时叙述 + I 责任方挂 R-009-X）（2026-07-22）
+
+**状态**：accepted
+
+**确认来源**：用户 `/govern 响应 GOAL-009 A-057：关闭 F-029/F-030（刷新 Root/GOAL-012/workspace 现时叙述；I 责任方挂 R-009-X）`。
+
+**决定**：
+
+1. **关闭 F-029**（推荐 · 跨文档状态漂移）：刷新现时叙述，保留历史快照标注。  
+   - [GOAL-001 `00-meta`](../GOAL-001-main-vision/00-meta.md)：阶段 6 现时表、当前阶段状态、6A–6X 路线图、当前子目标指向。  
+   - [GOAL-012 `00-meta`](../GOAL-012-first-slice-workspace-detail/00-meta.md)：现时门禁节 + 历史关门句标注。  
+   - [workspace.md](../workspace.md)：Web 写双门闩与 R-009-X 扩展门禁。  
+2. **关闭 F-030**（推荐 · I/residual 责任方）：GOAL-009 信息表中仍 collecting 的扩展项（I-001/I-002/I-005/I-008～I-011 等）**责任方改为 R-009-X**；GOAL-009 仅作规划来源与有界关闭证据。  
+3. **不**改 GOAL-009 `status`/`progress`（仍 done/100% 有界）；**不** verified 任何 I 全文；**不**关 Root；**不**宣称阶段 6 终态。  
+
+**为什么**：A-057 independent pass 仅余文档卫生 recommended；用户明确授权关闭。
+
+**影响**：A-058；02-execution；goal-tree 日志；上列路径。
