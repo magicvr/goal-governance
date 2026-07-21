@@ -162,7 +162,7 @@ def _run_required_checks(
             ),
         )
     if include_web:
-        web_python = _python_with_imports(root, ("frontmatter", "fastapi", "httpx2"))
+        web_python = _python_with_imports(root, ("frontmatter", "fastapi", "httpx"))
         checks.append(
             _run_check(
                 "web-parser-tests",
