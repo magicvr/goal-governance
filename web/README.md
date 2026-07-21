@@ -13,6 +13,12 @@
 - **F-007 向门禁（阶段 C）**：跨 workspace / path escape → `ERR_SCOPE_MISMATCH`；过期 → `ERR_DECISION_EXPIRED`；外部 trust → `ERR_TRUST_CONTEXT`；治理/脚本/路径内容 → `ERR_CONTENT_CONTRACT`。
 - **F-008 向门禁（阶段 D）**：recovery pending → `ERR_RECOVERY_PENDING` / `recovery_pending`；同进程 workspace 锁竞争 → `ERR_CONCURRENT_WRITE` / `conflict`；不可复核 committed receipt → `ERR_RECEIPT_UNVERIFIABLE` / `failed`。
 - **双门闩**：`PRODUCT_GATES_OPEN=true` **或** `ALLOW_CONTROLLED_WRITE` 未开 → 生产路径拒绝写入。
+- **N1 工作区导航（GOAL-015 A–C）**：
+  - service：`workspace_registry.py`（`DATA_ROOT` 下发现/注册；N1 字段；有界创建；归档索引）
+  - 绑定：`workspace_binding.py` + cookie `gg_focus_workspace_id`（HttpOnly）
+  - Web：`GET /workspaces` 列表、`POST /workspaces/select`、`POST /workspaces/status`（归档/恢复）、`GET /api/workspaces`；多区未选 **fail closed**
+  - 归档只改索引 `active|archived`，**不**删除磁盘 canonical；归档当前焦点会清除 cookie
+  - 注册表 `{data_root}/workspaces/registry.json` 仅为导航索引，不是目标状态权威
 - **非目标**：无 AI、无共享资料 CRUD、无多工作区 N1 列表产品化、无 SQLite；发布物不含 dogfood 过程树；fixture 使用合成 `GOAL-001-fixture-target`（`web/tests/fixtures/r004/workspace-ok/`，非本仓过程数据）。
 
 ## 工作区配置（fail closed）

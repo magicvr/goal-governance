@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Annotated, Any
 
-from fastapi import Depends, FastAPI, Form, HTTPException, Request
+from fastapi import Depends, FastAPI, Form, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -17,12 +17,20 @@ from services.controlled_change import (
 )
 from services.goals_repo import GoalsRepository
 from services.models import TreeValidationReport
+from services.workspace_binding import (
+    build_focus_state,
+    resolve_repository_for_request,
+    validate_focus_workspace_id,
+)
 from services.workspace_config import (
+    COOKIE_FOCUS_WORKSPACE,
     controlled_write_authorized,
     load_web_dotenv,
     production_product_gates_open,
+    resolve_data_root,
     resolve_workspace_config,
 )
+from services.workspace_registry import WorkspaceRegistryService
 import os
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -62,8 +70,9 @@ _ai_broker: AiBroker | None = None
 _ai_candidate_svc: AiCandidateService | None = None
 
 
-def get_goals_repository() -> GoalsRepository:
-    return GoalsRepository.from_config()
+def get_goals_repository(request: Request) -> GoalsRepository:
+    """Request-scoped: N1 focus cookie/query under DATA_ROOT, else α single config."""
+    return resolve_repository_for_request(request)
 
 
 RepositoryDependency = Annotated[GoalsRepository, Depends(get_goals_repository)]
@@ -87,10 +96,14 @@ def get_ai_candidate_service() -> AiCandidateService:
     return _ai_candidate_svc
 
 
-def _base_context(repository: GoalsRepository | None = None) -> dict[str, Any]:
+def _base_context(
+    repository: GoalsRepository | None = None,
+    request: Request | None = None,
+) -> dict[str, Any]:
     cfg = resolve_workspace_config()
     write_ok = controlled_write_authorized()
     ai = resolve_ai_config()
+    focus = build_focus_state(request)
     ctx: dict[str, Any] = {
         "status_labels": STATUS_LABELS,
         "audit_labels": AUDIT_LABELS,
@@ -103,6 +116,7 @@ def _base_context(repository: GoalsRepository | None = None) -> dict[str, Any]:
         "ai_enabled": ai.enabled,
         "ai_ready": ai.ready,
         "ai_status": ai.public_dict(),
+        **focus.as_template_dict(),
     }
     return ctx
 
@@ -139,13 +153,21 @@ def _tree_diagnostic_count(report: TreeValidationReport) -> int:
     )
 
 
+def _repo_workspace_id(repository: GoalsRepository) -> str:
+    """Prefer N1 workspace_id from config_source (n1:<id>); else directory name."""
+    src = repository.config_source or ""
+    if src.startswith("n1:") and len(src) > 3:
+        return src[3:]
+    return repository.goals_dir.name
+
+
 def _change_service(repository: GoalsRepository) -> ControlledChangeService:
     key = str(repository.goals_dir.resolve()) if repository.goals_dir.exists() else str(repository.goals_dir)
     svc = _change_services.get(key)
     if svc is None or svc.repository.goals_dir != repository.goals_dir:
         svc = ControlledChangeService(
             repository=repository,
-            workspace_id=repository.goals_dir.name,
+            workspace_id=_repo_workspace_id(repository),
             test_authorized=False,
         )
         _change_services[key] = svc
@@ -154,8 +176,8 @@ def _change_service(repository: GoalsRepository) -> ControlledChangeService:
 
 @app.get("/", name="home")
 async def home(request: Request, repository: RepositoryDependency):
-    """Render workspace detail: goal tree as primary navigation over configured workspace."""
-    base = _base_context(repository)
+    """Render workspace detail: goal tree as primary navigation over focused workspace."""
+    base = _base_context(repository, request)
     if not repository.is_configured:
         return templates.TemplateResponse(
             request=request,
@@ -202,6 +224,128 @@ async def home(request: Request, repository: RepositoryDependency):
     )
 
 
+@app.get("/workspaces", name="workspaces")
+async def workspaces_page(request: Request, repository: RepositoryDependency):
+    """N1 workspace list / select / archive UX (GOAL-015 stage C–D)."""
+    base = _base_context(repository, request)
+    active_rows: list[dict[str, str]] = list(base.get("n1_workspaces") or [])
+    archived_rows: list[dict[str, str]] = []
+    flash = request.query_params.get("msg")
+    data_root = resolve_data_root()
+    if data_root is not None:
+        svc = WorkspaceRegistryService(data_root)
+        listed = svc.list_n1(include_archived=True)
+        if listed.ok:
+            all_rows = list(listed.details.get("workspaces") or [])
+            active_rows = [r for r in all_rows if r.get("status") == "active"]
+            archived_rows = [r for r in all_rows if r.get("status") == "archived"]
+    return templates.TemplateResponse(
+        request=request,
+        name="workspaces.html",
+        context={
+            **base,
+            "active_page": "workspaces",
+            "n1_workspaces": active_rows,
+            "n1_archived": archived_rows,
+            "workspace_flash": flash,
+        },
+    )
+
+
+@app.post("/workspaces/select", name="workspace_select")
+async def workspace_select(
+    request: Request,
+    workspace_id: Annotated[str, Form()],
+):
+    """Set focus cookie to a validated active N1 workspace_id; redirect home."""
+    ok, _path, err = validate_focus_workspace_id(workspace_id)
+    if not ok:
+        raise HTTPException(status_code=400, detail=err or "invalid workspace_id")
+    response = RedirectResponse(url=str(request.url_for("home")), status_code=303)
+    response.set_cookie(
+        key=COOKIE_FOCUS_WORKSPACE,
+        value=workspace_id.strip(),
+        httponly=True,
+        samesite="lax",
+        max_age=60 * 60 * 24 * 30,
+        path="/",
+    )
+    return response
+
+
+@app.post("/workspaces/status", name="workspace_set_status")
+async def workspace_set_status(
+    request: Request,
+    workspace_id: Annotated[str, Form()],
+    status: Annotated[str, Form()],
+):
+    """Archive or unarchive via registry index (does not delete canonical)."""
+    status_s = status.strip().lower()
+    if status_s not in {"active", "archived"}:
+        raise HTTPException(status_code=400, detail="status must be active|archived")
+    data_root = resolve_data_root()
+    if data_root is None:
+        raise HTTPException(
+            status_code=400,
+            detail="DATA_ROOT required for archive/unarchive",
+        )
+    svc = WorkspaceRegistryService(data_root)
+    result = svc.set_status(workspace_id.strip(), status_s)
+    if not result.ok:
+        raise HTTPException(
+            status_code=400,
+            detail=result.message or "status update failed",
+        )
+    # If focus was archived, clear cookie so multi-mode fails closed until re-select.
+    redirect = RedirectResponse(
+        url=str(request.url_for("workspaces")) + f"?msg=status-{status_s}",
+        status_code=303,
+    )
+    focus = request.cookies.get(COOKIE_FOCUS_WORKSPACE)
+    if status_s == "archived" and focus == workspace_id.strip():
+        redirect.delete_cookie(key=COOKIE_FOCUS_WORKSPACE, path="/")
+    return redirect
+
+
+@app.get("/api/workspaces", name="api_workspaces")
+async def api_workspaces(request: Request):
+    """JSON N1 list only (no goal bodies)."""
+    state = build_focus_state(request)
+    data_root = state.data_root
+    include_archived = request.query_params.get("include_archived", "").lower() in {
+        "1",
+        "true",
+        "yes",
+    }
+    payload: dict[str, Any] = {
+        "ok": True,
+        "workspaces": list(state.workspaces),
+        "focus_workspace_id": state.focus_workspace_id,
+        "needs_selection": state.needs_selection,
+        "selection_error": state.selection_error,
+    }
+    if data_root is None:
+        payload["data_root_configured"] = False
+    else:
+        payload["data_root_configured"] = True
+        svc = WorkspaceRegistryService(data_root)
+        listed = svc.list_n1(include_archived=True)
+        if listed.ok:
+            all_rows = list(listed.details.get("workspaces") or [])
+            payload["invalid_count"] = len(listed.details.get("invalid") or [])
+            payload["archived"] = [r for r in all_rows if r.get("status") == "archived"]
+            if include_archived:
+                payload["workspaces"] = all_rows
+            # Strict N1 keys only
+            for row in payload["workspaces"]:
+                if set(row.keys()) - {"workspace_id", "display_name", "root_goal", "status"}:
+                    raise HTTPException(status_code=500, detail="N1 contract violated")
+            for row in payload.get("archived") or []:
+                if set(row.keys()) - {"workspace_id", "display_name", "root_goal", "status"}:
+                    raise HTTPException(status_code=500, detail="N1 contract violated")
+    return JSONResponse(payload)
+
+
 @app.get("/goals/{goal_id}", name="goal_detail")
 async def goal_detail(
     request: Request,
@@ -220,7 +364,7 @@ async def goal_detail(
         request=request,
         name="goal_detail.html",
         context={
-            **_base_context(repository),
+            **_base_context(repository, request),
             "active_page": "home",
             "goal": result.goal,
             "issues": result.issues,
@@ -261,7 +405,7 @@ async def goal_ai_suggest(
         request=request,
         name="goal_detail.html",
         context={
-            **_base_context(repository),
+            **_base_context(repository, request),
             "active_page": "home",
             "goal": result.goal,
             "issues": result.issues,
@@ -304,7 +448,7 @@ async def goal_ai_confirm(
         request=request,
         name="goal_detail.html",
         context={
-            **_base_context(repository),
+            **_base_context(repository, request),
             "active_page": "home",
             "goal": result.goal,
             "issues": result.issues,
@@ -338,7 +482,7 @@ async def goal_ai_reject(
         request=request,
         name="goal_detail.html",
         context={
-            **_base_context(repository),
+            **_base_context(repository, request),
             "active_page": "home",
             "goal": result.goal,
             "issues": result.issues,
@@ -410,7 +554,7 @@ async def goal_proposal(
         request=request,
         name="goal_detail.html",
         context={
-            **_base_context(repository),
+            **_base_context(repository, request),
             "active_page": "home",
             "goal": result.goal,
             "issues": result.issues,
@@ -456,7 +600,7 @@ async def goal_decide(
         request=request,
         name="goal_detail.html",
         context={
-            **_base_context(repository),
+            **_base_context(repository, request),
             "active_page": "home",
             "goal": result.goal,
             "issues": result.issues if result else (),
@@ -471,15 +615,19 @@ async def goal_decide(
 
 
 @app.get("/api/health", name="health")
-async def health(repository: RepositoryDependency):
+async def health(request: Request, repository: RepositoryDependency):
     cfg = resolve_workspace_config()
     ai = resolve_ai_config()
+    focus = build_focus_state(request)
     return JSONResponse(
         {
             "ok": True,
             "workspace_configured": repository.is_configured,
             "workspace_source": repository.config_source,
             "workspace_error": repository.config_error,
+            "focus_workspace_id": focus.focus_workspace_id,
+            "workspace_needs_selection": focus.needs_selection,
+            "n1_workspace_count": len(focus.workspaces),
             "product_gates_open": production_product_gates_open(),
             "controlled_write_enabled": controlled_write_authorized(),
             "dev_dogfood": cfg.dev_dogfood,

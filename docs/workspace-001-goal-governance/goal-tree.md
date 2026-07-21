@@ -4,10 +4,38 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.66.0
+version: 0.73.0
 ---
 
 # Goal Tree
+
+## 2026-07-22 · GOAL-015 有界关门（X-NAV）
+
+D-006 / A-006–A-007：阶段审 + close-out；`done / 100%`；**R-015-E2E** / **R-015-CREATE-UI** residual。R-009-X 仍 accepted。全量 **126 passed, 1 skipped**。
+
+## 2026-07-22 · GOAL-015 阶段 D 归档与负向矩阵
+
+D-005 / A-005：归档 UX + 跨区 404 不泄漏；progress 当时 **85%**。
+
+## 2026-07-22 · GOAL-015 阶段 C Web 绑定
+
+D-004 / A-004：`/workspaces` + focus cookie；progress 当时 **65%**。
+
+## 2026-07-22 · GOAL-015 阶段 B service
+
+D-003 / A-003：`workspace_registry` + tests；progress 当时 **40%**。
+
+## 2026-07-22 · GOAL-015 阶段 A 冻结（R-015-A）
+
+D-002 / A-002：N1 白名单与范围冻结；progress 当时 **15%**；阶段 A 完成。
+
+## 2026-07-22 · 创建 GOAL-015（X-NAV）
+
+D-034 / A-060：用户 E1；[GOAL-015-n1-workspace-navigation](GOAL-015-n1-workspace-navigation/) · 其后阶段 A 见上节。GOAL-009 仍 `done`；R-009-X 仍 accepted；Root 仍 active。下一编号 **GOAL-016**。
+
+## 2026-07-22 · R-009-X 下一扩展立项审视（待选定）
+
+D-033 / A-059：选项 E1=X-NAV（推荐）/ E2=X-SM / E3=X-PILOT / E4=NAV+PILOT / E5=NAV+SM / E0=不立。其后用户选 E1（见上节）。
 
 ## 2026-07-22 · 响应 GOAL-009 A-057（F-029 / F-030）
 
@@ -238,7 +266,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-011-multi-workspace-directory-migration · 完成多工作区目录迁移与共享资料索引骨架 [done 100%]
 ├── GOAL-012-first-slice-workspace-detail · 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） [done 100%]
 ├── GOAL-013-write-gate-ct-durable-idempotency · 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） [done 100%]
-└── GOAL-014-ai-collaboration-runtime · 实现 AI 协作运行时与用户确认链（有界） [done 100%]
+├── GOAL-014-ai-collaboration-runtime · 实现 AI 协作运行时与用户确认链（有界） [done 100%]
+└── GOAL-015-n1-workspace-navigation · 实现 N1 多工作区导航（列表 / 选择 / 归档） [done 100%]
 ```
 
 ## 状态总览
@@ -259,8 +288,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-012-first-slice-workspace-detail | 实现首个垂直切片：配置化工作区详情与受控执行事实追加（门禁内） | GOAL-001-main-vision | done | 100% | [GOAL-012-first-slice-workspace-detail/](GOAL-012-first-slice-workspace-detail/) |
 | GOAL-013-write-gate-ct-durable-idempotency | 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） | GOAL-001-main-vision | done | 100% | [GOAL-013-write-gate-ct-durable-idempotency/](GOAL-013-write-gate-ct-durable-idempotency/) |
 | GOAL-014-ai-collaboration-runtime | 实现 AI 协作运行时与用户确认链（有界） | GOAL-001-main-vision | done | 100% | [GOAL-014-ai-collaboration-runtime/](GOAL-014-ai-collaboration-runtime/) |
+| GOAL-015-n1-workspace-navigation | 实现 N1 多工作区导航（列表 / 选择 / 归档） | GOAL-001-main-vision | done | 100% | [GOAL-015-n1-workspace-navigation/](GOAL-015-n1-workspace-navigation/) |
 
-阶段 6：GOAL-009 `done / 100%`（有界规划/α/X-AI；**R-009-X** 扩展 residual）；GOAL-012/013/014 `done / 100%`。下一编号 **GOAL-015**。GOAL-001 仍为 `active`（阶段 6 终态见 R-009-X）。
+阶段 6：GOAL-009 `done / 100%`（有界）；GOAL-012～015 `done`（015=X-NAV 有界 + residual）。下一编号 **GOAL-016**。GOAL-001 仍为 `active`（阶段 6 终态见 R-009-X）。
 
 ## 状态图例
 

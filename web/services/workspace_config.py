@@ -17,6 +17,8 @@ from typing import Mapping
 ENV_WORKSPACE_DIR = "GOAL_GOVERNANCE_WORKSPACE_DIR"
 ENV_DATA_ROOT = "GOAL_GOVERNANCE_DATA_ROOT"
 ENV_DEV_DOGFOOD = "GOAL_GOVERNANCE_DEV_DOGFOOD"
+# Cookie / session focus for multi-workspace N1 (GOAL-015 stage C).
+COOKIE_FOCUS_WORKSPACE = "gg_focus_workspace_id"
 ENV_ALLOW_CONTROLLED_WRITE = "GOAL_GOVERNANCE_ALLOW_CONTROLLED_WRITE"
 ENV_TEST_WRITE_MODE = "GOAL_GOVERNANCE_TEST_WRITE_MODE"
 ENV_PRODUCT_GATES_OPEN = "GOAL_GOVERNANCE_PRODUCT_GATES_OPEN"
@@ -78,6 +80,22 @@ class WorkspaceConfig:
     @property
     def is_ready(self) -> bool:
         return self.configured and self.workspace_dir is not None and self.error is None
+
+
+def resolve_data_root(environ: dict[str, str] | None = None) -> Path | None:
+    """Product data root for multi-workspace registry (GOAL-015). None if unset/missing."""
+    env = environ if environ is not None else os.environ
+    raw = (env.get(ENV_DATA_ROOT) or "").strip()
+    if not raw:
+        return None
+    path = Path(raw).expanduser()
+    if not path.is_absolute():
+        path = (_REPO_ROOT / path).resolve()
+    else:
+        path = path.resolve()
+    if not path.is_dir():
+        return None
+    return path
 
 
 def resolve_workspace_config(

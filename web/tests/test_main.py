@@ -49,11 +49,99 @@ class GoalWebRoutesTests(unittest.TestCase):
         self.assertTrue(payload["ok"])
         self.assertIn("controlled_write_enabled", payload)
         self.assertIn("product_gates_open", payload)
+        self.assertIn("focus_workspace_id", payload)
         self.assertIn("ai", payload)
         self.assertIn("enabled", payload["ai"])
         self.assertIn("ready", payload["ai"])
         self.assertNotIn("api_key", payload["ai"])
         self.assertNotIn("sk-", str(payload["ai"]))
+
+    def test_workspaces_page_and_api_n1(self) -> None:
+        """GOAL-015 C: list page + JSON N1 without goal bodies."""
+        response = self.client.get("/workspaces")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("工作区列表", response.text)
+        api = self.client.get("/api/workspaces")
+        self.assertEqual(api.status_code, 200)
+        body = api.json()
+        self.assertTrue(body["ok"])
+        self.assertIn("workspaces", body)
+        # Must not leak goal section bodies
+        self.assertNotIn("02-execution", str(body))
+
+    def test_workspace_select_sets_cookie(self) -> None:
+        import os
+        import tempfile
+
+        from services.workspace_config import COOKIE_FOCUS_WORKSPACE, ENV_DATA_ROOT
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for ws_id, rg in (
+                ("workspace-001-a", "GOAL-001-a"),
+                ("workspace-002-b", "GOAL-001-b"),
+            ):
+                p = root / ws_id
+                p.mkdir()
+                (p / "workspace.md").write_text(
+                    f"""---
+id: {ws_id}
+title: {ws_id}
+status: active
+root_goal: {rg}
+canonical_scope: .
+---
+""",
+                    encoding="utf-8",
+                )
+                (p / "goal-tree.md").write_text("# t\n", encoding="utf-8")
+                g = p / rg
+                g.mkdir()
+                (g / "00-meta.md").write_text(
+                    f"""---
+id: {rg}
+title: R
+status: active
+parent: null
+---
+""",
+                    encoding="utf-8",
+                )
+
+            prev = os.environ.get(ENV_DATA_ROOT)
+            # Use real dependency resolution for this test
+            app.dependency_overrides.pop(get_goals_repository, None)
+            try:
+                os.environ[ENV_DATA_ROOT] = str(root)
+                # Multi without cookie → unconfigured home
+                home = self.client.get("/")
+                self.assertEqual(home.status_code, 200)
+                self.assertIn("fail closed", home.text.lower() if "fail" in home.text.lower() else home.text)
+                self.assertTrue(
+                    "未配置" in home.text or "选择" in home.text or "多个工作区" in home.text
+                )
+
+                sel = self.client.post(
+                    "/workspaces/select",
+                    data={"workspace_id": "workspace-001-a"},
+                    follow_redirects=False,
+                )
+                self.assertIn(sel.status_code, (303, 307, 302))
+                self.assertIn(COOKIE_FOCUS_WORKSPACE, sel.cookies)
+
+                # Client keeps cookie for subsequent requests
+                self.client.cookies.set(COOKIE_FOCUS_WORKSPACE, "workspace-001-a")
+                home2 = self.client.get("/")
+                self.assertEqual(home2.status_code, 200)
+                self.assertIn("workspace-001-a", home2.text)
+            finally:
+                if prev is None:
+                    os.environ.pop(ENV_DATA_ROOT, None)
+                else:
+                    os.environ[ENV_DATA_ROOT] = prev
+                app.dependency_overrides[get_goals_repository] = lambda: GoalsRepository(
+                    VALID_FIXTURE
+                )
 
     def test_proposal_preview_on_fixture_workspace(self) -> None:
         app.dependency_overrides[get_goals_repository] = lambda: GoalsRepository(R004_FIXTURE)

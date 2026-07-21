@@ -20,7 +20,7 @@ version: 0.6.0
 |--------|----------|------|
 | 核心方法论与模板 | GOAL-006 / 007 / 010 `done / 100%` | 协议与模板可复用；工作区/共享资料固定引用协议已就位。 |
 | Skills 消费适配器 | GOAL-008 `done / 100%` | 阶段 5 已关门；含新行为的发布仍须按 GOAL-008 惯例刷新 runtime evidence。 |
-| Web 工作台 | GOAL-009 `done / 100%`（有界）；GOAL-012/013/014 `done / 100%` | 规划台账 + α 切片 + 受控写 CT + X-AI 有界运行时已交付。生产受控写须双门闩 env；**N1 / 资料 CRUD 产品 / 人类多会话试点 / I 全文 verified / 阶段 6 终态宣称** → **R-009-X**。 |
+| Web 工作台 | GOAL-009 `done / 100%`（有界）；GOAL-012～015 `done`（015=X-NAV 有界） | 规划台账 + α + 受控写 + X-AI + N1 导航有界已交付。生产写双门闩；**资料 CRUD / 人类多会话试点 / I 全文 verified / 阶段 6 终态** → **R-009-X**（N1 有界切片见 GOAL-015 residual）。 |
 
 ## 2026-07-20 · 阶段 5 关门交接
 
@@ -68,7 +68,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 |--------|----------|------|
 | 核心方法论与模板 | GOAL-006 `done / 100%`；GOAL-007 `done / 100%`；GOAL-010 `done / 100%` | 核心协议、信息就绪与工作区/共享资料固定引用已就位。 |
 | Skills 消费适配器 | GOAL-008 `done / 100%`；GOAL-010 `done / 100%` | 阶段 5 已关门；新行为发布前刷新 runtime evidence。 |
-| Web 工作台 | GOAL-009 `done / 100%`（有界）；GOAL-012/013/014 `done / 100%` | α + 受控写 + X-AI 有界已交付；扩展/终态见 **R-009-X**（≠ 产品终态）。 |
+| Web 工作台 | GOAL-009 `done / 100%`（有界）；GOAL-012～015 `done / 100%`（015=X-NAV 有界） | α + 受控写 + X-AI + N1 导航有界已交付；扩展/终态见 **R-009-X**（≠ 产品终态）。 |
 
 > **历史注记**：2026-07-20 曾将 Web 记为 `GOAL-009 active / 0%`（规划起点）。该行已失效；勿再引用为现时。
 
@@ -142,8 +142,9 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 | GOAL-012-first-slice-workspace-detail | 首个垂直切片：配置化工作区详情与受控执行事实追加 | done / 100%（有界） | α 实现。 |
 | GOAL-013-write-gate-ct-durable-idempotency | 受控写入 CT 与跨进程幂等 | done / 100%（有界） | 写入门禁证据。 |
 | GOAL-014-ai-collaboration-runtime | AI 协作运行时与用户确认链 | done / 100%（有界） | X-AI；R-014-E2E residual。 |
+| GOAL-015-n1-workspace-navigation | N1 多工作区导航（列表/选择/归档） | **done / 100%**（有界） | X-NAV；R-015-E2E / R-015-CREATE-UI residual；≠ I-009 全文。 |
 
-完整树与 status 以 [goal-tree.md](../goal-tree.md) 为准。下一编号 **GOAL-015**（扩展另立时）。
+完整树与 status 以 [goal-tree.md](../goal-tree.md) 为准。下一编号 **GOAL-016**。
 
 ## 相关路径
 
