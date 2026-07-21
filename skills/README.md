@@ -2,9 +2,9 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-07-20
+updated: 2026-07-22
 parent: null
-version: 1.2.0
+version: 1.3.0
 ---
 
 # Skills
@@ -74,9 +74,45 @@ skills/
 
 ## 安装
 
-推荐：先整包复制进目标项目，再装规则与主入口。脚本**离线**。
+推荐：**从 GitHub Release 下载 skills-only zip**（不是整个 monorepo），解压进目标项目，再装规则与主入口。安装脚本**离线**、不访问网络。
 
-### 0. 复制包
+### 从 GitHub Release 安装（推荐 · 其他项目）
+
+1. 打开本仓库 [Releases](https://github.com/magicvr/goal-governance/releases)，下载与 tag 对应的  
+   `goal-governance-skills-vX.Y.Z.zip`（可对照同目录的 `.sha256` 校验）。  
+   包内**只有** Skills 分发面（prompts、install 适配、模板/契约镜像、安装脚本），**不含** dogfood 过程树、`web/` 或 `artifacts/`。
+2. 在目标项目根目录解压，使包内容落在 `./skills/`（或你选择的目录名）：
+
+```bash
+# 示例：已下载 zip 到当前目录
+unzip goal-governance-skills-vX.Y.Z.zip
+# zip 根目录名为 goal-governance-skills-vX.Y.Z/ — 重命名为 skills 便于默认参数
+mv goal-governance-skills-vX.Y.Z skills
+```
+
+```powershell
+Expand-Archive .\goal-governance-skills-vX.Y.Z.zip -DestinationPath .
+Rename-Item .\goal-governance-skills-vX.Y.Z skills
+```
+
+3. 安装宿主入口（默认 `/govern` + `/audit`）：
+
+```bash
+bash ./skills/install.sh --all --skills-dir ./skills
+# 或单宿主：--claude / --grok / --copilot
+```
+
+```powershell
+.\skills\install.ps1 -All -SkillsDir .\skills
+# 或：-Claude / -Grok / -Copilot
+```
+
+4. 在目标仓库建立工作区与 `goal-tree.md` 后，在对应 AI 宿主中调用 **`/govern`**（交叉审计用 **`/audit`**）。
+
+> 维护者如何产出 zip：见根目录 [docs/releases/README.md](../docs/releases/README.md) 与 `python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
+> 尚未发布的候选工作树**不要**当作正式 Release 身份；仅当 annotated tag 与 release evidence 就位时，zip 才作为该版本的对外安装物。
+
+### 0. 从源码树复制包（开发者 / 无 Release 时）
 
 ```bash
 cp -R /path/to/goal-governance/skills ./skills
@@ -210,5 +246,6 @@ Windows 上 `test_install_ps1_isolated_all_produces_govern_and_audit` 会在临�
 
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
+- 自动在无维护者授权时创建 GitHub Release（tag CI 仅 pack + 上传 artifact）
 
-当前交付：**核心协议的 Skills 适配规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 多宿主安装脚本 + 模板与机读契约分发镜像**。核心 canonical 方法论、模板与契约见仓库 `docs/` 层。
+当前交付：**核心协议的 Skills 适配规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 多宿主安装脚本 + 模板与机读契约分发镜像 + 版本化 zip 打包入口（`scripts/pack_skills_release.py`）**。核心 canonical 方法论、模板与契约见仓库 `docs/` 层。

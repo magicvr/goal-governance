@@ -10,9 +10,32 @@
 | 文档怎么写、规则是什么 | [docs/README.md](docs/README.md) |
 | 核心模板怎么用 | [docs/templates/README.md](docs/templates/README.md) |
 | AI 必须遵守什么 | [AGENTS.md](AGENTS.md) |
-| Skills 如何安装 | [skills/README.md](skills/README.md) |
+| Skills 如何安装 | [skills/README.md](skills/README.md)（推荐：从 [Releases](https://github.com/magicvr/goal-governance/releases) 下载 skills-only zip） |
+| Skills 如何打包 / 发布附件 | [docs/releases/README.md](docs/releases/README.md)、`scripts/pack_skills_release.py` |
 | 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
 | Web 如何启动 | [web/README.md](web/README.md) |
+
+## 在其他项目中安装 Skills（Release zip）
+
+其他仓库**不要**依赖 clone 整个 monorepo。从 GitHub Release 取 **skills-only** 安装包：
+
+```powershell
+# 1. 下载 goal-governance-skills-vX.Y.Z.zip（及可选 .sha256）到目标项目根
+# 2. 解压并命名为 skills
+Expand-Archive .\goal-governance-skills-vX.Y.Z.zip -DestinationPath .
+Rename-Item .\goal-governance-skills-vX.Y.Z skills
+
+# 3. 安装 /govern + /audit 到当前仓库（Claude / Grok / Copilot）
+.\skills\install.ps1 -All -SkillsDir .\skills
+```
+
+```bash
+unzip goal-governance-skills-vX.Y.Z.zip
+mv goal-governance-skills-vX.Y.Z skills
+bash ./skills/install.sh --all --skills-dir ./skills
+```
+
+详情、单宿主参数与工作区初始化见 [skills/README.md](skills/README.md)。维护者打包：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。
 
 ## 仓库结构
 

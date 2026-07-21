@@ -4,10 +4,22 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.88.0
+version: 0.91.0
 ---
 
 # Goal Tree
+
+## 2026-07-22 · 响应 GOAL-018 A-002（F-001～F-003）
+
+D-004 / A-003：关闭 recommended F-001（CI artifact 名统一 NORM）、F-002（R-018-FIRST-RELEASE residual）、F-003（后续 self 模板约定）。**维持** GOAL-018 `done / 100%`。下一编号仍 **GOAL-019**。
+
+## 2026-07-22 · GOAL-018 有界关门（Skills Release 打包）
+
+D-003 / A-001：P0～P2 四项交付完成（文档 + pack + releases 约定 + tag CI pack）；`done / 100%`。未推真实公开 Release（Non-goal）。其后 A-002/A-003 见上节。
+
+## 2026-07-22 · 创建 GOAL-018（Skills Release 打包）
+
+D-001：用户要求建立新目标并完成 P0～P2 四项（消费文档、pack 脚本、Release 挂载约定、tag CI pack）。[GOAL-018-skills-release-packaging](GOAL-018-skills-release-packaging/) · 其后有界关门见上节。
 
 ## 2026-07-22 · Root 阶段 6 有界结项审视
 
@@ -329,7 +341,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-014-ai-collaboration-runtime · 实现 AI 协作运行时与用户确认链（有界） [done 100%]
 ├── GOAL-015-n1-workspace-navigation · 实现 N1 多工作区导航（列表 / 选择 / 归档） [done 100%]
 ├── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
-└── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
+├── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
+└── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
 ```
 
 ## 状态总览
@@ -353,8 +366,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-015-n1-workspace-navigation | 实现 N1 多工作区导航（列表 / 选择 / 归档） | GOAL-001-main-vision | done | 100% | [GOAL-015-n1-workspace-navigation/](GOAL-015-n1-workspace-navigation/) |
 | GOAL-016-shared-materials-product | 实现共享资料区产品（CRUD / 固定引用 / 隔离） | GOAL-001-main-vision | done | 100% | [GOAL-016-shared-materials-product/](GOAL-016-shared-materials-product/) |
 | GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
+| GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径（文档 + pack + CI） | GOAL-001-main-vision | done | 100% | [GOAL-018-skills-release-packaging/](GOAL-018-skills-release-packaging/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-018**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-019**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。GOAL-018 承接 Skills 对外 Release 打包路径。
 
 ## 状态图例
 
@@ -369,6 +383,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-018`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-019`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。
