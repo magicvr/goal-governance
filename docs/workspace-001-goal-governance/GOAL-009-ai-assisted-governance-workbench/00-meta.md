@@ -112,7 +112,7 @@ GOAL-011 已将当前项目迁入 `docs/workspace-001-goal-governance/`，并建
 | **R-E-2-H** | 多会话人类试点（并入 R-009-X） | — | **closed（并入 R-009-X）** | D-031-A / A-056 |
 | **R-E-3** | α E 阶段整改环 | — | **closed（有界）** | D-027-A / A-049 |
 | **R-E-3-X** | 关门审子句 | — | **closed**（A-056 有界关门审完成） | D-027-A → D-031-A |
-| **R-009-X** | N1 多区（**GOAL-015 done 有界**；I-009 全文/E2E residual）、资料 CRUD（**GOAL-016 done 有界**；I-010 全文 / AI 读 / UX residual）、人类多会话试点、I 扩展全文、阶段 6 终态宣称 | 宣称终态、扩展产品放行、或 Root 阶段 6 终态审前 | **accepted** | D-031-A / A-056；D-032/A-058；GOAL-015/016 有界切片 |
+| **R-009-X** | N1（**015 done 有界**）、资料 CRUD（**016 done 有界**）、人类多会话（**017 done 有界路径证据**；**R-017-HUMAN-UX** 人手全文 residual）、I 扩展全文、阶段 6 终态宣称 | 宣称终态、扩展产品放行、或 Root 阶段 6 终态审前 | **accepted** | D-031-A/A-056；GOAL-015/016/017 有界切片 |
 
 既有 finding residual（R-F002～F004、R-F008）与 GOAL-014 **R-014-E2E** 不变，见各目标台账。**done 后**：开放 collecting 扩展项的推进/关闭责任归 **R-009-X**（及未来 X-* 实现目标）；GOAL-009 仅保留历史规划来源与有界关闭证据。
 

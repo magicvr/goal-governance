@@ -4,10 +4,34 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.82.0
+version: 0.88.0
 ---
 
 # Goal Tree
+
+## 2026-07-22 · Root 阶段 6 有界结项审视
+
+GOAL-001 D-015 / A-014：阶段 6 **有界结项**（009 + 012～017）；**Root 仍 active**；**R-009-X 仍 accepted**。**未**宣称终态 / Root done。
+
+## 2026-07-22 · GOAL-017 有界关门（X-PILOT）
+
+D-004 / A-004–A-005：汇总 + close-out；`done / 100%`；**R-017-HUMAN-UX** residual。R-009-X 仍 accepted。
+
+## 2026-07-22 · GOAL-017 阶段 B 会话证据
+
+D-003 / A-003：SESSION-001/002 落盘（agent TestClient 实跑）；progress 当时 **65%**。
+
+## 2026-07-22 · GOAL-017 阶段 A 冻结（R-017-A）
+
+D-002 / A-002：试点范围 + 会话证据模板；progress 当时 **20%**。
+
+## 2026-07-22 · 创建 GOAL-017（X-PILOT）
+
+D-038 / A-064：用户 P1；[GOAL-017-human-pilot-feedback](GOAL-017-human-pilot-feedback/) · 其后阶段 A 见上节。R-009-X 仍 accepted。下一编号 **GOAL-018**。
+
+## 2026-07-22 · R-009-X 下一扩展审视（X-PILOT · 待选定）
+
+D-037 / A-063：选项 P1=X-PILOT（推荐）/ P2=详脚本 / P0=不立。其后用户选 P1（见上节）。
 
 ## 2026-07-22 · 响应 GOAL-016 A-008（F-001～F-003）
 
@@ -304,7 +328,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-013-write-gate-ct-durable-idempotency · 补齐受控写入 CT 缺口与跨进程幂等（生产门禁默认仍关） [done 100%]
 ├── GOAL-014-ai-collaboration-runtime · 实现 AI 协作运行时与用户确认链（有界） [done 100%]
 ├── GOAL-015-n1-workspace-navigation · 实现 N1 多工作区导航（列表 / 选择 / 归档） [done 100%]
-└── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
+├── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
+└── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
 ```
 
 ## 状态总览
@@ -327,8 +352,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-014-ai-collaboration-runtime | 实现 AI 协作运行时与用户确认链（有界） | GOAL-001-main-vision | done | 100% | [GOAL-014-ai-collaboration-runtime/](GOAL-014-ai-collaboration-runtime/) |
 | GOAL-015-n1-workspace-navigation | 实现 N1 多工作区导航（列表 / 选择 / 归档） | GOAL-001-main-vision | done | 100% | [GOAL-015-n1-workspace-navigation/](GOAL-015-n1-workspace-navigation/) |
 | GOAL-016-shared-materials-product | 实现共享资料区产品（CRUD / 固定引用 / 隔离） | GOAL-001-main-vision | done | 100% | [GOAL-016-shared-materials-product/](GOAL-016-shared-materials-product/) |
+| GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
 
-阶段 6：GOAL-009 `done`（有界）；GOAL-012～016 `done`（015=X-NAV、016=X-SM 有界 + residual）。下一编号 **GOAL-017**。GOAL-001 仍为 `active`（阶段 6 终态见 R-009-X）。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-018**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。
 
 ## 状态图例
 
@@ -343,6 +369,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-017`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-018`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

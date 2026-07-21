@@ -5,22 +5,29 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-22
-version: 0.6.0
+version: 0.7.0
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
 
-## 2026-07-22 · 阶段 6 有界交付现时（A-057 F-029 响应）
+## 2026-07-22 · 阶段 6 有界结项（D-015 / A-014）
 
 > 现时以 [goal-tree.md](../goal-tree.md) 与下表为准。下文「2026-07-20」各节及「历史快照」表保留原貌，**不要**当作现时 status。
 
-阶段 6 **有界规划/α/X-AI 闭环已完成**（GOAL-009～014 均为 `done / 100%`，各目标有界范围见各自 meta）。**未**宣称一期 Web 产品终态；扩展与终态复审挂 [GOAL-009 **R-009-X**](../GOAL-009-ai-assisted-governance-workbench/00-meta.md#residual-台账e--accepted)。Root 保持 `active`。
+| 项 | 值 |
+|----|-----|
+| **阶段 6** | **有界结项** — AI 协助人类 Web 工作台在有界交付意义上完成 |
+| **裁决** | [D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22) / [A-014](03-audit.md#a-014--阶段-6-有界结项审视2026-07-22) |
+| **证据** | GOAL-009 有界关门 + GOAL-012～017 有界 done（α / 受控写 / X-AI / N1 / 资料 / 路径试点） |
+| **Root status** | **`active`（本条不改为 done）** |
+| **R-009-X** | **仍 accepted** — 约束终态宣称、I 全文 verified、人手 UX 全文、AI 读资料全文等 |
+| **明确不构成** | 一期 Web 产品终态；Root 关门；R-009-X closed；阶段 7 完成 |
 
 | 交付面 | 现时状态 | 结论 |
 |--------|----------|------|
 | 核心方法论与模板 | GOAL-006 / 007 / 010 `done / 100%` | 协议与模板可复用；工作区/共享资料固定引用协议已就位。 |
 | Skills 消费适配器 | GOAL-008 `done / 100%` | 阶段 5 已关门；含新行为的发布仍须按 GOAL-008 惯例刷新 runtime evidence。 |
-| Web 工作台 | GOAL-009 `done`（有界）；GOAL-012～016 `done`（015=X-NAV、016=X-SM 有界） | 规划台账 + α + 受控写 + X-AI + N1 + 共享资料产品有界已交付。生产写双门闩；**人类多会话试点 / I 全文 verified / 阶段 6 终态 / AI 读资料** → **R-009-X** 与各目标 residual。 |
+| Web 工作台 | 阶段 6 **有界结项**；009 + 012～017 `done`（有界） | 主路径有界可用；**人手 UX 全文 / I 全文 verified / 阶段 6 终态 / AI 读资料** → **R-009-X** 与各 residual。 |
 
 ## 2026-07-20 · 阶段 5 关门交接
 
@@ -68,7 +75,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 |--------|----------|------|
 | 核心方法论与模板 | GOAL-006 `done / 100%`；GOAL-007 `done / 100%`；GOAL-010 `done / 100%` | 核心协议、信息就绪与工作区/共享资料固定引用已就位。 |
 | Skills 消费适配器 | GOAL-008 `done / 100%`；GOAL-010 `done / 100%` | 阶段 5 已关门；新行为发布前刷新 runtime evidence。 |
-| Web 工作台 | GOAL-009 `done`（有界）；GOAL-012～016 `done`（015/016 有界） | α + 受控写 + X-AI + N1 + 资料产品有界；扩展/终态见 **R-009-X**（≠ 产品终态）。 |
+| Web 工作台 | 阶段 6 **有界结项**（D-015）；009 + 012～017 `done`（有界） | 有界交付完成；**≠ 终态**；扩展/终态见 **R-009-X**。 |
 
 > **历史注记**：2026-07-20 曾将 Web 记为 `GOAL-009 active / 0%`（规划起点）。该行已失效；勿再引用为现时。
 
@@ -144,8 +151,9 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 | GOAL-014-ai-collaboration-runtime | AI 协作运行时与用户确认链 | done / 100%（有界） | X-AI；R-014-E2E residual。 |
 | GOAL-015-n1-workspace-navigation | N1 多工作区导航（列表/选择/归档） | **done / 100%**（有界） | X-NAV；R-015-E2E / R-015-CREATE-UI residual；≠ I-009 全文。 |
 | GOAL-016-shared-materials-product | 共享资料区产品（CRUD / 固定引用 / 隔离） | **done / 100%**（有界） | X-SM；R-016-AI-READ / E2E / UX residual；≠ I-010 全文。 |
+| GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | **done / 100%**（有界） | X-PILOT；路径证据齐；**R-017-HUMAN-UX** residual；≠ I-007/I-012 全文。 |
 
-完整树与 status 以 [goal-tree.md](../goal-tree.md) 为准。下一编号 **GOAL-017**。
+完整树与 status 以 [goal-tree.md](../goal-tree.md) 为准。下一编号 **GOAL-018**。
 
 ## 相关路径
 

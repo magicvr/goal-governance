@@ -70,9 +70,24 @@ version: 1.0.0
 - 新目标：[GOAL-016-shared-materials-product](../GOAL-016-shared-materials-product/00-meta.md) · `active / 0%`。  
 - GOAL-009 仍 `done / 100%`；R-009-X 仍 accepted。
 
+### 2026-07-22 · 审视 R-009-X 下一扩展（X-PILOT）
+
+- 用户：`/govern 按 R-009-X 审视下一扩展（X-PILOT 试点）`  
+- [D-037](01-decision.md#d-037--r-009-x-下一扩展选项包x-pilot-试点proposed--待用户选定2026-07-22) / [A-063](03-audit.md#a-063--审视-r-009-x-下一扩展x-pilot-试点2026-07-22)。  
+- **仅选项包**；**未**创建 GOAL-017+。  
+- 推荐 **P1 = X-PILOT**；待用户 `OK P1` 或 `OK P0`。  
+- 背景：X-AI / X-NAV / X-SM 已有界 done（014～016）。
+
+### 2026-07-22 · 接受 P1：创建 GOAL-017（X-PILOT）
+
+- 用户选定 **P1**。  
+- [D-038](01-decision.md#d-038--接受-p1创建-goal-017x-pilot2026-07-22) / [A-064](03-audit.md#a-064--响应-p1创建-goal-017x-pilot2026-07-22)。  
+- 新目标：[GOAL-017-human-pilot-feedback](../GOAL-017-human-pilot-feedback/00-meta.md) · `active / 0%`。  
+- GOAL-009 仍 `done`；R-009-X 仍 accepted。
+
 ## 进度评估
 
-**100%**（有界规划/α/X-AI 台账范围）；扩展：X-NAV→015 done；**X-SM→GOAL-016 active**；试点未立。
+**100%**（有界规划台账）；扩展 014～016 done；**X-PILOT→GOAL-017 active**。
 
 ## 详细时间线
 

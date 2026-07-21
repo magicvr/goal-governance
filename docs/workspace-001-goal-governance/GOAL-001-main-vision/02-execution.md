@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-20
-version: 0.3.6
+updated: 2026-07-22
+version: 0.3.7
 ---
 
 # 执行记录 · GOAL-001
@@ -185,3 +185,11 @@ version: 0.3.6
 - Grok 主 `grok-4.5` 调用均通过；可选 session-title `grok-build` alias 的 502 作为 warning 保留，不将辅助失败扩大为主 dispatch 失败。具体 endpoint/model 配置保留在 GOAL-008 附件，不污染根 `AGENTS.md`。
 - compatibility report 从 7 个 uncovered 缩小为 3 个：Copilot `/govern`、Copilot `/audit` 与 Web parser CI replay。完整 rehearsal 5/5 checks 通过；Skills 31、standalone 3、scripts 30、Web 20 项通过，1 项 Windows symlink 权限跳过。
 - I-002 仍为 `collecting / required`，I-003 仍缺 ready coverage、干净候选和 annotated tag；根 F-005 继续 `open / required`。本轮没有 status/progress 变化，也没有 commit、push、tag 或 release。
+
+## 2026-07-22 · 阶段 6 有界结项审视（不关 Root）
+
+- 用户：`/govern 在 GOAL-001 记录阶段 6 有界结项审视（不关 Root；R-009-X 仍 accepted）`。  
+- [D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22) / [A-014](03-audit.md#a-014--阶段-6-有界结项审视2026-07-22)。  
+- **有界结项**：阶段 6 Web 工作台在有界交付意义上完成（009 + 012～017）。  
+- Root **仍 active**；**R-009-X 仍 accepted**；**未**宣称阶段 6 终态或 Root done。  
+- 阶段 7 / residual 产品 / 人手 UX 全文等仍可另立或触发。

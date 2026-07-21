@@ -4,8 +4,8 @@ doc: audit
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-19
-version: 0.3.2
+updated: 2026-07-22
+version: 0.3.3
 ---
 
 # 审计 · GOAL-001
@@ -573,3 +573,61 @@ GOAL-008 的 required 关闭证据现已齐全：Claude Code、Grok Build、GitH
 | F-006 | recommended / open | 真实消费者采用度试点仍按原范围留待阶段 7 复盘，不阻断本次关闭。 |
 
 本条关闭 F-005，不改变 GOAL-001 的 `active` 状态，也不声明阶段 6/7 或根目标完成。GOAL-008 已同步为 `done / 100%`，阶段 6 Web 深化可按根路线图另行推进。
+
+## A-014 · 阶段 6 有界结项审视（2026-07-22）
+
+- **source**：self  
+- **auditor**：`/govern`（Grok）  
+- **类型**：stage / portfolio-review  
+- **scope**：Root GOAL-001 层面对阶段 6（AI 协助人类 Web 工作台）是否达到**有界结项**；对照 009 + 012～017 交付与 R-009-X；**明确不关 Root**。  
+- **verdict**：**pass**（有界结项）  
+- **裁决**：[D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22)
+
+### 范围与区间
+
+| 纳入 | 排除 |
+|------|------|
+| 阶段 6 有界交付是否可书面结项 | Root `done` / 阶段 6 产品终态宣称 |
+| GOAL-009 有界关门 + 012～017 有界切片 | I-00N 全文 verified |
+| R-009-X 是否仍应约束终态 | 自动关闭 R-009-X 或 residual 产品项 |
+
+### 成果（有证据）
+
+| 切片 | 状态 | 说明 |
+|------|------|------|
+| GOAL-009 | done 有界 | 规划台账 + α 门禁；**R-009-X accepted** |
+| GOAL-012 / 013 | done 有界 | 详情 + 受控写 CT |
+| GOAL-014 | done 有界 | X-AI；R-014-E2E |
+| GOAL-015 | done 有界 | X-NAV；R-015-E2E / CREATE-UI |
+| GOAL-016 | done 有界 | X-SM；R-016-AI-READ / E2E / UX |
+| GOAL-017 | done 有界 | X-PILOT 路径证据；R-017-HUMAN-UX |
+| goal-tree | 002～017 done；001 active | 无 active 实现子目标 |
+
+### 对照阶段 6 意图（D-014）
+
+| 意图 | 有界判断 |
+|------|----------|
+| 人主导、AI 协助、确认后受控写 | **达成（有界）** · 014 确认链 + 012/013 写路径 |
+| 非只读终态 | **达成** · 写/导航/资料已交付有界能力 |
+| 不第二真相源 | **达成** · Markdown canonical + N1/资料索引非权威 |
+| 一期 Web 产品终态 | **未宣称** · R-009-X |
+
+### Residual / 门禁（仍开放于终态）
+
+| 项 | 状态 |
+|----|------|
+| **R-009-X** | **仍 accepted**（终态/I 全文/体验全文） |
+| R-017-HUMAN-UX 等 | 各目标 residual 台账 |
+| 阶段 7 发布验收 | 未开 |
+
+### 开放 required finding（本 scope）
+
+**无**（不要求本条关闭 R-009-X）。
+
+### 结论
+
+阶段 6 **有界结项 pass**：成果可固定为「有界 Web 工作台已交付」；Root **继续 active**；下一里程碑为 residual 择一推进、或阶段 7、或**经用户书面 residual 清单后**再议阶段 6 终态 / Root 关门。
+
+### 声明
+
+本条 **不**修改 GOAL-001 `status`；**不**关闭 R-009-X；**不**批量立项 GOAL-018+。

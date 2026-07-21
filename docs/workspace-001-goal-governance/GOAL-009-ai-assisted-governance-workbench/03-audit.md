@@ -15,7 +15,7 @@ version: 1.0.1
 - **有界关门**：`done / 100%`（D-031-A / **A-056** self）。
 - **独立关门复审**：**A-057** · `source: independent` · **verdict: pass**（有界）。
 - **A-057 响应**：**A-058** / D-032 · **F-029 closed** · **F-030 closed**（文档现时叙述 + I 责任方 → R-009-X）。
-- **R-009-X 扩展立项**：A-059→E1→GOAL-015（X-NAV **done**）；A-061→**S1**→**A-062** / D-036 创建 [GOAL-016](../GOAL-016-shared-materials-product/00-meta.md)（X-SM · `active / 0%`）。
+- **R-009-X 扩展立项**：015/016 已有界 done；A-063→**P1**→**A-064** / D-038 创建 [GOAL-017](../GOAL-017-human-pilot-feedback/00-meta.md)（X-PILOT · `active / 0%`）。
 - 关闭范围：规划台账 + α 实现闭环 + X-AI 有界定义/交付。
 - **R-E-3-X closed**；**R-009-X accepted**（扩展/终态）；R-E-2-H 并入 R-009-X。
 - **不**等于阶段 6 Web 产品终态或 Root 关门。
@@ -3901,3 +3901,75 @@ OK S1：创建 X-SM（GOAL-016 共享资料 CRUD 产品）
 ### 声明
 
 已立项 X-SM；**未**实现资料存储/CRUD 代码；**未** verified I-010；**未**关 residual 全文。
+## A-063 · 审视 R-009-X 下一扩展（X-PILOT 试点）（2026-07-22）
+
+- **source**：self
+- **auditor**：`/govern`（Grok）
+- **类型**：design-plan / residual-review
+- **scope**：R-009-X 下审视 **X-PILOT**（人类多会话试点）；**不**创建目标；**不**关 Root；**不**宣称终态。
+- **verdict**：conditional（选项可核对；立项待用户裁决）
+- **裁决包**：[D-037](01-decision.md#d-037--r-009-x-下一扩展选项包x-pilot-试点proposed--待用户选定2026-07-22)
+
+### 基线
+
+| 项 | 状态 |
+|----|------|
+| X-AI / X-NAV / X-SM | GOAL-014 / 015 / 016 **done**（各有界 + residual） |
+| R-009-X | **accepted**；含「人类多会话试点」未交付槽 |
+| 下一编号 | **GOAL-017** |
+| 开放 required finding（009） | **无** |
+
+### 映射
+
+| residual / I | 候选 |
+|--------------|------|
+| 人类多会话试点 · 原 R-E-2-H | **X-PILOT** |
+| I-007 / I-012 | 试点可收集有界证据；非整项 verified |
+| R-014/015/016-E2E 人类面 | 试点可输入，不自动关 residual |
+
+### 可执行性（P-001）
+
+| 代号 | 判断 |
+|------|------|
+| **X-PILOT** | 可立小目标：短路线图（准备→多会话执行→证据落盘→有界关门）；成功标准=可核对反馈/故障/路径清单 |
+
+### 推荐
+
+| 组合 | 含义 |
+|------|------|
+| **P1（推荐）** | 仅立 **X-PILOT** = GOAL-017 |
+| **P2** | 同目标含更详试点脚本附件 |
+| **P0** | 本拍不立项 |
+
+### 请用户确认
+
+```text
+OK P1：创建 X-PILOT（GOAL-017 人类多会话试点反馈）
+```
+
+或 `OK P0` / `OK P2`。
+
+### 声明
+
+**未**创建 GOAL-017；**未**宣称阶段 6 终态；**未**关 R-009-X。
+## A-064 · 响应 P1：创建 GOAL-017（X-PILOT）（2026-07-22）
+
+- **source**：self（response）
+- **auditor**：`/govern`（Grok）
+- **类型**：response / create
+- **scope**：按用户 P1 创建 X-PILOT 试点目标；GOAL-009 状态不变。
+- **verdict**：pass
+- **裁决**：[D-038](01-decision.md#d-038--接受-p1创建-goal-017x-pilot2026-07-22)
+
+### 成果
+
+| 项 | 结果 |
+|----|------|
+| 新目标 | [GOAL-017-human-pilot-feedback](../GOAL-017-human-pilot-feedback/00-meta.md) · `active / 0%` |
+| 五件套 | 齐全；路线图 A–C |
+| GOAL-009 | **仍 done** 有界 |
+| R-009-X | **仍 accepted**（试点槽移交 GOAL-017） |
+
+### 声明
+
+已立项 X-PILOT；**未**执行试点会话；**未** verified I-007/I-012 全文。
