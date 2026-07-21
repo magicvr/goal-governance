@@ -4,9 +4,10 @@ status: active
 created: 2026-07-22
 updated: 2026-07-22
 parent: GOAL-016-shared-materials-product
-version: 1.0.0
+version: 1.0.1
 type: design-freeze
 accepted_by: D-002
+errata: D-007 / A-009 (F-001)
 sources:
   - docs/architecture/workspace-protocol.md
   - GOAL-009 D-004 / D-011 / I-010
@@ -60,7 +61,15 @@ sources:
 | **禁止默认** | 静默使用仓库 `docs/shared-materials/` 作为可写生产库（该路径可为 dogfood/候选库存只读输入，**非**本产品写目标） |
 | **字节布局（最小）** | `{materials_root}/objects/{material_id}/{version}/{sha256_prefix}/blob` 或等价不可变路径；实现 B 可微调路径，但须 **version+sha256 定位且不可原地改 blob** |
 | **元数据索引** | `{materials_root}/index/` 下可重建 JSON/目录索引；**非**目标状态权威；与 blob 冲突以 blob+重算 sha256 为准 |
-| **工作区引用存放** | 优先：`workspace.md` 固定引用表 **或** 工作区根下 `materials-refs.json`（非五件套）；阶段 B 选定一种并测；**禁止**用 DB 权威存引用而丢失可审计文件副本（SQLite 仅可作可重建缓存，D-011） |
+| **工作区引用存放（产品实现 · B 选定）** | **权威索引**：`{materials_root}/refs/{workspace_id}.json`（可审计文件；**非**目标五件套、**非** goal-tree 状态）。**不是**默认写入各区 monorepo/焦点 `workspace.md` 引用表。protocol 表升格 / 同步写入 `workspace.md` = 后续扩展（非本有界关门必交）。**禁止**仅用 DB 权威存引用而无可审计文件副本。 |
+
+### 3.1 勘误（A-008 F-001 / D-007 · 2026-07-22）
+
+| 读者易混点 | 现时真相 |
+|------------|----------|
+| 「固定引用」= 已写入 `workspace.md` 协议表 | **否** · 产品 ref = `shared-materials/refs/*.json` |
+| protocol `source` 字段 | 产品有界路径 **省略**（SM-001 最小：material_id/version/sha256）；`source` 升格 = residual / 后续 |
+| Web「改版本」/ 对已有 material 上传新版 | **service** `put_bytes(material_id=)` 支持；**Web** 上传表单不传 material_id → 仅新建；Web 追加版本 = **R-016-UX** |
 
 ## 4. 数据模型（规范最小 · 实现须覆盖）
 
@@ -68,7 +77,7 @@ sources:
 |------|----------|------|
 | **Material** | `material_id`、显示名、`created_at`、当前版本指针 | 逻辑资料；id 稳定 |
 | **MaterialVersion** | `material_id`、`version`、`sha256`（64 hex）、`byte_size`、`storage_path`、`created_at` | **不可变**；新内容 → 新 version |
-| **MaterialRef** | `reference_id`、`workspace_id`、`material_id`、`version`、`sha256`、`purpose`、`local_record`、`status` | 对齐 workspace-protocol；`status`: active \| withdrawn \| invalid |
+| **MaterialRef（产品有界）** | `reference_id`、`workspace_id`、`material_id`、`version`、`sha256`、`purpose`、`local_record`、`status` | SM-001 最小三字段强制；**不**强制 protocol `source`（见 §3.1） |
 | **LocalAnnotation**（可选本目标） | 指向固定 `reference_id`（版本固定） | 不得改资料字节；可 residual 后置 |
 
 ### 4.1 版本与哈希（I-002 原则冻结；细节 B 可细化）
@@ -120,3 +129,4 @@ sources:
 | 版本 | 日期 | 说明 |
 |------|------|------|
 | 1.0.0 | 2026-07-22 | 阶段 A 初冻；D-002 接受 |
+| 1.0.1 | 2026-07-22 | §3 引用落点 / `source` / Web 版本勘误（A-008 F-001 / D-007） |

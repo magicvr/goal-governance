@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.81.0
+version: 0.82.0
 ---
 
 # Goal Tree
+
+## 2026-07-22 · 响应 GOAL-016 A-008（F-001～F-003）
+
+D-007 / A-009：关闭推荐项（R-016-A 引用落点勘误、I 证据指针、阶段条回填）。GOAL-016 仍 `done / 100%`（不重开）。
 
 ## 2026-07-22 · GOAL-016 有界关门（X-SM）
 

@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-22
 updated: 2026-07-22
-version: 1.0.0
+version: 1.0.1
 ---
 
 # 执行记录 · GOAL-016
@@ -27,6 +27,13 @@ version: 1.0.0
 - [D-006](01-decision.md#d-006--有界关门-goal-016x-sm2026-07-22) / [A-007](03-audit.md#a-007--有界关门审计-close-out2026-07-22)。  
 - `done / 100%`；R-016-AI-READ / E2E / UX residual。  
 - **未** verified I-010 全文；**未**关 R-009-X / Root。
+
+### 2026-07-22 · 响应 A-008（F-001～F-003）
+
+- 用户：关闭推荐项、文档对齐、不重开。  
+- [D-007](01-decision.md#d-007--响应-a-008关闭-f-001f-003文档对齐不重开2026-07-22) / [A-009](03-audit.md#a-009--响应-a-008关闭-f-001f-0032026-07-22)。  
+- R-016-A §3.1 勘误；meta I 表完整字段；A-001～A-005 一行索引。  
+- status 仍 **done / 100%**。
 
 ## 进度评估
 
