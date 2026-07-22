@@ -57,6 +57,12 @@ version: 1.1.0
 - 单测增补 workflow 结构契约：`test_publish_job_is_environment_gated_and_fail_closed`。
 - **未**推 tag / **未**创建真实 GitHub Release；R-018-FIRST-RELEASE 仍 accepted open。
 
+### 2026-07-22 · v0.8.0 skills consumer 发布准备
+
+- 矩阵 `candidateRevision: v0.8.0`；六宿主 CLI 入口 2026-07-22 runtime evidence 全 pass；web parser 保持 automated-verified。
+- CHANGELOG `0.8.0` 节；docs README 台账同步 matrix digest。
+- 计划：PR → main CI → 合并 → annotated `v0.8.0` → Environment `release` 审批 → 自动 Release 资产。
+
 ## 进度评估
 
-**100%**（有界 GOAL-018）：自动发版**实现与文档**已落地；首次成功实战仍属 R-018。
+**100%**（有界 GOAL-018 交付）+ v0.8.0 发布实战进行中（R-018）。

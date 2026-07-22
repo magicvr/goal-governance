@@ -4,14 +4,18 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.92.0
+version: 0.93.0
 ---
 
 # Goal Tree
 
+## 2026-07-22 · Skills v0.8.0 发布准备
+
+矩阵 `candidateRevision: v0.8.0`；六 CLI runtime 证据刷新；CHANGELOG 0.8.0。Skills 相关目标（003/005/006/007/008/010/018）均为 `done`。下一步：PR→main→tag `v0.8.0`→Environment 审批。下一编号 **GOAL-019**。
+
 ## 2026-07-22 · GOAL-018 D-005 自动发版路径
 
-用户方案 1：tag → pack → Environment `release` → 硬 release-evidence → 自动 create/挂资产。实现于 `skills-pack-release.yml` + `docs/releases`。GOAL-018 **仍 done**；R-018-FIRST-RELEASE 待首次实战。下一编号 **GOAL-019**。
+用户方案 1：tag → pack → Environment `release` → 硬 release-evidence → 自动 create/挂资产。实现于 `skills-pack-release.yml` + `docs/releases`。GOAL-018 **仍 done**；R-018-FIRST-RELEASE 待首次实战。
 
 ## 2026-07-22 · 响应 GOAL-018 A-002（F-001～F-003）
 

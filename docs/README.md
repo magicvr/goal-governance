@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.9.0
+version: 0.9.1
 ---
 
 # docs/ · 文档体系
@@ -96,12 +96,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **当前核心文档版本**：`0.9.0`。本工作树将运行中目标实例迁入显式 `workspace-<NNN>-<slug>/` 根，并新增共享资料候选库存与重建索引脚本；受影响的宿主 runtime 矩阵仍明确为未发布候选，尚未宣称已形成新的 release。
-- **最近发布基线**：`0.7.0`，对应 annotated `v0.7.0` release-candidate tag。
-- **快照日期**：2026-07-19。
-- **快照身份**：`0.4.0` 的已提交基线为 `2f54048db32b0e02194b0c0092e3e801b9532bc3`；`0.7.0` 候选 commit 为 `8a33ecd21d9183a680c9c0d63e471469f5e515a8`，由 `v0.7.0` annotated tag 绑定。
-- **当前工作树边界**：`v0.7.0` 的发布证据继续绑定其历史 `candidateRevision`、候选 commit、CI 报告、变更日志和 annotated tag；GOAL-010 改变行为源后，当前矩阵为 `candidateRevision: unreleased`，受影响宿主入口须重新取得 runtime evidence，且不改写历史候选身份。
-- **本轮变更范围**：新增信息需求、阶段门禁、残余风险接受和按规模拆分信息工作的核心规则；更新 canonical 五件套、消费适配器契约与矩阵、Skills 镜像、编排/审计提示词、宿主规则源、独立启用说明、CI/发行证据工具和契约测试。
+- **当前核心文档版本**：`0.9.1`。工作区根与共享资料协议已就位；Skills 发布面进入 `v0.8.0` 候选（矩阵 `candidateRevision: v0.8.0`）。
+- **最近发布基线**：`0.7.0` 为历史 annotated tag；**本候选**为 `0.8.0` / `v0.8.0`（skills consumer release）。
+- **快照日期**：2026-07-22。
+- **快照身份**：`0.7.0` 历史 commit `8a33ecd21d9183a680c9c0d63e471469f5e515a8`；`v0.8.0` 身份以合并到 `main` 后的 annotated tag 为准。
+- **当前工作树边界**：矩阵 `candidateRevision: v0.8.0`；三宿主 `/govern`+`/audit` 六单元已用 2026-07-22 机读 runtime evidence 刷新。Web parser 仍为 automated-verified（parser/CI，非 Web 产品终态）。
+- **本轮变更范围**：Skills pack/auto-release 工作流、runtime 证据刷新、兼容矩阵与 CHANGELOG 绑定 `v0.8.0`。
 
 ### canonical → Skills 同步台账
 
@@ -117,7 +117,7 @@ version: 0.1.0
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
 | 契约 | `skills-consumer-contract.json` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |
-| 契约 | `skills-consumer-compatibility-matrix.json` | `9768C7040969D8C28D0345D568A3323220FCA5AF6612C24F315FD972D2F918A5` | `9768C7040969D8C28D0345D568A3323220FCA5AF6612C24F315FD972D2F918A5` |
+| 契约 | `skills-consumer-compatibility-matrix.json` | `58BC2FE9DE78BF17D7B56A0E82AA339387E9ECBACF48B5B539A793259899E54C` | `58BC2FE9DE78BF17D7B56A0E82AA339387E9ECBACF48B5B539A793259899E54C` |
 | 契约 | `runtime-evidence.schema.json` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。

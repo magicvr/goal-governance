@@ -1,0 +1,360 @@
+I'll perform a read-only governance replay for GOAL-008. Let me start by reading the governance
+documents and GOAL-008 records.
+
+✗ Read GOAL-008-audit-framework
+  └ Path does not exist
+
+✗ Read goal-tree.md
+  └ Path does not exist
+
+● Read AGENTS.md
+  └ L1:100 (100 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:100 (100 lines read)
+
+● List directory .
+  └ 18 files found
+
+Let me locate the correct paths for goal-tree.md and GOAL-008:
+
+/ Search (glob)
+  │ "**/goal-tree.md"
+  └ 3 files found
+
+/ Search (glob)
+  │ "**/00-govern-orchestrator.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "**/GOAL-008*"
+  └ No matches found
+
+Now let me check the actual workspace structure and find GOAL-008:
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:150 (149 lines read)
+
+/ Search (glob)
+  │ "GOAL-*"
+  └ No matches found
+
+Let me check the docs/workspace structure and find GOAL-008:
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:100 (100 lines read)
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-*"
+  └ No matches found
+
+/ Search (glob)
+  │ "**/GOAL-008*/**"
+  └ 49 files found
+
+/ Search (grep)
+  │ "GOAL-008" (docs\workspace-001-goal-governance)
+  └ 40 files found
+
+Perfect! Found GOAL-008. Now let me read its five-piece suite and the orchestrator flow:
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ 1 line read
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ 1 line read
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ 103 lines read
+
+Let me read the decision, execution, and audit files in sections to understand GOAL-008:
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:100 (100 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:150 (150 lines read)
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:100 (99 lines read)
+
+Let me continue reading the orchestrator and check the root decision:
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-001-main-vision\03-audit.md
+  └ L1:50 (50 lines read)
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L150:350 (147 lines read)
+
+Now let me review the complete picture and apply /govern scan semantics. Let me check the latest
+goal-tree entry for GOAL-008:
+
+/ Search (grep)
+  │ "GOAL-008" (docs\workspace-001-goal-governance\goal-tree.md)
+  └ 2 lines found
+
+Perfect. Now I have all the information needed for the read-only governance replay. Let me provide
+the complete analysis:
+
+-----------------------------------------------------------------------------------------------
+
+GitHub Copilot CLI · 只读治理回放 | GOAL-008
+
+治理扫描
+
+扫描源：AGENTS.md、.github/copilot-instructions.md、skills/prompts/00-govern-orchestrator.md、docs/w
+orkspace-001-goal-governance/goal-tree.md、GOAL-008 五件套
+
+扫描时间：2026-07-22 08:25:29 UTC+08
+
+工作区上下文
+
+ - 显式工作区根：docs/workspace-001-goal-governance/
+ - Root Goal：GOAL-001-main-vision (parent: null)
+ - Canonical 范围：GOAL-001 及其直接/间接子目标（包括 GOAL-008）
+ - 焦点目标：GOAL-008-skills-consumer-adapter-release-consistency
+
+仓库观察
+
+ - SKILLS_PKG：skills/ ✓
+ - goal-tree.md：docs/workspace-001-goal-governance/goal-tree.md ✓
+ - 工作区绑定：Root Goal、canonical scope 与资料引用均可核对 ✓
+ - 跨工作区：无跨工作区请求，单一隐式工作区 ✓
+
+情境分类
+
+S2 已关门目标的状态核对 → 验证closure eligibility
+
+GOAL-008 当前 status: done / 100%，已完成；本次回放验证其关门条件是否真实满足。
+
+树摘要
+
+┌────────────────────────────────────────────┬────────────────┬───────┬───────┬────────────────┐
+│ 目标                                       │ 父目标         │ 状态  │ 进度  │ 关键路径       │
+├────────────────────────────────────────────┼────────────────┼───────┼───────┼────────────────┤
+│ GOAL-001-main-vision                       │ null (Root)    │ activ │ -     │ 总目标（未关门 │
+│                                            │                │ e     │       │ ）             │
+├────────────────────────────────────────────┼────────────────┼───────┼───────┼────────────────┤
+│ GOAL-008-skills-consumer-adapter-release-c │ GOAL-001-main- │ done  │ 100%  │ 发布一致性（已 │
+│ onsistency                                 │ vision         │       │       │ 关门）         │
+└────────────────────────────────────────────┴────────────────┴───────┴───────┴────────────────┘
+
+意见台账（焦点 GOAL-008）
+
+历史审计意见汇总
+
+┌───┬─────────┬─────────┬─────────────────────────┬────────────┬───────────────────────────────┐
+│ 编 │ 来源    │ 类型    │ 审视范围                │ 判决       │ 关键结论                      │
+│ 号 │         │         │                         │            │                               │
+├───┼─────────┼─────────┼─────────────────────────┼────────────┼───────────────────────────────┤
+│ A │ self    │ 阶段性  │ I-001～I-003、D-001～D- │ conditiona │ 路线图四阶段推进；I-001 已    │
+│ - │         │         │ 008、实施过程           │ l（进行中  │ verified；I-002/I-003 与      │
+│ 0 │         │         │                         │ ）         │ F-005 初期 deferred           │
+│ 0 │         │         │                         │            │                               │
+│ 1 │         │         │                         │            │                               │
+│ 至 │         │         │                         │            │                               │
+│ A │         │         │                         │            │                               │
+│ - │         │         │                         │            │                               │
+│ 0 │         │         │                         │            │                               │
+│ 1 │         │         │                         │            │                               │
+│ 3 │         │         │                         │            │                               │
+├───┼─────────┼─────────┼─────────────────────────┼────────────┼───────────────────────────────┤
+│ A │ indepen │ 宿主运  │ GitHub Copilot CLI      │ conditiona │ CLI /govern 与 /audit         │
+│ - │ dent    │ 行时证  │ 1.0.71 重放             │ l          │ 验证通过；Web CI              │
+│ 0 │         │ 据      │                         │            │ 与发行身份仍开放              │
+│ 1 │         │         │                         │            │                               │
+│ 4 │         │         │                         │            │                               │
+├───┼─────────┼─────────┼─────────────────────────┼────────────┼───────────────────────────────┤
+│ A │ self    │ 响应    │ A-014 + 候选版本号更新  │ conditiona │ CLI 证据入账；Copilot VS Code │
+│ - │         │         │                         │ l          │ 历史化；Web 与 tag/release    │
+│ 0 │         │         │                         │            │ 仍开放                        │
+│ 1 │         │         │                         │            │                               │
+│ 5 │         │         │                         │            │                               │
+├───┼─────────┼─────────┼─────────────────────────┼────────────┼───────────────────────────────┤
+│ A │ self    │ 关门审  │ I-001/I-002/I-003、F-00 │ pass       │ 所有必改项已关闭；无 residual │
+│ - │         │ 计      │ 5、release-candidate    │            │ 接受；GOAL-008 → done / 100%  │
+│ 0 │         │         │ 与阶段 5 验收           │            │                               │
+│ 1 │         │         │                         │            │                               │
+│ 6 │         │         │                         │            │                               │
+├───┼─────────┼─────────┼─────────────────────────┼────────────┼───────────────────────────────┤
+│ A │ self    │ 历史证  │ v0.7.0 归档、GOAL-010   │ pass       │ 历史结论不改写；当前候选绑定  │
+│ - │         │ 据新鲜  │ 行为源变更、当前        │            │ pending-runtime-validation；  │
+│ 0 │         │ 度      │ unreleased 候选         │            │ 下一发布触发条件已记          │
+│ 1 │         │         │                         │            │                               │
+│ 7 │         │         │                         │            │                               │
+└───┴─────────┴─────────┴─────────────────────────┴────────────┴───────────────────────────────┘
+
+开放必改 findings
+
+现状：0 个
+
+ - A-016 close-out 已覆盖所有 required findings
+ - 无未关闭的必改项、无冲突
+
+冲突
+
+现状：无
+
+ - A-014 → A-015 → A-016 为连续响应链，无逻辑冲突
+ - A-017 证实 freshness 是预期行为，非破坏性冲突
+
+信息就绪台账（焦点 GOAL-008）
+
+信息项最终状态
+
+┌───────┬──────────┬──────────────────────┬──────────────┬─────────────────────────────────────┐
+│ ID    │ 级别     │ 影响门禁             │ 当前状态     │ 关闭证据                            │
+├───────┼──────────┼──────────────────────┼──────────────┼─────────────────────────────────────┤
+│ I-001 │ required │ 方案与发布范围冻结   │ verified     │
+]8;id=md-83kkfz;docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consist
+decision.md#d-002--i-001-单一机读版本声明契约2026-07-19D-002]8;;；canonical schema/manifest +  │]8;;
+│       │          │                      │              │ fixtures + 契约测试（29 + 3         │
+│       │          │                      │              │
+passed）；]8;id=md-8dcux8;docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-relea
+stency/03-audit.md#a-002--i-001-契约实现与验证复审2026-07-19A-002]8;; 复审确认 │]8;;
+├───────┼──────────┼──────────────────────┼──────────────┼─────────────────────────────────────┤
+│ I-002 │ required │ 受影响实施与兼容验收 │ verified /   │ ]8;id=md-1h1xh9b;docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/01-decision.mdD-003/D-005/D-008]8;;]8;;                   │]8;;
+│       │          │                      │ closed       │ ；github-copilot-cli 1.0.71         │
+│       │          │                      │              │ 运行时证据（A-014）；GitHub Actions │
+│       │          │                      │              │ run 29700051047 Web CI replay；]8;;     │]8;;
+│       │          │                      │              │ ]8;id=md-122gy0z;docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/03-audit.md#a-016--self-close-out-audit2026-07-20A-016]8;;]8;; 确认六个宿主入口 + Web        │]8;;
+│       │          │                      │              │ 单元覆盖完整                        │
+├───────┼──────────┼──────────────────────┼──────────────┼─────────────────────────────────────┤
+│ I-003 │ required │ 阶段 5               │ verified /   │
+]8;id=md-fgrwoo;docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consist
+decision.md#d-005--重启完整发布一致性关门路径2026-07-19D-005]8;;；annotated tag  │]8;;
+│       │          │ 发布验收、F-005      │ closed       │ v0.7.0；release-candidate 身份与 CI │
+│       │          │ 关闭、阶段 7 输入    │              │ 流水线证据；]8;id=md-122gy0z;docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/03-audit.md#a-016--self-close-out-audit2026-07-20A-016]8;;]8;;                   │]8;;
+│       │          │                      │              │ 确认流水线、报告、变更日志完整且可  │
+│       │          │                      │              │ 追溯                                │
+└───────┴──────────┴──────────────────────┴──────────────┴─────────────────────────────────────┘
+
+关门前信息门禁检查 ✓
+
+ - I-001：required ✓ 已 verified；无延期，无 residual
+ - I-002：required ✓ 已 verified；无延期，无 residual
+ - I-003：required ✓ 已 verified；无延期，无 residual
+ - 到期 required 信息项：0 个 ✓
+
+上游必改 findings（GOAL-001 F-005）
+
+现状：已响应
+
+ - GOAL-001 ]8;id=md-bieugj;docs/workspace-001-goal-governance/GOAL-001-main-vision/03-audit.mdF-005]8;;]8;;（open / required）已由 GOAL-008 A-016 响应并关闭]8;;
+ - GOAL-001 A-013 记录该响应；Root 仍 active
+
+成功标准对照（GOAL-008）
+
+┌──────────────────────────────┬─────┬─────────┬───────────────────────────────────────────────┐
+│ 标准                         │ 期  │ 当前状  │ 证据                                          │
+│                              │ 望  │ 态      │                                               │
+├──────────────────────────────┼─────┼─────────┼───────────────────────────────────────────────┤
+│ 唯一机读协议/模板版本与兼容  │ ✓   │ ✓       │ docs/contracts/、schema、manifest、fixtures   │
+│ 声明                         │     │ 已形成  │                                               │
+├──────────────────────────────┼─────┼─────────┼───────────────────────────────────────────────┤
+│ 兼容矩阵与上一版本支持范围   │ ✓   │ ✓       │ canonical matrix、器配基线、当前及负例        │
+│                              │     │ 已形成  │ fixtures                                      │
+├──────────────────────────────┼─────┼─────────┼───────────────────────────────────────────────┤
+│ 跨宿主/跨版本验证与 fixtures │ ✓   │ ✓       │ CLI 运行时证据、GitHub Actions CI 通过        │
+│                              │     │ 已完成  │                                               │
+├──────────────────────────────┼─────┼─────────┼───────────────────────────────────────────────┤
+│ CI                           │ ✓   │ ✓       │ compatibility_report.py、release_evidence.py  │
+│ 漂移校验、报告与发行物身份   │     │ 已完成  │ 、CI artifacts                                │
+├──────────────────────────────┼─────┼─────────┼───────────────────────────────────────────────┤
+│ tag/release 或等价演练       │ ✓   │ ✓       │ annotated v0.7.0、release-candidate           │
+│                              │     │ 已完成  │ 证据、commit 8a33ecd...                       │
+└──────────────────────────────┴─────┴─────────┴───────────────────────────────────────────────┘
+
+关门可行性评估
+
+必要条件检查清单
+
+ - [X]  无未关闭 required findings ✓ (A-016 pass)
+ - [X]  无未处理 required 信息项 ✓ (I-001/I-002/I-003 均 verified)
+ - [X]  无用户书面接受的未留痕 residual ✓ (无 residual)
+ - [X]  无 P-004 冲突待裁决 ✓ (无冲突)
+ - [X]  有阶段/关门向审计 ✓ (A-016 self close-out; A-017 freshness review)
+ - [X]  成功标准对照可核对 ✓ (全部 5 项满足)
+ - [X]  goal-tree + frontmatter 与事实一致 ✓ (status=done, progress=100%)
+
+P-003 · 交叉审计意见状态
+
+┌─────────────┬─────────────┬───────────────────┬────────┬──────────────┐
+│ 审计        │ source      │ verdict           │ 必改项 │ 响应         │
+├─────────────┼─────────────┼───────────────────┼────────┼──────────────┤
+│ A-014       │ independent │ conditional→pass* │ 0 个   │ A-015 已接纳 │
+├─────────────┼─────────────┼───────────────────┼────────┼──────────────┤
+│ A-016/A-017 │ self        │ pass              │ 0 个   │ 关门确认     │
+└─────────────┴─────────────┴───────────────────┴────────┴──────────────┘
+
+*A-014 当时 verdict=conditional（基于 Copilot CLI 进入后仍需 Web CI 与 release tag），后续 A-016 中
+Web CI 与 release tag 已补齐，整体转为 pass。
+
+P-001 · 可执行性与路线图
+
+GOAL-008 已按路线图四阶段（A 信息发现/方案冻结、B 支持范围/矩阵、C 跨宿主验证、D
+发行证据与关门）完成；无阻塞。
+
+P-005 · 信息就绪最后确认
+
+ - 已识别未知项：I-001/I-002/I-003 + 影响门禁均已登记 ✓
+ - 最晚需要阶段已到：均已 verified ✓
+ - 无 deferred required 待触发 ✓
+ - 无信息冲突 ✓
+
+推进建议（只读回放）
+
+本次为只读回放，不建议写入任何修改。
+
+现状总结
+
+GOAL-008 已满足关门条件：
+
+ - ✓ 所有 required findings 已关闭
+ - ✓ 所有 required 信息项已 verified
+ - ✓ 成功标准全部达成
+ - ✓ 关门审计已完成（A-016 pass）
+ - ✓ 历史证据新鲜度已复核（A-017 pass）
+ - ✓ 上游 F-005 已响应
+ - ✓ 无 P-004 冲突
+
+权威状态
+
+GOAL-008 关门真实且可审计：status: done / 100%，候选身份 v0.7.0（annotated tag）。
+
+下一推进（离本目标作用域）
+
+ - GOAL-001 继续 active；阶段 6（Web 深化）与阶段 7（最终验收）由后续目标承接
+ - 当前 unreleased 候选（行为源已由 GOAL-010 变更）需新的宿主运行时证据后才可进入下一发布周期
+ - 本回放不改变任何文档、不创建目标、不修改状态
+
+-----------------------------------------------------------------------------------------------
+
+COPILOT_CLI_GOVERN_DISPATCH_OK
+
