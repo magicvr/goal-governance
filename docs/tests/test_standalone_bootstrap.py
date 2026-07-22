@@ -43,8 +43,10 @@ class StandaloneBootstrapTests(unittest.TestCase):
         for phrase in (
             "当前核心文档版本",
             "最近发布基线",
-            "0.9.0",
+            "0.9.1",
+            "0.8.0",
             "0.7.0",
+
             "canonical → Skills",
             "SHA-256",
             "docs/templates/goal-folder/",
