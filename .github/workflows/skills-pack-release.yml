@@ -139,28 +139,36 @@ jobs:
       - name: Install check dependencies
         run: python -m pip install -r scripts/requirements.txt -r web/requirements.txt
 
-      - name: Download pack artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.pack.outputs.artifact_name }}
-          path: pack-out
-
+      # Evidence gate must run on a clean tree. Download pack artifacts only after it passes
+      # (untracked pack-out/ would fail `git status --short` clean-tree checks).
       - name: Hard release-evidence gate (fail closed)
         id: evidence
         shell: bash
         run: |
           set -euo pipefail
           TAG="${GITHUB_REF_NAME}"
-          mkdir -p artifacts dist
-          python scripts/compatibility_report.py --output artifacts/compatibility-report.json
+          mkdir -p artifacts
+          # Keep generated reports outside the repo so the tree stays clean for release mode.
+          REPORT_DIR="$(mktemp -d)"
+          python scripts/compatibility_report.py --output "${REPORT_DIR}/compatibility-report.json"
           python scripts/release_evidence.py \
             --mode release \
             --tag "${TAG}" \
             --run-checks \
             --include-web \
-            --compatibility-report artifacts/compatibility-report.json \
-            --output artifacts/release-evidence.json
+            --compatibility-report "${REPORT_DIR}/compatibility-report.json" \
+            --output "${REPORT_DIR}/release-evidence.json"
+          mkdir -p "${GITHUB_WORKSPACE}/../release-assets"
+          cp "${REPORT_DIR}/compatibility-report.json" "${GITHUB_WORKSPACE}/../release-assets/"
+          cp "${REPORT_DIR}/release-evidence.json" "${GITHUB_WORKSPACE}/../release-assets/"
+          echo "ASSET_DIR=${GITHUB_WORKSPACE}/../release-assets" >> "$GITHUB_ENV"
           echo "Release evidence passed for ${TAG}"
+
+      - name: Download pack artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.pack.outputs.artifact_name }}
+          path: ${{ env.ASSET_DIR }}/pack-out
 
       - name: Create GitHub Release if missing
         env:
@@ -193,8 +201,9 @@ jobs:
         run: |
           set -euo pipefail
           TAG="${GITHUB_REF_NAME}"
+          ROOT="${ASSET_DIR:-${GITHUB_WORKSPACE}/../release-assets}"
           mapfile -t found < <(
-            find pack-out artifacts -type f \( \
+            find "${ROOT}" -type f \( \
               -name 'goal-governance-skills-v*.zip' -o \
               -name 'goal-governance-skills-v*.zip.sha256' -o \
               -name 'release-evidence.json' -o \
@@ -202,8 +211,8 @@ jobs:
             \) 2>/dev/null | sort -u
           )
           if [[ ${#found[@]} -eq 0 ]]; then
-            echo "No assets to upload"
-            ls -laR pack-out artifacts || true
+            echo "No assets to upload under ${ROOT}"
+            ls -laR "${ROOT}" || true
             exit 1
           fi
           # Require the consumer zip + digest among assets
