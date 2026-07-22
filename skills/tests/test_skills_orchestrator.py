@@ -35,6 +35,8 @@ INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
 CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
 SKILLS_TEMPLATES = SKILLS_ROOT / "templates" / "goal-folder"
+CORE_WORKSPACE_TEMPLATE = SKILLS_ROOT.parent / "docs" / "templates" / "workspace-context.md"
+SKILLS_WORKSPACE_TEMPLATE = SKILLS_ROOT / "templates" / "workspace-context.md"
 CORE_CONTRACTS = SKILLS_ROOT.parent / "docs" / "contracts"
 SKILLS_CONTRACTS = SKILLS_ROOT / "contracts"
 CORE_PRINCIPLES = SKILLS_ROOT.parent / "docs" / "architecture" / "principles.md"
@@ -201,6 +203,29 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 mirror.read_bytes(),
                 f"template mirror drift: {canonical} != {mirror}",
             )
+        self.assertTrue(
+            CORE_WORKSPACE_TEMPLATE.is_file(),
+            f"missing canonical workspace template: {CORE_WORKSPACE_TEMPLATE}",
+        )
+        self.assertTrue(
+            SKILLS_WORKSPACE_TEMPLATE.is_file(),
+            f"missing Skills workspace template mirror: {SKILLS_WORKSPACE_TEMPLATE}",
+        )
+        self.assertEqual(
+            CORE_WORKSPACE_TEMPLATE.read_bytes(),
+            SKILLS_WORKSPACE_TEMPLATE.read_bytes(),
+            "workspace context template mirror drift",
+        )
+        workspace_template = CORE_WORKSPACE_TEMPLATE.read_text(encoding="utf-8")
+        for marker in (
+            "root_goal",
+            "canonical_scope",
+            "shared_materials_catalog",
+            "reference_id",
+            "workspace_id",
+            "sha256",
+        ):
+            self.assertIn(marker, workspace_template)
         self.assertIn(
             "信息就绪与未知项",
             (CORE_TEMPLATES / "00-meta.md").read_text(encoding="utf-8"),
@@ -524,6 +549,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
+        self.assertEqual(matrix["candidateRevision"], "v0.8.0")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -557,10 +583,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             },
         )
         self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.215")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.103")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.106")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.71")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
-        for consumer_id in ("claude-code-cli", "grok-build-cli"):
+        for consumer_id in ("claude-code-cli", "grok-build-cli", "github-copilot-cli"):
             entrypoints = {entry["name"]: entry for entry in consumers[consumer_id]["entrypoints"]}
             self.assertEqual(
                 consumers[consumer_id]["contractVerificationStatus"],
@@ -570,16 +596,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertEqual(entrypoints["govern"]["status"], "runtime-verified")
             self.assertEqual(entrypoints["audit"]["status"], "runtime-verified")
             for entrypoint in entrypoints.values():
-                self.assertTrue(
-                    any(path.endswith(".json") for path in entrypoint["evidence"])
-                )
+                self.assertTrue(entrypoint["evidence"])
+                for path in entrypoint["evidence"]:
+                    self.assertTrue(
+                        (SKILLS_ROOT.parent / path).is_file(),
+                        msg=path,
+                    )
         copilot = consumers["github-copilot-cli"]
-        copilot_entrypoints = {
-            entry["name"]: entry for entry in copilot["entrypoints"]
-        }
         self.assertEqual(copilot["contractVerificationStatus"], "verified")
-        self.assertEqual(copilot_entrypoints["govern"]["status"], "runtime-verified")
-        self.assertEqual(copilot_entrypoints["audit"]["status"], "runtime-verified")
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")
@@ -766,6 +790,65 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 msg=f"advanced Copilot primitive drifted from P-005: {path}",
             )
 
+    def test_workspace_protocol_is_shipped_to_skills_surfaces(self) -> None:
+        """Workspace isolation and fixed-reference rules must not remain core-doc-only."""
+        protocol = (
+            SKILLS_ROOT.parent / "docs" / "architecture" / "workspace-protocol.md"
+        ).read_text(encoding="utf-8")
+        for marker in (
+            "隐式单工作区",
+            "canonical_scope",
+            "sha256",
+            "fail-closed",
+            "串行子目标",
+        ):
+            self.assertIn(marker, protocol)
+
+        core_prompts = tuple(PROMPTS / name for name in (
+            "00-govern-orchestrator.md",
+            "01-create-new-goal.md",
+            "02-record-decision.md",
+            "03-update-execution.md",
+            "04-write-audit.md",
+            "05-independent-audit.md",
+        ))
+        for path in core_prompts:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(
+                "docs/workspace-<NNN>-<slug>/workspace.md",
+                text,
+                msg=f"missing workspace scan: {path}",
+            )
+            self.assertRegex(
+                text,
+                r"Root Goal|root_goal|canonical 范围|canonical_scope",
+                msg=f"missing workspace binding: {path}",
+            )
+
+        rule_surfaces = (
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+            CLAUDE_GOVERN_SKILL,
+            GROK_GOVERN_SKILL,
+            COPILOT_PROMPTS / "govern.md",
+            CLAUDE_AUDIT_SKILL,
+            GROK_AUDIT_SKILL,
+            COPILOT_PROMPTS / "audit.md",
+        )
+        for path in rule_surfaces:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(
+                "docs/workspace-<NNN>-<slug>/workspace.md",
+                text,
+                msg=f"missing workspace rule: {path}",
+            )
+            self.assertRegex(
+                text,
+                r"隐式单工作区|fail closed|工作区上下文",
+                msg=f"missing fail-closed compatibility behavior: {path}",
+            )
+
     def test_docs_readme_hash_ledger_matches_template_bytes(self) -> None:
         """The published canonical/mirror ledger must describe the shipped bytes."""
         readme = (SKILLS_ROOT.parent / "docs" / "README.md").read_text(encoding="utf-8")
@@ -776,6 +859,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertEqual(digest, normalized_sha256(mirror))
             self.assertIn(name, readme)
             self.assertIn(digest, readme)
+        workspace_digest = normalized_sha256(CORE_WORKSPACE_TEMPLATE)
+        self.assertEqual(workspace_digest, normalized_sha256(SKILLS_WORKSPACE_TEMPLATE))
+        self.assertIn("workspace-context.md", readme)
+        self.assertIn(workspace_digest, readme)
         for name in (
             "skills-consumer-contract.schema.json",
             "skills-consumer-contract.json",

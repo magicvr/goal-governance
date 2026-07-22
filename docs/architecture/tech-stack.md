@@ -2,9 +2,9 @@
 title: 技术栈
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.3.0
+version: 0.5.0
 ---
 
 # 技术栈
@@ -16,9 +16,10 @@ version: 0.3.0
 | 方法论 | `docs/architecture/` | P-001～P-005、架构与长期约定 |
 | 文档规范 | `docs/README.md` | 目标实例、五件套和同步规则 |
 | 模板 | `docs/templates/goal-folder/` | canonical 五件套模板；不保存运行状态 |
-| 实例真相源 | `docs/goals/` | 目标、决策、执行、审计和附件 |
+| 工作区上下文 | `docs/workspace-<NNN>-<slug>/workspace.md` | 绑定 Root Goal、工作区根范围和共享资料固定引用；不保存目标状态 |
+| 实例真相源 | `docs/workspace-<NNN>-<slug>/` | 目标、决策、执行、审计和附件 |
 
-`skills/templates/goal-folder/` 是上述 canonical 模板的分发镜像，用于离线安装和复制到其他仓库；它不构成第二套规范。
+`skills/templates/goal-folder/` 与 `skills/templates/workspace-context.md` 是上述 canonical 模板的分发镜像，用于离线安装和复制到其他仓库；它们不构成第二套规范。工作区和共享资料细节见 [workspace-protocol.md](workspace-protocol.md)。
 
 ## Web 应用（已确定）
 
@@ -57,5 +58,5 @@ version: 0.3.0
 
 - 形态：提示词、Agent 规则、宿主 wrappers、安装脚本和可复制模板镜像
 - 入口规则：根目录 [AGENTS.md](../../AGENTS.md) 与 `skills/prompts/00-govern-orchestrator.md`
-- 消费关系：读取核心方法论与文档协议，驱动 AI 在 `docs/goals/` 中执行闭环
+- 消费关系：读取核心方法论与文档协议，驱动 AI 在已验证的工作区根中执行闭环
 - 实现状态：**当前基线已交付**；核心协议对齐、镜像漂移检查和跨宿主发布验收属于后续阶段

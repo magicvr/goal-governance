@@ -1,0 +1,81 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-07-22T00:22:56.939263Z",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "grok 0.2.106 (bde89716f6)",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": "GROK_MODELS_BASE_URL",
+    "model": "grok-4.5"
+  },
+  "behaviorSources": [
+    {
+      "path": ".grok/skills/govern/SKILL.md",
+      "sha256": "d78ac2adc4815c57d7583df9af96caa0ab4c3a67080fa6c0761998541628952a"
+    },
+    {
+      "path": "skills/install/grok/skills/govern/SKILL.md",
+      "sha256": "d78ac2adc4815c57d7583df9af96caa0ab4c3a67080fa6c0761998541628952a"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "16a47c8dd29cd3dba5262bf737cc21745d851163bd2a2250e9dffacd07c6beea"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "c5115536ae30358146213c2262703fc15e041dbf664212104b3b52f8836a5be0"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-govern.txt",
+      "sha256": "a2764b2f7692a86b6ca7a847753f936c2b0ca4c3d28ea8fef701c3ba55c1f5e4"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "grok",
+      "--prompt-file",
+      "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-govern.txt",
+      "--model",
+      "grok-4.5",
+      "--output-format",
+      "plain",
+      "--permission-mode",
+      "dontAsk",
+      "--disallowed-tools",
+      "Edit,Write,NotebookEdit",
+      "--max-turns",
+      "3",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 180.0,
+    "inputSha256": "a2764b2f7692a86b6ca7a847753f936c2b0ca4c3d28ea8fef701c3ba55c1f5e4",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker GROK_GOVERN_DISPATCH_OK after repository-backed skill execution."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "GROK_GOVERN_DISPATCH_OK",
+    "markerObserved": true,
+    "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-22.d/stdout.txt",
+    "stdoutSha256": "141ed995643c9f6a7d80f6e8e6ffd6cd3e3dd91598a6a16f67f3a4b35f454c3f",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-22.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrMode": "request-url-redacted",
+    "warnings": [],
+    "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

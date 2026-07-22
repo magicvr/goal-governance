@@ -2,9 +2,9 @@
 title: 提示词 · 写审计意见 / 阶段复盘
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.4.0
+version: 0.5.0
 role: primitive
 ---
 
@@ -35,6 +35,7 @@ role: primitive
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：
+- 工作区上下文（若存在）：【当前 `docs/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；只有 legacy `docs/goals/` 时才写“隐式单工作区”】
 - 今日日期：【YYYY-MM-DD】
 - **source**：`self`（默认）| 若用户明确要求记录独立审代贴则为 `independent`（并写 auditor）
 - **模式**：
@@ -45,15 +46,16 @@ role: primitive
 - **scope**：审什么（如「阶段 A」「目标定义」「F-008 关闭证据」）
 - audit_type（可选）：goal-definition | design-plan | execution-facts | close-out | ad-hoc
 - 相关信息项 / 信息门禁（可选）：【I-00N；目标定义 / 方案 / 实施 / 验收 / 关门】
+- 相关共享资料引用（可选）：【`reference_id`、`material_id`、`source`、`version`、`sha256`】
 - 你认为的成果/偏差（可选，可先由文档归纳再确认）：
 - 是否调整 status/progress：【否 / 是，说明】— **response/independent 默认否**
 - auditor（可选）：工具或模型名
 
 # 步骤
 
-1. 通读 `00-meta`、`01-decision`（含信息需求与残余风险）、`02-execution`、现有 `03-audit`。
+1. 通读当前 `docs/workspace-<NNN>-<slug>/workspace.md`、`00-meta`、`01-decision`（含信息需求与残余风险）、`02-execution`、现有 `03-audit`。workspace Root Goal/canonical 范围不匹配时，把它作为 scope 的阻断缺口，不得审计或放行其他工作区的内容；没有显式工作区根时只审 legacy 隐式单工作区。
 2. 新编号 = 文件中已有最大 `A-NNN` + 1（自审与独立审**共用**序列）。
-3. 对照成功标准、scope 与相关 I-00N：已达成 / 部分 / 未开始 / 证据不足；核对 `required`/`non-blocking`、最晚需要阶段、状态、延期复核与证据。
+3. 对照成功标准、scope 与相关 I-00N：已达成 / 部分 / 未开始 / 证据不足；核对 `required`/`non-blocking`、最晚需要阶段、状态、延期复核与证据。若 scope 使用共享资料引用，核对 `workspace_id`、`material_id`、`source`、`version` 和有效 `sha256`；引用不完整/不匹配只能作为缺口，不能被当成事实或关闭证据。
 4. 追加一节，**最小头字段强制**：
 
    ## A-NNN · <标题>（YYYY-MM-DD）
@@ -100,6 +102,7 @@ role: primitive
 - [ ] 有 A-NNN 编号与日期；历史条目仍在  
 - [ ] 头字段含 source、scope、verdict  
 - [ ] 成果/findings 可指回证据  
+- [ ] 工作区范围已核对；资料引用（若有）只补充可核对来源，未替代事实确认或跨工作区验证
 - [ ] required 与 recommended 可区分  
 - [ ] 相关 I-00N、最晚阶段、证据与残余风险接受已核对
 - [ ] 未越权改 status（除非用户确认）  

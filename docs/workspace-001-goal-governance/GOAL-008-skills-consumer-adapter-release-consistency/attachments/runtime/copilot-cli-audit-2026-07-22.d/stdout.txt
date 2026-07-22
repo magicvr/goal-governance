@@ -1,0 +1,200 @@
+I'll perform a read-only independent audit replay for GOAL-008. Let me gather the governance sources
+ and GOAL-008 records.
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● Read AGENTS.md
+  └ 296 lines read
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ 106 lines read
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 292 lines read
+
+Now let me read the goal-tree and GOAL-008 records:
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:100 (100 lines read)
+
+/ Search (glob)
+  │ "GOAL-008-*"
+  └ No matches found
+
+Let me search for GOAL-008 in the goal-tree and check for its directory:
+
+/ Search (grep)
+  │ "GOAL-008" (docs\workspace-001-goal-governance\goal-tree.md)
+  └ 1 file found
+
+/ Search (glob)
+  │ "*008*"
+  └ No matches found
+
+Let me search for GOAL-008 more broadly and view the full goal-tree:
+
+● List directory .
+  └ 18 files found
+
+Let me search for any GOAL directories:
+
+/ Search (glob)
+  │ "GOAL-*"
+  └ No matches found
+
+● Search for GOAL directories (shell)
+  │ Get-ChildItem -Name | Select-String GOAL
+  └ 1 line…
+
+● List directory docs\workspace-001-goal-governance
+  └ 20 files found
+
+Perfect! Now let me read the GOAL-008 records:
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ 1 line read
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ 1 line read
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ 103 lines read
+
+Let me read the critical sections:
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:100 (99 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:150 (150 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:100 (100 lines read)
+
+Now let me read more of the audit file to understand the complete audit trail:
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L150:300 (151 lines read)
+
+Based on my comprehensive review of GOAL-008 governance records using the Copilot CLI audit
+semantics, here is the independent cross-audit replay:
+
+-----------------------------------------------------------------------------------------------
+
+INDEPENDENT AUDIT REPLAY · GOAL-008
+
+Audit Date: 2026-07-22
+Auditor: GitHub Copilot CLI (read-only replay)
+Scope: GOAL-008 closure verdict and open required findings
+Source: Independent (cross-audit mode)
+
+-----------------------------------------------------------------------------------------------
+
+Governance Sources Verified
+
+✓ AGENTS.md § 6b (P-003 交叉审计与意见响应)
+✓ .github/copilot-instructions.md § 6b (P-003 交叉审计)
+✓ skills/prompts/05-independent-audit.md (independent audit semantics)
+✓ docs/workspace-001-goal-governance/goal-tree.md (GOAL-008 entry)
+✓ GOAL-008 complete record set:
+
+ - 00-meta.md (status: done, progress: 100%)
+ - 01-decision.md (D-009 through D-011 final decisions)
+ - 02-execution.md (2026-07-20 final entries)
+ - 03-audit.md (A-014 through A-017 audit trail)
+
+-----------------------------------------------------------------------------------------------
+
+Final Information Ledger (from 00-meta.md)
+
+┌───────┬──────────────┬───────────────────────────────────────────────────────────────────────┐
+│ ID    │ Final status │ Closing evidence                                                      │
+├───────┼──────────────┼───────────────────────────────────────────────────────────────────────┤
+│ I-001 │ verified     │ Canonical/mirror schema, fixtures and contract tests.                 │
+├───────┼──────────────┼───────────────────────────────────────────────────────────────────────┤
+│ I-002 │ verified     │ Six CLI runtime cells (GitHub Actions run 29700051047) plus Web CI    │
+│       │              │ replay; attachments/runtime/web-parser-ci-replay-2026-07-20.json      │
+├───────┼──────────────┼───────────────────────────────────────────────────────────────────────┤
+│ I-003 │ verified     │ Clean commit 8a33ecd21d9183a680c9c0d63e471469f5e515a8, annotated      │
+│       │              │ v0.7.0, and                                                           │
+│       │              │ attachments/runtime/release-candidate-v0.7.0-2026-07-20.json          │
+└───────┴──────────────┴───────────────────────────────────────────────────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+Audit Trail Summary
+
+┌───────┬─────────────┬─────────────┬──────────────────────────────────────────────────────────┐
+│ Audit │ Source      │ Verdict     │ Key Finding                                              │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-014 │ independent │ conditional │ Copilot CLI /govern/audit verified; Web CI and release   │
+│       │             │             │ identity still pending                                   │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-015 │ self        │ conditional │ CLI evidence accepted; Web/release still open            │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-016 │ self        │ pass        │ All gates closed: I-001/I-002/I-003 verified; F-005      │
+│       │             │             │ responded; no residual risk                              │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-017 │ self        │ pass        │ Historical evidence freshness confirmed; no new host     │
+│       │             │             │ runtime claimed                                          │
+└───────┴─────────────┴─────────────┴──────────────────────────────────────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+CLOSURE VERDICT: PASS
+
+Status: ✓ DONE / 100%
+Required Findings: ✓ ALL CLOSED
+Open Required Items: NONE
+Residual Risk Accepted: NONE
+
+-----------------------------------------------------------------------------------------------
+
+Evidence Profile
+
+ - I-001: Canonical schema, manifest, fixtures, contract tests (29 Skills + 3 standalone passed)
+ - I-002: Six CLI matrix cells verified + Web parser CI replay (run 29700051047)
+ - I-003: Annotated release tag v0.7.0, clean tree, release-candidate evidence binding
+ - F-005 (upstream): Responded in GOAL-001 A-013; closed by this goal's evidence
+ - No open required findings remain; all P-003 audit opinions are fallen through in the governance
+ledger
+ - Candidate identity: v0.7.0 (fixed commit 8a33ecd21d9183a680c9c0d63e471469f5e515a8)
+
+-----------------------------------------------------------------------------------------------
+
+Boundary Notes
+
+✓ Not a VS Code plugin replay (CLI-only, read-only mode)
+✓ Not reopen/rework history; v0.7.0 close-out preserved
+✓ Current unreleased candidate marked pending-runtime-validation per D-011
+✓ Web surface kept read-only; Web CI replay closed the I-002 gate only
+✓ Stage 6 (Web deepening) and stage 7 (final acceptance) remain outside this goal
+
+-----------------------------------------------------------------------------------------------
+
+COPILOT_CLI_AUDIT_DISPATCH_OK
+

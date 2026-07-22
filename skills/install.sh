@@ -145,7 +145,7 @@ Done.
 
 Next steps:
   1. Review installed rule file(s) and adjust paths for your project.
-  2. Ensure docs/goals/goal-tree.md exists (create if needed).
+  2. Ensure a docs/workspace-<NNN>-<slug>/ workspace root and its goal-tree.md exist.
   3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
      - Core: $SKILLS_DIR/prompts/00-govern-orchestrator.md
      - Cross: $SKILLS_DIR/prompts/05-independent-audit.md

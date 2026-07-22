@@ -29,7 +29,7 @@ role: advanced
 
 ### A. 先分析上下文（必做，再问用户）
 
-1. **优先读取** `docs/goals/goal-tree.md`：哪些目标 active / blocked，当前 progress。
+1. **优先读取** `<workspace-root>/goal-tree.md`：哪些目标 active / blocked，当前 progress。
 2. **必要时**读取候选目标的：
    - `00-meta.md`（成功标准、progress、status）
    - `01-decision.md`（I-00N 信息项、级别、阶段门禁与残余风险）
@@ -96,7 +96,7 @@ role: advanced
 1. **只记事实**：`02-execution.md` 时间线只追加**已发生**工作；禁止编造未完成、未提交的内容。
 2. **具体可验证**：尽量写路径、产物名、可勾选结果；避免「优化了体验」类空话。
 3. **计划与事实分离**：下一步必须标明为计划，不得标成已完成。
-4. **同步 meta + goal-tree**：调整 progress / status 时，改 `00-meta.md`，并**必须**同步 `docs/goals/goal-tree.md`（树 + 表）。
+4. **同步 meta + goal-tree**：调整 progress / status 时，改 `00-meta.md`，并**必须**同步 `<workspace-root>/goal-tree.md`（树 + 表）。
 5. **成功标准一致**：勾选 meta 中成功标准时，须与 execution 事实一致。
 6. **与 decision 分工**：取舍论证写入 `01-decision.md`，不要塞进 execution。
 7. **扁平存储与编号**：不嵌套目标文件夹；不擅自改 Root / parent 却不更新 goal-tree。

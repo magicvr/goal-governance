@@ -3,7 +3,23 @@
 {% block title %}{{ goal.title }} · Goal Governance{% endblock %}
 
 {% block content %}
-<a href="{{ url_for('home') }}" class="text-sm font-medium text-teal-700 hover:text-teal-900">← 返回目标概览</a>
+<a href="{{ url_for('home') }}" class="text-sm font-medium text-teal-700 hover:text-teal-900">← 返回工作区详情（目标树）</a>
+
+{% if tree and tree.nodes %}
+<nav class="mt-4 overflow-x-auto border border-zinc-200 bg-white rounded-lg p-3" aria-label="目标树">
+    <p class="text-xs font-medium text-zinc-500">目标树导航</p>
+    <ul class="mt-2 flex flex-wrap gap-2 text-xs">
+        {% for node in tree.nodes %}
+        <li>
+            <a href="{{ url_for('goal_detail', goal_id=node.id) }}"
+               class="inline-flex rounded border px-2 py-1 {% if node.id == goal.id %}border-teal-600 bg-teal-50 text-teal-900{% else %}border-zinc-200 text-zinc-700 hover:bg-zinc-50{% endif %}">
+                {{ node.title }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}
 
 <section class="mt-5 border-b border-zinc-200 pb-6">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -123,20 +139,112 @@
     </section>
 
     <section id="execution-panel" role="tabpanel" aria-labelledby="execution-tab" data-tab-panel="execution" hidden class="py-6">
+        <div class="mb-8 border border-violet-200 bg-violet-50/40 p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-zinc-950">AI 候选（GOAL-014 · 确认前非 canonical）</h2>
+            <p class="mt-1 text-xs text-zinc-600">
+                仅用户触发；输出默认 <code class="font-mono">ai-knowledge</code>。
+                AI 状态：enabled={{ ai_enabled }} · ready={{ ai_ready }}
+                {% if not ai_ready %}· 未就绪时提交将 fail closed{% endif %}
+            </p>
+            <form method="post" action="{{ url_for('goal_ai_suggest', goal_id=goal.id) }}" class="mt-4 space-y-3">
+                <div>
+                    <label for="ai_prompt" class="block text-xs font-medium text-zinc-600">提示（用户触发）</label>
+                    <textarea id="ai_prompt" name="prompt" rows="3" required
+                              class="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+                              placeholder="例如：根据当前执行记录，建议一条可追加的执行事实正文">{{ ai_prompt|default('') }}</textarea>
+                </div>
+                <button type="submit" class="rounded bg-violet-700 px-3 py-2 text-sm font-medium text-white hover:bg-violet-800">生成 AI 候选</button>
+            </form>
+            {% if ai_error %}
+            <p class="mt-3 text-sm text-rose-700">{{ ai_error }}</p>
+            {% endif %}
+            {% if ai_candidate %}
+            <div class="mt-4 border-t border-violet-100 pt-4 space-y-2">
+                <p class="text-xs font-medium text-violet-800">候选（未确认 · 禁止当作事实）</p>
+                <p class="font-mono text-xs text-zinc-600">id: {{ ai_candidate.candidate_id }} · status: {{ ai_candidate.status }}</p>
+                <p class="text-xs text-zinc-600">source_kind: <strong>{{ ai_candidate.source_kind }}</strong></p>
+                <p class="text-xs text-zinc-600 break-all">{{ ai_candidate.source_statement }}</p>
+                <pre class="overflow-x-auto whitespace-pre-wrap rounded bg-white border border-violet-100 p-3 text-sm text-zinc-800">{{ ai_candidate.content }}</pre>
+                <p class="font-mono text-xs break-all text-zinc-500">digest: {{ ai_candidate.content_digest }}</p>
+                {% if ai_candidate.status != 'rejected' %}
+                <div class="flex flex-wrap gap-2 pt-2">
+                    <form method="post" action="{{ url_for('goal_ai_confirm', goal_id=goal.id) }}" class="inline">
+                        <input type="hidden" name="candidate_id" value="{{ ai_candidate.candidate_id }}" />
+                        <input type="hidden" name="content_digest" value="{{ ai_candidate.content_digest }}" />
+                        <button type="submit" class="rounded border border-violet-400 bg-white px-3 py-1.5 text-sm text-violet-900">确认并生成受限提案</button>
+                    </form>
+                    <form method="post" action="{{ url_for('goal_ai_reject', goal_id=goal.id) }}" class="inline">
+                        <input type="hidden" name="candidate_id" value="{{ ai_candidate.candidate_id }}" />
+                        <button type="submit" class="rounded border border-zinc-300 px-3 py-1.5 text-sm">拒绝候选</button>
+                    </form>
+                </div>
+                {% else %}
+                <p class="text-xs text-zinc-500">已拒绝 · 未写入 canonical</p>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-8 border border-zinc-200 bg-white p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-zinc-950">候选执行事实（user-provided）</h2>
+            <p class="mt-1 text-xs text-zinc-500">先形成受限提案预览；生产路径默认不可写入（门禁关闭）。</p>
+            <form method="post" action="{{ url_for('goal_proposal', goal_id=goal.id) }}" class="mt-4 space-y-3">
+                <div>
+                    <label for="source_statement" class="block text-xs font-medium text-zinc-600">来源说明</label>
+                    <input id="source_statement" name="source_statement" type="text"
+                           value="{{ form_source|default('user provided in web form') }}"
+                           class="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+                </div>
+                <div>
+                    <label for="content" class="block text-xs font-medium text-zinc-600">执行事实正文</label>
+                    <textarea id="content" name="content" rows="4" required
+                              class="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm">{{ form_content|default('') }}</textarea>
+                </div>
+                <button type="submit" class="rounded bg-teal-700 px-3 py-2 text-sm font-medium text-white hover:bg-teal-800">生成受限提案</button>
+            </form>
+            {% if proposal_error %}
+            <p class="mt-3 text-sm text-rose-700">{{ proposal_error }}</p>
+            {% endif %}
+            {% if proposal %}
+            <div class="mt-4 border-t border-zinc-100 pt-4">
+                <p class="text-xs font-medium text-zinc-500">提案 digest</p>
+                <p class="mt-1 break-all font-mono text-xs text-zinc-800">{{ proposal.proposal_digest }}</p>
+                <p class="mt-3 text-xs font-medium text-zinc-500">写集</p>
+                <p class="mt-1 font-mono text-xs">{{ proposal.expected_write_set|join(', ') }}</p>
+                <pre class="mt-3 overflow-x-auto whitespace-pre-wrap rounded bg-zinc-50 p-3 text-xs text-zinc-800">{{ proposal.unified_diff }}</pre>
+                <form method="post" action="{{ url_for('goal_decide', goal_id=goal.id) }}" class="mt-3 flex flex-wrap gap-2">
+                    <input type="hidden" name="proposal_digest" value="{{ proposal.proposal_digest }}" />
+                    <button type="submit" name="action" value="affirm" class="rounded border border-zinc-300 px-3 py-1.5 text-sm {% if controlled_write_enabled %}bg-teal-700 text-white{% else %}bg-zinc-100 text-zinc-600{% endif %}">
+                        确认并执行{% if not controlled_write_enabled %}（当前将拒绝：门禁）{% endif %}
+                    </button>
+                    <button type="submit" name="action" value="reject" class="rounded border border-zinc-300 px-3 py-1.5 text-sm">拒绝</button>
+                </form>
+            </div>
+            {% endif %}
+            {% if receipt %}
+            <div class="mt-4 rounded border border-zinc-200 bg-zinc-50 p-3 text-xs">
+                <p>result: <strong>{{ receipt.result }}</strong>
+                {% if receipt.error_code %} · {{ receipt.error_code }}{% endif %}</p>
+                <p class="mt-1 font-mono break-all">operation_id: {{ receipt.operation_id }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <h2 class="text-lg font-semibold text-zinc-950">Canonical 执行记录</h2>
         {% if goal.execution.entries %}
-        <ol class="divide-y divide-zinc-200 border-y border-zinc-200">
+        <ol class="mt-4 divide-y divide-zinc-200 border-y border-zinc-200">
             {% for entry in goal.execution.entries %}
             <li class="grid gap-2 py-5 sm:grid-cols-[8rem_minmax(0,1fr)]">
                 <time datetime="{{ entry.date }}" class="text-sm font-medium text-teal-700">{{ entry.date }}</time>
                 <div>
-                    <h2 class="text-lg font-semibold text-zinc-950">{{ entry.title }}</h2>
+                    <h3 class="text-lg font-semibold text-zinc-950">{{ entry.title }}</h3>
                     <pre class="mt-3 whitespace-pre-wrap break-words text-sm leading-6 text-zinc-700">{{ entry.raw_markdown }}</pre>
                 </div>
             </li>
             {% endfor %}
         </ol>
         {% else %}
-        <p class="text-sm text-zinc-500">未解析到执行时间线。</p>
+        <p class="mt-4 text-sm text-zinc-500">未解析到执行时间线。</p>
         <details class="mt-4 border border-zinc-200 bg-white p-4 rounded-lg"><summary class="cursor-pointer text-sm font-medium text-zinc-800">查看执行原文</summary><pre class="mt-4 overflow-x-auto whitespace-pre-wrap break-words text-xs leading-6 text-zinc-700">{{ goal.execution.body_markdown }}</pre></details>
         {% endif %}
     </section>

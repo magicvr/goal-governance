@@ -9,7 +9,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 AGENTS = REPO_ROOT / "AGENTS.md"
 FIXTURE = (
     REPO_ROOT
-    / "docs/goals/GOAL-008-skills-consumer-adapter-release-consistency/attachments"
+    / "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments"
     / "i-002-runtime-fixture-2026-07-19.md"
 )
 

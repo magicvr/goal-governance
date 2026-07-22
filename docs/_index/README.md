@@ -15,4 +15,4 @@ version: 0.1.0
 - 跨目标索引
 - 自动生成的目录清单
 
-当前请以 [../goals/goal-tree.md](../goals/goal-tree.md) 作为目标入口。
+当前请以 [../workspace-001-goal-governance/goal-tree.md](../workspace-001-goal-governance/goal-tree.md) 作为当前工作区目标入口。

@@ -2,9 +2,9 @@
 title: 提示词 · 创建新目标
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.3.0
+version: 0.4.0
 role: primitive
 ---
 
@@ -36,6 +36,7 @@ P-001（大目标先路线图）与 P-005（信息就绪与未知项门禁）以
 - 目标标题：【用户语言】
 - 英文短 slug（小写、短横线）：【如 improve-auth】
 - 父目标完整 ID：【如 GOAL-001-my-root-slug；Root 则 null】
+- 工作区上下文：【当前 `docs/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；若仅有 legacy `docs/goals/` 则注明“隐式单工作区”】
 - 一句话概述：
 - 初始成功标准（2～5 条可验证项；尚受信息项影响的可标“暂定”）：
 - 是否需要高层路线图（范围大/步骤不明）？【是 / 否】
@@ -47,25 +48,27 @@ P-001（大目标先路线图）与 P-005（信息就绪与未知项门禁）以
 
 # 步骤
 
-1. 读 `docs/goals/goal-tree.md`，新编号 = 最大编号 + 1（三位）。Root 固定为 GOAL-001。
-2. 创建 `docs/goals/GOAL-NNN-<slug>/`（与现有目标平铺，层级只写在 parent）。
-3. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。
-4. 优先定位项目的核心模板层 `docs/templates/goal-folder/`；若目标仓库没有独立核心层，再定位 **SKILLS_PKG**（含 `prompts/01-create-new-goal.md` 或 `templates/goal-folder/` 的目录）并参考包内镜像 `templates/goal-folder/`。两者结构必须一致。
-5. Frontmatter 至少：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。
+1. 先定位当前工作区 `workspace.md` 和其 `goal-tree.md`：校验 `root_goal` 指向 `parent: null` 的 Root Goal、`canonical_scope` 覆盖当前工作区根。没有显式工作区根时只可处理 legacy `docs/goals/` 隐式单工作区；不得猜测外部工作区。
+2. 新编号 = 当前工作区目标树最大编号 + 1（三位）。Root 固定为 GOAL-001。
+3. 创建 `<workspace-root>/GOAL-NNN-<slug>/`（与现有目标平铺，层级只写在 parent）。不得把目标创建到其他工作区、共享资料目录或目录嵌套中。
+4. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。
+5. 优先定位项目的核心模板层 `docs/templates/goal-folder/`；若目标仓库没有独立核心层，再定位 **SKILLS_PKG**（含 `prompts/01-create-new-goal.md` 或 `templates/goal-folder/` 的目录）并参考包内镜像 `templates/goal-folder/`。两者结构必须一致。
+6. Frontmatter 至少：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。
    - Root 的 slug 使用用户确认的名称。
-6. 正文：
+7. 正文：
    - meta：概述、成功标准、parent 链接；需要时含路线图与信息就绪概览
    - decision：已有取舍则写「决定 + 为什么」；信息需求、阶段门禁、残余风险接受也在此记录；否则「待立项后补充」
    - execution：只记已发生事实（如「今日创建目标」）
    - audit：可写「尚未到达复盘节点」
-7. 更新 `goal-tree.md` 的 ASCII 树与状态表。
-8. 如需，在父目标文档轻量提及新子目标；progress 与事实一致。
+8. 更新 `goal-tree.md` 的 ASCII 树与状态表。
+9. 如需，在父目标文档轻量提及新子目标；progress 与事实一致。
 
 # 完成标准
 
 - [ ] 编号无冲突；id = 文件夹名  
 - [ ] 五件套齐全；parent 为完整 id 或 null  
 - [ ] goal-tree 树与表已更新  
+- [ ] 若存在工作区上下文，Root Goal / canonical 范围已校验且新目标未越界
 - [ ] 大目标已写路线图（若适用）  
 - [ ] 已识别信息项已登记；到期 required 项没有被伪装成已验证或可直接实施
 - [ ] 内容真实，无虚构完成项  

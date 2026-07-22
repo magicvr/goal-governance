@@ -29,7 +29,7 @@ role: advanced
 
 ### A. 先分析上下文（必做，再问用户）
 
-1. **优先读取** `docs/goals/goal-tree.md`：现有目标、status、progress，便于锁定「记在哪个目标下」。
+1. **优先读取** `<workspace-root>/goal-tree.md`：现有目标、status、progress，便于锁定「记在哪个目标下」。
 2. **必要时**读取候选目标的 `00-meta.md` 与现有 `01-decision.md`（含 I-00N 信息表）：
    - 确认目标存在、范围是否匹配本次决策
    - 已有 `D-NNN` 编号，推断下一条为最大 + 1
@@ -66,7 +66,7 @@ role: advanced
 
 | 优先级 | 参数 | 说明 |
 |--------|------|------|
-| 必须确认 | 目标 ID / 路径 | 完整 id 或 `docs/goals/…/`；给出候选 |
+| 必须确认 | 目标 ID / 路径 | 完整 id 或 `<workspace-root>/…/`；给出候选 |
 | 必须确认 | 决定了什么 | 明确结论 |
 | 必须确认 | 为什么 | 背景、约束、收益 |
 | 建议确认 | 决策标题 | 可从结论压缩一句话建议 |
@@ -99,7 +99,7 @@ role: advanced
 3. **不编造共识**：不确定标「待确认」；禁止虚构未发生的决定。
 4. **与 execution 分工**：过程流水账放 `02-execution.md`；decision 只保留可执行结论与取舍。
 5. **联动 meta / execution**：若决策改变范围、成功标准或路线图 → 同步 `00-meta.md`，并在 `02-execution.md` 追加一句事实（如「记录决策 D-NNN：…」）。
-6. **同步 goal-tree**：若 status / progress / parent 变化，**必须**更新 `docs/goals/goal-tree.md`（树 + 表）。
+6. **同步 goal-tree**：若 status / progress / parent 变化，**必须**更新 `<workspace-root>/goal-tree.md`（树 + 表）。
 7. **编号与扁平存储**：不改 Root 编号；不嵌套目标文件夹；`parent` 仅用完整 id。
 8. **历史可追溯**：过时决策用新条目 `superseded` 旧条目，不要静默删除历史。
 9. **P-005 信息决策**：变更 I-00N 时同步级别、门禁、最晚阶段、证据与延期复核；`accepted-residual` 要有用户书面范围/期限/触发，不能写成 `verified`。

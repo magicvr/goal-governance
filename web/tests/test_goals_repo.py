@@ -6,12 +6,14 @@ import tempfile
 import unittest
 
 from services.goals_repo import (
+    DOGFOOD_WORKSPACE_DIR,
     GoalRecoveryRequiredError,
     GoalValidationError,
     GoalWriteError,
     GoalsRepository,
 )
 from services.models import AuditConclusionState, GoalStatus, IssueSeverity
+from services.workspace_config import ENV_WORKSPACE_DIR
 
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -19,6 +21,22 @@ VALID_FIXTURE = FIXTURES / "valid-goals"
 
 
 class GoalsRepositoryTests(unittest.TestCase):
+    def test_dogfood_path_exists_but_is_not_silent_default(self) -> None:
+        self.assertEqual(DOGFOOD_WORKSPACE_DIR.name, "workspace-001-goal-governance")
+        self.assertTrue((DOGFOOD_WORKSPACE_DIR / "workspace.md").is_file())
+        self.assertTrue((DOGFOOD_WORKSPACE_DIR / "goal-tree.md").is_file())
+        unconfigured = GoalsRepository.from_config({})
+        self.assertFalse(unconfigured.is_configured)
+        self.assertNotEqual(
+            unconfigured.goals_dir.resolve() if unconfigured.goals_dir.exists() else unconfigured.goals_dir,
+            DOGFOOD_WORKSPACE_DIR.resolve(),
+        )
+
+    def test_from_config_uses_explicit_workspace(self) -> None:
+        repo = GoalsRepository.from_config({ENV_WORKSPACE_DIR: str(VALID_FIXTURE)})
+        self.assertTrue(repo.is_configured)
+        self.assertEqual(repo.goals_dir.resolve(), VALID_FIXTURE.resolve())
+
     def test_valid_list_get_parses_documents_and_attachments(self) -> None:
         repo = GoalsRepository(VALID_FIXTURE)
 

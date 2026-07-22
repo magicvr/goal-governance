@@ -28,7 +28,7 @@ metadata:
 
 1. 定位 **SKILLS_PKG**：仓库中含 `prompts/00-govern-orchestrator.md` 的目录（常见名 `skills/`，也可能改名）。
 2. **完整阅读并严格执行** `<SKILLS_PKG>/prompts/00-govern-orchestrator.md` 的「提示词正文」：
-   - 扫描 goal-tree、`03-audit` 意见台账、信息需求/阶段门禁与仓库观察信号
+   - 扫描 `docs/workspace-<NNN>-<slug>/workspace.md`（若有）、goal-tree、`03-audit` 意见台账、信息需求/阶段门禁与仓库观察信号
    - 分类 S0–S4；处理 P-004 裁决点与开放必改门禁  
    - 提议下一步并确认  
    - 再调用 `<SKILLS_PKG>/prompts/01`～`04` 原语写入  
@@ -38,6 +38,7 @@ metadata:
 
 - 默认路径是本 skill；原语由编排器选用。  
 - 交叉审查请用户使用 `/audit`（05），不要在本入口冒充 independent。  
+- 有 `docs/workspace-<NNN>-<slug>/workspace.md` 时，由 core prompt 校验 Root Goal/canonical 范围和资料固定引用；无 context 时只处理当前仓库隐式单工作区。
 - 进度与结论只写已发生事实。
 
 ## 完成

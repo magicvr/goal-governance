@@ -30,7 +30,7 @@ role: advanced
 
 ### A. 先分析上下文（必做，再问用户）
 
-1. **优先读取** `docs/goals/goal-tree.md`：现有目标列表、状态、parent、当前最大编号、下一个可用编号。
+1. **优先读取** `<workspace-root>/goal-tree.md`：现有目标列表、状态、parent、当前最大编号、下一个可用编号。
 2. **必要时**读取候选父目标的 `00-meta.md`（了解其范围、路线图阶段、是否适合挂新子目标）。
 3. 解析用户在 `/new-goal` 后已附带的文字（标题、slug、父目标、概述等），能提取的先提取。
 4. **尝试推断**（可推断则记下，勿编造文档中不存在的事实）：
@@ -91,8 +91,8 @@ role: advanced
 
 ## 必须遵守的 AGENTS 要点
 
-1. **真相源**：目标以 `docs/goals/` 为准；全局树与状态以 `docs/goals/goal-tree.md` 为准（**必读、必更新**）。
-2. **扁平存储**：所有目标文件夹平铺在 `docs/goals/`，**禁止**用子目录嵌套表达父子关系。
+1. **真相源**：目标以 `<workspace-root>/` 为准；全局树与状态以 `<workspace-root>/goal-tree.md` 为准（**必读、必更新**）。
+2. **扁平存储**：所有目标文件夹平铺在 `<workspace-root>/`，**禁止**用子目录嵌套表达父子关系。
 3. **编号与 Root**：`GOAL-001` 永久为 Root（`parent: null`），禁止改号；新编号 = 当前最大编号 + 1。
 4. **层级唯一来源**：仅 `00-meta.md` 的 `parent` 字段；值为父目标**完整 id**（含 slug），不是 `GOAL-001` 这种缺 slug 写法。
 5. **五件套一次建齐**：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`；`id` = 文件夹名。

@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-20
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # AGENTS.md
@@ -19,20 +19,21 @@ version: 0.6.0
 
 | 内容 | 路径 | 要求 |
 |------|------|------|
-| 目标与过程记录 | `docs/goals/` | 唯一长期存储 |
-| 目标树与状态 | `docs/goals/goal-tree.md` | **必读、必更新** |
+| 目标与过程记录 | `<workspace-root>/` | 唯一长期存储 |
+| 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
 | 架构约定 | `docs/architecture/` | 若项目启用 |
 | 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001～P-005 |
 | 文档使用规范 | `docs/README.md` | 若存在 |
 | 核心方法论与模板 | `docs/templates/` | 若项目采用核心层；canonical 模板优先 |
+| 工作区与共享资料协议 | `docs/workspace-<NNN>-<slug>/workspace.md`、`docs/architecture/workspace-protocol.md` | 前者存在时必读；目标状态仍以 `<workspace-root>/` 为准 |
 
-冲突时以 `docs/goals/` 与本文件为准。
+冲突时以 `<workspace-root>/` 与本文件为准。
 
 ## 2. 目标存储与编号
 
-1. **扁平存储**：所有目标文件夹平铺在 `docs/goals/`，**禁止**用子文件夹表达父子关系。
+1. **扁平存储**：所有目标文件夹平铺在 `<workspace-root>/`，**禁止**用子文件夹表达父子关系。
 2. **Root**：`GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
-3. **编号**：先读 `goal-tree.md`（或扫描 `docs/goals/`），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。
+3. **编号**：先读 `goal-tree.md`（或扫描 `<workspace-root>/`），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
 5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
 6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
@@ -43,7 +44,7 @@ version: 0.6.0
 ## 3. 目标五件套（创建时一次建齐）
 
 ```text
-docs/goals/GOAL-NNN-short-slug/
+<workspace-root>/GOAL-NNN-short-slug/
 ├── 00-meta.md
 ├── 01-decision.md
 ├── 02-execution.md
@@ -156,9 +157,19 @@ docs/goals/GOAL-NNN-short-slug/
 - **发现后的回流**：实施中发现新的关键未知时，暂停受影响范围，记录事实，并回到信息登记、决策或路线图；信息冲突、是否以有界实验收集信息、或是否接受残余风险由用户按 P-004 裁决。到达最晚需要阶段时，未获 residual 接受的 `deferred required` 视为开放 required 并阻断受影响门禁。
 - **按规模拆分**：先登记并设定门禁；只有澄清/收集工作具有独立范围、依赖、交付证据或并行价值时，才创建“信息澄清/验证”或“信息收集”子目标。禁止为每个低风险问题机械创建两个子目标。
 
+## 6c. 工作区与共享资料边界
+
+若仓库存在 `docs/workspace-<NNN>-<slug>/workspace.md`，先按 `docs/architecture/workspace-protocol.md`（若存在）校验其 `root_goal`、`canonical_scope` 和共享资料引用：
+
+1. 工作区绑定一个 `parent: null` 的 Root Goal 与其 canonical 目标范围；它不是 `parent` 层级、审计 scope 或第二套状态。
+2. 同一项目的 MVP、二阶段、三阶段等通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
+3. 没有 `docs/workspace-<NNN>-<slug>/workspace.md` 时，只按当前仓库的 `<workspace-root>/` 使用隐式单工作区；禁止自动发现、读取、混合或写入其他工作区上下文。
+4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
+5. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
+
 ## 7. 必须同步更新 goal-tree.md
 
-以下任一操作后，**必须**更新 `docs/goals/goal-tree.md`：
+以下任一操作后，**必须**更新 `<workspace-root>/goal-tree.md`：
 
 - 新建目标
 - 修改 `status` / `progress`
@@ -171,7 +182,7 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 8. 代码与文档边界
 
-- **目标真相源**：长期过程记录在 `docs/goals/`（本包约定）。业务代码与 UI 可以引用目标，长期存储以 `docs/goals/` 为准。
+- **目标真相源**：长期过程记录在 `<workspace-root>/`（本包约定）。业务代码与 UI 可以引用目标，长期存储以 `<workspace-root>/` 为准。
 - **代码布局（默认策略）**：
   - 默认：应用/库代码可在**仓库根**，或按该语言/生态惯例分布。
   - 若项目已约定子目录（如 `web/`、`app/`、`services/`）：按该约定；`{{APP_DIR}}` 仅在有约定时填写。
@@ -189,7 +200,7 @@ docs/goals/GOAL-NNN-short-slug/
 
 默认：**文档驱动的目标治理**；代码与可视化应用按项目实际叠加。
 
-1. **文档体系（本包约定）**：`docs/goals/` + `goal-tree.md`
+1. **文档体系（本包约定）**：`<workspace-root>/` + `goal-tree.md`
 2. **产品/代码（常见）**：仓库根或项目实际目录
 3. **独立可视化应用（可选）**：有则按项目路径
 4. **Skills 包（可选）**：`{{SKILLS_DIR}}`
@@ -205,7 +216,7 @@ docs/goals/GOAL-NNN-short-slug/
 ## 10. 变更工作流
 
 ```text
-1. 读 goal-tree.md → 编号、parent、未关门目标
+1. 读 `docs/workspace-<NNN>-<slug>/workspace.md`（若有）→ 校验 Root Goal/canonical 范围/资料引用；再读 goal-tree.md → 编号、parent、未关门目标
 2. 未指定原子操作时 → 优先编排器
 3. 尚不可直接执行 → 先高层路线图（P-001）；存在影响门禁的未知 → 先登记信息需求与最晚需要阶段（P-005）
 4. 推进时检查相关审计意见与信息就绪门禁；P-004 情形先询问用户
@@ -248,6 +259,7 @@ docs/goals/GOAL-NNN-short-slug/
 - [ ] `parent` 为完整父 id 或 `null`
 - [ ] 五件套齐全（若新建）
 - [ ] 大目标路线图已写/更新（若适用）
+- [ ] 若存在工作区上下文，Root Goal/canonical 范围已校验；共享资料引用未被当成跨工作区状态或未确认事实
 - [ ] 已识别的未知项已登记；本次要推进的阶段没有开放 required 信息门禁，或残余风险已获用户书面接受
 - [ ] `goal-tree.md` 已同步
 - [ ] `updated` / `progress` / `status` 与事实一致
@@ -279,6 +291,6 @@ docs/goals/GOAL-NNN-short-slug/
 
 ## 快速链接（按项目填写）
 
-- 目标树：`docs/goals/goal-tree.md`
-- Root Goal：`docs/goals/GOAL-001-<your-slug>/00-meta.md`
+- 目标树：`<workspace-root>/goal-tree.md`
+- Root Goal：`<workspace-root>/GOAL-001-<your-slug>/00-meta.md`
 - 治理原则：AGENTS 第 6 / 6b 节；`docs/architecture/principles.md`（若存在，P-001～P-005）

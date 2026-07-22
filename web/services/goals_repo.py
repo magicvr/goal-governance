@@ -42,7 +42,12 @@ from services.parse_md import (
     parse_section_document,
 )
 
-DEFAULT_GOALS_DIR = Path(__file__).resolve().parents[2] / "docs" / "goals"
+# Dogfood path is never the silent default; see workspace_config.resolve_workspace_config.
+from services.workspace_config import DOGFOOD_WORKSPACE, resolve_workspace_config
+
+DOGFOOD_WORKSPACE_DIR = DOGFOOD_WORKSPACE
+# Historical name kept for tests that assert the monorepo dogfood location exists.
+DEFAULT_GOALS_DIR = DOGFOOD_WORKSPACE_DIR
 _GOAL_NUMBER_RE = re.compile(r"^GOAL-(\d+)-")
 _TREE_HEADER_RE = re.compile(r"^\|\s*ID\s*\|", re.IGNORECASE)
 _SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -82,10 +87,47 @@ class _TreeRecord:
 
 
 class GoalsRepository:
-    def __init__(self, goals_dir: Path | None = None) -> None:
-        self.goals_dir = Path(goals_dir) if goals_dir is not None else DEFAULT_GOALS_DIR
-        self._resolved_goals_dir = self.goals_dir.resolve()
+    def __init__(
+        self,
+        goals_dir: Path | None = None,
+        *,
+        config_source: str = "explicit",
+        config_error: str | None = None,
+    ) -> None:
+        if goals_dir is None:
+            # Fail closed: non-existent path. Application code should use from_config().
+            goals_dir = Path("__unconfigured_workspace__")
+            if config_source == "explicit" and config_error is None:
+                config_source = "none"
+                config_error = "workspace not configured"
+        self.goals_dir = Path(goals_dir)
+        try:
+            self._resolved_goals_dir = self.goals_dir.resolve()
+        except OSError:
+            self._resolved_goals_dir = self.goals_dir
         self.goal_tree_file = self.goals_dir / "goal-tree.md"
+        self.config_error = config_error
+        self.config_source = config_source
+
+    @classmethod
+    def from_config(cls, environ: dict[str, str] | None = None) -> GoalsRepository:
+        """Build a repository from explicit workspace configuration (fail-closed)."""
+        cfg = resolve_workspace_config(environ)
+        if not cfg.is_ready or cfg.workspace_dir is None:
+            return cls(
+                Path("__unconfigured_workspace__"),
+                config_source=cfg.source,
+                config_error=cfg.error or "workspace not configured",
+            )
+        return cls(
+            cfg.workspace_dir,
+            config_source=cfg.source,
+            config_error=cfg.error,
+        )
+
+    @property
+    def is_configured(self) -> bool:
+        return self.config_error is None and self.goals_dir.is_dir()
 
     def list_goals(self) -> tuple[GoalLoadResult, ...]:
         if not self.goals_dir.is_dir():

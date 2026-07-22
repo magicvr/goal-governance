@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DATE = "2026-07-19"
+DATE = "2026-07-20"
 ROOT_ID = "GOAL-001-main-vision"
 ROOT_TITLE = "独立核心根目标"
 
@@ -22,7 +22,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         for phrase in (
             "docs/templates/",
             "docs/contracts/",
-            "docs/goals/goal-tree.md",
+            "workspace-001-main-vision/goal-tree.md",
             "GOAL-001",
             "git init",
             "skills/",
@@ -32,14 +32,21 @@ class StandaloneBootstrapTests(unittest.TestCase):
             "核对结果",
             "P-005",
             "信息需求表",
+            "docs/workspace-001-main-vision",
+            "workspace-context.md",
+            "显式工作区上下文",
         ):
             self.assertIn(phrase, guide)
 
     def test_docs_entry_declares_package_version_and_sync_ledger(self) -> None:
         entry = (REPO_ROOT / "docs" / "README.md").read_text(encoding="utf-8")
         for phrase in (
-            "核心包版本",
+            "当前核心文档版本",
+            "最近发布基线",
+            "0.9.1",
+            "0.8.0",
             "0.7.0",
+
             "canonical → Skills",
             "SHA-256",
             "docs/templates/goal-folder/",
@@ -58,8 +65,10 @@ class StandaloneBootstrapTests(unittest.TestCase):
             self._init_git_repo(target)
             self._copy_core_package(target)
             self._materialize_root(target)
+            self._materialize_workspace(target)
 
             self._assert_root_shape(target)
+            self._assert_workspace_shape(target)
             self.assertIn("P-005", (target / "AGENTS.md").read_text(encoding="utf-8"))
             principles = (target / "docs" / "architecture" / "principles.md").read_text(
                 encoding="utf-8"
@@ -88,6 +97,11 @@ class StandaloneBootstrapTests(unittest.TestCase):
                     encoding="utf-8"
                 ),
             )
+            workspace_protocol = target / "docs" / "architecture" / "workspace-protocol.md"
+            workspace_template = target / "docs" / "templates" / "workspace-context.md"
+            self.assertTrue(workspace_protocol.is_file())
+            self.assertTrue(workspace_template.is_file())
+            self.assertIn("隐式单工作区", workspace_protocol.read_text(encoding="utf-8"))
             contract_manifest = target / "docs" / "contracts" / "skills-consumer-contract.json"
             contract_schema = target / "docs" / "contracts" / "skills-consumer-contract.schema.json"
             compatibility_matrix = (
@@ -151,9 +165,9 @@ class StandaloneBootstrapTests(unittest.TestCase):
 
     @classmethod
     def _materialize_root(cls, target: Path) -> None:
-        goals = target / "docs" / "goals"
-        root = goals / ROOT_ID
-        goals.mkdir()
+        workspace = target / "docs" / "workspace-001-main-vision"
+        root = workspace / ROOT_ID
+        workspace.mkdir()
         root.mkdir()
 
         template = target / "docs" / "templates" / "goal-folder"
@@ -200,7 +214,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-        (goals / "goal-tree.md").write_text(
+        (workspace / "goal-tree.md").write_text(
             "\n".join(
                 [
                     "---",
@@ -227,6 +241,29 @@ class StandaloneBootstrapTests(unittest.TestCase):
             encoding="utf-8",
         )
 
+    @classmethod
+    def _materialize_workspace(cls, target: Path) -> None:
+        workspace = target / "docs" / "workspace-001-main-vision"
+        (workspace / "workspace.md").write_text(
+            cls._frontmatter(
+                {
+                    "id": "standalone-workspace",
+                    "title": "独立核心工作区",
+                    "status": "active",
+                    "root_goal": ROOT_ID,
+                    "canonical_scope": "docs/workspace-001-main-vision/",
+                    "shared_materials_catalog": "none",
+                    "created": DATE,
+                    "updated": DATE,
+                    "version": "0.1.0",
+                },
+                "# 工作区上下文 · 独立核心工作区\n\n"
+                "## 固定共享资料引用\n\n"
+                "`shared_materials_catalog: none`，因此没有共享资料引用。",
+            ),
+            encoding="utf-8",
+        )
+
     @staticmethod
     def _parse_frontmatter(path: Path) -> dict[str, str]:
         text = path.read_text(encoding="utf-8")
@@ -241,14 +278,14 @@ class StandaloneBootstrapTests(unittest.TestCase):
         return fields
 
     def _assert_root_shape(self, target: Path) -> None:
-        goals = target / "docs" / "goals"
-        root = goals / ROOT_ID
+        workspace = target / "docs" / "workspace-001-main-vision"
+        root = workspace / ROOT_ID
         required = ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md")
         self.assertTrue(root.is_dir())
         self.assertTrue((root / "attachments").is_dir())
         self.assertTrue((root / "attachments" / ".gitkeep").is_file())
         self.assertEqual(
-            [path.name for path in goals.iterdir() if path.is_dir()],
+            [path.name for path in workspace.iterdir() if path.is_dir()],
             [ROOT_ID],
         )
 
@@ -265,7 +302,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         self.assertEqual(meta["title"], ROOT_TITLE)
         self.assertEqual(meta["progress"], "0%")
 
-        tree_path = goals / "goal-tree.md"
+        tree_path = workspace / "goal-tree.md"
         tree_fields = self._parse_frontmatter(tree_path)
         for key in ("status", "created", "updated", "parent", "version"):
             self.assertIn(key, tree_fields, f"goal-tree missing {key}")
@@ -273,6 +310,16 @@ class StandaloneBootstrapTests(unittest.TestCase):
         tree = tree_path.read_text(encoding="utf-8")
         self.assertIn(ROOT_ID, tree)
         self.assertIn("[active 0%]", tree)
+
+    def _assert_workspace_shape(self, target: Path) -> None:
+        workspace = target / "docs" / "workspace-001-main-vision"
+        context = workspace / "workspace.md"
+        self.assertTrue(context.is_file())
+        fields = self._parse_frontmatter(context)
+        self.assertEqual(fields["id"], "standalone-workspace")
+        self.assertEqual(fields["root_goal"], ROOT_ID)
+        self.assertEqual(fields["canonical_scope"], "docs/workspace-001-main-vision/")
+        self.assertEqual(fields["shared_materials_catalog"], "none")
 
 
 if __name__ == "__main__":

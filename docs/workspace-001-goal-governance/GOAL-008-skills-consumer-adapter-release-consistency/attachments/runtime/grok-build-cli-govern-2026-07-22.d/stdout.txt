@@ -1,0 +1,35 @@
+I'll run the govern skill's scan phase only: load the skill, locate the orchestrator prompt, and read the minimum GOAL-008 sources for classification and open required gates.Skill and package located. Reading the orchestrator scan rules and GOAL-008 sources for classification and open gates.**GROK_GOVERN_DISPATCH_OK**
+
+### 1. Marker
+`GROK_GOVERN_DISPATCH_OK` (emitted after repository reads, not prompt echo)
+
+### 2. Loaded skill
+| Field | Value |
+|--------|--------|
+| **Title** | `govern` · 目标治理编排（Grok Build skill） / Goal-governance orchestrator (primary entry) |
+| **Source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+
+### 3. Orchestrator prompt path (from skill)
+| Field | Value |
+|--------|--------|
+| **Named by skill** | `<SKILLS_PKG>/prompts/00-govern-orchestrator.md` |
+| **Resolved SKILLS_PKG** | `skills/` |
+| **Actual path** | `skills/prompts/00-govern-orchestrator.md` |
+
+### 4. GOAL-008 scan (scan phase only)
+
+| Field | Value |
+|--------|--------|
+| **ID** | `GOAL-008-skills-consumer-adapter-release-consistency` |
+| **Status / progress** | `done` / `100%` |
+| **Parent** | `GOAL-001-main-vision` |
+| **Workspace** | `workspace-001-goal-governance` · Root `GOAL-001-main-vision` · scope `docs/workspace-001-goal-governance/` |
+| **Classification** | Focus is **already closed** (`done`). Tree still has unclosed Root → overall **S2** (有未关门目标). Focus is **not S4** (no open required findings/info gates on this goal). |
+| **Open required gates** | **None (0)** |
+
+**Gate ledger (authoritative close-out):**
+- **I-001 / I-002 / I-003** → `verified` (`00-meta` final ledger; A-016)
+- **A-016** self close-out → `verdict: pass`; required findings closed; no residual risk
+- **A-017** freshness review → `verdict: pass`; does **not** reopen GOAL-008 (unreleased candidate host cells are next-release evidence only)
+
+**Opinion summary (focus):** A-014…A-017 present; open required on GOAL-008 = **0**; no P-004 conflict for this focus.

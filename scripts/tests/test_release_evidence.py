@@ -179,16 +179,12 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
             report["matrix"]["previousProtocolStatus"],
             "not-applicable-first-supported-protocol",
         )
+        self.assertEqual(report["matrix"]["candidateRevision"], "v0.8.0")
         uncovered = {
             (cell["consumer"], cell["entrypoint"])
             for cell in report["coverage"]["uncovered"]
         }
-        self.assertNotIn(("claude-code-cli", "govern"), uncovered)
-        self.assertNotIn(("claude-code-cli", "audit"), uncovered)
-        self.assertNotIn(("grok-build-cli", "govern"), uncovered)
-        self.assertNotIn(("grok-build-cli", "audit"), uncovered)
-        self.assertNotIn(("github-copilot-cli", "govern"), uncovered)
-        self.assertNotIn(("github-copilot-cli", "audit"), uncovered)
+        self.assertEqual(uncovered, set())
         self.assertNotIn(("web-readonly-parser", "goal-document-parser"), uncovered)
         self.assertEqual(report["coverage"]["status"], "ready-for-release-evidence")
 
@@ -246,7 +242,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self.assertIsNone(evidence["source"]["annotatedTag"])
         self.assertIsNone(evidence["source"]["tagObject"])
         self.assertEqual(evidence["protocol"]["version"], "0.1.0")
-        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.7.0")
+        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.8.0")
         self.assertIn("checksPassed", evidence)
         schema = json.loads(
             (REPO_ROOT / "docs/releases/release-evidence.schema.json").read_text(
