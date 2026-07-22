@@ -109,8 +109,9 @@ bash ./skills/install.sh --all --skills-dir ./skills
 
 4. 在目标仓库建立工作区与 `goal-tree.md` 后，在对应 AI 宿主中调用 **`/govern`**（交叉审计用 **`/audit`**）。
 
-> 维护者如何产出 zip：见根目录 [docs/releases/README.md](../docs/releases/README.md) 与 `python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
-> 尚未发布的候选工作树**不要**当作正式 Release 身份；仅当 annotated tag 与 release evidence 就位时，zip 才作为该版本的对外安装物。
+> 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 zip / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
+> 本地调试 zip：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
+> 尚未对齐矩阵/`candidateRevision` 的工作树**不要**推正式 tag；门禁失败则**不会**创建 Release。
 
 ### 0. 从源码树复制包（开发者 / 无 Release 时）
 

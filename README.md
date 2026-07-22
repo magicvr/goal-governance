@@ -35,7 +35,8 @@ mv goal-governance-skills-vX.Y.Z skills
 bash ./skills/install.sh --all --skills-dir ./skills
 ```
 
-详情、单宿主参数与工作区初始化见 [skills/README.md](skills/README.md)。维护者打包：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。
+详情、单宿主参数与工作区初始化见 [skills/README.md](skills/README.md)。  
+维护者正式发版：annotated `v*` tag + Environment `release` 审批 + 严格 release-evidence（见 [docs/releases/README.md](docs/releases/README.md)）。本地调试：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。
 
 ## 仓库结构
 

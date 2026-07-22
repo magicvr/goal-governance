@@ -4,14 +4,18 @@ status: active
 created: 2026-07-18
 updated: 2026-07-22
 parent: null
-version: 0.91.0
+version: 0.92.0
 ---
 
 # Goal Tree
 
+## 2026-07-22 · GOAL-018 D-005 自动发版路径
+
+用户方案 1：tag → pack → Environment `release` → 硬 release-evidence → 自动 create/挂资产。实现于 `skills-pack-release.yml` + `docs/releases`。GOAL-018 **仍 done**；R-018-FIRST-RELEASE 待首次实战。下一编号 **GOAL-019**。
+
 ## 2026-07-22 · 响应 GOAL-018 A-002（F-001～F-003）
 
-D-004 / A-003：关闭 recommended F-001（CI artifact 名统一 NORM）、F-002（R-018-FIRST-RELEASE residual）、F-003（后续 self 模板约定）。**维持** GOAL-018 `done / 100%`。下一编号仍 **GOAL-019**。
+D-004 / A-003：关闭 recommended F-001（CI artifact 名统一 NORM）、F-002（R-018-FIRST-RELEASE residual）、F-003（后续 self 模板约定）。**维持** GOAL-018 `done / 100%`。
 
 ## 2026-07-22 · GOAL-018 有界关门（Skills Release 打包）
 

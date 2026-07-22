@@ -1,6 +1,13 @@
-# Pack skills-only zip on SemVer tags. Default: artifact upload only.
-# Does not create tags, push remotes, or publish a GitHub Release unless the
-# maintainer-authorized publish gate is explicitly enabled.
+# Pack skills-only zip on SemVer tags; publish GitHub Release after hard evidence
+# gates and Environment "release" approval.
+#
+# - pack: always (tag push or dispatch) — tests + zip + workflow artifacts
+# - publish: tag push, or workflow_dispatch with publish_release=true on a tag ref
+#   - environment: release (required reviewers + wait timer + main/v* policies)
+#   - release_evidence --mode release must pass (fail closed; no create/upload)
+#   - gh release create (if missing) + upload zip / sha256 / evidence
+#
+# Does not create or push git tags. Does not bypass Environment protection.
 name: Skills pack (tag)
 
 on:
@@ -14,7 +21,7 @@ on:
         required: false
         default: ""
       publish_release:
-        description: "If true, attach pack artifacts to an existing GitHub Release for that tag (requires contents:write and an existing release). Default false."
+        description: "On a tag ref: run publish job (evidence gate + Environment release + create/upload). Default false for dispatch-only pack."
         required: false
         type: boolean
         default: false
@@ -30,8 +37,11 @@ jobs:
     outputs:
       version: ${{ steps.ver.outputs.version }}
       artifact_name: ${{ steps.ver.outputs.artifact_name }}
+      tag_name: ${{ steps.ver.outputs.tag_name }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -43,20 +53,25 @@ jobs:
         run: |
           set -euo pipefail
           INPUT="${{ github.event.inputs.version }}"
+          TAG_NAME=""
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            TAG_NAME="${GITHUB_REF_NAME}"
+          fi
           if [[ -n "${INPUT}" ]]; then
             VER="${INPUT}"
-          elif [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            VER="${GITHUB_REF_NAME}"
+          elif [[ -n "${TAG_NAME}" ]]; then
+            VER="${TAG_NAME}"
           else
             VER="0.0.0-ci"
           fi
-          # Single identity for zip SemVer and workflow artifact name (strip one leading v).
           NORM="${VER#v}"
           ARTIFACT="skills-pack-${NORM}"
           echo "version=${NORM}" >> "$GITHUB_OUTPUT"
           echo "artifact_name=${ARTIFACT}" >> "$GITHUB_OUTPUT"
+          echo "tag_name=${TAG_NAME}" >> "$GITHUB_OUTPUT"
           echo "Resolved pack version: ${NORM}"
           echo "Artifact name: ${ARTIFACT}"
+          echo "Tag name: ${TAG_NAME:-"(none)"}"
 
       - name: Run pack unit tests
         run: python -m unittest discover -s scripts/tests -p 'test_pack_skills_release.py' -v
@@ -68,67 +83,143 @@ jobs:
             --version "${{ steps.ver.outputs.version }}" \
             --output-dir dist
 
-      - name: Optional compatibility + rehearsal evidence (non-blocking for pack identity)
-        continue-on-error: true
-        run: |
-          python -m pip install -r scripts/requirements.txt -r web/requirements.txt
-          mkdir -p artifacts
-          python scripts/compatibility_report.py --output artifacts/compatibility-report.json
-          python scripts/release_evidence.py \
-            --mode rehearsal \
-            --run-checks \
-            --include-web \
-            --compatibility-report artifacts/compatibility-report.json \
-            --output artifacts/release-evidence.json
-
       - name: Upload pack artifacts
         uses: actions/upload-artifact@v4
         with:
-          # Must match attach-to-release download name (F-001 / A-003).
           name: ${{ steps.ver.outputs.artifact_name }}
           path: |
             dist/goal-governance-skills-v*.zip
             dist/goal-governance-skills-v*.zip.sha256
-            artifacts/compatibility-report.json
-            artifacts/release-evidence.json
           if-no-files-found: error
 
-  # Maintainer-authorized gate only. Default path never reaches gh release.
-  attach-to-release:
-    if: >
-      github.event_name == 'workflow_dispatch' &&
-      github.event.inputs.publish_release == 'true' &&
-      github.ref_type == 'tag'
+  publish:
+    name: Publish GitHub Release (gated)
     needs: pack
+    if: >
+      (github.event_name == 'push' && github.ref_type == 'tag') ||
+      (github.event_name == 'workflow_dispatch' &&
+       github.event.inputs.publish_release == 'true' &&
+       github.ref_type == 'tag')
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Download pack artifact (same name as pack job upload)
+      - name: Ensure annotated tag is visible
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --force --tags origin
+          TAG="${GITHUB_REF_NAME}"
+          # Annotated tags resolve to tag objects; ^{} peels to the commit.
+          if ! git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
+            echo "Missing tag ref: ${TAG}"
+            exit 1
+          fi
+          if ! git cat-file -t "refs/tags/${TAG}" | grep -qx tag; then
+            echo "Tag ${TAG} must be annotated (not lightweight) for release evidence."
+            exit 1
+          fi
+          HEAD="$(git rev-parse HEAD)"
+          TARGET="$(git rev-parse "refs/tags/${TAG}^{}")"
+          if [[ "${HEAD}" != "${TARGET}" ]]; then
+            echo "Checkout HEAD ${HEAD} does not match tag ${TAG} -> ${TARGET}"
+            exit 1
+          fi
+          echo "Annotated tag ${TAG} points at HEAD ${HEAD}"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install check dependencies
+        run: python -m pip install -r scripts/requirements.txt -r web/requirements.txt
+
+      - name: Download pack artifact
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.pack.outputs.artifact_name }}
           path: pack-out
 
-      - name: Attach assets to existing GitHub Release (explicit gate)
+      - name: Hard release-evidence gate (fail closed)
+        id: evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          mkdir -p artifacts dist
+          python scripts/compatibility_report.py --output artifacts/compatibility-report.json
+          python scripts/release_evidence.py \
+            --mode release \
+            --tag "${TAG}" \
+            --run-checks \
+            --include-web \
+            --compatibility-report artifacts/compatibility-report.json \
+            --output artifacts/release-evidence.json
+          echo "Release evidence passed for ${TAG}"
+
+      - name: Create GitHub Release if missing
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
           TAG="${GITHUB_REF_NAME}"
-          # Fail closed if no release exists — do not create one here without a separate authorized process.
-          if ! gh release view "$TAG" >/dev/null 2>&1; then
-            echo "No GitHub Release for tag $TAG. Create the release as a maintainer first, then re-run with publish_release=true."
-            exit 1
+          TITLE="${TAG}"
+          EXTRA=()
+          # SemVer pre-release (e.g. v1.0.0-rc.1) → mark prerelease; still gated by evidence.
+          VER="${TAG#v}"
+          if [[ "${VER}" == *-* ]]; then
+            EXTRA+=(--prerelease)
           fi
-          mapfile -t found < <(find pack-out -type f \( -name 'goal-governance-skills-v*.zip' -o -name 'goal-governance-skills-v*.zip.sha256' -o -name 'release-evidence.json' -o -name 'compatibility-report.json' \) | sort)
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "Release ${TAG} already exists; will upload/clobber assets only."
+          else
+            gh release create "${TAG}" \
+              --title "${TITLE}" \
+              --generate-notes \
+              "${EXTRA[@]}"
+            echo "Created GitHub Release ${TAG}"
+          fi
+
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          mapfile -t found < <(
+            find pack-out artifacts -type f \( \
+              -name 'goal-governance-skills-v*.zip' -o \
+              -name 'goal-governance-skills-v*.zip.sha256' -o \
+              -name 'release-evidence.json' -o \
+              -name 'compatibility-report.json' \
+            \) 2>/dev/null | sort -u
+          )
           if [[ ${#found[@]} -eq 0 ]]; then
-            echo "No pack assets found under pack-out"
-            ls -laR pack-out || true
+            echo "No assets to upload"
+            ls -laR pack-out artifacts || true
             exit 1
           fi
-          gh release upload "$TAG" "${found[@]}" --clobber
-          echo "Uploaded ${#found[@]} asset(s) to release $TAG"
+          # Require the consumer zip + digest among assets
+          zip_ok=0
+          sha_ok=0
+          for f in "${found[@]}"; do
+            case "$(basename "$f")" in
+              goal-governance-skills-v*.zip) zip_ok=1 ;;
+              goal-governance-skills-v*.zip.sha256) sha_ok=1 ;;
+            esac
+          done
+          if [[ "${zip_ok}" -ne 1 || "${sha_ok}" -ne 1 ]]; then
+            echo "Missing required skills zip and/or .sha256 in asset set"
+            printf '%s\n' "${found[@]}"
+            exit 1
+          fi
+          gh release upload "${TAG}" "${found[@]}" --clobber
+          echo "Uploaded ${#found[@]} asset(s) to release ${TAG}:"
+          printf '  %s\n' "${found[@]}"

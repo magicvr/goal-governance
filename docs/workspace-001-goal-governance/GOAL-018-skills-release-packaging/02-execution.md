@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-22
 updated: 2026-07-22
-version: 1.0.1
+version: 1.1.0
 ---
 
 # 执行记录 · GOAL-018
@@ -49,6 +49,14 @@ version: 1.0.1
 - **F-003 closed（process）**：后续 self 关门最小结构约定落在 A-003；不回溯改写 A-001。
 - 审计响应节：[03-audit.md A-003](03-audit.md#a-003--self--响应-a-002关闭-f-001f-0032026-07-22)。**status 仍为 done / 100%**。
 
+### 2026-07-22 · 自动发版路径（D-005 · 方案 1）
+
+- 用户选择：严格 evidence + Environment + 自动 create/挂资产。
+- 重写 `.github/workflows/skills-pack-release.yml`：`pack` + `publish`（`environment: release`、硬 `release_evidence --mode release`、`gh release create` / `upload`）。
+- 更新 `docs/releases/README.md`、`skills/README.md`、根 `README.md`、`CHANGELOG` Unreleased。
+- 单测增补 workflow 结构契约：`test_publish_job_is_environment_gated_and_fail_closed`。
+- **未**推 tag / **未**创建真实 GitHub Release；R-018-FIRST-RELEASE 仍 accepted open。
+
 ## 进度评估
 
-**100%**：P0～P2 有界交付 + A-002 recommended 三项已响应；真实公开 Release 仍属 R-018-FIRST-RELEASE / 维护者授权后续动作。
+**100%**（有界 GOAL-018）：自动发版**实现与文档**已落地；首次成功实战仍属 R-018。

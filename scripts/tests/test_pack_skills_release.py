@@ -169,5 +169,27 @@ class PackSkillsReleaseTests(unittest.TestCase):
                 )
 
 
+class SkillsPackWorkflowContractTests(unittest.TestCase):
+    """Structural contract for the tag pack/publish workflow (no network)."""
+
+    def test_publish_job_is_environment_gated_and_fail_closed(self) -> None:
+        workflow = (REPO_ROOT / ".github/workflows/skills-pack-release.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("environment: release", workflow)
+        self.assertIn("gh release create", workflow)
+        self.assertIn("gh release upload", workflow)
+        self.assertIn("--mode release", workflow)
+        self.assertIn("release_evidence.py", workflow)
+        # Must not soft-continue past the hard evidence gate.
+        self.assertNotRegex(
+            workflow,
+            r"Hard release-evidence gate[\s\S]{0,200}continue-on-error:\s*true",
+        )
+        # Pack job must not require Environment approval.
+        pack_block = workflow.split("publish:")[0]
+        self.assertNotIn("environment: release", pack_block)
+
+
 if __name__ == "__main__":
     unittest.main()

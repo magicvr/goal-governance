@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-22
 updated: 2026-07-22
-version: 1.0.1
+version: 1.1.0
 ---
 
 # 决策记录 · GOAL-018
@@ -54,3 +54,17 @@ version: 1.0.1
 **为什么**：A-002 verdict=pass 且无 required finding；用户明确指示 recommended 响应 + 维持 done + 可选修 artifact 名。
 
 **未选方案**：因 recommended 项将目标重开为 `active`（过度；与 A-002 建议冲突）。
+
+## D-005 · 自动发版策略：严格 evidence + Environment release（2026-07-22）
+
+**决定**：
+
+1. annotated `v*` tag push 后：CI **pack** 无 Environment；**publish** job 使用 **`environment: release`**。
+2. publish 在 create/upload 前硬跑 `release_evidence.py --mode release --run-checks --include-web`；**失败则不** `gh release create` / **不** upload（方案 1 / fail closed）。
+3. 门禁通过且 Environment 审批通过后：`gh release create`（若无）+ upload zip / `.sha256` / evidence / compatibility-report；已存在 Release 则 `--clobber` 上传。
+4. SemVer 含 pre-release 段（如 `-rc.1`）时加 `--prerelease`。
+5. `workflow_dispatch` + `publish_release=true` 且在 **tag ref** 上可重跑 publish。
+6. **不**自动创建或推送 git tag；矩阵 identity 仍由维护者在推 tag 前冻结。
+7. 本目标 **保持 done**；R-018-FIRST-RELEASE 仍 open，直至首次真实成功发版实战。
+
+**未选方案**：evidence 软失败仍建 prerelease（纪律弱）；无 Environment 的全自动 create（去掉维护者平台闸）。
