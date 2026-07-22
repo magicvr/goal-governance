@@ -26,7 +26,7 @@ progress: 100%
 
 | ID | 级别 | 说明 | 复审触发 | 状态 |
 |----|------|------|----------|------|
-| **R-018-FIRST-RELEASE** | non-blocking residual | 首次在**已合入**工作流上推 annotated `v*` → Environment `release` 审批 → 硬 evidence 通过 → 自动 create Release 并挂 zip/sha256/evidence 的端到端实战 | 下一次意图对外发布的 annotated tag / 宣称「自动发版路径已实战」前 | **accepted**（实现见 D-005；实战未做前不关闭） |
+| **R-018-FIRST-RELEASE** | non-blocking residual | 首次在**已合入**工作流上推 annotated `v*` → Environment `release` 审批 → 硬 evidence 通过 → 自动 create Release 并挂 zip/sha256/evidence | — | **closed**（2026-07-22）：GitHub Release [v0.8.0](https://github.com/magicvr/goal-governance/releases/tag/v0.8.0)；Actions run `29882635335`；资产含 `goal-governance-skills-v0.8.0.zip` + `.sha256` + evidence |
 
 ## A-002 响应（2026-07-22）
 

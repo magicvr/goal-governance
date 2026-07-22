@@ -9,9 +9,13 @@ version: 0.93.0
 
 # Goal Tree
 
+## 2026-07-22 · Skills v0.8.0 自动发版成功
+
+PR #2 合并；annotated `v0.8.0`；Actions `29882635335` pack+publish success；Release 含 skills zip/sha256/evidence。R-018 closed。Skills 目标 003/005/006/007/008/010/018 均为 `done`。下一编号 **GOAL-019**。
+
 ## 2026-07-22 · Skills v0.8.0 发布准备
 
-矩阵 `candidateRevision: v0.8.0`；六 CLI runtime 证据刷新；CHANGELOG 0.8.0。Skills 相关目标（003/005/006/007/008/010/018）均为 `done`。下一步：PR→main→tag `v0.8.0`→Environment 审批。下一编号 **GOAL-019**。
+矩阵 `candidateRevision: v0.8.0`；六 CLI runtime 证据刷新；CHANGELOG 0.8.0。其后发版实战见上节。
 
 ## 2026-07-22 · GOAL-018 D-005 自动发版路径
 

@@ -63,6 +63,15 @@ version: 1.1.0
 - CHANGELOG `0.8.0` 节；docs README 台账同步 matrix digest。
 - 计划：PR → main CI → 合并 → annotated `v0.8.0` → Environment `release` 审批 → 自动 Release 资产。
 
+### 2026-07-22 · v0.8.0 自动发版实战成功（R-018 closed）
+
+- PR [#2](https://github.com/magicvr/goal-governance/pull/2) 合并至 `main`（merge `3e18720`）；CI green。
+- 首次 tag 发布 run `29881831560`：pack 成功；publish 因 pack-out 污染工作树导致 clean-tree 门禁失败（已修 workflow：evidence 先于下载 artifact）。
+- 修复提交 `8709d1f`；重挂 annotated `v0.8.0`；run `29882635335` pack + publish **success**。
+- GitHub Release：https://github.com/magicvr/goal-governance/releases/tag/v0.8.0  
+  资产：`goal-governance-skills-v0.8.0.zip`、`.sha256`、`release-evidence.json`、`compatibility-report.json`。
+- **R-018-FIRST-RELEASE closed**。
+
 ## 进度评估
 
-**100%**（有界 GOAL-018 交付）+ v0.8.0 发布实战进行中（R-018）。
+**100%**：有界交付 + 首次自动发版实战完成。
