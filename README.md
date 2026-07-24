@@ -35,6 +35,18 @@ mv goal-governance-skills-vX.Y.Z skills
 bash ./skills/install.sh --all --skills-dir ./skills
 ```
 
+**Windows 注意**：若执行 `.ps1` 报 `running scripts is disabled`，先在**当前窗口**放宽策略（仅本进程，不改系统默认），再重试：
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+或不改策略、单次绕过：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\skills\install.ps1 -All -SkillsDir .\skills
+```
+
 详情、单宿主参数与工作区初始化见 [skills/README.md](skills/README.md)。  
 维护者正式发版：annotated `v*` tag + Environment `release` 审批 + 严格 release-evidence（见 [docs/releases/README.md](docs/releases/README.md)）。本地调试：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。
 
@@ -103,6 +115,8 @@ uvicorn main:app --reload --host 127.0.0.1 --port 8000
 # 或在根目录：
 # uvicorn main:app --app-dir web --reload --host 127.0.0.1 --port 8000
 ```
+
+若 `Activate.ps1` 因执行策略被拒，可先 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`，或改用 `.\.venv\Scripts\activate.bat`。
 
 启动后访问：<http://127.0.0.1:8000>
 
