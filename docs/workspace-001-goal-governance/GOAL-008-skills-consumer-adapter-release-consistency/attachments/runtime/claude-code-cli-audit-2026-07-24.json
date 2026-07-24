@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-07-24T12:56:42.367944Z",
+  "capturedAt": "2026-07-24T13:05:02.833134Z",
   "unit": {
     "consumer": "claude-code-cli",
     "entrypoint": "audit",
@@ -51,18 +51,18 @@
     "inputSummary": "Read-only /audit dispatch probe requiring marker CLAUDE_AUDIT_DISPATCH_OK after repository-backed skill execution."
   },
   "result": {
-    "exitCode": 1,
-    "verdict": "fail",
+    "exitCode": 0,
+    "verdict": "pass",
     "marker": "CLAUDE_AUDIT_DISPATCH_OK",
-    "markerObserved": false,
+    "markerObserved": true,
     "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-24.d/stdout.txt",
-    "stdoutSha256": "132a38bf5e817b5bac61709d04e953b527da5f4efae7c463b5f7cf8c90971666",
+    "stdoutSha256": "837b6cc5bb4e05e495f10bf268b4d7e9ffa150c02e4419d44cd577cfb7b808b3",
     "stdoutMode": "claude-stream-json-sanitized",
     "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-24.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "stderrMode": "raw",
     "warnings": [],
-    "reason": "Main process did not both exit 0 and emit the required dispatch marker."
+    "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
   },
   "artifacts": {
     "screenshots": []

@@ -589,21 +589,12 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.71")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # Claude: govern verified 2026-07-24; audit still pending (gateway flakiness)
-        claude = consumers["claude-code-cli"]
-        self.assertEqual(
-            claude["contractVerificationStatus"],
-            adapters_by_id["claude-code-cli"]["verificationStatus"],
-        )
-        claude_eps = {entry["name"]: entry for entry in claude["entrypoints"]}
-        self.assertEqual(set(claude_eps), {"govern", "audit"})
-        self.assertEqual(claude_eps["govern"]["status"], "runtime-verified")
-        self.assertTrue(claude_eps["govern"]["evidence"])
-        self.assertIn("2026-07-24", claude_eps["govern"]["evidence"][0])
-        self.assertEqual(claude_eps["audit"]["status"], "pending-runtime-validation")
-        self.assertEqual(claude_eps["audit"]["evidence"], [])
-        # Grok + Copilot: both entrypoints runtime-verified 2026-07-24
-        for consumer_id in ("grok-build-cli", "github-copilot-cli"):
+        # Claude + Grok + Copilot: all six entrypoints runtime-verified 2026-07-24
+        for consumer_id in (
+            "claude-code-cli",
+            "grok-build-cli",
+            "github-copilot-cli",
+        ):
             entrypoints = {
                 entry["name"]: entry for entry in consumers[consumer_id]["entrypoints"]
             }

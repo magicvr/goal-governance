@@ -23,8 +23,9 @@ Skills **consumer** release 候选（GOAL-019）：**核心方法论与 Skills �
 - 矩阵 `candidateRevision: v0.9.0`。
 - GitHub Copilot CLI `1.0.71` `/govern` + `/audit`：2026-07-24 **runtime-verified**。
 - Grok Build CLI `0.2.111` `/govern` + `/audit`：2026-07-24 **runtime-verified**（CLI 子进程 + proxy-managed key）。
-- Claude Code CLI `2.1.218` `/govern`：2026-07-24 **runtime-verified**；`/audit` 仍 **pending**（网关间歇 503）。
+- Claude Code CLI `2.1.218` `/govern` + `/audit`：2026-07-24 **runtime-verified**。
 - Web parser 保持 automated-verified。
+- 六 CLI 入口 coverage **ready-for-release-evidence**（正式 annotated tag 前置条件）。
 
 ### 治理
 

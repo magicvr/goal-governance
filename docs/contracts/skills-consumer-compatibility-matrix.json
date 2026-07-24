@@ -53,11 +53,13 @@
         },
         {
           "name": "audit",
-          "status": "pending-runtime-validation",
-          "evidence": []
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-24.json"
+          ]
         }
       ],
-      "evidenceScope": "v0.9.0 candidate: Claude Code CLI 2.1.218 /govern re-captured 2026-07-24 against current behavior sources. /audit re-capture blocked by intermittent gateway 503 auth_unavailable (127.0.0.1:15721). Formal annotated tag requires claude/audit runtime-verified."
+      "evidenceScope": "v0.9.0 candidate: Claude Code CLI 2.1.218 /govern and /audit re-captured 2026-07-24 against current behavior sources (audit skill, 05-independent-audit, AGENTS)."
     },
     {
       "id": "grok-build-cli",
@@ -91,7 +93,7 @@
           ]
         }
       ],
-      "evidenceScope": "v0.9.0 candidate: Grok Build CLI 0.2.111 (94172f2aa4) /govern and /audit re-captured 2026-07-24 via CLI subprocess with proxy-managed API (XAI_API_KEY=PROXY_MANAGED, GROK_MODELS_BASE_URL local gateway). Distinct from interactive Grok Build session auth."
+      "evidenceScope": "v0.9.0 candidate: Grok Build CLI 0.2.111 (94172f2aa4) /govern and /audit re-captured 2026-07-24 via CLI subprocess with proxy-managed API (XAI_API_KEY=PROXY_MANAGED). Distinct from interactive Grok Build session auth."
     },
     {
       "id": "github-copilot-cli",

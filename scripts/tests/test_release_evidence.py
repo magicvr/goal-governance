@@ -184,12 +184,10 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
             (cell["consumer"], cell["entrypoint"])
             for cell in report["coverage"]["uncovered"]
         }
-        # v0.9.0: only claude/audit remains pending (gateway 503). Formal tag needs empty uncovered.
-        self.assertEqual(uncovered, {("claude-code-cli", "audit")})
+        # v0.9.0: all six host CLI cells runtime-verified after 2026-07-24 re-capture
+        self.assertEqual(uncovered, set())
         self.assertNotIn(("web-readonly-parser", "goal-document-parser"), uncovered)
-        self.assertNotIn(("github-copilot-cli", "govern"), uncovered)
-        self.assertNotIn(("grok-build-cli", "govern"), uncovered)
-        self.assertEqual(report["coverage"]["status"], "pending")
+        self.assertEqual(report["coverage"]["status"], "ready-for-release-evidence")
 
     def test_compatibility_report_uses_supplied_root_for_mirrors(self) -> None:
         with tempfile.TemporaryDirectory(prefix="gg-compatibility-root-") as tmp:

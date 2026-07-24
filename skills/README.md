@@ -16,7 +16,7 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 在 monorepo 中，规范模板位于 [`docs/templates/`](../docs/templates/)；包内 `templates/` 与 `core/docs/templates/` 为分发镜像。机读契约以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 为逐字节镜像。
 
-**发布与候选证据边界（GOAL-019 / v0.9.0）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot CLI `1.0.71` 均列为 `committed` 支持基线。矩阵 **`candidateRevision: v0.9.0`**。Copilot 与 Grok 的 `/govern`+`/audit`、Claude `/govern` 已于 2026-07-24 **runtime-verified**；**仅 Claude `/audit` 仍 pending**（网关 503，正式 tag 前须补抓）。Web parser 保持 `automated-verified`。VS Code 插件不作为 Copilot 重放证据来源。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
+**发布与候选证据边界（GOAL-019 / v0.9.0）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot CLI `1.0.71` 均列为 `committed` 支持基线。矩阵 **`candidateRevision: v0.9.0`**；三个 CLI 的 `/govern`+`/audit` 共六单元均于 2026-07-24 **runtime-verified**（coverage ready-for-release-evidence）。Web parser 保持 `automated-verified`。VS Code 插件不作为 Copilot 重放证据来源。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
 ## 产品模型（必读）
 
