@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-24
 parent: null
-version: 1.0.0
+version: 1.1.0
 ---
 
 # Goal Tree
+
+## 2026-07-24 · v0.9.0 发版冻结准备（PR）
+
+CHANGELOG 0.9.0；矩阵 `candidateRevision: v0.9.0`；Copilot 两路 2026-07-24 runtime-verified；Claude/Grok 四格 pending（鉴权失败）。**正式 tag 前须补齐 pending 单元**。GOAL-019 仍 done。
 
 ## 2026-07-24 · GOAL-019 有界关门
 

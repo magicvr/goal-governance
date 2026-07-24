@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
   "format": "goal-governance.skills-consumer-compatibility-matrix",
   "formatVersion": "1.0.0",
-  "candidateRevision": "v0.8.0",
+  "candidateRevision": "v0.9.0",
   "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
   "protocol": {
     "current": "0.1.0",
@@ -33,7 +33,7 @@
       "kind": "host-adapter",
       "host": {
         "product": "Claude Code CLI",
-        "version": "2.1.215",
+        "version": "2.1.218",
         "platform": "Windows 11",
         "installationSurface": ".claude/skills/govern and .claude/skills/audit"
       },
@@ -46,28 +46,24 @@
       "entrypoints": [
         {
           "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-22.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         },
         {
           "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-22.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.8.0 candidate: machine-readable Claude Code CLI /govern and /audit dispatch evidence re-captured 2026-07-22 against current behavior sources (workspace-protocol skills + pack/release path). v0.7.0 artifacts remain archived historical baseline."
+      "evidenceScope": "v0.9.0 candidate: GOAL-019 changed behavior sources (core install, S0/init-workspace, AGENTS/orchestrator). 2026-07-22 runtime-verified JSON remains historical only. 2026-07-24 re-capture attempts failed (host API 503 auth_unavailable / gateway). Re-capture required before formal annotated tag release."
     },
     {
       "id": "grok-build-cli",
       "kind": "host-adapter",
       "host": {
         "product": "Grok Build CLI",
-        "version": "0.2.106",
-        "build": "bde89716f6",
+        "version": "0.2.111",
+        "build": "94172f2aa4",
         "platform": "Windows 11",
         "installationSurface": ".grok/skills/govern and .grok/skills/audit"
       },
@@ -80,20 +76,16 @@
       "entrypoints": [
         {
           "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-22.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         },
         {
           "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-22.json"
-          ]
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.8.0 candidate: Grok Build CLI 0.2.106 (bde89716f6) /govern and /audit re-captured 2026-07-22. v0.7.0 Grok 0.2.103 artifacts remain archived historical baseline."
+      "evidenceScope": "v0.9.0 candidate: GOAL-019 behavior-source change. 2026-07-22 artifacts historical. 2026-07-24 re-capture failed (CLI 401 Unauthenticated). Re-capture required before formal annotated tag release."
     },
     {
       "id": "github-copilot-cli",
@@ -115,18 +107,18 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-22.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-24.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-22.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-24.json"
           ]
         }
       ],
-      "evidenceScope": "v0.8.0 candidate: GitHub Copilot CLI 1.0.71 /govern and /audit re-captured 2026-07-22 (CLI-only; workspace path prompts). v0.7.0 replays remain archived historical baseline."
+      "evidenceScope": "v0.9.0 candidate: GitHub Copilot CLI 1.0.71 /govern and /audit re-captured 2026-07-24 against current behavior sources (AGENTS, copilot-instructions, orchestrator/independent-audit prompts). v0.8.0/v0.7.0 replays remain archived historical baseline."
     },
     {
       "id": "web-readonly-parser",
