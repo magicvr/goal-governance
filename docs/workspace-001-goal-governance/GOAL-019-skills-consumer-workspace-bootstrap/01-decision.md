@@ -1,11 +1,11 @@
 ---
 id: GOAL-019-skills-consumer-workspace-bootstrap
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-24
 updated: 2026-07-24
-version: 0.6.0
+version: 1.0.0
 ---
 
 # 决策记录 · GOAL-019
@@ -16,11 +16,11 @@ version: 0.6.0
 
 | ID | 级别 | 状态 | 备注 |
 |----|------|------|------|
-| I-001 | non-blocking | open | 消费安装形态 |
+| I-001 | non-blocking | **accepted-residual** | R-019-I001-INSTALL-SHAPE（D-007） |
 | I-002 | non-blocking | **closed** | 阶段 C：可选 `--init-workspace` 已实现 |
 | I-003 | required | **closed** | D-005：slug 必须用户确认，禁止静默默认 |
 | I-004 | required | **closed** | D-004 清单；实现时按表 pack/install |
-| I-005 | non-blocking | deferred | standalone 全文；skills README 已标主路径 |
+| I-005 | non-blocking | **accepted-residual** | R-019-STANDALONE-COPY（D-007） |
 
 ## D-001 · 立项：关闭「装 Skills ≠ 有治理存储」缝隙
 
@@ -215,3 +215,30 @@ version: 0.6.0
 - **默认总是 scaffold（无 flag）**：否决（破坏仅装规则的路径）。  
 - **scaffold 时直接建 Root 五件套**：否决（与 S0/01 职责重叠）。  
 - **允许无 slug 的默认名**：否决（D-005）。
+
+## D-007 · 响应 A-001 并有界关门（F-001 必改 + residual 清单）
+
+**日期**：2026-07-24  
+**状态**：accepted  
+**用户确认**：`/govern 响应 GOAL-019 A-001…通过后有界关门`（书面）
+
+### 决定
+
+1. **F-001（required）**：**关闭**——修正 monorepo 根 `AGENTS.md` §9b/§11 残留「architecture 可选补充」为 **必备 / 同级必备**（与 §6/D-003 一致）。  
+2. **F-002（recommended）**：**关闭**——补自动化：`test_init_workspace_refuses_existing_path` + 源码 refuse 断言。  
+3. **F-003（recommended）**：接受为 residual **R-019-SH-RUNTIME**（Windows 以 ps1 隔离为主；sh 静态覆盖；不阻塞关门）。  
+4. **F-004 / P-004**：用户已要求补充 **self** 审计 → 写 A-002；不静默跳过。  
+5. **I-005 deferred**：接受为 residual **R-019-STANDALONE-COPY**（skills README 主路径已标；standalone 全文延后）。  
+6. **I-001 open**：接受为 residual **R-019-I001-INSTALL-SHAPE**。  
+7. 无未关闭 required finding 后：`status: done` / `progress: 100%`，同步 goal-tree。
+
+### 为什么
+
+- A-001 verdict conditional 的唯一 **required** 门禁是 F-001；根 AGENTS 已修。  
+- F-002 可测且成本低，优于仅 residual。  
+- F-003/I-005/I-001 不阻断消费主路径证据，书面 residual 可核对。
+
+### 未选方案
+
+- **F-001 仅 residual 不改根 AGENTS**：否决（用户明确「关闭 F-001（改根 AGENTS）」）。  
+- **F-003 阻塞关门直到 bash CI**：否决（超出本目标有界范围；记 residual）。

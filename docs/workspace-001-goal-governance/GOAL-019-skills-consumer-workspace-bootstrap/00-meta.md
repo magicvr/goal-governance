@@ -1,79 +1,76 @@
 ---
 id: GOAL-019-skills-consumer-workspace-bootstrap
 title: Skills 消费方工作区骨架落地（空仓可运行）
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-24
 updated: 2026-07-24
-version: 0.6.0
-progress: 90%
+version: 1.0.0
+progress: 100%
 ---
 
 # GOAL-019 · Skills 消费方工作区骨架落地（空仓可运行）
+
+## 有界关门（2026-07-24）
+
+本目标 `done / 100%` 关闭的是 **GOAL-019 成功标准全表**（A–C 实现 + A-001 响应 + 自审 A-002）：
+
+1. skills zip **内嵌 core** 并 **install 默认**装到 `docs/architecture` + `docs/templates` + 精简 `docs/README`
+2. S0/`01` 空仓 scaffold + slug 用户确认（D-005）
+3. 可选 `--init-workspace`（D-006；显式 slug；不建 Root 五件套）
+4. pack/README/宿主 wrappers 与隔离证据
+5. A-001 findings：F-001 closed；F-002 closed（补测）；F-003/F-004/I-005 residual 已书面接受
+
+**不**构成：Marketplace、强制 bash 跨平台 CI 冒烟（见 residual）、standalone-bootstrap 全文重写（I-005 residual）、宿主 runtime 证据全量刷新。
+
+## Residual（关门后）
+
+| ID | 级别 | 说明 | 复审触发 | 状态 |
+|----|------|------|----------|------|
+| **R-019-SH-RUNTIME** | non-blocking | install.sh 端到端隔离冒烟未在 Windows 本环境 bash 复跑；静态断言 + ps1 隔离为主证据 | 增加 bash CI job 或维护者在 Linux/macOS 跑 sh 冒烟 | open residual |
+| **R-019-STANDALONE-COPY** | non-blocking | `docs/standalone-bootstrap.md` 未全文改写为「有 Skills 时主路径=core 内嵌 install」；skills README 已标主路径（I-005） | 下次触达 standalone / GOAL-006 文档 | open residual |
+| **R-019-I001-INSTALL-SHAPE** | non-blocking | 消费方「仅拷宿主 skill vs 完整 zip+install」形态未做现场统计（I-001） | 外部试点反馈 | open residual |
 
 ## 概述
 
 承接对外 Skills 资产在**其他项目**安装后的体验缺口：消费方装完 zip/`install` 后往往没有治理**存储骨架**，也没有 **`docs/architecture` 核心方法论**，只剩适配器入口——半成品。
 
-本目标关闭两件事（见 [D-003](01-decision.md#d-003--核心方法论与-skills-同级必备内嵌-core-镜像默认安装2026-07-24)）：
+本目标关闭两件事（D-003）：
 
-1. **核心方法论与 Skills 同级必备**：skills zip **内嵌 core 镜像**，`install` **默认**安装到目标仓 `docs/architecture/`（及约定的 templates/入口）。
-2. **工作区真相源 scaffold**：空仓可建立 `docs/workspace-…` + `goal-tree` + Root 引导路径。
-
-**仍不**打包 monorepo dogfood 过程树（`docs/workspace-001-goal-governance/GOAL-*`）或本仓 Web/实现专属内容。
-
-## 背景（已确认事实）
-
-2026-07-24 `/govern` 诊断 + 用户裁决：
-
-| 观察 | 判定 |
-|------|------|
-| 目标项目无 dogfood 目标树 | **按设计**：过程数据不进发布物 |
-| 目标项目无 `docs/architecture/*` | **产品缺陷**（D-003 纠正：不得再标「可选」）；方法论与 Skills 同级必备 |
-| 安装不 scaffold 工作区；S0/`01` 弱 | **真缺口** |
-| `install.ps1` Next steps 仍指向 legacy `docs\goals\` | **真缺口** |
-
-相关：GOAL-006（核心可独立启用——**不**否定与 Skills 共交付）、GOAL-010、GOAL-018（skills-only 边界由 D-003 **扩展**为 skills+core 镜像，仍排除 dogfood）。
+1. **核心方法论与 Skills 同级必备**：skills zip **内嵌 core 镜像**，`install` **默认**安装到目标仓 `docs/architecture/`（及 templates/入口）。
+2. **工作区真相源 scaffold**：空仓可建立 `docs/workspace-…` + `goal-tree`；Root 由 `/govern` 创建。
 
 ## 成功标准
 
-- [x] **Core 镜像（D-004）**：`skills/core/docs/` 含 principles + workspace-protocol + overview/layout + templates + 精简 README；无 tech-stack
-- [x] **默认安装（D-004 落点）**：`install.sh` / `install.ps1` 任意宿主安装均调用 core → `./docs/`
-- [x] **打包**：`pack_skills_release` required 校验 core 文件；拒 tech-stack；单测覆盖
-- [x] `install.ps1` Next steps 与 `install.sh` 一致：`docs/workspace-…`（非 legacy `docs\goals\`）
-- [x] `skills/README.md`：**最小可运行集** + core 同级必备
-- [x] 编排器 S0 与 `01-create-new-goal`：空仓先 scaffold 工作区；slug 用户确认（D-005）
-- [x] AGENTS / govern wrapper：architecture **必备**、不完整安装话术；去掉「整体可选」定位
-- [x] 可选：`--init-workspace` / `-InitWorkspace`（显式 slug；不建 Root 五件套）
-- [x] 临时空目录：隔离冒烟断言 core + workspace skeleton 落点
-- [ ] 阶段/关门审计无未关闭 required finding（**阶段 D**）
-
-## 非目标（本目标不交付）
-
-- monorepo dogfood 目标树进 zip
-- Marketplace、协议大版本升级、强制刷新全部宿主 runtime 证据
-- **单独**再维护一套与 zip 无关的「仅 core 迷你包」作为主路径（GOAL-006 standalone 可保留为**无 AI 时**的次路径，主消费路径以 D-003 为准）
-- Web 工作台安装或生产写入放行
-- 把本仓 `tech-stack` 全量当作消费方强制依赖
+- [x] **Core 镜像（D-004）**
+- [x] **默认安装（D-004 落点）**
+- [x] **打包** required + 拒 tech-stack
+- [x] `install.ps1` Next steps 对齐 workspace
+- [x] `skills/README.md` 最小可运行集 + core 同级必备
+- [x] S0 与 `01` scaffold；slug 用户确认（D-005）
+- [x] AGENTS / wrappers 必备话术（含 monorepo 根 AGENTS §11，A-001 F-001）
+- [x] 可选 `--init-workspace`（D-006）
+- [x] 临时空目录隔离冒烟（ps1；sh 见 R-019-SH-RUNTIME）
+- [x] 阶段/关门审计：无未关闭 **required** finding（A-001 响应 + A-002 self）
 
 ## 高层路线图
 
 | 阶段 | 内容 | 状态 |
 |------|------|------|
-| **A** | 冻结 core 清单 + pack 内嵌镜像 + install 默认安装 architecture/templates；修 `install.ps1` 引导；README 最小可运行集（含 core 必备） | **完成**（2026-07-24） |
-| **B** | 强化 S0 / 原语 01 空仓工作区 scaffold；AGENTS/prompts 引用已装 core，不再写「architecture 整体可选」 | **完成**（2026-07-24） |
-| **C** | 可选 `--init-workspace` + 隔离可复现证据 | **完成**（2026-07-24） |
-| **D** | 阶段审 / 有界关门 | 待开始 |
+| **A** | core 镜像 + pack + install 默认 + README | **完成** |
+| **B** | S0/01 + AGENTS 必备话术 | **完成** |
+| **C** | `--init-workspace` + 隔离证据 | **完成** |
+| **D** | A-001 响应 + self + 有界关门 | **完成**（2026-07-24） |
 
 ## 信息就绪与未知项
 
-| ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
-|----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
-| I-001 | non-blocking | 消费方常见安装形态：仅拷宿主 skill 还是完整 zip + `install` | C 是否补「无 install 手拷 core」说明 | C | 用户反馈 | open | — | 形态待细化 |
-| I-002 | non-blocking | 是否必须实现 `--init-workspace` | C 范围 | C | 阶段 C 已实现可选开关 | **closed** | — | install 可选；须显式 slug（D-005） |
-| I-003 | required | 空仓 scaffold 的工作区/Root slug 策略 | B 实施 | B | D-005 + prompts | **closed** | — | 必须用户确认；禁止静默默认 |
-| I-004 | required | Core 镜像精确文件清单与目标路径映射 | A pack/install | A 实施 | 用户清单 → D-004 | **closed** | — | [D-004](01-decision.md#d-004--core-镜像文件清单与安装映射关闭-i-004)：principles + workspace-protocol + overview/layout（去 monorepo 段）+ templates + 精简 docs/README；不装 tech-stack |
-| I-005 | non-blocking | GOAL-006 standalone-bootstrap 文案如何与 D-003 主路径并存 | A 文档 | A | skills README 已写主路径；standalone 全文改写可延后 | deferred | 责任人：维护者；复核：阶段 B 或下次 standalone 触达 | skills README 已标明 core 默认 install 为主路径 |
+| ID | 级别 | 状态 | 证据 / 结论 |
+|----|------|------|-------------|
+| I-001 | non-blocking | **accepted-residual** | → R-019-I001-INSTALL-SHAPE |
+| I-002 | non-blocking | **closed** | D-006 |
+| I-003 | required | **closed** | D-005 |
+| I-004 | required | **closed** | D-004 |
+| I-005 | non-blocking | **accepted-residual** | → R-019-STANDALONE-COPY；skills README 主路径已标 |
 
 ## 父目标
 
@@ -81,6 +78,6 @@ progress: 90%
 
 ## 相关目标
 
-- [GOAL-006](../GOAL-006-core-methodology-template-productization/00-meta.md) · 核心层独立启用
-- [GOAL-010](../GOAL-010-core-workspace-shared-materials-protocol/00-meta.md) · 工作区协议
-- [GOAL-018](../GOAL-018-skills-release-packaging/00-meta.md) · Skills Release 打包路径
+- [GOAL-006](../GOAL-006-core-methodology-template-productization/00-meta.md)
+- [GOAL-010](../GOAL-010-core-workspace-shared-materials-protocol/00-meta.md)
+- [GOAL-018](../GOAL-018-skills-release-packaging/00-meta.md)

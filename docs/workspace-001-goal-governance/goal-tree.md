@@ -4,14 +4,18 @@ status: active
 created: 2026-07-18
 updated: 2026-07-24
 parent: null
-version: 0.99.0
+version: 1.0.0
 ---
 
 # Goal Tree
 
+## 2026-07-24 · GOAL-019 有界关门
+
+D-007 / A-002–A-003：响应 A-001；F-001/F-002 closed；F-003/I-005/I-001 residual。GOAL-019 **`done / 100%`**。下一编号 **GOAL-020**。
+
 ## 2026-07-24 · GOAL-019 阶段 C 实现
 
-D-006：可选 `--init-workspace`（显式 slug）；隔离冒烟 PASS。GOAL-019 `active / 90%`。阶段 D：关门审计。
+D-006：可选 `--init-workspace`（显式 slug）；隔离冒烟 PASS。其后关门见上节。
 
 ## 2026-07-24 · GOAL-019 阶段 B 实现
 
@@ -376,7 +380,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
 ├── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
 ├── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
-└── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [active 90%]
+└── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
 ```
 
 ## 状态总览
@@ -401,9 +405,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-016-shared-materials-product | 实现共享资料区产品（CRUD / 固定引用 / 隔离） | GOAL-001-main-vision | done | 100% | [GOAL-016-shared-materials-product/](GOAL-016-shared-materials-product/) |
 | GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
 | GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径（文档 + pack + CI） | GOAL-001-main-vision | done | 100% | [GOAL-018-skills-release-packaging/](GOAL-018-skills-release-packaging/) |
-| GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | active | 90% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
+| GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | done | 100% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-020**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。GOAL-019 承接 Skills 消费方空仓工作区 scaffold。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-020**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。GOAL-019 **done**（core+Skills 共交付 + 工作区 scaffold；residual R-019-*）。
 
 ## 状态图例
 

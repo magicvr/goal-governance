@@ -775,6 +775,78 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(ps1, r"RootSlug|root-slug")
         self.assertRegex(sh, r"no silent default|D-005")
         self.assertRegex(ps1, r"no silent default|D-005")
+        # GOAL-019 A-001 F-002: refuse overwrite when workspace path exists
+        self.assertRegex(sh, r"already exists|refuse overwrite")
+        self.assertRegex(ps1, r"already exists|refuse overwrite")
+
+    @unittest.skipUnless(sys.platform.startswith("win"), "InitWorkspace refuse smoke is Windows/ps1-first")
+    def test_init_workspace_refuses_existing_path(self) -> None:
+        """GOAL-019 A-001 F-002: second -InitWorkspace on same path must fail."""
+        pwsh = shutil.which("powershell") or shutil.which("pwsh")
+        if not pwsh:
+            self.skipTest("PowerShell not found on PATH")
+        with tempfile.TemporaryDirectory(prefix="gg-init-refuse-") as tmp:
+            target = Path(tmp)
+            skills = SKILLS_ROOT
+            cmd_base = [
+                pwsh,
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                str(INSTALL_PS1),
+                "-InitWorkspace",
+                "-WorkspaceSlug",
+                "refuse-demo",
+                "-RootSlug",
+                "refuse-root",
+                "-SkillsDir",
+                str(skills),
+            ]
+            first = subprocess.run(
+                cmd_base,
+                cwd=str(target),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            self.assertEqual(
+                first.returncode,
+                0,
+                msg=f"first init failed:\n{first.stdout}\n{first.stderr}",
+            )
+            ws = target / "docs" / "workspace-001-refuse-demo" / "workspace.md"
+            self.assertTrue(ws.is_file(), msg="first init did not create workspace.md")
+            second = subprocess.run(
+                cmd_base,
+                cwd=str(target),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            self.assertNotEqual(
+                second.returncode,
+                0,
+                msg=f"second init should refuse:\n{second.stdout}\n{second.stderr}",
+            )
+            combined = (second.stdout or "") + (second.stderr or "")
+            self.assertRegex(
+                combined,
+                r"(?i)already exists|refuse",
+                msg=f"refuse message missing:\n{combined}",
+            )
+
+    def test_monorepo_agents_architecture_not_optional_supplement(self) -> None:
+        """GOAL-019 A-001 F-001: root AGENTS must not call architecture optional."""
+        agents = (SKILLS_ROOT.parent / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertNotRegex(agents, r"architecture 原则全文可选补充")
+        self.assertNotRegex(agents, r"architecture.*可选补充")
+        self.assertRegex(agents, r"同级必备|原则全文\*\*必备\*\*|必备.*同级")
 
     def test_install_all_ships_contract_mirror(self) -> None:
         sh = INSTALL_SH.read_text(encoding="utf-8")

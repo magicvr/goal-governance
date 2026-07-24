@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-24
 parent: null
-version: 0.8.0
+version: 0.8.1
 ---
 
 # AGENTS.md
@@ -213,7 +213,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
   扫描 → 意见台账 → 分类 → P-004 裁决 → 提议 → 确认 → 原语 `01`～`04`。
 - **交叉审计**：`{{SKILLS_DIR}}/prompts/05-independent-audit.md` → **`/audit`**（只出意见，不改 status；响应归 `/govern`）。
 - advanced 填表 slash 可选（`--with-primitives`）。
-- **P-001** 以本文件第 6 节为准；**P-002～P-005** 以第 6b 节为准；有 architecture 原则文档时一并参考。
+- **P-001** 以本文件第 6 节为准；**P-002～P-005** 以第 6b 节为准；**全文**以 `docs/architecture/principles.md` 为准（与 Skills 同级必备）。
 
 ## 10. 变更工作流
 
@@ -241,7 +241,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - 执行/审计：只写有证据的事实；计划单独标注。
 - 代码布局与 Root slug：默认见第 8 节；以用户/项目约定为准（`web/` 等为可选约定示例）。
 - Skills 包：按内容定位 SKILLS_PKG。
-- P-001：本文件第 6 节；P-002～P-005：第 6b 节；architecture 原则全文可选补充。
+- P-001：本文件第 6 节；P-002～P-005：第 6b 节；architecture 原则全文**必备**（与 Skills 同级；缺则不完整安装）。
 - 目标可带未知立项，但信息项、阶段门禁、证据与残余风险接受必须可追踪；按工作量而非固定“两子目标”拆分。
 - 交叉审计意见由编排器统一响应；冲突与「是否自审」问用户并给建议。
 
