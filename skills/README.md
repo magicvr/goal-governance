@@ -196,6 +196,11 @@ install/copilot/prompts/audit.md
 | `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit` prompts + **core → docs/** |
 | `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
 | `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts + **core** |
+| `--init-workspace` / `-InitWorkspace` | 可选：scaffold `docs/workspace-NNN-slug/`（**须**同时给 slug） |
+| `--workspace-slug` / `-WorkspaceSlug` | 与 init-workspace 联用；小写短横线；**禁止静默默认** |
+| `--root-slug` / `-RootSlug` | 与 init-workspace 联用 → 计划中的 `GOAL-001-<slug>` |
+| `--root-title` / `-RootTitle` | 可选；计划中 Root 标题 |
+| `--workspace-nnn` / `-WorkspaceNnn` | 可选；默认 `001` |
 | `--skills-dir` / `-SkillsDir` | 默认 `./skills` |
 
 ```bash
@@ -212,7 +217,21 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 .\skills\install.ps1 -Copilot -SkillsDir .\skills
 ```
 
-安装后：使用 **`/govern`** 推进；需要交叉审计时用 **`/audit`**，再用 `/govern` 响应意见。
+可选：安装同时 scaffold 工作区骨架（**不**创建 Root 五件套；slug 必须显式给出）：
+
+```bash
+bash ./skills/install.sh --all --skills-dir ./skills \
+  --init-workspace --workspace-slug my-product --root-slug product-vision \
+  --root-title "Product vision"
+```
+
+```powershell
+.\skills\install.ps1 -All -SkillsDir .\skills `
+  -InitWorkspace -WorkspaceSlug my-product -RootSlug product-vision `
+  -RootTitle 'Product vision'
+```
+
+安装后：使用 **`/govern`** 推进（若已 scaffold，则创建 Root 五件套）；需要交叉审计时用 **`/audit`**。
 
 ## 最小可运行集（消费方）
 
@@ -222,7 +241,8 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 | `/govern` + `/audit` + `skills/prompts/*` | install + 包 |
 | **`docs/architecture/`**（principles、workspace-protocol、overview、directory-layout） | install 从 `core/` |
 | **`docs/templates/`** + 精简 **`docs/README.md`** | install 从 `core/` |
-| `docs/workspace-…/workspace.md` + `goal-tree` + Root | 安装后由 `/govern` S0 scaffold（slug **用户确认**） |
+| `docs/workspace-…/workspace.md` + `goal-tree` | `/govern` S0，或 install `--init-workspace`（slug **显式**） |
+| Root 五件套 | `/govern` / 原语 01 创建（init-workspace **不**代建） |
 
 | 不要期望随包出现 | 原因 |
 |------------------|------|
@@ -271,7 +291,6 @@ Windows 上隔离安装冒烟断言 `/govern`+`/audit`+**core docs 落点**，�
 
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
-- install 一键 scaffold 工作区（GOAL-019 阶段 C）  
 - 自动在无维护者授权时创建 GitHub Release（tag CI 仅 pack + 上传 artifact）
 
-当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + `/govern`/`/audit` + 原语 01～05 + 多宿主安装 + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。
+当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + `/govern`/`/audit` + 原语 01～05 + 多宿主安装 + 可选 `--init-workspace` + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。

@@ -15,6 +15,11 @@ param(
     [switch]$All,
     [switch]$Help,
     [switch]$WithPrimitives,
+    [switch]$InitWorkspace,
+    [string]$WorkspaceSlug = '',
+    [string]$RootSlug = '',
+    [string]$RootTitle = '',
+    [string]$WorkspaceNnn = '001',
     [string]$SkillsDir = './skills',
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$RemainingArgs
@@ -36,6 +41,7 @@ Usage (run from target project root):
   .\install.ps1 -Grok [-SkillsDir DIR]
   .\install.ps1 -Copilot [-SkillsDir DIR] [-WithPrimitives]
   .\install.ps1 -All [-SkillsDir DIR] [-WithPrimitives]
+  .\install.ps1 -InitWorkspace -WorkspaceSlug SLUG -RootSlug SLUG [host flags...]
   .\install.ps1 -Help
 
 Options:
@@ -50,6 +56,17 @@ Options:
   -WithPrimitives / --with-primitives
                            Also install advanced Copilot form-fill slash wrappers. Opt-in only.
   -All / --all             Install Claude + Grok + Copilot + prompts/templates/contracts under -SkillsDir
+  -InitWorkspace / --init-workspace
+                           GOAL-019: create docs\workspace-NNN-SLUG\ with workspace.md + goal-tree.md
+                           (does NOT create GOAL-* five-pack; use /govern for Root)
+  -WorkspaceSlug / --workspace-slug S
+                           Required with -InitWorkspace (lowercase hyphen slug)
+  -RootSlug / --root-slug S
+                           Required with -InitWorkspace -> GOAL-001-<S>
+  -RootTitle / --root-title T
+                           Optional planned Root title
+  -WorkspaceNnn / --workspace-nnn NNN
+                           Optional three-digit workspace number (default: 001)
   -SkillsDir / --skills-dir DIR
                            Skills package / destination directory (default: .\skills)
   -Help / --help           Show this help
@@ -60,6 +77,7 @@ Behavior:
   - Default Copilot slash surface: /govern + /audit
   - Core methodology (GOAL-019 D-004): ALWAYS installs package core\docs -> .\docs\
     (architecture + templates + slim docs\README). Missing core = incomplete install.
+  - -InitWorkspace alone is allowed (still installs core); slugs must be explicit (D-005)
   - Core orchestrator: prompts\00-govern-orchestrator.md
   - Cross-audit core: prompts\05-independent-audit.md
   - Compatibility contract mirror: contracts\skills-consumer-contract.json
@@ -68,10 +86,15 @@ Behavior:
 Examples:
   cd C:\path\to\your-project
   .\skills\install.ps1 -Claude -SkillsDir .\skills
-  .\skills\install.ps1 -Grok -SkillsDir .\skills
   .\skills\install.ps1 -All -SkillsDir .\skills
+  .\skills\install.ps1 -All -InitWorkspace -WorkspaceSlug my-product -RootSlug product-vision -SkillsDir .\skills
 "@
 }
+
+$script:InitWorkspaceDone = $false
+$script:InitWorkspaceNnn = '001'
+$script:InitWorkspaceSlug = ''
+$script:InitRootSlug = ''
 
 function Write-Err([string]$Message) {
     Write-Host "Error: $Message" -ForegroundColor Red
@@ -160,14 +183,21 @@ function Show-NextSteps {
         [string]$SkillsDir,
         [string]$PackageRoot
     )
+    $step2 = if ($script:InitWorkspaceDone) {
+        "  2. Workspace skeleton ready: docs\workspace-$($script:InitWorkspaceNnn)-$($script:InitWorkspaceSlug)\`n" +
+        "     Run /govern to create Root GOAL-001-$($script:InitRootSlug) (five-pack)."
+    } else {
+        "  2. Create workspace skeleton (pick one):`n" +
+        "     - /govern S0 (AI asks for slugs), or`n" +
+        "     - re-run install with -InitWorkspace -WorkspaceSlug S -RootSlug S"
+    }
     @"
 
 Done.
 
 Next steps:
   1. Review installed rule file(s) and docs\architecture (core methodology; required).
-  2. Create docs\workspace-<NNN>-<slug>\ with workspace.md + goal-tree.md
-     (from docs\templates\workspace-context.md). Then /govern to create Root Goal.
+$step2
   3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
      - Methodology: .\docs\architecture\principles.md
      - Orchestrator: $SkillsDir\prompts\00-govern-orchestrator.md
@@ -219,6 +249,128 @@ function Install-CoreDocs {
     Copy-DirMerge -Source $templates -Destination (Join-Path $TargetDir 'docs\templates') -Label 'core templates'
 }
 
+function Test-HyphenSlug([string]$Value, [string]$Label) {
+    if ([string]::IsNullOrWhiteSpace($Value)) {
+        Write-Err "$Label is required"
+    }
+    if ($Value -notmatch '^[a-z0-9]+(-[a-z0-9]+)*$') {
+        Write-Err "$Label must be lowercase hyphen slug (got: $Value)"
+    }
+}
+
+function Initialize-WorkspaceSkeleton {
+    param(
+        [string]$PackageRoot,
+        [string]$TargetDir,
+        [string]$WorkspaceSlug,
+        [string]$RootSlug,
+        [string]$RootTitle,
+        [string]$WorkspaceNnn
+    )
+    Test-HyphenSlug -Value $WorkspaceSlug -Label '-WorkspaceSlug'
+    Test-HyphenSlug -Value $RootSlug -Label '-RootSlug'
+    if ($WorkspaceNnn -notmatch '^[0-9]{3}$') {
+        Write-Err "-WorkspaceNnn must be three digits (got: $WorkspaceNnn)"
+    }
+    $title = if ([string]::IsNullOrWhiteSpace($RootTitle)) { 'Root Goal (pending definition)' } else { $RootTitle }
+    $today = Get-Date -Format 'yyyy-MM-dd'
+    $wsId = "workspace-$WorkspaceNnn-$WorkspaceSlug"
+    $rootId = "GOAL-001-$RootSlug"
+    $scope = "docs/$wsId/"
+    $wsDir = Join-Path (Join-Path $TargetDir 'docs') $wsId
+    $wsFile = Join-Path $wsDir 'workspace.md'
+    $treeFile = Join-Path $wsDir 'goal-tree.md'
+
+    if (Test-Path -LiteralPath $wsDir) {
+        Write-Err "Workspace path already exists (refuse overwrite): $wsDir"
+    }
+
+    $tmpl = Join-Path $TargetDir 'docs\templates\workspace-context.md'
+    if (-not (Test-Path -LiteralPath $tmpl -PathType Leaf)) {
+        $tmpl = Join-Path $PackageRoot 'core\docs\templates\workspace-context.md'
+    }
+    if (-not (Test-Path -LiteralPath $tmpl -PathType Leaf)) {
+        Write-Err "Missing workspace template: $tmpl (install core first)"
+    }
+
+    New-Item -ItemType Directory -Path $wsDir -Force | Out-Null
+
+    $wsText = @"
+---
+id: $wsId
+title: $wsId
+status: active
+root_goal: $rootId
+canonical_scope: $scope
+shared_materials_catalog: none
+created: $today
+updated: $today
+version: 0.1.0
+---
+
+# Workspace context: $wsId
+
+Scaffolded by install -InitWorkspace (GOAL-019). Goal state lives only in this folder goal-tree.md and GOAL-* packs.
+
+## Binding
+
+| Field | Value | Notes |
+|-------|-------|-------|
+| workspace id | $wsId | Must match shared-material workspace_id |
+| Root Goal | $rootId | Five-pack not created yet; create via /govern with parent null |
+| canonical_scope | $scope | Sole goal state scope for this workspace |
+| shared materials | none | Change path and add refs when needed |
+
+## Shared material refs
+
+| reference_id | workspace_id | material_id | source | version | sha256 | purpose | local_record | status |
+|--------------|--------------|-------------|--------|---------|--------|---------|--------------|--------|
+
+## Notes
+
+- Planned Root title: $title
+- Scaffold does NOT create GOAL-* folders; next step: /govern to create Root.
+"@
+    $utf8 = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($wsFile, ($wsText -replace "`r`n", "`n"), $utf8)
+
+    $treeText = @"
+---
+title: Goal Tree
+status: active
+created: $today
+updated: $today
+parent: null
+version: 0.1.0
+---
+
+# Goal Tree
+
+Workspace $wsId scaffolded. Root $rootId five-pack not created yet - run /govern.
+
+## Tree
+
+``````text
+(empty - pending Root $rootId)
+``````
+
+## Status
+
+| ID | Title | Parent | Status | Progress | Path |
+|----|-------|--------|--------|----------|------|
+| $rootId | $title | - | draft | 0% | (not created yet) |
+"@
+    $treeText = $treeText -replace '``````', '```'
+    [System.IO.File]::WriteAllText($treeFile, ($treeText -replace "`r`n", "`n"), $utf8)
+
+    Write-Host "Scaffolded workspace: $scope"
+    Write-Host "  workspace.md + goal-tree.md (Root $rootId pending /govern)"
+    $script:InitWorkspaceDone = $true
+    $script:InitWorkspaceNnn = $WorkspaceNnn
+    $script:InitWorkspaceSlug = $WorkspaceSlug
+    $script:InitRootSlug = $RootSlug
+}
+
 # Accept GNU-style flags (avoid @($null) which is a 1-element array)
 $extraArgs = @()
 if ($null -ne $RemainingArgs) {
@@ -233,7 +385,28 @@ while ($i -lt $extraArgs.Count) {
         '^--copilot$' { $Copilot = $true; $i++ }
         '^--all$' { $All = $true; $i++ }
         '^--with-primitives$' { $WithPrimitives = $true; $i++ }
+        '^--init-workspace$' { $InitWorkspace = $true; $i++ }
         '^(--help|-h)$' { $Help = $true; $i++ }
+        '^--workspace-slug$' {
+            if ($i + 1 -ge $extraArgs.Count) { Write-Err "--workspace-slug requires a value" }
+            $WorkspaceSlug = $extraArgs[$i + 1]; $i += 2
+        }
+        '^--workspace-slug=(.+)$' { $WorkspaceSlug = $Matches[1]; $i++ }
+        '^--root-slug$' {
+            if ($i + 1 -ge $extraArgs.Count) { Write-Err "--root-slug requires a value" }
+            $RootSlug = $extraArgs[$i + 1]; $i += 2
+        }
+        '^--root-slug=(.+)$' { $RootSlug = $Matches[1]; $i++ }
+        '^--root-title$' {
+            if ($i + 1 -ge $extraArgs.Count) { Write-Err "--root-title requires a value" }
+            $RootTitle = $extraArgs[$i + 1]; $i += 2
+        }
+        '^--root-title=(.+)$' { $RootTitle = $Matches[1]; $i++ }
+        '^--workspace-nnn$' {
+            if ($i + 1 -ge $extraArgs.Count) { Write-Err "--workspace-nnn requires a value" }
+            $WorkspaceNnn = $extraArgs[$i + 1]; $i += 2
+        }
+        '^--workspace-nnn=(.+)$' { $WorkspaceNnn = $Matches[1]; $i++ }
         '^--skills-dir$' {
             if ($i + 1 -ge $extraArgs.Count) {
                 Write-Err "--skills-dir requires a path argument"
@@ -252,9 +425,18 @@ while ($i -lt $extraArgs.Count) {
     }
 }
 
-if ($Help -or (-not $Claude -and -not $Grok -and -not $Copilot -and -not $All)) {
+if ($Help -or (-not $Claude -and -not $Grok -and -not $Copilot -and -not $All -and -not $InitWorkspace)) {
     Show-Usage
     if ($Help) { exit 0 } else { exit 1 }
+}
+
+if ($InitWorkspace) {
+    if ([string]::IsNullOrWhiteSpace($WorkspaceSlug)) {
+        Write-Err "-InitWorkspace requires -WorkspaceSlug (D-005: no silent default)"
+    }
+    if ([string]::IsNullOrWhiteSpace($RootSlug)) {
+        Write-Err "-InitWorkspace requires -RootSlug (D-005: no silent default)"
+    }
 }
 
 if ($All) {
@@ -382,7 +564,17 @@ if ($installExtras) {
     Copy-DirMerge -Source $ContractsSrc -Destination (Join-Path $SkillsDirResolved 'contracts') -Label 'contracts'
 }
 
-# GOAL-019 D-003/D-004: core methodology is co-required with any host install
+# GOAL-019 D-003/D-004: core methodology is co-required with any host or workspace init
 Install-CoreDocs -PackageRoot $PackageRoot -TargetDir $TargetDir
+
+if ($InitWorkspace) {
+    Initialize-WorkspaceSkeleton `
+        -PackageRoot $PackageRoot `
+        -TargetDir $TargetDir `
+        -WorkspaceSlug $WorkspaceSlug `
+        -RootSlug $RootSlug `
+        -RootTitle $RootTitle `
+        -WorkspaceNnn $WorkspaceNnn
+}
 
 Show-NextSteps -TargetDir $TargetDir -SkillsDir $SkillsDirResolved -PackageRoot $PackageRoot

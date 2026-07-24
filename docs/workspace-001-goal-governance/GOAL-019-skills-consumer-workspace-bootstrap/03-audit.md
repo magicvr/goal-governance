@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-24
 updated: 2026-07-24
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 审计 · GOAL-019
@@ -14,11 +14,12 @@ version: 0.5.0
 
 | ID | 级别 | 状态 | 本阶段影响 |
 |----|------|------|------------|
-| I-001 | non-blocking | open | 不阻断 C |
-| I-002 | non-blocking | open | C 前裁决 |
-| I-003 | required | **closed**（D-005） | 已写入 S0/01 |
+| I-001 | non-blocking | open | 不阻断关门 |
+| I-002 | non-blocking | **closed**（D-006） | init-workspace 已交付 |
+| I-003 | required | **closed**（D-005） | 已写入 S0/01/install |
 | I-004 | required | **closed**（D-004） | 阶段 A 已验收 |
-| I-005 | non-blocking | deferred | 不阻断 C |
+| I-005 | non-blocking | deferred | 不阻断关门（standalone 文案 residual 可接受） |
+
 
 
 ## 阶段 A 结构核对（非正式 A-00N · 2026-07-24）
@@ -32,7 +33,7 @@ version: 0.5.0
 | install.ps1 无 docs\\goals Next steps | 有 |
 | 隔离 install 冒烟 | 有（unittest OK） |
 
-正式 self 阶段审计可在阶段 C 后或关门前补 A-001。
+正式 self 阶段审计在阶段 D / 关门前补 **A-001**。
 
 ## 阶段 B 结构核对（非正式 · 2026-07-24）
 
@@ -43,6 +44,16 @@ version: 0.5.0
 | architecture 必备 / 不完整安装 | 有（AGENTS + 00 + wrappers） |
 | 01 步骤 0 | 有 |
 | 单测 portability required architecture | 有 |
+
+## 阶段 C 结构核对（非正式 · 2026-07-24）
+
+| 检查 | 结果 |
+|------|------|
+| install --init-workspace / -InitWorkspace | 有 |
+| 强制 workspace-slug + root-slug | 有 |
+| 不创建 GOAL 五件套 | 有（隔离冒烟） |
+| 已存在路径 refuse | 有（代码路径） |
+| 隔离 PASS + 33 unit tests | 有 |
 
 ## 决策一致性（自检 · 非正式 A-00N）
 

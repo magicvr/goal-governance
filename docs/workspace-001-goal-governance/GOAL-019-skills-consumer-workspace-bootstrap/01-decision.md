@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-24
 updated: 2026-07-24
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 决策记录 · GOAL-019
@@ -17,7 +17,7 @@ version: 0.5.0
 | ID | 级别 | 状态 | 备注 |
 |----|------|------|------|
 | I-001 | non-blocking | open | 消费安装形态 |
-| I-002 | non-blocking | open | 是否做 install scaffold 开关 |
+| I-002 | non-blocking | **closed** | 阶段 C：可选 `--init-workspace` 已实现 |
 | I-003 | required | **closed** | D-005：slug 必须用户确认，禁止静默默认 |
 | I-004 | required | **closed** | D-004 清单；实现时按表 pack/install |
 | I-005 | non-blocking | deferred | standalone 全文；skills README 已标主路径 |
@@ -190,3 +190,28 @@ version: 0.5.0
 
 - **包内固定默认 slug 可事后改**：否决。  
 - **从仓库目录名自动推断 slug 不经确认**：否决（可作为建议展示，仍须确认）。
+
+## D-006 · 阶段 C：可选 install 工作区脚手架（关闭 I-002）
+
+**日期**：2026-07-24  
+**状态**：accepted  
+**关闭**：I-002
+
+### 决定
+
+1. `install.sh` / `install.ps1` 提供**可选** `--init-workspace` / `-InitWorkspace`。  
+2. **必须**同时提供 `--workspace-slug` 与 `--root-slug`（D-005）；缺一 fail。  
+3. 脚手架只写 `docs/workspace-NNN-slug/workspace.md` + `goal-tree.md`；**不**创建 `GOAL-*` 五件套。  
+4. 可与宿主安装组合，也可单独使用（仍默认安装 core）。  
+5. 已有同路径工作区时 **refuse overwrite**。
+
+### 为什么
+
+- 消费方需要可脚本化、可 CI 复现的骨架，又不绕过「slug 用户确认」。  
+- Root 五件套仍归 `/govern` / 原语 01，避免 install 与编排器双写。
+
+### 未选方案
+
+- **默认总是 scaffold（无 flag）**：否决（破坏仅装规则的路径）。  
+- **scaffold 时直接建 Root 五件套**：否决（与 S0/01 职责重叠）。  
+- **允许无 slug 的默认名**：否决（D-005）。

@@ -4,15 +4,18 @@ status: active
 created: 2026-07-18
 updated: 2026-07-24
 parent: null
-version: 0.98.0
+version: 0.99.0
 ---
 
 # Goal Tree
 
+## 2026-07-24 · GOAL-019 阶段 C 实现
+
+D-006：可选 `--init-workspace`（显式 slug）；隔离冒烟 PASS。GOAL-019 `active / 90%`。阶段 D：关门审计。
+
 ## 2026-07-24 · GOAL-019 阶段 B 实现
 
-S0 scaffold + D-005 slug 用户确认；AGENTS/00/01/wrapper 去掉 architecture「可选」定位。GOAL-019 `active / 70%`。阶段 C：可选 `--init-workspace`。
-
+S0 scaffold + D-005 slug 用户确认；AGENTS/00/01/wrapper 去掉 architecture「可选」定位。其后阶段 C 见上节。
 ## 2026-07-24 · GOAL-019 阶段 A 实现
 
 `skills/core/` 镜像 + install 默认装 docs + pack 校验 + README 最小可运行集。其后阶段 B 见上节。
@@ -373,7 +376,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
 ├── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
 ├── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
-└── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [active 70%]
+└── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [active 90%]
 ```
 
 ## 状态总览
@@ -398,7 +401,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-016-shared-materials-product | 实现共享资料区产品（CRUD / 固定引用 / 隔离） | GOAL-001-main-vision | done | 100% | [GOAL-016-shared-materials-product/](GOAL-016-shared-materials-product/) |
 | GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
 | GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径（文档 + pack + CI） | GOAL-001-main-vision | done | 100% | [GOAL-018-skills-release-packaging/](GOAL-018-skills-release-packaging/) |
-| GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | active | 70% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
+| GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | active | 90% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
 
 阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-020**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。GOAL-019 承接 Skills 消费方空仓工作区 scaffold。
 

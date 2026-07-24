@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-24
 updated: 2026-07-24
-version: 0.5.0
-progress: 70%
+version: 0.6.0
+progress: 90%
 ---
 
 # GOAL-019 · Skills 消费方工作区骨架落地（空仓可运行）
@@ -44,9 +44,9 @@ progress: 70%
 - [x] `skills/README.md`：**最小可运行集** + core 同级必备
 - [x] 编排器 S0 与 `01-create-new-goal`：空仓先 scaffold 工作区；slug 用户确认（D-005）
 - [x] AGENTS / govern wrapper：architecture **必备**、不完整安装话术；去掉「整体可选」定位
-- [ ] 可选：`--init-workspace`（**阶段 C**）
-- [x] 临时空目录：`install.ps1 -All` 隔离冒烟断言 core 落点（结构证据）
-- [ ] 阶段/关门审计无未关闭 required finding
+- [x] 可选：`--init-workspace` / `-InitWorkspace`（显式 slug；不建 Root 五件套）
+- [x] 临时空目录：隔离冒烟断言 core + workspace skeleton 落点
+- [ ] 阶段/关门审计无未关闭 required finding（**阶段 D**）
 
 ## 非目标（本目标不交付）
 
@@ -62,7 +62,7 @@ progress: 70%
 |------|------|------|
 | **A** | 冻结 core 清单 + pack 内嵌镜像 + install 默认安装 architecture/templates；修 `install.ps1` 引导；README 最小可运行集（含 core 必备） | **完成**（2026-07-24） |
 | **B** | 强化 S0 / 原语 01 空仓工作区 scaffold；AGENTS/prompts 引用已装 core，不再写「architecture 整体可选」 | **完成**（2026-07-24） |
-| **C** | 可选 `--init-workspace` + 隔离可复现证据；canonical↔镜像一致性测试 | 待开始 |
+| **C** | 可选 `--init-workspace` + 隔离可复现证据 | **完成**（2026-07-24） |
 | **D** | 阶段审 / 有界关门 | 待开始 |
 
 ## 信息就绪与未知项
@@ -70,7 +70,7 @@ progress: 70%
 | ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | non-blocking | 消费方常见安装形态：仅拷宿主 skill 还是完整 zip + `install` | C 是否补「无 install 手拷 core」说明 | C | 用户反馈 | open | — | 形态待细化 |
-| I-002 | non-blocking | 是否必须实现 `--init-workspace` | C 范围 | C | 用户裁决 | open | — | 倾向「有则更好」 |
+| I-002 | non-blocking | 是否必须实现 `--init-workspace` | C 范围 | C | 阶段 C 已实现可选开关 | **closed** | — | install 可选；须显式 slug（D-005） |
 | I-003 | required | 空仓 scaffold 的工作区/Root slug 策略 | B 实施 | B | D-005 + prompts | **closed** | — | 必须用户确认；禁止静默默认 |
 | I-004 | required | Core 镜像精确文件清单与目标路径映射 | A pack/install | A 实施 | 用户清单 → D-004 | **closed** | — | [D-004](01-decision.md#d-004--core-镜像文件清单与安装映射关闭-i-004)：principles + workspace-protocol + overview/layout（去 monorepo 段）+ templates + 精简 docs/README；不装 tech-stack |
 | I-005 | non-blocking | GOAL-006 standalone-bootstrap 文案如何与 D-003 主路径并存 | A 文档 | A | skills README 已写主路径；standalone 全文改写可延后 | deferred | 责任人：维护者；复核：阶段 B 或下次 standalone 触达 | skills README 已标明 core 默认 install 为主路径 |
