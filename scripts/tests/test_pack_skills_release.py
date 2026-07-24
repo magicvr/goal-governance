@@ -48,6 +48,26 @@ def _minimal_skills_tree(root: Path) -> Path:
     )
     _write(skills / "contracts" / "skills-consumer-contract.json", "{}\n")
     _write(skills / "templates" / "goal-folder" / "00-meta.md", "# meta\n")
+    # GOAL-019 D-004 core mirror (required for pack completeness)
+    _write(skills / "core" / "docs" / "README.md", "# docs\n")
+    _write(skills / "core" / "docs" / "architecture" / "principles.md", "# p\n")
+    _write(
+        skills / "core" / "docs" / "architecture" / "workspace-protocol.md",
+        "# wp\n",
+    )
+    _write(skills / "core" / "docs" / "architecture" / "overview.md", "# o\n")
+    _write(
+        skills / "core" / "docs" / "architecture" / "directory-layout.md",
+        "# d\n",
+    )
+    _write(
+        skills / "core" / "docs" / "templates" / "workspace-context.md",
+        "# w\n",
+    )
+    _write(
+        skills / "core" / "docs" / "templates" / "goal-folder" / "00-meta.md",
+        "# m\n",
+    )
     # Noise that must be excluded
     _write(skills / "prompts" / "__pycache__" / "x.pyc", "cache")
     _write(skills / "tests" / "__pycache__" / "t.cpython-311.pyc", "cache")
@@ -100,6 +120,7 @@ class PackSkillsReleaseTests(unittest.TestCase):
             self.assertIn(f"{root}/install.sh", names)
             self.assertIn(f"{root}/install.ps1", names)
             self.assertIn(f"{root}/prompts/00-govern-orchestrator.md", names)
+            self.assertIn(f"{root}/core/docs/architecture/principles.md", names)
             self.assertTrue(any(n.startswith(f"{root}/contracts/") for n in names))
             joined = "\n".join(names)
             self.assertNotIn("__pycache__", joined)
@@ -107,6 +128,7 @@ class PackSkillsReleaseTests(unittest.TestCase):
             self.assertNotIn("docs/workspace-", joined)
             self.assertNotIn("/web/", joined)
             self.assertNotIn("artifacts/", joined)
+            self.assertNotIn("tech-stack.md", joined)
 
     def test_pack_skills_rejects_incomplete_tree(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -161,8 +183,16 @@ class PackSkillsReleaseTests(unittest.TestCase):
             self.assertIn(f"{root}/install.sh", names)
             self.assertIn(f"{root}/install.ps1", names)
             self.assertIn(f"{root}/prompts/00-govern-orchestrator.md", names)
+            self.assertIn(f"{root}/core/docs/architecture/principles.md", names)
+            self.assertIn(f"{root}/core/docs/architecture/workspace-protocol.md", names)
             self.assertTrue(any(n.startswith(f"{root}/contracts/") for n in names))
-            for bad in ("__pycache__", "docs/workspace-", "/web/", "artifacts/"):
+            for bad in (
+                "__pycache__",
+                "docs/workspace-",
+                "/web/",
+                "artifacts/",
+                "tech-stack.md",
+            ):
                 self.assertFalse(
                     any(bad in n for n in names),
                     msg=f"forbidden path fragment {bad!r} in archive",

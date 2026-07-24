@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-07-20
+updated: 2026-07-24
 parent: null
-version: 0.7.0
+version: 0.8.1
 ---
 
 # AGENTS.md
@@ -21,11 +21,11 @@ version: 0.7.0
 |------|------|------|
 | 目标与过程记录 | `<workspace-root>/` | 唯一长期存储 |
 | 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
-| 架构约定 | `docs/architecture/` | 若项目启用 |
-| 治理原则 | `docs/architecture/principles.md` | 若存在；含 P-001～P-005 |
-| 文档使用规范 | `docs/README.md` | 若存在 |
-| 核心方法论与模板 | `docs/templates/` | 若项目采用核心层；canonical 模板优先 |
-| 工作区与共享资料协议 | `docs/workspace-<NNN>-<slug>/workspace.md`、`docs/architecture/workspace-protocol.md` | 前者存在时必读；目标状态仍以 `<workspace-root>/` 为准 |
+| 架构约定 | `docs/architecture/` | **与 Skills 同级必备**（消费方 install 默认安装） |
+| 治理原则 | `docs/architecture/principles.md` | **必备**；P-001～P-005 全文；AGENTS §6/6b 为操作摘要 |
+| 文档使用规范 | `docs/README.md` | **必备**（消费方为精简入口） |
+| 核心方法论与模板 | `docs/templates/` | **必备**（消费方 install 默认安装）；canonical 模板优先 |
+| 工作区与共享资料协议 | `docs/workspace-<NNN>-<slug>/workspace.md`、`docs/architecture/workspace-protocol.md` | workspace 存在时必读；protocol **必备**；目标状态仍以 `<workspace-root>/` 为准 |
 
 冲突时以 `<workspace-root>/` 与本文件为准。
 
@@ -101,11 +101,13 @@ version: 0.7.0
 4. 路线图就位后，再**按阶段**创建与执行具体子目标。
 5. 已可直接执行的小目标**无需**强行补路线图。
 
-原则以本文件第 6 节为准；`docs/architecture/principles.md` 若存在可作补充，**不要求**必有 architecture。
+原则以本文件第 6 节为操作入口；**全文**以 `docs/architecture/principles.md` 为准（**必备**）。  
+Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安装，不得当作可跳过。
 
 ## 6b. 治理闭环、交叉审计与信息就绪（P-002～P-005）
 
-操作摘要如下；全文见 `docs/architecture/principles.md`（若存在）。**无 architecture 时仍须遵守本小节。**
+操作摘要如下；**全文**见 `docs/architecture/principles.md`。  
+降级兜底：若 principles 暂时缺失，仍须遵守本小节并报告不完整安装——**不是**「architecture 可选」产品定位。
 
 ### P-002 · 阶段质量意识
 
@@ -159,7 +161,7 @@ version: 0.7.0
 
 ## 6c. 工作区与共享资料边界
 
-若仓库存在 `docs/workspace-<NNN>-<slug>/workspace.md`，先按 `docs/architecture/workspace-protocol.md`（若存在）校验其 `root_goal`、`canonical_scope` 和共享资料引用：
+若仓库存在 `docs/workspace-<NNN>-<slug>/workspace.md`，先按 `docs/architecture/workspace-protocol.md`（必备）校验其 `root_goal`、`canonical_scope` 和共享资料引用：
 
 1. 工作区绑定一个 `parent: null` 的 Root Goal 与其 canonical 目标范围；它不是 `parent` 层级、审计 scope 或第二套状态。
 2. 同一项目的 MVP、二阶段、三阶段等通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
@@ -211,7 +213,7 @@ version: 0.7.0
   扫描 → 意见台账 → 分类 → P-004 裁决 → 提议 → 确认 → 原语 `01`～`04`。
 - **交叉审计**：`{{SKILLS_DIR}}/prompts/05-independent-audit.md` → **`/audit`**（只出意见，不改 status；响应归 `/govern`）。
 - advanced 填表 slash 可选（`--with-primitives`）。
-- **P-001** 以本文件第 6 节为准；**P-002～P-005** 以第 6b 节为准；有 architecture 原则文档时一并参考。
+- **P-001** 以本文件第 6 节为准；**P-002～P-005** 以第 6b 节为准；**全文**以 `docs/architecture/principles.md` 为准（与 Skills 同级必备）。
 
 ## 10. 变更工作流
 
@@ -239,7 +241,7 @@ version: 0.7.0
 - 执行/审计：只写有证据的事实；计划单独标注。
 - 代码布局与 Root slug：默认见第 8 节；以用户/项目约定为准（`web/` 等为可选约定示例）。
 - Skills 包：按内容定位 SKILLS_PKG。
-- P-001：本文件第 6 节；P-002～P-005：第 6b 节；architecture 原则全文可选补充。
+- P-001：本文件第 6 节；P-002～P-005：第 6b 节；architecture 原则全文**必备**（与 Skills 同级；缺则不完整安装）。
 - 目标可带未知立项，但信息项、阶段门禁、证据与残余风险接受必须可追踪；按工作量而非固定“两子目标”拆分。
 - 交叉审计意见由编排器统一响应；冲突与「是否自审」问用户并给建议。
 
@@ -293,4 +295,4 @@ version: 0.7.0
 
 - 目标树：`<workspace-root>/goal-tree.md`
 - Root Goal：`<workspace-root>/GOAL-001-<your-slug>/00-meta.md`
-- 治理原则：AGENTS 第 6 / 6b 节；`docs/architecture/principles.md`（若存在，P-001～P-005）
+- 治理原则：AGENTS 第 6 / 6b 节；`docs/architecture/principles.md`（必备，P-001～P-005 全文）

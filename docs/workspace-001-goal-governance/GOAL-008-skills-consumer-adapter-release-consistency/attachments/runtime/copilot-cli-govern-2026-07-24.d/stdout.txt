@@ -1,0 +1,342 @@
+I'll perform a read-only /govern scan for GOAL-008. Let me gather all governance sources and
+GOAL-008 records.
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● Read AGENTS.md
+  └ L1:100 (100 lines read)
+
+● List directory .
+  └ 18 files found
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 295 lines read
+
+Let me view the goal-tree and then locate GOAL-008 files:
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008-*"
+  └ No matches found
+
+Let me search for GOAL directories and view goal-tree with a focused range:
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:100 (99 lines read)
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-*"
+  └ No matches found
+
+Let me view more of goal-tree to find GOAL-008, and also check the workspace directory structure:
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L100:300 (200 lines read)
+
+● List directory docs\workspace-001-goal-governance
+  └ 21 files found
+
+Let me continue viewing the goal-tree to find GOAL-008 details:
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L350:500 (78 lines read)
+
+Now let me read the GOAL-008 five-piece set and the governor orchestrator:
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ 1 line read
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ 1 line read
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ 103 lines read
+
+Let me read the key sections of the decision, execution, and audit files:
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:150 (150 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:150 (133 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:200 (200 lines read)
+
+Now let me read the skills orchestrator prompt and the governing orchestrator prompt to understand
+the /govern semantics:
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:150 (150 lines read)
+
+Perfect! Now I have enough context. Let me compile the read-only governance replay for GOAL-008
+based on the /govern semantics:
+
+-----------------------------------------------------------------------------------------------
+
+COPILOT CLI GOVERNANCE REPLAY – GOAL-008
+
+Current DateTime: 2026-07-24T19:36:58.570+08:00
+Mode: Read-only replay with GitHub Copilot CLI 1.0.71
+Governance Sources: AGENTS.md, .github/copilot-instructions.md,
+skills/prompts/00-govern-orchestrator.md, goal-tree.md, GOAL-008 five-piece set
+
+-----------------------------------------------------------------------------------------------
+
+1. GOAL IDENTITY & LOCATION
+
+┌───────────┬──────────────────────────────────────────────────────────────────────────────────┐
+│ Field     │ Value                                                                            │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│ ID        │ GOAL-008-skills-consumer-adapter-release-consistency                             │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│ Title     │ Skills 消费适配器跨宿主/跨版本发布一致性                                         │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│ Parent    │ GOAL-001-main-vision                                                             │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│ Path      │ docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-cons │
+│           │ istency/                                                                         │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│ Created   │ 2026-07-19                                                                       │
+├───────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│ Updated   │ 2026-07-20                                                                       │
+└───────────┴──────────────────────────────────────────────────────────────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+2. CURRENT STATUS & PROGRESS
+
+┌──────────────┬──────────────────────────────────────────────────────────────────┐
+│ Field        │ Value                                                            │
+├──────────────┼──────────────────────────────────────────────────────────────────┤
+│ Status       │ done                                                             │
+├──────────────┼──────────────────────────────────────────────────────────────────┤
+│ Progress     │ 100%                                                             │
+├──────────────┼──────────────────────────────────────────────────────────────────┤
+│ Version      │ 1.5.0 (meta), 1.4.0 (decision), 1.8.0 (execution), 1.9.0 (audit) │
+└──────────────┴──────────────────────────────────────────────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+3. SCAN SUMMARY
+
+Core Installation Completeness: ✓ Complete
+
+ - docs/architecture/principles.md ✓
+ - docs/architecture/workspace-protocol.md ✓
+ - docs/templates/goal-folder/ ✓
+ - skills/contracts/skills-consumer-contract.json ✓ (consumer adapter contract)
+
+Workspace Validation: ✓ Valid
+
+ - docs/workspace-001-goal-governance/workspace.md exists
+ - Root Goal: GOAL-001-main-vision (parent: null) ✓
+ - Canonical scope verified
+
+Goal Tree Sync: ✓ Synchronized
+
+ - Last entry: 2026-07-24 · GOAL-019 有界关门 (next number: GOAL-020)
+ - GOAL-008 recorded as done / 100% in tree
+
+-----------------------------------------------------------------------------------------------
+
+4. RELATED AUDIT FINDINGS (A-00N LEDGER)
+
+Authoritative source: 03-audit.md (全部 A-00N)
+
+┌───────────┬─────────────┬────────────────────────────────┬─────────────┬─────────────────────┐
+│ ID        │ Source      │ Scope                          │ Verdict     │ Status              │
+├───────────┼─────────────┼────────────────────────────────┼─────────────┼─────────────────────┤
+│ A-014     │ independent │ I-002 runtime coverage         │ conditional │ Closed: CLI /govern │
+│           │             │ (Copilot CLI 1.0.71)           │             │ & /audit verified   │
+├───────────┼─────────────┼────────────────────────────────┼─────────────┼─────────────────────┤
+│ A-015     │ self        │ Response to A-014 & user       │ conditional │ Closed: CLI         │
+│           │             │ request                        │             │ evidence entered in │
+│           │             │                                │             │ ledger              │
+├───────────┼─────────────┼────────────────────────────────┼─────────────┼─────────────────────┤
+│ A-016     │ self        │ Close-out audit                │ pass        │ All required        │
+│           │             │ (I-001/I-002/I-003, A-014      │             │ findings closed     │
+│           │             │ response, release-candidate,   │             │                     │
+│           │             │ F-005)                         │             │                     │
+├───────────┼─────────────┼────────────────────────────────┼─────────────┼─────────────────────┤
+│ A-017     │ self        │ Historical evidence freshness  │ pass        │ Bounded to          │
+│           │             │ (v0.7.0 facts, GOAL-010        │             │ next-release        │
+│           │             │ changes, CPython 3.14.6)       │             │ trigger; no retest  │
+│           │             │                                │             │ claimed             │
+└───────────┴─────────────┴────────────────────────────────┴─────────────┴─────────────────────┘
+
+Summary:
+
+ - No open required findings in GOAL-008 scope
+ - No unclosed P-004 conflicts (user decisions recorded in D-009, D-010, D-011)
+ - No accepted residual risk from users (D-004's historical deferral was superseded by D-005's full
+closure restart)
+ - All three information gates (I-001, I-002, I-003) verified by A-016 close-out
+
+-----------------------------------------------------------------------------------------------
+
+5. INFORMATION GATES & READINESS (P-005)
+
+Final Information Ledger (per 00-meta.md):
+
+┌───────────┬──────────┬────────────┬────────────────────────────────────────────────┬─────────┐
+│ ID        │ Level    │ Final      │ Closing Evidence                               │ Verdict │
+│           │          │ Status     │                                                │         │
+├───────────┼──────────┼────────────┼────────────────────────────────────────────────┼─────────┤
+│ I-001     │ required │ verified   │ Canonical/mirror schema, fixtures, contract    │ ✓ PASS  │
+│           │          │            │ tests                                          │         │
+├───────────┼──────────┼────────────┼────────────────────────────────────────────────┼─────────┤
+│ I-002     │ required │ verified   │ Six CLI runtime cells + GitHub Actions run     │ ✓ PASS  │
+│           │          │            │ 29700051047; Web parser CI replay;             │         │
+│           │          │            │ attachments/runtime/copilot-cli-govern-2026-07 │         │
+│           │          │            │ -20.json, copilot-cli-audit-2026-07-20.json    │         │
+├───────────┼──────────┼────────────┼────────────────────────────────────────────────┼─────────┤
+│ I-003     │ required │ verified   │ Annotated tag v0.7.0; clean commit             │ ✓ PASS  │
+│           │          │            │ 8a33ecd21d9183a680c9c0d63e471469f5e515a8;      │         │
+│           │          │            │ release-candidate evidence;                    │         │
+│           │          │            │ attachments/runtime/release-candidate-v0.7.0-2 │         │
+│           │          │            │ 026-07-20.json                                 │         │
+└───────────┴──────────┴────────────┴────────────────────────────────────────────────┴─────────┘
+
+No open required information items → All stage gates cleared.
+
+-----------------------------------------------------------------------------------------------
+
+6. UPSTREAM DEPENDENCIES & GATE STATUS
+
+Upstream Dependency: GOAL-001 F-005 (阶段 5 发布一致性 required finding)
+
+┌───────────┬────────────────┬─────────────────────────────────────────────────────────────────┐
+│ Gate      │ Status         │ Finding                                                         │
+├───────────┼────────────────┼─────────────────────────────────────────────────────────────────┤
+│ F-005     │ CLOSED         │ Responded in GOAL-001 A-013 close-out; GOAL-008 now fully       │
+│           │                │ supplies evidence                                               │
+├───────────┼────────────────┼─────────────────────────────────────────────────────────────────┤
+│ F-006     │ open /         │ Non-blocking; does not affect GOAL-008 closure                  │
+│           │ recommended    │                                                                 │
+└───────────┴────────────────┴─────────────────────────────────────────────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+7. CLOSURE READINESS ANALYSIS
+
+Per P-003 (Audit Finality) & P-002 (Quality Awareness):
+
+┌──────────────────────────────┬───────────────────────────────────────────────────────────────┐
+│ Criterion                    │ Assessment                                                    │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ All required information     │ ✓ Yes (I-001/I-002/I-003 all verified)                        │
+│ items closed?                │                                                               │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ No unclosed required         │ ✓ Yes (A-014/A-015/A-016 all closed; no blocked condition)    │
+│ findings?                    │                                                               │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ No open P-004 conflicts?     │ ✓ Yes (all user decisions recorded in decision chain: D-009,  │
+│                              │ D-010, D-011)                                                 │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ No accepted residual risk    │ ✓ Yes (D-004 historical deferral superseded by D-005; no      │
+│ without evidence trail?      │ residual claim in final audit)                                │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Evidence chain complete &    │ ✓ Yes (artifact paths in A-016 ledger; git commit             │
+│ traceable?                   │ 8a33ecd21d9183a680c9c0d63e471469f5e515a8; annotated v0.7.0)   │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Upstream F-005 satisfied?    │ ✓ Yes (GOAL-001 A-013 response complete)                      │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Stage compliance (P-002)     │ ✓ Done: A → B → C → D all complete; close-out audit passed    │
+└──────────────────────────────┴───────────────────────────────────────────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+8. CLOSURE AUTHORIZATION
+
+Per AGENTS.md §11 hardcodes & P-003 gate semantics:
+
+Can GOAL-008 transition to done?
+
+✅ YES, AUTHORIZED
+
+ - No open required findings exist (all A-00N from A-001 onwards have closure evidence or are
+non-blocking)
+ - No open required information items remain (I-001/I-002/I-003 all verified)
+ - No open P-004 decision conflicts (all user directives recorded with audit trail)
+ - No user-accepted residual risk without explicit scope/trigger (D-004 superseded; A-016 shows
+clean close-out)
+ - Upstream F-005 satisfied (GOAL-001 A-013)
+ - Stage quality gates all passed per A-016 close-out audit
+
+Historical state: done / 100% as of 2026-07-20 (documented in 00-meta.md topmost entry).
+Current replay state: Confirm done / 100% ✓ (no changes require re-opening).
+
+-----------------------------------------------------------------------------------------------
+
+9. GOVERNANCE MATRIX SUMMARY
+
+┌──────────────────┬───────────────────────────────────────────────────────────────────────────┐
+│ Dimension        │ Finding                                                                   │
+├──────────────────┼───────────────────────────────────────────────────────────────────────────┤
+│ Completeness     │ Five-piece set intact; all required files present & version-tracked       │
+├──────────────────┼───────────────────────────────────────────────────────────────────────────┤
+│ Auditability     │ All decisions linked to evidence; decisions linked to execution;          │
+│                  │ execution linked to audit ledger; audit ledger linked to findings/gate    │
+│                  │ closure                                                                   │
+├──────────────────┼───────────────────────────────────────────────────────────────────────────┤
+│ Upstream         │ Inherits GOAL-001 D-010 scope; F-005 responded; no conflicting root       │
+│ alignment        │ directives                                                                │
+├──────────────────┼───────────────────────────────────────────────────────────────────────────┤
+│ Method           │ Follows P-001 (route → decision), P-002 (stage gates), P-003 (audit       │
+│ compliance       │ ledger), P-004 (user decisions written), P-005 (info gates tracked with   │
+│                  │ gates closed)                                                             │
+├──────────────────┼───────────────────────────────────────────────────────────────────────────┤
+│ Workspace        │ Flat storage in canonical root; parent explicitly set; id matches folder  │
+│ compliance       │ name; canonical scope valid                                               │
+└──────────────────┴───────────────────────────────────────────────────────────────────────────┘
+
+-----------------------------------------------------------------------------------------------
+
+10. CLOSURE DECISION
+
+Governance Authorization: ✅ GOAL-008 CLOSURE IS AUTHORIZED
+
+Rationale:
+
+ - Per AGENTS.md §11, a goal can transition done only when zero unclosed required findings exist and
+ zero open required information items remain.
+ - GOAL-008 meets both conditions per A-016 close-out audit (2026-07-20).
+ - No residual conflicts; no deferred gates without evidence path.
+ - Upstream dependency F-005 satisfied (GOAL-001 A-013).
+ - Historical v0.7.0 evidence trail is complete and immutable; current unreleased work state noted
+separately in D-011 without invalidating historical close-out.
+
+Status remains: ✅ done / 100%
+
+-----------------------------------------------------------------------------------------------
+
+COPILOT_CLI_GOVERN_DISPATCH_OK
+

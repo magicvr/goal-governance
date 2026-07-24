@@ -1,0 +1,44 @@
+I'll load the govern skill and run only its scan phase for GOAL-008—read-only, no writes or questions.Checking whether the workspace still has open goals so the S-class is accurate.## Govern scan (read-only probe)
+
+**GROK_GOVERN_DISPATCH_OK**
+
+| Item | Value |
+|------|--------|
+| **Loaded skill title** | `govern · 目标治理编排（Grok Build skill）` |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+| **Orchestrator prompt (named by skill)** | `<SKILLS_PKG>/prompts/00-govern-orchestrator.md` → resolved **`skills/prompts/00-govern-orchestrator.md`** (`SKILLS_PKG` = `skills/`) |
+
+### Scan facts used
+
+- Core: `docs/architecture/principles.md`, `workspace-protocol.md`, `docs/templates/goal-folder/` present  
+- Workspace: `docs/workspace-001-goal-governance/workspace.md` (`root_goal: GOAL-001-main-vision`, canonical `docs/workspace-001-goal-governance/`)  
+- Tree: `docs/workspace-001-goal-governance/goal-tree.md`  
+- Focus: `GOAL-008-skills-consumer-adapter-release-consistency` (`00-meta.md`, `03-audit.md`)
+
+### GOAL-008 classification
+
+| Field | Value |
+|-------|--------|
+| **id** | `GOAL-008-skills-consumer-adapter-release-consistency` |
+| **status / progress** | `done` / `100%` |
+| **parent** | `GOAL-001-main-vision` |
+| **Orchestrator class (focus)** | **Closed focus** — not S0–S4 open-work on this goal (not draft/active/blocked; no S4 gate response needed) |
+| **Workspace class (context)** | **S2** — Root `GOAL-001-main-vision` remains `active` |
+
+### Current open required gates (GOAL-008)
+
+**None.**
+
+Authoritative close-out (`03-audit` A-016 / final ledger in `00-meta`):
+
+| Gate | Status |
+|------|--------|
+| I-001 | `verified` |
+| I-002 | `verified` / closed |
+| I-003 | `verified` / closed |
+| Local required findings (A-010 F-001…F-003 path) | closed at close-out |
+| Accepted residual risk | none |
+
+A-017 keeps the historical `v0.7.0` close-out closed; it does **not** reopen GOAL-008 gates for the current unreleased candidate (that is later-candidate evidence, not an open GOAL-008 required gate).
+
+*Probe only: scan phase completed; no files modified, no subagents, no user questions.*

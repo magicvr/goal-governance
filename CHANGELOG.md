@@ -6,6 +6,31 @@
 
 - （无尚未绑定 tag 的变更）
 
+## 0.9.0 - 2026-07-24
+
+Skills **consumer** release 候选（GOAL-019）：**核心方法论与 Skills 同级必备** + 消费方工作区骨架。
+
+### 消费包 / install
+
+- skills zip 内嵌 `skills/core/`（principles、workspace-protocol、overview、directory-layout、templates、精简 docs/README；**不含** tech-stack / dogfood）。
+- `install.sh` / `install.ps1` **默认**将 core 安装到目标仓 `docs/architecture/`、`docs/templates/`、`docs/README.md`。
+- 可选 `--init-workspace` / `-InitWorkspace`（须显式 `--workspace-slug` + `--root-slug`；只建 `workspace.md` + `goal-tree.md`，不建 Root 五件套；路径已存在则 refuse）。
+- 编排器 S0 / 原语 01：空仓先 scaffold 工作区再立 Root；slug 禁止静默默认。
+- AGENTS / 宿主 wrappers：architecture 必备与「不完整安装」话术；pack required 校验 core。
+
+### 兼容矩阵 / 证据
+
+- 矩阵 `candidateRevision: v0.9.0`。
+- GitHub Copilot CLI `1.0.71` `/govern` + `/audit`：2026-07-24 **runtime-verified**。
+- Grok Build CLI `0.2.111` `/govern` + `/audit`：2026-07-24 **runtime-verified**（CLI 子进程 + proxy-managed key）。
+- Claude Code CLI `2.1.218` `/govern` + `/audit`：2026-07-24 **runtime-verified**。
+- Web parser 保持 automated-verified。
+- 六 CLI 入口 coverage **ready-for-release-evidence**（正式 annotated tag 前置条件）。
+
+### 治理
+
+- GOAL-019 有界关门（D-003～D-007；A-001 independent + A-002 self）。
+
 ## 0.8.0 - 2026-07-22
 
 Skills **consumer** release（安装包与宿主入口；**不**要求 Web 产品功能完成）。
