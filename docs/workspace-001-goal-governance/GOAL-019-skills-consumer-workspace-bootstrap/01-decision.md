@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-24
 updated: 2026-07-24
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 决策记录 · GOAL-019
@@ -18,7 +18,7 @@ version: 0.4.0
 |----|------|------|------|
 | I-001 | non-blocking | open | 消费安装形态 |
 | I-002 | non-blocking | open | 是否做 install scaffold 开关 |
-| I-003 | required | open | 默认工作区/Root slug 由用户确认（B 前关闭） |
+| I-003 | required | **closed** | D-005：slug 必须用户确认，禁止静默默认 |
 | I-004 | required | **closed** | D-004 清单；实现时按表 pack/install |
 | I-005 | non-blocking | deferred | standalone 全文；skills README 已标主路径 |
 
@@ -167,3 +167,26 @@ version: 0.4.0
 - **整份复制 monorepo `docs/README.md` + 全量 architecture（含 tech-stack）**：否决。  
 - **只装 principles + workspace-protocol、不装 overview/layout/README**：否决（用户清单含后三项）。  
 - **templates 仅留在 `skills/templates/`、不装到 `docs/templates/`**：否决（用户要求 templates 作为 core 落地）。
+
+## D-005 · 工作区/Root slug 必须用户确认（关闭 I-003 · 阶段 B）
+
+**日期**：2026-07-24  
+**状态**：accepted  
+**关闭**：I-003
+
+### 决定
+
+1. 空仓 S0 scaffold 时，**工作区路径 slug**（`docs/workspace-001-<workspace-slug>/`）与 **Root 英文 slug**（`GOAL-001-<root-slug>`）均须**用户明确确认**后写入。  
+2. **禁止**静默使用占位名（如 `main-vision`、`example`、`default`）。  
+3. 首工作区编号默认 `001`，除非用户指定其他 NNN。  
+4. 已写入编排器 S0、`01` 原语、AGENTS 模板与宿主 govern wrapper。
+
+### 为什么
+
+- I-003 阻断阶段 B 实施；用户此前清单与 D-003/D-004 均要求消费方自定 slug。  
+- 静默默认会导致跨项目同质化与错误绑定。
+
+### 未选方案
+
+- **包内固定默认 slug 可事后改**：否决。  
+- **从仓库目录名自动推断 slug 不经确认**：否决（可作为建议展示，仍须确认）。

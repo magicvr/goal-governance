@@ -99,6 +99,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("goal-tree", text)
         self.assertRegex(text, r"S0|情境|分类")
         self.assertRegex(text, r"未关门|总目的")
+        self.assertRegex(text, r"scaffold|工作区骨架")
+        self.assertRegex(text, r"不完整安装|同级必备")
         # Confirm before write + primitives
         self.assertRegex(text, r"确认")
         for name in (
@@ -922,11 +924,12 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertIn(name, readme)
             self.assertIn(digest, readme)
 
-    def test_portability_skills_pkg_and_optional_architecture(self) -> None:
-        """Reusable package must not require ./skills name or architecture/."""
+    def test_portability_skills_pkg_and_required_architecture(self) -> None:
+        """Package may rename skills dir; architecture is co-required (GOAL-019)."""
         template = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
         orch = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
         govern = (COPILOT_PROMPTS / "govern.md").read_text(encoding="utf-8")
+        create01 = (PROMPTS / "01-create-new-goal.md").read_text(encoding="utf-8")
         for text, label in (
             (template, "AGENTS.template"),
             (orch, "orchestrator"),
@@ -937,15 +940,23 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 r"SKILLS_PKG|改名|也可改名|其他名字|其他名",
                 msg=f"{label} should allow renamed skills package",
             )
-        self.assertRegex(template, r"architecture 可选|architecture.*可选|有 architecture")
-        self.assertRegex(orch, r"若存在|一并参考|architecture")
-        self.assertRegex(govern, r"若存在|architecture")
+        # Architecture is required for complete install — not optional product framing
+        self.assertRegex(template, r"同级必备|必备")
+        self.assertIn("docs/architecture/principles.md", template)
+        self.assertRegex(orch, r"不完整安装|同级必备")
+        self.assertIn("docs/architecture/principles.md", orch)
+        self.assertRegex(govern, r"不完整安装|同级必备|principles")
+        # S0 scaffold + user-confirmed slug (phase B)
+        self.assertRegex(orch, r"scaffold|工作区骨架")
+        self.assertRegex(orch, r"用户确认")
+        self.assertRegex(create01, r"步骤 0|工作区骨架|scaffold")
+        self.assertRegex(create01, r"禁止静默|用户确认")
         self.assertNotIn("GOAL-001-main-vision", orch)
-        self.assertNotIn("GOAL-001-main-vision", (PROMPTS / "01-create-new-goal.md").read_text(encoding="utf-8"))
+        self.assertNotIn("GOAL-001-main-vision", create01)
         self.assertIn("SKILLS_PKG", orch)
-        # Prefer positive defaults over long ban-lists
+        # Prefer positive defaults over long ban-lists in the fenced body
         ban_hits = len(__import__("re").findall(r"^[-*]\s*禁止", orch, flags=__import__("re").M))
-        self.assertLessEqual(ban_hits, 2, "orchestrator should not be a ban-list prompt")
+        self.assertLessEqual(ban_hits, 4, "orchestrator should not be a ban-list prompt")
 
     def test_skills_readme_documents_primary_and_audit_paths(self) -> None:
         text = README.read_text(encoding="utf-8")

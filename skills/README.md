@@ -222,7 +222,7 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 | `/govern` + `/audit` + `skills/prompts/*` | install + 包 |
 | **`docs/architecture/`**（principles、workspace-protocol、overview、directory-layout） | install 从 `core/` |
 | **`docs/templates/`** + 精简 **`docs/README.md`** | install 从 `core/` |
-| `docs/workspace-…/workspace.md` + `goal-tree` + Root | 安装后创建（阶段 B 将强化 S0） |
+| `docs/workspace-…/workspace.md` + `goal-tree` + Root | 安装后由 `/govern` S0 scaffold（slug **用户确认**） |
 
 | 不要期望随包出现 | 原因 |
 |------------------|------|

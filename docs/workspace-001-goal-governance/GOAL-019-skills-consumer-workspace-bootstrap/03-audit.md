@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-24
 updated: 2026-07-24
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 审计 · GOAL-019
@@ -14,11 +14,12 @@ version: 0.4.0
 
 | ID | 级别 | 状态 | 本阶段影响 |
 |----|------|------|------------|
-| I-001 | non-blocking | open | 不阻断 B |
+| I-001 | non-blocking | open | 不阻断 C |
 | I-002 | non-blocking | open | C 前裁决 |
-| I-003 | required | open | **阻断 B** 默认命名写入 |
-| I-004 | required | **closed**（D-004） | 阶段 A 实现已按清单验收（单测） |
-| I-005 | non-blocking | deferred | 不阻断 B |
+| I-003 | required | **closed**（D-005） | 已写入 S0/01 |
+| I-004 | required | **closed**（D-004） | 阶段 A 已验收 |
+| I-005 | non-blocking | deferred | 不阻断 C |
+
 
 ## 阶段 A 结构核对（非正式 A-00N · 2026-07-24）
 
@@ -31,7 +32,17 @@ version: 0.4.0
 | install.ps1 无 docs\\goals Next steps | 有 |
 | 隔离 install 冒烟 | 有（unittest OK） |
 
-正式 self 阶段审计可在阶段 B 交付前或 A 收尾时补 A-001。
+正式 self 阶段审计可在阶段 C 后或关门前补 A-001。
+
+## 阶段 B 结构核对（非正式 · 2026-07-24）
+
+| 检查 | 结果 |
+|------|------|
+| S0 先 scaffold 再 Root | 有（00 v0.7） |
+| slug 用户确认 / 禁静默默认 | 有（D-005） |
+| architecture 必备 / 不完整安装 | 有（AGENTS + 00 + wrappers） |
+| 01 步骤 0 | 有 |
+| 单测 portability required architecture | 有 |
 
 ## 决策一致性（自检 · 非正式 A-00N）
 
