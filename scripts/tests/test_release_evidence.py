@@ -179,14 +179,26 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
             report["matrix"]["previousProtocolStatus"],
             "not-applicable-first-supported-protocol",
         )
-        self.assertEqual(report["matrix"]["candidateRevision"], "v0.8.0")
+        self.assertEqual(report["matrix"]["candidateRevision"], "v0.9.0")
         uncovered = {
             (cell["consumer"], cell["entrypoint"])
             for cell in report["coverage"]["uncovered"]
         }
-        self.assertEqual(uncovered, set())
+        # v0.9.0: Claude/Grok pending re-capture after GOAL-019 behavior-source change;
+        # Copilot is runtime-verified. Formal tag requires uncovered empty.
+        self.assertEqual(
+            uncovered,
+            {
+                ("claude-code-cli", "govern"),
+                ("claude-code-cli", "audit"),
+                ("grok-build-cli", "govern"),
+                ("grok-build-cli", "audit"),
+            },
+        )
         self.assertNotIn(("web-readonly-parser", "goal-document-parser"), uncovered)
-        self.assertEqual(report["coverage"]["status"], "ready-for-release-evidence")
+        self.assertNotIn(("github-copilot-cli", "govern"), uncovered)
+        self.assertNotIn(("github-copilot-cli", "audit"), uncovered)
+        self.assertEqual(report["coverage"]["status"], "pending")
 
     def test_compatibility_report_uses_supplied_root_for_mirrors(self) -> None:
         with tempfile.TemporaryDirectory(prefix="gg-compatibility-root-") as tmp:
@@ -242,7 +254,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self.assertIsNone(evidence["source"]["annotatedTag"])
         self.assertIsNone(evidence["source"]["tagObject"])
         self.assertEqual(evidence["protocol"]["version"], "0.1.0")
-        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.8.0")
+        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.9.0")
         self.assertIn("checksPassed", evidence)
         schema = json.loads(
             (REPO_ROOT / "docs/releases/release-evidence.schema.json").read_text(
