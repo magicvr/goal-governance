@@ -7,3 +7,8 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 AGENTS.md text eol=lf
+
+# Runtime evidence artifacts: keep exact bytes
+docs/**/attachments/runtime/**/*.txt text eol=lf
+docs/**/attachments/runtime/**/*.json text eol=lf
+
