@@ -97,7 +97,7 @@ version: 0.1.0
 ## 可复制包版本与变更范围
 
 - **当前核心文档版本**：`0.9.1`。工作区根与共享资料协议已就位；Skills 发布面进入 **`v0.9.0` 候选**（矩阵 `candidateRevision: v0.9.0`）。
-- **最近发布基线**：`v0.8.0` 为已发布 annotated tag；**本候选**为 `0.9.0` / `v0.9.0`（GOAL-019 core+scaffold）。
+- **最近发布基线**：`0.7.0` 与 `v0.8.0` 为已发布 annotated tag 历史；**本候选**为 `0.9.0` / `v0.9.0`（GOAL-019 core+scaffold）。
 - **快照日期**：2026-07-24。
 - **快照身份**：`v0.8.0` 历史已发布；`v0.9.0` 身份以合并到 `main` 后的 annotated tag 为准（正式 tag 前须补齐 Claude/Grok runtime）。
 - **当前工作树边界**：矩阵 `candidateRevision: v0.9.0`；Copilot `/govern`+`/audit` 已 2026-07-24 runtime-verified；Claude/Grok 四格 pending-runtime-validation（本环境鉴权失败）。Web parser 仍为 automated-verified。
