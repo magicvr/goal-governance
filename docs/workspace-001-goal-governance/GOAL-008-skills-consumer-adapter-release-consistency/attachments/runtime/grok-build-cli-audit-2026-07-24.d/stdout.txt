@@ -1,0 +1,21 @@
+I'll load the audit skill and read the minimum GOAL-008 / prompt sources needed for this read-only dispatch probe—no writes, no subagents.Next I’ll read the independent-audit prompt and GOAL-008 meta/status fields for source semantics and the current required evidence gap.**GROK_AUDIT_DISPATCH_OK**
+
+1. **Marker**  
+   `GROK_AUDIT_DISPATCH_OK` (emitted after repository reads only; no files modified, no audit appended, no subagents, no questions).
+
+2. **Loaded skill**  
+   - **Title:** `audit · 独立交叉审计（Grok Build skill）`  
+   - **Actual source path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md`
+
+3. **Independent-audit prompt named by that skill**  
+   - **Named path:** `<SKILLS_PKG>/prompts/05-independent-audit.md`  
+   - **Resolved path:** `skills/prompts/05-independent-audit.md`  
+     (`C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\05-independent-audit.md`)
+
+4. **Required `source` / status semantics + one current required evidence gap**  
+   - **Semantics (skill + `05-independent-audit.md` hard constraints):**  
+     - Opinions must use **`source: independent`**.  
+     - Default is **audit-only**: write findings to the target’s `03-audit.md` (optional `attachments/`); **do not** change goal `status` / `progress`, decision body, or `goal-tree` status.  
+     - Response, finding closure, and any state transition belong to **`/govern`**.  
+   - **Current required evidence gap (GOAL-008):**  
+     Historical close-out remains **`done / 100%`** for annotated **`v0.7.0`**. After GOAL-010 changed Skills behavior sources, the **current unreleased** candidate matrices use `candidateRevision: unreleased` and set all six host cells (Claude / Grok / Copilot × `/govern` + `/audit`) to **`pending-runtime-validation`** with old runtime evidence cleared. **Fresh host-runtime evidence for those six cells is required** before the unreleased candidate may be treated as runtime-verified or release-ready (per `00-meta.md` “当前未发布候选的复核边界”).

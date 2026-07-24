@@ -588,31 +588,36 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.111")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.71")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
-        # Claude/Grok: pending until re-capture after GOAL-019 behavior-source change
-        for consumer_id in ("claude-code-cli", "grok-build-cli"):
-            entrypoints = {entry["name"]: entry for entry in consumers[consumer_id]["entrypoints"]}
+        adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
+        # Claude: govern verified 2026-07-24; audit still pending (gateway flakiness)
+        claude = consumers["claude-code-cli"]
+        self.assertEqual(
+            claude["contractVerificationStatus"],
+            adapters_by_id["claude-code-cli"]["verificationStatus"],
+        )
+        claude_eps = {entry["name"]: entry for entry in claude["entrypoints"]}
+        self.assertEqual(set(claude_eps), {"govern", "audit"})
+        self.assertEqual(claude_eps["govern"]["status"], "runtime-verified")
+        self.assertTrue(claude_eps["govern"]["evidence"])
+        self.assertIn("2026-07-24", claude_eps["govern"]["evidence"][0])
+        self.assertEqual(claude_eps["audit"]["status"], "pending-runtime-validation")
+        self.assertEqual(claude_eps["audit"]["evidence"], [])
+        # Grok + Copilot: both entrypoints runtime-verified 2026-07-24
+        for consumer_id in ("grok-build-cli", "github-copilot-cli"):
+            entrypoints = {
+                entry["name"]: entry for entry in consumers[consumer_id]["entrypoints"]
+            }
             self.assertEqual(
                 consumers[consumer_id]["contractVerificationStatus"],
-                {adapter["id"]: adapter for adapter in manifest["adapters"]}[consumer_id][
-                    "verificationStatus"
-                ],
+                adapters_by_id[consumer_id]["verificationStatus"],
             )
             self.assertEqual(set(entrypoints), {"govern", "audit"})
-            self.assertEqual(entrypoints["govern"]["status"], "pending-runtime-validation")
-            self.assertEqual(entrypoints["audit"]["status"], "pending-runtime-validation")
-            self.assertEqual(entrypoints["govern"]["evidence"], [])
-            self.assertEqual(entrypoints["audit"]["evidence"], [])
-        # Copilot: runtime-verified against 2026-07-24 captures
-        copilot = consumers["github-copilot-cli"]
-        self.assertEqual(copilot["contractVerificationStatus"], "verified")
-        copilot_eps = {entry["name"]: entry for entry in copilot["entrypoints"]}
-        self.assertEqual(set(copilot_eps), {"govern", "audit"})
-        for name in ("govern", "audit"):
-            self.assertEqual(copilot_eps[name]["status"], "runtime-verified")
-            self.assertTrue(copilot_eps[name]["evidence"])
-            for path in copilot_eps[name]["evidence"]:
-                self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                self.assertIn("2026-07-24", path)
+            for name in ("govern", "audit"):
+                self.assertEqual(entrypoints[name]["status"], "runtime-verified")
+                self.assertTrue(entrypoints[name]["evidence"])
+                for path in entrypoints[name]["evidence"]:
+                    self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
+                    self.assertIn("2026-07-24", path)
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")

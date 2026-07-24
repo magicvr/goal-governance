@@ -184,20 +184,11 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
             (cell["consumer"], cell["entrypoint"])
             for cell in report["coverage"]["uncovered"]
         }
-        # v0.9.0: Claude/Grok pending re-capture after GOAL-019 behavior-source change;
-        # Copilot is runtime-verified. Formal tag requires uncovered empty.
-        self.assertEqual(
-            uncovered,
-            {
-                ("claude-code-cli", "govern"),
-                ("claude-code-cli", "audit"),
-                ("grok-build-cli", "govern"),
-                ("grok-build-cli", "audit"),
-            },
-        )
+        # v0.9.0: only claude/audit remains pending (gateway 503). Formal tag needs empty uncovered.
+        self.assertEqual(uncovered, {("claude-code-cli", "audit")})
         self.assertNotIn(("web-readonly-parser", "goal-document-parser"), uncovered)
         self.assertNotIn(("github-copilot-cli", "govern"), uncovered)
-        self.assertNotIn(("github-copilot-cli", "audit"), uncovered)
+        self.assertNotIn(("grok-build-cli", "govern"), uncovered)
         self.assertEqual(report["coverage"]["status"], "pending")
 
     def test_compatibility_report_uses_supplied_root_for_mirrors(self) -> None:
