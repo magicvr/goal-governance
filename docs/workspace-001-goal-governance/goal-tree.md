@@ -2,16 +2,31 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-22
+updated: 2026-07-24
 parent: null
-version: 0.93.0
+version: 0.97.0
 ---
 
 # Goal Tree
 
+## 2026-07-24 · GOAL-019 阶段 A 实现
+
+`skills/core/` 镜像 + install 默认装 docs + pack 校验 + README 最小可运行集；单测 39 passed。GOAL-019 `active / 45%`。阶段 B：S0/01 scaffold。
+
+## 2026-07-24 · GOAL-019 D-004（Core 清单 · 关闭 I-004）
+
+用户确认：principles + workspace-protocol + overview/layout（去 monorepo 段）+ templates + 精简 docs/README；**不装** tech-stack。其后阶段 A 见上节。
+## 2026-07-24 · GOAL-019 D-003（核心与 Skills 同级必备）
+
+用户裁决：方法论与 Skills 同级必备；方案 **A** = zip 内嵌 core + install 默认安装。D-002 superseded。其后 D-004 见上节。
+
+## 2026-07-24 · 创建 GOAL-019（Skills 消费方工作区骨架）
+
+D-001 / D-002（后被 D-003 修订）：立项关闭「装 Skills ≠ 有治理存储」缝隙。[GOAL-019-skills-consumer-workspace-bootstrap](GOAL-019-skills-consumer-workspace-bootstrap/) · 其后 D-003 见上节。下一编号 **GOAL-020**。
+
 ## 2026-07-22 · Skills v0.8.0 自动发版成功
 
-PR #2 合并；annotated `v0.8.0`；Actions `29882635335` pack+publish success；Release 含 skills zip/sha256/evidence。R-018 closed。Skills 目标 003/005/006/007/008/010/018 均为 `done`。下一编号 **GOAL-019**。
+PR #2 合并；annotated `v0.8.0`；Actions `29882635335` pack+publish success；Release 含 skills zip/sha256/evidence。R-018 closed。Skills 目标 003/005/006/007/008/010/018 均为 `done`。其后 GOAL-019 见上节。
 
 ## 2026-07-22 · Skills v0.8.0 发布准备
 
@@ -354,7 +369,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-015-n1-workspace-navigation · 实现 N1 多工作区导航（列表 / 选择 / 归档） [done 100%]
 ├── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
 ├── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
-└── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
+├── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
+└── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [active 45%]
 ```
 
 ## 状态总览
@@ -379,8 +395,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-016-shared-materials-product | 实现共享资料区产品（CRUD / 固定引用 / 隔离） | GOAL-001-main-vision | done | 100% | [GOAL-016-shared-materials-product/](GOAL-016-shared-materials-product/) |
 | GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
 | GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径（文档 + pack + CI） | GOAL-001-main-vision | done | 100% | [GOAL-018-skills-release-packaging/](GOAL-018-skills-release-packaging/) |
+| GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | active | 45% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-019**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。GOAL-018 承接 Skills 对外 Release 打包路径。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-020**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。GOAL-019 承接 Skills 消费方空仓工作区 scaffold。
 
 ## 状态图例
 
@@ -395,6 +412,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-019`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-020`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

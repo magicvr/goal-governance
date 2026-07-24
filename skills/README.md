@@ -2,9 +2,9 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-07-22
+updated: 2026-07-24
 parent: null
-version: 1.3.0
+version: 1.4.0
 ---
 
 # Skills
@@ -12,7 +12,9 @@ version: 1.3.0
 本目录提供可复制到**其他项目**的目标治理约定与模板。  
 本仓库运行中的强制规则仍以根目录 [AGENTS.md](../AGENTS.md) 为准；此处是提炼后的**可复用交付物**。
 
-Skills 是核心方法论与文档协议的消费适配器，不是独立真相源。在本仓库中，规范模板位于 [`docs/templates/goal-folder/`](../docs/templates/goal-folder/) 与可选的 [`docs/templates/workspace-context.md`](../docs/templates/workspace-context.md)；本包内对应模板是用于离线复制和安装脚本的同步镜像。消费适配器的机读版本/兼容声明以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 是逐字节分发镜像。安装到其他仓库后，镜像必须自包含可用。
+Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skills 同级必备**（GOAL-019 D-003）：包内 [`core/`](core/) 为消费分发镜像，`install` **默认**安装到目标仓 `docs/architecture/`、`docs/templates/` 与精简 `docs/README.md`。缺 core = **不完整安装**。
+
+在 monorepo 中，规范模板位于 [`docs/templates/`](../docs/templates/)；包内 `templates/` 与 `core/docs/templates/` 为分发镜像。机读契约以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 为逐字节镜像。
 
 **发布与候选证据边界（GOAL-008 D-010 / D-011）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot CLI `1.0.71` 均列为 `committed` 支持基线。`v0.7.0` 的六个 CLI 入口与 Web CI 证据是已归档的历史发布事实；GOAL-010 修改行为源后，当前矩阵明确为 `candidateRevision: unreleased`，三个 CLI 的 `/govern`、`/audit` 共六个入口保持 `pending-runtime-validation` 且不引用旧证据。Web parser 保持已有的 `automated-verified` CI 证据。VS Code 插件不作为 Copilot 重放证据来源。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
@@ -20,10 +22,11 @@ Skills 是核心方法论与文档协议的消费适配器，不是独立真相�
 
 | 层级 | 是什么 | 用户怎么用 |
 |------|--------|------------|
+| **核心方法论** | `docs/architecture` + `docs/templates` + 精简 `docs/README` | install 从 `core/` **默认**安装；与 Skills **同级必备** |
 | **主入口（primary）** | 编排器：扫描 / 意见台账 / 分类 / P-004 裁决 / 确认 / 原语 | **`/govern`** |
 | **交叉入口** | 独立审计：只出意见（`source: independent`） | **`/audit`** |
 | **原语（primitives）** | 创建目标、记决策、更执行、写审计 | 由编排器调用；Copilot advanced 可选 |
-| **规则** | AGENTS / copilot-instructions | 结构、编号、P-001～P-005、goal-tree |
+| **规则** | AGENTS / copilot-instructions | 结构、编号、操作细则摘要 |
 
 生命周期：**设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。
 交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
@@ -50,6 +53,11 @@ skills/
 ├── README.md
 ├── AGENTS.template.md
 ├── install.sh / install.ps1
+├── core/                               # GOAL-019：方法论镜像 → install 默认装到 ./docs/
+│   └── docs/
+│       ├── README.md                   # 精简文档入口
+│       ├── architecture/               # principles, workspace-protocol, overview, layout
+│       └── templates/                  # 五件套 + workspace-context
 ├── install/
 │   ├── claude/
 │   │   ├── AGENTS.md
@@ -66,8 +74,8 @@ skills/
 │   ├── 00-govern-orchestrator.md       # PRIMARY core
 │   ├── 01–04 …                         # primitives
 │   └── 05-independent-audit.md         # cross-audit core
-├── templates/goal-folder/              # docs/templates 的五件套分发镜像
-├── templates/workspace-context.md      # workspace-<NNN>-<slug>/workspace.md 分发镜像
+├── templates/goal-folder/              # 包内模板镜像（install --all 同步到 skills 目录）
+├── templates/workspace-context.md
 ├── contracts/                          # docs/contracts 的分发镜像
 └── tests/
 ```
@@ -80,7 +88,7 @@ skills/
 
 1. 打开本仓库 [Releases](https://github.com/magicvr/goal-governance/releases)，下载与 tag 对应的  
    `goal-governance-skills-vX.Y.Z.zip`（可对照同目录的 `.sha256` 校验）。  
-   包内**只有** Skills 分发面（prompts、install 适配、模板/契约镜像、安装脚本），**不含** dogfood 过程树、`web/` 或 `artifacts/`。
+   包内含 Skills 适配器 + **core 方法论镜像**（prompts、install、`core/`、模板/契约），**不含** monorepo dogfood 过程树、`web/` 或 `artifacts/`，**不含** `tech-stack.md`。
 2. 在目标项目根目录解压，使包内容落在 `./skills/`（或你选择的目录名）：
 
 ```bash
@@ -95,19 +103,19 @@ Expand-Archive .\goal-governance-skills-vX.Y.Z.zip -DestinationPath .
 Rename-Item .\goal-governance-skills-vX.Y.Z skills
 ```
 
-3. 安装宿主入口（默认 `/govern` + `/audit`）：
+3. 安装宿主入口（默认 `/govern` + `/audit`）**并默认安装 core → `./docs/`**：
 
 ```bash
 bash ./skills/install.sh --all --skills-dir ./skills
-# 或单宿主：--claude / --grok / --copilot
+# 或单宿主：--claude / --grok / --copilot（同样会装 core）
 ```
 
 ```powershell
 .\skills\install.ps1 -All -SkillsDir .\skills
-# 或：-Claude / -Grok / -Copilot
+# 或：-Claude / -Grok / -Copilot（同样会装 core）
 ```
 
-4. 在目标仓库建立工作区与 `goal-tree.md` 后，在对应 AI 宿主中调用 **`/govern`**（交叉审计用 **`/audit`**）。
+4. 确认 `docs/architecture/principles.md` 等已存在；再建立 `docs/workspace-001-<slug>/`（`workspace.md` + `goal-tree.md`），调用 **`/govern`**（交叉审计用 **`/audit`**）。
 
 > 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 zip / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
 > 本地调试 zip：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
@@ -183,11 +191,11 @@ install/copilot/prompts/audit.md
 
 | 参数 | 作用 |
 |------|------|
-| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/govern` + **`audit`**（`/govern` + `/audit`） |
-| `--grok` / `-Grok` | `.grok/skills/govern` + **`audit`**（`/govern` + `/audit`） |
-| `--copilot` / `-Copilot` | copilot-instructions + **默认双入口** `govern` + `audit` prompts |
+| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/govern` + **`audit`** + **core → docs/** |
+| `--grok` / `-Grok` | `.grok/skills/govern` + **`audit`** + **core → docs/** |
+| `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit` prompts + **core → docs/** |
 | `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
-| `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts |
+| `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts + **core** |
 | `--skills-dir` / `-SkillsDir` | 默认 `./skills` |
 
 ```bash
@@ -206,27 +214,43 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 
 安装后：使用 **`/govern`** 推进；需要交叉审计时用 **`/audit`**，再用 `/govern` 响应意见。
 
+## 最小可运行集（消费方）
+
+| 必备 | 来源 |
+|------|------|
+| 根 `AGENTS.md`（或 copilot-instructions） | install |
+| `/govern` + `/audit` + `skills/prompts/*` | install + 包 |
+| **`docs/architecture/`**（principles、workspace-protocol、overview、directory-layout） | install 从 `core/` |
+| **`docs/templates/`** + 精简 **`docs/README.md`** | install 从 `core/` |
+| `docs/workspace-…/workspace.md` + `goal-tree` + Root | 安装后创建（阶段 B 将强化 S0） |
+
+| 不要期望随包出现 | 原因 |
+|------------------|------|
+| monorepo dogfood `GOAL-*` 树 | 过程数据 |
+| `tech-stack.md` | 实现栈，非方法论 |
+| 完整 monorepo `docs/README` / standalone 测试 | 维护者路径 |
+
 ## 在其他项目中快速启用
 
-1. 安装规则 + `/govern` + `/audit` skill（见上）。  
-2. 建立 `docs/workspace-001-<slug>/goal-tree.md`（可先空）。
-3. 从 `templates/workspace-context.md` 创建 `docs/workspace-001-<slug>/workspace.md`，绑定 Root Goal 与该工作区根；旧 `docs/goals/` 只用于 legacy 单工作区兼容。
-4. 调用 `/govern`：扫描并引导总目的，或分析未关门目标的下一步。
-5. 调用 `/audit`：对指定目标写独立审计意见（不改 status）。
+1. 安装规则 + `/govern` + `/audit`（**同时默认安装 core → `docs/`**）。  
+2. 核对 `docs/architecture/principles.md` 存在。  
+3. 从 `docs/templates/workspace-context.md` 建立 `docs/workspace-001-<slug>/workspace.md` 与 `goal-tree.md`。  
+4. 调用 `/govern`：引导总目的 / Root。  
+5. 调用 `/audit`：独立审计意见（不改 status）。
 
 ## 核心约定（摘要）
 
 | 规则 | 说明 |
 |------|------|
-| 扁平存储 | 目标平铺在当前 `docs/workspace-<NNN>-<slug>/` 根（本包约定） |
+| 核心 + Skills | 同级必备；仅装适配器不算完整 |
+| 扁平存储 | 目标平铺在当前 `docs/workspace-<NNN>-<slug>/` 根 |
 | 编号 | `GOAL-001` 为 Root；slug 自定 |
 | 层级 | 仅 `parent` 字段 |
 | 总览 | 变更后更新 `goal-tree.md` |
 | 五件套 | meta / decision / execution / audit / attachments |
-| 工作区 | `docs/workspace-<NNN>-<slug>/workspace.md` 绑定 Root Goal 与 canonical 范围；仅 legacy `docs/goals/` 缺失显式根时为隐式单工作区 |
-| 共享资料 | 只使用匹配工作区的固定 `material_id` / source / version / SHA-256 引用；不成为第二状态或事实捷径 |
-| 信息就绪 | 可带未知立项；登记 I-00N、阶段门禁、证据与用户接受的残余风险 |
-| 代码布局 | 普遍在仓库根；子目录仅项目自定 |
+| 工作区 | `workspace.md` 绑定 Root Goal 与 canonical 范围；legacy `docs/goals/` 仅旧仓兼容 |
+| 共享资料 | 固定 `material_id` / source / version / SHA-256；非第二状态 |
+| 信息就绪 | 可带未知立项；I-00N 与阶段门禁 |
 | 包目录名 | 常为 `skills/`，可改名；按含 `prompts/00-…` 定位 |
 
 ## 测试
@@ -241,12 +265,13 @@ python skills/tests/test_skills_orchestrator.py
 powershell -NoProfile -ExecutionPolicy Bypass -File .\skills\tests\test_install_ps1_isolated.ps1
 ```
 
-Windows 上 `test_install_ps1_isolated_all_produces_govern_and_audit` 会在临时目录执行 `install.ps1 -All`，断言默认产出 `/govern`+`/audit` 且不含填表 advanced slash。`install.sh` 的真实执行仍依赖 bash 环境（本仓库 Windows 主证据以 PS1 为准）。
+Windows 上隔离安装冒烟断言 `/govern`+`/audit`+**core docs 落点**，且不含填表 advanced slash、不含 `tech-stack`。`install.sh` 的真实执行仍依赖 bash 环境（本仓库 Windows 主证据以 PS1 为准）。
 
 ## 尚未包含
 
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
+- install 一键 scaffold 工作区（GOAL-019 阶段 C）  
 - 自动在无维护者授权时创建 GitHub Release（tag CI 仅 pack + 上传 artifact）
 
-当前交付：**核心协议的 Skills 适配规则 + 编排主入口 `/govern` + 交叉入口 `/audit` + 文档原语 01～05 + 多宿主安装脚本 + 模板与机读契约分发镜像 + 版本化 zip 打包入口（`scripts/pack_skills_release.py`）**。核心 canonical 方法论、模板与契约见仓库 `docs/` 层。
+当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + `/govern`/`/audit` + 原语 01～05 + 多宿主安装 + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。

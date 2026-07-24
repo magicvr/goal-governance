@@ -114,11 +114,24 @@ def inventoriable_files(skills_root: Path) -> list[Path]:
         root / "install.ps1",
         root / "prompts" / "00-govern-orchestrator.md",
         root / "contracts",
+        # GOAL-019 D-004 core methodology mirror (co-required with Skills)
+        root / "core" / "docs" / "README.md",
+        root / "core" / "docs" / "architecture" / "principles.md",
+        root / "core" / "docs" / "architecture" / "workspace-protocol.md",
+        root / "core" / "docs" / "architecture" / "overview.md",
+        root / "core" / "docs" / "architecture" / "directory-layout.md",
+        root / "core" / "docs" / "templates" / "workspace-context.md",
+        root / "core" / "docs" / "templates" / "goal-folder" / "00-meta.md",
     )
     missing = [str(p.relative_to(root)) for p in required if not p.exists()]
     if missing:
         raise PackSkillsError(
             "skills root is incomplete; missing: " + ", ".join(missing)
+        )
+    tech_stack = root / "core" / "docs" / "architecture" / "tech-stack.md"
+    if tech_stack.is_file():
+        raise PackSkillsError(
+            "skills core mirror must not include tech-stack.md (GOAL-019 D-004)"
         )
 
     files: list[Path] = []

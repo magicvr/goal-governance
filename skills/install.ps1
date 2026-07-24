@@ -58,6 +58,8 @@ Behavior:
   - Claude skills -> govern + audit
   - Grok skills -> govern + audit
   - Default Copilot slash surface: /govern + /audit
+  - Core methodology (GOAL-019 D-004): ALWAYS installs package core\docs -> .\docs\
+    (architecture + templates + slim docs\README). Missing core = incomplete install.
   - Core orchestrator: prompts\00-govern-orchestrator.md
   - Cross-audit core: prompts\05-independent-audit.md
   - Compatibility contract mirror: contracts\skills-consumer-contract.json
@@ -163,11 +165,13 @@ function Show-NextSteps {
 Done.
 
 Next steps:
-  1. Review installed rule file(s) and adjust paths for your project.
-  2. Ensure docs\goals\goal-tree.md exists (create if needed).
+  1. Review installed rule file(s) and docs\architecture (core methodology; required).
+  2. Create docs\workspace-<NNN>-<slug>\ with workspace.md + goal-tree.md
+     (from docs\templates\workspace-context.md). Then /govern to create Root Goal.
   3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
-     - Core: $SkillsDir\prompts\00-govern-orchestrator.md
-     - Cross: $SkillsDir\prompts\05-independent-audit.md
+     - Methodology: .\docs\architecture\principles.md
+     - Orchestrator: $SkillsDir\prompts\00-govern-orchestrator.md
+     - Cross-audit: $SkillsDir\prompts\05-independent-audit.md
      - Contract: $SkillsDir\contracts\skills-consumer-contract.json
      - Claude: /govern + /audit under .\.claude\skills\
      - Grok:   /govern + /audit under .\.grok\skills\
@@ -178,6 +182,41 @@ Project root:  $TargetDir
 Skills dir:    $SkillsDir
 Package root:  $PackageRoot
 "@
+}
+
+function Install-CoreDocs {
+    param(
+        [string]$PackageRoot,
+        [string]$TargetDir
+    )
+    $coreDocs = Join-Path $PackageRoot 'core\docs'
+    $arch = Join-Path $coreDocs 'architecture'
+    $templates = Join-Path $coreDocs 'templates'
+    $readme = Join-Path $coreDocs 'README.md'
+    if (-not (Test-Path -LiteralPath $arch -PathType Container)) {
+        Write-Err "Missing package core mirror: $arch (GOAL-019 D-004)"
+    }
+    if (-not (Test-Path -LiteralPath $templates -PathType Container)) {
+        Write-Err "Missing package core mirror: $templates (GOAL-019 D-004)"
+    }
+    if (-not (Test-Path -LiteralPath $readme -PathType Leaf)) {
+        Write-Err "Missing package core mirror: $readme (GOAL-019 D-004)"
+    }
+    $principles = Join-Path $arch 'principles.md'
+    $protocol = Join-Path $arch 'workspace-protocol.md'
+    if (-not (Test-Path -LiteralPath $principles -PathType Leaf)) {
+        Write-Err "Missing principles.md in core mirror"
+    }
+    if (-not (Test-Path -LiteralPath $protocol -PathType Leaf)) {
+        Write-Err "Missing workspace-protocol.md in core mirror"
+    }
+    if (Test-Path -LiteralPath (Join-Path $arch 'tech-stack.md') -PathType Leaf) {
+        Write-Err "core mirror must not ship tech-stack.md (D-004)"
+    }
+    Write-Host 'Installing core methodology -> .\docs\ (architecture + templates + README)'
+    Copy-RuleFile -Source $readme -Destination (Join-Path $TargetDir 'docs\README.md')
+    Copy-DirMerge -Source $arch -Destination (Join-Path $TargetDir 'docs\architecture') -Label 'core architecture'
+    Copy-DirMerge -Source $templates -Destination (Join-Path $TargetDir 'docs\templates') -Label 'core templates'
 }
 
 # Accept GNU-style flags (avoid @($null) which is a 1-element array)
@@ -241,6 +280,7 @@ $CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
 $TemplatesSrc = Join-Path $PackageRoot 'templates'
 $ContractsSrc = Join-Path $PackageRoot 'contracts'
+$CoreDocsSrc = Join-Path $PackageRoot 'core\docs'
 
 if (-not (Test-Path -LiteralPath $PromptsSrc -PathType Container)) {
     Write-Err "Missing package directory: $PromptsSrc"
@@ -250,6 +290,9 @@ if (-not (Test-Path -LiteralPath $TemplatesSrc -PathType Container)) {
 }
 if (-not (Test-Path -LiteralPath $ContractsSrc -PathType Container)) {
     Write-Err "Missing package directory: $ContractsSrc"
+}
+if (-not (Test-Path -LiteralPath $CoreDocsSrc -PathType Container)) {
+    Write-Err "Missing package directory: $CoreDocsSrc (GOAL-019 core mirror)"
 }
 if (-not (Test-Path -LiteralPath $TargetDir -PathType Container)) {
     Write-Err "Current working directory is not a directory: $TargetDir"
@@ -338,5 +381,8 @@ if ($installExtras) {
     Copy-DirMerge -Source $TemplatesSrc -Destination (Join-Path $SkillsDirResolved 'templates') -Label 'templates'
     Copy-DirMerge -Source $ContractsSrc -Destination (Join-Path $SkillsDirResolved 'contracts') -Label 'contracts'
 }
+
+# GOAL-019 D-003/D-004: core methodology is co-required with any host install
+Install-CoreDocs -PackageRoot $PackageRoot -TargetDir $TargetDir
 
 Show-NextSteps -TargetDir $TargetDir -SkillsDir $SkillsDirResolved -PackageRoot $PackageRoot

@@ -61,6 +61,8 @@ Behavior:
   - Grok skills → ./.grok/skills/govern/ + audit/
   - Default Copilot slash surface: /govern (primary) + /audit (cross-audit)
   - Advanced form-filling slashes are NOT installed unless --with-primitives
+  - Core methodology (GOAL-019 D-004): ALWAYS installs package core/docs → ./docs/
+    (architecture + templates + slim docs/README). Missing core = incomplete install.
   - Core orchestrator: prompts/00-govern-orchestrator.md
   - Cross-audit core: prompts/05-independent-audit.md
   - prompts/, templates/ and contracts/ are placed under --skills-dir (with --all)
@@ -144,11 +146,13 @@ print_next_steps() {
 Done.
 
 Next steps:
-  1. Review installed rule file(s) and adjust paths for your project.
-  2. Ensure a docs/workspace-<NNN>-<slug>/ workspace root and its goal-tree.md exist.
+  1. Review installed rule file(s) and docs/architecture (core methodology; required).
+  2. Create docs/workspace-<NNN>-<slug>/ with workspace.md + goal-tree.md
+     (from docs/templates/workspace-context.md). Then /govern to create Root Goal.
   3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
-     - Core: $SKILLS_DIR/prompts/00-govern-orchestrator.md
-     - Cross: $SKILLS_DIR/prompts/05-independent-audit.md
+     - Methodology: ./docs/architecture/principles.md
+     - Orchestrator: $SKILLS_DIR/prompts/00-govern-orchestrator.md
+     - Cross-audit: $SKILLS_DIR/prompts/05-independent-audit.md
      - Contract: $SKILLS_DIR/contracts/skills-consumer-contract.json
      - Claude: /govern + /audit under ./.claude/skills/
      - Grok:   /govern + /audit under ./.grok/skills/
@@ -159,6 +163,22 @@ Project root:  $TARGET_DIR
 Skills dir:    $SKILLS_DIR
 Package root:  $PACKAGE_ROOT
 EOF
+}
+
+install_core_docs() {
+  local core_docs="$PACKAGE_ROOT/core/docs"
+  [[ -d "$core_docs/architecture" ]] || die "Missing package core mirror: $core_docs/architecture (GOAL-019 D-004)"
+  [[ -d "$core_docs/templates" ]] || die "Missing package core mirror: $core_docs/templates (GOAL-019 D-004)"
+  [[ -f "$core_docs/README.md" ]] || die "Missing package core mirror: $core_docs/README.md (GOAL-019 D-004)"
+  [[ -f "$core_docs/architecture/principles.md" ]] || die "Missing principles.md in core mirror"
+  [[ -f "$core_docs/architecture/workspace-protocol.md" ]] || die "Missing workspace-protocol.md in core mirror"
+  if [[ -f "$core_docs/architecture/tech-stack.md" ]]; then
+    die "core mirror must not ship tech-stack.md (D-004)"
+  fi
+  echo "Installing core methodology → ./docs/ (architecture + templates + README)"
+  copy_file "$core_docs/README.md" "$TARGET_DIR/docs/README.md"
+  copy_dir_merge "$core_docs/architecture" "$TARGET_DIR/docs/architecture" "core architecture"
+  copy_dir_merge "$core_docs/templates" "$TARGET_DIR/docs/templates" "core templates"
 }
 
 # --- parse args ---
@@ -237,10 +257,12 @@ COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
 TEMPLATES_SRC="$PACKAGE_ROOT/templates"
 CONTRACTS_SRC="$PACKAGE_ROOT/contracts"
+CORE_DOCS_SRC="$PACKAGE_ROOT/core/docs"
 
 [[ -d "$PROMPTS_SRC" ]] || die "Missing package directory: $PROMPTS_SRC"
 [[ -d "$TEMPLATES_SRC" ]] || die "Missing package directory: $TEMPLATES_SRC"
 [[ -d "$CONTRACTS_SRC" ]] || die "Missing package directory: $CONTRACTS_SRC"
+[[ -d "$CORE_DOCS_SRC" ]] || die "Missing package directory: $CORE_DOCS_SRC (GOAL-019 core mirror)"
 [[ -d "$TARGET_DIR" ]] || die "Current working directory is not a directory: $TARGET_DIR"
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
@@ -305,5 +327,8 @@ if [[ "$INSTALL_EXTRAS" -eq 1 ]]; then
   copy_dir_merge "$TEMPLATES_SRC" "$SKILLS_DIR/templates" "templates"
   copy_dir_merge "$CONTRACTS_SRC" "$SKILLS_DIR/contracts" "contracts"
 fi
+
+# GOAL-019 D-003/D-004: core methodology is co-required with any host install
+install_core_docs
 
 print_next_steps

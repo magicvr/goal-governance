@@ -43,7 +43,15 @@ try {
         (Join-Path $SkillsDest 'prompts\05-independent-audit.md'),
         (Join-Path $SkillsDest 'templates\workspace-context.md'),
         (Join-Path $SkillsDest 'contracts\skills-consumer-contract.schema.json'),
-        (Join-Path $SkillsDest 'contracts\skills-consumer-contract.json')
+        (Join-Path $SkillsDest 'contracts\skills-consumer-contract.json'),
+        # GOAL-019 D-004: core methodology default install (from package core/, not skills dest)
+        (Join-Path $TempRoot 'docs\README.md'),
+        (Join-Path $TempRoot 'docs\architecture\principles.md'),
+        (Join-Path $TempRoot 'docs\architecture\workspace-protocol.md'),
+        (Join-Path $TempRoot 'docs\architecture\overview.md'),
+        (Join-Path $TempRoot 'docs\architecture\directory-layout.md'),
+        (Join-Path $TempRoot 'docs\templates\workspace-context.md'),
+        (Join-Path $TempRoot 'docs\templates\goal-folder\00-meta.md')
     )
 
     $missing = @()
@@ -54,7 +62,8 @@ try {
     }
 
     $forbidden = @(
-        (Join-Path $TempRoot '.github\prompts\new-goal.prompt.md')
+        (Join-Path $TempRoot '.github\prompts\new-goal.prompt.md'),
+        (Join-Path $TempRoot 'docs\architecture\tech-stack.md')
     )
     $leaked = @()
     foreach ($path in $forbidden) {
@@ -98,7 +107,7 @@ try {
         exit 1
     }
 
-    Write-Host 'PASS: isolated -All install produced /govern + /audit surface; no form-fill primitives.'
+    Write-Host 'PASS: isolated -All install produced /govern + /audit + core docs; no form-fill primitives; no tech-stack.'
     Write-Host "  evidence_dir=$TempRoot"
     exit 0
 }

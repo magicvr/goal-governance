@@ -718,6 +718,51 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(sh, r"00-govern-orchestrator|/govern")
         self.assertRegex(ps1, r"00-govern-orchestrator|/govern")
 
+    def test_core_d004_mirror_is_complete(self) -> None:
+        """GOAL-019 D-004: skills/core ships methodology subset without tech-stack."""
+        core = SKILLS_ROOT / "core" / "docs"
+        required = (
+            core / "README.md",
+            core / "architecture" / "principles.md",
+            core / "architecture" / "workspace-protocol.md",
+            core / "architecture" / "overview.md",
+            core / "architecture" / "directory-layout.md",
+            core / "templates" / "README.md",
+            core / "templates" / "workspace-context.md",
+            core / "templates" / "goal-folder" / "00-meta.md",
+            core / "templates" / "goal-folder" / "01-decision.md",
+            core / "templates" / "goal-folder" / "02-execution.md",
+            core / "templates" / "goal-folder" / "03-audit.md",
+        )
+        for path in required:
+            self.assertTrue(path.is_file(), f"missing core mirror file: {path}")
+        self.assertFalse(
+            (core / "architecture" / "tech-stack.md").is_file(),
+            "core mirror must not include tech-stack.md",
+        )
+        principles = (core / "architecture" / "principles.md").read_text(encoding="utf-8")
+        for marker in ("P-001", "P-002", "P-003", "P-004", "P-005"):
+            self.assertIn(marker, principles)
+        layout = (core / "architecture" / "directory-layout.md").read_text(encoding="utf-8")
+        self.assertIn("workspace-", layout)
+        self.assertNotIn("goal-governance/web", layout.replace("\\", "/"))
+        # goal-folder five-pack should match package templates mirror
+        for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
+            self.assertEqual(
+                (core / "templates" / "goal-folder" / name).read_bytes(),
+                (SKILLS_TEMPLATES / name).read_bytes(),
+                f"core templates drift from skills/templates: {name}",
+            )
+        sh = INSTALL_SH.read_text(encoding="utf-8")
+        ps1 = INSTALL_PS1.read_text(encoding="utf-8")
+        self.assertIn("install_core_docs", sh)
+        self.assertIn("Install-CoreDocs", ps1)
+        self.assertIn("core/docs", sh.replace("\\", "/"))
+        self.assertIn("core", ps1)
+        self.assertRegex(sh, r"docs/workspace-<NNN>-<slug>")
+        self.assertRegex(ps1, r"docs\\workspace-<NNN>-<slug>|docs/workspace-<NNN>-<slug>")
+        self.assertNotIn(r"docs\goals\goal-tree", ps1)
+
     def test_install_all_ships_contract_mirror(self) -> None:
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
@@ -915,6 +960,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"Grok|\.grok")
         self.assertIn("SKILL.md", text)
         self.assertIn("contracts/", text)
+        self.assertIn("core/", text)
+        self.assertRegex(text, r"同级必备|不完整安装")
+        self.assertIn("principles", text)
 
     def test_skills_readme_default_install_documents_govern_and_audit(self) -> None:
         """F-017 guard: README manual/script sections must match default govern+audit surface."""
