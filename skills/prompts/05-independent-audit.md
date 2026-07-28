@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.3.0
+version: 0.3.1
 role: independent-audit
 ---
 
@@ -93,6 +93,7 @@ role: independent-audit
 - [ ] source=independent；含 scope、verdict、findings  
 - [ ] 若 scope 涉及 P-005，已核对信息项、阶段门禁、证据与残余风险接受
 - [ ] 工作区范围已校验；共享资料引用（若有）未被当成跨工作区权限、canonical 事实或自动关闭证据
+- [ ] 跨区目标提及（若有）用 Q2 落盘 / 对用户可用 Q3；禁止仅凭裸 GOAL id 跨区
 - [ ] 未擅自改目标状态  
 - [ ] 用户知道如何用 /govern 闭环  
 ```

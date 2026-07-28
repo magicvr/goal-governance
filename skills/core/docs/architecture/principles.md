@@ -2,16 +2,18 @@
 title: 治理原则
 status: active
 created: 2026-07-18
-updated: 2026-07-24
+updated: 2026-07-20
 parent: null
-version: 0.5.1
+version: 0.5.0
 ---
 
 # 治理原则
 
-本文件记录 Goal Governance 核心方法论的**元规则**（跨目标、跨交付形态长期适用的原则）。具体操作细则见根目录 [AGENTS.md](../../AGENTS.md)、[docs/README.md](../README.md) 与模板 [docs/templates/](../templates/)。Skills 编排落地见 `skills/prompts/`（`/govern`、`/audit`）。Skills 与其他消费适配器不改变这些规则的权威性。
+本文件记录 Goal Governance 核心方法论的**元规则**（跨目标、跨交付形态长期适用的原则）。具体操作细则见根目录 [AGENTS.md](../../AGENTS.md)、[docs/README.md](../README.md) 与 canonical 模板 [docs/templates/](../templates/)。Skills 编排落地见 [GOAL-005-skills-closed-loop-audit](../goals/GOAL-005-skills-closed-loop-audit/00-meta.md) 及 `skills/prompts/`；Skills 与 Web 都是消费适配器，不改变这些规则的权威性。
 
 工作区与共享资料固定引用的操作协议见 [workspace-protocol.md](workspace-protocol.md)。它把 P-001 的路线图/串行阶段、P-002 的证据意识与 P-005 的信息门禁应用到跨工作区边界，不新增第二套生命周期或状态真相；目标状态只在各自工作区根内保存。
+
+仓库级愿景体系见 [../vision/](../vision/)：**Charter 防漂移（不可 Goal-`done`）**；**愿景规划 VP 可关门**并对齐 Charter；工作区/Root 通过 `plan_refs`/`primary_plan` 对齐 VP。愿景目录不持有 progress% 或 goal-tree 权威。
 
 | 编号 | 标题 | 一句话 |
 |------|------|--------|
@@ -62,7 +64,7 @@ version: 0.5.1
 
 **价值**：降低设立时目标偏移、方案不可行、虚标进度与草率关门。
 
-**延后（非本原则强制）**：完整自动状态机、硬编码全部门禁枚举——由 Skills 编排提示词逐步落地。
+**延后（非本原则强制）**：完整自动状态机、硬编码全部门禁枚举——由 Skills 提示词逐步落地，见 GOAL-005。
 
 ---
 
@@ -84,7 +86,7 @@ version: 0.5.1
 | **已关闭** | 可核对的修正事实（路径、决策号等）+ 可选复审；口头声称不算 |
 | **冲突** | 见 P-004（verdict 相反或必改项互否） |
 
-字段级响应/关闭流程由 Skills 编排器与 `04` 原语细化。
+字段级响应/关闭流程由 Skills 编排器与 `04` 原语（GOAL-005 阶段 B）细化。
 
 ### 落盘规则（权威位置）
 
@@ -99,7 +101,7 @@ version: 0.5.1
 | **写入方** | 交叉工具可直接追加 `03-audit`；或输出 Markdown 后由人/本侧代贴——仍标 `source: independent` |
 | **编排器认账** | 推进/放行时扫描该目标 `03-audit.md` 中带编号的条目（含链接的附件详情） |
 
-**来源标注**：`source: self | independent` 为强制最小字段。更细结构（findings ID 等）由审计原语细化。
+**来源标注**：`source: self | independent` 为强制最小字段。更细结构（findings ID 等）由审计原语/GOAL-005 阶段 B 细化。
 
 **产品面**：默认主入口仍为编排器；独立审计为交叉专用入口（如 `/audit`），**不是**与历史四填表原语并列的主路径。
 
@@ -189,11 +191,11 @@ version: 0.5.1
 |------|-----------------|-----------------|
 | P-001 | 第 6 节 | `01` 创建、编排器 S0/S2 |
 | P-002 | 第 6b 节 | `00` 编排意识；`03` 事实；`04` 审视 |
-| P-003 | 第 6b 节 | `00` 意见汇总；独立 `/audit` |
-| P-004 | 第 6b 节 | `00` 用户裁决点 |
+| P-003 | 第 6b 节 | `00` 意见汇总；独立 `/audit`（GOAL-005 B） |
+| P-004 | 第 6b 节 | `00` 用户裁决点（GOAL-005 B） |
 | P-005 | 第 6b 节 | `00` 信息就绪扫描与门禁；`01`～`05` 记录、实施与审计 |
 
-关联决策：见维护者 monorepo 的 GOAL-001 / GOAL-005 / GOAL-007 决策记录（若可访问）；消费方以本文件与 AGENTS 为准。
+关联决策：[GOAL-001 D-009](../goals/GOAL-001-main-vision/01-decision.md#d-009--将信息就绪纳入核心闭环2026-07-19)；[GOAL-005 D-002～D-006](../goals/GOAL-005-skills-closed-loop-audit/01-decision.md)；[GOAL-007 D-001～D-002](../goals/GOAL-007-information-readiness-governance/01-decision.md)。
 
 ## 补充协议：工作区与共享资料引用
 

@@ -6,6 +6,30 @@
 
 - （无尚未绑定 tag 的变更）
 
+## 0.9.1 - 2026-07-28
+
+Skills **consumer** patch：跨区目标限定引用（A0）+ 同窗口治理/愿景澄清；六 CLI runtime 对当前行为源重采。
+
+### 协议 / Skills（A0 · GOAL-010 D-003）
+
+- 工作区协议 **0.5.0** §2.6：短 `GOAL-*` id 不变；跨区限定引用 **Q1**（双字段）/ **Q2**（canonical 路径，**文档默认**）/ **Q3**（行内标签，**对话默认**）；禁止把工作区编号嵌进 goal id。
+- 根 `AGENTS.md` / `skills/AGENTS.template.md` **0.9.2**；编排器 `00` 与原语 `01`～`05` 对齐工作区页眉与 Q2/Q3 纪律。
+- `skills/core` 镜像同步 protocol / directory-layout / docs README。
+
+### 治理面（同窗口合入）
+
+- finding 三路径闭合与愿景门禁澄清（principles / AGENTS / 编排器）。
+- Charter → VP → 工作区愿景对齐体系。
+
+### 兼容矩阵 / 证据
+
+- 矩阵 `candidateRevision: v0.9.1`。
+- Claude Code CLI `2.1.220` `/govern` + `/audit`：2026-07-28 **runtime-verified**。
+- Grok Build CLI `0.2.112` `/govern` + `/audit`：2026-07-28 **runtime-verified**（CLI 子进程 + proxy-managed key）。
+- GitHub Copilot CLI `1.0.71` `/govern` + `/audit`：2026-07-28 **runtime-verified**（GitHub 月度配额耗尽时经 `COPILOT_PROVIDER_BASE_URL` BYOK 走 OpenAI-compatible 代理；宿主仍为 Copilot CLI）。
+- Web parser 保持 automated-verified。
+- 六 CLI 入口 coverage **ready-for-release-evidence**。
+
 ## 0.9.0 - 2026-07-24
 
 Skills **consumer** release 候选（GOAL-019）：**核心方法论与 Skills 同级必备** + 消费方工作区骨架。

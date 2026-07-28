@@ -4,12 +4,20 @@ title: 建立工作区与共享资料区核心协议，并完成 Skills 首先�
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
-updated: 2026-07-20
-version: 0.3.0
+updated: 2026-07-28
+version: 0.3.1
 progress: 100%
 ---
 
 # GOAL-010 · 建立工作区与共享资料区核心协议，并完成 Skills 首先适配
+
+## 2026-07-28 · A0 限定引用（D-003 · 不重开）
+
+用户确认短 id + Q2/Q3 限定引用（A0）。[D-003](01-decision.md#d-003--a0-限定引用与展示消歧不改-goal-id-形状2026-07-28)；workspace-protocol **0.5.0**。本目标 **仍 `done / 100%`**。执行见 [02-execution](02-execution.md#2026-07-28--a0-限定引用落地d-003--不重开本目标)。
+
+## 2026-07-28 · 协议修订交叉引用（不重开）
+
+Root [D-016](../GOAL-001-main-vision/01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) 维护了 workspace-protocol（当时 **0.4.0**）等元规则；其后 D-003 升至 **0.5.0**。本目标 **仍 `done / 100%`**；说明见 [02-execution](02-execution.md#2026-07-28--交叉引用协议逻辑一致性修订不重开本目标)。
 
 ## 2026-07-20 · 后续物理目录迁移说明
 

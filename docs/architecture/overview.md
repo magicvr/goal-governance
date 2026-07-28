@@ -2,9 +2,9 @@
 title: 架构概览
 status: active
 created: 2026-07-18
-updated: 2026-07-20
+updated: 2026-07-28
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 架构概览
@@ -23,27 +23,28 @@ version: 0.6.0
 ## 逻辑架构
 
 ```text
-┌──────────────────────────────────────────────────────┐
-│ 核心方法论与文档协议                                  │
-│ docs/README.md + docs/architecture/ + docs/templates/ + docs/contracts/ │
-└───────────────────────┬──────────────────────────────┘
-                        │ 规范结构与生命周期
-             ┌──────────┴──────────┐
-             ▼                     ▼
-   ┌──────────────────┐  ┌──────────────────┐
-   │ Skills / 提示词   │  │ Web 人类工作台    │
-   │ AI/Agent 适配器   │  │ 当前只读/诊断     │
-   └─────────┬────────┘  └─────────┬────────┘
-             │ 读写                 │ 读取
-             └──────────┬───────────┘
-                        ▼
-             ┌──────────────────────┐
-             │ workspace-<NNN>-slug/ │  ← workspace runtime source of truth
-             │ workspace.md + goal-tree.md │
-             └──────────────────────┘
-
-`workspace-<NNN>-slug/workspace.md` 绑定当前工作区的 Root Goal、canonical 范围和共享资料固定引用；它不保存目标生命周期状态，也不替代上图中的真相源。
+┌──────────────────────────────────────────────────────────────┐
+│ 核心方法论与文档协议                                           │
+│ docs/README + architecture/ + templates/ + contracts/ + vision/ │
+└──────────────────────────┬───────────────────────────────────┘
+                           │ 规范结构与生命周期
+              ┌────────────┴────────────┐
+              ▼                         ▼
+    ┌──────────────────┐      ┌──────────────────┐
+    │ Skills / 提示词   │      │ Web 人类工作台    │
+    │ AI/Agent 适配器   │      │ 有界受控写入      │
+    └────────┬─────────┘      └────────┬─────────┘
+             │ 读写                      │ 读 + 门禁后写
+             └────────────┬─────────────┘
+                          ▼
+             ┌──────────────────────────┐
+             │ workspace-<NNN>-slug/     │  ← 运行时目标真相源
+             │ workspace.md + goal-tree │
+             │ + 平铺 GOAL-* 五件套      │
+             └──────────────────────────┘
 ```
+
+`workspace.md` 绑定 Root Goal、canonical 范围、共享资料目录指针与（若有 vision）`plan_refs`/`primary_plan`；**不**保存目标生命周期状态。愿景目录 `docs/vision/` 对齐 Charter→VP，**不是** progress 或审计台账。
 
 ## 仓库布局
 
@@ -51,29 +52,30 @@ version: 0.6.0
 |------|------|
 | `docs/workspace-<NNN>-<slug>/` | 当前工作区的目标与过程记录（扁平） |
 | `docs/workspace-<NNN>-<slug>/workspace.md` | 显式工作区绑定与共享资料固定引用；不保存目标状态 |
+| `docs/vision/` | Charter、VP、对齐契约；非 goal-tree |
 | `docs/shared-materials/` | 工作区外的共享资料候选库存；不保存目标状态 |
 | `docs/templates/` | 核心 canonical 文档模板 |
 | `docs/contracts/` | 消费适配器的 canonical 机读版本与兼容声明 |
-| `docs/architecture/` | 技术与架构约定、[治理原则](principles.md) |
+| `docs/architecture/` | 技术与架构约定、[治理原则](principles.md)、[工作区协议](workspace-protocol.md) |
 | `docs/_index/` | 预留索引/术语 |
 | `skills/` | AI/Agent 消费适配器、安装包与模板/契约分发镜像 |
-| `web/` | FastAPI Web 应用 |
+| `web/` | FastAPI Web 应用（有界受控写入，默认门闩关闭） |
 | `AGENTS.md` | AI 强制规则 |
 
-## 当前阶段（v0）
+## 当前阶段（现时）
 
-- GOAL-001 已通过 D-007 重基线为“三层交付、一个真相源”；核心 canonical 模板位于 `docs/templates/goal-folder/`。
-- 文档体系规则与 GOAL-002/003/004/005 已建立；GOAL-003/005 已交付 Skills 的**单一编排主入口**（`/govern`）、交叉入口（`/audit`）、原语与多宿主安装基线。
-- 治理原则 [principles.md](principles.md) 已含 P-001～P-005；P-005 允许带未知立项，并通过信息需求与阶段门禁避免把未知伪装成已知；`skills/templates/goal-folder/` 与 `skills/contracts/` 分别作为核心模板和消费适配器契约的离线分发镜像继续随包安装。
-- GOAL-008 的 I-001 已交付 `docs/contracts/` canonical schema/manifest 与 `skills/contracts/` 镜像；实际宿主/版本支持矩阵仍由 I-002 按门禁推进。
-- GOAL-010 正把工作区 Root Goal 绑定、串行阶段与共享资料固定引用纳入 core 协议，并先由 Skills 适配；它不放行 GOAL-009 的 Web 产品、存储或受控写入门禁。
-- GOAL-004 阶段 A～D 已完成：领域模型、读取服务、可恢复 Create/Update 服务与只读 Web 接入见 [domain-model-and-storage.md](../workspace-001-goal-governance/GOAL-004-core-data-model/attachments/domain-model-and-storage.md)。
-- Web 首页和 `/goals/{goal_id}` 已通过 `GoalsRepository` 读取 Markdown 真相源，展示目标、详情与 tree/document 诊断；UI 写入不在当前 Web 交付边界。
+- **真相源**：显式工作区 `docs/workspace-001-goal-governance/`（GOAL-011 已完成自 `docs/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
+- **原则**：[principles.md](principles.md) P-001～P-005（含 finding 三路径闭合、P-004.1～4.4）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
+- **Skills**：`/govern` 主入口、`/audit` 交叉入口、多宿主安装与契约镜像；发布一致性以 GOAL-008 惯例与 runtime evidence 为准。
+- **Web**：阶段 6 **有界结项**（GOAL-009 及 012～017）；主路径可读 + 受控写（双门闩，见 `web/README.md`）。扩展能力挂 residual **R-009-X**，不假装产品终态。
+- **Root**：`GOAL-001-main-vision` 保持 `active`，对齐 `VP-001-governance-platform-delivery` / `vision-goal-governance@0.1.0`。
 
-## 演进方向（未实现，仅规划）
+细节以工作区 `goal-tree.md` 与各目标五件套为准；本页若与之冲突，以工作区记录为准。
 
-1. 工作区与共享资料固定引用协议（GOAL-010）：先形成 core/Skills 共用边界，再由产品适配器验证运行时模型。
-2. Web 继续以人机协作工作台的产品发现为当前阶段；任何读模型、资料访问或写入能力另立目标并遵守相同事务与审计约束（阶段 6）。
-3. 三个交付面的兼容性、漂移检测与发布验收（阶段 7）。
+## 演进方向（未实现或 residual，仅规划）
+
+1. 多工作区 N1 导航、资料 CRUD 产品、AI 读资料全文等（R-009-X 与后续目标）。
+2. 三交付面持续兼容性、漂移检测与发布验收加固。
+3. 消费适配器对 finding residual / user-overruled 的机读字段（若产品需要）。
 
 细节技术选型见 [tech-stack.md](tech-stack.md)。

@@ -4,13 +4,32 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-22
-version: 0.3.7
+updated: 2026-07-28
+version: 0.3.8
 ---
 
 # 执行记录 · GOAL-001
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
+
+## 2026-07-28 · 核心协议逻辑一致性修订（D-016）
+
+- **触发**：用户审视核心协议逻辑问题 → 确认修改 → 要求在合适处记录操作。  
+- **决策**：[D-016](01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28)。  
+- **已改权威/落地文件**（摘要）：  
+  - `docs/architecture/principles.md` → **0.6.0**（P-002 路线图槽位；P-003 finding 三路径；P-004.1～4.4；死链修正）  
+  - `docs/architecture/workspace-protocol.md` → **0.4.0**（纲领串行/阶段内并行；legacy 唯一路径；跨区 id；Primary 冲突指针）  
+  - `docs/architecture/overview.md` → **0.7.0**（现时叙述；去掉过期「只读 / GOAL-010 进行中」）  
+  - `docs/architecture/directory-layout.md`（约束与 protocol 对齐）  
+  - `docs/vision/alignment.md` → **0.2.0**（Primary 冲突裁决；active VP 14 日空转）  
+  - `docs/vision/consumer-checklist.md`（Primary / 空转勾选）  
+  - `docs/README.md`（编号、finding 闭合、legacy）  
+  - 根 `AGENTS.md`、`skills/AGENTS.template.md` → **0.9.1**  
+  - `skills/prompts/00-govern-orchestrator.md` → **0.8.1**（§3.3 单条 residual；闭合用语）  
+- **交叉引用**：GOAL-010 已 `done`，仅在其执行记录追加「协议修订不重开目标」说明，不改其 status/progress。  
+- **验证**：`python -m unittest docs.tests.test_workspace_protocol docs.tests.test_vision_protocol docs.tests.test_standalone_bootstrap` → OK；`python -m unittest skills.tests.test_skills_orchestrator` → OK（35）。  
+- **未做**：不改 Root/`goal-tree` 目标 status 表进度；不关 R-009-X；不建 GOAL-020；不刷 runtime evidence / release tag。  
+- **goal-tree**：仅追加本日志节（见 [goal-tree.md](../goal-tree.md)）。
 
 ## 2026-07-20 · GOAL-008 阶段 5 关门
 

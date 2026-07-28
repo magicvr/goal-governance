@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.4.0
+version: 0.4.1
 role: primitive
 ---
 
@@ -52,6 +52,7 @@ role: primitive
 
 3. 条目具体可核对；计划与已完成分开写。
 4. 涉及共享资料时，先核对引用的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256`；缺失或不匹配时记录拒绝/阻断事实，不能把资料内容写成 confirmed 事实、证据或跨工作区上下文。固定引用只说明来源，事实准入仍须用户显式确认。
+4b. 时间线若提及**他区**目标或产物：落盘用 **Q2** 路径；对话用 **Q3**。本区目标用短 id；禁止改 goal id 形状。
 5. 涉及 I-00N 时：记录实际收集/验证动作与证据路径；新发现的未知追加到信息表，并写明 `required`/`non-blocking`、影响门禁和最晚需要阶段。`deferred` 要保留理由、责任人与复核触发；没有证据时不得把状态改为 `verified`。
 6. 刷新 `updated`。
 7. 调整 progress/status 时：同步 meta 与 goal-tree（树 + 表）；关门前确认没有未处理的关门 required 信息项。

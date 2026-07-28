@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
   "format": "goal-governance.skills-consumer-compatibility-matrix",
   "formatVersion": "1.0.0",
-  "candidateRevision": "v0.9.0",
+  "candidateRevision": "v0.9.1",
   "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
   "protocol": {
     "current": "0.1.0",
@@ -33,7 +33,7 @@
       "kind": "host-adapter",
       "host": {
         "product": "Claude Code CLI",
-        "version": "2.1.218",
+        "version": "2.1.220",
         "platform": "Windows 11",
         "installationSurface": ".claude/skills/govern and .claude/skills/audit"
       },
@@ -48,26 +48,26 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-24.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-28.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-24.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-28.json"
           ]
         }
       ],
-      "evidenceScope": "v0.9.0 candidate: Claude Code CLI 2.1.218 /govern and /audit re-captured 2026-07-24 against current behavior sources (audit skill, 05-independent-audit, AGENTS)."
+      "evidenceScope": "v0.9.1 candidate: Claude Code CLI 2.1.220 /govern and /audit re-captured 2026-07-28 against current behavior sources (AGENTS, 00-govern-orchestrator, 05-independent-audit, install skills)."
     },
     {
       "id": "grok-build-cli",
       "kind": "host-adapter",
       "host": {
         "product": "Grok Build CLI",
-        "version": "0.2.111",
-        "build": "94172f2aa4",
+        "version": "0.2.112",
+        "build": "9bbd559437",
         "platform": "Windows 11",
         "installationSurface": ".grok/skills/govern and .grok/skills/audit"
       },
@@ -82,18 +82,18 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-24.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-28.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-24.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-28.json"
           ]
         }
       ],
-      "evidenceScope": "v0.9.0 candidate: Grok Build CLI 0.2.111 (94172f2aa4) /govern and /audit re-captured 2026-07-24 via CLI subprocess with proxy-managed API (XAI_API_KEY=PROXY_MANAGED). Distinct from interactive Grok Build session auth."
+      "evidenceScope": "v0.9.1 candidate: Grok Build CLI 0.2.112 (9bbd559437) /govern and /audit re-captured 2026-07-28 via CLI subprocess with proxy-managed API (XAI_API_KEY=PROXY_MANAGED). Distinct from interactive Grok Build session auth."
     },
     {
       "id": "github-copilot-cli",
@@ -115,18 +115,18 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-24.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-28.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-24.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-28.json"
           ]
         }
       ],
-      "evidenceScope": "v0.9.0 candidate: GitHub Copilot CLI 1.0.71 /govern and /audit re-captured 2026-07-24 against current behavior sources."
+      "evidenceScope": "v0.9.1 candidate: GitHub Copilot CLI 1.0.71 /govern and /audit re-captured 2026-07-28 against current behavior sources. GitHub monthly quota exhausted; capture used COPILOT_PROVIDER_BASE_URL BYOK to an OpenAI-compatible proxy (model grok-4.5). Host product remains Copilot CLI; model routing is recorded in runtime evidence environment."
     },
     {
       "id": "web-readonly-parser",
