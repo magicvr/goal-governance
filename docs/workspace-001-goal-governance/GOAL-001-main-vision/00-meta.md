@@ -3,12 +3,24 @@ id: GOAL-001-main-vision
 title: 交付可复用的目标治理方法论、文档协议与消费工具
 status: active
 parent: null
+plan_refs: VP-001-governance-platform-delivery
+primary_plan: VP-001-governance-platform-delivery
+serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
 created: 2026-07-18
-updated: 2026-07-22
-version: 0.7.0
+updated: 2026-07-28
+version: 0.8.0
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
+
+## 愿景对齐
+
+| 项 | 值 |
+|----|-----|
+| Charter | [vision-goal-governance@0.1.0](../../../vision/charter.md) |
+| plan_refs | `VP-001-governance-platform-delivery` |
+| primary_plan | [VP-001-governance-platform-delivery](../../../vision/plans/VP-001-governance-platform-delivery.md) |
+| serves_summary | 本 Root 是 primary 工作区的可治理总目标：展开区内路线图与子目标，推进 VP-001，而不把仓库 Charter 标为可 `done` 的 Goal。 |
 
 ## 2026-07-22 · 阶段 6 有界结项（D-015 / A-014）
 

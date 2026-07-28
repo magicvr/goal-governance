@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-07-24
+updated: 2026-07-28
 parent: null
-version: 0.8.1
+version: 0.9.0
 ---
 
 # AGENTS.md
@@ -21,13 +21,14 @@ version: 0.8.1
 |------|------|------|
 | 目标与过程记录 | `<workspace-root>/` | 唯一长期存储 |
 | 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
+| 仓库愿景体系 | `docs/vision/` | 存在时**必读**；Charter→VP→工作区对齐；**不是** goal-tree / progress 权威 |
 | 架构约定 | `docs/architecture/` | **与 Skills 同级必备**（消费方 install 默认安装） |
 | 治理原则 | `docs/architecture/principles.md` | **必备**；P-001～P-005 全文；AGENTS §6/6b 为操作摘要 |
 | 文档使用规范 | `docs/README.md` | **必备**（消费方为精简入口） |
 | 核心方法论与模板 | `docs/templates/` | **必备**（消费方 install 默认安装）；canonical 模板优先 |
 | 工作区与共享资料协议 | `docs/workspace-<NNN>-<slug>/workspace.md`、`docs/architecture/workspace-protocol.md` | workspace 存在时必读；protocol **必备**；目标状态仍以 `<workspace-root>/` 为准 |
 
-冲突时以 `<workspace-root>/` 与本文件为准。
+冲突时以 `<workspace-root>/` 与本文件为准。目标状态**永不**以 `docs/vision/` 为准。
 
 ## 2. 目标存储与编号
 
@@ -169,6 +170,16 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
 5. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
 
+## 6d. 愿景体系（Charter → VP → Workspace）
+
+若仓库存在 `docs/vision/charter.md`：
+
+1. **先读** `docs/vision/charter.md` 与 `docs/vision/alignment.md`（或 consumer-checklist），再定位工作区与推进目标。
+2. 三层链：Charter（不可 Goal-`done`）← 愿景规划 `VP-*`（`planned|active|closed|abandoned`）← 工作区/Root 的 `plan_refs` + 必填 `primary_plan`。
+3. 非 sandbox opt-out 时缺 `plan_refs`/`primary_plan`、VP 缺失、或 `vision_ref` 与 charter 版本不一致 → **fail closed**，不得假装推进或关门。
+4. `docs/vision/` **不是** goal-tree、progress% 或审计台账；VP 关门须链接工作区证据。
+5. 细则：`docs/vision/alignment.md`；协议摘要：`docs/architecture/workspace-protocol.md` §4b。
+
 ## 7. 必须同步更新 goal-tree.md
 
 以下任一操作后，**必须**更新 `<workspace-root>/goal-tree.md`：
@@ -218,14 +229,14 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 ## 10. 变更工作流
 
 ```text
-1. 读 `docs/workspace-<NNN>-<slug>/workspace.md`（若有）→ 校验 Root Goal/canonical 范围/资料引用；再读 goal-tree.md → 编号、parent、未关门目标
+1. 若存在 `docs/vision/charter.md` → 读 Charter 版本与 alignment；再读 `docs/workspace-<NNN>-<slug>/workspace.md`（若有）→ 校验 Root Goal/canonical 范围/资料引用/`plan_refs`+`primary_plan`；再读 goal-tree.md → 编号、parent、未关门目标
 2. 未指定原子操作时 → 优先编排器
 3. 尚不可直接执行 → 先高层路线图（P-001）；存在影响门禁的未知 → 先登记信息需求与最晚需要阶段（P-005）
-4. 推进时检查相关审计意见与信息就绪门禁；P-004 情形先询问用户
+4. 推进时检查相关审计意见、信息就绪门禁与愿景/VP 对齐；P-004 情形先询问用户
 5. **若存在未关闭 required/必改项 → 先响应/修正，不得假装放行或关门**
 6. 创建或修改五件套
 7. 更新 goal-tree.md（树 + 表）
-8. 项目已有 docs/README、architecture 等时再按需更新
+8. 项目已有 docs/README、architecture、vision 等时再按需更新
 9. 再改代码或 Skills（路径以项目实际为准）
 ```
 

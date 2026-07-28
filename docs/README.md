@@ -2,20 +2,25 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-07-20
+updated: 2026-07-28
 parent: null
-version: 0.9.1
+version: 0.10.0
 ---
 
 # docs/ · 文档体系
 
-本目录是 **Goal Governance** 的核心规范与运行记录来源：方法论、文档协议、目标、决策、执行、审计与架构说明均以 Markdown 维护。具体目标实例的状态真相只存在于各自 `docs/workspace-<NNN>-<slug>/` 根。
+本目录是 **Goal Governance** 的核心规范与运行记录来源：方法论、文档协议、目标、决策、执行、审计与架构说明均以 Markdown 维护。具体目标实例的状态真相只存在于各自 `docs/workspace-<NNN>-<slug>/` 根。仓库级愿景与规划对齐在 `docs/vision/`（**不是**第二套目标状态）。
 
 ## 目录结构
 
 ```text
 docs/
 ├── README.md                 # 本文件：文档架构与使用规范
+├── vision/                   # 仓库级愿景：Charter → VP → 工作区对齐
+│   ├── charter.md
+│   ├── roadmap.md
+│   ├── plans/VP-*.md
+│   └── alignment.md
 ├── standalone-bootstrap.md   # 核心包独立启用与空 Git 验证
 ├── tests/                    # 核心文档层的可重复验证
 ├── workspace-001-example/    # 工作区根（目标在其中扁平存放）
@@ -41,7 +46,7 @@ docs/
 ├── architecture/             # 架构与技术约定
 │   ├── overview.md
 │   ├── principles.md         # 治理原则（元规则）
-│   ├── workspace-protocol.md # 工作区/共享资料固定引用协议
+│   ├── workspace-protocol.md # 工作区/共享资料/愿景对齐协议
 │   └── tech-stack.md
 └── _index/                   # 预留：索引、术语等（可扩展）
 ```
@@ -65,6 +70,7 @@ docs/
 10. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/goal-folder/`，消费适配器契约位于 `docs/contracts/`；`skills/templates/goal-folder/` 与 `skills/contracts/` 是供安装脚本和离线复制使用的同步镜像。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
 11. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal。
 12. **工作区与共享资料协议**：显式工作区可从 `docs/templates/workspace-context.md` 创建 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal 与该工作区根 canonical 范围；没有显式工作区根但保留 `docs/goals/` 的旧仓库才是 legacy 隐式单工作区。共享资料候选库存和固定引用不能形成第二套目标状态或跨工作区上下文通道。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
+13. **愿景体系（Charter → VP → Workspace）**：`docs/vision/` 维护不可 Goal-`done` 的 Charter、可关门的愿景规划 VP，以及对齐门禁。工作区通过 `plan_refs` / `primary_plan` 挂接 VP。愿景**不是** goal-tree 或 progress 权威。见 [vision/README.md](vision/README.md) 与 [vision/alignment.md](vision/alignment.md)。
 
 ## Frontmatter 约定
 
@@ -113,7 +119,7 @@ version: 0.1.0
 | 模板 | `01-decision.md` | `C86403B96BA69E9E84B6662FF5B41EF0E637ABE5B2E57D8369E00FBA19F5B796` | `C86403B96BA69E9E84B6662FF5B41EF0E637ABE5B2E57D8369E00FBA19F5B796` |
 | 模板 | `02-execution.md` | `7864D87F7AE97B0AA2E0E1D14E290AC21110CC9C20BDD70382BACDEBCF9EB132` | `7864D87F7AE97B0AA2E0E1D14E290AC21110CC9C20BDD70382BACDEBCF9EB132` |
 | 模板 | `03-audit.md` | `44C72913995F8E27646C57555469A28B4FA06BCCDDBF2799B9D773C7F8920B4C` | `44C72913995F8E27646C57555469A28B4FA06BCCDDBF2799B9D773C7F8920B4C` |
-| 模板 | `workspace-context.md` | `2DF812258D093012128F8AAF0E50D208481BE84EC67EBE43F493D9E5E32C4D1E` | `2DF812258D093012128F8AAF0E50D208481BE84EC67EBE43F493D9E5E32C4D1E` |
+| 模板 | `workspace-context.md` | `B9A6C8E731A3B9E7751994EDA1AEB2198779869E56EEF3947D63A84CF728DDB5` | `B9A6C8E731A3B9E7751994EDA1AEB2198779869E56EEF3947D63A84CF728DDB5` |
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
 | 契约 | `skills-consumer-contract.json` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |

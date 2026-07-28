@@ -13,6 +13,8 @@ version: 0.5.0
 
 工作区与共享资料固定引用的操作协议见 [workspace-protocol.md](workspace-protocol.md)。它把 P-001 的路线图/串行阶段、P-002 的证据意识与 P-005 的信息门禁应用到跨工作区边界，不新增第二套生命周期或状态真相；目标状态只在各自工作区根内保存。
 
+仓库级愿景体系见 [../vision/](../vision/)：**Charter 防漂移（不可 Goal-`done`）**；**愿景规划 VP 可关门**并对齐 Charter；工作区/Root 通过 `plan_refs`/`primary_plan` 对齐 VP。愿景目录不持有 progress% 或 goal-tree 权威。
+
 | 编号 | 标题 | 一句话 |
 |------|------|--------|
 | [P-001](#p-001--目标可执行性与路线图) | 目标可执行性与路线图 | 大目标先路线图，再按阶段立项 |

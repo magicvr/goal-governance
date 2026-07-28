@@ -1,57 +1,69 @@
 ---
-title: 目录布局（消费方）
+title: 目录布局
 status: active
 created: 2026-07-18
-updated: 2026-07-24
+updated: 2026-07-28
 parent: null
-version: 0.1.0
+version: 0.6.0
 ---
 
 # 目录布局
 
-消费方在完整安装 Skills（含 core）并建立第一个工作区后的**最小**布局：
-
 ```text
-your-project/
-├── AGENTS.md                      # AI 强制规则（install 写入）
+goal-governance/
+├── AGENTS.md                 # AI 助手强制规则
+├── README.md                 # 项目入口说明
 ├── docs/
-│   ├── README.md                  # 文档入口（core 精简版）
+│   ├── README.md             # 文档体系规范
+│   ├── vision/               # 仓库级愿景体系（非 goal-tree）
+│   │   ├── README.md
+│   │   ├── charter.md        # 现行愿景（不可 done）
+│   │   ├── roadmap.md        # VP 索引
+│   │   ├── plans/VP-*.md     # 愿景规划（可关门）
+│   │   ├── revisions.md
+│   │   ├── workspaces.md
+│   │   ├── alignment.md
+│   │   └── consumer-checklist.md
+│   ├── workspace-001-example/ # 显式工作区根
+│   │   ├── workspace.md       # Root/范围/资料/规划对齐
+│   │   ├── goal-tree.md       # 本工作区目标树与状态总览
+│   │   ├── GOAL-001-.../      # 目标（平铺，无嵌套）
+│   │   └── GOAL-00N-.../
+│   ├── shared-materials/      # 工作区外的资料候选库存
+│   ├── templates/
+│   │   ├── README.md            # 核心模板层说明
+│   │   ├── goal-folder/         # canonical 五件套模板
+│   │   └── workspace-context.md # workspace-<NNN>-<slug>/workspace.md 模板
+│   ├── contracts/               # canonical 机读协议/模板版本与兼容声明
+│   │   ├── skills-consumer-contract.schema.json
+│   │   └── skills-consumer-contract.json
 │   ├── architecture/
 │   │   ├── overview.md
-│   │   ├── principles.md          # P-001～P-005
+│   │   ├── principles.md     # 治理原则（元规则）
 │   │   ├── workspace-protocol.md
-│   │   └── directory-layout.md    # 本文件
-│   ├── templates/
-│   │   ├── README.md
-│   │   ├── goal-folder/           # 五件套模板
+│   │   ├── tech-stack.md
+│   │   └── directory-layout.md
+│   └── _index/               # 预留
+├── skills/                    # AI/Agent 消费适配器与分发包
+│   ├── prompts/
+│   ├── templates/             # docs/templates 的同步镜像
 │   │   └── workspace-context.md
-│   ├── shared-materials/          # 可选
-│   └── workspace-001-<slug>/      # 显式工作区根（需创建）
-│       ├── workspace.md
-│       ├── goal-tree.md
-│       ├── GOAL-001-<root-slug>/
-│       └── GOAL-00N-.../
-└── skills/                        # Skills 包（可改名）
-    ├── prompts/
-    ├── templates/                 # 包内分发镜像（可选副本）
-    ├── contracts/
-    ├── core/                      # 包内 core 源（install 已拷到 docs/）
-    └── install.*
+│   ├── contracts/             # docs/contracts 的同步镜像
+│   └── install.*
+└── web/
+    ├── main.py
+    ├── requirements.txt
+    ├── README.md
+    ├── static/
+    └── templates/
 ```
 
 ## 约束
 
-- `docs/workspace-<NNN>-<slug>/GOAL-*` 之间**不得**再嵌套目标目录。  
-- 新目标只新增当前工作区根内的同级文件夹，并改 `parent` + 该工作区 `goal-tree.md`。  
-- `docs/templates/goal-folder/` 是本仓库创建目标时的模板源；`skills/templates/` 为包内镜像，不保存目标状态。  
-- `workspace.md` 绑定一个 Root Goal 与该工作区根范围。没有显式工作区根但存在 `docs/goals/` 时，才按 **legacy** 隐式单工作区兼容。  
-- 共享资料只以版本/哈希固定引用出现；不能成为第二套目标状态。  
-- **不**要求存在 monorepo 维护者目录（如上游 `web/`、dogfood 过程树、`artifacts/`）。
-
-## 与 Skills 包的关系
-
-| 包内 | 安装后 |
-|------|--------|
-| `skills/core/docs/**` | → `docs/**`（默认 install） |
-| `skills/prompts/**` | 留在 skills 目录（或 `--all` 同步） |
-| `skills/contracts/**` | 留在 skills 目录 |
+- `docs/workspace-<NNN>-<slug>/GOAL-*` 之间**不得**再嵌套目标目录。
+- 新目标只新增当前工作区根内的同级文件夹，并改 `parent` + 该工作区 `goal-tree.md`。
+- `docs/templates/goal-folder/` 是核心 canonical 模板；`skills/templates/goal-folder/` 只用于 Skills 离线分发，不保存目标状态。
+- `docs/workspace-<NNN>-<slug>/workspace.md` 是显式工作区上下文，绑定一个 Root Goal 与该工作区根范围；`docs/templates/workspace-context.md` 与 Skills 镜像必须同步。没有显式工作区根但存在 `docs/goals/` 时才按 legacy 隐式单工作区处理。
+- `docs/vision/` 是仓库级愿景与规划对齐层；**不是**目标状态库，不得写入 progress% 或替代各区 goal-tree。
+- 共享资料只以版本/哈希固定引用出现在工作区上下文或受控记录中，不能成为跨工作区目标状态或第二真相源。
+- `docs/contracts/` 是消费适配器版本与兼容声明的 canonical；`skills/contracts/` 只用于离线分发，必须逐字节同步且不得另立版本真相。

@@ -2,9 +2,9 @@
 title: 提示词 · 目标治理编排器（主入口）
 status: active
 created: 2026-07-18
-updated: 2026-07-24
+updated: 2026-07-28
 parent: null
-version: 0.7.0
+version: 0.8.0
 role: primary
 ---
 
@@ -41,7 +41,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 # 工作方式（优先遵守）
 
 1. **一条主路径**：用户说「帮我推进」「治理」「下一步」或调用 `/govern` 时，直接走本流程。按情境选用 create / decision / execution / audit，用户无需先选「填哪张表」。
-2. **文档驱动**：以当前工作区根的 `goal-tree.md` 与目标五件套为真相源；先定位 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验其 Root Goal 与 canonical 范围，再处理当前工作区；进度与结论只写已发生的事实；不确定标「待确认」。
+2. **文档驱动**：以当前工作区根的 `goal-tree.md` 与目标五件套为真相源；若存在 `docs/vision/charter.md`，先读 Charter/`alignment` 再定位工作区；定位 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验 Root Goal、canonical 范围与（非 sandbox opt-out 时）`plan_refs`/`primary_plan`；进度与结论只写已发生的事实；不确定标「待确认」。`docs/vision/` 不是 progress 权威。
 3. **扫描 → 意见台账 → 分类 → 提议 → 确认 → 写入**：写入前先建议并确认（用户本轮已明确写入指令时可直接执行）。
 4. **大目标先路线图（P-001）**：范围大或步骤不明时，先在 meta/decision 写高层阶段与先后关系，再按阶段立项；本回合聚焦一个清晰下一步。
 5. **信息就绪（P-005）**：不假定设立时已知一切。识别信息项、影响门禁与最晚需要阶段；允许先推进澄清/收集，但不把开放 required 信息项写成已知或默许越过受影响门禁。
@@ -95,25 +95,29 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 
 **工作区协议**（按 `docs/architecture/workspace-protocol.md`；缺失时仍遵守下列不变量）：
 
-1. 定位当前 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验：`root_goal` 指向唯一 `parent: null` Root Goal；`canonical_scope` 为当前工作区根。绑定不匹配时 fail closed。  
-2. 只处理当前工作区。不得自动发现、加载、合并或写入其他工作区上下文。  
-3. 共享资料引用须同时具备匹配的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256`；否则 fail closed。内容须用户确认才成事实。  
-4. 无显式工作区根、但存在 `docs/goals/` 时，仅按 **legacy** 隐式单工作区兼容；不得猜测外部工作区。  
-5. 新项目默认路径是**显式工作区**，不是 legacy `docs/goals/`。  
-6. MVP/后续阶段通常更新 Root 路线图并建串行子目标；只有长期目的改变时才改 Root 定义。
+1. 若存在 `docs/vision/charter.md`：读取 `vision_id`/`version` 与 `docs/vision/alignment.md` 要点（三层链 Charter←VP←Workspace）。  
+2. 定位当前 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验：`root_goal` 指向唯一 `parent: null` Root Goal；`canonical_scope` 为当前工作区根。绑定不匹配时 fail closed。  
+3. 非 sandbox opt-out 时校验 `plan_refs`、`primary_plan`（∈ plan_refs），且 `docs/vision/plans/<primary_plan>.md` 存在；其 `vision_ref` 须精确匹配 charter 版本。失败 fail closed。  
+4. 只处理当前工作区。不得自动发现、加载、合并或写入其他工作区上下文。  
+5. 共享资料引用须同时具备匹配的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256`；否则 fail closed。内容须用户确认才成事实。  
+6. 无显式工作区根、但存在 `docs/goals/` 时，仅按 **legacy** 隐式单工作区兼容；不得猜测外部工作区。  
+7. 新项目默认路径是**显式工作区**，不是 legacy `docs/goals/`。  
+8. MVP/后续阶段通常更新 Root 路线图并建串行子目标；跨区纲领阶段用 `docs/vision/plans/VP-*.md`；只有长期目的改变时才改 Root 定义或修订 Charter。  
+9. 愿景目录不保存目标 progress%；VP 关门须链接工作区证据。
 
 # 流程
 
 ## 1. 扫描
 
 1. 定位 **SKILLS_PKG**；检查 **core 完整性**（`docs/architecture/principles.md` 等，见上节）。
-2. 定位当前工作区 `workspace.md`，校验工作区 ID、Root Goal、canonical 范围与共享资料引用；多个工作区而用户未指定焦点时 fail closed。
-3. 检查当前工作区根与其中的 `goal-tree.md`；仅在没有显式工作区根时检查 legacy `docs/goals/`。
-4. 若有 goal-tree：读取 id、title、parent、status、progress，并核对显式工作区的 Root Goal 绑定。
-5. 按需打开未关门目标的 `00-meta`、`01-decision`（含信息需求）、近期 `02-execution` / **`03-audit`（全部 A-00N）**。
-6. 若焦点是消费适配器或发布一致性，检查包内 `contracts/skills-consumer-contract.json` 是否存在。
-7. 记录仓库**观察信号**（结论以前表默认策略 + 用户确认为准）。
-8. 吸收用户本轮意图（总目的、焦点 ID、想关门、要响应某次审计等）。
+2. 若存在 `docs/vision/`：读 charter 版本与 alignment；记录 `primary_plan` 候选。
+3. 定位当前工作区 `workspace.md`，校验工作区 ID、Root Goal、canonical 范围、共享资料引用与愿景规划对齐字段；多个工作区而用户未指定焦点时 fail closed。
+4. 检查当前工作区根与其中的 `goal-tree.md`；仅在没有显式工作区根时检查 legacy `docs/goals/`。
+5. 若有 goal-tree：读取 id、title、parent、status、progress，并核对显式工作区的 Root Goal 绑定与 Root `plan_refs`/`primary_plan`（若有）。
+6. 按需打开未关门目标的 `00-meta`、`01-decision`（含信息需求）、近期 `02-execution` / **`03-audit`（全部 A-00N）**。
+7. 若焦点是消费适配器或发布一致性，检查包内 `contracts/skills-consumer-contract.json` 是否存在。
+8. 记录仓库**观察信号**（结论以前表默认策略 + 用户确认为准）。
+9. 吸收用户本轮意图（总目的、焦点 ID、想关门、要响应某次审计等）。
 
 ## 1b. 意见台账（焦点目标）
 
@@ -201,6 +205,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 用简短结构回复：
 
 > **治理扫描**：…  
+> **愿景对齐**：charter 版本；primary_plan / plan_refs；VP status；是否 fail closed  
 > **工作区上下文**：显式/隐式；Root Goal 与 canonical 范围；资料引用是否可用；跨工作区请求是否已 fail closed
 > **仓库观察**（默认策略未确认前仅作参考）：…  
 > **情境**：S0 / S1 / S2 / S3 / S4  
@@ -228,8 +233,9 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
    - 创建目录 `docs/workspace-001-<workspace-slug>/`  
    - 从 `docs/templates/workspace-context.md` 复制为 `workspace.md`（若无，则用 `<SKILLS_PKG>/core/docs/templates/workspace-context.md` 或 `<SKILLS_PKG>/templates/workspace-context.md`）  
    - 填写 `id: workspace-001-<workspace-slug>`、`root_goal: GOAL-001-<root-slug>`、`canonical_scope: docs/workspace-001-<workspace-slug>/`、`shared_materials_catalog: none`（或用户指定）  
+   - 若仓库已有 `docs/vision/`：填写 `vision_role`、`plan_refs`、`primary_plan`（对齐现有 VP 或先建 `planned` VP）；primary 工作区禁止无规划 opt-out  
    - 写入初始 `goal-tree.md`（树 + 表可先只含即将创建的 Root，或空表后由 01 填满）  
-4. 再执行 **01** 创建 `GOAL-001-<root-slug>`（`parent: null`），五件套 + 同步 goal-tree；`workspace.md` 的 `root_goal` 必须与 Root id 一致。  
+4. 再执行 **01** 创建 `GOAL-001-<root-slug>`（`parent: null`），五件套 + 同步 goal-tree；`workspace.md` 的 `root_goal` 必须与 Root id 一致；Root meta 同步 `plan_refs`/`primary_plan`（若适用）。  
 5. 目的仍大而模糊时：本回合只写高层路线图和信息需求表；不要机械创建两个信息子目标。  
 6. 收尾：说明已创建路径，建议下一句输入（如继续推进 / 自审）。
 
@@ -307,6 +313,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 - 新项目 S0：**先** scaffold `docs/workspace-001-<slug>/`（workspace.md + goal-tree），**再**建 Root；slug **必须用户确认**。  
 - 核心方法论与 Skills 同级必备；不得宣称 architecture 对完整安装可选。  
 - 存在显式工作区根时，绑定不匹配或资料引用未固定/不匹配必须 fail closed；不得自动混合其他工作区上下文。
+- 存在 `docs/vision/` 时，非 sandbox 缺 plan 对齐或 VP/`vision_ref` 不合法必须 fail closed；不得把 vision 当 progress 权威。  
 - Root 编号保持 `GOAL-001`；新编号 = 当前最大 + 1。  
 - 新建目标一次建齐五件套；有变更则更新 goal-tree（树 + 表）。  
 - 只记录真实决策、执行与审计；编造进度视为失败。  
