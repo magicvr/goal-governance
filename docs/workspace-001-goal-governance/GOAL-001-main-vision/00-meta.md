@@ -8,14 +8,14 @@ primary_plan: VP-001-governance-platform-delivery
 serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
 created: 2026-07-18
 updated: 2026-07-28
-version: 0.8.3
+version: 0.8.5
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
 
 ## 现时摘要（2026-07-28）· 单一权威入口
 
-> **本文件现时 status / 焦点 / 下一编号只以本节为准**（响应 [A-015 F-007](03-audit.md#a-015--root-现时状态纲领路线图与退出门禁独立交叉审计2026-07-28)）。  
+> **本文件现时 status / 焦点 / 下一编号只以本节为准**（[A-015](03-audit.md#a-015--root-现时状态纲领路线图与退出门禁独立交叉审计2026-07-28) F-007/F-008 已响应）。
 > 下文标注「历史」或旧日期的「当前*」章节**不可**作现时判定。完整树与 status 列以 [goal-tree.md](../goal-tree.md) 为准。执行层「当前进展/下一步」见 [02-execution.md](02-execution.md#当前进展2026-07-28)。
 
 ### Root 现时
@@ -24,8 +24,9 @@ version: 0.8.3
 |----|-----|
 | **status** | **`active`**（唯一未关门目标） |
 | **progress 宣称** | 不宣称 Root `done`；不宣称阶段 6 终态 |
+| **现行路径** | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) · 路径 D**（仅维护发版/协议；A/B/C 延期） |
 | **子目标** | GOAL-002～019 **全部** `done / 100%`；**无** active 实现子目标 |
-| **下一编号** | **GOAL-020** |
+| **下一编号** | **GOAL-020**（D 内维护 / 用户授权单点 residual / 将来改道后契约范围） |
 | **工作区** | `workspace-001-goal-governance` · `root_goal: GOAL-001-main-vision` |
 
 ### 三面现时状态
@@ -43,9 +44,9 @@ version: 0.8.3
 | 1～4 | 已完成基线 | GOAL-002～007 |
 | 5 | **已关门** | GOAL-008；F-005 closed（A-013） |
 | 6 | **有界结项**（≠ 终态） | [D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22) / [A-014](03-audit.md#a-014--阶段-6-有界结项审视2026-07-22)；009 + 012～017 |
-| 6 后 · Skills 维护波次 | **已 done**（尚未写入 F-008 退出契约归属） | GOAL-018（Release 打包）；GOAL-019（消费方骨架 / 空仓可运行） |
-| 6 后 · 协议 / 愿景栈 | **已落盘**（Root 仍 active；不发版） | D-016～D-023；P-006；`/vision`；`/vision-audit` |
-| 7 | **未开始**；**无可执行契约** | 阻断见 **A-015 F-008**（required，仍 open） |
+| 6 后 · Skills 维护波次 | **已 done**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 归属） | GOAL-018（Release 打包）；GOAL-019（消费方骨架）— **非**阶段 7 预工作、**非** residual 主线 |
+| 6 后 · 协议 / 愿景栈 | **路径 D 维护**（Root 仍 active） | D-016～D-023；P-006；`/vision`；`/vision-audit` |
+| 7 | **延期未开**（路径 D；非「缺契约」） | 改道 **A** 须新 D-0xx；见 D-024 §6 |
 
 ### 愿景栈（最小对齐）
 
@@ -61,28 +62,31 @@ version: 0.8.3
 
 | 项 | 级别 | 状态 | 阻断什么 |
 |----|------|------|----------|
-| **A-015 F-008** | required | **open** | 无契约的阶段 7 范围冻结、阶段 6 终态宣称、Root `done` |
-| **R-009-X** | accepted residual | **仍 accepted** | 产品终态 / I 全文 verified / 人手 UX 全文 / AI 读资料全文等（见下表） |
-| **A-006 F-006**（A-015 F-010 确认） | recommended | open | 不阻断立项；影响阶段 7 / 对外 GA 复盘证据质量 |
-| **发版候选**（A-015 F-011） | recommended | open | 正式 tag 前 runtime 重采；矩阵候选与 unreleased/v0.9.x 阻塞项以 goal-tree 日志为准；**不**阻断 Root 保持 `active` |
-| **A-015 F-007** | required | **closed（本拍 fixed）** | 曾阻断「仅凭过时当前*章节判定焦点」；现时以本节为准 |
+| **A-015 F-008** | required | **closed · fixed**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) / [A-017](03-audit.md#a-017--响应-a-015--f-008路径-d契约2026-07-28)） | 曾缺退出路径契约；现以路径 D 为准 |
+| **R-009-X** | accepted residual | **仍 accepted** | 产品终态 / I 全文 verified / 人手 UX 全文 / AI 读资料全文等（见下表）；**路径 D 不关闭** |
+| **A-006 F-006**（A-015 F-010 确认） | recommended | open | 不阻断 D 维护；影响将来 A/对外 GA 复盘 |
+| **发版候选**（A-015 F-011） | recommended | open | **runtime ready**（unreleased；path-D 验证 2026-07-28）；**v0.9.1 已 tag**；下一正式 tag（建议 v0.9.2）须用户授权；不阻断 Root `active` |
+| **A-015 F-007** | required | **closed · fixed**（A-016） | 现时以本节为准 |
+| **A-015 F-009** | recommended | **closed · fixed**（对照表已在现时摘要；A-016/A-017） | 曾缺 R-009-X 有界 vs 终态对照 |
 
-### R-009-X 对照刷新（recommended · A-015 F-009）
+### R-009-X 对照刷新（A-015 F-009 · 已刷新）
 
 | 范围 | 有界交付指针 | 仍 residual / 阻断终态 |
 |------|--------------|------------------------|
-| α / 受控写 | GOAL-012 / 013；F-007/F-008 closed；I-003/004/006 α verified | 生产双门闩 + R-F008 单进程等 |
+| α / 受控写 | GOAL-012 / 013；GOAL-009 写入 F-007/F-008 closed；I-003/004/006 α verified | 生产双门闩 + R-F008 单进程等 |
 | X-AI | GOAL-014 有界 done | R-014-E2E 等 |
 | X-NAV | GOAL-015 有界 done | R-015-E2E / R-015-CREATE-UI；≠ I-009 全文 |
 | X-SM | GOAL-016 有界 done | R-016-AI-READ / E2E / UX；≠ I-010 全文 |
 | X-PILOT | GOAL-017 有界 done | **R-017-HUMAN-UX**；≠ I-007/I-012 全文 |
-| 终态宣称 | — | **R-009-X 仍 accepted**；**不**自动 closed |
+| 终态宣称 | — | **R-009-X 仍 accepted**；路径 D **不**自动 closed |
 
-### 下一步指向（Root）
+### 下一步指向（Root · 路径 D）
 
-1. **主路径（required）**：经 `/govern` 按 P-004 书面择 [A-015 F-008](03-audit.md#f-008--阶段-7--residual-择一--root-有界退出缺少可执行契约) 路径并落盘 D-0xx 契约——A=阶段 7 三面发布验收 / B=residual 清单推进 / C=Root·VP **有界**退出 / D=仅维护发版·协议不关 Root（可组合）。  
-2. **维护可选**（F-008 边界内不阻止）：runtime 重采、发版候选、协议修订、单一 residual 子目标（须用户书面授权）。  
-3. **禁止**：无 F-008 契约宣称阶段 6 终态或 Root `done`；把 018/019 再次立项为未完成工作；仅凭下文历史「当前*」章节判定焦点。
+1. **默认**：在 [D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 内做协议修订、发版候选、愿景/入口 dogfood、台账卫生。
+2. **发版**：当前工作树 runtime **ready-for-release-evidence**（`unreleased`）。下一 annotated tag 须用户书面授权（建议 **v0.9.2**；**v0.9.1 已存在**）。证据：`artifacts/compatibility-report-path-d-check.json`、`artifacts/release-evidence-path-d-rehearsal-2026-07-28.json`。
+3. **单点 residual**：仅当用户书面点名范围时可立 **一个** 有界子目标（GOAL-020+）。
+4. **改道**：A（阶段 7）/ B（residual 清单）/ C（有界退出）须新的 `/govern` + D-0xx。
+5. **禁止**：无改道宣称阶段 6 终态或 Root `done`；无授权自动 tag/Release；批量开 residual；把 018/019 再立项为未完成；仅凭下文历史章节判定焦点。
 
 ---
 
@@ -90,9 +94,10 @@ version: 0.8.3
 
 | 裁决 | 要点 | 权威版本 / 说明 |
 |------|------|----------------|
+| **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)** | **路径 D**：仅维护不关 Root；关闭 A-015 F-008；018/019 归属 Skills 维护波次 | A-017；A/B/C 延期 |
 | [D-017](01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28) | P-006；冷启动 Charter→VP→区；取消 sandbox opt-out；Vision Review | principles **0.7.0**；alignment **0.3.0**；AGENTS **0.10.0** |
 | [D-016](01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) | finding 三路径；P-004.3/4.4；legacy 唯一路径 | 其后 D-017 升版；Root 仍 active |
-| D-018～D-023 | `/vision` 第二刀；follow-through；`/vision-audit`；runtime 重采（不发版） | 见 [02-execution](02-execution.md)；**不**改 Root status |
+| D-018～D-023 | `/vision` 第二刀；follow-through；`/vision-audit`；runtime 重采（不发版） | 见 [02-execution](02-execution.md)；追溯为路径 D 型维护 |
 
 ## 愿景对齐
 
@@ -170,7 +175,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 
 ## 高层路线图（历史快照 · 重基线后早期表）
 
-> **不可作现时 status。** 表内阶段 5「进行中 / 20%」、阶段 6「未开始」等为**早期快照**，与现时冲突时以「现时摘要（2026-07-28）」为准。  
+> **不可作现时 status。** 表内阶段 5「进行中 / 20%」、阶段 6「未开始」等为**早期快照**，与现时冲突时以「现时摘要（2026-07-28）」为准。
 > 既有 GOAL-002～005 是重基线前完成的基础与验证历史；它们不被改写为「核心产品从未关门」。
 
 | 阶段 | 主题 | 快照状态（过时） | 关联 |
@@ -181,7 +186,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 | 阶段 4 | 核心方法论、文档协议与 canonical 模板产品化 | 已完成（GOAL-006） | [GOAL-006-core-methodology-template-productization](../GOAL-006-core-methodology-template-productization/00-meta.md) |
 | 阶段 5 | Skills 消费适配器与发布一致性 | 快照曾写进行中（**现时：已关门**） | [GOAL-008-skills-consumer-adapter-release-consistency](../GOAL-008-skills-consumer-adapter-release-consistency/00-meta.md) |
 | 阶段 6 | Web 人类工作台深化 | 快照曾写未开始（**现时：有界结项**） | GOAL-009 + 012～017 |
-| 阶段 7 | 三面一致性、版本化与发布验收 | 未开始（**现时仍无契约 · F-008**） | 待用户择路径 |
+| 阶段 7 | 三面一致性、版本化与发布验收 | 快照曾写未开始（**现时：路径 D 下延期未开 · D-024**） | 改道 A 须新契约 |
 
 ### 阶段 6 路线图明细（结项后保留 · 现时承接列）
 
@@ -214,8 +219,8 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 | GOAL-009-ai-assisted-governance-workbench | AI 协助的人类目标治理 Web 工作台 | done / 100%（有界） | 阶段 6 规划 + α/X-AI 台账；**R-009-X** |
 | GOAL-010 / 011 | 工作区·共享资料协议；目录迁移 | done / 100% | 跨层协议 + 显式工作区根 |
 | GOAL-012～017 | α 切片 / 写入 CT / X-AI / X-NAV / X-SM / X-PILOT | done / 100%（有界） | 阶段 6 有界交付；各 residual 仍挂本目标 |
-| GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径 | done / 100% | 阶段 6 后 Skills 维护/发版路径（**归属待 F-008**） |
-| GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架（空仓可运行） | done / 100% | 消费方 core+scaffold（**归属待 F-008**） |
+| GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径 | done / 100% | 阶段 6 后 **Skills 维护波次**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)） |
+| GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架（空仓可运行） | done / 100% | 同上 · 消费方 core+scaffold |
 
 ### 子目标（历史快照 · 阶段 5 中途）
 

@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-28
-version: 0.4.0
+version: 0.4.2
 ---
 
 # 执行记录 · GOAL-001
@@ -19,17 +19,43 @@ version: 0.4.0
 | 方向 | 状态 | 说明 |
 |------|------|------|
 | 核心方法论与模板 | **已完成基线** + 07-28 协议修订 | GOAL-006/007/010 done；D-016/D-017（P-006 等）；Root 仍 active |
-| Skills | **阶段 5 已关** + 维护波次 done | GOAL-008 done；GOAL-018 release 打包 done；GOAL-019 消费方骨架 done；四入口（含 `/vision-audit`） |
+| Skills | **阶段 5 已关** + 维护波次 done | GOAL-008 done；GOAL-018/019 done（D-024：Skills 维护波次） |
 | Web | **阶段 6 有界结项**（≠ 终态） | 009 + 012～017 有界 done；扩展/终态 → **R-009-X** |
 | 愿景栈 | 最小对齐完备 | Charter@0.1.0；VP-001；VRev-001 pass；V-F-001 fixed |
+| Root 路径 | **D-024 路径 D** | 仅维护发版/协议；A/B/C 延期；**不**关 Root |
+| 发版候选 runtime | **ready-for-release-evidence**（unreleased） | path-D 验证 2026-07-28；v0.9.1 已 tag；下一 tag 须授权 |
 | Root | **`active`** | 002～019 全 done；无 active 实现子目标；下一编号 **GOAL-020** |
 
 ## 下一步（根目标视角 · 2026-07-28）
 
-1. **必做（A-015 F-008 still open）**：用户书面择阶段 7 / residual 清单 / 有界退出 / 仅维护 之一（或组合），落盘 D-0xx 契约后再谈范围冻结或 Root 退出。  
-2. **本拍已完成**：A-015 **F-007 fixed** — Root 单一现时摘要与本节进展/下一步已刷新。  
-3. **维护可选**：runtime 重采、发版候选、协议修订、用户授权的单一 residual 子目标。  
-4. **禁止**：无 F-008 契约宣称阶段 6 终态或 Root `done`；把 GOAL-018/019 当作未完成再立项。
+1. **现行路径 D**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)）：协议修订、runtime/发版候选、愿景入口 dogfood、台账卫生。
+2. **本拍已完成**：A-015 F-007/F-008 fixed；路径 D **发版候选 runtime 验证**（compat ready + rehearsal checksPassed）。
+3. **发版下一步（须用户书面授权）**：冻结下一 annotated tag（建议 **v0.9.2**）+ release-mode evidence；**本拍不打 tag**。
+4. **可选**：用户书面授权的单一 residual 子目标；或书面改道 A/B/C。
+5. **禁止**：无改道宣称阶段 6 终态或 Root done；无授权自动 tag/Release；批量 residual。
+
+
+## 2026-07-28 · 路径 D：发版候选 runtime 验证（不发版）
+
+- **用户指令**：`/govern 按路径 D 推进发版候选 runtime 重采`。
+- **范围判定（路径 D）**：D-023 全量 refresh 之后，行为源（AGENTS / 编排器 / 四入口 wrappers）**未**因 F-007/F-008 台账变更而变脏；本拍执行 **freshness 验证 + 发版 rehearsal**，而非因 stale 再全量 12 单元 host re-dispatch。
+- **事实**：
+  1. 宿主版本：Claude Code `2.1.220`；Grok Build `0.2.112`；Copilot CLI `1.0.75`（与矩阵一致）。
+  2. `python scripts/compatibility_report.py --output artifacts/compatibility-report-path-d-check.json --require-ready` → **exit 0**；coverage **ready-for-release-evidence**；uncovered **[]**；`candidateRevision: unreleased`；报告 commit `097ff2ce…`。
+  3. 矩阵 12 宿主入口（govern/audit/vision/vision-audit × claude/grok/copilot）均为 **runtime-verified**，证据仍指向 2026-07-28 refresh/byok 文件；行为源 digest 与现树一致（报告未报 stale）。
+  4. 修复推进中暴露的门禁：`scripts/tests/test_release_evidence.py` 将硬编码 `v0.9.1` 改为 `unreleased`（与 post-tag 工作树一致）；剥离 GOAL-001 文档 trailing whitespace。
+  5. `python scripts/release_evidence.py --mode rehearsal --run-checks --include-web --compatibility-report artifacts/compatibility-report-path-d-check.json --output artifacts/release-evidence-path-d-rehearsal-2026-07-28.json` → **checksPassed: true**；`releaseStatus: rehearsal`；workingTree **不 clean**（含本拍台账，预期）。
+- **不构成**：annotated tag；GitHub Release；`release_evidence --mode release`；Root/子目标 status 变更；R-009-X/F-006 closed；关闭 A-015 F-011（formal tag 仍 recommended open）。
+- **计划（非本拍）**：用户授权后可设下一 tag（建议 **v0.9.2**，因 **v0.9.1** 已存在）并跑 release-mode。
+
+## 2026-07-28 · 响应 A-015 F-008：路径 D 契约（D-024）
+
+- **用户指令**：`/govern 响应 GOAL-001 A-015 F-008：采用路径 D`。
+- **事实**：
+  - 落盘 [D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)：路径 D 最小交付/非目标、与 R-009-X·F-006 关系、018/019 归属、改道门槛。
+  - 刷新 [00-meta 现时摘要](00-meta.md#现时摘要2026-07-28-单一权威入口) 与本节进展/下一步；[A-017](03-audit.md) 关闭 **F-008**（`fixed`）；F-009 recommended 对照表确认 closed。
+  - **不**关 Root；**不** closed R-009-X；**不**开阶段 7；**不**建 GOAL-020；**不**改各子目标 status/progress。
+- **计划（非本拍事实）**：后续默认 D 内维护，直至用户改道或点名单点 residual。
 
 ## 2026-07-28 · 响应 A-015 F-007：刷新 Root 现时摘要
 
@@ -116,21 +142,21 @@ version: 0.4.0
 
 ## 2026-07-28 · 核心协议逻辑一致性修订（D-016）
 
-- **触发**：用户审视核心协议逻辑问题 → 确认修改 → 要求在合适处记录操作。  
-- **决策**：[D-016](01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28)。  
-- **已改权威/落地文件**（摘要）：  
-  - `docs/architecture/principles.md` → **0.6.0**（P-002 路线图槽位；P-003 finding 三路径；P-004.1～4.4；死链修正）  
-  - `docs/architecture/workspace-protocol.md` → **0.4.0**（纲领串行/阶段内并行；legacy 唯一路径；跨区 id；Primary 冲突指针）  
-  - `docs/architecture/overview.md` → **0.7.0**（现时叙述；去掉过期「只读 / GOAL-010 进行中」）  
-  - `docs/architecture/directory-layout.md`（约束与 protocol 对齐）  
-  - `docs/vision/alignment.md` → **0.2.0**（Primary 冲突裁决；active VP 14 日空转）  
-  - `docs/vision/consumer-checklist.md`（Primary / 空转勾选）  
-  - `docs/README.md`（编号、finding 闭合、legacy）  
-  - 根 `AGENTS.md`、`skills/AGENTS.template.md` → **0.9.1**  
-  - `skills/prompts/00-govern-orchestrator.md` → **0.8.1**（§3.3 单条 residual；闭合用语）  
-- **交叉引用**：GOAL-010 已 `done`，仅在其执行记录追加「协议修订不重开目标」说明，不改其 status/progress。  
-- **验证**：`python -m unittest docs.tests.test_workspace_protocol docs.tests.test_vision_protocol docs.tests.test_standalone_bootstrap` → OK；`python -m unittest skills.tests.test_skills_orchestrator` → OK（35）。  
-- **未做**：不改 Root/`goal-tree` 目标 status 表进度；不关 R-009-X；不建 GOAL-020；不刷 runtime evidence / release tag。  
+- **触发**：用户审视核心协议逻辑问题 → 确认修改 → 要求在合适处记录操作。
+- **决策**：[D-016](01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28)。
+- **已改权威/落地文件**（摘要）：
+  - `docs/architecture/principles.md` → **0.6.0**（P-002 路线图槽位；P-003 finding 三路径；P-004.1～4.4；死链修正）
+  - `docs/architecture/workspace-protocol.md` → **0.4.0**（纲领串行/阶段内并行；legacy 唯一路径；跨区 id；Primary 冲突指针）
+  - `docs/architecture/overview.md` → **0.7.0**（现时叙述；去掉过期「只读 / GOAL-010 进行中」）
+  - `docs/architecture/directory-layout.md`（约束与 protocol 对齐）
+  - `docs/vision/alignment.md` → **0.2.0**（Primary 冲突裁决；active VP 14 日空转）
+  - `docs/vision/consumer-checklist.md`（Primary / 空转勾选）
+  - `docs/README.md`（编号、finding 闭合、legacy）
+  - 根 `AGENTS.md`、`skills/AGENTS.template.md` → **0.9.1**
+  - `skills/prompts/00-govern-orchestrator.md` → **0.8.1**（§3.3 单条 residual；闭合用语）
+- **交叉引用**：GOAL-010 已 `done`，仅在其执行记录追加「协议修订不重开目标」说明，不改其 status/progress。
+- **验证**：`python -m unittest docs.tests.test_workspace_protocol docs.tests.test_vision_protocol docs.tests.test_standalone_bootstrap` → OK；`python -m unittest skills.tests.test_skills_orchestrator` → OK（35）。
+- **未做**：不改 Root/`goal-tree` 目标 status 表进度；不关 R-009-X；不建 GOAL-020；不刷 runtime evidence / release tag。
 - **goal-tree**：仅追加本日志节（见 [goal-tree.md](../goal-tree.md)）。
 
 ## 2026-07-20 · GOAL-008 阶段 5 关门
@@ -305,8 +331,8 @@ version: 0.4.0
 
 ## 2026-07-22 · 阶段 6 有界结项审视（不关 Root）
 
-- 用户：`/govern 在 GOAL-001 记录阶段 6 有界结项审视（不关 Root；R-009-X 仍 accepted）`。  
-- [D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22) / [A-014](03-audit.md#a-014--阶段-6-有界结项审视2026-07-22)。  
-- **有界结项**：阶段 6 Web 工作台在有界交付意义上完成（009 + 012～017）。  
-- Root **仍 active**；**R-009-X 仍 accepted**；**未**宣称阶段 6 终态或 Root done。  
+- 用户：`/govern 在 GOAL-001 记录阶段 6 有界结项审视（不关 Root；R-009-X 仍 accepted）`。
+- [D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22) / [A-014](03-audit.md#a-014--阶段-6-有界结项审视2026-07-22)。
+- **有界结项**：阶段 6 Web 工作台在有界交付意义上完成（009 + 012～017）。
+- Root **仍 active**；**R-009-X 仍 accepted**；**未**宣称阶段 6 终态或 Root done。
 - 阶段 7 / residual 产品 / 人手 UX 全文等仍可另立或触发。

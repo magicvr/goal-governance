@@ -5,8 +5,17 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
 updated: 2026-07-28
-version: 1.8.1
+version: 1.8.2
 ---
+
+### 2026-07-28 · 路径 D 发版候选 runtime 验证（不重开；不发版）
+
+- 交叉：GOAL-001 路径 D（D-024）用户指令推进发版候选。
+- `compatibility_report.py --require-ready` → **ready-for-release-evidence**；矩阵 `candidateRevision: unreleased`；12 CLI 入口 evidence 未 stale。
+- `release_evidence.py --mode rehearsal --run-checks --include-web` → **checksPassed: true**（修复 `test_release_evidence.py` 对过期 `v0.9.1` candidate 的硬编码断言后）。
+- 产物：`artifacts/compatibility-report-path-d-check.json`、`artifacts/release-evidence-path-d-rehearsal-2026-07-28.json`。
+- **不**改本目标 status/progress；**不** annotated tag / Release。
+
 
 ### 2026-07-28 - `/vision` runtime dual-pass（不重开本目标；不发版）
 

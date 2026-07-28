@@ -4,7 +4,12 @@
 
 ## Unreleased
 
-- （无尚未绑定 tag 的变更）
+Post-`v0.9.1` 工作树（矩阵 `candidateRevision: unreleased`；**未**构成新 tag）：
+
+- 四入口 runtime 全矩阵：`/govern` `/audit` `/vision` `/vision-audit` × Claude/Grok/Copilot **runtime-verified**（2026-07-28 refresh/byok；path-D 验证 ready-for-release-evidence）。
+- 独立 `/vision-audit` 入口与 P-006 愿景栈 dogfood。
+- GOAL-001 路径 D（仅维护不关 Root）；A-015 F-007/F-008 fixed。
+- `test_release_evidence.py` 与当前 `unreleased` 矩阵对齐。
 
 ## 0.9.1 - 2026-07-28
 
