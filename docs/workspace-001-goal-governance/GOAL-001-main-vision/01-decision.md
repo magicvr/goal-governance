@@ -410,3 +410,23 @@ version: 0.3.0
 **未选**：多愿景；sandbox 免挂 VP；先工作区后补愿景；把 Vision Review 写入某 Root 的 `03-audit`；本轮一次做完 `/vision` skill 全文。
 
 **影响**：见 [02-execution 本轮](02-execution.md#2026-07-28--p-006-愿景组合治理第一刀d-017)；愿景 `revisions`；`goal-tree` 日志。不改 Root `status`/`progress` 宣称。
+
+## D-018 · Skills `/vision` 决策层第二刀（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 D-017 第一刀落盘后确认「做第二刀」。
+
+**决定**：
+
+1. 新增 **`skills/prompts/06-vision-orchestrator.md`**（决策层核心：V0–V6）。  
+2. 默认 install 三入口：`/govern` + `/audit` + **`/vision`**（Claude/Grok skill + Copilot prompt）。  
+3. 契约 `hostEntrypoints` / 矩阵 `requiredEntrypoints` 含 `vision`；矩阵 status = **`pending-runtime-validation`**（不伪造 runtime evidence）。  
+4. 更新 skills README、AGENTS §9b、govern wrapper 交叉引用、隔离安装测试。  
+5. **不构成**：`/vision` runtime-verified；Root 关门；发版 tag。
+
+**为什么**：决策层与实现层分入口，避免 `/govern` 既开区又改 Charter；与 P-006 工具分工一致。
+
+**未选**：仅文档不装 skill；把 vision 塞进 `/govern` 单一入口。
+
+**影响**：[02-execution](02-execution.md#2026-07-28--skills-vision-第二刀d-018)；goal-tree 日志。

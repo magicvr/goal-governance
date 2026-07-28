@@ -26,7 +26,8 @@
       ],
       "hostEntrypoints": [
         "govern",
-        "audit"
+        "audit",
+        "vision"
       ]
     }
   },
@@ -53,7 +54,8 @@
       },
       "entrypoints": [
         "govern",
-        "audit"
+        "audit",
+        "vision"
       ],
       "supportCommitment": "committed",
       "verificationStatus": "verified"
@@ -66,7 +68,8 @@
       },
       "entrypoints": [
         "govern",
-        "audit"
+        "audit",
+        "vision"
       ],
       "supportCommitment": "committed",
       "verificationStatus": "verified"
@@ -79,7 +82,8 @@
       },
       "entrypoints": [
         "govern",
-        "audit"
+        "audit",
+        "vision"
       ],
       "supportCommitment": "committed",
       "verificationStatus": "verified"

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 1.4.1
+version: 1.5.0
 ---
 
 # Skills
@@ -30,21 +30,22 @@ Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；We
 | 层级 | 是什么 | 用户怎么用 |
 |------|--------|------------|
 | **核心方法论** | `docs/architecture` + `docs/templates` + 精简 `docs/README` | install 从 `core/` **默认**安装；与 Skills **同级必备** |
-| **主入口（primary）** | 编排器：扫描 / 意见台账 / 分类 / P-004 裁决 / 确认 / 原语 | **`/govern`** |
+| **实现主入口（primary）** | 编排器：扫描 / 意见台账 / 分类 / P-004 裁决 / 确认 / 原语 | **`/govern`** |
+| **决策入口** | 愿景与组合：Charter / VP / Review / re-align / 结构选型 | **`/vision`** |
 | **交叉入口** | 独立审计：只出意见（`source: independent`） | **`/audit`** |
 | **原语（primitives）** | 创建目标、记决策、更执行、写审计 | 由编排器调用；Copilot advanced 可选 |
 | **规则** | AGENTS / copilot-instructions | 结构、编号、操作细则摘要 |
 
-生命周期：**设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门**。
-交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
+生命周期（P-006）：**愿景/意图 → 工作区+Root → 纲领路线图 → 阶段计划 → 子目标 → 审计/整改 → 关门**。  
+决策层由 `/vision` 负责；交叉意见由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
 
-工作区协议：`/govern` 和 `/audit` 先定位当前 `docs/workspace-<NNN>-<slug>/workspace.md`，校验其 Root Goal、canonical 范围和共享资料固定引用；不匹配或多个工作区未指定焦点时 fail closed。没有显式工作区根的旧项目才按 `docs/goals/` 的 legacy 隐式单工作区工作，Skills 不会自动发现或混合外部工作区。共享资料候选库存只补充文件摘要，资料内容仍须经用户确认才能成为事实、证据或 finding 关闭依据。
+工作区协议：`/govern` 和 `/audit` 先定位当前 `docs/workspace-<NNN>-<slug>/workspace.md`，校验其 Root Goal、canonical 范围和共享资料固定引用；不匹配或多个工作区未指定焦点时 fail closed。冷启动缺 Charter 时先 **`/vision`**。没有显式工作区根的旧项目才按 `docs/goals/` 的 legacy 隐式单工作区工作。
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
-| Claude Code CLI `2.1.220` | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / runtime-verified (2026-07-28)` |
-| Grok Build CLI `0.2.112` | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / runtime-verified (2026-07-28)` |
-| GitHub Copilot CLI `1.0.71` | `.github/copilot-instructions.md` + repository prompt sources | `/govern` · `/audit` | `committed / runtime-verified (2026-07-28)` |
+| Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision}/` | `/govern` · `/audit` · `/vision` | govern/audit `runtime-verified (2026-07-28)`；vision **pending-runtime-validation** |
+| Grok Build CLI `0.2.112` | `.grok/skills/{govern,audit,vision}/` | `/govern` · `/audit` · `/vision` | 同上 |
+| GitHub Copilot CLI `1.0.71` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` | 同上 |
 
 核心行为：
 
@@ -52,6 +53,7 @@ Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；We
 
 - 编排：[`prompts/00-govern-orchestrator.md`](prompts/00-govern-orchestrator.md)
 - 交叉：[`prompts/05-independent-audit.md`](prompts/05-independent-audit.md)
+- 愿景：[`prompts/06-vision-orchestrator.md`](prompts/06-vision-orchestrator.md)
 
 ## 目录结构
 
@@ -68,19 +70,21 @@ skills/
 ├── install/
 │   ├── claude/
 │   │   ├── AGENTS.md
-│   │   └── skills/{govern,audit}/SKILL.md
+│   │   └── skills/{govern,audit,vision}/SKILL.md
 │   ├── grok/
-│   │   └── skills/{govern,audit}/SKILL.md
+│   │   └── skills/{govern,audit,vision}/SKILL.md
 │   └── copilot/
 │       ├── copilot-instructions.md
 │       └── prompts/
-│           ├── govern.md               # primary
-│           ├── audit.md                # cross-audit (default install)
+│           ├── govern.md               # impl primary
+│           ├── audit.md                # cross-audit (default)
+│           ├── vision.md               # decision layer (default)
 │           └── new-goal.md …           # advanced only
 ├── prompts/
-│   ├── 00-govern-orchestrator.md       # PRIMARY core
+│   ├── 00-govern-orchestrator.md       # PRIMARY impl core
 │   ├── 01–04 …                         # primitives
-│   └── 05-independent-audit.md         # cross-audit core
+│   ├── 05-independent-audit.md         # cross-audit core
+│   └── 06-vision-orchestrator.md       # vision decision core
 ├── templates/goal-folder/              # 包内模板镜像（install --all 同步到 skills 目录）
 ├── templates/workspace-context.md
 ├── contracts/                          # docs/contracts 的分发镜像
@@ -111,7 +115,7 @@ Expand-Archive .\goal-governance-skills-vX.Y.Z.zip -DestinationPath .
 Rename-Item .\goal-governance-skills-vX.Y.Z skills
 ```
 
-3. 安装宿主入口（默认 `/govern` + `/audit`）**并默认安装 core → `./docs/`**：
+3. 安装宿主入口（默认 **`/govern` + `/audit` + `/vision`**）**并默认安装 core → `./docs/`**：
 
 ```bash
 bash ./skills/install.sh --all --skills-dir ./skills
@@ -123,7 +127,7 @@ bash ./skills/install.sh --all --skills-dir ./skills
 # 或：-Claude / -Grok / -Copilot（同样会装 core）
 ```
 
-4. 确认 `docs/architecture/principles.md` 等已存在；再建立 `docs/workspace-001-<slug>/`（`workspace.md` + `goal-tree.md`），调用 **`/govern`**（交叉审计用 **`/audit`**）。
+4. 确认 `docs/architecture/principles.md` 等已存在；冷启动先 **`/vision`**（Charter→VP），再建立工作区并 **`/govern`**（交叉审计用 **`/audit`**）。
 
 > 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 zip / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
 > 本地调试 zip：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
@@ -141,41 +145,39 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
-**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit`**。这描述可复制文件，不提升上表的声明/承诺层级或 `unverified` 运行时状态；填表类 advanced slash 仍为可选。
+**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision`**。填表类 advanced slash 仍为可选。`/vision` 的 runtime evidence 在矩阵中为 **pending-runtime-validation**。
 
 #### Claude Code
 
 ```text
 install/claude/AGENTS.md
   →  <repo>/AGENTS.md
-install/claude/skills/govern/SKILL.md
-  →  <repo>/.claude/skills/govern/SKILL.md
-install/claude/skills/audit/SKILL.md
-  →  <repo>/.claude/skills/audit/SKILL.md
+install/claude/skills/{govern,audit,vision}/SKILL.md
+  →  <repo>/.claude/skills/{govern,audit,vision}/SKILL.md
 ```
 
 ```bash
-mkdir -p .claude/skills/govern .claude/skills/audit
+mkdir -p .claude/skills/govern .claude/skills/audit .claude/skills/vision
 cp ./skills/install/claude/AGENTS.md ./AGENTS.md
 cp ./skills/install/claude/skills/govern/SKILL.md .claude/skills/govern/SKILL.md
 cp ./skills/install/claude/skills/audit/SKILL.md .claude/skills/audit/SKILL.md
+cp ./skills/install/claude/skills/vision/SKILL.md .claude/skills/vision/SKILL.md
 ```
 
 #### Grok Build
 
 ```text
-install/grok/skills/govern/SKILL.md
-  →  <repo>/.grok/skills/govern/SKILL.md
-install/grok/skills/audit/SKILL.md
-  →  <repo>/.grok/skills/audit/SKILL.md
+install/grok/skills/{govern,audit,vision}/SKILL.md
+  →  <repo>/.grok/skills/{govern,audit,vision}/SKILL.md
 ```
 
 （建议同时有根 `AGENTS.md` 作项目规则；可与 Claude 共用。）
 
 ```bash
-mkdir -p .grok/skills/govern .grok/skills/audit
+mkdir -p .grok/skills/govern .grok/skills/audit .grok/skills/vision
 cp ./skills/install/grok/skills/govern/SKILL.md .grok/skills/govern/SKILL.md
 cp ./skills/install/grok/skills/audit/SKILL.md .grok/skills/audit/SKILL.md
+cp ./skills/install/grok/skills/vision/SKILL.md .grok/skills/vision/SKILL.md
 ```
 
 #### GitHub Copilot
@@ -187,21 +189,24 @@ install/copilot/prompts/govern.md
   →  .github/prompts/govern.prompt.md
 install/copilot/prompts/audit.md
   →  .github/prompts/audit.prompt.md
+install/copilot/prompts/vision.md
+  →  .github/prompts/vision.prompt.md
 ```
 
 | Wrapper | 斜杠 | 何时安装 |
 |---------|------|----------|
-| govern.md | `/govern` | **默认**（主入口） |
+| govern.md | `/govern` | **默认**（实现主入口） |
 | audit.md | `/audit` | **默认**（交叉审计） |
+| vision.md | `/vision` | **默认**（决策层） |
 | new-goal … write-audit | advanced | 仅 `--with-primitives` |
 
 ### 2. 脚本安装
 
 | 参数 | 作用 |
 |------|------|
-| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/govern` + **`audit`** + **core → docs/** |
-| `--grok` / `-Grok` | `.grok/skills/govern` + **`audit`** + **core → docs/** |
-| `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit` prompts + **core → docs/** |
+| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/govern` + **`audit`** + **`vision`** + **core → docs/** |
+| `--grok` / `-Grok` | `.grok/skills/govern` + **`audit`** + **`vision`** + **core → docs/** |
+| `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit`/`vision` prompts + **core → docs/** |
 | `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
 | `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts + **core** |
 | `--init-workspace` / `-InitWorkspace` | 可选：scaffold `docs/workspace-NNN-slug/`（**须**同时给 slug） |
@@ -239,16 +244,17 @@ bash ./skills/install.sh --all --skills-dir ./skills \
   -RootTitle 'Product vision'
 ```
 
-安装后：使用 **`/govern`** 推进（若已 scaffold，则创建 Root 五件套）；需要交叉审计时用 **`/audit`**。
+安装后：冷启动用 **`/vision`**（Charter→VP）；**`/govern`** 推进（若已 scaffold，则创建 Root 五件套）；交叉审计用 **`/audit`**。
 
 ## 最小可运行集（消费方）
 
 | 必备 | 来源 |
 |------|------|
 | 根 `AGENTS.md`（或 copilot-instructions） | install |
-| `/govern` + `/audit` + `skills/prompts/*` | install + 包 |
+| `/govern` + `/audit` + `/vision` + `skills/prompts/*` | install + 包 |
 | **`docs/architecture/`**（principles、workspace-protocol、overview、directory-layout） | install 从 `core/` |
 | **`docs/templates/`** + 精简 **`docs/README.md`** | install 从 `core/` |
+| 现行 Charter + 至少一 VP（完整治理） | `/vision` 冷启动 |
 | `docs/workspace-…/workspace.md` + `goal-tree` | `/govern` S0，或 install `--init-workspace`（slug **显式**） |
 | Root 五件套 | `/govern` / 原语 01 创建（init-workspace **不**代建） |
 
@@ -260,11 +266,12 @@ bash ./skills/install.sh --all --skills-dir ./skills \
 
 ## 在其他项目中快速启用
 
-1. 安装规则 + `/govern` + `/audit`（**同时默认安装 core → `docs/`**）。  
+1. 安装规则 + `/govern` + `/audit` + `/vision`（**同时默认安装 core → `docs/`**）。  
 2. 核对 `docs/architecture/principles.md` 存在。  
-3. 从 `docs/templates/workspace-context.md` 建立 `docs/workspace-001-<slug>/workspace.md` 与 `goal-tree.md`。  
-4. 调用 `/govern`：引导总目的 / Root。  
-5. 调用 `/audit`：独立审计意见（不改 status）。
+3. 调用 `/vision`：Charter → 首个 VP（+ Vision Review）。  
+4. 建立工作区（`/govern` S0 或 `--init-workspace`）并挂 `primary_plan`。  
+5. 调用 `/govern`：Root / 子目标推进。  
+6. 调用 `/audit`：目标独立审计意见（不改 status）。
 
 ## 核心约定（摘要）
 
@@ -293,12 +300,13 @@ python skills/tests/test_skills_orchestrator.py
 powershell -NoProfile -ExecutionPolicy Bypass -File .\skills\tests\test_install_ps1_isolated.ps1
 ```
 
-Windows 上隔离安装冒烟断言 `/govern`+`/audit`+**core docs 落点**，且不含填表 advanced slash、不含 `tech-stack`。`install.sh` 的真实执行仍依赖 bash 环境（本仓库 Windows 主证据以 PS1 为准）。
+Windows 上隔离安装冒烟断言 `/govern`+`/audit`+`/vision`+**core docs 落点**，且不含填表 advanced slash、不含 `tech-stack`。`install.sh` 的真实执行仍依赖 bash 环境（本仓库 Windows 主证据以 PS1 为准）。
 
 ## 尚未包含
 
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
-- 自动在无维护者授权时创建 GitHub Release（tag CI 仅 pack + 上传 artifact）
+- 自动在无维护者授权时创建 GitHub Release（tag CI 仅 pack + 上传 artifact）  
+- `/vision` 各宿主 runtime evidence（矩阵为 pending-runtime-validation）
 
-当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + `/govern`/`/audit` + 原语 01～05 + 多宿主安装 + 可选 `--init-workspace` + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。
+当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + `/govern`/`/audit`/`/vision` + 原语 01～05 + 愿景 06 + 多宿主安装 + 可选 `--init-workspace` + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。

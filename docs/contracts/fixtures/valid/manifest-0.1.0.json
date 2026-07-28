@@ -26,7 +26,8 @@
       ],
       "hostEntrypoints": [
         "govern",
-        "audit"
+        "audit",
+        "vision"
       ]
     }
   },

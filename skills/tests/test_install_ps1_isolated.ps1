@@ -38,13 +38,17 @@ try {
         (Join-Path $TempRoot 'AGENTS.md'),
         (Join-Path $TempRoot '.claude\skills\govern\SKILL.md'),
         (Join-Path $TempRoot '.claude\skills\audit\SKILL.md'),
+        (Join-Path $TempRoot '.claude\skills\vision\SKILL.md'),
         (Join-Path $TempRoot '.grok\skills\govern\SKILL.md'),
         (Join-Path $TempRoot '.grok\skills\audit\SKILL.md'),
+        (Join-Path $TempRoot '.grok\skills\vision\SKILL.md'),
         (Join-Path $TempRoot '.github\copilot-instructions.md'),
         (Join-Path $TempRoot '.github\prompts\govern.prompt.md'),
         (Join-Path $TempRoot '.github\prompts\audit.prompt.md'),
+        (Join-Path $TempRoot '.github\prompts\vision.prompt.md'),
         (Join-Path $SkillsDest 'prompts\00-govern-orchestrator.md'),
         (Join-Path $SkillsDest 'prompts\05-independent-audit.md'),
+        (Join-Path $SkillsDest 'prompts\06-vision-orchestrator.md'),
         (Join-Path $SkillsDest 'templates\workspace-context.md'),
         (Join-Path $SkillsDest 'contracts\skills-consumer-contract.schema.json'),
         (Join-Path $SkillsDest 'contracts\skills-consumer-contract.json'),
@@ -81,6 +85,7 @@ try {
 
     $governText = Get-Content -LiteralPath (Join-Path $TempRoot '.claude\skills\govern\SKILL.md') -Raw -Encoding UTF8
     $auditText = Get-Content -LiteralPath (Join-Path $TempRoot '.claude\skills\audit\SKILL.md') -Raw -Encoding UTF8
+    $visionText = Get-Content -LiteralPath (Join-Path $TempRoot '.claude\skills\vision\SKILL.md') -Raw -Encoding UTF8
 
     $contentOk = $true
     if ($governText -notmatch '00-govern-orchestrator') {
@@ -89,6 +94,10 @@ try {
     }
     if ($auditText -notmatch '05-independent-audit') {
         Write-Host 'FAIL: Claude audit skill missing 05-independent-audit ref'
+        $contentOk = $false
+    }
+    if ($visionText -notmatch '06-vision-orchestrator') {
+        Write-Host 'FAIL: Claude vision skill missing 06-vision-orchestrator ref'
         $contentOk = $false
     }
     if ($governText -notmatch 'workspace-<NNN>-<slug>/workspace\.md') {

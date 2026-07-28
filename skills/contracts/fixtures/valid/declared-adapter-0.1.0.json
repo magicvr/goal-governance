@@ -26,7 +26,8 @@
       ],
       "hostEntrypoints": [
         "govern",
-        "audit"
+        "audit",
+        "vision"
       ]
     }
   },
@@ -53,7 +54,8 @@
       },
       "entrypoints": [
         "govern",
-        "audit"
+        "audit",
+        "vision"
       ],
       "supportCommitment": "declared",
       "verificationStatus": "unverified"

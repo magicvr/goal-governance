@@ -251,7 +251,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - **编排主路径（实现层）**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md` → **`/govern`**。  
   愿景完整性 → 工作区校验 → 扫描 → 意见台账 → 分类 → P-004 裁决 → 提议 → 确认 → 原语 `01`～`04`。
 - **交叉审计（目标层）**：`{{SKILLS_DIR}}/prompts/05-independent-audit.md` → **`/audit`**（只出意见，不改 status；响应归 `/govern`）。
-- **愿景/决策层**：独立 **`/vision`**（或等价）——建修 Charter、组合编排、VP、Vision Review、re-align（**Skills 第二刀**；未落地前由编排器按 P-006/alignment **引导补齐与门禁**，不得无愿景推进）。
+- **愿景/决策层**：**`/vision`** → `{{SKILLS_DIR}}/prompts/06-vision-orchestrator.md`——建修 Charter、组合编排、VP、Vision Review、re-align；冷启动优先本入口，再交 `/govern` 开区。
 - advanced 填表 slash 可选（`--with-primitives`）。
 - **P-001** 以本文件第 6 节为准；**P-002～P-005** 以第 6b 节为准；**P-006** 以第 6d/6e 节为准；**全文**以 `docs/architecture/principles.md` 为准（与 Skills 同级必备）。
 

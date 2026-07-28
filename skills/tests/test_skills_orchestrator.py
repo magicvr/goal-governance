@@ -27,8 +27,12 @@ CLAUDE_GOVERN_SKILL = (
 CLAUDE_AUDIT_SKILL = (
     SKILLS_ROOT / "install" / "claude" / "skills" / "audit" / "SKILL.md"
 )
+CLAUDE_VISION_SKILL = (
+    SKILLS_ROOT / "install" / "claude" / "skills" / "vision" / "SKILL.md"
+)
 GROK_GOVERN_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "govern" / "SKILL.md"
 GROK_AUDIT_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "audit" / "SKILL.md"
+GROK_VISION_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "vision" / "SKILL.md"
 INSTALL_SH = SKILLS_ROOT / "install.sh"
 INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
@@ -333,7 +337,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                     "parent",
                     "version",
                 ],
-                "hostEntrypoints": ["govern", "audit"],
+                "hostEntrypoints": ["govern", "audit", "vision"],
             },
         )
 
@@ -529,7 +533,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 adapter["supportsProtocol"],
                 {"minInclusive": "0.1.0", "maxExclusive": "0.2.0"},
             )
-            self.assertEqual(adapter["entrypoints"], ["govern", "audit"])
+            self.assertEqual(adapter["entrypoints"], ["govern", "audit", "vision"])
         self.assertEqual(by_id["claude-code-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["github-copilot-cli"]["verificationStatus"], "verified")
@@ -559,7 +563,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             matrix["protocol"]["previousStatus"],
             "not-applicable-first-supported-protocol",
         )
-        self.assertEqual(matrix["requiredEntrypoints"], ["govern", "audit"])
+        self.assertEqual(matrix["requiredEntrypoints"], ["govern", "audit", "vision"])
         negative = {item["id"]: item for item in matrix["negativeFixtures"]}
         self.assertIn("unsupported-protocol-0.2.0", negative)
         self.assertIn("no-fabricated-predecessor", negative)
@@ -602,13 +606,16 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 consumers[consumer_id]["contractVerificationStatus"],
                 adapters_by_id[consumer_id]["verificationStatus"],
             )
-            self.assertEqual(set(entrypoints), {"govern", "audit"})
+            self.assertEqual(set(entrypoints), {"govern", "audit", "vision"})
             for name in ("govern", "audit"):
                 self.assertEqual(entrypoints[name]["status"], "runtime-verified")
                 self.assertTrue(entrypoints[name]["evidence"])
                 for path in entrypoints[name]["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertIn("2026-07-28", path)
+            self.assertEqual(
+                entrypoints["vision"]["status"], "pending-runtime-validation"
+            )
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")
@@ -859,20 +866,22 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("$ContractsSrc", ps1)
         self.assertIn("'contracts'", ps1)
 
-    def test_install_default_slash_is_govern_and_audit_opt_in_primitives(self) -> None:
-        """Default install: /govern + /audit; form-fill primitives stay opt-in."""
+    def test_install_default_slash_is_govern_audit_vision_opt_in_primitives(self) -> None:
+        """Default install: /govern + /audit + /vision; form-fill primitives stay opt-in."""
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
         self.assertIn("--with-primitives", sh)
         self.assertRegex(ps1, r"WithPrimitives|with-primitives")
-        self.assertIn("WRAPPER_NAMES=(govern audit)", sh)
-        self.assertIn("$wrapperNames = @('govern', 'audit')", ps1)
+        self.assertIn("WRAPPER_NAMES=(govern audit vision)", sh)
+        self.assertIn("$wrapperNames = @('govern', 'audit', 'vision')", ps1)
         self.assertIn("INSTALL_PRIMITIVE_WRAPPERS", sh)
         self.assertIn("$WithPrimitives", ps1)
         self.assertIn("new-goal", sh)
         self.assertIn("new-goal", ps1)
         self.assertRegex(sh, r"skills/audit|audit/SKILL")
         self.assertRegex(ps1, r"skills\\audit|audit\\SKILL")
+        self.assertRegex(sh, r"skills/vision|vision/SKILL")
+        self.assertRegex(ps1, r"skills\\vision|vision\\SKILL")
         self.assertRegex(sh, r"INSTALL_PRIMITIVE_WRAPPERS.*1|with-primitives")
 
     def test_agents_template_does_not_force_web_app_dir(self) -> None:
@@ -1057,8 +1066,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         text = README.read_text(encoding="utf-8")
         self.assertIn("/govern", text)
         self.assertIn("/audit", text)
+        self.assertIn("/vision", text)
         self.assertIn("00-govern-orchestrator", text)
         self.assertIn("05-independent-audit", text)
+        self.assertIn("06-vision-orchestrator", text)
         self.assertRegex(text, r"primary|主入口")
         self.assertRegex(text, r"primitive|原语|advanced")
         self.assertRegex(text, r"with-primitives|WithPrimitives")
@@ -1070,24 +1081,25 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"同级必备|不完整安装")
         self.assertIn("principles", text)
 
-    def test_skills_readme_default_install_documents_govern_and_audit(self) -> None:
-        """F-017 guard: README manual/script sections must match default govern+audit surface."""
+    def test_skills_readme_default_install_documents_govern_audit_vision(self) -> None:
+        """F-017 guard: README must match default govern+audit+vision surface."""
         text = README.read_text(encoding="utf-8")
         norm = text.replace("\\", "/")
-        # Manual install: both skills/paths for each host family
         self.assertIn(".claude/skills/audit", norm)
         self.assertIn(".grok/skills/audit", norm)
+        self.assertIn(".claude/skills/vision", norm)
+        self.assertIn(".grok/skills/vision", norm)
         self.assertRegex(text, r"audit\.prompt\.md|prompts/audit")
+        self.assertRegex(text, r"vision\.prompt\.md|prompts/vision")
         self.assertIn("skills/audit/SKILL.md", norm)
-        # Must not revive the old "Copilot = only govern prompt" claim
+        self.assertIn("skills/vision/SKILL.md", norm)
         self.assertNotIn("仅** govern prompt", text)
         self.assertNotIn("**仅** govern prompt", text)
         self.assertNotRegex(text, r"(?i)--copilot[^\n]{0,80}仅\s*govern\s*prompt")
-        # Explicit default surface language
-        self.assertRegex(text, r"`/govern`\s*\+\s*`/audit`")
-        self.assertRegex(text, r"--claude[^\n]*audit", re.I)
-        self.assertRegex(text, r"--grok[^\n]*audit", re.I)
-        self.assertRegex(text, r"--copilot[^\n]*(audit|默认双入口)", re.I)
+        self.assertRegex(text, r"`/govern`.*`/audit`.*`/vision`|`/govern`\s*\+\s*`/audit`\s*\+\s*`/vision`")
+        self.assertRegex(text, r"--claude[^\n]*vision", re.I)
+        self.assertRegex(text, r"--grok[^\n]*vision", re.I)
+        self.assertRegex(text, r"--copilot[^\n]*vision", re.I)
 
     def _assert_primary_govern_skill(self, path: Path, host_label: str) -> None:
         self.assertTrue(path.is_file(), f"missing {host_label} skill: {path}")
@@ -1132,6 +1144,27 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("05-independent-audit", text)
         self.assertRegex(text, r"independent|交叉")
 
+    def test_vision_prompt_and_skills_exist(self) -> None:
+        path = PROMPTS / "06-vision-orchestrator.md"
+        self.assertTrue(path.is_file(), f"missing vision core: {path}")
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("P-006", text)
+        self.assertIn("单愿景", text)
+        self.assertIn("VRev", text)
+        self.assertIn("/govern", text)
+        self.assertRegex(text, r"Charter|愿景")
+        for skill, label in (
+            (CLAUDE_VISION_SKILL, "Claude"),
+            (GROK_VISION_SKILL, "Grok"),
+        ):
+            self.assertTrue(skill.is_file(), f"missing {label} vision skill")
+            s = skill.read_text(encoding="utf-8")
+            self.assertRegex(s, r"(?m)^name:\s*vision\s*$")
+            self.assertIn("06-vision-orchestrator", s)
+        copilot = COPILOT_PROMPTS / "vision.md"
+        self.assertTrue(copilot.is_file())
+        self.assertIn("06-vision-orchestrator", copilot.read_text(encoding="utf-8"))
+
     def test_install_scripts_wire_claude_and_grok_skills(self) -> None:
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
@@ -1140,9 +1173,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertIn(".claude/skills/govern", text.replace("\\", "/"))
             self.assertIn(".grok/skills/govern", text.replace("\\", "/"))
             self.assertIn("audit", text)
+            self.assertIn("vision", text)
             self.assertIn("SKILL.md", text)
             self.assertRegex(text, r"00-govern-orchestrator")
             self.assertRegex(text, r"05-independent-audit")
+            self.assertRegex(text, r"06-vision-orchestrator")
 
     def test_install_ps1_isolated_smoke_script_exists(self) -> None:
         self.assertTrue(
@@ -1199,13 +1234,17 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 target / "AGENTS.md",
                 target / ".claude" / "skills" / "govern" / "SKILL.md",
                 target / ".claude" / "skills" / "audit" / "SKILL.md",
+                target / ".claude" / "skills" / "vision" / "SKILL.md",
                 target / ".grok" / "skills" / "govern" / "SKILL.md",
                 target / ".grok" / "skills" / "audit" / "SKILL.md",
+                target / ".grok" / "skills" / "vision" / "SKILL.md",
                 target / ".github" / "copilot-instructions.md",
                 target / ".github" / "prompts" / "govern.prompt.md",
                 target / ".github" / "prompts" / "audit.prompt.md",
+                target / ".github" / "prompts" / "vision.prompt.md",
                 skills_dest / "prompts" / "00-govern-orchestrator.md",
                 skills_dest / "prompts" / "05-independent-audit.md",
+                skills_dest / "prompts" / "06-vision-orchestrator.md",
                 skills_dest / "contracts" / "skills-consumer-contract.schema.json",
                 skills_dest / "contracts" / "skills-consumer-contract.json",
                 skills_dest / "contracts" / "skills-consumer-compatibility-matrix.schema.json",
@@ -1227,8 +1266,12 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             audit = (target / ".claude" / "skills" / "audit" / "SKILL.md").read_text(
                 encoding="utf-8"
             )
+            vision = (target / ".claude" / "skills" / "vision" / "SKILL.md").read_text(
+                encoding="utf-8"
+            )
             self.assertIn("00-govern-orchestrator", govern)
             self.assertIn("05-independent-audit", audit)
+            self.assertIn("06-vision-orchestrator", vision)
             for name in (
                 "skills-consumer-contract.schema.json",
                 "skills-consumer-contract.json",

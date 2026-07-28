@@ -355,9 +355,9 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 
 ### 6.9 工具分工（落地节奏）
 
-- **`/vision`（或等价）**：决策层——建/修 Charter、组合编排、VP、Vision Review、re-align 引导。（Skills **第二刀**）
-- **`/govern`**：实现层推进；发现缺 Charter、待 re-align 或结构歧义时进入引导或 fail closed，**不得**无愿景推进。
-- **第一刀（本文档包）**：原则、alignment、protocol、AGENTS 摘要、最小模板与协议测试。
+- **`/vision`**：决策层——建/修 Charter、组合编排、VP、Vision Review、re-align 引导（`skills/prompts/06-vision-orchestrator.md`）。
+- **`/govern`**：实现层推进；发现缺 Charter、待 re-align 或结构歧义时转入 `/vision` 或 fail closed，**不得**无愿景推进。
+- **落地**：核心文档第一刀 + Skills `/vision` 第二刀（install 默认三入口：govern / audit / vision）。
 
 ### 6.10 本原则 v1 非目标
 

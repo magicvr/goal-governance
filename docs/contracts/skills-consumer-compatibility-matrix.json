@@ -11,7 +11,8 @@
   },
   "requiredEntrypoints": [
     "govern",
-    "audit"
+    "audit",
+    "vision"
   ],
   "negativeFixtures": [
     {
@@ -35,7 +36,7 @@
         "product": "Claude Code CLI",
         "version": "2.1.220",
         "platform": "Windows 11",
-        "installationSurface": ".claude/skills/govern and .claude/skills/audit"
+        "installationSurface": ".claude/skills/govern and .claude/skills/audit and vision skill/prompt"
       },
       "supportsProtocol": {
         "minInclusive": "0.1.0",
@@ -57,9 +58,14 @@
           "evidence": [
             "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-28.json"
           ]
+        },
+        {
+          "name": "vision",
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.9.1 candidate: Claude Code CLI 2.1.220 /govern and /audit re-captured 2026-07-28 against current behavior sources (AGENTS, 00-govern-orchestrator, 05-independent-audit, install skills)."
+      "evidenceScope": "v0.9.1 candidate: Claude Code CLI 2.1.220 /govern and /audit re-captured 2026-07-28 against current behavior sources (AGENTS, 00-govern-orchestrator, 05-independent-audit, install skills). /vision shipped as decision-layer entry (06-vision-orchestrator); runtime evidence pending."
     },
     {
       "id": "grok-build-cli",
@@ -69,7 +75,7 @@
         "version": "0.2.112",
         "build": "9bbd559437",
         "platform": "Windows 11",
-        "installationSurface": ".grok/skills/govern and .grok/skills/audit"
+        "installationSurface": ".grok/skills/govern and .grok/skills/audit and vision skill/prompt"
       },
       "supportsProtocol": {
         "minInclusive": "0.1.0",
@@ -91,9 +97,14 @@
           "evidence": [
             "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-28.json"
           ]
+        },
+        {
+          "name": "vision",
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.9.1 candidate: Grok Build CLI 0.2.112 (9bbd559437) /govern and /audit re-captured 2026-07-28 via CLI subprocess with proxy-managed API (XAI_API_KEY=PROXY_MANAGED). Distinct from interactive Grok Build session auth."
+      "evidenceScope": "v0.9.1 candidate: Grok Build CLI 0.2.112 (9bbd559437) /govern and /audit re-captured 2026-07-28 via CLI subprocess with proxy-managed API (XAI_API_KEY=PROXY_MANAGED). Distinct from interactive Grok Build session auth. /vision shipped as decision-layer entry (06-vision-orchestrator); runtime evidence pending."
     },
     {
       "id": "github-copilot-cli",
@@ -102,7 +113,7 @@
         "product": "GitHub Copilot CLI",
         "version": "1.0.71",
         "platform": "Windows 11",
-        "installationSurface": "%APPDATA%/npm/@github/copilot"
+        "installationSurface": "%APPDATA%/npm/@github/copilot and vision skill/prompt"
       },
       "supportsProtocol": {
         "minInclusive": "0.1.0",
@@ -124,9 +135,14 @@
           "evidence": [
             "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-28.json"
           ]
+        },
+        {
+          "name": "vision",
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.9.1 candidate: GitHub Copilot CLI 1.0.71 /govern and /audit re-captured 2026-07-28 against current behavior sources. GitHub monthly quota exhausted; capture used COPILOT_PROVIDER_BASE_URL BYOK to an OpenAI-compatible proxy (model grok-4.5). Host product remains Copilot CLI; model routing is recorded in runtime evidence environment."
+      "evidenceScope": "v0.9.1 candidate: GitHub Copilot CLI 1.0.71 /govern and /audit re-captured 2026-07-28 against current behavior sources. GitHub monthly quota exhausted; capture used COPILOT_PROVIDER_BASE_URL BYOK to an OpenAI-compatible proxy (model grok-4.5). Host product remains Copilot CLI; model routing is recorded in runtime evidence environment. /vision shipped as decision-layer entry (06-vision-orchestrator); runtime evidence pending."
     },
     {
       "id": "web-readonly-parser",

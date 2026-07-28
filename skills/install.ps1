@@ -48,11 +48,13 @@ Options:
   -Claude / --claude       Install Claude Code: .\AGENTS.md + project skills
                            .\.claude\skills\govern\  ->  /govern
                            .\.claude\skills\audit\   ->  /audit
+                           .\.claude\skills\vision\  ->  /vision
   -Grok / --grok           Install Grok Build project skills
                            .\.grok\skills\govern\  ->  /govern
                            .\.grok\skills\audit\   ->  /audit
+                           .\.grok\skills\vision\  ->  /vision
   -Copilot / --copilot     Install GitHub Copilot rules -> .\.github\copilot-instructions.md
-                           and default slashes -> govern + audit
+                           and default slashes -> govern + audit + vision
   -WithPrimitives / --with-primitives
                            Also install advanced Copilot form-fill slash wrappers. Opt-in only.
   -All / --all             Install Claude + Grok + Copilot + prompts/templates/contracts under -SkillsDir
@@ -72,14 +74,15 @@ Options:
   -Help / --help           Show this help
 
 Behavior:
-  - Claude skills -> govern + audit
-  - Grok skills -> govern + audit
-  - Default Copilot slash surface: /govern + /audit
+  - Claude skills -> govern + audit + vision
+  - Grok skills -> govern + audit + vision
+  - Default Copilot slash surface: /govern + /audit + /vision
   - Core methodology (GOAL-019 D-004): ALWAYS installs package core\docs -> .\docs\
     (architecture + templates + slim docs\README). Missing core = incomplete install.
   - -InitWorkspace alone is allowed (still installs core); slugs must be explicit (D-005)
   - Core orchestrator: prompts\00-govern-orchestrator.md
   - Cross-audit core: prompts\05-independent-audit.md
+  - Vision decision core: prompts\06-vision-orchestrator.md
   - Compatibility contract mirror: contracts\skills-consumer-contract.json
   - Offline only; prompts before overwriting
 
@@ -198,15 +201,17 @@ Done.
 Next steps:
   1. Review installed rule file(s) and docs\architecture (core methodology; required).
 $step2
-  3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
+  3. DEFAULT user path: /govern (impl) + /audit (goal cross-audit) + /vision (decision)
      - Methodology: .\docs\architecture\principles.md
      - Orchestrator: $SkillsDir\prompts\00-govern-orchestrator.md
      - Cross-audit: $SkillsDir\prompts\05-independent-audit.md
+     - Vision: $SkillsDir\prompts\06-vision-orchestrator.md
      - Contract: $SkillsDir\contracts\skills-consumer-contract.json
-     - Claude: /govern + /audit under .\.claude\skills\
-     - Grok:   /govern + /audit under .\.grok\skills\
-     - Copilot: govern.prompt.md + audit.prompt.md
+     - Claude: /govern + /audit + /vision under .\.claude\skills\
+     - Grok:   /govern + /audit + /vision under .\.grok\skills\
+     - Copilot: govern + audit + vision prompts
   4. Advanced Copilot form-filling slashes only if you used -WithPrimitives.
+  5. Cold start: /vision (Charter->VP) then /govern (workspace+Root).
 
 Project root:  $TargetDir
 Skills dir:    $SkillsDir
@@ -455,8 +460,10 @@ $SkillsDirResolved = Get-ResolvedPath -Path $SkillsDir -BaseDir $TargetDir
 $ClaudeAgentsSrc = Join-Path $PackageRoot 'install\claude\AGENTS.md'
 $ClaudeGovernSrc = Join-Path $PackageRoot 'install\claude\skills\govern\SKILL.md'
 $ClaudeAuditSrc = Join-Path $PackageRoot 'install\claude\skills\audit\SKILL.md'
+$ClaudeVisionSrc = Join-Path $PackageRoot 'install\claude\skills\vision\SKILL.md'
 $GrokGovernSrc = Join-Path $PackageRoot 'install\grok\skills\govern\SKILL.md'
 $GrokAuditSrc = Join-Path $PackageRoot 'install\grok\skills\audit\SKILL.md'
+$GrokVisionSrc = Join-Path $PackageRoot 'install\grok\skills\vision\SKILL.md'
 $CopilotSrc = Join-Path $PackageRoot 'install\copilot\copilot-instructions.md'
 $CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
@@ -490,6 +497,9 @@ if ($Claude) {
     if (-not (Test-Path -LiteralPath $ClaudeAuditSrc -PathType Leaf)) {
         Write-Err "Missing package file: $ClaudeAuditSrc"
     }
+    if (-not (Test-Path -LiteralPath $ClaudeVisionSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $ClaudeVisionSrc"
+    }
 }
 if ($Grok) {
     if (-not (Test-Path -LiteralPath $GrokGovernSrc -PathType Leaf)) {
@@ -497,6 +507,9 @@ if ($Grok) {
     }
     if (-not (Test-Path -LiteralPath $GrokAuditSrc -PathType Leaf)) {
         Write-Err "Missing package file: $GrokAuditSrc"
+    }
+    if (-not (Test-Path -LiteralPath $GrokVisionSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $GrokVisionSrc"
     }
 }
 if ($Copilot) {
@@ -517,13 +530,15 @@ if ($Claude) {
     Copy-RuleFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
     Copy-RuleFile -Source $ClaudeGovernSrc -Destination (Join-Path $TargetDir '.claude\skills\govern\SKILL.md')
     Copy-RuleFile -Source $ClaudeAuditSrc -Destination (Join-Path $TargetDir '.claude\skills\audit\SKILL.md')
-    Write-Host 'Claude skills: /govern + /audit'
+    Copy-RuleFile -Source $ClaudeVisionSrc -Destination (Join-Path $TargetDir '.claude\skills\vision\SKILL.md')
+    Write-Host 'Claude skills: /govern + /audit + /vision'
 }
 
 if ($Grok) {
     Copy-RuleFile -Source $GrokGovernSrc -Destination (Join-Path $TargetDir '.grok\skills\govern\SKILL.md')
     Copy-RuleFile -Source $GrokAuditSrc -Destination (Join-Path $TargetDir '.grok\skills\audit\SKILL.md')
-    Write-Host 'Grok skills: /govern + /audit'
+    Copy-RuleFile -Source $GrokVisionSrc -Destination (Join-Path $TargetDir '.grok\skills\vision\SKILL.md')
+    Write-Host 'Grok skills: /govern + /audit + /vision'
     $agentsPath = Join-Path $TargetDir 'AGENTS.md'
     if (-not (Test-Path -LiteralPath $agentsPath -PathType Leaf) -and (Test-Path -LiteralPath $ClaudeAgentsSrc -PathType Leaf)) {
         Write-Host 'Note: no AGENTS.md yet; consider -Claude or copy install\claude\AGENTS.md for project rules.'
@@ -541,12 +556,12 @@ if ($Copilot) {
     if (-not (Test-Path -LiteralPath $promptsDir)) {
         New-Item -ItemType Directory -Path $promptsDir -Force | Out-Null
     }
-    $wrapperNames = @('govern', 'audit')
+    $wrapperNames = @('govern', 'audit', 'vision')
     if ($WithPrimitives) {
         $wrapperNames += @('new-goal', 'log-decision', 'update-execution', 'write-audit')
         Write-Host 'Including advanced primitive slash wrappers (-WithPrimitives)'
     } else {
-        Write-Host 'Copilot slash surface: /govern + /audit (pass -WithPrimitives for form-fill ops)'
+        Write-Host 'Copilot slash surface: /govern + /audit + /vision (pass -WithPrimitives for form-fill ops)'
     }
     foreach ($name in $wrapperNames) {
         Copy-RuleFile `

@@ -9,6 +9,10 @@ version: 1.1.2
 
 # Goal Tree
 
+## 2026-07-28 · Skills `/vision` 第二刀（GOAL-001 D-018）
+
+落地 `06-vision-orchestrator` 与默认 install 三入口（govern/audit/vision）；契约矩阵 vision=pending-runtime-validation。**不**改各 GOAL status/progress。详见 [D-018](GOAL-001-main-vision/01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。
+
 ## 2026-07-28 · P-006 愿景组合治理第一刀（GOAL-001 D-017）
 
 用户确认 D0–D24 并落盘：P-006；alignment **0.3.0**；取消 sandbox opt-out；冷启动 Charter→VP→区；`reviews.md`；AGENTS **0.10.0**；编排器 **0.9.0**；vision 模板。**不**改各 GOAL status/progress；Root 仍 `active`。`/vision` skill 为第二刀。详见 [D-017](GOAL-001-main-vision/01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28) / [执行](GOAL-001-main-vision/02-execution.md#2026-07-28--p-006-愿景组合治理第一刀d-017)。

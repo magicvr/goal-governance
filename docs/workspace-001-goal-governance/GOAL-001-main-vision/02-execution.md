@@ -12,6 +12,18 @@ version: 0.3.9
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
+## 2026-07-28 · Skills `/vision` 第二刀（D-018）
+
+- **决策**：[D-018](01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。
+- **产物**：
+  - `skills/prompts/06-vision-orchestrator.md`
+  - install：`claude`/`grok`/`copilot` vision wrappers；`install.ps1` / `install.sh` 默认三入口
+  - 本仓 `.grok/skills/vision/`（及若存在 `.claude/skills/vision/`）
+  - 契约/矩阵含 `vision`（pending-runtime-validation）
+  - 测试与 skills README / AGENTS 同步
+- **未做**：各宿主 `/vision` runtime evidence 重采。
+- Root 仍 `active`。
+
 ## 2026-07-28 · P-006 愿景组合治理第一刀（D-017）
 
 - **决策**：[D-017](01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28)。
