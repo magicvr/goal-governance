@@ -551,7 +551,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.9.0")
+        self.assertEqual(matrix["candidateRevision"], "v0.9.1")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -584,12 +584,12 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "web-readonly-parser",
             },
         )
-        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.218")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.111")
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.220")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.112")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.71")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # Claude + Grok + Copilot: all six entrypoints runtime-verified 2026-07-24
+        # Claude + Grok + Copilot: all six entrypoints runtime-verified 2026-07-28
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -608,7 +608,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 self.assertTrue(entrypoints[name]["evidence"])
                 for path in entrypoints[name]["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                    self.assertIn("2026-07-24", path)
+                    self.assertIn("2026-07-28", path)
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")

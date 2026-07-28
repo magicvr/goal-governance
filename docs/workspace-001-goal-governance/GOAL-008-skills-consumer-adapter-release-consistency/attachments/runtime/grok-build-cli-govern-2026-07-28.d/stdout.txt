@@ -1,0 +1,42 @@
+I'll run the govern skill's scan phase only: load the skill, locate the orchestrator prompt, and read the minimum GOAL-008 sources—no writes, subagents, or questions.Next I'll read the orchestrator scan phase and the minimum GOAL-008 workspace sources.## GROK_GOVERN_DISPATCH_OK
+
+Read-only scan phase only. No files modified, no subagents, no questions.
+
+### 1. Marker
+`GROK_GOVERN_DISPATCH_OK`
+
+### 2. Loaded skill
+| Field | Value |
+|------|--------|
+| **Title** | `govern · 目标治理编排（Grok Build skill）` (`name: govern`) |
+| **Source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+
+### 3. Orchestrator prompt (named by skill)
+| Field | Value |
+|------|--------|
+| **SKILLS_PKG** | `skills/` (contains `prompts/00-govern-orchestrator.md`) |
+| **Orchestrator path** | `skills/prompts/00-govern-orchestrator.md` |
+| **Absolute** | `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\00-govern-orchestrator.md` |
+
+### 4. GOAL-008 classification & open required gates
+
+**Workspace context (scan)**  
+- Explicit workspace: `docs/workspace-001-goal-governance/` (`workspace-001-goal-governance`)  
+- Root: `GOAL-001-main-vision` · `active`  
+- Focus: `GOAL-008-skills-consumer-adapter-release-consistency` · **`done` / `100%`**
+
+**Classification**  
+- **S2** at workspace level (unclosed Root still `active`).  
+- Focus GOAL-008 is already closed (`done`), so it is **not** an open S2/S4 advance target.  
+- **S4 does not apply** for this focus: no open required findings or due required information items on GOAL-008.
+
+**Open required gates (GOAL-008)**  
+| Gate class | Status |
+|------------|--------|
+| Required findings (A-00N) | **None open** — A-016 close-out: all required closed; no residual |
+| I-001 | **verified** |
+| I-002 | **verified** |
+| I-003 | **verified** |
+| Upstream F-005 (GOAL-001) | Handed to root response (A-016); **not an open GOAL-008 gate** |
+
+A-017 notes post-closeout `unreleased` matrix / pending host re-validation for a **later** candidate; it explicitly **does not reopen** GOAL-008.

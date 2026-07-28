@@ -103,11 +103,11 @@ version: 0.1.0
 ## 可复制包版本与变更范围
 
 - **当前核心文档版本**：`0.9.1`（含 workspace-protocol **0.5.0** A0 限定引用）。工作区根与共享资料协议已就位。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / **`v0.9.0`** 为已发布 annotated tag；**下一 Skills 候选**为 **`0.9.1` / `v0.9.1`**（A0 Q2/Q3 + 同窗口治理澄清）。
-- **快照日期**：2026-07-28（工作树）；`v0.9.0` 发布日为 2026-07-24。
-- **快照身份**：`v0.9.0` 已发布；`v0.9.1` 以合并到 `main` 后的 annotated tag + release evidence 为准（**尚未**打 tag）。
-- **当前工作树边界**：矩阵仍为 `candidateRevision: v0.9.0`（**有意未抢先改为 v0.9.1**）。A0 已改 `AGENTS.md` 与 `00-govern-orchestrator.md`，故 2026-07-24 六单元 runtime 证据对上述行为源为 **stale**——正式 `v0.9.1` Release **前必须重采**。Web parser 仍为 automated-verified。
-- **本轮变更范围（拟 0.9.1）**：GOAL-010 D-003 A0 限定引用；协议/AGENTS/Skills prompts；详见根 `CHANGELOG.md` Unreleased。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / **`v0.9.1`**（冻结候选；annotated tag 以合并 `main` 后推送为准）。
+- **快照日期**：2026-07-28。
+- **快照身份**：矩阵 **`candidateRevision: v0.9.1`**；六 CLI runtime 2026-07-28 已对当前行为源重采；正式 GitHub Release 仍以 annotated `v0.9.1` + release evidence 为准。
+- **当前工作树边界**：六 CLI 入口 **ready-for-release-evidence**；Web parser 仍为 automated-verified。Copilot 重采因 GitHub 月度配额耗尽，经 `COPILOT_PROVIDER_BASE_URL` BYOK 完成（宿主仍为 Copilot CLI）。
+- **本轮变更范围（0.9.1）**：GOAL-010 D-003 A0 限定引用；finding 三路径/愿景门禁；Charter→VP 对齐；详见根 `CHANGELOG.md`。
 
 ### canonical → Skills 同步台账
 
@@ -123,7 +123,7 @@ version: 0.1.0
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
 | 契约 | `skills-consumer-contract.json` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |
-| 契约 | `skills-consumer-compatibility-matrix.json` | `2ED0564D586552F94DD711FAB69CD7D45A3C934FA6FB4ADE925BA75CE2901F37` | `2ED0564D586552F94DD711FAB69CD7D45A3C934FA6FB4ADE925BA75CE2901F37` |
+| 契约 | `skills-consumer-compatibility-matrix.json` | `0A0D31CFDD5CC927C5AECD1782FC6186A0400C50F11A23B7B562A659E8C9BC0E` | `0A0D31CFDD5CC927C5AECD1782FC6186A0400C50F11A23B7B562A659E8C9BC0E` |
 | 契约 | `runtime-evidence.schema.json` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。

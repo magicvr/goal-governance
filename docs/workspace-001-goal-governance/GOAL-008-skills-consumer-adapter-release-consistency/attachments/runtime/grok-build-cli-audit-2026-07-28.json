@@ -1,0 +1,81 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-07-28T02:56:21.906599Z",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "grok 0.2.112 (9bbd559437)",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": "GROK_MODELS_BASE_URL",
+    "model": "grok-4.5"
+  },
+  "behaviorSources": [
+    {
+      "path": ".grok/skills/audit/SKILL.md",
+      "sha256": "827f34f0362a5e811cdd8ee0f34bc96171334b7d7beef111815a1c0321df1098"
+    },
+    {
+      "path": "skills/install/grok/skills/audit/SKILL.md",
+      "sha256": "827f34f0362a5e811cdd8ee0f34bc96171334b7d7beef111815a1c0321df1098"
+    },
+    {
+      "path": "skills/prompts/05-independent-audit.md",
+      "sha256": "1f349da1fe03970d56ad357fbb8b185b10845570f4031f081b64eeb7ac1e721c"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "4588109ccee1f2e09a08d57f3093d2ca46adec7e8320b68f07f0fb50063e035a"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-audit.txt",
+      "sha256": "67fe850d1babad056be374ed4c9890b6bc1813405cbbc0430773b5f9298ab158"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "grok",
+      "--prompt-file",
+      "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-audit.txt",
+      "--model",
+      "grok-4.5",
+      "--output-format",
+      "plain",
+      "--permission-mode",
+      "dontAsk",
+      "--disallowed-tools",
+      "Edit,Write,NotebookEdit",
+      "--max-turns",
+      "8",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240.0,
+    "inputSha256": "67fe850d1babad056be374ed4c9890b6bc1813405cbbc0430773b5f9298ab158",
+    "inputSummary": "Read-only /audit dispatch probe requiring marker GROK_AUDIT_DISPATCH_OK after repository-backed skill execution."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "GROK_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-28.d/stdout.txt",
+    "stdoutSha256": "2c46fb5b87886549749ba411fd8ba514b60bc17a8195c5a65098586e6d094de8",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-28.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrMode": "request-url-redacted",
+    "warnings": [],
+    "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

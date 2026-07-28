@@ -1,0 +1,235 @@
+Performing a read-only independent audit of GOAL-008 from the listed governance sources only.
+
+● skill(audit)
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ 107 lines read
+
+/ Search (glob)
+  │ "**/GOAL-008*/**"
+  └ 91 files found
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ 103 lines read
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:200 (200 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:250 (133 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:80 (79 lines read)
+
+/ Search (grep)
+  │ "GOAL-008" in **/goal-tree.md
+  └ 1 file found
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:120 (120 lines read)
+
+● Read release-candidate-v0.7.0-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\release-candidate-v0.7.0-2026-07-20.json
+  └ 28 lines read
+
+● Read web-parser-ci-replay-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\web-parser-ci-replay-2026-07-20.json
+  └ 39 lines read
+
+● Read copilot-cli-audit-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-audit-2026-07-20.json
+  └ 70 lines read
+
+● Read copilot-cli-govern-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-govern-2026-07-20.json
+  └ 70 lines read
+
+/ Search (grep)
+  │ "GOAL-008|v0\.7\.0|unreleased|pending-runtime" in **/goal-tree.md
+  └ 1 file found
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:70 (69 lines read)
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:80 (44 lines read)
+
+/ Search (grep)
+  │ "GOAL-008|skills-consumer-adapter" in **/goal-tree.md
+  └ 1 file found
+
+/ Search (grep)
+  │ "## A-0" in **/GOAL-008*/03-audit.md
+  └ 1 file found
+
+/ Search (grep)
+  │ "candidateRevision|pending-runtime|github-copilot-cli|coverage" in
+  │ **/skills-consumer-compatibility-matrix.json
+  └ 2 files found
+
+Deepening verification of goal-tree status, matrix freshness, and evidence path consistency.
+
+✗ Read copilot-cli-audit-2026-07-28.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-audit-2026-07-28.json
+  └ Path does not exist
+
+● Read skills-consumer-compatibility-matrix.json
+  │ docs\contracts\skills-consumer-compatibility-matrix.json
+  └ L1:120 (120 lines read)
+
+● Read copilot-cli-govern-2026-07-28.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-govern-2026-07-28.json
+  └ 70 lines read
+
+/ Search (grep)
+  │ "GOAL-008|008-skills|adapter-release" (docs\workspace-001-goal-governance\goal-tree.md)
+  └ 1 file found
+
+/ Search (grep)
+  │ "## A-01[4-9]|## A-02|Finding|F-00|open / required|required" in **/GOAL-008*/03-audit.md
+  └ 1 file found
+
+● Read skills-consumer-compatibility-matrix.json
+  │ docs\contracts\skills-consumer-compatibility-matrix.json
+  └ L98:220 (62 lines read)
+
+● Read copilot-cli-govern-2026-07-24.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-govern-2026-07-24.json
+  └ L1:70 (70 lines read)
+
+● Read copilot-cli-audit-2026-07-24.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-audit-2026-07-24.json
+  └ L1:70 (70 lines read)
+
+● List all A-NNN audit sections (shell)
+  │ Select-String -Path "docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release
+  │ -consistency\03-audit.md" -Pattern "^## A-" | ForEach-Object { $_.Line }
+  └ 18 lines…
+
+● Extract GOAL-008 lines from goal-tree (shell)
+  │ Select-String -Path "docs\workspace-001-goal-governance\goal-tree.md" -Pattern
+  │ "GOAL-008|008-skills" -Context 2,4 | ForEach-Object { $_.Context.PreContext; $_.Line;
+  │ $_.Context.PostContext; "---" }
+  └ 17 lines…
+
+● Read copilot-cli-audit.txt
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\prompts\copilot-cli-audit.txt
+  └ 3 lines read
+
+/ Search (grep)
+  │ "v0\.9\.0|2026-07-24|2026-07-28|A-018|A-019|freshness|pending-runtime" in
+  │ **/GOAL-008*/**/*.{md,json}
+  └ 15 files found
+
+● Hash current behavior sources vs evidence (shell)
+  │ Get-FileHash -Algorithm SHA256 AGENTS.md, .github\copilot-instructions.md,
+  │ skills\prompts\05-independent-audit.md, skills\prompts\00-govern-orchestrator.md |
+  │ Format-Table -AutoSize; if (Test-Path "docs\workspace-001-goal-governance\GOAL-008-skills-cons
+  │ umer-adapter-release-consistency\attachments\runtime\prompts\copilot-cli-audit.txt") {
+  │ Get-FileHash -Algorithm SHA256 "docs\workspace-001-goal-governance\GOAL-008-skills-consumer-ad…
+  └ 15 lines…
+
+Independent /audit · GOAL-008 (read-only)
+
+┌─────────────────┬──────────────────────────────────────────────────────────────────────┐
+│ Field           │ Value                                                                │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│ source          │ independent                                                          │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│ auditor         │ GitHub Copilot CLI 1.0.71                                            │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│ workspace       │ workspace-001-goal-governance · root GOAL-001-main-vision            │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│ scope           │ GOAL-008 close-out / I-001–I-003 evidence · current matrix freshness │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│ audit_type      │ close-out + finding-closure readiness                                │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│ Would-be id     │ A-018 (not written — read-only)                                      │
+├─────────────────┼──────────────────────────────────────────────────────────────────────┤
+│ verdict         │ conditional                                                          │
+└─────────────────┴──────────────────────────────────────────────────────────────────────┘
+
+Evidence (supported)
+
+ - Five-piece set present; goal-tree + meta: done / 100%.
+ - I-001: contracts/mirrors + tests cited in meta/A-002.
+ - I-002 (v0.7.0): Copilot CLI govern/audit JSON (…-2026-07-20), Claude/Grok cells, Web CI
+web-parser-ci-replay-2026-07-20.json (run 29700051047, head 8a33ecd…).
+ - I-003 (v0.7.0): release-candidate-v0.7.0-2026-07-20.json · tag v0.7.0 · ready coverage.
+ - A-016 self close-out pass; D-010/D-011 keep historical release vs later worktree separate.
+ - A-017: post-GOAL-010 freshness / unreleased honesty (no reopen of v0.7.0).
+ - This session: no VS Code; sources limited as requested.
+
+Findings
+
+┌───────────┬──────────────┬───────────────────────────────────────────────────────────────────┐
+│ ID        │ Level        │ Finding                                                           │
+├───────────┼──────────────┼───────────────────────────────────────────────────────────────────┤
+│ F-001     │ required     │ Matrix candidateRevision: **v0.9.0** marks Copilot /govern+/audit │
+│           │              │ runtime-verified via …-2026-07-24.json, but current digests do    │
+│           │              │ not match those behaviorSources: AGENTS.md now 4588109c… (24:     │
+│           │              │ eb524280…); 05-independent-audit.md now 1f349da1… (24 audit:      │
+│           │              │ 6273660f…); 00-govern now f95ba298… (24 govern: 9d1230c6…). Per   │
+│           │              │ D-011/A-017 freshness, 24 JSON must not stand for current host    │
+│           │              │ verification.                                                     │
+├───────────┼──────────────┼───────────────────────────────────────────────────────────────────┤
+│ F-002     │ required     │ copilot-cli-govern-2026-07-28.json exists (digests align with     │
+│           │              │ current AGENTS/govern); copilot-cli-audit-2026-07-28.json         │
+│           │              │ missing. Matrix still points audit at stale 24 artifact.          │
+├───────────┼──────────────┼───────────────────────────────────────────────────────────────────┤
+│ F-003     │ recommended  │ GOAL-008 03-audit ends at A-017 (updated: 2026-07-20); no ledger  │
+│           │              │ for v0.9.0 / 24–28 recaptures — doc lag vs contracts matrix.      │
+└───────────┴──────────────┴───────────────────────────────────────────────────────────────────┘
+
+Not open against historical v0.7.0 close-out: I-001–I-003 + A-016 chain remain coherent for that
+tag. No residual accepted in records for that close-out.
+
+Closure verdict
+
+ - Historical GOAL-008 @ v0.7.0: close-out evidence holds → not reopened as fail.
+ - Current tree / “ready” inheritance: conditional — F-001/F-002 block treating matrix Copilot cells
+ (or a new release claim) as runtime-ready until fresh audit capture + matrix/digest bind + /govern
+response.
+
+Next (for /govern, not this session)
+
+ 1. Capture/bind Copilot /audit against current sources (or mark cell pending-runtime-validation).
+ 2. Re-point matrix evidence only to digest-fresh JSON.
+ 3. Append A-018 (this opinion) + close F-001/F-002 via fixed / residual / overruled.
+ 4. Do not silently keep done claims as proof of current release readiness.
+
+Opinion only — no status/progress/goal-tree edits (per read-only dispatch).
+
+COPILOT_CLI_AUDIT_DISPATCH_OK
+

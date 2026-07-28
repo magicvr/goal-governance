@@ -20,10 +20,10 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 | 身份 | 状态 |
 |------|------|
-| **`v0.9.0`** | 已发布 annotated tag / Release 基线。矩阵 **`candidateRevision: v0.9.0`**；六 CLI 单元 2026-07-24 runtime-verified（相对**当时**行为源）。 |
-| **`0.9.1`（进行中）** | 含 A0 限定引用（Q2 文档 / Q3 对话）等。工作树已改 `AGENTS.md` 与编排器 prompt → 旧 runtime 证据 **stale**。正式 tag **前**须重采六单元；在此之前可用本仓 `dist/goal-governance-skills-v0.9.1-rc.1.zip` 预打包（**不**等于 GitHub Release 身份）。 |
+| **`v0.9.0`** | 已发布 annotated tag / Release 基线。 |
+| **`v0.9.1`** | 冻结候选：矩阵 **`candidateRevision: v0.9.1`**；六 CLI 单元 2026-07-28 runtime-verified（相对当前行为源，含 A0 Q2/Q3）。正式 GitHub Release 以 annotated tag + release evidence 为准。 |
 
-Claude Code / Grok Build / Copilot CLI 仍为 `committed` 基线；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
+Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
 ## 产品模型（必读）
 
@@ -42,9 +42,9 @@ Claude Code / Grok Build / Copilot CLI 仍为 `committed` 基线；Web parser �
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
-| Claude Code CLI | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / 当前候选待 runtime 验证` |
-| Grok Build CLI | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / 当前候选待 runtime 验证` |
-| GitHub Copilot CLI `1.0.71` | `.github/copilot-instructions.md` + repository prompt sources | `/govern` · `/audit` | `committed / 当前候选待 runtime 验证` |
+| Claude Code CLI `2.1.220` | `.claude/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / runtime-verified (2026-07-28)` |
+| Grok Build CLI `0.2.112` | `.grok/skills/govern/` + `audit/` | `/govern` · `/audit` | `committed / runtime-verified (2026-07-28)` |
+| GitHub Copilot CLI `1.0.71` | `.github/copilot-instructions.md` + repository prompt sources | `/govern` · `/audit` | `committed / runtime-verified (2026-07-28)` |
 
 核心行为：
 
@@ -96,8 +96,7 @@ skills/
 1. 打开本仓库 [Releases](https://github.com/magicvr/goal-governance/releases)，下载与 tag 对应的  
    `goal-governance-skills-vX.Y.Z.zip`（可对照同目录的 `.sha256` 校验）。  
    包内含 Skills 适配器 + **core 方法论镜像**（prompts、install、`core/`、模板/契约），**不含** monorepo dogfood 过程树、`web/` 或 `artifacts/`，**不含** `tech-stack.md`。  
-   **在 `v0.9.1` Release 尚未发布前**：用维护者提供的预打包  
-   `dist/goal-governance-skills-v0.9.1-rc.1.zip`（同目录 `.sha256`；**pre-release 身份，非正式 tag**），或按下节「从源码树复制」。
+   若目标 tag 的 Release 尚未出现，可从源码树复制 `skills/`，或使用维护者提供的预打包 zip（**不**等于正式 Release 身份）。
 2. 在目标项目根目录解压，使包内容落在 `./skills/`（或你选择的目录名）：
 
 ```bash

@@ -1,0 +1,108 @@
+Scanning GOAL-008 with /govern read-only semantics from the listed governance sources.
+
+● skill(govern)
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:150 (149 lines read)
+
+/ Search (glob)
+  │ "**/GOAL-008*/**"
+  └ 91 files found
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ 1 line read
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ 103 lines read
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L150:320 (171 lines read)
+
+/ Search (grep)
+  │ "GOAL-008" in **/goal-tree.md (docs\workspace-001-goal-governance)
+  └ 11 lines found
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:120 (120 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:150 (150 lines read)
+
+/ Search (grep)
+  │ "I-00|Final status|verified|collecting|close-out|A-00" in **/GOAL-008*/02-execution.md
+  │ (docs\workspace-001-goal-governance)
+  └ 42 lines found
+
+/ Search (grep)
+  │ "^## A-00|^###
+  │ A-00|verdict|source:|required|开放|closed|fixed|accepted-residual|user-overruled|I-00" in
+  │ **/GOAL-008*/03-audit.md (docs\workspace-001-goal-governance)
+  └ 7 lines found
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:80 (44 lines read)
+
+/ Search (grep)
+  │ "A-01[0-9]|F-00|open / required|closed|fixed" in **/GOAL-008*/03-audit.md
+  │ (docs\workspace-001-goal-governance)
+  └ 60 lines found
+
+治理扫描（只读 /govern · Copilot CLI 1.0.71）
+
+工作区
+workspace-001-goal-governance · Root GOAL-001-main-vision · 焦点 GOAL-008
+
+状态 / 进度
+done / 100%（meta + goal-tree 一致）
+历史关门：v0.7.0 @ 8a33ecd… · CI run 29700051047
+D-011/A-017：当前树为 candidateRevision: unreleased；不重开 GOAL-008
+
+意见台账
+
+┌───────────────────────────────────────────────┬─────────────┬─────────────┬──────────────────┐
+│ A                                             │ source      │ verdict     │ 要点             │
+├───────────────────────────────────────────────┼─────────────┼─────────────┼──────────────────┤
+│ A-014                                         │ independent │ conditional │ 当时缺 Web/I-003 │
+├───────────────────────────────────────────────┼─────────────┼─────────────┼──────────────────┤
+│ A-015                                         │ self        │ conditional │ 响应 A-014       │
+├───────────────────────────────────────────────┼─────────────┼─────────────┼──────────────────┤
+│ A-016                                         │ self        │ pass        │ close-out；I/F   │
+│                                               │             │             │ 关闭             │
+├───────────────────────────────────────────────┼─────────────┼─────────────┼──────────────────┤
+│ A-017                                         │ self        │ pass        │ 保鲜边界，不重开 │
+├───────────────────────────────────────────────┼─────────────┼─────────────┼──────────────────┤
+│ 开放 required findings：0（A-010 F-001～F-003 │             │             │                  │
+│ 由 A-016 闭合；无 residual）                  │             │             │                  │
+└───────────────────────────────────────────────┴─────────────┴─────────────┴──────────────────┘
+
+信息门禁（权威=00-meta final ledger）
+I-001 / I-002 / I-003 → 均 verified · 到期开放 required：0
+
+关门
+允许保持 done；本目标无需再关门。
+下一候选发布另需新 runtime，不构成对本目标的重开。
+
+情境：焦点已关门 · 无 S4 门禁 · 无 P-004 待裁。只读，无写入。
+
+COPILOT_CLI_GOVERN_DISPATCH_OK
+
