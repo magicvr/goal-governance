@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-22
-version: 0.2.8
+updated: 2026-07-28
+version: 0.2.9
 ---
 
 # 决策记录 · GOAL-001
@@ -357,3 +357,36 @@ version: 0.2.8
 **未选**：Root `done`；R-009-X closed；无 residual 清单的阶段 6 终态宣称。
 
 **影响**：A-014；00-meta 现时节；02-execution；goal-tree 日志。GOAL-009 状态不变。
+
+## D-016 · 核心协议逻辑一致性修订（finding 闭合 / 隐式工作区 / P-004 扩表）（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户要求「审视当前的核心协议是否存在逻辑问题」，随后确认「修改你所发现的问题」，并要求「在合适的地方记录本次修改操作」。
+
+**决定**：
+
+1. **采纳并落盘**对核心协议的一致性修订（不新立子目标、不重开已 `done` 的 GOAL-006/007/010；属 Root 层方法论维护）。
+2. **Finding 合法闭合**（P-003）固定为三路径，与编排器/AGENTS 对齐：  
+   - `fixed`：可核对修正  
+   - `accepted-residual`：用户书面接受残余（范围、期限、复审触发）  
+   - `user-overruled`：用户书面驳回/降级（**单条意见亦可**，不要求先有冲突）  
+3. **P-004 扩表**：在「是否自审」「意见冲突」之外，正式包含单条 finding residual/overruled（4.3）与信息 residual/有界实验/信息冲突（4.4）。  
+4. **隐式工作区**：无显式 `workspace-*/workspace.md` 时，**仅** `docs/goals/` legacy 可作隐式单工作区；否则空治理 scaffold，禁止猜测任意 `<workspace-root>`。  
+5. **其它边界**：P-002 嵌入 P-001 路线图槽位；纲领阶段串行、阶段内可并行；`GOAL-*` 仅区内唯一、跨区须 `workspace_id`；Primary 三处冲突 fail closed；`active` VP 零工作区 14 日空转宽限；编号单调不复用 cancelled。  
+6. **权威文件版本**（本轮）：`principles.md` **0.6.0**；`workspace-protocol.md` **0.4.0**；`alignment.md` **0.2.0**；`overview.md` **0.7.0**；根 `AGENTS.md` / Skills 模板 **0.9.1**；`00-govern-orchestrator` **0.8.1**。  
+7. **不构成**：Root / 任一子目标 `done` 变更；R-009-X closed；新 release tag；runtime evidence 刷新义务自动免除（若后续发布含行为面，仍按 GOAL-008 惯例）。
+
+**为什么**：
+
+- 审视发现门禁「何为已解除」在 finding 维度分叉（原则只认修正，AGENTS/编排器已允许 residual），以及根 AGENTS 隐式工作区宽于 protocol，会导致编排器与规范各写各的。  
+- 单条 required finding 无用户否决通道会造成可治理性死锁。  
+- 串行/并行、Primary 冲突、VP 空转「长期」等边界糊会在多区与愿景层放大。
+
+**未选方案**：
+
+- **只改 AGENTS/提示词、不改正文 principles**：继续权威分叉。  
+- **禁止 finding residual**：与 dogfood（如 R-009-X）及检查清单已有表述冲突，成本高。  
+- **新开 GOAL-020 专做协议修订**：范围是元规则维护，挂 Root 决策更贴切；已关门 GOAL-010 仅追加交叉引用，不重开。
+
+**影响与后续**：见 [02-execution 本轮事实](02-execution.md#2026-07-28--核心协议逻辑一致性修订d-016)；GOAL-010 执行追加交叉说明；`goal-tree` 日志；愿景 `revisions` editorial（alignment 0.2.0）。不改 Root `status`/`progress`。

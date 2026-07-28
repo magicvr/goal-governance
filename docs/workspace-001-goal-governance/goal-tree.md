@@ -2,12 +2,16 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-24
+updated: 2026-07-28
 parent: null
-version: 1.1.0
+version: 1.1.1
 ---
 
 # Goal Tree
+
+## 2026-07-28 · 核心协议逻辑一致性修订（GOAL-001 D-016）
+
+用户审视并确认修订：P-003 finding 三路径闭合、P-004.3/4.4、legacy 隐式工作区唯一路径、纲领串行/阶段内并行、Primary 冲突与 VP 14 日空转等。权威：principles **0.6.0**、workspace-protocol **0.4.0**、alignment **0.2.0**；AGENTS/编排器已同步。验证：workspace/vision/standalone + skills orchestrator 测试 OK。**不**改各 GOAL status/progress；Root 仍 `active`。详见 [GOAL-001 D-016](GOAL-001-main-vision/01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) / [执行](GOAL-001-main-vision/02-execution.md#2026-07-28--核心协议逻辑一致性修订d-016)。
 
 ## 2026-07-24 · v0.9.0 发版冻结准备（PR）
 

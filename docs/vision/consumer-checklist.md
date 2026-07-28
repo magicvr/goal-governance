@@ -38,6 +38,8 @@ version: 0.1.0
 - [ ] 新建区/Root/关键推进/关门前跑完 A–C
 - [ ] Charter strategic 修订后检查 VP 与区 re-align
 - [ ] 不把 vision 目录内容当作 progress 或 finding 关闭证据
+- [ ] Primary 声明（workspace / workspaces.md / charter.primary_workspace）无互相矛盾；若矛盾已 fail closed 并待用户裁决
+- [ ] `active` VP 若零工作区：已告警；未超 14 日空转宽限，或已有继续空转书面留痕
 - [ ] VP 关门要求区证据链接；有界 residual 已点名
 
 ## E. 编排器读序（最小）

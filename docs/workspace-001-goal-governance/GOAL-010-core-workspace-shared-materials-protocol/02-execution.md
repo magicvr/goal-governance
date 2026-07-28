@@ -4,13 +4,21 @@ doc: execution
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
-updated: 2026-07-20
-version: 0.2.0
+updated: 2026-07-28
+version: 0.2.1
 ---
 
 # 执行记录 · GOAL-010
 
 ## 时间线
+
+### 2026-07-28 · 交叉引用：协议逻辑一致性修订（不重开本目标）
+
+- Root [GOAL-001 D-016](../GOAL-001-main-vision/01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) 修订了核心协议，其中与本目标相关的部分包括：  
+  - `workspace-protocol` **0.4.0**（纲领串行 / 阶段内并行；legacy 隐式工作区唯一路径；跨区 Goal id；Primary 冲突指针）  
+  - principles / AGENTS 与编排器对工作区 fail closed 与 finding 闭合的对齐  
+- **本目标保持 `done / 100%`**，不因本次元规则维护重开、不改成功标准勾选、不宣称新的产品门禁关闭。  
+- 现行协议以 `docs/architecture/workspace-protocol.md` 与 principles **0.6.0** 为准；本目标 2026-07-20 关门结论仍为当时基线事实。
 
 ### 2026-07-20 · 目标立项与协议边界登记
 

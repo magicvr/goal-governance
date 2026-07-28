@@ -4,7 +4,7 @@ status: active
 created: 2026-07-20
 updated: 2026-07-28
 parent: null
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 工作区与共享资料区协议
@@ -35,10 +35,16 @@ version: 0.3.0
 3. 工作区之间不得混合目标、候选、草稿、审计意见、写入请求或 AI 上下文。多个工作区而没有明确焦点时，Skills 和消费适配器必须 fail closed，而非猜测默认工作区。
 4. 平台或宿主可以提供导航，但导航缓存不能成为 canonical 目标状态；跨工作区导航字段、运行时授权和用户操作仍属于消费适配器/产品门禁。
 5. 工作区上下文改变 Root Goal 绑定、canonical 范围或共享资料目录指针时，属于治理变更：必须有可追溯决定，并在受影响目标的执行记录中留下事实。
+6. **目标 id 作用域**：`GOAL-*` 仅在**本工作区**内唯一。跨工作区提及目标时必须同时给出 `workspace_id`（或等价 canonical 路径，如 `docs/workspace-00N-…/GOAL-…`），不得仅凭 `GOAL-NNN-…` 跨区寻址或合并上下文。
 
-## 3. Root Goal 与串行阶段
+## 3. Root Goal、纲领阶段与并行
 
-Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立项时穷尽所有未来阶段。MVP、后续阶段和扩展工作应更新该 Root Goal 的路线图并创建串行子目标；只有长期目的、成功边界或战略方向确实改变时，才记录决定后修改 Root Goal 定义。不得用工作区目录嵌套代替目标 `parent` 关系。
+Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立项时穷尽所有未来阶段。
+
+1. **纲领阶段串行**：Root 路线图中的 MVP、二阶段、三阶段等**纲领阶段**通常按先后关系推进；进入下一纲领阶段前，应更新路线图完成标记，并避免把未完成纲领的退出条件假装已满足。
+2. **阶段内可并行**：同一纲领阶段内允许多个子目标并行（例如同一交付波次下的 Skills 与 Web 试点），只要 `parent`、依赖与门禁在各自五件套中可追踪。
+3. 只有长期目的、成功边界或战略方向确实改变时，才记录决定后修改 Root Goal 定义。不得用工作区目录嵌套代替目标 `parent` 关系。
+4. 「串行子目标」**不**禁止阶段内并行；禁止的是用并行掩盖未完成的纲领先后关系，或用目录嵌套伪造层级。
 
 ## 4. 工作区上下文文档
 
@@ -55,7 +61,17 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 | `plan_refs` | 对齐的愿景规划 id 列表（逗号分隔）。非 sandbox opt-out 时至少一项。 |
 | `primary_plan` | 当前焦点 VP；必须出现在 `plan_refs` 中；对应 `docs/vision/plans/<id>.md`。 |
 
-若 `shared_materials_catalog: none`，工作区不得声明共享资料引用。对于旧仓库，只有没有显式工作区根且存在 `docs/goals/` 时才可作为 legacy 隐式单工作区处理；不得把该兼容路径复制到已迁移仓库中。
+若 `shared_materials_catalog: none`，工作区不得声明共享资料引用。
+
+### 隐式 / legacy 工作区（唯一兼容路径）
+
+| 条件 | 行为 |
+|------|------|
+| 存在至少一个 `docs/workspace-<NNN>-<slug>/workspace.md` | 必须使用显式工作区；多区无焦点 → fail closed |
+| **无**显式工作区根，**且**存在 `docs/goals/` 与唯一 Root Goal | 仅允许将该 `docs/goals/` 作为 **legacy 隐式单工作区** |
+| 既无显式工作区，也无 `docs/goals/` | **不是**隐式工作区；按空治理 scaffold（见 Skills S0），禁止猜测仓库根或其他路径为 `<workspace-root>` |
+
+不得把 legacy `docs/goals/` 路径复制到已迁移仓库中；已有显式工作区后禁止回退为「随便一个 `<workspace-root>`」。
 
 ### 4b. 愿景对齐（三层链）
 
@@ -64,7 +80,8 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 3. **Opt-out**：仅 `vision_role: sandbox` 可在留痕后省略 `plan_refs`；`primary` 禁止 opt-out。
 4. **规划与工作区非 1:1**：一 VP 可由 0..N 个工作区推进（`planned` 允许 0）；一工作区可挂 1..N 个 VP，但必须标明 `primary_plan`。
 5. **VP 关门**：轻量纲领确认 + 链接工作区证据；允许有界 closed（residual 点名到区/目标）；禁止把 progress% 或审计台账放进 `docs/vision/`。
-6. 完整规则见 [../vision/alignment.md](../vision/alignment.md)；消费方勾选见 [../vision/consumer-checklist.md](../vision/consumer-checklist.md)。
+6. **Primary 冲突**：`workspace.md` 的 `vision_role`、`docs/vision/workspaces.md` 的 role、Charter 的 `primary_workspace` 三者冲突时，以 [alignment.md](../vision/alignment.md) 的裁决顺序 fail closed，不得静默选一侧。
+7. 完整规则见 [../vision/alignment.md](../vision/alignment.md)；消费方勾选见 [../vision/consumer-checklist.md](../vision/consumer-checklist.md)。
 
 ## 5. 共享资料候选库存与固定引用
 
@@ -97,10 +114,11 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 1. 若存在 `docs/vision/charter.md`，先读取 Charter 版本与 [alignment](../vision/alignment.md) 要点，再定位工作区。
 2. 定位用户指定或已配置的工作区 `workspace.md`，校验 Root Goal、canonical scope、共享资料引用，以及（非 sandbox opt-out 时）`plan_refs` / `primary_plan` 与对应 VP 文件后，再扫描该工作区 `goal-tree.md` 与目标记录。
 3. 若仓库只有一个显式工作区，消费适配器可以使用它作为当前 scope；多个工作区而未指定焦点时必须拒绝受影响读取、写入和放行。
-4. 没有显式工作区根时，只能将旧 `docs/goals/` 作为 legacy 单工作区；不得自动发现、合并或写入其他目录。
+4. 没有显式工作区根时，**仅当**存在 `docs/goals/` 才可作为 legacy 单工作区；否则 fail closed / 走空治理 scaffold。不得自动发现、合并或把仓库根等猜测路径当作工作区。
 5. 任何创建、决策、执行、审计或提案都必须在已验证的当前工作区内。资料候选库存只补充可核对的文件摘要，不替代固定引用或事实确认。愿景目录不保存目标进度权威。
-6. `/audit` 只在当前工作区目标台账追加 `source: independent` 意见；它不得凭资料目录、愿景规划或索引改变状态或关闭 finding。
+6. `/audit` 只在当前工作区目标台账追加 `source: independent` 意见；它不得凭资料目录、愿景规划或索引改变状态或关闭 finding（finding 闭合见 principles P-003 三路径，由 `/govern` 响应）。
+7. 跨工作区目标引用必须带 `workspace_id` 或 canonical 路径（§2.6）。
 
 ## 7. 与后续产品的交接
 
-GOAL-011 将当前项目迁移到显式工作区根并提供共享资料候选索引骨架。它为 GOAL-009 R-003 提供目录与资料盘点输入，但不建立工作区实体/动态索引、资料用户 CRUD、AI 读取执行、跨工作区导航例外、访问安全契约或正反访问测试。因此 GOAL-009 的 I-009/I-010、F-003/F-004 和路线图 B 仍保持开放。
+GOAL-011 已将本项目迁移到显式工作区根并提供共享资料候选索引骨架（曾为 GOAL-009 R-003 提供目录与资料盘点输入）。后续产品能力（多工作区导航、资料 CRUD、AI 读全文、访问安全、正反访问测试等）仍由相应目标与 residual 门禁定义；本协议不自动放行这些能力，也不关闭 GOAL-009 扩展 residual（如 R-009-X）。

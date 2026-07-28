@@ -4,7 +4,7 @@ title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
 updated: 2026-07-28
-version: 0.1.0
+version: 0.2.0
 parent: null
 ---
 
@@ -47,6 +47,19 @@ Workspace + Root Goal
 - **primary 禁止 opt-out。**
 - 至多一个工作区 `vision_role: primary`（与 [workspaces.md](workspaces.md) 一致）。
 
+### 3.1 Primary 声明冲突裁决
+
+Primary 可能出现在三处：`workspace.md` 的 `vision_role: primary`、[workspaces.md](workspaces.md) 的 `role: primary`、Charter 的 `primary_workspace`。
+
+| 情形 | 行为 |
+|------|------|
+| 三处一致 | 通过 |
+| 仅一处声称 primary，其它未声明或为空 | 以**已声明**处为准，并应在下一维护回合补齐另外两处 |
+| 两处或以上**互相矛盾**（不同 `workspace_id`） | **fail closed**：不得推进受影响的新建 Root/放行/关门；展示冲突；按 P-004 等用户裁决后留痕再改 |
+| Charter `primary_workspace` 指向不存在的工作区 | fail closed，直至修正 Charter 或创建/声明该区 |
+
+权威顺序（仅用于**修复建议**，不能静默覆盖用户已确认的矛盾）：`alignment` 本文件规则 → 用户书面裁决 → 再改 Charter / workspaces.md / workspace.md。实例与本文件冲突时仍以本文件 + charter 为准。
+
 ## 4. Root Goal 声明
 
 Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，以及简短 `serves_summary`（可写在 frontmatter 或「愿景对齐」节）。  
@@ -57,12 +70,21 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 | VP status | 工作区绑定 |
 |-----------|------------|
 | `planned` | 允许 0 个工作区 |
-| `active` | 期望 ≥1；若为 0，编排器须告警或询问用户，禁止长期空转 active |
+| `active` | 期望 ≥1；若为 0，见下「空转」规则 |
 | `closed` | 保留历史绑定；默认不接新区，除非 reopen + 用户确认 |
 | `abandoned` | 不要求绑定 |
 
 - 一规划 : 0..N 工作区；一工作区 : 1..N 规划（须标 `primary_plan` 焦点）。
 - 多区并行同一 VP 时**推荐** `lead_workspace`；关门提案默认由 lead 侧发起并经用户确认。
+
+### 5.1 `active` VP 零工作区（空转）
+
+`status: active` 且绑定工作区数为 0 时：
+
+1. 编排器**必须告警**，并询问用户：挂接工作区 / 改回 `planned` / 接受有时限的空转。
+2. **空转宽限**：自 VP 标为 `active` 或自上次「零区复核」起 **14 个日历日**（以 `updated` 或决策留痕日期较晚者为准）。宽限内可扫描与规划，但**不得**把该 VP 当作已在推进的交付证据。
+3. **超过宽限**仍无工作区、且无用户书面「继续空转」记录（须含下一复核日 ≤ 再 14 日）：对该 VP 相关的新建挂接以外的**放行/关门** fail closed，直到挂区、降为 `planned`/`abandoned`，或留下新的有界空转接受。
+4. 「长期空转」即指超过上述宽限且无合规留痕。
 
 ## 6. 门禁时机（fail closed）
 
