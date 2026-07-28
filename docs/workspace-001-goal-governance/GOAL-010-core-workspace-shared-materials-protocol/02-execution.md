@@ -5,12 +5,20 @@ status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
 updated: 2026-07-28
-version: 0.2.1
+version: 0.3.0
 ---
 
 # 执行记录 · GOAL-010
 
 ## 时间线
+
+### 2026-07-28 · A0 限定引用落地（D-003 · 不重开本目标）
+
+- 用户确认：方案 A / 范围 A0 / 挂 GOAL-010 / 文档 Q2 / 对话 Q3。
+- 协议：`docs/architecture/workspace-protocol.md` → **0.5.0**，§2.6 扩写裸 id 条件、Q1/Q2/Q3、禁止嵌 ws 号；§6.7 对齐。
+- 同步：`docs/README.md` **0.10.1**、`directory-layout.md` **0.6.1**、根 `AGENTS.md` **0.9.2**、`skills/AGENTS.template.md` **0.9.2**、install Claude/Copilot 规则摘要、`skills/core/docs` 镜像（protocol / layout / README）、`skills/prompts/00`～`05`。
+- **本目标仍 `done / 100%`**；未改 Web 路由/展示（A1/A2 未做）。
+- 验证：`python -m unittest docs.tests.test_workspace_protocol skills.tests.test_skills_orchestrator -v` → **42 passed**（含 §2.6 Q2/Q3 与 prompts A0 契约）。
 
 ### 2026-07-28 · 交叉引用：协议逻辑一致性修订（不重开本目标）
 

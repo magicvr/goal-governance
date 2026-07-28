@@ -4,7 +4,25 @@
 
 ## Unreleased
 
-- （无尚未绑定 tag 的变更）
+准备中的 **0.9.1** Skills consumer patch（正式 annotated tag / GitHub Release 前须重采六单元 runtime 证据；当前 `v0.9.0` 证据对 `AGENTS.md` 与 `00-govern-orchestrator.md` 已 **stale**）。
+
+### 协议 / Skills（A0 · GOAL-010 D-003）
+
+- 工作区协议 **0.5.0** §2.6：短 `GOAL-*` id 不变；跨区限定引用 **Q1**（双字段）/ **Q2**（canonical 路径，**文档默认**）/ **Q3**（行内标签，**对话默认**）；禁止把工作区编号嵌进 goal id。
+- 根 `AGENTS.md` / `skills/AGENTS.template.md` **0.9.2**；编排器 `00` 与原语 `01`～`05` 对齐工作区页眉与 Q2/Q3 纪律。
+- `skills/core` 镜像同步 protocol / directory-layout / docs README。
+
+### 同窗口已合入、拟随 0.9.1 发布的治理面（若 tag 点包含对应 commit）
+
+- finding 三路径闭合与愿景门禁澄清（principles / AGENTS / 编排器）。
+- Charter → VP → 工作区愿景对齐体系（若该 commit 在发布点上）。
+
+### 发版门禁（维护者）
+
+1. 工作树干净；本文件出现 `## 0.9.1` 节（从 Unreleased 迁入）。  
+2. 矩阵 `candidateRevision: v0.9.1`；六 CLI runtime 对**当前**行为源重采并通过 `compatibility_report`。  
+3. annotated `v0.9.1` + `release_evidence --mode release` + Environment `release` 审批。  
+4. 外部仓安装见 `skills/README.md`（Release 资产 zip，或在证据未齐前用本仓 `dist/` 预打包）。
 
 ## 0.9.0 - 2026-07-24
 

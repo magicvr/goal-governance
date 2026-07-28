@@ -4,8 +4,8 @@ doc: decision
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-20
-updated: 2026-07-20
-version: 0.2.0
+updated: 2026-07-28
+version: 0.3.0
 ---
 
 # 决策记录 · GOAL-010
@@ -64,3 +64,26 @@ version: 0.2.0
 - **把协议存在直接等同于 Web 门禁关闭**：缺少资料模型、访问/安全契约、用户 CRUD、AI 读取和跨工作区正反验证，不能形成该结论。
 
 **影响与后续**：GOAL-010 关门为 `done / 100%`；[GOAL-009 A-008](../GOAL-009-ai-assisted-governance-workbench/03-audit.md) 只记录协议输入和不放行边界。后续产品实现继续由 GOAL-009 及其后续子目标负责。
+
+## D-003 · A0 限定引用与展示消歧（不改 goal id 形状）（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户审视跨工作区目标编号混淆后，选择方案 **A**（短 id 不变 + 强化限定引用/展示），范围 **A0**（协议 + AGENTS + Skills），挂本目标；文档默认 **Q2** canonical 路径，对话默认 **Q3** 标签。明确否决把工作区编号嵌进 `GOAL-*` id（方案 B）。
+
+**决定**：
+
+1. **存储 id 不变**：继续 `GOAL-NNN-short-slug`；Root 固定 `GOAL-001-…`；跨区 id 允许重复；**禁止** `GOAL-{ws}-{nnn}-…` 一类嵌套编号。
+2. **扩展** `docs/architecture/workspace-protocol.md` §2.6（协议 **0.5.0**）：裸 id 合法条件；必须限定的场景；合法形式 **Q1**（双字段）/ **Q2**（路径，文档默认）/ **Q3**（标签，对话默认）；区内 `parent` 仍短 id；历史文档不强制回写。
+3. **Skills A0**：`/govern` 汇报必含工作区页眉；跨区/多区歧义用 Q3 或反问 `workspace_id`；原语 01～05 与 AGENTS/模板/宿主规则摘要对齐。Web 展示与复合路由（A1/A2）**不在本决定范围**，不因本决定关闭产品 residual。
+4. **本目标保持 `done / 100%`**：属协议维护追加，不重开成功标准、不宣称 Web 门禁关闭。
+
+**为什么**：混淆主因是裸 id 在跨区场景下的认知歧义，不是磁盘碰撞。限定引用 + 展示页眉以最低迁移成本消歧；改 id 形状会冲击 Root 约定、全库 parent 与历史链接。
+
+**未选方案**：
+
+- **B · id 内嵌工作区编号**：双写、迁移重、与 Root=`GOAL-001` 冲突。
+- **仅靠焦点、不写引用规范**：口头/落盘歧义继续存在。
+- **A1/A2 Web 与 A0 绑死**：超出本目标 Skills/协议边界。
+
+**影响与后续**：同步 AGENTS、docs/README、directory-layout、skills core 镜像与 prompts；在 goal-tree 记一条 changelog；A1/A2 仍可选挂后续产品目标。

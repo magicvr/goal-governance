@@ -934,8 +934,12 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             "sha256",
             "fail-closed",
             "串行子目标",
+            "Q2",
+            "Q3",
+            "文档落盘默认",
+            "对话/编排回显默认",
         ):
-            self.assertIn(marker, protocol)
+            self.assertIn(marker, protocol, msg=f"missing protocol marker: {marker}")
 
         core_prompts = tuple(PROMPTS / name for name in (
             "00-govern-orchestrator.md",
@@ -956,6 +960,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 text,
                 r"Root Goal|root_goal|canonical 范围|canonical_scope",
                 msg=f"missing workspace binding: {path}",
+            )
+            self.assertRegex(
+                text,
+                r"Q2|Q3|限定引用",
+                msg=f"missing qualified-ref (A0) contract: {path}",
             )
 
         rule_surfaces = (

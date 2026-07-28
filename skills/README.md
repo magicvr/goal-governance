@@ -2,9 +2,9 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-07-24
+updated: 2026-07-28
 parent: null
-version: 1.4.0
+version: 1.4.1
 ---
 
 # Skills
@@ -16,7 +16,14 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 在 monorepo 中，规范模板位于 [`docs/templates/`](../docs/templates/)；包内 `templates/` 与 `core/docs/templates/` 为分发镜像。机读契约以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 为逐字节镜像。
 
-**发布与候选证据边界（GOAL-019 / v0.9.0）**：Claude Code CLI、Grok Build CLI 与 GitHub Copilot CLI `1.0.71` 均列为 `committed` 支持基线。矩阵 **`candidateRevision: v0.9.0`**；三个 CLI 的 `/govern`+`/audit` 共六单元均于 2026-07-24 **runtime-verified**（coverage ready-for-release-evidence）。Web parser 保持 `automated-verified`。VS Code 插件不作为 Copilot 重放证据来源。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
+**发布与候选证据边界**：
+
+| 身份 | 状态 |
+|------|------|
+| **`v0.9.0`** | 已发布 annotated tag / Release 基线。矩阵 **`candidateRevision: v0.9.0`**；六 CLI 单元 2026-07-24 runtime-verified（相对**当时**行为源）。 |
+| **`0.9.1`（进行中）** | 含 A0 限定引用（Q2 文档 / Q3 对话）等。工作树已改 `AGENTS.md` 与编排器 prompt → 旧 runtime 证据 **stale**。正式 tag **前**须重采六单元；在此之前可用本仓 `dist/goal-governance-skills-v0.9.1-rc.1.zip` 预打包（**不**等于 GitHub Release 身份）。 |
+
+Claude Code / Grok Build / Copilot CLI 仍为 `committed` 基线；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
 ## 产品模型（必读）
 
@@ -88,7 +95,9 @@ skills/
 
 1. 打开本仓库 [Releases](https://github.com/magicvr/goal-governance/releases)，下载与 tag 对应的  
    `goal-governance-skills-vX.Y.Z.zip`（可对照同目录的 `.sha256` 校验）。  
-   包内含 Skills 适配器 + **core 方法论镜像**（prompts、install、`core/`、模板/契约），**不含** monorepo dogfood 过程树、`web/` 或 `artifacts/`，**不含** `tech-stack.md`。
+   包内含 Skills 适配器 + **core 方法论镜像**（prompts、install、`core/`、模板/契约），**不含** monorepo dogfood 过程树、`web/` 或 `artifacts/`，**不含** `tech-stack.md`。  
+   **在 `v0.9.1` Release 尚未发布前**：用维护者提供的预打包  
+   `dist/goal-governance-skills-v0.9.1-rc.1.zip`（同目录 `.sha256`；**pre-release 身份，非正式 tag**），或按下节「从源码树复制」。
 2. 在目标项目根目录解压，使包内容落在 `./skills/`（或你选择的目录名）：
 
 ```bash

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-24
 parent: null
-version: 0.5.0
+version: 0.5.1
 role: primitive
 ---
 
@@ -60,8 +60,9 @@ P-001 与 P-005 以 AGENTS 为准；**全文**见 `docs/architecture/principles.
 1. 定位当前工作区 `workspace.md` 与 `goal-tree.md`：校验 `root_goal` / `canonical_scope`。  
    - 创建**非 Root** 子目标时：工作区必须已存在且绑定正确。  
    - 仅当用户明确维护旧仓、且无显式工作区根时，才使用 legacy `docs/goals/`。  
-2. 新编号 = 当前工作区最大编号 + 1（三位）。Root 固定 GOAL-001。  
-3. 创建 `<workspace-root>/GOAL-NNN-<slug>/`（平铺）。  
+2. 新编号 = 当前工作区最大编号 + 1（三位）。Root 固定 GOAL-001。**禁止**把工作区编号嵌进 goal id。  
+3. 创建 `<workspace-root>/GOAL-NNN-<slug>/`（平铺）。`parent` 与同区链接用短 id；若正文需提及他区目标，落盘用 **Q2** 路径（`docs/workspace-…/GOAL-…/`），对话说明用 **Q3**（`[workspace_id] GOAL-…`）。  
+
 4. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。  
 5. 模板源：优先 `docs/templates/goal-folder/`；否则 `<SKILLS_PKG>/core/docs/templates/goal-folder/` 或 `<SKILLS_PKG>/templates/goal-folder/`。  
 6. Frontmatter：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。Root 的 slug = 用户确认名。  
@@ -71,7 +72,8 @@ P-001 与 P-005 以 AGENTS 为准；**全文**见 `docs/architecture/principles.
 
 # 完成标准
 
-- [ ] 编号无冲突；id = 文件夹名  
+- [ ] 编号无冲突；id = 文件夹名；未嵌工作区号  
+
 - [ ] 五件套齐全；parent 为完整 id 或 null  
 - [ ] goal-tree 树与表已更新  
 - [ ] 显式工作区：workspace.md 存在且 Root/canonical 一致；新目标未越界  

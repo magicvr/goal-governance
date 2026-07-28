@@ -121,6 +121,11 @@ class WorkspaceProtocolTests(unittest.TestCase):
             "fail-closed",
             "第二套状态",
             "GOAL-009 R-003",
+            "Q2",
+            "Q3",
+            "文档落盘默认",
+            "对话/编排回显默认",
+            "把工作区编号嵌进 goal id",
         ):
             self.assertIn(phrase, protocol)
 

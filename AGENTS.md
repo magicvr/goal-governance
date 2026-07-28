@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 0.9.1
+version: 0.9.2
 ---
 
 # AGENTS.md
@@ -34,7 +34,7 @@ version: 0.9.1
 
 1. **扁平存储**：所有目标文件夹平铺在 `<workspace-root>/`，**禁止**用子文件夹表达父子关系。
 2. **Root**：`GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
-3. **编号**：先读 `goal-tree.md`（或扫描 `<workspace-root>/`），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。编号在工作区内**单调不复用**（含 `cancelled`）；历史空洞可保留，**禁止**把已取消编号赋予新含义。跨工作区 id 可重复，跨区引用须带 `workspace_id` 或 canonical 路径。
+3. **编号**：先读 `goal-tree.md`（或扫描 `<workspace-root>/`），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。编号在工作区内**单调不复用**（含 `cancelled`）；历史空洞可保留，**禁止**把已取消编号赋予新含义。跨工作区 id **可重复**；**禁止**把工作区编号嵌进 goal id。跨区引用见 `docs/architecture/workspace-protocol.md` §2.6：文档默认 **Q2** 路径，对话默认 **Q3** 标签；裸 `GOAL-*` 仅限已绑定当前工作区。
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
 5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
 6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
@@ -171,7 +171,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 2. Root 路线图的**纲领阶段**通常串行；**同一纲领阶段内**允许并行子目标。只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
 3. **隐式工作区唯一路径**：没有显式 `docs/workspace-<NNN>-<slug>/workspace.md` 时，**仅当**存在 `docs/goals/` 才可作为 legacy 隐式单工作区；否则不得猜测 `<workspace-root>`（应空治理 scaffold）。禁止自动发现、读取、混合或写入其他工作区上下文。
 4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
-5. 跨工作区提及目标须带 `workspace_id` 或 canonical 路径；`GOAL-*` id 仅工作区内唯一。
+5. 跨工作区提及目标须用限定引用（§2.6）：文档 **Q2**、对话 **Q3**、机器 **Q1**；`GOAL-*` 仅工作区内唯一，形状不嵌工作区号。区内 `parent` 仍用短 id。
 6. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
 
 ## 6d. 愿景体系（Charter → VP → Workspace）
@@ -299,6 +299,8 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | finding：fixed / residual / overruled | P-003 闭合 |
 | 冲突 / 是否自审 / residual → 问用户 + 建议 | P-004 |
 | 无显式区 → 仅 legacy `docs/goals/` 或 scaffold | 工作区协议 |
+| 跨区：文档 Q2 路径 / 对话 Q3 标签 | 不改 `GOAL-NNN-slug`；裸 id 仅当前区 |
+| 区内 parent 仍短 id | 不把工作区号嵌进 goal id |
 
 
 > 信息不足时：先登记未知项及其最晚阶段；只有信息工作具备独立范围或证据时才拆出澄清/收集子目标。

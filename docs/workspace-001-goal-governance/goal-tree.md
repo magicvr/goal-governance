@@ -9,9 +9,17 @@ version: 1.1.1
 
 # Goal Tree
 
+## 2026-07-28 · 0.9.1 外部消费准备（A0 后）
+
+外部仓需用 A0：CHANGELOG Unreleased 记 **0.9.1** 候选；预打包 `dist/goal-governance-skills-v0.9.1-rc.1.zip`。正式 `v0.9.1` tag **阻塞于**六单元 runtime 对当前 `AGENTS.md` / `00-govern-orchestrator.md` 的重采（v0.9.0 证据 stale）。矩阵仍 `v0.9.0` 直至重采后改 `candidateRevision`。
+
+## 2026-07-28 · A0 目标限定引用（GOAL-010 D-003）
+
+用户确认：短 id 不变；文档默认 **Q2** 路径、对话默认 **Q3** 标签；挂 [GOAL-010](GOAL-010-core-workspace-shared-materials-protocol/) **不重开**。workspace-protocol **0.5.0** §2.6；AGENTS **0.9.2**；Skills 00～05 与 core 镜像已同步。**未**做 Web A1/A2；**未**改各 GOAL status/progress。详见 [D-003](GOAL-010-core-workspace-shared-materials-protocol/01-decision.md#d-003--a0-限定引用与展示消歧不改-goal-id-形状2026-07-28) / [执行](GOAL-010-core-workspace-shared-materials-protocol/02-execution.md#2026-07-28--a0-限定引用落地d-003--不重开本目标)。
+
 ## 2026-07-28 · 核心协议逻辑一致性修订（GOAL-001 D-016）
 
-用户审视并确认修订：P-003 finding 三路径闭合、P-004.3/4.4、legacy 隐式工作区唯一路径、纲领串行/阶段内并行、Primary 冲突与 VP 14 日空转等。权威：principles **0.6.0**、workspace-protocol **0.4.0**、alignment **0.2.0**；AGENTS/编排器已同步。验证：workspace/vision/standalone + skills orchestrator 测试 OK。**不**改各 GOAL status/progress；Root 仍 `active`。详见 [GOAL-001 D-016](GOAL-001-main-vision/01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) / [执行](GOAL-001-main-vision/02-execution.md#2026-07-28--核心协议逻辑一致性修订d-016)。
+用户审视并确认修订：P-003 finding 三路径闭合、P-004.3/4.4、legacy 隐式工作区唯一路径、纲领串行/阶段内并行、Primary 冲突与 VP 14 日空转等。权威：principles **0.6.0**、workspace-protocol（当时 **0.4.0**，其后 D-003 → **0.5.0**）、alignment **0.2.0**；AGENTS/编排器已同步。验证：workspace/vision/standalone + skills orchestrator 测试 OK。**不**改各 GOAL status/progress；Root 仍 `active`。详见 [GOAL-001 D-016](GOAL-001-main-vision/01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) / [执行](GOAL-001-main-vision/02-execution.md#2026-07-28--核心协议逻辑一致性修订d-016)。
 
 ## 2026-07-24 · v0.9.0 发版冻结准备（PR）
 

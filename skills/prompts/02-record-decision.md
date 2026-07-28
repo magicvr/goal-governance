@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.4.0
+version: 0.4.1
 role: primitive
 ---
 
@@ -51,6 +51,7 @@ role: primitive
 
 3. 刷新 `updated`；小改可保持 version。
 4. 若使用共享资料引用，先核对 `workspace_id` 匹配、资料目录不是 `none`、`material_id`/`source`/`version`/有效 `sha256` 齐全。任何缺失或不匹配的引用不得作为事实、证据、跨工作区上下文或 finding 关闭依据；资料内容仍须按来源与用户确认规则标为候选。
+4b. 决策正文若提及**他区**目标：落盘用 **Q2** canonical 路径；对用户说明用 **Q3** 标签。区内目标与 `parent` 仍用短 id；禁止把工作区号写进 goal 文件夹名。
 5. 若决策改变范围、成功标准、路线图或信息门禁：同步 `00-meta` / 信息需求表，并在 `02-execution` 记一句「记录决策 D-NNN：…」。`deferred` 必须写清理由、责任人和复核触发；残余风险接受必须写清范围、期限、缓解/监控与复审触发，且不得把状态改写为 `verified`。
 6. 若 status/progress 变化：同步 `goal-tree.md`。
 7. 过程流水账写在 execution；decision 保持可执行结论。

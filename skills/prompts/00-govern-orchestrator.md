@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 0.8.1
+version: 0.8.2
 role: primary
 ---
 
@@ -105,7 +105,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 7. 新项目默认路径是**显式工作区**，不是 legacy `docs/goals/`。  
 8. Root 路线图**纲领阶段**通常串行；**同一纲领阶段内**可并行子目标。跨区纲领用 `docs/vision/plans/VP-*.md`；只有长期目的改变时才改 Root 定义或修订 Charter。  
 9. 愿景目录不保存目标 progress%；VP 关门须链接工作区证据。`active` VP 零工作区超过 14 日空转宽限且无留痕时，相关放行/关门 fail closed（见 alignment）。  
-10. 跨工作区目标引用必须带 `workspace_id` 或 canonical 路径；`GOAL-*` 仅区内唯一。
+10. **目标限定引用（§2.6 A0）**：`GOAL-*` 仅区内唯一，**不**把工作区编号嵌进 id。裸 id 仅当已绑定当前工作区且本轮读写均在该区。跨区/多区歧义/外部链接必须用限定形式——文档落盘默认 **Q2**（`docs/workspace-…/GOAL-…/`），对话回显默认 **Q3**（`[workspace_id] GOAL-…`），机器载荷可用 **Q1**（`workspace_id` + `goal_id`）。区内 `parent` 仍用短 id。多区无焦点 fail closed，不输出裸 id 推进建议；用户只说裸 GOAL 且多区时反问 `workspace_id`。
 
 # 流程
 
@@ -218,10 +218,10 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 
 > **治理扫描**：…  
 > **愿景对齐**：charter 版本；primary_plan / plan_refs；VP status；是否 fail closed  
-> **工作区上下文**：显式/隐式；Root Goal 与 canonical 范围；资料引用是否可用；跨工作区请求是否已 fail closed
+> **工作区页眉**（必填）：`workspace_id`；显式/隐式；canonical 范围；Root Goal；焦点目标（区内可用短 id；跨区用 Q3）；资料引用是否可用；跨区请求是否 fail closed
 > **仓库观察**（默认策略未确认前仅作参考）：…  
 > **情境**：S0 / S1 / S2 / S3 / S4  
-> **树摘要**：Root=…；未关门：…；已关门：…  
+> **树摘要**：Root=…；未关门：…；已关门：…（跨区提及用 Q3）  
 > **意见台账**（焦点）：相关 A-00N…；开放 required：N；冲突：有/无  
 > **信息台账**（焦点）：相关 I-00N…；受影响门禁…；到期开放 required：N
 > **裁决待确认**（若触发 P-004）：…  
@@ -326,7 +326,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 - 核心方法论与 Skills 同级必备；不得宣称 architecture 对完整安装可选。  
 - 存在显式工作区根时，绑定不匹配或资料引用未固定/不匹配必须 fail closed；不得自动混合其他工作区上下文。无显式区时仅 legacy `docs/goals/` 或空治理 scaffold，禁止猜测仓库根为工作区。
 - 存在 `docs/vision/` 时，非 sandbox 缺 plan 对齐或 VP/`vision_ref` 不合法必须 fail closed；不得把 vision 当 progress 权威。  
-- Root 编号保持 `GOAL-001`；新编号 = 当前最大 + 1；不复用 cancelled 号作新含义。跨区引用带 workspace_id。  
+- Root 编号保持 `GOAL-001`；新编号 = 当前最大 + 1；不复用 cancelled 号作新含义；不把工作区号嵌进 goal id。跨区：文档 Q2 / 对话 Q3 / 机器 Q1。  
 - 新建目标一次建齐五件套；有变更则更新 goal-tree（树 + 表）。  
 - 只记录真实决策、执行与审计；编造进度视为失败。  
 - 独立审计默认不改 status/progress；响应与状态变更走本编排器 + 用户确认。  

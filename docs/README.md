@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 0.10.0
+version: 0.10.1
 ---
 
 # docs/ · 文档体系
@@ -55,7 +55,7 @@ docs/
 
 1. **工作区内目标平铺**：所有目标直接放在各自 `docs/workspace-<NNN>-<slug>/` 根，**禁止**用嵌套文件夹表达层级。
 2. **GOAL-001 为工作区总目标**：每个工作区的 `GOAL-001-*` 是 Root Goal；`parent` 必须为 `null`。
-3. **工作区内编号**：新编号 = 当前最大编号 + 1（三位）。编号**单调不复用**（含 `cancelled`）；历史空洞可保留；**禁止**把已取消编号赋予新含义。`GOAL-*` 仅工作区内唯一；跨区引用须带 `workspace_id` 或 canonical 路径。
+3. **工作区内编号**：新编号 = 当前最大编号 + 1（三位）。编号**单调不复用**（含 `cancelled`）；历史空洞可保留；**禁止**把已取消编号赋予新含义。`GOAL-*` 仅工作区内唯一，**不**把工作区编号嵌进 goal id。跨区引用见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md) §2.6：文档默认 **Q2** canonical 路径，对话默认 **Q3** 标签；裸 id 仅限已绑定当前工作区。
 4. **层级字段**：父子关系只写在各目标 `00-meta.md` 的 `parent` 中。
 5. **总览同步**：任何新建/完成/改 parent/改状态，必须更新当前工作区的 `goal-tree.md`。
 6. **标准五件套**：每个目标文件夹必须包含：
@@ -102,12 +102,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **当前核心文档版本**：`0.9.1`。工作区根与共享资料协议已就位；Skills 发布面进入 **`v0.9.0` 候选**（矩阵 `candidateRevision: v0.9.0`）。
-- **最近发布基线**：`0.7.0` 与 `v0.8.0` 为已发布 annotated tag 历史；**本候选**为 `0.9.0` / `v0.9.0`（GOAL-019 core+scaffold）。
-- **快照日期**：2026-07-24。
-- **快照身份**：`v0.8.0` 历史已发布；`v0.9.0` 身份以合并到 `main` 后的 annotated tag 为准。
-- **当前工作树边界**：矩阵 `candidateRevision: v0.9.0`；Claude / Grok / Copilot 六单元 `/govern`+`/audit` 均已 2026-07-24 **runtime-verified**（coverage ready-for-release-evidence）。Web parser 仍为 automated-verified。
-- **本轮变更范围**：GOAL-019 skills core 默认安装、S0/init-workspace、兼容矩阵与 CHANGELOG 绑定 `v0.9.0` 候选。
+- **当前核心文档版本**：`0.9.1`（含 workspace-protocol **0.5.0** A0 限定引用）。工作区根与共享资料协议已就位。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / **`v0.9.0`** 为已发布 annotated tag；**下一 Skills 候选**为 **`0.9.1` / `v0.9.1`**（A0 Q2/Q3 + 同窗口治理澄清）。
+- **快照日期**：2026-07-28（工作树）；`v0.9.0` 发布日为 2026-07-24。
+- **快照身份**：`v0.9.0` 已发布；`v0.9.1` 以合并到 `main` 后的 annotated tag + release evidence 为准（**尚未**打 tag）。
+- **当前工作树边界**：矩阵仍为 `candidateRevision: v0.9.0`（**有意未抢先改为 v0.9.1**）。A0 已改 `AGENTS.md` 与 `00-govern-orchestrator.md`，故 2026-07-24 六单元 runtime 证据对上述行为源为 **stale**——正式 `v0.9.1` Release **前必须重采**。Web parser 仍为 automated-verified。
+- **本轮变更范围（拟 0.9.1）**：GOAL-010 D-003 A0 限定引用；协议/AGENTS/Skills prompts；详见根 `CHANGELOG.md` Unreleased。
 
 ### canonical → Skills 同步台账
 

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.5.0
+version: 0.5.1
 role: primitive
 ---
 
@@ -103,6 +103,7 @@ role: primitive
 - [ ] 头字段含 source、scope、verdict  
 - [ ] 成果/findings 可指回证据  
 - [ ] 工作区范围已核对；资料引用（若有）只补充可核对来源，未替代事实确认或跨工作区验证
+- [ ] 跨区目标提及（若有）用 Q2 落盘 / 对用户可用 Q3；未把工作区号嵌进 goal id
 - [ ] required 与 recommended 可区分  
 - [ ] 相关 I-00N、最晚阶段、证据与残余风险接受已核对
 - [ ] 未越权改 status（除非用户确认）  
