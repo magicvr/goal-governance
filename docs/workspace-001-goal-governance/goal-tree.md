@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 1.1.2
+version: 1.1.3
 ---
 
 # Goal Tree
+
+## 2026-07-28 · 响应 GOAL-001 A-015 F-007（现时摘要刷新）
+
+`/govern` 关闭 A-015 **F-007**（`fixed`）：Root [00-meta 现时摘要](GOAL-001-main-vision/00-meta.md#现时摘要2026-07-28-单一权威入口) 与 [02-execution 当前进展/下一步](GOAL-001-main-vision/02-execution.md#当前进展2026-07-28) 已对齐 018/019 done、D-016～D-023、愿景栈与 **下一编号 GOAL-020**。[A-016](GOAL-001-main-vision/03-audit.md#a-016--响应-a-015--f-007刷新-root-现时摘要2026-07-28)。**F-008 仍 open**；**不**改各 GOAL status/progress；Root 仍 `active`。
 
 ## 2026-07-28 · 响应 V-F-001：独立 Vision Review 专用入口（GOAL-001 D-020；不发版）
 
