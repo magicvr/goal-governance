@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 1.1.1
+version: 1.1.2
 ---
 
 # Goal Tree
+
+## 2026-07-28 · P-006 愿景组合治理第一刀（GOAL-001 D-017）
+
+用户确认 D0–D24 并落盘：P-006；alignment **0.3.0**；取消 sandbox opt-out；冷启动 Charter→VP→区；`reviews.md`；AGENTS **0.10.0**；编排器 **0.9.0**；vision 模板。**不**改各 GOAL status/progress；Root 仍 `active`。`/vision` skill 为第二刀。详见 [D-017](GOAL-001-main-vision/01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28) / [执行](GOAL-001-main-vision/02-execution.md#2026-07-28--p-006-愿景组合治理第一刀d-017)。
 
 ## 2026-07-28 · 0.9.1 外部消费准备（A0 后）
 

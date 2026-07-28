@@ -64,13 +64,14 @@ docs/
    - `02-execution.md` — 执行（时间线、事实）
    - `03-audit.md` — 审计/复盘
    - `attachments/` — 附件（可为空，保留目录）
-7. **可执行性与路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。纲领阶段通常串行；**同一纲领阶段内**可并行子目标。
+7. **可执行性与纲领路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清**纲领路线图**（阶段与先后关系），再创建与执行子目标。纲领阶段通常串行；**同一纲领阶段内**可并行子目标。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识（含 P-001 路线图槽位）；独立审计出意见、编排器响应全部意见；finding 合法闭合为 `fixed` / `accepted-residual` / `user-overruled`；「是否自审」、意见冲突、单条必改否决/residual、信息 residual 由用户裁决。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
-10. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/goal-folder/`，消费适配器契约位于 `docs/contracts/`；`skills/templates/goal-folder/` 与 `skills/contracts/` 是供安装脚本和离线复制使用的同步镜像。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
-11. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal。
-12. **工作区与共享资料协议**：显式工作区可从 `docs/templates/workspace-context.md` 创建 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal 与该工作区根 canonical 范围；**仅当**没有显式工作区根且保留 `docs/goals/` 的旧仓库才是 legacy 隐式单工作区——否则不得猜测工作区根。共享资料候选库存和固定引用不能形成第二套目标状态或跨工作区上下文通道。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
-13. **愿景体系（Charter → VP → Workspace）**：`docs/vision/` 维护不可 Goal-`done` 的 Charter、可关门的愿景规划 VP，以及对齐门禁。工作区通过 `plan_refs` / `primary_plan` 挂接 VP。愿景**不是** goal-tree 或 progress 权威。Primary 声明冲突与 `active` VP 零工作区空转规则见 [vision/alignment.md](vision/alignment.md)。
+10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review（`reviews.md`）；**无 sandbox plan opt-out**。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
+11. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/`（含 `goal-folder/`、`workspace-context.md`、`vision/`），消费适配器契约位于 `docs/contracts/`；`skills/templates/` 与 `skills/contracts/` 是供安装脚本和离线复制使用的同步镜像。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
+12. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal（须遵守 P-006 冷启动顺序）。
+13. **工作区与共享资料协议**：显式工作区可从 `docs/templates/workspace-context.md` 创建 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`；**仅当**没有显式工作区根且保留 `docs/goals/` 的旧仓库才是 legacy 隐式单工作区——否则不得猜测工作区根。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
+14. **愿景体系（Charter → VP → Workspace）**：`docs/vision/` 维护不可 Goal-`done` 的唯一 Charter、可关门的意图 VP、组合编排索引、Vision Review 与对齐门禁。愿景**不是** goal-tree 或 progress 权威。见 [vision/alignment.md](vision/alignment.md)。
 
 ## Frontmatter 约定
 

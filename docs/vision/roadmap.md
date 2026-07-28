@@ -7,10 +7,10 @@ updated: 2026-07-28
 version: 0.1.0
 ---
 
-# 愿景规划索引（Roadmap）
+# 愿景规划索引（组合编排）
 
-本表是纲领规划的**索引**；每个 VP 的权威正文在 [plans/](plans/)。  
-不在此维护 progress% 或审计意见。
+本表是愿景级 **组合编排**（VP 波次索引），**不是**目标层「纲领路线图」，也**不是** progress%。  
+每个 VP（**意图**）的权威正文在 [plans/](plans/)。不在此维护审计意见或 Goal finding。
 
 | id | title | status | vision_ref | lead_workspace | workspace_count | detail |
 |----|-------|--------|------------|----------------|-----------------|--------|

@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-28
-version: 0.2.9
+version: 0.3.0
 ---
 
 # 决策记录 · GOAL-001
@@ -390,3 +390,23 @@ version: 0.2.9
 - **新开 GOAL-020 专做协议修订**：范围是元规则维护，挂 Root 决策更贴切；已关门 GOAL-010 仅追加交叉引用，不重开。
 
 **影响与后续**：见 [02-execution 本轮事实](02-execution.md#2026-07-28--核心协议逻辑一致性修订d-016)；GOAL-010 执行追加交叉说明；`goal-tree` 日志；愿景 `revisions` editorial（alignment 0.2.0）。不改 Root `status`/`progress`。
+
+## D-017 · P-006 愿景组合治理与级联对齐（第一刀）（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户就愿景审计、建愿景工具、路线图/开区/子目标方法论讨论后，逐项确认 D0–D24（含单愿景制、冷启动串行、取消 sandbox opt-out 等），并确认「开始」第一刀文档落盘。
+
+**决定**：
+
+1. 将 **P-006（愿景、组合治理与级联对齐）** 写入 `docs/architecture/principles.md`（**0.7.0**），含：单愿景制、冷启动 Charter→VP→工作区、对齐递归、总流程命名（组合编排 / 纲领路线图 / 阶段计划 / 意图=VP）、结构选型判定树、分层审视、strategic 宽阻断、工具分工与 v1 非目标。
+2. **alignment.md 0.3.0** 为愿景门禁权威：取消 sandbox plan opt-out；`reviews.md`（`VRev-00N`）；lead 多区必填；完整安装必有 Charter。
+3. 同步：`workspace-protocol` **0.6.0**、根 `AGENTS` **0.10.0**（§6d/6e）、vision README/checklist/roadmap/workspaces、模板 `docs/templates/vision/*` 与 workspace-context **0.4.0**、协议测试与 fixtures、`00-govern-orchestrator` **0.9.0**（S0 冷启动顺序；实现层门禁）。
+4. **Skills `/vision` 为第二刀**（本轮不新建 skill 全文）；编排器在无 skill 时仍须按 P-006 引导补齐与 fail closed。
+5. **不构成**：Root/`VP-001` 关门；R-009-X closed；多愿景；恢复 sandbox opt-out。
+
+**为什么**：执行层 P-001～P-005 已闭环，但缺战略/组合层统一叙事时，人与 AI 在「何时改愿景 / 开区 / 拆子目标」上无法对齐；无强制 Charter 则对齐链无源头。
+
+**未选**：多愿景；sandbox 免挂 VP；先工作区后补愿景；把 Vision Review 写入某 Root 的 `03-audit`；本轮一次做完 `/vision` skill 全文。
+
+**影响**：见 [02-execution 本轮](02-execution.md#2026-07-28--p-006-愿景组合治理第一刀d-017)；愿景 `revisions`；`goal-tree` 日志。不改 Root `status`/`progress` 宣称。

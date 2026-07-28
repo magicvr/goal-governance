@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 治理原则
@@ -13,15 +13,16 @@ version: 0.6.0
 
 工作区与共享资料固定引用的操作协议见 [workspace-protocol.md](workspace-protocol.md)。它把 P-001 的路线图与阶段边界、P-002 的证据意识与 P-005 的信息门禁应用到跨工作区边界，不新增第二套生命周期或状态真相；目标状态只在各自工作区根内保存。
 
-仓库级愿景体系见 [../vision/](../vision/)：**Charter 防漂移（不可 Goal-`done`）**；**愿景规划 VP 可关门**并对齐 Charter；工作区/Root 通过 `plan_refs`/`primary_plan` 对齐 VP。愿景目录不持有 progress% 或 goal-tree 权威。细则以 [../vision/alignment.md](../vision/alignment.md) 为准。
+仓库级愿景与组合治理见 [../vision/](../vision/) 与 **[P-006](#p-006--愿景组合治理与级联对齐)**：**单愿景制**；Charter 为对齐链源头（不可 Goal-`done`）；**组合编排**与可关门 **VP（意图）**；工作区/Root 必须挂 `plan_refs`/`primary_plan`。愿景目录不持有 progress% 或 goal-tree 权威。细则以 [../vision/alignment.md](../vision/alignment.md) 为准。
 
 | 编号 | 标题 | 一句话 |
 |------|------|--------|
-| [P-001](#p-001--目标可执行性与路线图) | 目标可执行性与路线图 | 大目标先路线图，再按阶段立项 |
+| [P-001](#p-001--目标可执行性与路线图) | 目标可执行性与路线图 | 大目标先**纲领路线图**，再按阶段立项 |
 | [P-002](#p-002--治理闭环与阶段质量意识) | 治理闭环与阶段质量意识 | 设立→信息→路线图→方案→实施→关门，关键节点可审视与修正 |
 | [P-003](#p-003--交叉审计与意见响应) | 交叉审计与意见响应 | 独立审出意见；编排器汇总并响应全部意见；finding 须合法闭合 |
 | [P-004](#p-004--用户裁决点) | 用户裁决点 | 是否自审、意见冲突、单条必改否决/residual、信息 residual → 问用户并给建议，不自动裁 |
 | [P-005](#p-005--信息就绪与未知项门禁) | 信息就绪与未知项门禁 | 允许带未知立项；按阶段收集、验证或接受残余风险 |
+| [P-006](#p-006--愿景组合治理与级联对齐) | 愿景、组合治理与级联对齐 | 单愿景源头；决策级联→实现展开；对齐递归；分层审视 |
 
 ---
 
@@ -227,6 +228,145 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 
 **价值**：把未知本身变成可治理对象，既避免过早承诺，也避免用“以后再说”绕过规划、实施或关门的证据要求。
 
+---
+
+## P-006 · 愿景、组合治理与级联对齐
+
+**原则**：完整目标治理以**唯一愿景（Charter）**为对齐链源头；经**组合编排**与**意图（VP）**落到工作区与 Root，再经**纲领路线图 → 阶段计划 → 子目标**展开（可嵌套）。每一节点对齐**直接上一级**；状态与审计真相仍在本目标/本工作区。决策层与实现层可回流；分层审视贯穿关键门，但 **Vision Review ≠ Goal Audit**。
+
+### 6.1 单愿景制（不变量）
+
+1. **每一个开启目标治理的项目**（一次完整治理安装，通常一个仓库的治理根）**有且仅有一个**现行愿景：一份 `status: active` 的 Charter。
+2. **禁止多愿景**：不得并行多个 active Charter / 多个争用的 `vision_id` 北极星。
+3. **不同项目**可以有不同愿景——那是各自独立的治理实例，不是同一项目内的多愿景。
+4. **换代不是多愿景**：旧 Charter 仅可 `superseded`；历史 `vision_ref` 可只读保留；**现行对齐**只认唯一 active Charter。
+5. 多工作区、多 VP 仍共一愿景：区是上下文，VP 是同一源头下的意图波次。
+
+### 6.2 完整安装与冷启动
+
+1. **完整安装必含**现行 `docs/vision/charter.md`（及 alignment 所要求的愿景树最小文件）。缺省 = **不完整安装**，不得假装可长期推进。
+2. **法定冷启动顺序（严格串行）**：
+   ```text
+   最小完备 Charter
+     → 首个意图 VP 落盘（可极简）
+     → 工作区 + Root（挂 plan_refs / primary_plan）
+     → 纲领路线图 → 阶段计划 → 子目标（可嵌套）
+   ```
+3. **缺 Charter 时的行为**：仅允许**引导补齐**（协助写 Charter / 首 VP / 对齐说明）；**拒绝**非引导性的开区、推进、放行、关门。须明确报告不完整安装。
+4. **legacy** 无 vision 的旧仓：视为不完整；补齐前不得新开显式区或放行/关门（只读与引导补齐除外）。
+
+### 6.3 对齐递归
+
+| 节点 | 直接上一级（对齐对象） |
+|------|------------------------|
+| 子目标 | 父目标（`parent` 完整 id） |
+| Root | 意图 VP（`primary_plan` ∈ `plan_refs`） |
+| VP | 现行 Charter（`vision_ref` 精确匹配 `vision_id@version`） |
+| Charter | 无上一级（链源头） |
+
+- **方向/边界权威**向上对齐；**status / progress / 审计台账**以本目标与本区为准。
+- **最小可检查对齐**（完整治理）：
+  - **机读**：`parent` 合法；Root/工作区有 `plan_refs`+`primary_plan`；VP 文件存在；`vision_ref` = 现行 Charter；**禁止**省略 plan 字段（无 sandbox opt-out）。
+  - **语义**：`serves_summary` / 意图陈述不与上一级成功边界、非目标**明显冲突**；冲突 → P-004，不得静默放行。
+- **继承**：默认继承愿景/VP 语境与适用边界约束；**不**自动继承父级 `accepted-residual` / `overruled`、本地进度或审计台账。沿用 residual 须显式引用并再确认范围。
+- **有界偏离**：允许偏离直接上一级，但须 P-004 留痕（范围、理由、是否仍服务上级意图）。若实质改成功边界/非目标 → **升级**为修订 VP 或 Charter `strategic`，禁止用偏离绕过。
+- **复述限度**：Root/子目标允许短 `serves_summary` + 链接；**禁止**在目标内扩写第二套愿景边界。
+- **跨工作区**：**禁止**跨区 `parent`；协作只经同一 VP 绑定或 Q1/Q2/Q3 限定引用。
+
+### 6.4 总流程：决策级联 → 实现展开
+
+```text
+【决策层】（主责：/vision 或等价引导；第二刀 Skills）
+  唯一 Charter
+    → 组合编排（愿景级 VP 索引/波次，非 progress%）
+    → 意图落盘 = VP
+    → 结构选型（见 6.6）
+    → Vision Review（关键门，见 6.7）
+         ↓
+【实现层】（主责：/govern）
+  工作区 + Root（必须挂 VP）
+    → 纲领路线图（P-001）
+    → 阶段计划（目标内方案/实施安排，非树节点）
+    → 子目标五件套
+         └─ 若仍大 → 递归：纲领路线图 → 阶段计划 → 子目标
+         ↓
+  Goal Audit / 意见响应（P-003）
+         ↑ 方向偏差可回流决策层
+```
+
+**命名（消歧）**：
+
+| 名称 | 层 | 写什么 | 不写什么 |
+|------|----|--------|----------|
+| **组合编排** | 愿景 | VP 索引、波次先后/并行、lead 区 | progress%、goal-tree、finding |
+| **纲领路线图** | Root/大目标 | 纲领阶段与先后、完成标记 | 细任务流水 |
+| **阶段计划** | 目标内 | 某阶段方案与实施安排（多在 `01-decision`） | 独立生命周期实体、第二套状态源 |
+| **意图** | 权威 | 已落盘 `VP-*.md` | 仅会话草案不可作 `primary_plan` |
+
+意图**草案**可暂存会话/决策草稿，**无日历死线**；一旦挂 `plan_refs`/`primary_plan` 或宣称服务某意图，必须已有 VP 文件。
+
+### 6.5 工件最小完备（Charter / 意图）
+
+**Charter 初建最小完备**：目的陈述；方向级成功边界；非目标（建议 ≥3 条）；原则摘要（可链 principles）；`vision_id` / `version` / `status` / `effective_date`（及 frontmatter 约定字段）。不要求阶段 checklist 或 progress%。
+
+**VP（意图）**：意图说明；方向级退出判据；`vision_ref`；工作区绑定表；可关门记录（closed 时）。证据在工作区，不在 vision 写 progress%。
+
+**战略假设（轻量，可选）**：Charter 或 VP 可维护假设/未知；标为影响「方向已稳」的项未关闭或未 residual 前，不得宣称方向已稳 / strategic 已完备；不替代目标层 P-005 全表。
+
+### 6.6 结构选型判定树
+
+```text
+意图是什么？
+├─ 改项目级目的/边界/非目标？ → Charter strategic 修订（+ Review + re-align）
+├─ 同愿景下新纲领波次/可关门主题？ → 新 VP 或修订现 VP
+├─ 需独立 goal-tree、隔离上下文或长期并行目的？ → 新工作区 + Root（必须挂 VP）
+├─ 同 Root 目的与边界内？ → 子目标（大则先纲领路线图）
+└─ 高不确定探索？ → vision_role: sandbox（仍须挂 VP；仅为角色/风险标签）
+```
+
+**嵌套指引（无硬层数上限）**：优先加纲领阶段 → 再加子目标层 → 最后开新区。停止条件：已可直接执行，或信息/范围可在单目标内闭环（P-005）。
+
+**同一 VP 多工作区**：多于一个绑定区时 **`lead_workspace` 必填**；VP 关门提案默认由 lead 侧发起，support 区证据须链接，经用户确认。
+
+**反模式**：每功能一个工作区；无限塞单一 Root；用新 VP 回避纲领纪律；用改 Charter 表达纯执行学习；跨区 parent；sandbox 省略 plan 对齐。
+
+### 6.7 分层审视（关键门强制）
+
+| 环 | 机制 | 强制？ | 落点 |
+|----|------|--------|------|
+| Charter 初建或 `strategic` 后 | **Vision Review** | 是（可为 self） | [docs/vision/reviews.md](../vision/reviews.md)（`VRev-00N`） |
+| 新 VP 立项 | 用户确认意图 | 是 | VP 文件 + 组合编排索引 |
+| 开工作区 / Root | 对齐校验 | 是 | workspace + Root meta |
+| 目标方案/事实/关门 | P-002 / P-003 | 大目标完整；小目标可合并 | 目标 `03-audit` 等 |
+| `editorial` 修订 | — | 不强制 Review | revisions |
+
+- Vision Review：**默认不改** Charter/VP 状态；建议 `class`（editorial / strategic / no-change）。**required** 意见闭合路径与 P-003 同构：`fixed` / `accepted-residual` / `user-overruled`。未合法闭合时，可阻断开区、VP 关门、宣称「方向已稳」。
+- **禁止**为 VP/Charter 建立 Goal 五件套或用目标 `03-audit` 替代愿景审视台账。
+- Goal 独立审计仍只出意见、不改 status（P-003）。
+
+### 6.8 Charter 修订与宽阻断
+
+| class | 含义 | re-align |
+|-------|------|----------|
+| `editorial` | 措辞/链接，不改方向/边界/非目标 | 不强制 |
+| `strategic` | 目的、边界、非目标、原则优先级 | impact 所列 VP/区必须 re-align |
+
+**strategic 后宽阻断**（受影响范围 re-align 完成前）：禁止新建子目标、放行、关门、非引导开区；允许只读与引导 re-align。流程：更新 charter → [revisions.md](../vision/revisions.md) → 更新 VP `vision_ref` → 刷新工作区/Root 声明。
+
+### 6.9 工具分工（落地节奏）
+
+- **`/vision`（或等价）**：决策层——建/修 Charter、组合编排、VP、Vision Review、re-align 引导。（Skills **第二刀**）
+- **`/govern`**：实现层推进；发现缺 Charter、待 re-align 或结构歧义时进入引导或 fail closed，**不得**无愿景推进。
+- **第一刀（本文档包）**：原则、alignment、protocol、AGENTS 摘要、最小模板与协议测试。
+
+### 6.10 本原则 v1 非目标
+
+多愿景；`vision_ref` semver 范围匹配；Web 愿景写入 UI；自动跳过 Vision Review 的算法；硬编码嵌套层数；独立「Intent」文档类型与 VP 并列；向 vision 目录汇总 progress%。
+
+**价值**：人与 AI 共用同一级联与判定树；避免无北极星的空中楼阁与执行层/战略层混写。
+
+**操作细则**：[AGENTS.md](../../AGENTS.md) §6d/§6e；全文门禁 [../vision/alignment.md](../vision/alignment.md)。
+
 ## 原则与落地文档对照
 
 | 原则 | AGENTS 操作入口 | Skills 主要落地 |
@@ -236,12 +376,14 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 | P-003 | 第 6b 节 | `00` 意见汇总与 finding 闭合；独立 `/audit` |
 | P-004 | 第 6b 节 | `00` 用户裁决点（含 4.1～4.4） |
 | P-005 | 第 6b 节 | `00` 信息就绪扫描与门禁；`01`～`05` 记录、实施与审计 |
+| P-006 | 第 6d / 6e 节 | 编排器愿景门禁；`/vision` 第二刀；alignment 校验 |
 
-关联决策：[GOAL-001 D-009](../workspace-001-goal-governance/GOAL-001-main-vision/01-decision.md#d-009--将信息就绪纳入核心闭环2026-07-19)；[GOAL-005 D-002～D-006](../workspace-001-goal-governance/GOAL-005-skills-closed-loop-audit/01-decision.md)；[GOAL-007 D-001～D-002](../workspace-001-goal-governance/GOAL-007-information-readiness-governance/01-decision.md)。
+关联决策：[GOAL-001 D-009](../workspace-001-goal-governance/GOAL-001-main-vision/01-decision.md#d-009--将信息就绪纳入核心闭环2026-07-19)；[GOAL-001 D-017](../workspace-001-goal-governance/GOAL-001-main-vision/01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28)；[GOAL-005 D-002～D-006](../workspace-001-goal-governance/GOAL-005-skills-closed-loop-audit/01-decision.md)；[GOAL-007 D-001～D-002](../workspace-001-goal-governance/GOAL-007-information-readiness-governance/01-decision.md)。
 
 ## 补充协议：工作区与共享资料引用
 
-- 工作区是 Root Goal 与 canonical 范围的上下文，不是新的目标层级；纲领阶段串行、阶段内可并行，由路线图与子目标承接（见 workspace-protocol §3）。
+- 工作区是 Root Goal 与 canonical 范围的上下文，不是新的目标层级；纲领阶段串行、阶段内可并行，由**纲领路线图**与子目标承接（见 workspace-protocol §3）。
 - 共享资料固定引用只提供可追溯来源，不能替代用户确认、审计证据、P-004 裁决或 P-005 门禁。
 - 工作区绑定或资料引用不完整时，受影响的读取、推理、写入和放行应 fail closed；物理资料存储、用户 CRUD、AI 访问执行和 Web 安全模型留给相应消费适配器的验证门禁。
 - 目标 `GOAL-*` id **仅在工作区内唯一**；跨工作区提及目标时必须同时给出 `workspace_id`（或等价 canonical 路径），不得仅凭 `GOAL-NNN-…` 跨区寻址。
+- 完整治理必含唯一 Charter；所有工作区（含 `sandbox` 角色）必须挂 VP；无 plan opt-out（P-006 / alignment）。

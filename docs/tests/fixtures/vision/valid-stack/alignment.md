@@ -6,5 +6,5 @@ version: 0.1.0
 
 # alignment
 
-Requires plan_refs and primary_plan. Gates fail closed.
+单愿景制. Requires plan_refs and primary_plan (no sandbox opt-out). Gates fail closed.
 Vision holds no progress% and is not a goal-tree authority.

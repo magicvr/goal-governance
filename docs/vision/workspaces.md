@@ -17,6 +17,8 @@ version: 0.1.0
 
 ## 规则摘要
 
-- 至多一个 `role: primary`；primary **禁止** 无规划 opt-out。
-- `sandbox` 可在 alignment 规则下 `plan_refs` 为空并留痕。
+- 至多一个 `role: primary`。
+- **所有**工作区（含 `sandbox` 角色）必须有非空 `plan_refs` 与 `primary_plan`；**取消** plan opt-out（alignment 0.3 / P-006）。
+- `sandbox` 仅表示角色/风险标签，仍共一愿景、仍须挂 VP。
+- 多区服务同一 VP 时贡献图与 VP 正文应能指向 **lead** 工作区。
 - `map_status` 仅为贡献图用（`active` \| `archived`），不是目标 progress。

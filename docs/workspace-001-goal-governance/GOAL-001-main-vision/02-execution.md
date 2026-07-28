@@ -5,12 +5,28 @@ status: active
 parent: null
 created: 2026-07-18
 updated: 2026-07-28
-version: 0.3.8
+version: 0.3.9
 ---
 
 # 执行记录 · GOAL-001
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
+
+## 2026-07-28 · P-006 愿景组合治理第一刀（D-017）
+
+- **决策**：[D-017](01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28)。
+- **产物（核心）**：
+  - `docs/architecture/principles.md` **0.7.0**（新增 P-006 全文）
+  - `docs/vision/alignment.md` **0.3.0**；新建 `docs/vision/reviews.md`
+  - `docs/architecture/workspace-protocol.md` **0.6.0**
+  - 根 `AGENTS.md` **0.10.0**（§6d/6e）
+  - vision README / consumer-checklist / roadmap / workspaces 同步
+  - 模板：`docs/templates/vision/charter.md`、`vision-plan.md`；`workspace-context` **0.4.0**
+  - 测试：`docs/tests/test_vision_protocol.py`（reviews 必选；sandbox 无 plan 拒绝；P-006 断言）
+  - 编排器：`skills/prompts/00-govern-orchestrator.md` **0.9.0**（冷启动 Charter→VP→区；无 opt-out）
+  - Skills core 镜像：principles、workspace-protocol、templates 已同步
+- **未做（第二刀）**：独立 `/vision` skill 全文；Web 愿景写入 UI。
+- **Root**：仍 `active`；本条不改 progress 宣称。
 
 ## 2026-07-28 · 核心协议逻辑一致性修订（D-016）
 

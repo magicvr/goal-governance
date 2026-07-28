@@ -8,10 +8,20 @@ primary_plan: VP-001-governance-platform-delivery
 serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
 created: 2026-07-18
 updated: 2026-07-28
-version: 0.8.1
+version: 0.8.2
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
+
+## 2026-07-28 · P-006 愿景组合治理第一刀（D-017）
+
+| 项 | 值 |
+|----|-----|
+| **裁决** | [D-017](01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28) |
+| **事实** | [02-execution 同日节](02-execution.md#2026-07-28--p-006-愿景组合治理第一刀d-017) |
+| **要点** | 单愿景；冷启动 Charter→VP→区；对齐递归；取消 sandbox opt-out；Vision Review；结构选型；`/vision` 第二刀 |
+| **权威版本** | principles **0.7.0**（P-006）；alignment **0.3.0**；workspace-protocol **0.6.0**；AGENTS **0.10.0** |
+| **Root status** | **仍 `active`**；本条不改 progress 宣称，不关 Root |
 
 ## 2026-07-28 · 核心协议逻辑一致性修订（D-016）
 
@@ -20,7 +30,7 @@ version: 0.8.1
 | **裁决** | [D-016](01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) |
 | **事实** | [02-execution 同日节](02-execution.md#2026-07-28--核心协议逻辑一致性修订d-016) |
 | **要点** | finding 三路径闭合；P-004.3/4.4；legacy 隐式工作区唯一路径；纲领串行/阶段内并行；Primary 冲突与 VP 空转 14 日 |
-| **权威版本** | principles **0.6.0**；workspace-protocol **0.4.0**；alignment **0.2.0** |
+| **权威版本** | principles **0.6.0**（其后 D-017 升至 0.7.0）；workspace-protocol 当时 **0.4.0**；alignment 当时 **0.2.0** |
 | **Root status** | **仍 `active`**；本条不改 progress 宣称，不关 Root |
 
 ## 愿景对齐

@@ -10,7 +10,7 @@ plan_refs: VP-001-example-plan
 primary_plan: VP-001-example-plan
 created: 2026-07-20
 updated: 2026-07-28
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 工作区上下文 · 示例工作区
@@ -25,12 +25,12 @@ version: 0.3.0
 | Root Goal | `GOAL-001-example-root` | 必须存在，且其 `parent: null`。 |
 | canonical 范围 | `docs/workspace-001-example/` | 当前工作区唯一的目标状态范围。 |
 | 共享资料目录 | `docs/shared-materials/` | 固定路径/URI，或 `none`；不在此文档保存资料内容。 |
-| 愿景角色 | `delivery` | `primary` \| `delivery` \| `sandbox`。 |
-| 规划对齐 | `plan_refs` / `primary_plan` | 指向 `docs/vision/plans/VP-*.md`；非 sandbox opt-out 时必填。 |
+| 愿景角色 | `delivery` | `primary` \| `delivery` \| `sandbox`（角色标签；sandbox **仍须**挂 VP）。 |
+| 规划对齐 | `plan_refs` / `primary_plan` | 指向 `docs/vision/plans/VP-*.md`；**必填**（无 opt-out）。 |
 
 ## 愿景对齐
 
-仓库若已安装 [docs/vision/](../vision/)，本工作区通过 `plan_refs` 与 `primary_plan` 对齐愿景规划（VP）；VP 再对齐 Charter。细则见 [vision/alignment.md](../vision/alignment.md)。  
+完整治理下仓库**必有**唯一 [docs/vision/](../vision/) Charter。本工作区通过**必填**的 `plan_refs` 与 `primary_plan` 对齐意图（VP）；VP 再对齐 Charter。细则见 [vision/alignment.md](../vision/alignment.md) 与 P-006。  
 **不要**在本文件维护 progress% 或把愿景目录当作第二套目标树。
 
 ## 固定共享资料引用
