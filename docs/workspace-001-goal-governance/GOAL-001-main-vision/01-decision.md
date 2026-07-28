@@ -448,3 +448,22 @@ version: 0.3.0
 **为什么**：第二刀 skill 已装，但缺 runtime 证据、消费 AGENTS 叙事与 dogfood Review 则矩阵/install 仍撒谎。
 
 **影响**：[02-execution](02-execution.md#2026-07-28--vision-follow-throughd-019)；GOAL-008 运行时附件；矩阵/README；**不发版**。
+
+## D-020 · 响应 V-F-001：独立 Vision Review 专用入口（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 `/vision` 对 `V-F-001` 的 P-004 裁决中选择“新增 `/vision-audit`”，而非扩展 Goal `/audit` 的 scope 路由。
+
+**决定**：
+
+1. 新增 `07-independent-vision-review.md` 与默认 `/vision-audit` 入口：只写 `docs/vision/reviews.md`（`source: independent` / `VRev-00N`），不改 Charter、VP、Goal 或 Goal `03-audit.md`。
+2. 保持 `/audit` 为 Goal 独立审计；`/vision` 负责 self Review、愿景决策与 Vision finding 响应。三个边界均在 core prompts、Claude/Grok/Copilot 安装入口与消费者说明中明确。
+3. 将 `vision-audit` 加入消费契约和默认安装面；当前候选标记为 `unreleased`，该入口三宿主均 `pending-runtime-validation`，不将结构测试写成 runtime evidence。
+4. 以 `VRev-002` 响应节记录 `V-F-001: fixed`；不创建 Goal 五件套，不改 Root 或子目标 status/progress，不发版。
+
+**为什么**：专用入口保持 Vision Review 与 Goal Audit 的台账、响应方和门禁边界可执行且无歧义；按 scope 扩展 `/audit` 会把既有 Goal 审计契约变为隐式路由。
+
+**未选**：扩展 `/audit` 按 scope 写入 `reviews.md`；接受 residual 或 overrule 该 required finding。
+
+**影响**：实施事实与验证见 [02-execution.md](02-execution.md#2026-07-28--响应-v-f-001独立-vision-review-专用入口d-020不发版)；正式闭合见 [VRev-002](../../../vision/reviews.md#响应--v-f-0012026-07-28)。

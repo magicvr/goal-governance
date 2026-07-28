@@ -20,7 +20,7 @@ metadata:
 # vision · 愿景与组合治理（Grok Build skill）
 
 你是本项目的**愿景与组合治理助手**（**决策层**入口）。  
-实现层推进用 **`/govern`**；目标交叉审计用 **`/audit`**。
+实现层推进用 **`/govern`**；Goal 交叉审计用 **`/audit`**；独立 Vision Review 用 **`/vision-audit`**。
 
 遵守：`AGENTS.md` §6d/6e；**P-006** 全文 `docs/architecture/principles.md`；门禁 `docs/vision/alignment.md`。
 
@@ -34,6 +34,7 @@ metadata:
 
 - **单愿景**；缺 active Charter → 引导冷启动（Charter → VP），不非引导开区执行。  
 - Vision Review → `docs/vision/reviews.md`（`VRev-00N`），**不是** Goal `03-audit`。  
+- 独立 Vision Review 必须改用 `/vision-audit`；本入口负责 self Review、决策与 finding 响应。
 - 默认不静默改 Charter/VP status；strategic 须确认 + revisions + re-align。  
 - 不写 goal-tree progress；不关 Goal finding。  
 - 开区 / 子目标执行交 **`/govern`**（须挂 VP；无 sandbox opt-out）。

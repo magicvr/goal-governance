@@ -9,6 +9,10 @@ version: 1.1.2
 
 # Goal Tree
 
+## 2026-07-28 · 响应 V-F-001：独立 Vision Review 专用入口（GOAL-001 D-020；不发版）
+
+用户按 P-004 选择新增 `/vision-audit`，不扩展 `/audit`。核心 `07`、三宿主默认安装与消费者契约已同步；[VRev-002](../vision/reviews.md#响应--v-f-0012026-07-28) 以 `fixed` 闭合入口缺口。新入口三宿主 runtime 仍 pending，矩阵为 `unreleased`。**不**改任何 Goal status/progress。详见 [D-020](GOAL-001-main-vision/01-decision.md#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)。
+
 ## 2026-07-28 · `/vision` follow-through（GOAL-001 D-019；不发版）
 
 Dual-pass runtime：Claude+Grok vision **pass**；Copilot **quota fail** → pending。VRev-001；消费 AGENTS 同步 P-006。**无**正式发版。详见 [D-019](GOAL-001-main-vision/01-decision.md#d-019--vision-follow-throughruntime--消费面--vrev不发版2026-07-28)。

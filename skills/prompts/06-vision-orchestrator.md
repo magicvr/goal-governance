@@ -22,6 +22,7 @@ role: vision-decision
 | **`/vision`** | 决策 | Charter / VP / 组合编排 / Review / re-align 引导 | 不推进子目标执行、不改 goal-tree 进度、不关 Goal finding |
 | **`/govern`** | 实现 | 工作区目标推进、P-003 响应、放行/关门 | 无 Charter 时不得假装完整推进（可转本入口引导） |
 | **`/audit`** | 目标交叉审 | Goal `03-audit` independent | 不写 Vision Review 台账 |
+| **`/vision-audit`** | 愿景交叉审 | `reviews.md` independent | 不改 Charter / VP / Goal 状态；不响应 finding |
 
 **硬约束（P-006 / alignment）**
 
@@ -30,6 +31,7 @@ role: vision-decision
 - **冷启动串行**：Charter → 首个 VP →（再交 `/govern` 建工作区+Root）。  
 - **无 sandbox plan opt-out**；结构选型可建议 `sandbox` 角色，但仍须挂 VP。  
 - Vision Review 落 `docs/vision/reviews.md`（`VRev-00N`），**不是** Goal `03-audit`。  
+- 独立 Vision Review 只由 `/vision-audit` / `07-independent-vision-review.md` 写入；`/vision` 处理 self Review、决策与 finding 响应。
 - Review / independent 意见**默认不直接改** Charter/VP status；strategic 变更须用户确认 + revisions + re-align。  
 - 不把 progress% 或 Goal finding 写入 vision 目录。
 
@@ -133,7 +135,7 @@ role: vision-decision
 
 1. 新编号 = reviews 中最大 VRev-NNN + 1。  
 2. 追加 `reviews.md` 索引行 + 正文节：source、date、scope、verdict、findings（required|recommended）、建议 class。  
-3. source：`self`（本入口协助自审）或 `independent`（用户声明交叉审视且你保持审查立场）。  
+3. source：本入口只写 `self`；独立交叉审视必须交 `/vision-audit`，由其写入 `source: independent`。
 4. **默认不改** Charter/VP status。  
 5. required 未闭合 → 可阻断：开区建议、VP 关门、宣称「方向已稳」。
 
@@ -196,5 +198,5 @@ role: vision-decision
 ## 使用注意事项
 
 - 与 `/govern` 分入口；冷启动先本文件再工作区。  
-- 独立愿景审视可另开会话，`source: independent` 写入 reviews。  
+- 独立愿景审视可另开会话，用 `/vision-audit` 写入 `source: independent` 的 `reviews.md` 条目。
 - 实现层推进、Goal 审计响应仍归 `/govern` / `/audit`。

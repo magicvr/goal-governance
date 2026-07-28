@@ -22,6 +22,7 @@ role: independent-audit
 - **禁止**修改目标 `status` / `progress` / 方案正文 / goal-tree 状态列  
   （除非用户在本轮**明确书面授权**「边审边改」——默认拒绝）
 - 结束后提示：可用 `/govern` 响应意见、关闭 finding、推进阶段
+- 愿景层独立审视使用 `/vision-audit` / [07-independent-vision-review.md](07-independent-vision-review.md)，不得写入 `docs/vision/reviews.md`
 
 结构与落盘规则对齐 P-003；字段与 [04-write-audit.md](04-write-audit.md) 兼容，但**立场是审查者不是执行者**。
 

@@ -12,6 +12,15 @@ version: 0.3.9
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
+## 2026-07-28 · 响应 V-F-001：独立 Vision Review 专用入口（D-020；不发版）
+
+- **用户裁决**：采用专用 `/vision-audit`，不扩展 `/audit` 的 scope 路由。
+- **产物**：`skills/prompts/07-independent-vision-review.md`；Claude/Grok/Copilot 的 `vision-audit` 安装源与当前 workspace wrapper；`install.ps1` / `install.sh` 默认四入口；消费者契约与 Skills README。
+- **边界**：`/audit` 只写 Goal `03-audit.md`；`/vision-audit` 只写 `docs/vision/reviews.md`；`/vision` 保留 self Review、决策与 finding 响应。
+- **已执行验证**：独立入口核心、原 `/vision`、Claude/Grok/Copilot 安装源、Windows PowerShell 隔离安装、消费者契约和 Skills 镜像的聚焦 `unittest` 均通过。
+- **运行时证据**：新入口三宿主均 `pending-runtime-validation`；矩阵为 `unreleased`，未将安装结构测试记为 runtime-verified。
+- **审视闭合**：[VRev-002 的 V-F-001 响应](../../../vision/reviews.md#响应--v-f-0012026-07-28) 记录为 `fixed`。Root 保持 `active`，不改 progress，不发版。
+
 ## 2026-07-28 · `/vision` follow-through（D-019；不发版）
 
 - **决策**：[D-019](01-decision.md#d-019--vision-follow-throughruntime--消费面--vrev不发版2026-07-28)。

@@ -1,7 +1,7 @@
 {
   "contractSchemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-contract/v1",
   "contractFormat": "goal-governance.skills-consumer-contract",
-  "contractFormatVersion": "0.2.0",
+  "contractFormatVersion": "0.2.1",
   "canonical": {
     "owner": "docs/contracts",
     "manifestPath": "docs/contracts/skills-consumer-contract.json",
@@ -27,7 +27,8 @@
       "hostEntrypoints": [
         "govern",
         "audit",
-        "vision"
+        "vision",
+        "vision-audit"
       ]
     }
   },
@@ -55,7 +56,8 @@
       "entrypoints": [
         "govern",
         "audit",
-        "vision"
+        "vision",
+        "vision-audit"
       ],
       "supportCommitment": "committed",
       "verificationStatus": "verified"
@@ -69,7 +71,8 @@
       "entrypoints": [
         "govern",
         "audit",
-        "vision"
+        "vision",
+        "vision-audit"
       ],
       "supportCommitment": "committed",
       "verificationStatus": "verified"
@@ -83,7 +86,8 @@
       "entrypoints": [
         "govern",
         "audit",
-        "vision"
+        "vision",
+        "vision-audit"
       ],
       "supportCommitment": "committed",
       "verificationStatus": "verified"

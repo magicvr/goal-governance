@@ -27,7 +27,8 @@
       "hostEntrypoints": [
         "govern",
         "audit",
-        "vision"
+        "vision",
+        "vision-audit"
       ]
     }
   },

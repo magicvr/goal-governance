@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
   "format": "goal-governance.skills-consumer-compatibility-matrix",
   "formatVersion": "1.0.0",
-  "candidateRevision": "v0.9.1",
+  "candidateRevision": "unreleased",
   "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
   "protocol": {
     "current": "0.1.0",
@@ -12,7 +12,8 @@
   "requiredEntrypoints": [
     "govern",
     "audit",
-    "vision"
+    "vision",
+    "vision-audit"
   ],
   "negativeFixtures": [
     {
@@ -65,9 +66,14 @@
           "evidence": [
             "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-28.json"
           ]
+        },
+        {
+          "name": "vision-audit",
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.9.1 candidate: /govern and /audit runtime-verified 2026-07-28; /vision dual-pass runtime-verified 2026-07-28 against 06-vision-orchestrator and installed vision skill."
+      "evidenceScope": "Current worktree: existing /govern, /audit, and /vision runtime evidence remains recorded; /vision-audit is structurally tested but pending a fresh host runtime capture."
     },
     {
       "id": "grok-build-cli",
@@ -106,9 +112,14 @@
           "evidence": [
             "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-2026-07-28.json"
           ]
+        },
+        {
+          "name": "vision-audit",
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.9.1 candidate: /govern and /audit runtime-verified 2026-07-28; /vision dual-pass runtime-verified 2026-07-28 against 06-vision-orchestrator and installed vision skill."
+      "evidenceScope": "Current worktree: existing /govern, /audit, and /vision runtime evidence remains recorded; /vision-audit is structurally tested but pending a fresh host runtime capture."
     },
     {
       "id": "github-copilot-cli",
@@ -144,9 +155,14 @@
           "name": "vision",
           "status": "pending-runtime-validation",
           "evidence": []
+        },
+        {
+          "name": "vision-audit",
+          "status": "pending-runtime-validation",
+          "evidence": []
         }
       ],
-      "evidenceScope": "v0.9.1 candidate follow-through: /vision dual capture attempted 2026-07-28; Claude+Grok runtime-verified; Copilot CLI blocked by monthly quota (stderr captured; matrix vision remains pending-runtime-validation)."
+      "evidenceScope": "Current worktree: /vision dual capture attempted 2026-07-28; Claude+Grok runtime-verified; Copilot CLI remains pending after its monthly quota block. New /vision-audit is structurally tested and pending runtime validation on every host."
     },
     {
       "id": "web-readonly-parser",
