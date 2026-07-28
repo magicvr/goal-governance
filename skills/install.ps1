@@ -252,10 +252,16 @@ function Install-CoreDocs {
     if (Test-Path -LiteralPath (Join-Path $arch 'tech-stack.md') -PathType Leaf) {
         Write-Err "core mirror must not ship tech-stack.md (D-004)"
     }
-    Write-Host 'Installing core methodology -> .\docs\ (architecture + templates + README)'
+    $vision = Join-Path $coreDocs 'vision'
+    $alignment = Join-Path $vision 'alignment.md'
+    if (-not (Test-Path -LiteralPath $alignment -PathType Leaf)) {
+        Write-Err "Missing alignment.md in core vision mirror (GOAL-001 A-018 F-013 / D-025)"
+    }
+    Write-Host 'Installing core methodology -> .\docs\ (architecture + templates + vision rules + README)'
     Copy-RuleFile -Source $readme -Destination (Join-Path $TargetDir 'docs\README.md')
     Copy-DirMerge -Source $arch -Destination (Join-Path $TargetDir 'docs\architecture') -Label 'core architecture'
     Copy-DirMerge -Source $templates -Destination (Join-Path $TargetDir 'docs\templates') -Label 'core templates'
+    Copy-DirMerge -Source $vision -Destination (Join-Path $TargetDir 'docs\vision') -Label 'core vision rules'
 }
 
 function Test-HyphenSlug([string]$Value, [string]$Label) {

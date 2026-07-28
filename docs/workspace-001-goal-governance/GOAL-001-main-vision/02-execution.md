@@ -4,36 +4,45 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-28
-version: 0.4.2
+updated: 2026-07-29
+version: 0.4.3
 ---
 
 # 执行记录 · GOAL-001
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
-## 当前进展（2026-07-28）
+## 当前进展（2026-07-29）
 
-> **现时权威**：与 [00-meta 现时摘要](00-meta.md#现时摘要2026-07-28-单一权威入口) 对齐。下方历史时间线保留原貌，**不可**单独作为「现在做到哪」的判定。
+> **现时权威**：与 [00-meta 现时摘要](00-meta.md#现时摘要2026-07-28-单一权威入口) 对齐（本节补充 A-018 响应后事实）。下方历史时间线保留原貌，**不可**单独作为「现在做到哪」的判定。
 
 | 方向 | 状态 | 说明 |
 |------|------|------|
-| 核心方法论与模板 | **已完成基线** + 07-28 协议修订 | GOAL-006/007/010 done；D-016/D-017（P-006 等）；Root 仍 active |
-| Skills | **阶段 5 已关** + 维护波次 done | GOAL-008 done；GOAL-018/019 done（D-024：Skills 维护波次） |
-| Web | **阶段 6 有界结项**（≠ 终态） | 009 + 012～017 有界 done；扩展/终态 → **R-009-X** |
-| 愿景栈 | 最小对齐完备 | Charter@0.1.0；VP-001；VRev-001 pass；V-F-001 fixed |
-| Root 路径 | **D-024 路径 D** | 仅维护发版/协议；A/B/C 延期；**不**关 Root |
-| 发版候选 runtime | **ready-for-release-evidence**（unreleased） | path-D 验证 2026-07-28；v0.9.1 已 tag；下一 tag 须授权 |
-| Root | **`active`** | 002～019 全 done；无 active 实现子目标；下一编号 **GOAL-020** |
+| 核心方法论与模板 | **已完成基线** + P-006 后回流 | GOAL-006/007/010 done；D-017 + **D-025**（A-018 fixed） |
+| Skills | **阶段 5 已关** + core 愿景规则面 | 018/019 done；core 现含 `vision/alignment.md` |
+| Web | **阶段 6 有界结项**（≠ 终态） | 扩展/终态 → **R-009-X** |
+| 愿景栈 | 最小对齐完备 | Charter@0.1.0（VR-004 editorial）；VP-001；V-F-001 fixed |
+| Root 路径 | **D-024 路径 D** | 仅维护；**不**关 Root |
+| 发版候选 runtime | **ready-for-release-evidence**（unreleased） | 本拍**未**重采 runtime / **未** tag |
+| Root | **`active`** | 002～019 全 done；下一编号 **GOAL-020** |
 
-## 下一步（根目标视角 · 2026-07-28）
+## 下一步（根目标视角 · 2026-07-29）
 
-1. **现行路径 D**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)）：协议修订、runtime/发版候选、愿景入口 dogfood、台账卫生。
-2. **本拍已完成**：A-015 F-007/F-008 fixed；路径 D **发版候选 runtime 验证**（compat ready + rehearsal checksPassed）。
-3. **发版下一步（须用户书面授权）**：冻结下一 annotated tag（建议 **v0.9.2**）+ release-mode evidence；**本拍不打 tag**。
-4. **可选**：用户书面授权的单一 residual 子目标；或书面改道 A/B/C。
-5. **禁止**：无改道宣称阶段 6 终态或 Root done；无授权自动 tag/Release；批量 residual。
+1. **路径 D**：协议/发版候选/台账；A-018 required 已闭合。  
+2. **发版**（须用户书面授权）：建议 **v0.9.2** + release evidence；本拍不打 tag。  
+3. **可选**：单一 residual 子目标或改道 A/B/C。  
+4. **禁止**：终态/Root done；无授权 tag；批量 residual。
 
+## 2026-07-29 · 响应 A-018（D-025 · 路径 D 协议回流）
+
+- **用户指令**：`/govern 响应 GOAL-001 A-018：优先 F-012 + F-013，再 F-014/F-015`。
+- **事实**：
+  1. 重写 [standalone-bootstrap.md](../../standalone-bootstrap.md) 与测试：冷启动 Charter→VP→区+Root+plan。
+  2. core 镜像增加 `vision/alignment.md`；install 默认安装；测试 38 项含 core/AGENTS 断言通过。
+  3. 清除权威面「仅 P-001～P-005」；根/模板 AGENTS 门禁语义对齐。
+  4. Charter editorial VR-004；决策 [D-025](01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29)；响应 [A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)。
+- **验证**：`test_standalone_bootstrap` 3 ok；`skills.tests.test_skills_orchestrator` 38 ok。
+- **未做**：tag/Release；Root status 变更；runtime 全量重采。
 
 ## 2026-07-28 · 路径 D：发版候选 runtime 验证（不发版）
 

@@ -2,9 +2,9 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-29
 parent: null
-version: 0.10.2
+version: 0.10.3
 ---
 
 # docs/ · 文档体系
@@ -103,12 +103,13 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **当前核心文档版本**：`0.9.1`（含 workspace-protocol **0.5.0** A0 限定引用）。工作区根与共享资料协议已就位。
+- **文档入口版本**（本文件 frontmatter）：`0.10.3` — 描述 docs 树导航与协议索引的修订号。  
+- **可复制核心包版本**（对外分发/发版候选身份）：`0.9.1`（含 workspace-protocol A0 限定引用与 P-006 栈）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。  
 - **最近发布基线**：`v0.7.0` / `v0.8.0` / **`v0.9.0`**；后续版本仍须 annotated tag 与 release evidence。
-- **快照日期**：2026-07-28。
+- **快照日期**：2026-07-29。
 - **快照身份**：矩阵 **`candidateRevision: unreleased`**；已有入口保留其历史 runtime evidence，正式 GitHub Release 仍以 annotated tag + release evidence 为准。
 - **当前工作树边界**：`/vision-audit` 与 `/vision` 已在 Claude Code、Grok Build 与 GitHub Copilot CLI 上 `runtime-verified`；Copilot 使用用户级 BYOK provider、模型和密钥进行只读 replay。安装结构和契约测试已通过；Web parser 仍为 automated-verified。
-- **本轮变更范围**：独立 Vision Review 专用入口、Goal/Vision 审计路由分离及消费契约更新；详见根 `CHANGELOG.md`。
+- **本轮变更范围（A-018 响应）**：standalone 冷启动对齐 P-006；core 分发纳入 `vision/alignment.md`；清除「仅 P-001～P-005」权威面；AGENTS dogfood/消费门禁语义对齐。详见 GOAL-001 A-019 / D-025。
 
 ### canonical → Skills 同步台账
 

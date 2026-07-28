@@ -4,8 +4,8 @@ doc: audit
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-28
-version: 0.3.6
+updated: 2026-07-29
+version: 0.3.7
 ---
 
 # 审计 · GOAL-001
@@ -866,6 +866,189 @@ P-004：若需对同 scope 再做 self 审计，**询问用户**是否自审后�
 | **R-009-X** | accepted residual | 路径 D 不关闭 |
 | **F-006 / F-010** | recommended open | 真实外部采用 |
 | **F-011** | recommended open | 发版候选跟踪（可在 D 内推进） |
+
+## A-018 · 核心方法论文档一致性独立交叉审计（2026-07-29）
+
+- **source**：independent
+- **auditor**：Grok Build `/audit`
+- **类型**：ad-hoc（methodology documentation coherence；execution-facts of doc surfaces）
+- **scope**：愿景–目标治理体系**核心方法论文档**在 P-006 落地后的一致性与可复制卫生——`docs/architecture/principles.md`、`workspace-protocol.md`、`overview.md`、`directory-layout.md`、`tech-stack.md`；`docs/README.md`；`docs/standalone-bootstrap.md` + `docs/tests/test_standalone_bootstrap.py`；`docs/vision/alignment.md` / `charter.md`；`docs/templates/**`；根 `AGENTS.md` 与 `skills/AGENTS.template.md`；`skills/core/` 分发镜像；相关 Skills 说明面。不审 Web 实现、不审各 GOAL 业务进度、不改任何 `status`/`progress`。
+- **verdict**：**conditional**
+- **工作区**：`[workspace-001-goal-governance] GOAL-001-main-vision`（Q3）；canonical `docs/workspace-001-goal-governance/`
+
+### 范围与区间
+
+| 纳入 | 排除 |
+|------|------|
+| P-001～P-006 元规则与操作摘要是否自洽 | 改 Charter/VP/Goal 状态 |
+| 冷启动 / standalone / core 包是否仍符合完整安装声明 | R-009-X、阶段 7、发版 tag |
+| canonical ↔ Skills 镜像漂移（architecture/templates） | 历史已关门目标正文的批量回写 |
+| 过时「仅 P-001～P-005」权威面 | monorepo dogfood 过程树内容正确性 |
+
+本意见与 [VRev-002](../../vision/reviews.md)（愿景入口可执行性，V-F-001 已 fixed）互补：本条审的是**方法论文档与产品化路径**，不是 Vision Review 入口路由。
+
+### 成果（有证据）
+
+1. **原则栈实质自洽**：`principles.md` **0.7.0** 含完整 P-001～P-006；`alignment.md` **0.3.0** 与 P-006 冷启动、无 sandbox opt-out、宽阻断、lead、Vision Review 同构；`workspace-protocol.md` **0.6.0** §4b 与 Q1/Q2/Q3 引用一致；根 `AGENTS.md` **0.10.0** §6/6b/6d/6e 操作摘要与全文对照表可对齐。
+2. **主路径模板已跟愿景字段**：`docs/templates/workspace-context.md` 含 `vision_role` / `plan_refs` / `primary_plan`；`docs/templates/vision/{charter,vision-plan}.md` 存在；goal-folder 含 P-005 信息就绪槽位。
+3. **canonical ↔ skills/core 主文件字节一致**（2026-07-29 现场哈希）：`principles`、`workspace-protocol`、`overview`、`directory-layout`、`docs/README`、五件套、`workspace-context`、vision 模板均 **MATCH**；契约镜像台账与 `docs/README` 同步表一致。
+4. **Skills 编排面已认知 P-006**：`00-govern-orchestrator` / `06-vision` / `07-vision-audit` 与 install 四入口（含 `/vision-audit`）与原则工具分工一致。
+5. **本仓 dogfood 对齐链完整**：`vision-goal-governance@0.1.0` ← `VP-001` ← `workspace-001-goal-governance` + Root；非本 scope 的实例问题。
+
+### 对照成功标准（方法论产品面）
+
+| 期望（来自 P-006 / GOAL-006 / GOAL-019 / docs 入口） | 判定 |
+|--------------------------------------------------|------|
+| 完整安装 = Charter + 对齐规则 + 工作区挂 VP | **部分**：权威文有；**独立启用与 core 分发未闭环**（见 F-001 / F-002） |
+| 大目标先纲领路线图；finding 三路径；P-004 不静默裁 | **通过**（原则/AGENTS 一致） |
+| 无 Skills 可独立复制启用且不与现行协议冲突 | **未通过**（standalone 仍可生成缺 plan / 无 Charter 的区） |
+| 消费 core 镜像与 monorepo 语义同步、声明准确 | **部分**：文件 MATCH；**目录说明与必备清单仍写 P-001～P-005** |
+| 权威面不互相矛盾 | **未通过**（见 F-001～F-004） |
+
+### Findings
+
+#### F-012 · standalone 独立启用路径与 P-006 冷启动 / plan 门禁冲突
+
+- **严重度**：high
+- **要求**：required
+- **关联**：P-006 §6.2；alignment §0.2；workspace-protocol §4 / §4b；`docs/README` 规则 12（声称须遵守 P-006 冷启动）
+- **状态**：open
+- **证据**：
+  1. [`docs/standalone-bootstrap.md`](../../standalone-bootstrap.md)（updated **2026-07-20**，version **0.4.0**）复制 architecture 时仍写「P-001～P-005」；步骤顺序为 **建 Root → workspace.md → goal-tree**，**无** Charter → VP 串行；`workspace.md` 指引只改 `id`/`root_goal`/`canonical_scope`/`shared_materials_catalog`，**未要求** `plan_refs` / `primary_plan` / `vision_role`。
+  2. [`docs/tests/test_standalone_bootstrap.py`](../../tests/test_standalone_bootstrap.py) `_materialize_workspace` 写入的 frontmatter **缺少** `plan_refs`/`primary_plan`，却作为「合规」独立启用验收——与现行协议 fail-closed 条件相反。
+  3. 同文件测试断言 guide 含 workspace 路径，**不**断言 Charter/VP/P-006。
+- **影响**：按官方独立启用说明可复现出**不完整安装**工作区，却被测试标为通过；`docs/README`「须遵守 P-006 冷启动」与 guide 正文互相否定。宣称「核心包可独立完整启用」在 P-006 之后**名不副实**。
+- **关闭要求（fixed 路径建议）**：
+  1. 重写 standalone：复制来源含 vision 最小树（或明确「仅半安装 / 须先 Charter」边界）；顺序 **Charter → VP → 工作区+Root（含 plan 字段）**；
+  2. 测试生成合法 `plan_refs`/`primary_plan` 与最小 `docs/vision/`，或显式断言「不完整安装 + 仅引导」而**禁止**把缺 plan 的区标为完整成功；
+  3. 同步 `docs/README` 独立启用表述与版本/变更范围。
+
+#### F-013 · 消费方 core 包未携带愿景规则权威，且必备清单仍停在 P-005
+
+- **严重度**：high
+- **要求**：required
+- **关联**：P-006 §6.2「完整安装必含 Charter 及 alignment 所要求最小文件」；GOAL-019 D-003/D-004；`skills/core/README.md`
+- **状态**：open
+- **证据**：
+  1. `skills/core/docs/` **有** principles（含 P-006 全文）与 `templates/vision/*`，**无** `docs/vision/alignment.md`（及 charter/roadmap/reviews 骨架）。现场：`skills/core/docs/vision/alignment.md` **不存在**。
+  2. [`skills/core/README.md`](../../../skills/core/README.md) 仍写 `principles.md — P-001～P-005`；updated **2026-07-24**。
+  3. GOAL-019 [D-003](../GOAL-019-skills-consumer-workspace-bootstrap/01-decision.md) 表仍列 `principles.md（P-001～P-005）` 为必备——P-006 第一刀后**未回流** core 清单。
+  4. install 默认装 architecture + templates，消费仓可有 P-006 原则文，但 **alignment 门禁细则**依赖 monorepo 才有的 `docs/vision/`，冷启动只能靠 `/vision` 现写，缺少可复制的规则权威副本。
+- **影响**：Skills 消费路径「装 Skills = 装 core」在愿景层**不完整**；编排器 fail closed 依赖的 alignment 在纯消费仓可能缺失，与「完整安装」定义漂移。
+- **关闭要求**：更新 D-003/D-004 或等效决策：core 是否必备 `alignment.md`（及最小 vision scaffold 模板）；同步 `skills/core` 镜像、install 映射、core README、测试断言；明确「模板可建 Charter」≠「规则权威已安装」。
+
+#### F-014 · 多处权威/入口面在 P-006 后仍写「仅 P-001～P-005」
+
+- **严重度**：med
+- **要求**：required（权威面与对外成功边界）；入口说明可为 recommended 若降级
+- **状态**：open
+- **证据（抽样，非穷尽）**：
+
+  | 表面 | 过时表述 | 路径 |
+  |------|----------|------|
+  | 现行 Charter 成功边界 #1 与原则摘要 | `P-001～P-005` | [`docs/vision/charter.md`](../../vision/charter.md) L25、L43 |
+  | tech-stack 方法论行 | `P-001～P-005` | [`docs/architecture/tech-stack.md`](../../architecture/tech-stack.md) L16 |
+  | standalone 复制表 | `P-001～P-005` | `standalone-bootstrap.md` L22 |
+  | core README | `P-001～P-005` | `skills/core/README.md` L22 |
+  | prompts 设计原则 | `遵守 AGENTS … P-001～P-005` | [`skills/prompts/README.md`](../../../skills/prompts/README.md) L63 |
+  | 消费 AGENTS 模板速链 | `P-001～P-005 全文` | `skills/AGENTS.template.md` 文末；install Claude/Copilot 同源 |
+
+- **影响**：读者/安装方会以为愿景组合治理**不是**核心原则；与 principles 索引表、AGENTS §6d/6e、docs/README 规则 10 **直接冲突**。Charter 自身省略 P-006 尤严重（方向成功边界未覆盖「单愿景级联」）。
+- **关闭要求**：将上述表面统一为 **P-001～P-006**（或「P-001～P-005 执行层 + P-006 决策/组合层」的显式分层表述）；Charter 若仅 editorial 补 P-006 引用须走 revisions 分类；禁止只改一处留多处旧句。
+
+#### F-015 · 根 `AGENTS.md`（dogfood）与 `AGENTS.template.md`（消费）漂移，且 dogfood 弱化 architecture 必备
+
+- **严重度**：med
+- **要求**：required（就「architecture 同级必备」与「/vision 已落地」两句）；其余措辞差异可为 recommended
+- **状态**：open
+- **证据**：
+  1. 2026-07-29 哈希 **DRIFT**（根 24271 B vs template 21667 B）。部分差异合理（dogfood 路径 vs `{{…}}` 消费占位）。
+  2. 根 AGENTS §8：**「architecture：已有则改架构先更新文档；没有则按用户要求再考虑是否建立」**——与同文件 §1/§6「architecture **必备** / 缺则不完整安装」及 GOAL-019 D-003 **矛盾**。
+  3. 根 AGENTS 变更工作流步骤 3 仍写 **「未来 `/vision`」**，而 `/vision` 与 `06-vision-orchestrator` 已落地（D-018 / install 四入口）。
+  4. template 文末速链仍「P-001～P-005」（并入 F-014）；§6d/6e 比根文件更短，消费方操作摘要弱于 dogfood。
+- **影响**：本仓 AI 可能把 architecture 当可选；消费安装得到的规则与 dogfood 行为不一致，回归「只装 Skills、方法论可跳过」体验。
+- **关闭要求**：根 AGENTS 删除/改写「可考虑是否建立 architecture」与「未来 /vision」；建立 **template → install AGENTS** 与 dogfood 的同步策略（允许路径占位差异，禁止门禁语义分叉）；速链与 §6d 对齐 P-006。
+
+#### F-016 · 目录树与版本身份卫生缺口（非阻断设计）
+
+- **严重度**：low
+- **要求**：recommended
+- **状态**：open
+- **证据**：
+  1. [`directory-layout.md`](../../architecture/directory-layout.md) 的 `templates/` 树**未列出** `vision/`（实际 canonical 与 core 均有）。
+  2. [`docs/README.md`](../../README.md) frontmatter `version: 0.10.2`，正文「当前核心文档版本」仍为 **`0.9.1`**——双版本身份并存，读者不知以何为准。
+- **影响**：导航与发版沟通噪音；不单独否定 P-00x 语义。
+- **关闭要求**：补全 layout 树；统一或显式区分「文档入口版本」vs「可复制核心包版本」并在 README 一句话说清。
+
+### 必改项汇总
+
+| ID | 级别 | 一句话 |
+|----|------|--------|
+| **F-012** | required | standalone + 其测试与 P-006 冷启动/plan 门禁对齐，或降级为「半安装」且不得标完整成功 |
+| **F-013** | required | core/消费清单纳入愿景规则权威（至少 alignment）或正式缩小「完整安装」定义并改所有入口 |
+| **F-014** | required | 清除权威面「仅 P-001～P-005」；Charter/tech-stack/standalone/core/prompts/template 速链同步 P-006 |
+| **F-015** | required | 根 AGENTS 与 template 门禁语义对齐；去掉 architecture 可选与「未来 /vision」 |
+| **F-016** | recommended | directory-layout 与 docs 版本身份卫生 |
+
+### 与既有意见的异同
+
+| 既有 | 关系 |
+|------|------|
+| VRev-002 / V-F-001（独立 Vision Review 入口） | **已 fixed**（`/vision-audit`）；本条不重复；本条审文档包与冷启动产品化 |
+| GOAL-006 A-001～A-005 | 当时阶段 4 在 **pre-P-006 / pre-多工作区终态** 下 pass 关门合理；**不**追溯否定历史 close-out；本条是 P-006 后的**回流卫生**审计 |
+| A-015 F-007/F-008 | 台账与路径 D；本条不改 Root 退出契约 |
+
+### 结论 + 建议给编排器/用户的下一步
+
+**verdict: conditional**——**元规则设计（P-001～P-006 分层、对齐递归、finding 闭合、信息门禁）质量高且主文一致**；问题集中在 **P-006 第一刀之后的产品化回流未完成**：独立启用路径、core 分发边界、多入口过时「P-005 封顶」表述、AGENTS dogfood/消费分叉。
+
+建议（编排器 `/govern` 响应时）：
+
+1. **优先 F-012 + F-013**（否则「完整安装 / 独立启用」对外承诺继续虚假）。
+2. **F-014 + F-015** 作一次文档卫生 PR（可与 F-012 同波）。
+3. F-016 顺手。
+4. 是否新开子目标（如「P-006 后核心包与 standalone 回流」）或在路径 D 下维护性修正：按 P-004 请用户选；本意见**不**代选。
+5. Charter 补 P-006 若触达成功边界，按 alignment 判 editorial vs strategic（本审计建议多为 **editorial** 补全引用，但须用户/ `/vision` 确认 class）。
+
+### 声明
+
+本意见 **source: independent**；**不**修改任何目标 `status` / `progress` / goal-tree 状态列，**不**修改 Charter/VP。响应、finding 闭合与推进由 **`/govern`**（愿景面配合 **`/vision`**）处理。
+
+## A-019 · 响应 A-018 F-012～F-015（2026-07-29）
+
+- **source**：self（编排响应；**非** independent）
+- **auditor**：Grok Build `/govern`
+- **类型 / scope**：response · A-018 required findings（优先 F-012+F-013，再 F-014/F-015；顺手 F-016）
+- **verdict**：**pass**（本响应 scope）；A-018 四条 required 均 **closed · fixed**
+- **用户指令**：`/govern 响应 GOAL-001 A-018：优先 F-012 + F-013，再 F-014/F-015`
+- **P-004**：用户书面跳过同 scope 额外自审，直接 fixed
+
+### 关闭证据
+
+| Finding | 状态 | 证据 |
+|---------|------|------|
+| **F-012** | **closed · fixed** | [standalone-bootstrap.md](../../standalone-bootstrap.md) **0.5.0**；[test_standalone_bootstrap.py](../../tests/test_standalone_bootstrap.py) 生成 Charter/VP/plan 并断言；`python -m unittest discover -s docs/tests -p test_standalone_bootstrap.py` **3 ok** |
+| **F-013** | **closed · fixed** | `skills/core/docs/vision/alignment.md` 与 canonical 字节一致；core README **0.2.0**；install.ps1 / install.sh 安装 vision 规则；`test_core_d004_mirror_is_complete` ok；[D-025](01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29) |
+| **F-014** | **closed · fixed** | Charter 成功边界/原则摘要 → P-006（[VR-004](../../vision/revisions.md) editorial）；tech-stack、prompts README、AGENTS.template 速链已改；无权威面「仅 P-005 封顶」 |
+| **F-015** | **closed · fixed** | 根 AGENTS **0.10.1**：architecture 完整安装必备；工作流写 **`/vision`**（非「未来」）；template 0.10.1 + install Claude/Copilot 同源；`test_monorepo_agents_architecture_not_optional_supplement` ok |
+| **F-016** | **closed · fixed**（recommended） | directory-layout 含 `templates/vision/`；docs/README **0.10.3** 区分入口版本 vs 可复制包 `0.9.1` |
+
+### 验证
+
+- `python -m unittest discover -s docs/tests -p "test_standalone_bootstrap.py" -v` → **OK**（3）  
+- `python -m unittest skills.tests.test_skills_orchestrator -v` → **OK**（38）
+
+### 仍开放（非本条 scope）
+
+| 项 | 状态 |
+|----|------|
+| R-009-X | accepted residual |
+| A-006 F-006 / A-015 F-010 | recommended open |
+| 发版下一 tag | 须用户授权 |
+
+### 声明
+
+本响应不修改 Root `status`/`progress`；不打 tag；不宣称阶段 6 终态。
 
 ### P-004 注记
 

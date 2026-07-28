@@ -4,8 +4,8 @@ doc: decision
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-24
-updated: 2026-07-24
-version: 1.0.0
+updated: 2026-07-29
+version: 1.0.1
 ---
 
 # 决策记录 · GOAL-019
@@ -69,7 +69,7 @@ version: 1.0.0
 
    | 内容 | 消费方 |
    |------|--------|
-   | `principles.md`（P-001～P-005） | **必备** |
+   | `principles.md`（P-001～**P-006**；历史稿曾写至 P-005，见 D-006） | **必备** |
    | `workspace-protocol.md` | **必备** |
    | `overview.md` / `directory-layout.md`（可去 monorepo 专有段） | **建议必备** |
    | canonical 五件套 + workspace-context 模板 | **必备**（可与现有 `skills/templates` 统一为「装到 `docs/templates`」） |
@@ -242,3 +242,20 @@ version: 1.0.0
 
 - **F-001 仅 residual 不改根 AGENTS**：否决（用户明确「关闭 F-001（改根 AGENTS）」）。  
 - **F-003 阻塞关门直到 bash CI**：否决（超出本目标有界范围；记 residual）。
+
+## D-008 · Core 清单回流：愿景 alignment 必备（2026-07-29）
+
+**状态**：accepted（GOAL-019 已 done；本条为**清单勘误/扩展注记**，不重开目标）  
+**确认来源**：GOAL-001 [D-025](../GOAL-001-main-vision/01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29) / A-018 F-013 fixed  
+**关系**：补充 D-003/D-004；权威实施以 monorepo `skills/core` + install 为准。
+
+### 决定
+
+1. 消费方 core **必备**安装 `docs/vision/alignment.md`（规则权威），可附 `docs/vision/README.md` 说明边界。  
+2. **不**把 monorepo dogfood Charter/VP **实例**打进 core；实例由冷启动从 `templates/vision/` 创建。  
+3. D-003 表中 principles 表述更正为 **P-001～P-006**（本文件表已改）。  
+4. install 缺 `alignment.md` = 不完整 core 镜像（与缺 principles 同级失败）。
+
+### 为什么
+
+P-006 后完整安装依赖 alignment 门禁细则；仅 principles 全文不足以让消费仓 fail-closed 对齐。

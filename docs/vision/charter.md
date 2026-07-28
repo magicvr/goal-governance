@@ -7,7 +7,7 @@ version: 0.1.0
 effective_date: 2026-07-28
 primary_workspace: workspace-001-goal-governance
 created: 2026-07-28
-updated: 2026-07-28
+updated: 2026-07-29
 ---
 
 # Charter · Goal Governance
@@ -22,11 +22,11 @@ updated: 2026-07-28
 
 在本愿景仍为 `active` 的前提下，下列方向成立即视为仍在愿景内（**不是**可关门的验收 checklist）：
 
-1. **协议可复制**：生命周期、P-001～P-005、五件套与工作区/共享资料边界有可独立启用的文档与模板。
+1. **协议可复制**：生命周期、P-001～**P-006**、五件套、工作区/共享资料边界与愿景对齐规则有可独立启用的文档与模板。
 2. **消费一致**：Skills 与 Web（及后续适配器）消费同一核心协议，不另立第二套目标状态。
 3. **可审计闭环**：决策、执行事实与审计意见可落盘、可交叉审、可门禁；独立审计默认不直接改 status。
 4. **工作区隔离**：多工作区时目标/候选/AI 上下文不混合；跨区默认 fail closed。
-5. **愿景可对齐**：进行中与将开启的工作通过愿景规划（VP）挂接本 Charter，避免各区 Root 各自漂移。
+5. **愿景可对齐**：进行中与将开启的工作通过愿景规划（VP）挂接本 Charter（单愿景 · Charter→VP→工作区），避免各区 Root 各自漂移。
 
 ## 非目标
 
@@ -40,11 +40,12 @@ updated: 2026-07-28
 
 ## 原则摘要
 
-操作原则以 [docs/architecture/principles.md](../architecture/principles.md) 为准（P-001～P-005）。与本 Charter 直接相关的要点：
+操作原则以 [docs/architecture/principles.md](../architecture/principles.md) 为准（P-001～**P-006**）。与本 Charter 直接相关的要点：
 
 - 大范围先路线图再立项（P-001）；可执行细节在工作区 Root / 子目标，不在本文件堆进度。
 - 事实与审计可指回证据（P-002 / P-003）；愿景规划关门只做纲领确认并链接区证据。
 - 冲突与是否自审问用户（P-004）；信息门禁不可用「以后再说」绕过（P-005）。
+- 单愿景源头、冷启动串行、对齐递归与组合编排（P-006）；细则见 [alignment.md](alignment.md)。
 
 ## 与 Root Goal 的关系
 

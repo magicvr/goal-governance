@@ -7,8 +7,8 @@ plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
 serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
 created: 2026-07-18
-updated: 2026-07-28
-version: 0.8.5
+updated: 2026-07-29
+version: 0.8.6
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -33,8 +33,8 @@ version: 0.8.5
 
 | 交付面 | 现时状态 | 结论 |
 |--------|----------|------|
-| 核心方法论与模板 | GOAL-006 / 007 / 010 `done`；D-016/D-017 协议修订已落盘 | 可复用；P-001～P-006；工作区/共享资料协议就位；**不是** Root 终态 |
-| Skills 消费适配器 | GOAL-008 `done`（阶段 5）；GOAL-018 release 打包 `done`；GOAL-019 消费方骨架 `done`；入口 `/govern` `/audit` `/vision` `/vision-audit` | 阶段 5 已关；含新行为的发版仍按 GOAL-008 惯例刷 runtime；**F-006** 真实外部采用仍 recommended open |
+| 核心方法论与模板 | GOAL-006 / 007 / 010 `done`；D-016/D-017 + **D-025**（A-018 回流） | 可复用；P-001～P-006；standalone/core 已对齐冷启动；**不是** Root 终态 |
+| Skills 消费适配器 | GOAL-008 `done`；018/019 `done`；core 含 `vision/alignment.md`；入口 `/govern` `/audit` `/vision` `/vision-audit` | 阶段 5 已关；含新行为的发版仍按 GOAL-008 惯例刷 runtime；**F-006** 仍 recommended open |
 | Web 工作台 | 阶段 6 **有界结项**（D-015 / A-014）；009 + 012～017 `done`（有界） | 主路径有界可用；**≠ 终态**；扩展/终态 → **R-009-X** 与各子目标 residual |
 
 ### 纲领位置（P-001）
@@ -45,7 +45,7 @@ version: 0.8.5
 | 5 | **已关门** | GOAL-008；F-005 closed（A-013） |
 | 6 | **有界结项**（≠ 终态） | [D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22) / [A-014](03-audit.md#a-014--阶段-6-有界结项审视2026-07-22)；009 + 012～017 |
 | 6 后 · Skills 维护波次 | **已 done**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 归属） | GOAL-018（Release 打包）；GOAL-019（消费方骨架）— **非**阶段 7 预工作、**非** residual 主线 |
-| 6 后 · 协议 / 愿景栈 | **路径 D 维护**（Root 仍 active） | D-016～D-023；P-006；`/vision`；`/vision-audit` |
+| 6 后 · 协议 / 愿景栈 | **路径 D 维护**（Root 仍 active） | D-016～D-025；P-006；`/vision`；`/vision-audit`；A-018 required closed |
 | 7 | **延期未开**（路径 D；非「缺契约」） | 改道 **A** 须新 D-0xx；见 D-024 §6 |
 
 ### 愿景栈（最小对齐）
@@ -68,6 +68,7 @@ version: 0.8.5
 | **发版候选**（A-015 F-011） | recommended | open | **runtime ready**（unreleased；path-D 验证 2026-07-28）；**v0.9.1 已 tag**；下一正式 tag（建议 v0.9.2）须用户授权；不阻断 Root `active` |
 | **A-015 F-007** | required | **closed · fixed**（A-016） | 现时以本节为准 |
 | **A-015 F-009** | recommended | **closed · fixed**（对照表已在现时摘要；A-016/A-017） | 曾缺 R-009-X 有界 vs 终态对照 |
+| **A-018 F-012～F-015** | required | **closed · fixed**（[D-025](01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29) / [A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)） | 核心方法论文档/standalone/core/AGENTS 回流 |
 
 ### R-009-X 对照刷新（A-015 F-009 · 已刷新）
 
@@ -95,7 +96,8 @@ version: 0.8.5
 | 裁决 | 要点 | 权威版本 / 说明 |
 |------|------|----------------|
 | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)** | **路径 D**：仅维护不关 Root；关闭 A-015 F-008；018/019 归属 Skills 维护波次 | A-017；A/B/C 延期 |
-| [D-017](01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28) | P-006；冷启动 Charter→VP→区；取消 sandbox opt-out；Vision Review | principles **0.7.0**；alignment **0.3.0**；AGENTS **0.10.0** |
+| **[D-025](01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29)** | A-018 F-012～F-015 fixed；standalone/core/AGENTS 回流 | A-019；路径 D |
+| [D-017](01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28) | P-006；冷启动 Charter→VP→区；取消 sandbox opt-out；Vision Review | principles **0.7.0**；alignment **0.3.0**；AGENTS **0.10.1** |
 | [D-016](01-decision.md#d-016--核心协议逻辑一致性修订finding-闭合--隐式工作区--p-004-扩表2026-07-28) | finding 三路径；P-004.3/4.4；legacy 唯一路径 | 其后 D-017 升版；Root 仍 active |
 | D-018～D-023 | `/vision` 第二刀；follow-through；`/vision-audit`；runtime 重采（不发版） | 见 [02-execution](02-execution.md)；追溯为路径 D 型维护 |
 

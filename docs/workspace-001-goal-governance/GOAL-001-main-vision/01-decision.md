@@ -618,3 +618,36 @@ A / B / C **显式延期**：未采用本拍；若将来改道，必须再经 /g
 
 - [A-017](03-audit.md) 关闭 F-008（fixed）；刷新 [00-meta 现时摘要](00-meta.md)、[02-execution](02-execution.md)、[goal-tree](../goal-tree.md) 日志。
 - 编排器默认下一步：D 内维护（runtime/发版/协议）或用户点名的单一动作；**不**自动开阶段 7 / residual 战役 / Root 关门。
+
+## D-025 · 响应 A-018：P-006 后核心包 / standalone / AGENTS 回流（2026-07-29）
+
+**状态**：accepted  
+**确认来源**：用户 `/govern 响应 GOAL-001 A-018：优先 F-012 + F-013，再 F-014/F-015`（路径 D 协议维护；书面指定 fixed 优先序）。  
+**P-004**：存在 independent A-018、无同 scope self 全量审；用户以「响应 + 优先序」书面选择**不另做自审、直接按 fixed 修正**。
+
+### 决定
+
+以 **fixed** 路径闭合 A-018 **F-012～F-015**（F-016 recommended 顺手处理）；**不**新开子目标、**不**改 Root status、**不**发版。
+
+| Finding | 闭合路径 | 要点 |
+|---------|----------|------|
+| **F-012** | fixed | `standalone-bootstrap` **0.5.0** 强制 Charter→VP→工作区+Root；复制含 `alignment.md`；`workspace` 必填 plan；测试生成愿景+plan 并断言 |
+| **F-013** | fixed | core 必备 `docs/vision/alignment.md`（+ vision README）；install 默认安装 vision 规则面；扩展 D-004 清单（本条 + GOAL-019 [D-008](../GOAL-019-skills-consumer-workspace-bootstrap/01-decision.md#d-008--core-清单回流愿景-alignment-必备2026-07-29) 注记） |
+| **F-014** | fixed | Charter / tech-stack / standalone / core README / prompts README / AGENTS 模板速链统一 **P-001～P-006**；Charter 为 **editorial**（VR-004），版本仍 0.1.0 |
+| **F-015** | fixed | 根 AGENTS 删除 architecture「可再建」与「未来 /vision」；template §6d/6e 与工作流对齐；install Claude/Copilot 指令同源刷新 |
+| **F-016** | fixed（顺手） | directory-layout 补 `templates/vision/`；docs/README 区分入口版本 vs 可复制包版本 |
+
+### 为什么
+
+A-018 证明元规则自洽，缺口在 P-006 后产品化回流；用户已书面要求按 fixed 优先序修正，属路径 D 允许的协议/文档卫生。
+
+### 未选
+
+- residual / overruled 任一条 required finding  
+- 新开 GOAL-020 专项目标（本拍可在 Root 维护波次内完成）  
+- Charter strategic / re-align（仅措辞补 P-006 引用）
+
+### 影响
+
+- 证据与响应节：[A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)、[02-execution](02-execution.md)  
+- 消费方 core 缺 alignment = 不完整安装；standalone 缺 Charter/plan 不得标完整成功  

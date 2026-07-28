@@ -2,12 +2,16 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-29
 parent: null
-version: 1.1.5
+version: 1.1.6
 ---
 
 # Goal Tree
+
+## 2026-07-29 · 响应 GOAL-001 A-018（D-025 · 路径 D）
+
+`/govern` 按用户优先序 **fixed** 闭合 A-018 **F-012～F-015**（F-016 顺手）：standalone 冷启动对齐 P-006；core 分发 `vision/alignment.md`；权威面 P-006；AGENTS dogfood/消费门禁对齐。[D-025](GOAL-001-main-vision/01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29) / [A-019](GOAL-001-main-vision/03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)。测试：standalone 3 ok；skills orchestrator 38 ok。**不**改各 GOAL status/progress；**不** tag；Root 仍 `active`。
 
 ## 2026-07-28 · 路径 D：发版候选 runtime 验证（不发版）
 

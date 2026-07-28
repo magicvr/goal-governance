@@ -2,9 +2,9 @@
 title: Skills · 提示词模板
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-29
 parent: null
-version: 0.5.1
+version: 0.5.2
 ---
 
 # prompts/ · 目标治理提示词
@@ -60,7 +60,7 @@ Goal 交叉意见由 `/audit` 写入；独立 Vision Review 由 `/vision-audit` 
 | 主入口 + 交叉入口 | `/govern` 生命周期；`/audit` 独立意见 |
 | 原语可组合 | 01～04 保证文档结构一致 |
 | 信息就绪 | P-005：登记未知、最晚需要阶段、证据与残余风险；按规模拆信息工作 |
-| 遵守 AGENTS | 扁平存储、parent、goal-tree、P-001～P-005 |
+| 遵守 AGENTS | 扁平存储、parent、goal-tree、P-001～**P-006** |
 | 真实 | 禁止编造进度与空话 |
 
 ## 与其他交付物

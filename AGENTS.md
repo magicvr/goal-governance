@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-29
 parent: null
-version: 0.10.0
+version: 0.10.1
 ---
 
 # AGENTS.md
@@ -229,7 +229,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
   - 若项目已约定子目录（如 `web/`、`app/`、`services/`）：按该约定；`{{APP_DIR}}` 仅在有约定时填写。
   - 刚装本包、文件很少时：项目性质与代码路径标为待确认，**问用户**或读已有 README/架构；目录观察只作参考。
 - **语言与日期**：标题/正文跟随用户语言；slug 建议小写英文短横线；日期用会话/系统 `YYYY-MM-DD`。
-- **architecture**：已有则改架构先更新文档；没有则按用户要求再考虑是否建立。
+- **architecture**：**完整安装必备**（与 Skills 同级）；缺失时先补 core（重跑 install 或从包内 `core/docs` 复制）再推进治理写入。改治理元规则时先更新 `docs/architecture/` 再改实现。
 
 ## 8b. Skills 包路径
 
@@ -260,7 +260,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 ```text
 1. 判定愿景完整性：缺 Charter → 仅引导补齐（Charter→VP），停止非引导推进
 2. 读 Charter 版本与 alignment；再读 `docs/workspace-<NNN>-<slug>/workspace.md`（若有）→ 校验 Root/canonical/资料/`plan_refs`+`primary_plan`；再读 goal-tree → 编号、parent、未关门目标
-3. 未指定原子操作时 → 实现层优先 `/govern`；愿景/开区结构决策走 P-006 / 未来 `/vision`
+3. 未指定原子操作时 → 实现层优先 `/govern`；愿景/开区结构决策走 P-006 / **`/vision`**
 4. 尚不可直接执行 → 先纲领路线图（P-001）；存在影响门禁的未知 → 先登记信息需求（P-005）
 5. 推进时检查审计意见、信息门禁、愿景对齐、Vision Review required、strategic 宽阻断；P-004 先问用户
 6. **未合法闭合的 required/必改项 → 先闭合留痕，不得假装放行或关门**

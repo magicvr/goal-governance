@@ -314,10 +314,12 @@ install_core_docs() {
   if [[ -f "$core_docs/architecture/tech-stack.md" ]]; then
     die "core mirror must not ship tech-stack.md (D-004)"
   fi
-  echo "Installing core methodology → ./docs/ (architecture + templates + README)"
+  [[ -f "$core_docs/vision/alignment.md" ]] || die "Missing alignment.md in core vision mirror (GOAL-001 A-018 F-013 / D-025)"
+  echo "Installing core methodology → ./docs/ (architecture + templates + vision rules + README)"
   copy_file "$core_docs/README.md" "$TARGET_DIR/docs/README.md"
   copy_dir_merge "$core_docs/architecture" "$TARGET_DIR/docs/architecture" "core architecture"
   copy_dir_merge "$core_docs/templates" "$TARGET_DIR/docs/templates" "core templates"
+  copy_dir_merge "$core_docs/vision" "$TARGET_DIR/docs/vision" "core vision rules"
 }
 
 # --- parse args ---

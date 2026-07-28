@@ -746,7 +746,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(ps1, r"00-govern-orchestrator|/govern")
 
     def test_core_d004_mirror_is_complete(self) -> None:
-        """GOAL-019 D-004: skills/core ships methodology subset without tech-stack."""
+        """GOAL-019 D-004 + GOAL-001 D-025: core ships methodology + vision alignment."""
         core = SKILLS_ROOT / "core" / "docs"
         required = (
             core / "README.md",
@@ -760,6 +760,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             core / "templates" / "goal-folder" / "01-decision.md",
             core / "templates" / "goal-folder" / "02-execution.md",
             core / "templates" / "goal-folder" / "03-audit.md",
+            core / "vision" / "alignment.md",
+            core / "vision" / "README.md",
         )
         for path in required:
             self.assertTrue(path.is_file(), f"missing core mirror file: {path}")
@@ -768,8 +770,18 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             "core mirror must not include tech-stack.md",
         )
         principles = (core / "architecture" / "principles.md").read_text(encoding="utf-8")
-        for marker in ("P-001", "P-002", "P-003", "P-004", "P-005"):
+        for marker in ("P-001", "P-002", "P-003", "P-004", "P-005", "P-006"):
             self.assertIn(marker, principles)
+        core_readme = (SKILLS_ROOT / "core" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("P-006", core_readme)
+        self.assertIn("alignment.md", core_readme)
+        self.assertNotIn("P-001～P-005", core_readme)
+        alignment = (core / "vision" / "alignment.md").read_bytes()
+        self.assertEqual(
+            alignment,
+            (SKILLS_ROOT.parent / "docs" / "vision" / "alignment.md").read_bytes(),
+            "core vision/alignment.md must match canonical",
+        )
         layout = (core / "architecture" / "directory-layout.md").read_text(encoding="utf-8")
         self.assertIn("workspace-", layout)
         self.assertNotIn("goal-governance/web", layout.replace("\\", "/"))
@@ -786,6 +798,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("Install-CoreDocs", ps1)
         self.assertIn("core/docs", sh.replace("\\", "/"))
         self.assertIn("core", ps1)
+        self.assertIn("vision/alignment.md", sh.replace("\\", "/"))
+        self.assertIn("alignment.md", ps1)
         self.assertRegex(sh, r"workspace-|init-workspace")
         self.assertRegex(ps1, r"workspace-|InitWorkspace|init-workspace")
         self.assertNotIn(r"docs\goals\goal-tree", ps1)
@@ -867,11 +881,18 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
 
     def test_monorepo_agents_architecture_not_optional_supplement(self) -> None:
-        """GOAL-019 A-001 F-001: root AGENTS must not call architecture optional."""
+        """GOAL-019 A-001 F-001 + A-018 F-015: root AGENTS must not call architecture optional."""
         agents = (SKILLS_ROOT.parent / "AGENTS.md").read_text(encoding="utf-8")
         self.assertNotRegex(agents, r"architecture 原则全文可选补充")
         self.assertNotRegex(agents, r"architecture.*可选补充")
+        self.assertNotRegex(agents, r"按用户要求再考虑是否建立")
+        self.assertNotIn("未来 `/vision`", agents)
+        self.assertNotIn("未来 /vision", agents)
         self.assertRegex(agents, r"同级必备|原则全文\*\*必备\*\*|必备.*同级")
+        self.assertIn("完整安装必备", agents)
+        template = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
+        self.assertIn("P-001～**P-006**", template)
+        self.assertNotIn("P-001～P-005 全文", template)
 
     def test_install_all_ships_contract_mirror(self) -> None:
         sh = INSTALL_SH.read_text(encoding="utf-8")

@@ -2,9 +2,9 @@
 title: AGENTS 模板 · 目标治理 AI 规则
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-29
 parent: null
-version: 0.10.0
+version: 0.10.1
 ---
 
 # AGENTS.md
@@ -175,20 +175,28 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 
 ## 6d. 愿景体系（单愿景 · Charter → VP → Workspace）
 
-**完整安装必有**现行 `docs/vision/charter.md`（`status: active`）。缺省 = **不完整安装**：仅允许引导补齐；拒绝非引导开区/推进/放行/关门。
+**完整安装必有**现行 `docs/vision/charter.md`（`status: active`）与 `docs/vision/alignment.md`（规则权威）。缺省 = **不完整安装**：仅允许引导补齐；拒绝非引导开区/推进/放行/关门。
 
-1. **单愿景制**：每项目有且仅有一个现行 Charter；禁止多愿景。
-2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 `plan_refs`/`primary_plan`）。
-3. **所有工作区**（含 `sandbox` 角色）**必须**挂 VP；**取消** sandbox plan opt-out。
-4. 细则：`docs/vision/alignment.md`；原则全文 **P-006**。
+1. **单愿景制**：每项目有且仅有一个现行 Charter；禁止多愿景。换代用 `superseded`，不是第二北极星。
+2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 `plan_refs`/`primary_plan`）→ 区内纲领路线图/子目标。
+3. **先读** Charter 与 `docs/vision/alignment.md`（或 consumer-checklist），再定位工作区与推进目标。
+4. **对齐递归**：子目标→父目标→Root→VP→Charter（源头）。机读字段链 + 语义不与上一级边界/非目标明显冲突。
+5. **所有工作区**（含 `sandbox` 角色）**必须** `plan_refs` + `primary_plan`；**取消** sandbox opt-out。
+6. 缺 plan、VP 缺失、或 `vision_ref` 与 charter 版本不一致 → **fail closed**。
+7. `docs/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 见 `docs/vision/reviews.md`（`VRev-00N`）。
+8. 细则：`docs/vision/alignment.md`；原则全文 **P-006**；协议摘要：`docs/architecture/workspace-protocol.md` §4b。
 
-## 6e. 级联与入口分工（P-006 操作摘要）
+## 6e. 级联流程、结构选型与分层审视（P-006 操作摘要）
 
 ```text
-决策层 /vision：Charter → 组合编排 → 意图(VP) → Review / re-align
-实现层 /govern：工作区+Root → 纲领路线图 → 阶段计划 → 子目标 → Goal Audit 响应
-交叉 /audit：目标 03-audit（independent）；不写 Vision Review
+决策层：Charter → 组合编排 → 意图(VP) → 结构选型 → Vision Review
+实现层：工作区+Root → 纲领路线图 → 阶段计划 → 子目标（可嵌套）→ Goal Audit
+回流：实现偏差可回到决策层；strategic 后宽阻断直至 re-align
+交叉 /audit：目标 03-audit（independent）；/vision-audit：reviews.md；均不改 status
 ```
+
+**结构选型**：改源头→Charter strategic；新波次→VP；独立树/隔离→新工作区；同 Root→子目标；探索→`sandbox` 角色仍挂 VP。  
+工具：决策层 → `/vision`；实现层 → `/govern`；独立 Vision Review → `/vision-audit`。
 
 ## 7. 必须同步更新 goal-tree.md
 
@@ -240,18 +248,19 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 ## 10. 变更工作流
 
 ```text
-1. 定位当前工作区 `workspace.md` → 校验 Root Goal/canonical 范围/资料引用；再读该工作区 goal-tree.md → 编号、parent、未关门目标
-2. 未指定原子操作时 → 优先编排器
-3. 尚不可直接执行 → 先高层路线图（P-001）；存在影响门禁的未知 → 先登记信息需求与最晚需要阶段（P-005）
-4. 推进时检查相关审计意见与信息就绪门禁；P-004 情形先询问用户
-5. **若存在未关闭 required/必改项 → 先响应/修正，不得假装放行或关门**
-6. 创建或修改五件套
-7. 更新 goal-tree.md（树 + 表）
-8. 项目已有 docs/README、architecture 等时再按需更新
-9. 再改代码或 Skills（路径以项目实际为准）
+1. 判定愿景完整性：缺 Charter / alignment → 仅引导补齐（Charter→VP），停止非引导推进
+2. 读 Charter 版本与 alignment；再读 workspace.md → 校验 Root/canonical/资料/`plan_refs`+`primary_plan`；再读 goal-tree
+3. 未指定原子操作时 → 实现层优先 `/govern`；愿景/开区结构决策走 **`/vision`**
+4. 尚不可直接执行 → 先高层路线图（P-001）；存在影响门禁的未知 → 先登记信息需求（P-005）
+5. 推进时检查审计意见、信息门禁、愿景对齐、Vision Review required、strategic 宽阻断；P-004 先问用户
+6. **若存在未关闭 required/必改项 → 先响应/修正，不得假装放行或关门**
+7. 创建或修改五件套
+8. 更新 goal-tree.md（树 + 表）
+9. 按需更新 docs/README、architecture、vision
+10. 再改代码或 Skills
 ```
 
-步骤 **1、3–7 强制**；编排优先；8–9 按影响面。
+步骤 **1–2、4–8 强制**；编排优先；9–10 按影响面。
 
 ## 11. 正确做法与硬约束
 
@@ -259,14 +268,15 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 
 - 层级：平铺文件夹 + `parent` 完整 id。
 - 改 status/progress/parent/新建：同步 goal-tree 树与表。
-- 大目标：先路线图，再按阶段建子目标。
+- 大目标：先路线图，再按阶段建子目标；阶段内可并行。
 - 执行/审计：只写有证据的事实；计划单独标注。
 - 代码布局与 Root slug：默认见第 8 节；以用户/项目约定为准（`web/` 等为可选约定示例）。
 - Skills 包：按内容定位 SKILLS_PKG。
-- P-001：本文件第 6 节；P-002～P-005：第 6b 节；architecture 原则全文**必备**（与 Skills 同级）。
-- 空仓 S0：先 scaffold `docs/workspace-001-<用户确认 slug>/`（workspace.md + goal-tree），再创建 Root；禁止静默默认 slug。
+- P-001：第 6 节；P-002～P-005：第 6b 节；**P-006**：第 6d/6e 节；architecture 原则全文**必备**（与 Skills 同级；缺则不完整安装）。
+- 空仓 S0：**先** Charter→VP，再 scaffold 工作区+Root（slug **用户确认**）；禁止静默默认 slug、禁止无 Charter 开区。
 - 目标可带未知立项，但信息项、阶段门禁、证据与残余风险接受必须可追踪；按工作量而非固定“两子目标”拆分。
 - 交叉审计意见由编排器统一响应；冲突、是否自审、单条 finding residual/overruled、信息 residual 均问用户并给建议。
+- 单愿景 + 冷启动串行 + 对齐递归；结构选型用判定树。
 
 **硬约束**
 
@@ -278,6 +288,8 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 - 正式审计意见必须落在被审目标 `03-audit.md`（可链附件）；未落盘意见不作为放行依据。
 - 未合法闭合的 required/必改 findings 存在时，禁止推进对应门禁或 `status: done`（闭合仅限 fixed / accepted-residual / user-overruled）。
 - 无显式工作区时禁止把任意路径当作隐式工作区根；仅 legacy `docs/goals/` 或空治理 scaffold。
+- **完整安装必有唯一 active Charter + alignment**；缺则仅引导补齐。
+- **所有工作区必须挂 VP**（无 sandbox plan opt-out）；禁止跨区 `parent`；禁止多愿景。
 
 ## 12. 完成前检查清单
 
@@ -318,6 +330,7 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 - Root Goal：`{{WORKSPACE_ROOT}}/{{ROOT_GOAL_FOLDER}}/00-meta.md`
 - 核心模板目录：`{{CORE_TEMPLATES_DIR}}`（若项目采用独立核心层）
 - 架构说明：`{{ARCHITECTURE_PATH}}`
-- 治理原则：AGENTS 第 6 / 6b 节；`docs/architecture/principles.md`（必备，P-001～P-005 全文）
+- 治理原则：AGENTS 第 6 / 6b / 6d / 6e 节；`docs/architecture/principles.md`（必备，P-001～**P-006** 全文）
+- 愿景对齐：`docs/vision/alignment.md`；审视台账：`docs/vision/reviews.md`
 - 代码/应用布局：仓库根为常见默认；若已约定子目录则填 `{{APP_DIR}}`（可空）
 - Skills 目录：`{{SKILLS_DIR}}`
