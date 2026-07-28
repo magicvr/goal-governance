@@ -9,6 +9,10 @@ version: 1.1.2
 
 # Goal Tree
 
+## 2026-07-28 · `/vision` follow-through（GOAL-001 D-019；不发版）
+
+Dual-pass runtime：Claude+Grok vision **pass**；Copilot **quota fail** → pending。VRev-001；消费 AGENTS 同步 P-006。**无**正式发版。详见 [D-019](GOAL-001-main-vision/01-decision.md#d-019--vision-follow-throughruntime--消费面--vrev不发版2026-07-28)。
+
 ## 2026-07-28 · Skills `/vision` 第二刀（GOAL-001 D-018）
 
 落地 `06-vision-orchestrator` 与默认 install 三入口（govern/audit/vision）；契约矩阵 vision=pending-runtime-validation。**不**改各 GOAL status/progress。详见 [D-018](GOAL-001-main-vision/01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。

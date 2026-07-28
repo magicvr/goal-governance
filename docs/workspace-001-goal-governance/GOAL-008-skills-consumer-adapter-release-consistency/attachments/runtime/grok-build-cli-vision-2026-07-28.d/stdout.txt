@@ -1,0 +1,11 @@
+**GROK_VISION_DISPATCH_OK**
+
+| Item | Value |
+|------|--------|
+| **Skill title** | `vision` · 愿景与组合治理（Grok Build skill） |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **Orchestrator prompt** | `skills/prompts/06-vision-orchestrator.md` (SKILLS_PKG = `skills/`) |
+| **Active Charter** | `vision-goal-governance@0.1.0` (`status: active`) |
+| **workspace-001 `primary_plan`** | **Resolves** — `primary_plan: VP-001-governance-platform-delivery` → `docs/vision/plans/VP-001-governance-platform-delivery.md` exists; `vision_ref: vision-goal-governance@0.1.0` matches Charter |
+
+Scan-only probe; no files modified.

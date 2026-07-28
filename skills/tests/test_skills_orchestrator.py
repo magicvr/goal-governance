@@ -590,7 +590,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         )
         self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.220")
         self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.112")
-        self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.71")
+        self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
         # Claude + Grok + Copilot: all six entrypoints runtime-verified 2026-07-28
@@ -613,9 +613,16 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 for path in entrypoints[name]["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertIn("2026-07-28", path)
-            self.assertEqual(
-                entrypoints["vision"]["status"], "pending-runtime-validation"
-            )
+            vision = entrypoints["vision"]
+            if consumer_id == "github-copilot-cli":
+                self.assertEqual(vision["status"], "pending-runtime-validation")
+            else:
+                self.assertEqual(vision["status"], "runtime-verified")
+                self.assertTrue(vision["evidence"])
+                for path in vision["evidence"]:
+                    self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
+                    self.assertIn("vision", path)
+                    self.assertIn("2026-07-28", path)
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")

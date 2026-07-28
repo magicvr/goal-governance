@@ -12,6 +12,18 @@ version: 0.3.9
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
+## 2026-07-28 · `/vision` follow-through（D-019；不发版）
+
+- **决策**：[D-019](01-decision.md#d-019--vision-follow-throughruntime--消费面--vrev不发版2026-07-28)。
+- **Runtime dual-pass（GOAL-008 attachments/runtime）**：
+  - Claude：`claude-code-cli-vision-2026-07-28-pass1.json` + `…-2026-07-28.json` → **pass** / markerObserved
+  - Grok：`grok-build-cli-vision-2026-07-28-pass1.json` + `…-2026-07-28.json` → **pass** / markerObserved
+  - Copilot：两次 **fail**（stderr: monthly quota）；矩阵 vision 仍 pending；scratch `vision-capture-copilot.log`
+- **矩阵/README**：Claude+Grok vision runtime-verified；Copilot pending；skills README 状态表已对齐。
+- **消费面**：AGENTS.template / Claude install AGENTS / Copilot instructions 含 P-006 与三入口。
+- **Dogfood**：[VRev-001](../../../vision/reviews.md) self pass；**无** tag/Release/release_evidence release-mode。
+- 命令摘要见 GOAL-008 执行与 scratch `vision-capture-summary.txt`。
+
 ## 2026-07-28 · Skills `/vision` 第二刀（D-018）
 
 - **决策**：[D-018](01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。

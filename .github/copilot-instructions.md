@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-24
 parent: null
-version: 0.9.0
+version: 0.10.0
 ---
 
 # AGENTS.md
@@ -21,7 +21,8 @@ version: 0.9.0
 | 目标与过程记录 | `docs/workspace-<NNN>-<slug>/` | 当前工作区内的唯一长期存储 |
 | 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
 | 核心方法论（architecture） | `docs/architecture/` | **与 Skills 同级必备**（install 默认安装）；含 principles、workspace-protocol 等 |
-| 治理原则全文 | `docs/architecture/principles.md` | **必备**；P-001～P-005 权威长文；AGENTS §6/6b 为操作摘要 |
+| 治理原则全文 | `docs/architecture/principles.md` | **必备**；P-001～**P-006** 权威长文；AGENTS §6/6b/6d/6e 为操作摘要 |
+| 仓库愿景体系 | `docs/vision/` | **完整安装必备**；**单愿景** Charter→VP→工作区；**不是** goal-tree / progress 权威 |
 | 文档使用规范 | `docs/README.md` | **必备**（install 默认精简入口） |
 | 核心模板 | `docs/templates/`（或 `{{CORE_TEMPLATES_DIR}}`） | **必备**；创建五件套与 workspace 上下文 |
 | 工作区与共享资料协议 | `<workspace-root>/workspace.md`、`docs/architecture/workspace-protocol.md` | workspace.md 存在时必读；protocol **必备**；目标状态仍以该工作区根为准 |
@@ -32,7 +33,7 @@ version: 0.9.0
 
 1. **工作区内扁平存储**：所有目标文件夹平铺在 `docs/workspace-<NNN>-<slug>/` 根，**禁止**用子文件夹表达父子关系。
 2. **Root**：每个工作区的 `GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
-3. **编号**：先读当前工作区 `goal-tree.md`（或扫描其 canonical root），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。
+3. **编号**：先读当前工作区 `goal-tree.md`（或扫描其 canonical root），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。编号在工作区内单调不复用；跨区 id 可重复，**禁止**把工作区编号嵌进 goal id。跨区引用见 workspace-protocol §2.6：文档默认 **Q2** 路径，对话默认 **Q3** 标签；裸 `GOAL-*` 仅限已绑定当前工作区。
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
 5. **`id` = 文件夹名**：`00-meta.md` 的 `id` 必须与文件夹名完全一致（如 `GOAL-004-foo-bar`）。
 6. **层级唯一来源**：仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
@@ -166,7 +167,25 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 2. 同一项目的 MVP、二阶段、三阶段等通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
 3. 没有显式工作区根、但存在 `docs/goals/` 时，只按该 legacy 目录使用隐式单工作区；禁止自动发现、读取、混合或写入其他工作区上下文。
 4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
-5. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
+5. 跨工作区提及目标须用限定引用：文档 **Q2**、对话 **Q3**、机器 **Q1**；`GOAL-*` 仅区内唯一；区内 `parent` 仍用短 id。
+6. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
+
+## 6d. 愿景体系（单愿景 · Charter → VP → Workspace）
+
+**完整安装必有**现行 `docs/vision/charter.md`（`status: active`）。缺省 = **不完整安装**：仅允许引导补齐；拒绝非引导开区/推进/放行/关门。
+
+1. **单愿景制**：每项目有且仅有一个现行 Charter；禁止多愿景。
+2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 `plan_refs`/`primary_plan`）。
+3. **所有工作区**（含 `sandbox` 角色）**必须**挂 VP；**取消** sandbox plan opt-out。
+4. 细则：`docs/vision/alignment.md`；原则全文 **P-006**。
+
+## 6e. 级联与入口分工（P-006 操作摘要）
+
+```text
+决策层 /vision：Charter → 组合编排 → 意图(VP) → Review / re-align
+实现层 /govern：工作区+Root → 纲领路线图 → 阶段计划 → 子目标 → Goal Audit 响应
+交叉 /audit：目标 03-audit（independent）；不写 Vision Review
+```
 
 ## 7. 必须同步更新 goal-tree.md
 
@@ -208,11 +227,12 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 
 ## 9b. Skills 主入口（若已安装本包）
 
-- **编排主路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md` → **`/govern`**。  
+- **实现主路径**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md` → **`/govern`**。  
   扫描 → 意见台账 → 分类 → P-004 裁决 → 提议 → 确认 → 原语 `01`～`04`。
+- **决策层**：**`/vision`** → `{{SKILLS_DIR}}/prompts/06-vision-orchestrator.md`（Charter / VP / Vision Review / re-align；冷启动优先）。
 - **交叉审计**：`{{SKILLS_DIR}}/prompts/05-independent-audit.md` → **`/audit`**（只出意见，不改 status；响应归 `/govern`）。
 - advanced 填表 slash 可选（`--with-primitives`）。
-- **P-001** 以本文件第 6 节为准；**P-002～P-005** 以第 6b 节为准；**全文**以 `docs/architecture/principles.md` 为准（必备）。
+- **P-001** 第 6 节；**P-002～P-005** 第 6b 节；**P-006** 第 6d/6e 节；**全文** `docs/architecture/principles.md`（必备）。
 
 ## 10. 变更工作流
 
@@ -281,6 +301,7 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 | 独立审只出意见；编排器响应 | P-003 |
 | 审计意见写入被审目标 `03-audit.md`（A-00N + source） | P-003 落盘 |
 | 冲突 / 是否自审 → 问用户 + 建议 | P-004 |
+| 跨区：文档 Q2 路径 / 对话 Q3 标签 | 不改 `GOAL-NNN-slug`；裸 id 仅当前区 |
 
 
 ## 快速链接（按项目填写）

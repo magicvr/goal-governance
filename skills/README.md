@@ -43,9 +43,9 @@ Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；We
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
-| Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision}/` | `/govern` · `/audit` · `/vision` | govern/audit `runtime-verified (2026-07-28)`；vision **pending-runtime-validation** |
-| Grok Build CLI `0.2.112` | `.grok/skills/{govern,audit,vision}/` | `/govern` · `/audit` · `/vision` | 同上 |
-| GitHub Copilot CLI `1.0.71` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` | 同上 |
+| Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision}/` | `/govern` · `/audit` · `/vision` | govern/audit/vision **`runtime-verified (2026-07-28)`** |
+| Grok Build CLI `0.2.112` | `.grok/skills/{govern,audit,vision}/` | `/govern` · `/audit` · `/vision` | govern/audit/vision **`runtime-verified (2026-07-28)`** |
+| GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` | govern/audit `runtime-verified`；**vision pending**（2026-07-28 月度配额阻断，失败证据已落盘） |
 
 核心行为：
 
@@ -145,7 +145,7 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
-**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision`**。填表类 advanced slash 仍为可选。`/vision` 的 runtime evidence 在矩阵中为 **pending-runtime-validation**。
+**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision`**。填表类 advanced slash 仍为可选。`/vision` runtime：Claude + Grok **`runtime-verified`**；Copilot 因配额仍为 **pending-runtime-validation**（见矩阵）。
 
 #### Claude Code
 
@@ -307,6 +307,6 @@ Windows 上隔离安装冒烟断言 `/govern`+`/audit`+`/vision`+**core docs 落
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
 - 自动在无维护者授权时创建 GitHub Release（tag CI 仅 pack + 上传 artifact）  
-- `/vision` 各宿主 runtime evidence（矩阵为 pending-runtime-validation）
+- Copilot `/vision` runtime-verified（2026-07-28 配额阻断；Claude/Grok 已 dual-pass verified）
 
 当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + `/govern`/`/audit`/`/vision` + 原语 01～05 + 愿景 06 + 多宿主安装 + 可选 `--init-workspace` + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。

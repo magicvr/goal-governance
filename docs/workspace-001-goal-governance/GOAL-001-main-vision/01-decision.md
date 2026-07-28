@@ -430,3 +430,21 @@ version: 0.3.0
 **未选**：仅文档不装 skill；把 vision 塞进 `/govern` 单一入口。
 
 **影响**：[02-execution](02-execution.md#2026-07-28--skills-vision-第二刀d-018)；goal-tree 日志。
+
+## D-019 · `/vision` follow-through（runtime + 消费面 + VRev；不发版）（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：目标「完成后继的全部工作（除了正式发版）」；计划 acceptance 1–5。
+
+**决定**：
+
+1. 扩展 `capture_runtime_evidence.py` 接受 `entrypoint=vision`；新增 claude/grok/copilot vision 探针 prompt。  
+2. **Dual-pass** 捕获：Claude + Grok **pass** → 矩阵 vision=`runtime-verified`；Copilot **fail**（monthly quota）→ 保持 `pending-runtime-validation`，失败 JSON/stderr 与 scratch log 留痕，**不伪造** verified。  
+3. 同步消费面：`skills/AGENTS.template.md`、`install/claude/AGENTS.md`、`install/copilot/copilot-instructions.md` 写入单愿景 / `/vision` vs `/govern` vs `/audit`。  
+4. 补录 **VRev-001**（self，charter-init + stack coherence，verdict pass）。  
+5. **明确非目标**：annotated tag、GitHub Release、`release_evidence --mode release`。
+
+**为什么**：第二刀 skill 已装，但缺 runtime 证据、消费 AGENTS 叙事与 dogfood Review 则矩阵/install 仍撒谎。
+
+**影响**：[02-execution](02-execution.md#2026-07-28--vision-follow-throughd-019)；GOAL-008 运行时附件；矩阵/README；**不发版**。
