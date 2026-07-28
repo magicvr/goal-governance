@@ -107,7 +107,7 @@ version: 0.1.0
 - **最近发布基线**：`v0.7.0` / `v0.8.0` / **`v0.9.0`**；后续版本仍须 annotated tag 与 release evidence。
 - **快照日期**：2026-07-28。
 - **快照身份**：矩阵 **`candidateRevision: unreleased`**；已有入口保留其历史 runtime evidence，正式 GitHub Release 仍以 annotated tag + release evidence 为准。
-- **当前工作树边界**：新 `/vision-audit` 三宿主均为 `pending-runtime-validation`；安装结构和契约测试已通过。Web parser 仍为 automated-verified。
+- **当前工作树边界**：`/vision-audit` 与 `/vision` 已在 Claude Code、Grok Build 与 GitHub Copilot CLI 上 `runtime-verified`；Copilot 使用用户级 BYOK provider、模型和密钥进行只读 replay。安装结构和契约测试已通过；Web parser 仍为 automated-verified。
 - **本轮变更范围**：独立 Vision Review 专用入口、Goal/Vision 审计路由分离及消费契约更新；详见根 `CHANGELOG.md`。
 
 ### canonical → Skills 同步台账
@@ -124,8 +124,8 @@ version: 0.1.0
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
 | 契约 | `skills-consumer-contract.json` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |
-| 契约 | `skills-consumer-compatibility-matrix.json` | `16BC2D7AE27692081608446BB49E79F976AC8FD9FC84E0BDADDE24E6657DAB93` | `16BC2D7AE27692081608446BB49E79F976AC8FD9FC84E0BDADDE24E6657DAB93` |
-| 契约 | `runtime-evidence.schema.json` | `6F4DC79DB279D0A597B2BCB55BC00AAE5CA73DCF23EB20ED0A8BADF2C6B42C89` | `6F4DC79DB279D0A597B2BCB55BC00AAE5CA73DCF23EB20ED0A8BADF2C6B42C89` |
+| 契约 | `skills-consumer-compatibility-matrix.json` | `E97B7387CC513634269E086E61F1937F2D0B1F91C1E18B50456646B832BF7F3D` | `E97B7387CC513634269E086E61F1937F2D0B1F91C1E18B50456646B832BF7F3D` |
+| 契约 | `runtime-evidence.schema.json` | `3DF446820F3FA24275AD94F99E481481BC2F2B34F5C5ACEC27412526A5F3E693` | `3DF446820F3FA24275AD94F99E481481BC2F2B34F5C5ACEC27412526A5F3E693` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。
 

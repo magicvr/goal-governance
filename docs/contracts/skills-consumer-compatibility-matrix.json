@@ -50,30 +50,32 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "vision-audit",
-          "status": "pending-runtime-validation",
-          "evidence": []
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-audit-2026-07-28.json"
+          ]
         }
       ],
-      "evidenceScope": "Current worktree: existing /govern, /audit, and /vision runtime evidence remains recorded; /vision-audit is structurally tested but pending a fresh host runtime capture."
+      "evidenceScope": "Current worktree: /govern, /audit, /vision, and /vision-audit have fresh runtime evidence. The vision-audit probe is read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
     },
     {
       "id": "grok-build-cli",
@@ -96,30 +98,32 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "vision-audit",
-          "status": "pending-runtime-validation",
-          "evidence": []
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-audit-2026-07-28.json"
+          ]
         }
       ],
-      "evidenceScope": "Current worktree: existing /govern, /audit, and /vision runtime evidence remains recorded; /vision-audit is structurally tested but pending a fresh host runtime capture."
+      "evidenceScope": "Current worktree: /govern, /audit, /vision, and /vision-audit have fresh runtime evidence. The vision-audit probe is read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
     },
     {
       "id": "github-copilot-cli",
@@ -141,28 +145,32 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-28-refresh.json"
           ]
         },
         {
           "name": "vision",
-          "status": "pending-runtime-validation",
-          "evidence": []
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-2026-07-28-byok-refresh.json"
+          ]
         },
         {
           "name": "vision-audit",
-          "status": "pending-runtime-validation",
-          "evidence": []
+          "status": "runtime-verified",
+          "evidence": [
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-28-byok-auth.json"
+          ]
         }
       ],
-      "evidenceScope": "Current worktree: /vision dual capture attempted 2026-07-28; Claude+Grok runtime-verified; Copilot CLI remains pending after its monthly quota block. New /vision-audit is structurally tested and pending runtime validation on every host."
+      "evidenceScope": "Current worktree: BYOK-aware replay refreshed all four Copilot entrypoints on 2026-07-28. Runtime evidence verifies read-only dispatch only; no release claim follows from these captures."
     },
     {
       "id": "web-readonly-parser",

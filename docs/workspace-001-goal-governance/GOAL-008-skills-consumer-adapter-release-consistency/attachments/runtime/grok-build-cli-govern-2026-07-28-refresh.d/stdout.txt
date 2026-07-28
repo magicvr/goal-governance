@@ -1,0 +1,13 @@
+I'll load the govern skill and run only its scan phase for GOAL-008—read-only, no writes, no questions.Scanning workspace bindings and GOAL-008 meta/audit/info gates.**GROK_GOVERN_DISPATCH_OK**
+
+### Dispatch probe (scan only)
+
+| Item | Value |
+|------|--------|
+| **1. Marker** | `GROK_GOVERN_DISPATCH_OK` |
+| **2. Loaded skill** | **Title:** `govern` · 目标治理编排（Grok Build skill） · **Path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+| **3. Orchestrator prompt** | Named by skill as `<SKILLS_PKG>/prompts/00-govern-orchestrator.md` → resolved **SKILLS_PKG** = `skills/` → **`C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\00-govern-orchestrator.md`** |
+| **4. GOAL-008 classification** | Focus **`GOAL-008-skills-consumer-adapter-release-consistency`**: **`done` / 100%** (closed). Workspace context is **S2** (Root `GOAL-001-main-vision` still `active`); focus itself is **not** S4 (no open required findings / expired required info on this goal). |
+| **4. Open required gates (GOAL-008)** | **None.** Authoritative close-out **A-016**: I-001 / I-002 / I-003 **verified/closed**; no open required findings; no accepted residual. **A-017** keeps historical `v0.7.0` close-out and does **not** reopen GOAL-008 gates (post-close `unreleased` host runtime is a *future candidate* concern, not an open GOAL-008 gate). |
+
+**Scan notes (minimum reads):** Charter `active` 0.1.0; workspace `workspace-001-goal-governance` with `primary_plan: VP-001-governance-platform-delivery`; core `principles.md` + `workspace-protocol.md` present; goal-tree agrees `GOAL-008` → `done 100%`.

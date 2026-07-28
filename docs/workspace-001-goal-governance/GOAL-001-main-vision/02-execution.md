@@ -12,6 +12,31 @@ version: 0.3.9
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
+## 2026-07-28 · 三宿主 `/audit` 重采与 Copilot `/vision` 复核（D-023；不发版）
+
+- 三宿主 `/audit` 均以当前行为源重采并通过：`claude-code-cli-audit-2026-07-28-refresh.json`、`grok-build-cli-audit-2026-07-28-refresh.json`、`copilot-cli-audit-2026-07-28-refresh.json`。三份旧 audit evidence 不再作为当前矩阵引用。
+- GitHub Copilot CLI `1.0.75` 的 `/vision` 已通过 BYOK read-only dispatch：`copilot-cli-vision-2026-07-28-byok-refresh.json`；矩阵单元升级为 `runtime-verified`。
+- 首次完整报告继续发现 Claude/Grok 的既有 `/vision` evidence 陈旧；两单元随后重采并通过：`claude-code-cli-vision-2026-07-28-refresh.json`、`grok-build-cli-vision-2026-07-28-refresh.json`。旧 vision evidence 不再作为当前矩阵引用。
+- 完整报告 [artifacts/compatibility-report-runtime-refresh-2026-07-28.json](../../../artifacts/compatibility-report-runtime-refresh-2026-07-28.json) 已生成：canonical/Skills 镜像一致，12 个宿主 entrypoint 均可校验，coverage 为 `ready-for-release-evidence`；`candidateRevision` 保持 `unreleased`，未产生 tag、Release 或 release-mode evidence。
+- 所有结果只证明 wrapper 路由、核心 prompt 加载与 repository-backed read-only 行为；未新增 Goal 或 Vision finding，未改变 Charter / VP / Goal status 或 progress，未执行 tag、Release 或 release-mode evidence。
+
+## 2026-07-28 · Copilot BYOK replay 与 `/govern` freshness 重采（D-022；不发版）
+
+- 检查发现用户级 BYOK 的 provider URL、模型与 provider API key 均已配置，但当前 VS Code 终端未继承。replay helper 现仅在子进程缺失时读取用户级变量，并把 provider/GitHub token 标记为 secret environment variables；未读取、显示或落盘任何值。
+- GitHub Copilot CLI `1.0.75` 的 `/vision-audit` 已通过 BYOK read-only dispatch：`GOAL-008/attachments/runtime/copilot-cli-vision-audit-2026-07-28-byok-auth.json`。矩阵将该单元升级为 `runtime-verified`。
+- 全矩阵 `/govern` freshness 已重采并通过：`claude-code-cli-govern-2026-07-28-refresh.json`、`grok-build-cli-govern-2026-07-28-refresh.json`、`copilot-cli-govern-2026-07-28-refresh.json`。三条旧 evidence 不再作为当前候选的矩阵引用。
+- 全量 `compatibility_report.py` 已不再由 `/govern` evidence 阻断；它随后在既有 `.claude/skills/audit/SKILL.md` 的陈旧 `/audit` evidence 停止。该 `/audit` 单元不在本轮用户指定的 `/govern` freshness 范围内，仍需在完整候选验证时单独重采。
+- Copilot `/vision` 仍为 `pending-runtime-validation`。未创建 VRev、未改变 Charter / VP / Goal status 或 progress，未执行 tag、Release 或 release-mode evidence。**计划**：在后续完整候选验证中按需重采其余陈旧单元。
+
+## 2026-07-28 · `/vision-audit` 三宿主 runtime capture（D-021；不发版）
+
+- `scripts/capture_runtime_evidence.py` 与 canonical/Skills `runtime-evidence.schema.json` 已接受 `vision-audit`；聚焦 unit test 验证 CLI 与 schema 都能生成该单元的有效 evidence。
+- 新增三份只读 probe：`attachments/runtime/prompts/{claude,grok,copilot-cli}-vision-audit.txt`。它们要求实际加载宿主 wrapper 和 `07-independent-vision-review`，读取当前愿景/工作区事实并输出 marker；不写 `reviews.md` 或 Goal 记录。
+- Claude Code `2.1.220` 通过：`GOAL-008/attachments/runtime/claude-code-cli-vision-audit-2026-07-28.json`。Grok Build `0.2.112` 通过：`GOAL-008/attachments/runtime/grok-build-cli-vision-audit-2026-07-28.json`。两单元已更新为 `runtime-verified`。
+- GitHub Copilot CLI `1.0.75` 失败：`GOAL-008/attachments/runtime/copilot-cli-vision-audit-2026-07-28.json` 与其 stderr 记录“monthly quota”耗尽；单元保持 `pending-runtime-validation`，未将失败证据写入 verified evidence。
+- `compatibility_report.py` 的全矩阵汇总仍被既有 `.claude/skills/govern/SKILL.md` 的陈旧 runtime evidence 阻断；直接调用 validator 已确认本轮 Claude/Grok `/vision-audit` evidence 有效且行为源新鲜。该报告阻断属于当前候选的既有重采工作，不把它误写为本入口失败。
+- 未创建 VRev、未改变 Charter / VP / Goal status 或 progress，未执行 tag、Release 或 release-mode evidence。**计划**：配额恢复后仅重采 Copilot `/vision-audit` 单元。
+
 ## 2026-07-28 · 响应 V-F-001：独立 Vision Review 专用入口（D-020；不发版）
 
 - **用户裁决**：采用专用 `/vision-audit`，不扩展 `/audit` 的 scope 路由。

@@ -1,0 +1,57 @@
+Running read-only vision-audit discovery: loading the skill and the specified governance sources.
+
+● skill(vision-audit)
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ 44 lines read
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ 66 lines read
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:80 (80 lines read)
+
+● Read vision-audit.prompt.md
+  │ .github\prompts\vision-audit.prompt.md
+  └ 28 lines read
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ 197 lines read
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ 119 lines read
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ 100 lines read
+
+Vision-audit dispatch (read-only)
+
+┌──────────────────────────────┬───────────────────────────────────────────────────────────────┐
+│ Item                         │ Value                                                         │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Wrapper                      │ .github/prompts/vision-audit.prompt.md (v0.1.0,               │
+│                              │ /vision-audit)                                                │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Core prompt                  │ skills/prompts/07-independent-vision-review.md (v0.1.0)       │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Skill context                │ .claude/skills/vision-audit → SKILLS_PKG 07                   │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Charter                      │ vision-goal-governance@0.1.0 (status: active)                 │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Workspace primary_plan       │ VP-001-governance-platform-delivery                           │
+│                              │ (workspace-001-goal-governance)                               │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────┤
+│ Open required Vision         │ 0 (V-F-001 closed fixed under VRev-002 response)              │
+│ findings                     │                                                               │
+└──────────────────────────────┴───────────────────────────────────────────────────────────────┘
+
+No files written; no VRev appended.
+
+COPILOT_CLI_VISION_AUDIT_DISPATCH_OK
+

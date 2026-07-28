@@ -1,0 +1,8 @@
+
+Authentication failed with provider at http://192.168.31.213:8317/v1 (HTTP 401).
+  Check your COPILOT_PROVIDER_API_KEY or COPILOT_PROVIDER_BEARER_TOKEN.
+
+
+Changes    +0 -0
+Duration   9s
+Resume     copilot --resume=c276b4fa-2f49-4d74-a93d-14fe4d59101e

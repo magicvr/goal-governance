@@ -47,7 +47,8 @@
           "enum": [
             "govern",
             "audit",
-            "vision"
+            "vision",
+            "vision-audit"
           ]
         },
         "protocolVersion": {

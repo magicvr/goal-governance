@@ -1,0 +1,10 @@
+/vision-audit alignment
+
+This is a read-only runtime dispatch probe. Do not modify files, launch subagents, or ask the user questions. Load the installed vision-audit skill and its referenced core prompt, then read the minimum vision records needed to report:
+
+1. literal marker CLAUDE_VISION_AUDIT_DISPATCH_OK;
+2. the loaded skill title and actual source path;
+3. the core prompt path named by that skill (07-independent-vision-review);
+4. the active Charter vision_id@version, workspace-001 primary_plan, and whether reviews.md has open required findings.
+
+Only emit the marker after reading the installed skill, its core prompt, and the current vision/workspace records. This probe must not append a VRev or modify any Goal record.

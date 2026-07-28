@@ -618,18 +618,19 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertIn("2026-07-28", path)
             vision = entrypoints["vision"]
-            if consumer_id == "github-copilot-cli":
-                self.assertEqual(vision["status"], "pending-runtime-validation")
-            else:
-                self.assertEqual(vision["status"], "runtime-verified")
-                self.assertTrue(vision["evidence"])
-                for path in vision["evidence"]:
-                    self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                    self.assertIn("vision", path)
-                    self.assertIn("2026-07-28", path)
+            self.assertEqual(vision["status"], "runtime-verified")
+            self.assertTrue(vision["evidence"])
+            for path in vision["evidence"]:
+                self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
+                self.assertIn("vision", path)
+                self.assertIn("2026-07-28", path)
             vision_audit = entrypoints["vision-audit"]
-            self.assertEqual(vision_audit["status"], "pending-runtime-validation")
-            self.assertEqual(vision_audit["evidence"], [])
+            self.assertEqual(vision_audit["status"], "runtime-verified")
+            self.assertTrue(vision_audit["evidence"])
+            for path in vision_audit["evidence"]:
+                self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
+                self.assertIn("vision-audit", path)
+                self.assertIn("2026-07-28", path)
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")

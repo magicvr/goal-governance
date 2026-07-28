@@ -1,0 +1,36 @@
+����λ�� ��:1 �ַ�: 72
++ ... OT_PROVIDER_BASE_URL = [Environment]::GetEnvironmentVariable(COPILOT_ ...
++                                                                  ~
+����������ȱ�١�)����
+����λ�� ��:1 �ַ�: 72
++ ... nvironment]::GetEnvironmentVariable(COPILOT_PROVIDER_BASE_URL, User); ...
++                                         ~~~~~~~~~~~~~~~~~~~~~~~~~
+����ʽ������а�������ı�ǡ�COPILOT_PROVIDER_BASE_URL����
+����λ�� ��:1 �ַ�: 97
++ ... vironment]::GetEnvironmentVariable(COPILOT_PROVIDER_BASE_URL, User);  ...
++                                                                 ~
+�����б���ȱ�ٲ�����
+����λ�� ��:1 �ַ�: 103
++ ... ent]::GetEnvironmentVariable(COPILOT_PROVIDER_BASE_URL, User); $env:C ...
++                                                                 ~
+����ʽ������а�������ı�ǡ�)����
+����λ�� ��:1 �ַ�: 165
++ ... ; $env:COPILOT_MODEL = [Environment]::GetEnvironmentVariable(COPILOT_ ...
++                                                                  ~
+����������ȱ�١�)����
+����λ�� ��:1 �ַ�: 165
++ ... T_MODEL = [Environment]::GetEnvironmentVariable(COPILOT_MODEL, User); ...
++                                                     ~~~~~~~~~~~~~
+����ʽ������а�������ı�ǡ�COPILOT_MODEL����
+����λ�� ��:1 �ַ�: 178
++ ... _MODEL = [Environment]::GetEnvironmentVariable(COPILOT_MODEL, User);  ...
++                                                                 ~
+�����б���ȱ�ٲ�����
+����λ�� ��:1 �ַ�: 184
++ ...  = [Environment]::GetEnvironmentVariable(COPILOT_MODEL, User); & docs ...
++                                                                 ~
+����ʽ������а�������ı�ǡ�)����
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordEx 
+   ception
+    + FullyQualifiedErrorId : MissingEndParenthesisInMethodCall
+ 

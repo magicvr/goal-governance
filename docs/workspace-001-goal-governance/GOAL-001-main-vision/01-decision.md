@@ -467,3 +467,57 @@ version: 0.3.0
 **未选**：扩展 `/audit` 按 scope 写入 `reviews.md`；接受 residual 或 overrule 该 required finding。
 
 **影响**：实施事实与验证见 [02-execution.md](02-execution.md#2026-07-28--响应-v-f-001独立-vision-review-专用入口d-020不发版)；正式闭合见 [VRev-002](../../../vision/reviews.md#响应--v-f-0012026-07-28)。
+
+## D-021 · `/vision-audit` 三宿主 runtime capture 验证范围（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 `/govern` 指定“为 `/vision-audit` 的三宿主 runtime capture 建立并推进验证范围”。
+
+**决定**：
+
+1. 验证范围固定为 Claude Code CLI `2.1.220`、Grok Build CLI `0.2.112` 与 GitHub Copilot CLI `1.0.75` 的单一 `/vision-audit` 入口。每次 probe 必须只读，读取实际宿主 wrapper、`skills/prompts/07-independent-vision-review.md`、Charter、alignment、reviews 与当前 workspace；不得新增 VRev、修改 Goal 或发版。
+2. 只有 evidence schema 校验通过、进程 exit `0` 且观测到宿主专属 marker，才可将对应矩阵单元标为 `runtime-verified`。行为源、探针输入和输出摘要均由 SHA-256 绑定；任一 wrapper 或核心提示词变更均会使证据失效。
+3. 宿主失败仅记录为失败事实并保持 `pending-runtime-validation`；不以安装结构测试、prompt 回显或历史 `/vision` 证据替代。Copilot 配额恢复后重采其单元；本决定不接受 residual、不关闭任何 Vision finding，也不授权 tag、Release 或关门。
+
+**为什么**：D-020 已确认入口与分发结构，却不能证明真实宿主调度。将 scope 限定在独立入口的 read-only discovery 路径，能验证路由边界而不触发独立审计写入副作用。
+
+**未选**：将三宿主结构测试标成 runtime evidence；运行会追加 VRev 的审计；因 Copilot 配额失败而跳过或推断通过。
+
+**影响**：实施结果见 [02-execution.md](02-execution.md#2026-07-28--vision-audit-三宿主-runtime-captured-021不发版)；候选 matrix 仍为 `unreleased`。
+
+## D-022 · Copilot BYOK replay 与 `/govern` freshness 重采（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户说明 GitHub Copilot 使用 BYOK，并要求重采 `/vision-audit`、处理全矩阵既有 `/govern` evidence 的 freshness。
+
+**决定**：
+
+1. Copilot replay helper 从用户级环境继承 `COPILOT_PROVIDER_BASE_URL`、`COPILOT_PROVIDER_API_KEY`、可选 bearer token 与模型；不打印、落盘或传递其值给工具调用，并以 Copilot 的 `--secret-env-vars` 保护 provider/GitHub token。
+2. `COPILOT_MODEL` 存在时以 `--model` 显式传给 Copilot CLI。capture evidence 仅将 provider 变量名与模型名作为环境身份记录，不记录 URL、密钥或 bearer token。
+3. 全矩阵的 Claude、Grok、Copilot `/govern` 旧 evidence 已逐一以当前行为源重采；Copilot `/vision-audit` 仅在 BYOK provider 成功认证并输出 marker 后升为 `runtime-verified`。不重采或放行 Copilot `/vision`，不发版。
+
+**为什么**：VS Code 继承的终端环境没有用户级 BYOK 变量，旧 helper 只依赖 GitHub token，导致 replay 先表现为额度失败、后表现为 provider 401。显式继承并隐藏敏感变量可让真实 provider 认证与 evidence 边界同时可核对。
+
+**未选**：把 provider 密钥写入仓库、evidence 或决策正文；只在 capture 元数据中声称 BYOK；将 Copilot `/vision` 推断为已验证。
+
+**影响**：实施事实见 [02-execution.md](02-execution.md#2026-07-28--copilot-byok-replay--govern-freshness重采d-022不发版)；候选 matrix 仍为 `unreleased`。
+
+## D-023 · 三宿主 `/audit` 重采与 Copilot `/vision` 复核（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 `/govern` 指定“重采三宿主 `/audit`，并复核 Copilot `/vision`，再生成完整 compatibility report”。
+
+**决定**：
+
+1. Claude、Grok、Copilot `/audit` 的旧 evidence 一律以当前 wrapper、核心 prompt、AGENTS 与 probe input 重新采集；只读 dispatch 成功且 marker 已观测时才替换矩阵引用。
+2. Copilot `/vision` 通过同一 BYOK helper 重新采集；成功才从 `pending-runtime-validation` 升为 `runtime-verified`。不以先前的额度失败或 `/vision-audit` 成功推断本单元通过。
+3. 三宿主四入口的 runtime evidence 只证明当前行为源下的只读 dispatch，不等同于 annotated tag、Release 或完整发行结论。
+
+**为什么**：完整兼容报告在 `/govern` freshness 修复后立即暴露 `/audit` evidence 陈旧，Copilot `/vision` 仍是仅剩的 pending entrypoint。按单元重采保持矩阵覆盖与实际宿主结果一致。
+
+**未选**：保留陈旧 audit evidence；将 Copilot vision 写为“由其它入口推断通过”；把 runtime coverage 当作 release-ready。
+
+**影响**：实施事实见 [02-execution.md](02-execution.md#2026-07-28--三宿主-audit-重采--copilot-vision-复核d-023不发版)；后续 compatibility report 以当前 matrix 为准。

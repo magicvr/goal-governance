@@ -368,7 +368,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--consumer", required=True)
     parser.add_argument(
         "--entrypoint",
-        choices=("govern", "audit", "vision"),
+        choices=("govern", "audit", "vision", "vision-audit"),
         required=True,
     )
     parser.add_argument("--protocol-version", required=True)
