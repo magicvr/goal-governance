@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-29
 parent: null
-version: 0.10.1
+version: 0.10.2
 ---
 
 # AGENTS.md
@@ -67,7 +67,7 @@ docs/workspace-001-example/GOAL-NNN-short-slug/
 | `parent` | 目标：父目标完整 id 或 `null`；非目标文件可用 `null` |
 | `version` | 文档版本号 |
 
-`00-meta.md` **必须**另含：`id`、`title`；**建议**含 `progress`（如 `50%`）。
+`00-meta.md` **必须**另含：`id`、`title`；可选含派生展示字段 `progress`。`progress` 只能由目标内显式路线图/计划检查点确定性计算，不是状态、门禁或审计事实。
 
 ### status 取值
 
@@ -100,6 +100,8 @@ docs/workspace-001-example/GOAL-NNN-short-slug/
 3. 路线图写在该目标的 `00-meta.md` 或 `01-decision.md`，并随进展更新。
 4. 路线图就位后，再**按阶段**创建与执行具体子目标。
 5. 已可直接执行的小目标**无需**强行补路线图。
+
+**派生进度展示**：仅当目标内存在显式、可枚举的路线图或阶段计划检查点时，才可写 `progress`。默认等权计算 `已完成检查点数 / 总检查点数`；若使用权重，权重必须随检查点显式落盘。无来源或来源不一致时省略/显示 `—`，不得手填百分比兜底。任何 progress 值都不得放行阶段、关闭 finding、覆盖信息门禁、推导 `done`，也不得进入愿景目录作为权威。
 
 原则以**本文件（AGENTS）第 6 节**为操作入口；**全文**以 `docs/architecture/principles.md` 为准（**完整安装必备**）。  
 Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不完整安装，应先补 core（重跑 install 或从包内 `core/docs` 复制），不得当作可跳过。
@@ -181,7 +183,7 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 `plan_refs`/`primary_plan`）→ 区内纲领路线图/子目标。
 3. **先读** Charter 与 `docs/vision/alignment.md`（或 consumer-checklist），再定位工作区与推进目标。
 4. **对齐递归**：子目标→父目标→Root→VP→Charter（源头）。机读字段链 + 语义不与上一级边界/非目标明显冲突。
-5. **所有工作区**（含 `sandbox` 角色）**必须** `plan_refs` + `primary_plan`；**取消** sandbox opt-out。
+5. **所有工作区**必须 `plan_refs` + `primary_plan`；当前规范角色仅 `primary` / `delivery`，不存在 plan opt-out。
 6. 缺 plan、VP 缺失、或 `vision_ref` 与 charter 版本不一致 → **fail closed**。
 7. `docs/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 见 `docs/vision/reviews.md`（`VRev-00N`）。
 8. 细则：`docs/vision/alignment.md`；原则全文 **P-006**；协议摘要：`docs/architecture/workspace-protocol.md` §4b。
@@ -195,7 +197,7 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 交叉 /audit：目标 03-audit（independent）；/vision-audit：reviews.md；均不改 status
 ```
 
-**结构选型**：改源头→Charter strategic；新波次→VP；独立树/隔离→新工作区；同 Root→子目标；探索→`sandbox` 角色仍挂 VP。  
+**结构选型**：改源头→Charter strategic；新波次→VP；独立树/隔离→新工作区；同 Root→子目标；高不确定探索先按 P-005 建立有界信息收集阶段或目标。
 工具：决策层 → `/vision`；实现层 → `/govern`；独立 Vision Review → `/vision-audit`。
 
 ## 7. 必须同步更新 goal-tree.md
@@ -289,7 +291,7 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 - 未合法闭合的 required/必改 findings 存在时，禁止推进对应门禁或 `status: done`（闭合仅限 fixed / accepted-residual / user-overruled）。
 - 无显式工作区时禁止把任意路径当作隐式工作区根；仅 legacy `docs/goals/` 或空治理 scaffold。
 - **完整安装必有唯一 active Charter + alignment**；缺则仅引导补齐。
-- **所有工作区必须挂 VP**（无 sandbox plan opt-out）；禁止跨区 `parent`；禁止多愿景。
+- **所有工作区必须挂 VP**；角色仅 `primary` / `delivery`；禁止跨区 `parent`；禁止多愿景。
 
 ## 12. 完成前检查清单
 

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-28
 updated: 2026-07-28
 parent: null
-version: 0.1.0
+version: 0.2.0
 role: vision-decision
 ---
 
@@ -29,7 +29,7 @@ role: vision-decision
 - **单愿景**：每项目至多一个 `status: active` Charter；禁止多愿景。  
 - **完整安装**必有 active Charter；缺则本入口主路径是**引导补齐**，不是开区执行。  
 - **冷启动串行**：Charter → 首个 VP →（再交 `/govern` 建工作区+Root）。  
-- **无 sandbox plan opt-out**；结构选型可建议 `sandbox` 角色，但仍须挂 VP。  
+- 工作区角色仅 `primary` / `delivery`；所有工作区都必须挂 VP，无 plan opt-out。
 - Vision Review 落 `docs/vision/reviews.md`（`VRev-00N`），**不是** Goal `03-audit`。  
 - 独立 Vision Review 只由 `/vision-audit` / `07-independent-vision-review.md` 写入；`/vision` 处理 self Review、决策与 finding 响应。
 - Review / independent 意见**默认不直接改** Charter/VP status；strategic 变更须用户确认 + revisions + re-align。  
@@ -155,7 +155,7 @@ role: vision-decision
 同愿景新纲领波次？ → 新 VP 或修订 VP
 独立 goal-tree / 隔离 / 长期并行目的？ → 新工作区（交 /govern，须挂 VP）
 同 Root 边界内？ → 子目标（交 /govern + P-001）
-高不确定？ → sandbox 角色仍挂 VP
+高不确定？ → 先按 P-005 建有界信息收集阶段/目标；需独立树时再开 delivery 工作区
 ```
 
 反模式：每功能一区；无限塞 Root；用新 VP 回避纲领纪律；用改 Charter 表达纯执行学习。
@@ -187,7 +187,7 @@ role: vision-decision
 # 硬约束
 
 - 禁止第二 active Charter；换代用 superseded。  
-- 禁止 sandbox 省略 plan_refs（本入口若建议开区，必须提醒挂 VP）。  
+- 工作区角色仅 `primary` / `delivery`；禁止任何工作区省略 plan_refs / primary_plan。
 - 禁止跨区 parent 建议。  
 - 意图权威 = 已落盘 VP 文件。  
 - Vision Review 编号 VRev-；Charter 修订 VR-；二者不混用。  

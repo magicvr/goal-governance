@@ -4,7 +4,7 @@ title: 愿景体系消费方检查清单
 status: active
 created: 2026-07-28
 updated: 2026-07-29
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 消费方检查清单
@@ -35,7 +35,7 @@ version: 0.3.0
 ## B. 当前工作区
 
 - [ ] 已定位焦点 `workspace.md`（多区未指定则 fail closed）
-- [ ] 存在 `vision_role`、**必填** `plan_refs`、**必填** `primary_plan`（含 sandbox；**无 opt-out**）
+- [ ] 存在 `vision_role`（仅 `primary` / `delivery`）、**必填** `plan_refs`、**必填** `primary_plan`（无 opt-out）
 - [ ] `primary_plan` ∈ `plan_refs`（逗号分隔列表）
 - [ ] `primary_plan` 对应文件 `docs/vision/plans/<primary_plan>.md` 存在
 - [ ] Root `00-meta` 的 plan 字段与 workspace 一致（或可解释的同步中状态）
@@ -60,9 +60,9 @@ version: 0.3.0
 ## E. 编排器读序（最小）
 
 1. **完整安装？** 无 active Charter → 不完整；仅引导 Charter→VP  
-2. 读 charter 版本与 alignment 要点（单愿景、无 opt-out、宽阻断）  
+2. 读 charter 版本与 alignment 要点（单愿景、角色仅 primary/delivery、无 opt-out、宽阻断）
 3. 定位并校验当前 `workspace.md`（含**必填** plan 字段）  
 4. 解析 `primary_plan` → 读对应 VP；检查 `reviews.md` 开放 required（若影响本动作）  
 5. 再扫该区 `goal-tree` 与目标五件套 / 审计意见  
 
-不得发明第二套愿景路径；不得 sandbox 省略 plan。
+不得发明第二套愿景路径；任何工作区都不得省略 plan。

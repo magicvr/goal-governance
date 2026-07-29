@@ -3,9 +3,9 @@ title: /update-execution · 更新执行进度（Copilot wrapper · advanced pri
 description: 原语入口。默认请用 /govern。按 03-update-execution 更新进度。
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-29
 parent: null
-version: 0.3.0
+version: 0.4.0
 slash: /update-execution
 role: advanced
 ---
@@ -44,7 +44,7 @@ role: advanced
 | 当前 progress / status | 来自 meta 与 goal-tree；默认「保持」 |
 | 阻塞 | 用户未提则默认「无」 |
 | 下一步计划 | 用户未提则可不写；若写须标明为计划 |
-| 进度是否上调 | 仅当事实明显覆盖更多成功标准时**建议**新百分比，须用户确认后再改 |
+| progress 是否变化 | 仅当事实改变显式检查点时，按完成检查点/总检查点或已落盘权重确定性重算；无检查点则省略/— |
 
 若工作可能跨多个目标，先列出归属建议，请用户确认记到哪一个（可拆成多次更新）。
 
@@ -52,15 +52,15 @@ role: advanced
 
 例如：
 
-> **当前项目情况**：GOAL-003 active 70%、GOAL-004 active 0%……  
-> **我推断**：记入 `GOAL-00X-…`；日期 `YYYY-MM-DD`；progress/status 默认保持（当前 N% / active）。  
+> **当前项目情况**：GOAL-003 active（派生 progress 75%）、GOAL-004 active（无检查点，progress —）……
+> **我推断**：记入 `GOAL-00X-…`；日期 `YYYY-MM-DD`；status 默认保持；仅在检查点变化时重算派生 progress。
 > **从你描述提取的事实**：1）… 2）…  
 > **仍需你确认 / 补充**：……（例如是否调整进度、是否有阻塞）
 
 ### C. 只问真正缺失或需确认的项
 
 - 用户已写清的事实列表不要再整表复问；可结构化复述后请确认「有无遗漏/纠错」。
-- **progress / status 默认保持**；仅在你建议调整或用户要求时确认新值与依据。
+- **status 默认保持**；progress 只随显式检查点变化确定性重算，不把用户指定百分比当成事实。
 - **避免**一次性甩全表；核心是「目标 + 今日事实」。
 
 **参数优先级（仅补缺）：**
@@ -73,7 +73,7 @@ role: advanced
 | 可默认 | 阻塞 / 风险 | 默认「无」 |
 | 可选 | 关联 I-00N | 收集、验证、新发现或状态变化；没有证据不得标 `verified` |
 | 可选 | 下一步计划 | 标明为计划，非已完成 |
-| 可默认 | 进度百分比 | 默认保持；若调整须给依据（对照成功标准） |
+| 可派生 | progress | 有显式检查点时重算；无检查点则省略/—；不得手填 |
 | 可默认 | status | 默认保持；取值 `draft` \| `active` \| `blocked` \| `done` \| `cancelled` |
 
 对**无法确定且会影响写入**的字段，**不要猜测后继续**。绝不把未做的工作写成完成。
@@ -96,7 +96,7 @@ role: advanced
 1. **只记事实**：`02-execution.md` 时间线只追加**已发生**工作；禁止编造未完成、未提交的内容。
 2. **具体可验证**：尽量写路径、产物名、可勾选结果；避免「优化了体验」类空话。
 3. **计划与事实分离**：下一步必须标明为计划，不得标成已完成。
-4. **同步 meta + goal-tree**：调整 progress / status 时，改 `00-meta.md`，并**必须**同步 `<workspace-root>/goal-tree.md`（树 + 表）。
+4. **同步 meta + goal-tree**：检查点或 status 变化时，重算派生 progress（若有）并同步 `00-meta.md` 与 `<workspace-root>/goal-tree.md`（树 + 表）。
 5. **成功标准一致**：勾选 meta 中成功标准时，须与 execution 事实一致。
 6. **与 decision 分工**：取舍论证写入 `01-decision.md`，不要塞进 execution。
 7. **扁平存储与编号**：不嵌套目标文件夹；不擅自改 Root / parent 却不更新 goal-tree。
@@ -110,5 +110,5 @@ role: advanced
 用核心提示词中的**交付检查清单**逐条自检，并简短汇报：
 
 - 新增时间线条目摘要
-- progress / status 是否变更，是否与 meta、goal-tree 一致
+- status / 检查点是否变更；派生 progress（若有）是否可重算并与 meta、goal-tree 一致
 - 检查清单勾选结果

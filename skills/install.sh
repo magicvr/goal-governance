@@ -296,7 +296,7 @@ version: 0.1.0
 
 | ID | 标题 | Parent | Status | Progress | 路径 |
 |----|------|--------|--------|----------|------|
-| ${root_id} | ${title} | — | draft | 0% | _(not created yet)_ |
+| ${root_id} | ${title} | — | draft | — | _(not created yet)_ |
 EOF
 
   echo "Scaffolded workspace: ${scope}"

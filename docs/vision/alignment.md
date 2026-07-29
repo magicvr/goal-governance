@@ -4,7 +4,7 @@ title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
 updated: 2026-07-29
-version: 0.4.0
+version: 0.5.0
 parent: null
 ---
 
@@ -32,7 +32,7 @@ parent: null
 
 #### Minimal Complete Install（MUST） vs Recommended
 
-> **权威表**。更新本表后须同步 checklist 勾选与 standalone 核对项。  
+> **权威表**。更新本表后须同步 checklist 勾选与 standalone 核对项。
 > 「完整独立启用」= 下表全部 MUST 已存在且冷启动顺序合法；**不是**「仅有 architecture + templates」。
 
 | 层级 | 路径 / 条件 | 级别 | 说明 |
@@ -112,11 +112,11 @@ Workspace + Root Goal
 
 | 字段 | 要求 |
 |------|------|
-| `vision_role` | `primary` \| `delivery` \| `sandbox`（**角色/风险标签**；不免除对齐） |
+| `vision_role` | `primary` \| `delivery` |
 | `plan_refs` | **必填**，至少一个 VP id；多个用逗号分隔 |
 | `primary_plan` | **必填**，且必须 ∈ `plan_refs`；对应 `docs/vision/plans/<id>.md` |
 
-- **取消 sandbox opt-out**：任何角色（含 `sandbox`）**不得**省略 `plan_refs` / `primary_plan`。废止 `vision_opt_out_reason` 作为免挂 VP 的合法路径。
+- **无 plan opt-out**：任何工作区都不得省略 `plan_refs` / `primary_plan`；`vision_role` 仅允许 `primary` / `delivery`。
 - 至多一个工作区 `vision_role: primary`（与 [workspaces.md](workspaces.md) 一致）。
 
 ### 3.1 Primary 声明冲突裁决
@@ -171,7 +171,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 7. VP 关门前（区证据 + lead 规则）  
 8. 相关 **Vision Review** 的 required 意见未合法闭合时（开区 / VP 关门 / 宣称方向已稳）
 
-失败模式：缺 Charter；缺 `plan_refs` / `primary_plan`；`primary_plan` 不在列表中；VP 文件缺失；`vision_ref` 与 charter 版本不一致；primary 无规划；Charter/VP 非法 status；sandbox 试图 opt-out；待 re-align 宽阻断生效中。
+失败模式：缺 Charter；缺 `plan_refs` / `primary_plan`；`primary_plan` 不在列表中；VP 文件缺失；`vision_ref` 与 charter 版本不一致；非法 `vision_role`；primary 无规划；Charter/VP 非法 status；待 re-align 宽阻断生效中。
 
 ## 7. 规划关门（轻量）
 
@@ -210,7 +210,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 
 ## 10. 结构选型（摘要）
 
-详见 P-006 §6.6。要点：改源头 → Charter；新波次 → VP；独立树/隔离 → 新工作区（仍挂 VP）；同 Root → 子目标；探索 → `sandbox` **角色**且仍挂 VP。
+详见 P-006 §6.6。要点：改源头 → Charter；新波次 → VP；独立树/隔离 → 新工作区（仍挂 VP）；同 Root → 子目标；高不确定探索 → P-005 有界信息收集阶段/目标。
 
 ## 11. 引用格式
 
@@ -225,4 +225,4 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 - 将执行流水或 progress 写入 vision 目录  
 - 自动跳过 Vision Review 的算法；硬编码目标嵌套层数  
 - 与 VP 并列的独立「Intent」文档类型  
-- sandbox 省略 `plan_refs` 的 opt-out  
+- 任何工作区省略 `plan_refs` / `primary_plan` 的 opt-out

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-19
 updated: 2026-07-29
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 核心包独立启用说明
@@ -139,11 +139,11 @@ Copy-Item (Join-Path $target 'docs\templates\workspace-context.md') (Join-Path $
 | `root_goal` | = Root 完整 id，且 Root `parent: null` |
 | `canonical_scope` | 如 `docs/workspace-001-main-vision/` |
 | `shared_materials_catalog` | 路径或 `none` |
-| `vision_role` | `primary` \| `delivery` \| `sandbox` |
+| `vision_role` | `primary` \| `delivery` |
 | `plan_refs` | **必填**；至少一个 VP id |
 | `primary_plan` | **必填**；∈ `plan_refs`；对应 `docs/vision/plans/<id>.md` |
 
-**禁止**省略 `plan_refs` / `primary_plan`（无 sandbox opt-out）。
+**禁止**省略 `plan_refs` / `primary_plan`（无 opt-out）。
 
 ### 3.2 Root 五件套
 
@@ -155,7 +155,6 @@ parent: null
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 version: 0.1.0
-progress: 0%
 ```
 
 建议在 Root `00-meta` 同步 `plan_refs` / `primary_plan` 与短 `serves_summary`。四个 Markdown 与 `attachments/` 必须齐全；模板示例 id（如 `GOAL-042`）不得原样留下。
@@ -164,7 +163,7 @@ progress: 0%
 
 ## 4. 建立 `goal-tree.md`
 
-在工作区根写入树与状态表，与 Root `id` / `parent` / `status` / `progress` 一致。
+在工作区根写入树与状态表，与 Root `id` / `parent` / `status` 一致。新 Root 尚无显式检查点时，`progress` 省略并显示 `—`；建立检查点后再按 P-001 派生规则重算。
 
 ````markdown
 ---
@@ -179,12 +178,12 @@ version: 0.1.0
 # Goal Tree
 
 ```text
-GOAL-001-main-vision · <项目总目标> [active 0%]
+GOAL-001-main-vision · <项目总目标> [active]
 ```
 
 | ID | 标题 | Parent | Status | Progress | 路径 |
 |----|------|--------|--------|----------|------|
-| GOAL-001-main-vision | <项目总目标> | — | active | 0% | GOAL-001-main-vision/ |
+| GOAL-001-main-vision | <项目总目标> | — | active | — | GOAL-001-main-vision/ |
 ````
 
 ## 5. 核对清单与证据记录

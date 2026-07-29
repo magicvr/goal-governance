@@ -37,7 +37,7 @@ metadata:
 - 独立 Vision Review 必须改用 `/vision-audit`；本入口负责 self Review、决策与 finding 响应。
 - 默认不静默改 Charter/VP status；strategic 须确认 + revisions + re-align。  
 - 不写 goal-tree progress；不关 Goal finding。  
-- 开区 / 子目标执行交 **`/govern`**（须挂 VP；无 sandbox opt-out）。
+- 开区 / 子目标执行交 **`/govern`**（须挂 VP；`vision_role` 仅允许 `primary` / `delivery`）。
 
 ## 完成
 

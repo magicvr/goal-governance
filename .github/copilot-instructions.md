@@ -2,9 +2,9 @@
 title: AGENTS 模板 · 目标治理 AI 规则
 status: active
 created: 2026-07-18
-updated: 2026-07-24
+updated: 2026-07-29
 parent: null
-version: 0.10.0
+version: 0.10.2
 ---
 
 # AGENTS.md
@@ -176,7 +176,7 @@ Skills 与核心方法论**同级必备**：缺 `docs/architecture/` 视为不�
 
 1. **单愿景制**：每项目有且仅有一个现行 Charter；禁止多愿景。
 2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 `plan_refs`/`primary_plan`）。
-3. **所有工作区**（含 `sandbox` 角色）**必须**挂 VP；**取消** sandbox plan opt-out。
+3. **所有工作区**必须挂 VP；`vision_role` 仅允许 `primary` / `delivery`，无 plan opt-out。
 4. 细则：`docs/vision/alignment.md`；原则全文 **P-006**。
 
 ## 6e. 级联与入口分工（P-006 操作摘要）

@@ -729,6 +729,35 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             audit_prompt,
         )
 
+    def test_progress_is_derived_and_sandbox_role_is_removed(self) -> None:
+        principles = CORE_PRINCIPLES.read_text(encoding="utf-8")
+        for marker in (
+            "派生进度展示（非权威）",
+            "已完成检查点数 / 总检查点数",
+            "`progress=100%` 不自动推导 `status: done`",
+            "不得放行阶段",
+            "不得汇总或解释目标 progress",
+        ):
+            self.assertIn(marker, principles)
+
+        meta = (SKILLS_TEMPLATES / "00-meta.md").read_text(encoding="utf-8")
+        self.assertIn("派生进度展示（可选）", meta)
+        self.assertIn("4 个显式成功检查点中的 2 个完成项", meta)
+
+        orchestrator = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
+        self.assertIn("显式检查点确定性派生", orchestrator)
+        self.assertIn("不能放行阶段、关闭 finding 或覆盖 status", orchestrator)
+
+        alignment = (SKILLS_ROOT.parent / "docs" / "vision" / "alignment.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("`primary` \\| `delivery`", alignment)
+        self.assertNotIn("vision_role: sandbox", alignment)
+        self.assertNotIn("sandbox opt-out", alignment)
+
+        self.assertNotIn("| draft | 0% |", INSTALL_SH.read_text(encoding="utf-8"))
+        self.assertNotIn("| draft | 0% |", INSTALL_PS1.read_text(encoding="utf-8"))
+
     def test_copilot_govern_wrapper_is_primary(self) -> None:
         path = COPILOT_PROMPTS / "govern.md"
         self.assertTrue(path.is_file(), f"missing primary wrapper: {path}")

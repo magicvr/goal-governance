@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-24
 parent: null
-version: 0.5.1
+version: 0.6.0
 role: primitive
 ---
 
@@ -65,7 +65,7 @@ P-001 与 P-005 以 AGENTS 为准；**全文**见 `docs/architecture/principles.
 
 4. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。  
 5. 模板源：优先 `docs/templates/goal-folder/`；否则 `<SKILLS_PKG>/core/docs/templates/goal-folder/` 或 `<SKILLS_PKG>/templates/goal-folder/`。  
-6. Frontmatter：status, created, updated, parent, version；meta 另含 id、title（建议 progress）。Root 的 slug = 用户确认名。  
+6. Frontmatter：status, created, updated, parent, version；meta 另含 id、title。`progress` 可选：仅当已写显式可枚举检查点时按 P-001 确定性派生；否则省略/显示 `—`，禁止手填百分比。Root 的 slug = 用户确认名。
 7. 正文：meta 概述/成功标准/路线图/信息概览；decision 取舍与信息项；execution 仅事实；audit 可写尚未到复盘节点。  
 8. 更新 `goal-tree.md`（树 + 表）。若本目标为 Root，确保 `workspace.md` 的 `root_goal` 与 id 一致。  
 9. 如需，在父目标文档轻量提及新子目标。

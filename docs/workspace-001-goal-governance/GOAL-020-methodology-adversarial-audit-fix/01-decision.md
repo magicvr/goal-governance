@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-main-vision
 created: 2026-07-29
 updated: 2026-07-29
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 决策记录 · GOAL-020
@@ -47,21 +47,34 @@ version: 0.1.0
 
 **未选方案**：只建五件套、审计另开一轮——增加一次往返，无额外独立性收益（同会话上下文）。
 
-## D-003 · F-001～F-004 纠错 + I-001/I-002 裁决问询（2026-07-29）
+## D-003 · F-001～F-004 纠错并保留阶段 D 门禁（2026-07-29）
 
 **决定**：
 
-1. 按用户「先修 F-001～F-004」指令：F-001 模板已重写；F-002 谓词最小充分条件已写入 principles；F-003 保证等级已写入 principles；F-004 MUST 表已写入 alignment 并同步 checklist/standalone。
-2. 阶段 B/C 完成（F-001～F-004 closed）；F-005 仍 open（依赖 I-001/I-002）。
-3. **阶段 D 前**：**问用户 I-001 / I-002**（P-004.4）：progress%（删除 vs 门禁化上限？）；sandbox（补差异化门禁 vs 降为非规范备注？）。
-4. **自审计**：A-001 为独立审计，尚无同 scope `self` 覆盖（P-004.1）；**须询问用户**是否需要自审计，或按本轮「先修 F-001～F-004」指令直接闭合。
+1. 按用户「先修 F-001～F-004」指令：F-001 模板重写；F-002 谓词最小充分条件写入 principles；F-003 保证等级写入 principles；F-004 MUST 表写入 alignment 并同步 checklist/standalone。
+2. 阶段 B/C 的 required 范围完成；F-005 与 I-001/I-002 保持开放，等待 P-004 书面裁决。
+3. A-001 为独立审计；A-002 仅是响应记录，不冒充同 scope self audit。
 
-**为什么**：用户已明确写指令「先修 F-001～F-004」并附带「阶段 D 前就 progress% 与 sandbox 问我」；P-004.1 独立审计尚无自审时必须询问（不自动跳过）；本轮用户已明确写「先修」故直接执行纠错，不等待自审。
+**为什么**：先闭合可直接修正的 required，再把 progress 与 sandbox 的方法论取舍留给用户裁决，避免编排器静默决定。
 
-**未选方案**：
+**未选方案**：直接关闭 F-005/F-006；静默补 self audit；向已关门 GOAL-006 回写 required。
 
-- 仅写审计不改文档：违反用户「先修 F-001～F-004」指令。
-- 直接关闭 F-005：I-001/I-002 未裁决，违反 P-004.4 门禁。
-- 静默自审：违反 P-004.1「必须询问」。
+**确认来源**：用户明确要求先修 F-001～F-004。
 
-**确认来源**：用户本轮明确「先修 F-001～F-004；阶段 D 前就 progress% 与 sandbox 问我（I-001 / I-002）」后指令「先修」。
+## D-004 · 阶段 D 策略裁决：派生 progress、移除 sandbox、阶段 E 自审（2026-07-29）
+
+- **状态**：accepted
+
+**决定**：
+
+1. `progress` 保留为**非权威派生展示**：仅由目标内显式路线图/计划检查点确定性计算；默认等权，显式权重可覆盖。它不放行阶段、不关闭 finding、不覆盖 I-00N 或 `status`，也不进入愿景层。F-005 走 `fixed`。
+2. 当前规范**全面移除 sandbox 支持**：`vision_role` 仅允许 `primary` / `delivery`；高不确定探索按 P-005 建有界信息收集阶段/目标，需独立树时使用正常 delivery 工作区。F-006 走 `fixed`。
+3. 同 scope self audit 安排在**阶段 E**，覆盖阶段 A～D 的全部修正；A-002/A-003 仍只作为响应记录。
+4. I-001、I-002 以本决策关闭；I-003 经评估关闭为 `verified · no Charter change`：本轮只收紧实现层方法论与角色枚举，不改变 Charter 的目的、成功边界或非目标，不触发 strategic/re-align/VRev。
+5. F-007～F-011 保持 recommended open，进入阶段 E 评估；不阻断阶段 D 完成。
+
+**为什么**：派生规则消除手填百分比形成第二状态通道；移除未被框架实际采用的 sandbox 角色，比保留空心标签或新增差异化门禁更清晰。阶段 E 统一自审能覆盖最终文档栈，避免在已知修正尚未完成时重复审计。
+
+**未选方案**：删除所有目标 progress；设置“开放 required 时百分比上限”；仅在 GOAL-020 排除 sandbox；保留 sandbox 并接受 residual；现在立即做同 scope self audit。
+
+**影响与后续**：更新 canonical 权威、模板、Skills core/宿主入口与测试；同步 GOAL-020/Root/goal-tree。阶段 E 运行回归并追加 self audit，之后再评估关门。

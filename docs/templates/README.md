@@ -4,7 +4,7 @@ status: active
 created: 2026-07-19
 updated: 2026-07-28
 parent: null
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 核心目标文档模板
@@ -32,7 +32,8 @@ version: 0.5.0
 
 - 新目标实例创建在当前工作区根 `docs/workspace-<NNN>-<slug>/`，并遵守根目录 `AGENTS.md` 与该工作区 `goal-tree.md`。
 - 本目录只定义可复用的文档结构与写作起点，不是运行中的目标记录。
-- 工作区仍以一个 Root Goal 为长期锚点；MVP、后续阶段和扩展目标写入 Root Goal 路线图并作为串行子目标承接，不要求在创建 Root Goal 时穷尽未来计划。
+- 工作区仍以一个 Root Goal 为长期锚点；MVP、后续阶段和扩展目标写入 Root Goal 路线图。纲领阶段通常串行，同一阶段内可由多个子目标并行承接；不要求在创建 Root Goal 时穷尽未来计划。
+- `progress`（若使用）必须由显式路线图/计划检查点确定性派生；默认等权，显式权重可覆盖。它只用于展示，不放行阶段、不关闭 finding、不覆盖信息门禁或 status。
 - 共享资料只在工作区上下文中以版本/哈希固定引用；资料内容不是 canonical 事实，也不得作为跨工作区目标状态或上下文混合通道。详见 [workspace protocol](../architecture/workspace-protocol.md)。
 - P-005 允许目标带未知项立项；模板中的信息需求表用于记录问题、`required`/`non-blocking` 级别、最晚阶段、延期复核、状态和证据，不要求在创建时已经知道一切。
 - `skills/templates/goal-folder/` 是面向离线复制与安装脚本的分发镜像；修改模板时先改本目录，再同步镜像。

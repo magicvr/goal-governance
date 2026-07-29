@@ -28,7 +28,7 @@ VP_ALLOWED_STATUS = frozenset({"planned", "active", "closed", "abandoned"})
 GOAL_FORBIDDEN_ON_CHARTER = frozenset(
     {"done", "draft", "blocked", "cancelled"}
 )
-VISION_ROLE_ALLOWED = frozenset({"primary", "delivery", "sandbox"})
+VISION_ROLE_ALLOWED = frozenset({"primary", "delivery"})
 VISION_REF_RE = re.compile(
     r"^(?P<vision_id>[a-z0-9-]+)@(?P<version>\d+\.\d+\.\d+)$"
 )
@@ -107,7 +107,7 @@ def validate_workspace_vision_alignment(
         raise ValueError(f"invalid vision_role: {role}")
     plan_refs_raw = fields.get("plan_refs", "").strip()
     primary = fields.get("primary_plan", "").strip()
-    # No sandbox opt-out: all roles require plan_refs + primary_plan when require_plans.
+    # All supported roles require plan_refs + primary_plan when require_plans.
     if not require_plans:
         return fields
     if not plan_refs_raw:
@@ -251,17 +251,19 @@ class VisionProtocolTests(unittest.TestCase):
                 vision_root=FIXTURES / "valid-stack",
             )
 
-    def test_sandbox_without_plans_is_rejected(self) -> None:
+    def test_sandbox_role_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "workspace.md"
             path.write_text(
                 "---\n"
                 "id: ws-sandbox\n"
                 "vision_role: sandbox\n"
+                "plan_refs: VP-001-sample\n"
+                "primary_plan: VP-001-sample\n"
                 "---\n",
                 encoding="utf-8",
             )
-            with self.assertRaisesRegex(ValueError, "missing plan_refs"):
+            with self.assertRaisesRegex(ValueError, "invalid vision_role"):
                 validate_workspace_vision_alignment(
                     path, vision_root=FIXTURES / "valid-stack"
                 )
@@ -275,9 +277,11 @@ class VisionProtocolTests(unittest.TestCase):
         self.assertIn("单愿景", principles)
         self.assertIn("P-006", agents)
         self.assertIn("单愿景", agents)
-        self.assertIn("取消", agents)
         alignment = (VISION_DIR / "alignment.md").read_text(encoding="utf-8")
-        self.assertIn("取消 sandbox opt-out", alignment)
+        self.assertIn("primary", alignment)
+        self.assertIn("delivery", alignment)
+        self.assertNotIn("vision_role: sandbox", alignment)
+        self.assertNotIn("sandbox opt-out", alignment)
 
     def test_primary_plan_not_in_refs_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

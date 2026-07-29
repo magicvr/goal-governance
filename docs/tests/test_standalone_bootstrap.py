@@ -259,7 +259,6 @@ class StandaloneBootstrapTests(unittest.TestCase):
                 {
                     **common,
                     "title": ROOT_TITLE,
-                    "progress": "0%",
                     "plan_refs": VP_ID,
                     "primary_plan": VP_ID,
                 },
@@ -307,12 +306,12 @@ class StandaloneBootstrapTests(unittest.TestCase):
                     "# Goal Tree",
                     "",
                     "```text",
-                    f"{ROOT_ID} · {ROOT_TITLE} [active 0%]",
+                    f"{ROOT_ID} · {ROOT_TITLE} [active]",
                     "```",
                     "",
                     "| ID | 标题 | Parent | Status | Progress | 路径 |",
                     "|----|------|--------|--------|----------|------|",
-                    f"| {ROOT_ID} | {ROOT_TITLE} | — | active | 0% | {ROOT_ID}/ |",
+                    f"| {ROOT_ID} | {ROOT_TITLE} | — | active | — | {ROOT_ID}/ |",
                     "",
                 ]
             ),
@@ -394,7 +393,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
 
         meta = self._parse_frontmatter(root / "00-meta.md")
         self.assertEqual(meta["title"], ROOT_TITLE)
-        self.assertEqual(meta["progress"], "0%")
+        self.assertNotIn("progress", meta)
         self.assertEqual(meta["primary_plan"], VP_ID)
         self.assertEqual(meta["plan_refs"], VP_ID)
 
@@ -405,7 +404,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
         self.assertEqual(tree_fields["parent"], "null")
         tree = tree_path.read_text(encoding="utf-8")
         self.assertIn(ROOT_ID, tree)
-        self.assertIn("[active 0%]", tree)
+        self.assertIn("[active]", tree)
+        self.assertIn("| active | — |", tree)
 
     def _assert_workspace_shape(self, target: Path) -> None:
         workspace = target / "docs" / "workspace-001-main-vision"

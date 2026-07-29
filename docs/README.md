@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-29
 parent: null
-version: 0.10.3
+version: 0.10.4
 ---
 
 # docs/ · 文档体系
@@ -65,9 +65,10 @@ docs/
    - `03-audit.md` — 审计/复盘
    - `attachments/` — 附件（可为空，保留目录）
 7. **可执行性与纲领路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清**纲领路线图**（阶段与先后关系），再创建与执行子目标。纲领阶段通常串行；**同一纲领阶段内**可并行子目标。
+   - `progress`（若有）仅由显式检查点确定性派生；默认等权，显式权重可覆盖。它不放行阶段、不关闭 finding、不覆盖 I-00N 或 `status`，也不进入愿景层。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识（含 P-001 路线图槽位）；独立审计出意见、编排器响应全部意见；finding 合法闭合为 `fixed` / `accepted-residual` / `user-overruled`；「是否自审」、意见冲突、单条必改否决/residual、信息 residual 由用户裁决。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
-10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review（`reviews.md`）；**无 sandbox plan opt-out**。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
+10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review（`reviews.md`）；工作区角色仅 `primary` / `delivery`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
 11. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/`（含 `goal-folder/`、`workspace-context.md`、`vision/`），消费适配器契约位于 `docs/contracts/`；`skills/templates/` 与 `skills/contracts/` 是供安装脚本和离线复制使用的同步镜像。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
 12. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal（须遵守 P-006 冷启动顺序）。
 13. **工作区与共享资料协议**：显式工作区可从 `docs/templates/workspace-context.md` 创建 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`；**仅当**没有显式工作区根且保留 `docs/goals/` 的旧仓库才是 legacy 隐式单工作区——否则不得猜测工作区根。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
@@ -117,11 +118,11 @@ version: 0.1.0
 
 | 类别 | 文件 | canonical SHA-256 | Skills mirror SHA-256 |
 |------|------|------------------|----------------------|
-| 模板 | `00-meta.md` | `5800252F8AF11CE741B90B04DA15D6FA8A71FBD8A253CB0D60C0AE270CA1F712` | `5800252F8AF11CE741B90B04DA15D6FA8A71FBD8A253CB0D60C0AE270CA1F712` |
+| 模板 | `00-meta.md` | `40649D5FF5E81B1AC411BD301DFA3C31A3376ADCA74420B303AEF07C6248A684` | `40649D5FF5E81B1AC411BD301DFA3C31A3376ADCA74420B303AEF07C6248A684` |
 | 模板 | `01-decision.md` | `C86403B96BA69E9E84B6662FF5B41EF0E637ABE5B2E57D8369E00FBA19F5B796` | `C86403B96BA69E9E84B6662FF5B41EF0E637ABE5B2E57D8369E00FBA19F5B796` |
 | 模板 | `02-execution.md` | `7864D87F7AE97B0AA2E0E1D14E290AC21110CC9C20BDD70382BACDEBCF9EB132` | `7864D87F7AE97B0AA2E0E1D14E290AC21110CC9C20BDD70382BACDEBCF9EB132` |
-| 模板 | `03-audit.md` | `44C72913995F8E27646C57555469A28B4FA06BCCDDBF2799B9D773C7F8920B4C` | `44C72913995F8E27646C57555469A28B4FA06BCCDDBF2799B9D773C7F8920B4C` |
-| 模板 | `workspace-context.md` | `C54D92D90036ECC4098206C6D7E839855D2494F95B6E2003E8B51904D95BD68C` | `C54D92D90036ECC4098206C6D7E839855D2494F95B6E2003E8B51904D95BD68C` |
+| 模板 | `03-audit.md` | `93E10520BAEAC0B40DFEABF903B9C15CE65070BA368316258292A839573949A9` | `93E10520BAEAC0B40DFEABF903B9C15CE65070BA368316258292A839573949A9` |
+| 模板 | `workspace-context.md` | `95CC2567A1D0D1A28A55F50037AED20ADA2922E458648F6403E8619C779626DF` | `95CC2567A1D0D1A28A55F50037AED20ADA2922E458648F6403E8619C779626DF` |
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
 | 契约 | `skills-consumer-contract.json` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |

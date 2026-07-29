@@ -4,14 +4,14 @@ status: active
 created: 2026-07-20
 updated: 2026-07-28
 parent: null
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 工作区与共享资料区协议
 
 本协议定义核心文档、Skills 和后续消费适配器共同使用的工作区边界。它保留目标五件套和目标平铺，但不再以全局 `docs/goals/` 作为当前 canonical 布局：每个显式工作区在自己的根目录内保存唯一目标状态。
 
-仓库级愿景体系见 [../vision/](../vision/) 与 [principles.md](principles.md) **P-006**：**单愿景**；冷启动 **Charter → VP → 工作区/Root**；所有工作区必须挂 `plan_refs`/`primary_plan`（**无 sandbox opt-out**）。愿景**不是**第二套 goal-tree 或 progress 权威。规则细节以 [../vision/alignment.md](../vision/alignment.md) 为准。
+仓库级愿景体系见 [../vision/](../vision/) 与 [principles.md](principles.md) **P-006**：**单愿景**；冷启动 **Charter → VP → 工作区/Root**；所有工作区必须挂 `plan_refs`/`primary_plan`。愿景**不是**第二套 goal-tree 或 progress 权威。规则细节以 [../vision/alignment.md](../vision/alignment.md) 为准。
 
 ## 1. 范围与术语
 
@@ -73,7 +73,7 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 | `canonical_scope` | 当前工作区根；格式为 `docs/workspace-<NNN>-<slug>/`。 |
 | `shared_materials_catalog` | 共享资料目录的固定路径/URI，或 `none`。它只标识资料来源，不保存资料内容。 |
 | `status`、`created`、`updated`、`version` | 与其他 core Markdown 一致的可追溯元信息。 |
-| `vision_role` | `primary` \| `delivery` \| `sandbox`（完整治理下必填；`sandbox` 仅为角色/风险标签）。 |
+| `vision_role` | `primary` \| `delivery`（完整治理下必填）。 |
 | `plan_refs` | **必填**，至少一个愿景规划 id（逗号分隔）。**禁止** opt-out。 |
 | `primary_plan` | **必填**；必须出现在 `plan_refs` 中；对应 `docs/vision/plans/<id>.md`。 |
 
@@ -95,7 +95,7 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 
 1. **单愿景 · Charter ← VP ← Workspace/Root**：项目内唯一 active Charter；Root 与工作区通过 `plan_refs` / `primary_plan` 挂接 VP；VP 通过 `vision_ref: {vision_id}@{version}` 精确对齐 Charter。
 2. **Fail closed**：缺 Charter（完整安装判定）、缺 plan 字段、`primary_plan` 无法解析、VP `vision_ref` 与 charter 版本不一致、或 Charter/VP 使用非法 status 时，不得推进受影响的新建/放行/关门（引导补齐/re-align 除外）。
-3. **无 plan opt-out**：含 `vision_role: sandbox` 在内的**所有**工作区必须填写 `plan_refs` 与 `primary_plan`。`sandbox` 不表示可脱离意图对齐。
+3. **无 plan opt-out**：**所有**工作区必须填写 `plan_refs` 与 `primary_plan`；`vision_role` 仅允许 `primary` / `delivery`。
 4. **规划与工作区非 1:1**：一 VP 可由 0..N 个工作区推进（`planned` 允许 0）；一工作区可挂 1..N 个 VP，但必须标明 `primary_plan`。多区绑定同一 active/推进中 VP 时 **`lead_workspace` 必填**。
 5. **VP 关门**：轻量纲领确认 + 链接工作区证据；多区时 lead 发起 + 用户确认；允许有界 closed（residual 点名到区/目标）；禁止把 progress% 或 Goal 审计台账放进 `docs/vision/`。
 6. **Primary 冲突**：`workspace.md` 的 `vision_role`、`docs/vision/workspaces.md` 的 role、Charter 的 `primary_workspace` 三者冲突时，以 [alignment.md](../vision/alignment.md) 的裁决顺序 fail closed，不得静默选一侧。

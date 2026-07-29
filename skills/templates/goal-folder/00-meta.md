@@ -5,8 +5,8 @@ status: active
 parent: GOAL-040-docs-quality
 created: 2026-03-01
 updated: 2026-07-19
-version: 0.2.0
-progress: 60%
+version: 0.3.0
+progress: 50%
 ---
 
 # GOAL-042 · 优化项目 README 文档结构
@@ -21,6 +21,10 @@ progress: 60%
 - [x] 快速开始步骤在干净环境可复现（已自测一遍）
 - [ ] 与 `docs/README.md` 交叉链接一致，无过期路径
 - [ ] 由一名协作者按 README 完成首次启动并口头确认
+
+## 派生进度展示（可选）
+
+`progress: 50%` 由上方 4 个显式成功检查点中的 2 个完成项等权计算。progress 仅为展示；检查点变化后重算并同步 `goal-tree.md`。它不放行阶段、不关闭 finding、不覆盖信息门禁，也不自动推导 `status: done`。若目标没有可枚举检查点，请省略 frontmatter 的 `progress`。
 
 ## 信息就绪与未知项（按需）
 

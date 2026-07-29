@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-29
 parent: null
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 治理原则
@@ -58,6 +58,16 @@ version: 0.8.0
 | 5 | 用户或决策已明示「分阶段」或「先路线图」 |
 
 **跳过路线图时的留痕**：在 `00-meta` 或 `01-decision` 用一句话写明「为何 1–5 均不适用」（可极短）。拿不准时**不跳过**。
+
+### 派生进度展示（非权威）
+
+`progress` 是可选的**派生展示**，不是目标生命周期、质量、审计、信息就绪或愿景事实。使用时必须满足：
+
+1. 来源是目标 `00-meta.md` / `01-decision.md` 中显式、可枚举的路线图或阶段计划检查点；无来源、来源不完整或解析不一致时省略/显示 `—`，不得手填百分比兜底。
+2. 默认按 `已完成检查点数 / 总检查点数` 等权计算；若需不同权重，必须在检查点表中显式记录权重，且总权重可核对。部分完成不计入，除非已拆成更细检查点。
+3. `00-meta` 与 `goal-tree` 只保存/展示同一派生结果；检查点变化后重算。它们不是两份可独立编辑的进度真相。
+4. `progress=100%` 不自动推导 `status: done`；`status` 也不反向伪造 progress。任何百分比都不得放行阶段、冻结方案、实施、验收、关门，或关闭/降级 finding 与 I-00N。
+5. Charter、VP、`docs/vision/`、Vision Review 与跨工作区组合编排不得汇总或解释目标 progress。
 
 ---
 
@@ -212,7 +222,7 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 | 2 | **必改互否**：对**同一** finding 主题或同一可识别交付主张，一方标 required 必改、另一方明确主张不必改 / 应 overruled 且未闭合 |
 | 3 | **门禁互否**：一方主张「可放行/可关门」，另一方主张「阻断同一门禁」，且双方 required 未按三路径闭合 |
 
-**不视为冲突**：多条同向意见；可叠加的必改项（合并开放集合）；仅 recommended 分歧且无 required 互否；一方已 `user-overruled`/`accepted-residual` 留痕后与历史原文的表面不一致。  
+**不视为冲突**：多条同向意见；可叠加的必改项（合并开放集合）；仅 recommended 分歧且无 required 互否；一方已 `user-overruled`/`accepted-residual` 留痕后与历史原文的表面不一致。
 **拿不准** → 当冲突询问用户。
 
 ### 4.3 单条（或无冲突）required finding 的否决 / residual
@@ -320,7 +330,7 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 
 - **方向/边界权威**向上对齐；**status / progress / 审计台账**以本目标与本区为准。
 - **最小可检查对齐**（完整治理）：
-  - **机读**：`parent` 合法；Root/工作区有 `plan_refs`+`primary_plan`；VP 文件存在；`vision_ref` = 现行 Charter；**禁止**省略 plan 字段（无 sandbox opt-out）。
+  - **机读**：`parent` 合法；Root/工作区有 `plan_refs`+`primary_plan`；VP 文件存在；`vision_ref` = 现行 Charter；**禁止**省略 plan 字段。
   - **语义**：按下方谓词判定是否与上一级**明显冲突**；冲突 → P-004，不得静默放行。
 
 #### 谓词 ·「不与上一级明显冲突 / 语义对齐失败」（最小充分条件）
@@ -388,14 +398,14 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 ├─ 同愿景下新纲领波次/可关门主题？ → 新 VP 或修订现 VP
 ├─ 需独立 goal-tree、隔离上下文或长期并行目的？ → 新工作区 + Root（必须挂 VP）
 ├─ 同 Root 目的与边界内？ → 子目标（大则先纲领路线图）
-└─ 高不确定探索？ → vision_role: sandbox（仍须挂 VP；仅为角色/风险标签）
+└─ 高不确定探索？ → 先按 P-005 建有界信息收集阶段/目标；需要独立树时再开 delivery 工作区
 ```
 
 **嵌套指引（无硬层数上限）**：优先加纲领阶段 → 再加子目标层 → 最后开新区。停止条件：已可直接执行，或信息/范围可在单目标内闭环（P-005）。
 
 **同一 VP 多工作区**：多于一个绑定区时 **`lead_workspace` 必填**；VP 关门提案默认由 lead 侧发起，support 区证据须链接，经用户确认。
 
-**反模式**：每功能一个工作区；无限塞单一 Root；用新 VP 回避纲领纪律；用改 Charter 表达纯执行学习；跨区 parent；sandbox 省略 plan 对齐。
+**反模式**：每功能一个工作区；无限塞单一 Root；用新 VP 回避纲领纪律；用改 Charter 表达纯执行学习；跨区 parent；用“探索”名义绕过 plan 对齐或信息门禁。
 
 ### 6.7 分层审视（关键门强制）
 
@@ -453,4 +463,4 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 - 共享资料固定引用只提供可追溯来源，不能替代用户确认、审计证据、P-004 裁决或 P-005 门禁。
 - 工作区绑定或资料引用不完整时，受影响的读取、推理、写入和放行应 fail closed；物理资料存储、用户 CRUD、AI 访问执行和 Web 安全模型留给相应消费适配器的验证门禁。
 - 目标 `GOAL-*` id **仅在工作区内唯一**；跨工作区提及目标时必须同时给出 `workspace_id`（或等价 canonical 路径），不得仅凭 `GOAL-NNN-…` 跨区寻址。
-- 完整治理必含唯一 Charter；所有工作区（含 `sandbox` 角色）必须挂 VP；无 plan opt-out（P-006 / alignment）。
+- 完整治理必含唯一 Charter；所有工作区必须挂 VP；角色仅 `primary` / `delivery`，无 plan opt-out（P-006 / alignment）。

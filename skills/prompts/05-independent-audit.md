@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.3.1
+version: 0.4.0
 role: independent-audit
 ---
 
@@ -19,7 +19,7 @@ role: independent-audit
 
 - `source` **必须**为 `independent`
 - **默认只写审计意见**到被审目标 `03-audit.md`（可 + attachments）
-- **禁止**修改目标 `status` / `progress` / 方案正文 / goal-tree 状态列  
+- **禁止**修改目标 `status` / 检查点 / 派生 `progress` / 方案正文 / goal-tree 状态列；任何百分比都不能作为 finding 闭合或放行依据
   （除非用户在本轮**明确书面授权**「边审边改」——默认拒绝）
 - 结束后提示：可用 `/govern` 响应意见、关闭 finding、推进阶段
 - 愿景层独立审视使用 `/vision-audit` / [07-independent-vision-review.md](07-independent-vision-review.md)，不得写入 `docs/vision/reviews.md`
@@ -81,7 +81,7 @@ role: independent-audit
 
 5. 若全文很长：摘要 + verdict + findings 列表写在 `03-audit`；全文写入 `attachments/audit-A-NNN-independent.md` 并链接。
 6. 刷新该 `03-audit.md` 的 `updated`（仅审计文档元数据）。
-7. **不要**改 `00-meta` 的 status/progress，**不要**改 goal-tree 状态。
+7. **不要**改 `00-meta` 的 status、检查点或派生 progress，**不要**改 goal-tree 状态；不得用 progress 证明完成或关闭 finding。
 8. 回复用户：verdict 一句话、必改项列表、已写入路径、建议「用 /govern 响应」。
 
 # Verdict 尺度

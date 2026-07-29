@@ -373,7 +373,7 @@ Workspace $wsId scaffolded. Root $rootId five-pack not created yet - run /govern
 
 | ID | Title | Parent | Status | Progress | Path |
 |----|-------|--------|--------|----------|------|
-| $rootId | $title | - | draft | 0% | (not created yet) |
+| $rootId | $title | - | draft | - | (not created yet) |
 "@
     $treeText = $treeText -replace '``````', '```'
     [System.IO.File]::WriteAllText($treeFile, ($treeText -replace "`r`n", "`n"), $utf8)

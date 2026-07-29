@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-29
 parent: null
-version: 0.10.1
+version: 0.10.2
 ---
 
 # AGENTS.md
@@ -68,7 +68,7 @@ version: 0.10.1
 | `parent` | 目标：父目标完整 id 或 `null`；非目标文件可用 `null` |
 | `version` | 文档版本号 |
 
-`00-meta.md` **必须**另含：`id`、`title`；**建议**含 `progress`（如 `50%`）。
+`00-meta.md` **必须**另含：`id`、`title`；可选含派生展示字段 `progress`。`progress` 只能由目标内显式路线图/计划检查点确定性计算，不是状态、门禁或审计事实。
 
 ### status 取值
 
@@ -101,6 +101,8 @@ version: 0.10.1
 3. 路线图写在该目标的 `00-meta.md` 或 `01-decision.md`，并随进展更新。
 4. 路线图就位后，再**按阶段**创建与执行具体子目标。
 5. 已可直接执行的小目标**无需**强行补路线图。
+
+**派生进度展示**：仅当目标内存在显式、可枚举的路线图或阶段计划检查点时，才可写 `progress`。默认等权计算 `已完成检查点数 / 总检查点数`；若使用权重，权重必须随检查点显式落盘。无来源或来源不一致时省略/显示 `—`，不得手填百分比兜底。任何 progress 值都不得放行阶段、关闭 finding、覆盖信息门禁、推导 `done`，也不得进入愿景目录作为权威。
 
 原则以本文件第 6 节为操作入口；**全文**以 `docs/architecture/principles.md` 为准（**必备**）。  
 Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安装，不得当作可跳过。
@@ -182,7 +184,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 plan）→ 区内纲领路线图/子目标。
 3. **先读** Charter 与 `docs/vision/alignment.md`（或 consumer-checklist），再定位工作区与推进目标。
 4. **对齐递归**：子目标→父目标→Root→VP→Charter（源头）。机读字段链 + 语义不与上一级边界/非目标明显冲突。
-5. **所有工作区**（含 `sandbox` 角色）**必须** `plan_refs` + `primary_plan`；**取消** sandbox opt-out。
+5. **所有工作区**必须 `plan_refs` + `primary_plan`；当前规范角色仅 `primary` / `delivery`，不存在 plan opt-out。
 6. 缺 plan、VP 缺失、或 `vision_ref` 与 charter 版本不一致 → **fail closed**。
 7. `docs/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 见 `docs/vision/reviews.md`（`VRev-00N`）。
 8. 细则：`docs/vision/alignment.md`；原则全文 **P-006**；协议摘要：`docs/architecture/workspace-protocol.md` §4b。
@@ -202,7 +204,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | 阶段计划 | 目标内方案（非树节点） |
 | 意图 | 已落盘 `VP-*.md`（草案不可作 primary_plan） |
 
-**结构选型**：改源头→Charter strategic；新波次→VP；独立树/隔离→新工作区；同 Root→子目标；探索→`sandbox` 角色仍挂 VP。  
+**结构选型**：改源头→Charter strategic；新波次→VP；独立树/隔离→新工作区；同 Root→子目标；高不确定探索先按 P-005 建立有界信息收集阶段或目标。
 **强制审视**：Charter 初建/strategic → Vision Review；新 VP → 用户确认；开区 → 对齐校验；目标层按 P-002/P-003（小目标可合并）。  
 **继承**：语境与边界约束可继承；residual/overruled/进度/审计**不**自动继承。有界偏离须 P-004；改边界则升级改上一级。  
 **跨区**：禁止跨区 `parent`；用 Q2/Q3。多区同一 VP 时 `lead_workspace` 必填。  
@@ -213,7 +215,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 以下任一操作后，**必须**更新 `<workspace-root>/goal-tree.md`：
 
 - 新建目标
-- 修改 `status` / `progress`
+- 修改 `status`，或检查点变化导致派生 `progress` 变化
 - 修改 `parent`（调整树）
 - 完成或取消目标
 - 重命名文件夹或 slug（并修正所有引用）
@@ -298,7 +300,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - 未合法闭合的 required/必改 findings 存在时，禁止推进对应门禁或 `status: done`（闭合仅限 fixed / accepted-residual / user-overruled）。
 - 无显式工作区时禁止把任意路径当作隐式 `<workspace-root>`；仅 legacy `docs/goals/` 或空治理 scaffold。
 - **完整安装必有唯一 active Charter**；缺则仅引导补齐。
-- **所有工作区必须挂 VP**（无 sandbox plan opt-out）；禁止跨区 `parent`；禁止多愿景。
+- **所有工作区必须挂 VP**；角色仅 `primary` / `delivery`；禁止跨区 `parent`；禁止多愿景。
 - Vision Review required 未闭合、或 strategic 未 re-align（宽阻断）时，不得开区/放行/关门/宣称方向已稳。
 
 ## 12. 完成前检查清单
@@ -312,6 +314,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - [ ] 已识别的未知项已登记；本次要推进的阶段没有开放 required 信息门禁，或残余风险已获用户书面接受
 - [ ] `goal-tree.md` 已同步
 - [ ] `updated` / `progress` / `status` 与事实一致
+- [ ] `progress`（若有）可从显式检查点确定性重算，且未被用作放行/关门依据
 - [ ] 若涉及推进/放行：相关审计意见与 Vision Review（若适用）已汇总；P-004 已询问用户（若适用）
 - [ ] 无未合法闭合的 required/必改 findings（fixed / accepted-residual / user-overruled 之一）
 
@@ -320,7 +323,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | 推荐 | 说明 |
 |------|------|
 | 平铺 + `parent: GOAL-001-<slug>` | 完整 id；禁止跨区 parent |
-| 改 progress 同时改 goal-tree | 两处一致 |
+| 检查点变化后重算 progress 并同步 goal-tree | progress 仅为派生展示 |
 | 大目标先纲领路线图 | 再按阶段立项；阶段内可并行 |
 | 计划与已完成分开写 | 阶段计划非树节点；时间线只记事实 |
 | 复制模板后改真实 id | 例如勿留 GOAL-042 |
@@ -330,7 +333,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | Vision Review → `docs/vision/reviews.md`（VRev-00N） | P-006；≠ Goal audit |
 | finding：fixed / residual / overruled | P-003 / Vision Review 同构 |
 | 冲突 / 是否自审 / residual → 问用户 + 建议 | P-004 |
-| 单愿景；冷启动 Charter→VP→区 | P-006；无 sandbox opt-out |
+| 单愿景；冷启动 Charter→VP→区 | P-006；工作区角色仅 primary/delivery |
 | 无显式区 → 仅 legacy `docs/goals/` 或 scaffold | 工作区协议 |
 | 跨区：文档 Q2 路径 / 对话 Q3 标签 | 不改 `GOAL-NNN-slug`；裸 id 仅当前区 |
 | 区内 parent 仍短 id | 不把工作区号嵌进 goal id |

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 0.9.0
+version: 0.10.0
 role: primary
 ---
 
@@ -44,7 +44,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 # 工作方式（优先遵守）
 
 1. **一条主路径**：用户说「帮我推进」「治理」「下一步」或调用 `/govern` 时，直接走本流程（**实现层**）。按情境选用 create / decision / execution / audit，用户无需先选「填哪张表」。
-2. **文档驱动**：以当前工作区根的 `goal-tree.md` 与目标五件套为真相源；**先判定**现行 `docs/vision/charter.md`（完整安装必有；缺则仅引导补齐 Charter→VP）；再读 alignment；定位 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`（**无 sandbox opt-out**）；进度与结论只写已发生的事实；不确定标「待确认」。`docs/vision/` 不是 progress 权威。
+2. **文档驱动**：以当前工作区根的 `goal-tree.md` 与目标五件套为真相源；**先判定**现行 `docs/vision/charter.md`（完整安装必有；缺则仅引导补齐 Charter→VP）；再读 alignment；定位 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`（角色仅 `primary` / `delivery`，无 opt-out）；进度与结论只写已发生的事实；不确定标「待确认」。`progress`（若有）只能由显式检查点确定性派生，不能放行阶段、关闭 finding 或覆盖 status；`docs/vision/` 不是 progress 权威。
 3. **扫描 → 意见台账 → 分类 → 提议 → 确认 → 写入**：写入前先建议并确认（用户本轮已明确写入指令时可直接执行）。
 4. **大目标先纲领路线图（P-001）**：范围大或步骤不明时，先在 meta/decision 写高层阶段与先后关系，再按阶段立项；本回合聚焦一个清晰下一步。
 5. **信息就绪（P-005）**：不假定设立时已知一切。识别信息项、影响门禁与最晚需要阶段；允许先推进澄清/收集，但不把开放 required 信息项写成已知或默许越过受影响门禁。
@@ -100,7 +100,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 
 1. **愿景完整安装**：无 active `docs/vision/charter.md` → **不完整安装**；仅允许引导补齐（Charter → 首个 VP）；**拒绝**非引导开区/推进/放行/关门。有 Charter 则读 `vision_id`/`version` 与 `alignment.md`（**单愿景**；对齐递归 Charter←VP←Workspace←子目标）。  
 2. 定位当前 `docs/workspace-<NNN>-<slug>/workspace.md` 并校验：`root_goal` 指向唯一 `parent: null` Root Goal；`canonical_scope` 为当前工作区根。绑定不匹配时 fail closed。  
-3. **所有工作区**校验必填 `plan_refs`、`primary_plan`（∈ plan_refs；**含 sandbox，无 opt-out**），且 `docs/vision/plans/<primary_plan>.md` 存在；其 `vision_ref` 须精确匹配 charter 版本。失败 fail closed。检查 `reviews.md` 是否有阻断本动作的未闭合 required（VRev）。  
+3. **所有工作区**校验 `vision_role` ∈ {`primary`,`delivery`}，并校验必填 `plan_refs`、`primary_plan`（∈ plan_refs；无 opt-out）；且 `docs/vision/plans/<primary_plan>.md` 存在，其 `vision_ref` 须精确匹配 charter 版本。失败 fail closed。检查 `reviews.md` 是否有阻断本动作的未闭合 required（VRev）。
 4. 只处理当前工作区。不得自动发现、加载、合并或写入其他工作区上下文；**禁止跨区 parent**。  
 5. 共享资料引用须同时具备匹配的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256`；否则 fail closed。内容须用户确认才成事实。  
 6. 无显式工作区根、但存在 `docs/goals/` 时，仅按 **legacy** 隐式单工作区兼容（缺 vision 仍按不完整/引导处理）；不得猜测外部工作区。  
@@ -117,7 +117,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 2. **愿景完整性**：无 active Charter → 标不完整安装，本轮主建议为引导补齐（可停在此）；有则读 charter/alignment/`reviews.md`，记录 `primary_plan` 候选与开放 VRev required。
 3. 定位当前工作区 `workspace.md`，校验工作区 ID、Root Goal、canonical 范围、共享资料引用与**必填**愿景 plan 字段；多个工作区而用户未指定焦点时 fail closed。
 4. 检查当前工作区根与其中的 `goal-tree.md`；仅在没有显式工作区根时检查 legacy `docs/goals/`。
-5. 若有 goal-tree：读取 id、title、parent、status、progress，并核对显式工作区的 Root Goal 绑定与 Root `plan_refs`/`primary_plan`。
+5. 若有 goal-tree：读取 id、title、parent、status、progress，并核对显式工作区的 Root Goal 绑定与 Root `plan_refs`/`primary_plan`；若 progress 无显式检查点来源或与重算结果不一致，列为维护缺口，不把它用于阶段判断。
 6. 按需打开未关门目标的 `00-meta`、`01-decision`（含信息需求）、近期 `02-execution` / **`03-audit`（全部 A-00N）**。
 7. 若焦点是消费适配器或发布一致性，检查包内 `contracts/skills-consumer-contract.json` 是否存在。
 8. 记录仓库**观察信号**（结论以前表默认策略 + 用户确认为准）。
@@ -331,7 +331,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 - 新项目 S0：**先** scaffold `docs/workspace-001-<slug>/`（workspace.md + goal-tree），**再**建 Root；slug **必须用户确认**。  
 - 核心方法论与 Skills 同级必备；不得宣称 architecture 对完整安装可选。  
 - 存在显式工作区根时，绑定不匹配或资料引用未固定/不匹配必须 fail closed；不得自动混合其他工作区上下文。无显式区时仅 legacy `docs/goals/` 或空治理 scaffold，禁止猜测仓库根为工作区。
-- 缺 active Charter = 不完整安装（仅引导补齐）。有 vision 时缺 plan 对齐或 VP/`vision_ref` 不合法必须 fail closed（**无 sandbox opt-out**）；不得把 vision 当 progress 权威。  
+- 缺 active Charter = 不完整安装（仅引导补齐）。有 vision 时 `vision_role` 非 `primary`/`delivery`、缺 plan 对齐或 VP/`vision_ref` 不合法必须 fail closed；不得把 vision 当 progress 权威。
 - 单愿景；禁止跨区 parent；strategic 未 re-align 宽阻断；Vision Review required 未闭合可阻断开区/VP 关门/方向已稳宣称。  
 - Root 编号保持 `GOAL-001`；新编号 = 当前最大 + 1；不复用 cancelled 号作新含义；不把工作区号嵌进 goal id。跨区：文档 Q2 / 对话 Q3 / 机器 Q1。  
 - 新建目标一次建齐五件套；有变更则更新 goal-tree（树 + 表）。  

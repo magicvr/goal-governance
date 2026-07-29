@@ -5,9 +5,9 @@ description: >
   决策层入口；实现推进用 /govern；Goal 交叉审计用 /audit；独立 Vision Review 用 /vision-audit。
 status: active
 created: 2026-07-28
-updated: 2026-07-28
+updated: 2026-07-29
 parent: null
-version: 0.1.0
+version: 0.2.0
 slash: /vision
 role: vision-decision
 ---
@@ -36,7 +36,7 @@ role: vision-decision
 - 单愿景；冷启动 Charter → VP，再交 `/govern` 开区。  
 - Review 落 `docs/vision/reviews.md`（`VRev-00N`）。  
 - 独立 Vision Review 用 `/vision-audit`；`/vision` 负责 self Review、决策与 finding 响应。
-- 无 sandbox plan opt-out；不写 progress% 进 vision。  
+- `vision_role` 仅允许 `primary` / `delivery`；所有工作区 plan 必填；不写 progress% 进 vision。
 
 `/vision` 后的附言视为初始意图。
 

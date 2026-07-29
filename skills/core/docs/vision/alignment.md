@@ -4,7 +4,7 @@ title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
 updated: 2026-07-29
-version: 0.4.0
+version: 0.5.0
 parent: null
 ---
 
@@ -25,10 +25,41 @@ parent: null
 
 ### 0.2 完整安装与冷启动
 
-1. 完整安装**必含**现行 Charter 及本文件要求的愿景树最小文件（见 [README.md](README.md)）。缺省 = **不完整安装**。
+1. 完整安装文件集以本节 **Minimal Complete Install（MUST）** 为**唯一权威**；[consumer-checklist.md](consumer-checklist.md)、[standalone-bootstrap.md](../standalone-bootstrap.md)、[principles P-006 §6.2](../architecture/principles.md#62-完整安装与冷启动) **必须同表**，禁止三处各写「建议/必含」分裂定义。缺任一 MUST 行 = **不完整安装**。
 2. **法定顺序（严格串行）**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（`plan_refs` + `primary_plan`）→ 区内纲领路线图与子目标。
 3. **缺 Charter**：仅允许**引导补齐**；拒绝非引导开区、推进、放行、关门；须报告不完整安装。
 4. **legacy** 无 vision：不完整；补齐前不得新开显式区或放行/关门（只读与引导除外）。
+
+#### Minimal Complete Install（MUST） vs Recommended
+
+> **权威表**。更新本表后须同步 checklist 勾选与 standalone 核对项。
+> 「完整独立启用」= 下表全部 MUST 已存在且冷启动顺序合法；**不是**「仅有 architecture + templates」。
+
+| 层级 | 路径 / 条件 | 级别 | 说明 |
+|------|-------------|------|------|
+| 规则入口 | 根 `AGENTS.md`（或项目声明的等价 AI 规则） | **MUST** | 操作摘要；全文原则仍以 architecture 为准 |
+| 文档入口 | `docs/README.md` | **MUST** | 核心文档索引 |
+| 方法论 | `docs/architecture/principles.md` | **MUST** | P-001～P-006 全文 |
+| 方法论 | `docs/architecture/workspace-protocol.md` | **MUST** | 工作区/资料协议 |
+| 模板 | `docs/templates/goal-folder/`（五件套 + `attachments/`） | **MUST** | canonical 目标模板 |
+| 模板 | `docs/templates/workspace-context.md` | **MUST** | 工作区页模板 |
+| 模板 | `docs/templates/vision/charter.md`、`vision-plan.md` | **MUST** | 冷启动复制源 |
+| 契约（若分发消费适配器） | `docs/contracts/` 消费契约文件 | **MUST**（有 Skills/Web 分发时） | 纯文档-only 仓可无，但不得假装已装适配器契约 |
+| 愿景规则 | `docs/vision/alignment.md` | **MUST** | 本文件；规则权威 |
+| 愿景入口 | `docs/vision/README.md` | **MUST** | 目录地图与硬边界 |
+| 愿景实例 | `docs/vision/charter.md`（`status: active`） | **MUST** | 单愿景；缺 = 不完整 |
+| 愿景树 | `docs/vision/roadmap.md` | **MUST** | 组合编排索引（可极简，但文件必须存在） |
+| 愿景树 | `docs/vision/revisions.md` | **MUST** | Charter 修订台账（可极简） |
+| 愿景树 | `docs/vision/reviews.md` | **MUST** | Vision Review 台账（可极简；Charter 初建后宜有 VRev） |
+| 愿景树 | `docs/vision/workspaces.md` | **MUST** | 工作区贡献图（可极简） |
+| 愿景树 | `docs/vision/consumer-checklist.md` | **MUST** | 与本表一致的操作勾选 |
+| 意图 | 至少一个 `docs/vision/plans/VP-*.md` | **MUST**（开区前） | `vision_ref` 精确匹配 Charter |
+| 工作区 | 显式 `docs/workspace-<NNN>-<slug>/workspace.md` | **MUST**（开区后） | 含必填 `plan_refs` / `primary_plan` |
+| 目标 | 工作区根 `goal-tree.md` + Root 五件套 | **MUST**（开区后） | Root `parent: null` |
+| 方法论（可选扩展） | `docs/architecture/overview.md`、`directory-layout.md` 等 | Recommended | 增强可读性，不替代 MUST |
+| 实例 dogfood | 他仓过程树、本仓历史 GOAL 附件 | 勿复制 | 不是完整安装条件 |
+
+**半安装**：仅有 architecture/templates、无 Charter 或无上表愿景树 MUST 文件 → 只可读原则，**不得**记为完整独立启用通过，也不得非引导推进/放行/关门。
 
 ### 0.3 命名
 
@@ -81,11 +112,11 @@ Workspace + Root Goal
 
 | 字段 | 要求 |
 |------|------|
-| `vision_role` | `primary` \| `delivery` \| `sandbox`（**角色/风险标签**；不免除对齐） |
+| `vision_role` | `primary` \| `delivery` |
 | `plan_refs` | **必填**，至少一个 VP id；多个用逗号分隔 |
 | `primary_plan` | **必填**，且必须 ∈ `plan_refs`；对应 `docs/vision/plans/<id>.md` |
 
-- **取消 sandbox opt-out**：任何角色（含 `sandbox`）**不得**省略 `plan_refs` / `primary_plan`。废止 `vision_opt_out_reason` 作为免挂 VP 的合法路径。
+- **无 plan opt-out**：任何工作区都不得省略 `plan_refs` / `primary_plan`；`vision_role` 仅允许 `primary` / `delivery`。
 - 至多一个工作区 `vision_role: primary`（与 [workspaces.md](workspaces.md) 一致）。
 
 ### 3.1 Primary 声明冲突裁决
@@ -140,7 +171,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 7. VP 关门前（区证据 + lead 规则）  
 8. 相关 **Vision Review** 的 required 意见未合法闭合时（开区 / VP 关门 / 宣称方向已稳）
 
-失败模式：缺 Charter；缺 `plan_refs` / `primary_plan`；`primary_plan` 不在列表中；VP 文件缺失；`vision_ref` 与 charter 版本不一致；primary 无规划；Charter/VP 非法 status；sandbox 试图 opt-out；待 re-align 宽阻断生效中。
+失败模式：缺 Charter；缺 `plan_refs` / `primary_plan`；`primary_plan` 不在列表中；VP 文件缺失；`vision_ref` 与 charter 版本不一致；非法 `vision_role`；primary 无规划；Charter/VP 非法 status；待 re-align 宽阻断生效中。
 
 ## 7. 规划关门（轻量）
 
@@ -179,7 +210,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 
 ## 10. 结构选型（摘要）
 
-详见 P-006 §6.6。要点：改源头 → Charter；新波次 → VP；独立树/隔离 → 新工作区（仍挂 VP）；同 Root → 子目标；探索 → `sandbox` **角色**且仍挂 VP。
+详见 P-006 §6.6。要点：改源头 → Charter；新波次 → VP；独立树/隔离 → 新工作区（仍挂 VP）；同 Root → 子目标；高不确定探索 → P-005 有界信息收集阶段/目标。
 
 ## 11. 引用格式
 
@@ -194,4 +225,4 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 - 将执行流水或 progress 写入 vision 目录  
 - 自动跳过 Vision Review 的算法；硬编码目标嵌套层数  
 - 与 VP 并列的独立「Intent」文档类型  
-- sandbox 省略 `plan_refs` 的 opt-out  
+- 任何工作区省略 `plan_refs` / `primary_plan` 的 opt-out
