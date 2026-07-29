@@ -1,11 +1,11 @@
 ---
 id: GOAL-020-methodology-adversarial-audit-fix
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-29
 updated: 2026-07-29
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 决策记录 · GOAL-020
@@ -78,3 +78,20 @@ version: 0.2.0
 **未选方案**：删除所有目标 progress；设置“开放 required 时百分比上限”；仅在 GOAL-020 排除 sandbox；保留 sandbox 并接受 residual；现在立即做同 scope self audit。
 
 **影响与后续**：更新 canonical 权威、模板、Skills core/宿主入口与测试；同步 GOAL-020/Root/goal-tree。阶段 E 运行回归并追加 self audit，之后再评估关门。
+
+## D-005 · 接受 A-004 建议并确认 GOAL-020 关门（2026-07-29）
+
+- **状态**：accepted
+
+**决定**：
+
+1. 接受 A-004 `self / close-out / pass` 建议，将 GOAL-020 从 `active` 改为 `done`；派生 progress 保持 `100%`。
+2. F-010 保留为 `recommended / open / non-blocking follow-up`，不改写为 fixed、accepted-residual 或 user-overruled；它不影响当前实例对齐，也不阻断本目标成功标准。
+3. 本次不追加独立 targeted 复审；按框架默认 L0 关门。未来仍可用 `/audit` 做只读复审。
+4. 不重开 GOAL-006，不修改 Root/Charter/VP 状态，不开启阶段 7。
+
+**为什么**：A～E 全部完成；A-004 已核对 required=0、到期信息项=0、成功标准与回归证据通过。用户在 `/govern` 关门裁决中明确选择“确认关门”。
+
+**未选方案**：先独立复审；保持 `active / 100%`；在本次关门中静默收紧 F-010 的 primary/strategic 规则。
+
+**后续**：若要处理 F-010，另走 `/govern` P-004 裁决并更新 alignment/tests；不得借本次 `done` 宣称该 recommended 已关闭。

@@ -24,7 +24,7 @@ version: 0.4.3
 | 愿景栈 | 最小对齐完备 | Charter@0.1.0（VR-004 editorial）；VP-001；V-F-001 fixed |
 | Root 路径 | **D-024 路径 D** | 仅维护；**不**关 Root |
 | 发版候选 runtime | **ready-for-release-evidence**（unreleased） | 本拍**未**重采 runtime / **未** tag |
-| Root | **`active`** | 002～019 全 done；下一编号 **GOAL-020** |
+| Root | **`active`** | 002～020 全 done；下一编号 **GOAL-021** |
 
 ## 下一步（根目标视角 · 2026-07-29）
 

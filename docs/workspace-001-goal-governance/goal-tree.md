@@ -4,14 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-29
 parent: null
-version: 1.1.8
+version: 1.1.9
 ---
 
 # Goal Tree
 
-## 2026-07-29 · 创建 GOAL-020（方法论对抗审与纠错）
+## 2026-07-29 · GOAL-020 阶段 E 与用户确认关门
 
-用户确认新目标作为对抗性审计主台账（不挂已关门 GOAL-006）。[GOAL-020-methodology-adversarial-audit-fix](GOAL-020-methodology-adversarial-audit-fix/) 当前 `active / 80%`（A～D 4/5 等权派生）：A-001 independent；A-002/A-003 响应；F-001～F-006 closed；I-001～I-003 closed；progress 收敛为显式检查点派生展示；sandbox 从当前规范全面移除。F-007～F-011 recommended open；阶段 E 回归与 self audit 待执行。路径 D 单点协议质量工作；**不**重开 GOAL-006；**不**改其它 GOAL status。下一编号 **GOAL-021**。
+[GOAL-020-methodology-adversarial-audit-fix](GOAL-020-methodology-adversarial-audit-fix/) 已由 D-005/A-005 `done / 100%`：A-001 independent；A-002/A-003 响应；A-004 self close-out `pass`；F-001～F-009/F-011 closed；F-010 recommended non-blocking follow-up；I-001～I-003 closed。Docs 22 / Skills 39 passed，canonical/core 哈希一致。路径 D 单点协议质量工作；**不**重开 GOAL-006；**不**改 Root/Charter/VP status；阶段 7仍延期。下一编号 **GOAL-021**。
 
 ## 2026-07-29 · 响应 GOAL-001 A-018（D-025 · 路径 D）
 
@@ -433,7 +433,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
 ├── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
 ├── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
-└── GOAL-020-methodology-adversarial-audit-fix · 核心方法论对抗性审计与纠错 [active 80%]
+└── GOAL-020-methodology-adversarial-audit-fix · 核心方法论对抗性审计与纠错 [done 100%]
 ```
 
 ## 状态总览
@@ -459,9 +459,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
 | GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径（文档 + pack + CI） | GOAL-001-main-vision | done | 100% | [GOAL-018-skills-release-packaging/](GOAL-018-skills-release-packaging/) |
 | GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | done | 100% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
-| GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | GOAL-001-main-vision | active | 80% | [GOAL-020-methodology-adversarial-audit-fix/](GOAL-020-methodology-adversarial-audit-fix/) |
+| GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | GOAL-001-main-vision | done | 100% | [GOAL-020-methodology-adversarial-audit-fix/](GOAL-020-methodology-adversarial-audit-fix/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**活跃子目标**：[GOAL-020](GOAL-020-methodology-adversarial-audit-fix/)（A～D 完成；required closed；阶段 E 回归/self audit 待执行）。下一编号 **GOAL-021**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。GOAL-020 已由 D-005/A-005 `done / 100%` 关门，F-010 保留 recommended follow-up；当前无未关门子目标。下一编号 **GOAL-021**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
 
 ## 状态图例
 

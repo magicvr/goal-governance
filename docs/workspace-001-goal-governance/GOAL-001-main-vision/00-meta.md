@@ -8,7 +8,7 @@ primary_plan: VP-001-governance-platform-delivery
 serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
 created: 2026-07-18
 updated: 2026-07-29
-version: 0.8.8
+version: 0.8.9
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -25,7 +25,7 @@ version: 0.8.8
 | **status** | **`active`** |
 | **progress 宣称** | 不宣称 Root `done`；不宣称阶段 6 终态 |
 | **现行路径** | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) · 路径 D**（仅维护发版/协议；A/B/C 延期） |
-| **子目标** | GOAL-002～019 `done / 100%`；**活跃**：[GOAL-020](../GOAL-020-methodology-adversarial-audit-fix/00-meta.md) `active / 80%`（A～D 完成；required 已 closed；阶段 E 回归/self audit 待执行） |
+| **子目标** | GOAL-002～020 均 `done / 100%`；GOAL-020 由 D-005/A-005 用户确认关门，F-010 保留 recommended follow-up |
 | **下一编号** | **GOAL-021** |
 | **工作区** | `workspace-001-goal-governance` · `root_goal: GOAL-001-main-vision` |
 
@@ -46,7 +46,7 @@ version: 0.8.8
 | 6 | **有界结项**（≠ 终态） | [D-015](01-decision.md#d-015--阶段-6-有界结项审视不关-rootr-009-x-仍-accepted2026-07-22) / [A-014](03-audit.md#a-014--阶段-6-有界结项审视2026-07-22)；009 + 012～017 |
 | 6 后 · Skills 维护波次 | **已 done**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 归属） | GOAL-018（Release 打包）；GOAL-019（消费方骨架）— **非**阶段 7 预工作、**非** residual 主线 |
 | 6 后 · 协议 / 愿景栈 | **路径 D 维护**（Root 仍 active） | D-016～D-025；P-006；`/vision`；`/vision-audit`；A-018 required closed |
-| 6 后 · 方法论质量 | **GOAL-020 active / 80% 派生展示** | A～D 完成；F-001～F-006 closed（F-005 派生 progress，F-006 移除 sandbox）；I-001～I-003 closed；F-007～F-011 recommended open；阶段 E 回归/self audit 待执行；不重开 GOAL-006 |
+| 6 后 · 方法论质量 | **GOAL-020 done / 100%** | A～E 完成；A-004 self pass；D-005/A-005 用户确认关门；F-001～F-009/F-011 closed；F-010 recommended follow-up；I-001～I-003 closed；不重开 GOAL-006 |
 | 7 | **延期未开**（路径 D；非「缺契约」） | 改道 **A** 须新 D-0xx；见 D-024 §6 |
 
 ### 愿景栈（最小对齐）
@@ -224,7 +224,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 | GOAL-012～017 | α 切片 / 写入 CT / X-AI / X-NAV / X-SM / X-PILOT | done / 100%（有界） | 阶段 6 有界交付；各 residual 仍挂本目标 |
 | GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径 | done / 100% | 阶段 6 后 **Skills 维护波次**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)） |
 | GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架（空仓可运行） | done / 100% | 同上 · 消费方 core+scaffold |
-| GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | active / 80%（派生） | 路径 D 单点：A～D 完成；required closed；阶段 E 回归/self audit 待执行 |
+| GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | done / 100% | 路径 D 单点：A～E 完成；D-005/A-005 关门；F-010 recommended follow-up |
 
 ### 子目标（历史快照 · 阶段 5 中途）
 

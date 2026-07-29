@@ -1,11 +1,11 @@
 ---
 id: GOAL-020-methodology-adversarial-audit-fix
 doc: audit
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-29
 updated: 2026-07-29
-version: 0.2.0
+version: 0.4.0
 ---
 
 # 审计 · GOAL-020
@@ -44,11 +44,11 @@ I-001/I-002 已由 D-004 关闭，I-003 已验证为不触发 Charter 修订。�
 | **F-004** | required | med | Minimal Complete Install：bootstrap「建议」vs checklist/alignment「必含」分裂 | closed (fixed) |
 | **F-005** | required | med | `progress%` 无换算/门禁规则，可与开放必改并存的乐观进度 | closed (fixed · A-003) |
 | **F-006** | recommended | med | `sandbox` 取消 opt-out 后无差异化门禁，易成标签安慰剂 | closed (fixed · A-003) |
-| **F-007** | recommended | med | 权威栈多头（AGENTS / principles / alignment）冲突消解不完备 | open |
-| **F-008** | recommended | low | 模板「串行子目标」vs 协议「阶段内并行」教战不一致 | open |
-| **F-009** | recommended | low | 交叉引用 `§2.6` 无对应标题锚点 | open |
-| **F-010** | recommended | med | strategic impact 可收缩；primary「单方声称即通过」过软 | open |
-| **F-011** | recommended | low | Charter 无 draft 与 P-005 带未知不对称；core 无 Skills 时结构≠行为治理 | open |
+| **F-007** | recommended | med | 权威栈多头（AGENTS / principles / alignment）冲突消解不完备 | closed (fixed · A-004) |
+| **F-008** | recommended | low | 模板「串行子目标」vs 协议「阶段内并行」教战不一致 | closed (fixed · A-004) |
+| **F-009** | recommended | low | 交叉引用 `§2.6` 无对应标题锚点 | closed (fixed · A-004) |
+| **F-010** | recommended | med | strategic impact 可收缩；primary「单方声称即通过」过软 | open · non-blocking follow-up |
+| **F-011** | recommended | low | Charter 无 draft 与 P-005 带未知不对称；core 无 Skills 时结构≠行为治理 | closed (fixed · A-004) |
 
 ### F-001 · 审计模板与 P-003 强制落盘格式脱节
 
@@ -87,12 +87,12 @@ I-001/I-002 已由 D-004 关闭，I-003 已验证为不触发 Charter 修订。�
 - **闭合路径**：fixed（已写入 alignment.md §0.2 MUST 表，并同步 checklist / standalone / principles）  
 - **决策/响应**：D-003 / A-002
 
-### 必改项汇总（开放）
+### 响应后现时摘要
 
-- **F-001～F-004**（required）已按三路径合法闭合（fixed）；**F-005** 后由 D-004 / A-003 fixed；F-006 由同轮 fixed；F-007～F-011 为 recommended open。
-- **结论**：阶段 B/C/D 完成；阶段 E 回归与 self audit 待执行。
-- **阶段 D 门禁**：I-001 / I-002 已由 D-004 书面裁决并关闭。
-- **自审计**：用户已选择阶段 E 做覆盖 A～D 的同 scope self audit；A-002/A-003 仅为响应记录。
+- **F-001～F-006** 已 fixed；阶段 E 又 fixed F-007/F-008/F-009/F-011；仅 F-010 为 recommended open。
+- **结论**：阶段 A～E 完成；A-004 self close-out `pass`，status 等待用户确认。
+- **信息门禁**：I-001～I-003 closed；无到期 required。
+- **自审计**：A-004 已完成同 scope self close-out audit；A-002/A-003 仅为响应记录。
 
 ### F-005 · progress% 无方法论
 
@@ -218,3 +218,72 @@ F-001～F-004 已 fixed；阶段 B/C 完成；阶段 D 前等待用户 P-004 裁
 ### 声明
 
 本节是编排响应，不冒充独立审计，也不替代用户已选择的阶段 E self audit。派生 progress 不构成放行或关门证据。
+
+## A-004 · 阶段 E 同 scope self close-out audit（2026-07-29）
+
+- **source**：`self`
+- **auditor**：govern orchestrator
+- **类型 / scope**：`close-out` / 与 A-001 同 scope：核心方法论权威面、模板、standalone、Skills/core 镜像及 F-001～F-011 响应证据
+- **verdict**：`pass`
+- **状态影响**：本审计不直接改 `status`；GOAL-020 保持 `active`，等待用户确认关门
+
+### 范围与证据
+
+- 愿景链仍有效：唯一 active Charter、VP-001、workspace/Root plan 绑定一致；I-001～I-003 closed，无 re-align 或 VRev required 阻断。
+- F-001～F-006 的 fixed 证据见 A-002/A-003；派生 progress 与移除 sandbox 的 canonical/Skills/test 面一致。
+- 阶段 E 评估并补齐 F-007/F-009/F-011；F-008 已由阶段 D 的模板措辞修正满足关闭要求。
+- 回归：Docs `22 passed`；Skills `39 passed`；canonical/core principles、workspace-protocol、alignment 哈希逐对一致；`git diff --check` pass。
+
+### 对照成功标准
+
+| 成功标准 | 结果 | 证据 |
+|----------|------|------|
+| A-00N independent 审计已落盘 | pass | A-001 + attachment |
+| required findings 合法闭合 | pass | F-001～F-005 fixed；A-002/A-003；F-006 recommended 亦 fixed |
+| core/模板/镜像纠错一致 | pass | canonical + Skills/core；Docs 22 / Skills 39 passed |
+| Minimal Complete Install 三处一致 | pass | alignment / consumer-checklist / standalone + tests |
+| 不夸大关门级稳健、不重开 GOAL-006 | pass | 本审计限定为 GOAL-020 当前 scope；GOAL-006 历史状态未改 |
+
+### F-007～F-011 评估
+
+| finding | 结论 | 证据 / 理由 |
+|---------|------|-------------|
+| F-007 | closed · fixed | `principles.md` 新增“权威与冲突消解顺序”：区分 Goal 状态、P-001～P-006、alignment、workspace protocol 与消费镜像；P-004 裁决仍不可被顺序替代 |
+| F-008 | closed · fixed | `templates/README.md` 与 `workspace-context.md` 已统一“纲领阶段通常串行、同阶段内可并行子目标” |
+| F-009 | closed · fixed | `workspace-protocol.md` 新增真实 `### 2.6 目标 id 作用域与限定引用` 标题，既有 §2.6 引用可解析 |
+| F-010 | open · recommended · non-blocking | 当前三处 primary 声明一致，且无 strategic re-align 债务，现实例无错误放行；若把“单方声明补齐”改为一律 fail closed，或将 strategic impact 默认扩为全仓，会改变既有 alignment 规则，须另行 P-004 裁决，不在 self audit 中静默改写 |
+| F-011 | closed · fixed | alignment 明确 Charter 无 canonical draft、active 可登记战略假设；standalone 明确“结构完整 ≠ 行为自动治理”及无 Skills 时没有自动门禁执行器 |
+
+### Findings
+
+- 无开放 required finding。
+- **F-010** 保留为 med / recommended follow-up；不影响当前工作区对齐或本目标成功标准，不阻断 GOAL-020 关门。未来修改 primary/strategic 默认规则时，应新开用户裁决并更新 alignment/tests。
+
+### 关门建议
+
+**建议 GOAL-020 关门**：阶段 A～E 已完成、成功标准全部可核对、required 为 0、信息项为 0、回归通过。关门须由用户明确确认后，通过 `/govern` 将 `status` 改为 `done` 并同步 goal-tree；F-010 作为 recommended follow-up 保留原审计记录，不伪装为 fixed/residual/overruled。
+
+可选增强：关门前或关门后使用 `/audit` 对 A-004 做独立 targeted 复审；L0 默认不强制。
+
+## A-005 · 用户确认关门与状态响应（2026-07-29）
+
+- **source**：`self`
+- **auditor**：govern orchestrator
+- **类型 / scope**：`response` / A-004 关门建议与 GOAL-020 status
+- **verdict**：`pass`
+
+### 用户裁决与关闭事实
+
+- 用户在 `/govern` 明确选择“确认关门”。
+- D-005 接受 A-004 建议；GOAL-020 改为 `done / 100%`，并同步 Root / goal-tree。
+- 关门时 required findings = 0；到期 required I-00N = 0；成功标准全部勾选；Docs 22 / Skills 39 回归通过。
+- F-010 仍为 `recommended / open / non-blocking follow-up`；本响应不将其改写为 fixed、accepted-residual 或 user-overruled。
+
+### 边界
+
+- 本次 `done` 只关闭 GOAL-020 的 A～E scope，不宣称 Root 终态，不关闭 R-009-X，不重开 GOAL-006，不改变 Charter/VP 状态或阶段 7。
+- 默认保证等级仍为 L0；未执行新的 independent targeted 复审。
+
+### 结论
+
+GOAL-020 关门条件满足，用户已授权状态变更，正式结果为 `done / 100%`。

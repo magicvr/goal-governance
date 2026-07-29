@@ -215,6 +215,8 @@ class VisionProtocolTests(unittest.TestCase):
         self.assertIn("fail closed", alignment)
         self.assertIn("progress", alignment.lower())
         self.assertIn("goal-tree", alignment)
+        self.assertIn("Charter **没有 canonical `draft` 状态**", alignment)
+        self.assertIn("战略假设/未知", alignment)
 
     def test_workspace_template_declares_vision_fields(self) -> None:
         template = REPO_ROOT / "docs" / "templates" / "workspace-context.md"

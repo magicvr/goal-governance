@@ -4,7 +4,7 @@ status: active
 created: 2026-07-19
 updated: 2026-07-29
 parent: null
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 核心包独立启用说明
@@ -35,6 +35,8 @@ version: 0.7.0
 | `docs/vision/alignment.md` | `docs/vision/alignment.md` | 愿景对齐**规则权威**（P-006 门禁细则） |
 
 `skills/` 与 `web/` 不是本场景前置条件。dogfood 过程树、本仓 `charter.md` 实例、`plans/VP-001-…` 等**不要**整树复制；Charter/VP 从 `docs/templates/vision/` 在目标仓新建。
+
+**结构完整 ≠ 行为自动治理**：本说明验证文件、引用链与模板可独立建立，并提供默认 L0 规则；未安装 Skills 时，不存在自动扫描、提醒或写入门禁执行器。人或其他工具仍须实际按 AGENTS / principles / alignment 执行 P-004、P-005 与审计闭合，才能声称治理行为发生。
 
 ## 1. 建立空 Git 仓库并复制核心层
 

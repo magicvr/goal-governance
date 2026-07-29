@@ -46,6 +46,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
             "Charter",
             "冷启动",
             "不完整安装",
+            "结构完整 ≠ 行为自动治理",
+            "不存在自动扫描、提醒或写入门禁执行器",
         ):
             self.assertIn(phrase, guide)
         # Architecture row must not stop at P-005 only

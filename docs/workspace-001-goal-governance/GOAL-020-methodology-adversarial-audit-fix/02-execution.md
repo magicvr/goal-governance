@@ -1,11 +1,11 @@
 ---
 id: GOAL-020-methodology-adversarial-audit-fix
 doc: execution
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-29
 updated: 2026-07-29
-version: 0.2.0
+version: 0.4.0
 ---
 
 # 执行记录 · GOAL-020
@@ -36,12 +36,29 @@ version: 0.2.0
 - 一致性：canonical goal/workspace 模板已同步 Skills/core 镜像；docs README SHA-256 台账已刷新；`git diff --check` 通过。
 - **计划**：阶段 E 再追加真正的同 scope self audit，并评估 F-007～F-011 recommended。
 
+### 2026-07-29 · 阶段 E 推荐项评估与 self audit
+
+- F-007 fixed：`principles.md` 增加权威与冲突消解顺序，并同步 core 镜像。
+- F-008 fixed：`templates/README.md` / `workspace-context.md` 已统一“纲领串行、阶段内并行”表述。
+- F-009 fixed：`workspace-protocol.md` 建立真实 `### 2.6` 标题并同步 core。
+- F-011 fixed：alignment 明确 Charter 无 canonical draft、active 可带战略假设；standalone 区分结构完整与行为自动治理。
+- F-010 评估为 non-blocking recommended follow-up：当前 primary 三处一致、无 strategic re-align 债务；改变默认规则须另行 P-004 裁决。
+- 回归：Docs **22 passed**；Skills **39 passed**；三组 canonical/core 哈希一致；`git diff --check` pass。
+- [A-004](03-audit.md#a-004--阶段-e-同-scope-self-close-out-audit2026-07-29) self close-out audit：`pass`；建议关门，但未越权修改 status。
+
+### 2026-07-29 · 用户确认关门
+
+- 用户在 `/govern` 关门裁决中选择“确认关门”。
+- 记录 [D-005](01-decision.md#d-005--接受-a-004-建议并确认-goal-020-关门2026-07-29) 与 [A-005](03-audit.md#a-005--用户确认关门与状态响应2026-07-29)。
+- GOAL-020 更新为 `done / 100%`；同步 Root 现时摘要与 `goal-tree.md` 树/状态表。
+- F-010 保持 `recommended / open / non-blocking follow-up`；未伪写为已关闭。
+- GOAL-006、Root、Charter、VP 状态均未改变；未开启阶段 7，未 tag/release。
+
 ## 进度评估
 
-**80%（派生展示）**：纲领路线图 A～D 共 4/5 个等权检查点完成；阶段 E 未完成。该百分比不表示 recommended 已关闭、self audit 已完成或目标可关门。
+**100%（派生展示） / done**：纲领路线图 A～E 共 5/5 个等权检查点完成；A-004 self audit pass；D-005 用户确认关门。百分比本身不推导 `done`，状态依据用户确认与审计证据变更。
 
-### 待办
+### 后续（不属于本目标开放门禁）
 
-1. 运行 docs/Skills 回归、镜像一致性与 `git diff --check`，记录可核对结果。
-2. 阶段 E 按用户选择执行覆盖 A～D 的同 scope self audit。
-3. 评估 F-007～F-011 recommended：修正、明确延期，或在关门前说明为何不阻断。
+1. F-010 保留为 recommended follow-up；未来若修改 primary/strategic 默认规则，先走 P-004 裁决。
+2. 可选：用 `/audit` 对 A-004/A-005 做 targeted independent 复审（L0 不强制）。

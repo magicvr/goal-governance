@@ -4,7 +4,7 @@ title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
 updated: 2026-07-29
-version: 0.5.0
+version: 0.6.0
 parent: null
 ---
 
@@ -78,6 +78,8 @@ parent: null
 | Charter (`doc_type: vision-charter`) | `active` \| `superseded` | Goal 的 `done` / `draft` / `blocked` / `cancelled`；progress%；goal-tree；并行第二 active |
 | Vision Plan (`doc_type: vision-plan`) | `planned` \| `active` \| `closed` \| `abandoned` | Goal 的 `done` 作 VP status；完整五件套；progress% 权威 |
 | 工作区目标 | 既有 Goal status | 把 vision/VP 目录当目标父节点；跨区 `parent` |
+
+Charter **没有 canonical `draft` 状态**：尚不满足最小完备或尚未获用户确认的草案只能留在会话/提案中，不得占用现行 `docs/vision/charter.md`。`active` Charter 可以显式登记战略假设/未知；若某项影响“方向已稳”，在 verified 或合规 residual 前不得作该宣称（见 P-006 §6.5）。
 
 愿景体系**不是**第二套目标状态源；不汇总各区 progress，不关闭 Goal finding。
 
