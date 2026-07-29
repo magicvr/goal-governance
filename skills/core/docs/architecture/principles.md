@@ -2,9 +2,9 @@
 title: 治理原则
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-29
 parent: null
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 治理原则

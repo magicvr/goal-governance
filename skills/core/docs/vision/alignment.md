@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-07-28
-version: 0.3.0
+updated: 2026-07-29
+version: 0.4.0
 parent: null
 ---
 

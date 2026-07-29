@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-29
 parent: null
-version: 1.1.6
+version: 1.1.7
 ---
 
 # Goal Tree
+
+## 2026-07-29 · 创建 GOAL-020（方法论对抗审与纠错）
+
+用户确认新目标作为对抗性审计主台账（不挂已关门 GOAL-006）。创建 [GOAL-020-methodology-adversarial-audit-fix](GOAL-020-methodology-adversarial-audit-fix/)：`active / 50%`；parent Root；阶段 A 已落盘 **A-001**（`conditional`）；阶段 B/C 完成 F-001～F-004 纠错（A-002）；阶段 D 前 I-001/I-002 未裁决。路径 D 单点协议质量工作；**不**重开 GOAL-006；**不**改其它 GOAL status。下一编号 **GOAL-021**。
 
 ## 2026-07-29 · 响应 GOAL-001 A-018（D-025 · 路径 D）
 
@@ -428,7 +432,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
 ├── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
 ├── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
-└── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
+├── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
+└── GOAL-020-methodology-adversarial-audit-fix · 核心方法论对抗性审计与纠错 [active 15%]
 ```
 
 ## 状态总览
@@ -454,8 +459,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
 | GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径（文档 + pack + CI） | GOAL-001-main-vision | done | 100% | [GOAL-018-skills-release-packaging/](GOAL-018-skills-release-packaging/) |
 | GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | done | 100% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
+| GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | GOAL-001-main-vision | active | 50% | [GOAL-020-methodology-adversarial-audit-fix/](GOAL-020-methodology-adversarial-audit-fix/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。下一编号 **GOAL-020**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**活跃子目标**：[GOAL-020](GOAL-020-methodology-adversarial-audit-fix/)（方法论对抗审；A-001 required 未闭合）。下一编号 **GOAL-021**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
 
 ## 状态图例
 
@@ -470,6 +476,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-020`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-021`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

@@ -3,22 +3,34 @@ doc_type: vision-consumer-checklist
 title: 愿景体系消费方检查清单
 status: active
 created: 2026-07-28
-updated: 2026-07-28
-version: 0.2.0
+updated: 2026-07-29
+version: 0.3.0
 ---
 
 # 消费方检查清单
 
-> 政策以 [alignment.md](alignment.md) 与 **P-006** 为准。本清单只做操作映射；变更规则时先改 alignment，再同步本页。
+> 政策以 [alignment.md](alignment.md) 与 **P-006** 为准。本清单只做操作映射；变更规则时先改 alignment，再同步本页。  
+> **完整安装 MUST 权威表**：[alignment.md §0.2](alignment.md#02-完整安装与冷启动)（与 [standalone-bootstrap](../standalone-bootstrap.md) **同表**，禁止另立「建议必含」）。
 
 ## A. 仓库发现与完整安装
 
-- [ ] 存在 `docs/vision/README.md` 与 `docs/vision/charter.md`
-- [ ] 存在 `docs/vision/roadmap.md`、`revisions.md`、`reviews.md`、`workspaces.md`、`alignment.md`、`consumer-checklist.md`
+### A0. Minimal Complete Install（对照权威 MUST 表）
+
+- [ ] 根 `AGENTS.md`（或等价 AI 规则）
+- [ ] `docs/README.md`
+- [ ] `docs/architecture/principles.md`、`workspace-protocol.md`
+- [ ] `docs/templates/goal-folder/`、`workspace-context.md`、`templates/vision/charter.md` + `vision-plan.md`
+- [ ] `docs/vision/alignment.md`、`README.md`
+- [ ] 愿景树 **MUST** 文件均存在（**不是**建议）：`roadmap.md`、`revisions.md`、`reviews.md`、`workspaces.md`、`consumer-checklist.md`
+- [ ] 分发 Skills/Web 时：`docs/contracts/` 消费契约存在
+
+### A1. 愿景实例与单愿景
+
+- [ ] 存在 `docs/vision/charter.md`（现行）
 - [ ] 至少存在一个 `docs/vision/plans/VP-*.md`（冷启动在开区前必须落盘首个 VP）
 - [ ] Charter：`doc_type: vision-charter`，`vision_id`、`version` 有值，`status` ∈ {`active`,`superseded`}（**不是** `done`）
 - [ ] **至多一个** `status: active` 的 Charter（单愿景）
-- [ ] 缺 Charter → 报告**不完整安装**；仅引导补齐，不非引导开区/推进/放行/关门
+- [ ] 缺任一 A0/A1 MUST → 报告**不完整安装**；仅引导补齐，不非引导开区/推进/放行/关门
 
 ## B. 当前工作区
 

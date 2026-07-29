@@ -3,8 +3,8 @@ doc_type: vision-index
 title: 愿景体系入口
 status: active
 created: 2026-07-28
-updated: 2026-07-28
-version: 0.2.0
+updated: 2026-07-29
+version: 0.3.0
 ---
 
 # 愿景体系 · `docs/vision/`
@@ -19,7 +19,7 @@ version: 0.2.0
 2. Charter **不可**使用 Goal 生命周期的 `done`。
 3. 目标生命周期状态、进度与 Goal 审计台账只存在于各 `docs/workspace-*/` 根内。
 4. 愿景文档不汇总各区 progress%，不关闭 Goal finding。
-5. 完整安装**必含**本目录最小文件集；缺 Charter = 不完整安装（仅引导补齐）。
+5. 完整安装**必含**本目录最小文件集（**MUST** 权威表：[alignment.md §0.2](alignment.md#02-完整安装与冷启动)）；缺 Charter 或缺任一愿景树 MUST 文件 = 不完整安装（仅引导补齐）。
 6. 所有工作区必须挂 VP（**无** sandbox plan opt-out）。
 
 ## 文件地图
