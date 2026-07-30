@@ -115,7 +115,7 @@ version: 0.1.0
 
 ### canonical → Skills 镜像（GOAL-022）
 
-`docs/templates/` 与 `docs/contracts/` 是唯一上游。刷新镜像：
+`docs/architecture/`（白名单文件）、`docs/templates/`、`docs/vision/alignment.md` 与 `docs/contracts/` 是唯一上游。刷新镜像：
 
 ```bash
 python scripts/stage_skills_mirrors.py
@@ -129,6 +129,13 @@ python scripts/stage_skills_mirrors.py --check
 | `skills/core/docs/vision/alignment.md` | 愿景规则 |
 | `skills/contracts/**` | 契约与 fixtures 逐字节镜像 |
 | **不**覆盖 | `skills/core/docs/README.md`、`skills/core/docs/vision/README.md`（消费方手维精简） |
+
+**AI / 维护者硬要求（漏做 = 远端 CI 红）**：
+
+1. 只改 `docs/` 侧 canonical，**不要**手改 `skills/core/docs/**` 或 `skills/contracts/**` 镜像正文来消漂移。
+2. 改完白名单路径后，在**同一提交任务**内运行 stage + `--check`，并把 `skills/core`、`skills/contracts`（及若有 `skills/templates`）变更一并提交。
+3. 只提交 `docs/`、漏交镜像 → CI「Stage skills mirrors and fail on drift」失败（`git diff` 脏树门禁）。
+4. 操作约定摘要亦见根目录 `AGENTS.md` **§8c**（AI 工具强制入口）。
 
 `pack_skills_release.py` 在 monorepo 下打包前会自动 stage。CI 在测试前 stage 并要求工作树无漂移。核验：`python -m unittest skills/tests/test_skills_orchestrator.py scripts/tests/test_stage_skills_mirrors.py -v`。
 

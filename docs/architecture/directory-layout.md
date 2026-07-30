@@ -2,9 +2,9 @@
 title: 目录布局
 status: active
 created: 2026-07-18
-updated: 2026-07-29
+updated: 2026-07-31
 parent: null
-version: 0.6.2
+version: 0.6.3
 ---
 
 # 目录布局
@@ -69,3 +69,4 @@ goal-governance/
 - 共享资料只以版本/哈希固定引用出现在工作区上下文或受控记录中，不能成为跨工作区目标状态或第二真相源。
 - `GOAL-*` id 仅工作区内唯一，**形状不嵌工作区编号**；跨区引用见 [workspace-protocol.md](workspace-protocol.md) §2.6（文档默认 **Q2** 路径，对话默认 **Q3** 标签）。
 - `docs/contracts/` 是消费适配器版本与兼容声明的 canonical；`skills/contracts/` 由 stage 从 docs 生成，必须逐字节一致且不得另立版本真相。
+- **stage 门禁（本 monorepo）**：改 `docs/architecture` 白名单、`docs/templates/**`、`docs/vision/alignment.md` 或 `docs/contracts/**` 后，必须运行 `python scripts/stage_skills_mirrors.py` 并**提交**生成的 `skills/core` / `skills/contracts` 变更；禁止手改镜像、禁止只交 docs。AI 操作入口见根 `AGENTS.md` §8c；说明见 [../README.md](../README.md)。

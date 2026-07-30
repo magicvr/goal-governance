@@ -36,7 +36,7 @@ version: 0.6.0
 - `progress`（若使用）必须由显式路线图/计划检查点确定性派生；默认等权，显式权重可覆盖。它只用于展示，不放行阶段、不关闭 finding、不覆盖信息门禁或 status。
 - 共享资料只在工作区上下文中以版本/哈希固定引用；资料内容不是 canonical 事实，也不得作为跨工作区目标状态或上下文混合通道。详见 [workspace protocol](../architecture/workspace-protocol.md)。
 - P-005 允许目标带未知项立项；模板中的信息需求表用于记录问题、`required`/`non-blocking` 级别、最晚阶段、延期复核、状态和证据，不要求在创建时已经知道一切。
-- 包内分发镜像为 `skills/core/docs/templates/`（GOAL-022：改本目录后运行 `python scripts/stage_skills_mirrors.py`；**不要**手改 skills 侧）。
+- 包内分发镜像为 `skills/core/docs/templates/`（GOAL-022：改本目录后运行 `python scripts/stage_skills_mirrors.py`，**提交**镜像 diff；**不要**手改 skills 侧。漏交会触发 CI 脏树门禁。AI 见根 `AGENTS.md` §8c）。
 - Web 读取生成的目标实例，不读取本目录来推断目标状态。
 
 ## 版本与同步

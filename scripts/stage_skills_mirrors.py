@@ -4,6 +4,12 @@
 Canonical truth lives under docs/. Byte-identical consumer mirrors are generated
 into skills/core/docs (methodology subset) and skills/contracts.
 
+Operator / AI rule (fail closed in CI if violated):
+  After editing any staged canonical path (architecture whitelist, templates/**,
+  vision/alignment.md, contracts/**), run this script, run --check, and commit
+  the skills/core + skills/contracts diff in the same change-set. Do not hand-edit
+  mirror files to clear drift. See AGENTS.md §8c and docs/README.md.
+
 Hand-maintained (never overwritten by stage):
   - skills/core/docs/README.md          (consumer slim entry)
   - skills/core/docs/vision/README.md   (consumer vision index)

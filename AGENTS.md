@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-07-29
+updated: 2026-07-31
 parent: null
-version: 0.10.2
+version: 0.10.3
 ---
 
 # AGENTS.md
@@ -239,6 +239,38 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - **定位 SKILLS_PKG**：含 `prompts/00-govern-orchestrator.md`（或 `prompts/01-create-new-goal.md`）的目录。原语与模板相对该根。
 - `{{SKILLS_DIR}}` = 包根相对仓库根的路径。
 
+## 8c. Monorepo · canonical → Skills 镜像 stage（本仓维护者 / 存在 stage 脚本时）
+
+> **何时适用**：仓库根存在 `scripts/stage_skills_mirrors.py`（本 monorepo 维护面）。消费方目标仓通常**无**此脚本，可删除本小节。  
+> 细则与白名单：`docs/README.md`「canonical → Skills 镜像」；脚本：`scripts/stage_skills_mirrors.py`（GOAL-022）。
+
+**真相源只在 `docs/`。** `skills/core/docs/` 与 `skills/contracts/` 是分发镜像，不是第二套规范。**禁止**手改镜像侧正文来「修好」漂移；应改 canonical 再 stage。
+
+### 改下列任一路径后必须 stage 并提交镜像
+
+| canonical（只改这里） | 镜像落点（由脚本生成） |
+|----------------------|------------------------|
+| `docs/architecture/{principles,workspace-protocol,overview,directory-layout}.md` | `skills/core/docs/architecture/`（**不含** `tech-stack.md`） |
+| `docs/templates/**` | `skills/core/docs/templates/**` |
+| `docs/vision/alignment.md` | `skills/core/docs/vision/alignment.md` |
+| `docs/contracts/**` | `skills/contracts/**` |
+
+**不**由 stage 覆盖（须手维，勿指望脚本同步）：`skills/core/docs/README.md`、`skills/core/docs/vision/README.md`、`skills/core/README.md`。
+
+### 强制操作顺序（改完 canonical 同一任务内完成）
+
+```text
+1. 只改 docs/ 侧 canonical
+2. python scripts/stage_skills_mirrors.py
+3. python scripts/stage_skills_mirrors.py --check
+4. 将 skills/core、skills/contracts（及若有 skills/templates 指针）变更一并纳入提交
+5. 禁止只提交 docs/ 而漏交镜像 → CI「Stage skills mirrors and fail on drift」会失败
+```
+
+- **pack/CI** 会在测试前 stage 并用脏树门禁失败；本地漏提交镜像 = 远端红。
+- 删除 canonical 文件时：stage **不一定**自动清镜像 orphan（见 GOAL-022 residual）；须确认镜像侧无残留或按脚本能力 prune，再 `--check`。
+- 只改工作区目标五件套、`docs/vision/charter|plans|reviews` 等**不在**上表白名单的路径 → **无需** stage。
+
 ## 9. 交付形态（按项目裁剪）
 
 默认：**文档驱动的目标治理**；代码与可视化应用按项目实际叠加。
@@ -269,10 +301,11 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 7. 创建或修改五件套
 8. 更新 goal-tree.md（树 + 表）
 9. 按需更新 docs/README、architecture、vision
-10. 再改代码或 Skills（`/vision` 等第二刀按节奏）
+9b. **若本仓有 stage 脚本且改动了 §8c 白名单路径** → 跑 `stage_skills_mirrors.py`，提交镜像，`--check` 通过（漏交 = CI 红）
+10. 再改代码或 Skills prompts/install（`/vision` 等第二刀按节奏）；**不要**手改 stage 镜像顶替 canonical
 ```
 
-步骤 **1–2、4–8 强制**；编排优先；9–10 按影响面。
+步骤 **1–2、4–8 强制**；编排优先；**9b 在适用时与 9 同等强制**；10 按影响面。
 
 ## 11. 正确做法与硬约束
 
@@ -288,6 +321,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - 目标可带未知立项，但信息项、阶段门禁、证据与残余风险接受必须可追踪；按工作量而非固定“两子目标”拆分。
 - 交叉审计意见由编排器统一响应；冲突、是否自审、单条 finding residual/overruled、信息 residual 均问用户并给建议。
 - 单愿景 + 冷启动串行 + 对齐递归；大目标先**纲领路线图**再立项；结构选型用判定树。
+- 本 monorepo：改 stage 白名单 canonical 后同一提交内刷新 Skills 镜像（§8c）；镜像只读生成、不手改。
 
 **硬约束**
 
@@ -302,6 +336,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - **完整安装必有唯一 active Charter**；缺则仅引导补齐。
 - **所有工作区必须挂 VP**；角色仅 `primary` / `delivery`；禁止跨区 `parent`；禁止多愿景。
 - Vision Review required 未闭合、或 strategic 未 re-align（宽阻断）时，不得开区/放行/关门/宣称方向已稳。
+- **（monorepo / 有 stage 脚本时）** 改 §8c 白名单 `docs/` 路径后，必须 `python scripts/stage_skills_mirrors.py` 并提交 `skills/core`、`skills/contracts`（等）镜像变更；禁止只改 canonical 不交镜像；禁止手改镜像绕过 stage。
 
 ## 12. 完成前检查清单
 
@@ -317,6 +352,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - [ ] `progress`（若有）可从显式检查点确定性重算，且未被用作放行/关门依据
 - [ ] 若涉及推进/放行：相关审计意见与 Vision Review（若适用）已汇总；P-004 已询问用户（若适用）
 - [ ] 无未合法闭合的 required/必改 findings（fixed / accepted-residual / user-overruled 之一）
+- [ ] **（monorepo）** 若改动了 stage 白名单 canonical：已 stage、`--check` ok，且镜像变更已纳入同一提交（§8c）
 
 ## 写法对照（简表）
 
@@ -337,6 +373,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | 无显式区 → 仅 legacy `docs/goals/` 或 scaffold | 工作区协议 |
 | 跨区：文档 Q2 路径 / 对话 Q3 标签 | 不改 `GOAL-NNN-slug`；裸 id 仅当前区 |
 | 区内 parent 仍短 id | 不把工作区号嵌进 goal id |
+| 改 architecture/templates/contracts/alignment → stage 并提交镜像 | §8c；漏交则 CI 红 |
 
 
 > 信息不足时：先登记未知项及其最晚阶段；只有信息工作具备独立范围或证据时才拆出澄清/收集子目标。
@@ -346,6 +383,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - 本文件为 Claude Code 的项目级规则入口；保持在仓库根目录、文件名 `AGENTS.md`。
 - 日常目标协作优先编排器（§9b）；原子写入再走 01～04。
 - 改规则后无需额外注册；下次会话即按本文件执行。
+- 本 monorepo 改 `docs/architecture` / `templates` / `contracts` / `vision/alignment` 时，**同一任务**按 §8c stage 镜像，避免 CI 漂移失败。
 
 ## 快速链接（按项目填写）
 
@@ -353,3 +391,4 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - Root Goal：`<workspace-root>/GOAL-001-<your-slug>/00-meta.md`
 - 治理原则：AGENTS 第 6 / 6b / 6d / 6e 节；`docs/architecture/principles.md`（必备，P-001～P-006 全文）
 - 愿景对齐：`docs/vision/alignment.md`；审视台账：`docs/vision/reviews.md`
+- Skills 镜像 stage（本仓）：`scripts/stage_skills_mirrors.py`；说明见 §8c 与 `docs/README.md`
