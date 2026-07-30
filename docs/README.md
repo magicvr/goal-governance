@@ -2,9 +2,9 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-07-29
+updated: 2026-07-30
 parent: null
-version: 0.10.4
+version: 0.10.5
 ---
 
 # docs/ · 文档体系
@@ -104,13 +104,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **文档入口版本**（本文件 frontmatter）：`0.10.3` — 描述 docs 树导航与协议索引的修订号。  
-- **可复制核心包版本**（对外分发/发版候选身份）：`0.9.1`（含 workspace-protocol A0 限定引用与 P-006 栈）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。  
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / **`v0.9.0`**；后续版本仍须 annotated tag 与 release evidence。
-- **快照日期**：2026-07-29。
-- **快照身份**：矩阵 **`candidateRevision: unreleased`**；已有入口保留其历史 runtime evidence，正式 GitHub Release 仍以 annotated tag + release evidence 为准。
-- **当前工作树边界**：`/vision-audit` 与 `/vision` 已在 Claude Code、Grok Build 与 GitHub Copilot CLI 上 `runtime-verified`；Copilot 使用用户级 BYOK provider、模型和密钥进行只读 replay。安装结构和契约测试已通过；Web parser 仍为 automated-verified。
-- **本轮变更范围（A-018 响应）**：standalone 冷启动对齐 P-006；core 分发纳入 `vision/alignment.md`；清除「仅 P-001～P-005」权威面；AGENTS dogfood/消费门禁语义对齐。详见 GOAL-001 A-019 / D-025。
+- **文档入口版本**（本文件 frontmatter）：`0.10.5` — 描述 docs 树导航与协议索引的修订号。  
+- **可复制核心包版本**（对外分发/发版候选身份）：`0.9.2`（四入口 runtime 面 + P-006 愿景栈）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。  
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / **`v0.9.2`（冻结中）**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
+- **快照日期**：2026-07-30。
+- **快照身份**：矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 runtime-verified（2026-07-28）；Web parser automated-verified。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code、Grok Build 与 GitHub Copilot CLI 上 `runtime-verified`（`/vision-audit` 为只读 dispatch）。**不**宣称 Root 终态或 R-009-X closed。
 
 ### canonical → Skills 同步台账
 
@@ -126,7 +125,7 @@ version: 0.1.0
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
 | 契约 | `skills-consumer-contract.json` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |
-| 契约 | `skills-consumer-compatibility-matrix.json` | `E97B7387CC513634269E086E61F1937F2D0B1F91C1E18B50456646B832BF7F3D` | `E97B7387CC513634269E086E61F1937F2D0B1F91C1E18B50456646B832BF7F3D` |
+| 契约 | `skills-consumer-compatibility-matrix.json` | `A0F7A2789D41BE9B4AE8AE257E7CB8CC01DFEA8B1279A9D457D2D50365027C17` | `A0F7A2789D41BE9B4AE8AE257E7CB8CC01DFEA8B1279A9D457D2D50365027C17` |
 | 契约 | `runtime-evidence.schema.json` | `3DF446820F3FA24275AD94F99E481481BC2F2B34F5C5ACEC27412526A5F3E693` | `3DF446820F3FA24275AD94F99E481481BC2F2B34F5C5ACEC27412526A5F3E693` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。

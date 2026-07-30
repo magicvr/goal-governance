@@ -4,12 +4,31 @@
 
 ## Unreleased
 
-Post-`v0.9.1` 工作树（矩阵 `candidateRevision: unreleased`；**未**构成新 tag）：
+（无。当前候选已冻结为 **0.9.2** / `v0.9.2`。）
 
-- 四入口 runtime 全矩阵：`/govern` `/audit` `/vision` `/vision-audit` × Claude/Grok/Copilot **runtime-verified**（2026-07-28 refresh/byok；path-D 验证 ready-for-release-evidence）。
-- 独立 `/vision-audit` 入口与 P-006 愿景栈 dogfood。
-- GOAL-001 路径 D（仅维护不关 Root）；A-015 F-007/F-008 fixed。
-- `test_release_evidence.py` 与当前 `unreleased` 矩阵对齐。
+## 0.9.2 - 2026-07-30
+
+Skills **consumer** patch：默认**四入口**面（`/govern` `/audit` `/vision` `/vision-audit`）全矩阵 runtime 证据 + P-006 愿景栈与路径 D 协议卫生。
+
+### 入口 / runtime
+
+- 默认 install 与契约 `requiredEntrypoints`：govern + audit + vision + **vision-audit**。
+- 独立入口：`skills/prompts/07-independent-vision-review.md`；三宿主 wrapper；`/vision-audit` 只写 `docs/vision/reviews.md`。
+- 兼容矩阵：四入口 × Claude Code / Grok Build / Copilot CLI 均为 **runtime-verified**（2026-07-28 refresh/byok；`/vision-audit` 为只读 dispatch，非写盘 e2e）。
+- Web parser 保持 automated-verified。
+- 矩阵 `candidateRevision: v0.9.2`；coverage **ready-for-release-evidence**。
+
+### 协议 / 愿景 / 路径 D
+
+- P-006 愿景栈 dogfood：Charter / VP / alignment / Vision Review；V-F-001～V-F-007 editorial fixed。
+- GOAL-001 路径 D（仅维护不关 Root）：A-015 F-007/F-008 fixed；A-018 F-012～F-015 fixed；GOAL-020 methodology adversarial audit fix done。
+- 文档卫生：`skills/README` 装机树/手动安装对齐四入口；Goal 历史「三入口」叙述加现时注（D-018→D-020）。
+- standalone / core 分发含 `vision/alignment.md`；权威面与 AGENTS 门禁语义对齐 P-006。
+
+### 非目标（本 tag 不宣称）
+
+- Root / 阶段 6 产品终态；R-009-X closed；F-006 外部采用。
+- `/vision-audit` 写盘全路径 e2e。
 
 ## 0.9.1 - 2026-07-28
 

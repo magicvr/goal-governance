@@ -2,9 +2,9 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-30
 parent: null
-version: 1.5.1
+version: 1.5.2
 ---
 
 # Skills
@@ -20,8 +20,8 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 | 身份 | 状态 |
 |------|------|
-| **`v0.9.0`** | 已发布 annotated tag / Release 基线。 |
-| **当前工作树** | 矩阵 **`candidateRevision: unreleased`**；四个默认入口均已在三宿主通过 read-only runtime capture；Copilot 用用户级 BYOK provider、模型和密钥完成 replay。正式 GitHub Release 以 annotated tag + release evidence 为准。 |
+| **`v0.9.0`** / **`v0.9.1`** | 已发布 annotated tag / Release 基线。 |
+| **`v0.9.2`（本冻结）** | 矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 **runtime-verified**（2026-07-28；`/vision-audit` 只读 dispatch）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
 
 Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
@@ -72,21 +72,23 @@ skills/
 ├── install/
 │   ├── claude/
 │   │   ├── AGENTS.md
-│   │   └── skills/{govern,audit,vision}/SKILL.md
+│   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md
 │   ├── grok/
-│   │   └── skills/{govern,audit,vision}/SKILL.md
+│   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md
 │   └── copilot/
 │       ├── copilot-instructions.md
 │       └── prompts/
 │           ├── govern.md               # impl primary
-│           ├── audit.md                # cross-audit (default)
+│           ├── audit.md                # Goal cross-audit (default)
 │           ├── vision.md               # decision layer (default)
+│           ├── vision-audit.md         # independent Vision Review (default)
 │           └── new-goal.md …           # advanced only
 ├── prompts/
 │   ├── 00-govern-orchestrator.md       # PRIMARY impl core
 │   ├── 01–04 …                         # primitives
-│   ├── 05-independent-audit.md         # cross-audit core
-│   └── 06-vision-orchestrator.md       # vision decision core
+│   ├── 05-independent-audit.md         # Goal cross-audit core
+│   ├── 06-vision-orchestrator.md       # vision decision core
+│   └── 07-independent-vision-review.md # independent Vision Review core
 ├── templates/goal-folder/              # 包内模板镜像（install --all 同步到 skills 目录）
 ├── templates/workspace-context.md
 ├── contracts/                          # docs/contracts 的分发镜像
@@ -129,7 +131,7 @@ bash ./skills/install.sh --all --skills-dir ./skills
 # 或：-Claude / -Grok / -Copilot（同样会装 core）
 ```
 
-4. 确认 `docs/architecture/principles.md` 等已存在；冷启动先 **`/vision`**（Charter→VP），再建立工作区并 **`/govern`**（交叉审计用 **`/audit`**）。
+4. 确认 `docs/architecture/principles.md` 等已存在；冷启动先 **`/vision`**（Charter→VP），再建立工作区并 **`/govern`**；Goal 交叉审计用 **`/audit`**；独立 Vision Review 用 **`/vision-audit`**。
 
 > 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 zip / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
 > 本地调试 zip：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
@@ -154,32 +156,34 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 ```text
 install/claude/AGENTS.md
   →  <repo>/AGENTS.md
-install/claude/skills/{govern,audit,vision}/SKILL.md
-  →  <repo>/.claude/skills/{govern,audit,vision}/SKILL.md
+install/claude/skills/{govern,audit,vision,vision-audit}/SKILL.md
+  →  <repo>/.claude/skills/{govern,audit,vision,vision-audit}/SKILL.md
 ```
 
 ```bash
-mkdir -p .claude/skills/govern .claude/skills/audit .claude/skills/vision
+mkdir -p .claude/skills/govern .claude/skills/audit .claude/skills/vision .claude/skills/vision-audit
 cp ./skills/install/claude/AGENTS.md ./AGENTS.md
 cp ./skills/install/claude/skills/govern/SKILL.md .claude/skills/govern/SKILL.md
 cp ./skills/install/claude/skills/audit/SKILL.md .claude/skills/audit/SKILL.md
 cp ./skills/install/claude/skills/vision/SKILL.md .claude/skills/vision/SKILL.md
+cp ./skills/install/claude/skills/vision-audit/SKILL.md .claude/skills/vision-audit/SKILL.md
 ```
 
 #### Grok Build
 
 ```text
-install/grok/skills/{govern,audit,vision}/SKILL.md
-  →  <repo>/.grok/skills/{govern,audit,vision}/SKILL.md
+install/grok/skills/{govern,audit,vision,vision-audit}/SKILL.md
+  →  <repo>/.grok/skills/{govern,audit,vision,vision-audit}/SKILL.md
 ```
 
 （建议同时有根 `AGENTS.md` 作项目规则；可与 Claude 共用。）
 
 ```bash
-mkdir -p .grok/skills/govern .grok/skills/audit .grok/skills/vision
+mkdir -p .grok/skills/govern .grok/skills/audit .grok/skills/vision .grok/skills/vision-audit
 cp ./skills/install/grok/skills/govern/SKILL.md .grok/skills/govern/SKILL.md
 cp ./skills/install/grok/skills/audit/SKILL.md .grok/skills/audit/SKILL.md
 cp ./skills/install/grok/skills/vision/SKILL.md .grok/skills/vision/SKILL.md
+cp ./skills/install/grok/skills/vision-audit/SKILL.md .grok/skills/vision-audit/SKILL.md
 ```
 
 #### GitHub Copilot
@@ -209,9 +213,9 @@ install/copilot/prompts/vision-audit.md
 
 | 参数 | 作用 |
 |------|------|
-| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/govern` + **`audit`** + **`vision`** + **core → docs/** |
-| `--grok` / `-Grok` | `.grok/skills/govern` + **`audit`** + **`vision`** + **core → docs/** |
-| `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit`/`vision` prompts + **core → docs/** |
+| `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
+| `--grok` / `-Grok` | `.grok/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
+| `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit`/`vision`/`vision-audit` prompts + **core → docs/** |
 | `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
 | `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts + **core** |
 | `--init-workspace` / `-InitWorkspace` | 可选：scaffold `docs/workspace-NNN-slug/`（**须**同时给 slug） |
@@ -306,13 +310,13 @@ python skills/tests/test_skills_orchestrator.py
 powershell -NoProfile -ExecutionPolicy Bypass -File .\skills\tests\test_install_ps1_isolated.ps1
 ```
 
-Windows 上隔离安装冒烟断言 `/govern`+`/audit`+`/vision`+**core docs 落点**，且不含填表 advanced slash、不含 `tech-stack`。`install.sh` 的真实执行仍依赖 bash 环境（本仓库 Windows 主证据以 PS1 为准）。
+Windows 上隔离安装冒烟断言默认**四入口**（`/govern`+`/audit`+`/vision`+`/vision-audit`）+ **core docs 落点**，且不含填表 advanced slash、不含 `tech-stack`。`install.sh` 的真实执行仍依赖 bash 环境（本仓库 Windows 主证据以 PS1 为准）。
 
 ## 尚未包含
 
 - Marketplace 完整包  
 - 编号 / parent 自动校验工具  
 - 自动在无维护者授权时创建 GitHub Release（tag CI 仅 pack + 上传 artifact）  
-- Copilot `/vision` runtime-verified（2026-07-28 配额阻断；Claude/Grok 已 dual-pass verified）
+- `/vision-audit` 写盘全路径 e2e（矩阵证据为只读 dispatch / probe，不是写盘 e2e）
 
-当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + `/govern`/`/audit`/`/vision` + 原语 01～05 + 愿景 06 + 多宿主安装 + 可选 `--init-workspace` + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。
+当前交付：**core 方法论镜像（默认 install）+ Skills 适配 + 默认四入口（`/govern` `/audit` `/vision` `/vision-audit`）+ 原语 01～05 + 愿景 06 + 独立 Vision Review 07 + 多宿主安装 + 可选 `--init-workspace` + 模板/契约镜像 + pack zip**。monorepo `docs/` 仍为维护者 canonical 上游。

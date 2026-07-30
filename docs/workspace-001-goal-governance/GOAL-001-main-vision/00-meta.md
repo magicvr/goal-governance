@@ -7,8 +7,8 @@ plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
 serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
 created: 2026-07-18
-updated: 2026-07-29
-version: 0.8.9
+updated: 2026-07-30
+version: 0.9.0
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -24,7 +24,7 @@ version: 0.8.9
 |----|-----|
 | **status** | **`active`** |
 | **progress 宣称** | 不宣称 Root `done`；不宣称阶段 6 终态 |
-| **现行路径** | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) · 路径 D**（仅维护发版/协议；A/B/C 延期） |
+| **现行路径** | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) · 路径 D**（仅维护发版/协议；A/B/C 延期）；本拍 **[D-026](01-decision.md#d-026--路径-d授权annotated-v092--release-mode-evidence2026-07-30)** 授权 `v0.9.2` |
 | **子目标** | GOAL-002～020 均 `done / 100%`；GOAL-020 由 D-005/A-005 用户确认关门，F-010 保留 recommended follow-up |
 | **下一编号** | **GOAL-021** |
 | **工作区** | `workspace-001-goal-governance` · `root_goal: GOAL-001-main-vision` |
@@ -66,7 +66,7 @@ version: 0.8.9
 | **A-015 F-008** | required | **closed · fixed**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) / [A-017](03-audit.md#a-017--响应-a-015--f-008路径-d契约2026-07-28)） | 曾缺退出路径契约；现以路径 D 为准 |
 | **R-009-X** | accepted residual | **仍 accepted** | 产品终态 / I 全文 verified / 人手 UX 全文 / AI 读资料全文等（见下表）；**路径 D 不关闭** |
 | **A-006 F-006**（A-015 F-010 确认） | recommended | open | 不阻断 D 维护；影响将来 A/对外 GA 复盘 |
-| **发版候选**（A-015 F-011） | recommended | open | **runtime ready**（unreleased；path-D 验证 2026-07-28）；**v0.9.1 已 tag**；下一正式 tag（建议 v0.9.2）须用户授权；不阻断 Root `active` |
+| **发版候选**（A-015 F-011） | recommended | **closing · D-026** | 用户已授权 **v0.9.2**；矩阵 `candidateRevision: v0.9.2`；release-mode evidence 见本拍执行；正式 GitHub Release 仍须 push tag + Environment `release` |
 | **A-015 F-007** | required | **closed · fixed**（A-016） | 现时以本节为准 |
 | **A-015 F-009** | recommended | **closed · fixed**（对照表已在现时摘要；A-016/A-017） | 曾缺 R-009-X 有界 vs 终态对照 |
 | **A-018 F-012～F-015** | required | **closed · fixed**（[D-025](01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29) / [A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)） | 核心方法论文档/standalone/core/AGENTS 回流 |
@@ -85,7 +85,7 @@ version: 0.8.9
 ### 下一步指向（Root · 路径 D）
 
 1. **默认**：在 [D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 内做协议修订、发版候选、愿景/入口 dogfood、台账卫生。
-2. **发版**：当前工作树 runtime **ready-for-release-evidence**（`unreleased`）。下一 annotated tag 须用户书面授权（建议 **v0.9.2**；**v0.9.1 已存在**）。证据：`artifacts/compatibility-report-path-d-check.json`、`artifacts/release-evidence-path-d-rehearsal-2026-07-28.json`。
+2. **发版**：**D-026** 已授权 **v0.9.2**；冻结后跑 release-mode evidence；推 tag + Environment `release` 后 GitHub Release 才完整。
 3. **单点 residual**：仅当用户书面点名范围时可立 **一个** 有界子目标（GOAL-020+）。
 4. **改道**：A（阶段 7）/ B（residual 清单）/ C（有界退出）须新的 `/govern` + D-0xx。
 5. **禁止**：无改道宣称阶段 6 终态或 Root `done`；无授权自动 tag/Release；批量开 residual；把 018/019 再立项为未完成；仅凭下文历史章节判定焦点。

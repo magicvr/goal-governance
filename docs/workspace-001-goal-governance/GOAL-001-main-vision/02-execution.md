@@ -4,34 +4,61 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-29
-version: 0.4.3
+updated: 2026-07-30
+version: 0.4.4
 ---
 
 # 执行记录 · GOAL-001
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
-## 当前进展（2026-07-29）
+## 当前进展（2026-07-30）
 
-> **现时权威**：与 [00-meta 现时摘要](00-meta.md#现时摘要2026-07-28-单一权威入口) 对齐（本节补充 A-018 响应后事实）。下方历史时间线保留原貌，**不可**单独作为「现在做到哪」的判定。
+> **现时权威**：与 [00-meta 现时摘要](00-meta.md#现时摘要2026-07-28-单一权威入口) 对齐。下方历史时间线保留原貌，**不可**单独作为「现在做到哪」的判定。
 
 | 方向 | 状态 | 说明 |
 |------|------|------|
 | 核心方法论与模板 | **已完成基线** + P-006 后回流 | GOAL-006/007/010 done；D-017 + **D-025**（A-018 fixed） |
-| Skills | **阶段 5 已关** + core 愿景规则面 | 018/019 done；core 现含 `vision/alignment.md` |
+| Skills | **阶段 5 已关** + 四入口面文档对齐 | 018/019 done；README 装机树已含 `vision-audit` |
 | Web | **阶段 6 有界结项**（≠ 终态） | 扩展/终态 → **R-009-X** |
-| 愿景栈 | 最小对齐完备 | Charter@0.1.0（VR-004 editorial）；VP-001；V-F-001 fixed |
+| 愿景栈 | 最小对齐完备 | Charter@0.1.0；VP-001；V-F-001～007 fixed |
 | Root 路径 | **D-024 路径 D** | 仅维护；**不**关 Root |
-| 发版候选 runtime | **ready-for-release-evidence**（unreleased） | 本拍**未**重采 runtime / **未** tag |
+| 发版候选 runtime | **ready-for-release-evidence**（`v0.9.2` 冻结） | D-026 授权 tag + release-mode |
 | Root | **`active`** | 002～020 全 done；下一编号 **GOAL-021** |
 
-## 下一步（根目标视角 · 2026-07-29）
+## 下一步（根目标视角 · 2026-07-30）
 
-1. **路径 D**：协议/发版候选/台账；A-018 required 已闭合。  
-2. **发版**（须用户书面授权）：建议 **v0.9.2** + release evidence；本拍不打 tag。  
-3. **可选**：单一 residual 子目标或改道 A/B/C。  
-4. **禁止**：终态/Root done；无授权 tag；批量 residual。
+1. **路径 D**：协议/台账维护；**v0.9.2** 冻结与 release-mode 见本拍 D-026。  
+2. **发版后续**：推送 annotated `v0.9.2`（若尚未推）→ Actions pack → Environment **`release` 审批** → 自动 Release 资产。  
+3. **发版后**：矩阵/测试可再回 `unreleased` 进入下一开发窗口（须另记）。  
+4. **禁止**：终态/Root done；无改道开阶段 7；批量 residual。
+
+## 2026-07-30 · 路径 D 授权：`v0.9.2` + release-mode evidence（D-026）
+
+- **用户指令**：`/govern 授权路径 D 打 v0.9.2 并跑 release evidence`。
+- **决策**：[D-026](01-decision.md#d-026--路径-d授权annotated-v092--release-mode-evidence2026-07-30)。
+- **冻结内容**（本拍提交前）：
+  1. `CHANGELOG.md` → `## 0.9.2 - 2026-07-30`（Unreleased 清空说明）。
+  2. `docs/contracts` + `skills/contracts` 矩阵 `candidateRevision: v0.9.2`（字节镜像一致）。
+  3. `scripts/tests/test_release_evidence.py`、`skills/tests/test_skills_orchestrator.py` 守卫对齐 `v0.9.2`。
+  4. `skills/README.md` / `docs/README.md` 包身份与矩阵 SHA 同步。
+  5. 含上一拍 README 四入口装机树卫生与 Goal「三入口」历史注。
+- **计划命令**（冻结提交 + annotated tag 后）：
+  - `python scripts/release_evidence.py --mode release --tag v0.9.2 --run-checks --include-web --output artifacts/release-evidence-v0.9.2.json`
+  - 可选：`python scripts/compatibility_report.py --output artifacts/compatibility-report-v0.9.2.json`
+- **结果**：见本条下方「执行结果」补记（tag 与 evidence 跑完后填写）。
+- **不构成**：Root status 变更；R-009-X closed；无 Environment 审批则无 GitHub Release。
+
+## 2026-07-30 · 路径 D 可选卫生：四入口装机树 + Goal「三入口」历史注
+
+- **用户指令**：`/govern 实现层路径 D 可选卫生（skills README 装机树片段、Goal 历史「三入口」叙述）`。
+- **范围（D-024 §2）**：文档卫生；**不**改 Root/子目标 status/progress；**不** tag；**不**改 Charter/VP 实质边界。
+- **事实**：
+  1. `skills/README.md` **1.5.2**：目录树、Claude/Grok 手动安装路径、脚本参数表、交付摘要对齐默认**四入口**（含 `vision-audit` 与 `07`）；去掉过时「三 skill / 三入口」装机片段与「Copilot vision 仍配额阻断」的未包含项措辞。
+  2. GOAL-001 [D-018](01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28) 与本文件 D-018/D-019 历史节追加**现时注**（当日三入口 → 现时四入口经 D-020）；**不**改写独立审计 A-015 正文中的历史观察句。
+  3. `test_skills_readme_default_install_documents_govern_audit_vision` 守卫扩展为要求 README 含 `vision-audit`。
+- **验证**：`python -m unittest skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_skills_readme_default_install_documents_govern_audit_vision` → **ok**。
+- **未做**：runtime 重采；annotated tag；改 matrix `installationSurface` 细字段（非本拍点名范围）。
 
 ## 2026-07-29 · 响应 A-018（D-025 · 路径 D 协议回流）
 
@@ -117,21 +144,23 @@ version: 0.4.3
   - Grok：`grok-build-cli-vision-2026-07-28-pass1.json` + `…-2026-07-28.json` → **pass** / markerObserved
   - Copilot：两次 **fail**（stderr: monthly quota）；矩阵 vision 仍 pending；scratch `vision-capture-copilot.log`
 - **矩阵/README**：Claude+Grok vision runtime-verified；Copilot pending；skills README 状态表已对齐。
-- **消费面**：AGENTS.template / Claude install AGENTS / Copilot instructions 含 P-006 与三入口。
+- **消费面**：AGENTS.template / Claude install AGENTS / Copilot instructions 含 P-006 与**当时**三入口。
 - **Dogfood**：[VRev-001](../../../vision/reviews.md) self pass；**无** tag/Release/release_evidence release-mode。
 - 命令摘要见 GOAL-008 执行与 scratch `vision-capture-summary.txt`。
+- **现时注（2026-07-30）**：D-019 当时默认面为三入口；**现时**默认四入口（+ `/vision-audit`，[D-020](01-decision.md#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)）。本条不改历史 runtime 事实。
 
 ## 2026-07-28 · Skills `/vision` 第二刀（D-018）
 
 - **决策**：[D-018](01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。
 - **产物**：
   - `skills/prompts/06-vision-orchestrator.md`
-  - install：`claude`/`grok`/`copilot` vision wrappers；`install.ps1` / `install.sh` 默认三入口
+  - install：`claude`/`grok`/`copilot` vision wrappers；`install.ps1` / `install.sh` **当日**默认三入口
   - 本仓 `.grok/skills/vision/`（及若存在 `.claude/skills/vision/`）
   - 契约/矩阵含 `vision`（pending-runtime-validation）
   - 测试与 skills README / AGENTS 同步
 - **未做**：各宿主 `/vision` runtime evidence 重采。
 - Root 仍 `active`。
+- **现时注（2026-07-30）**：其后 [D-020](01-decision.md#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28) 将默认 install 扩为**四入口**（+ `/vision-audit`）。本条「三入口」仅为 D-018 当日事实，非现行产品面。
 
 ## 2026-07-28 · P-006 愿景组合治理第一刀（D-017）
 

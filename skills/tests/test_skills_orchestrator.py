@@ -557,7 +557,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "unreleased")
+        self.assertEqual(matrix["candidateRevision"], "v0.9.2")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -1149,24 +1149,36 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("principles", text)
 
     def test_skills_readme_default_install_documents_govern_audit_vision(self) -> None:
-        """F-017 guard: README must match default govern+audit+vision surface."""
+        """F-017 guard: README must match default four-entrypoint surface (incl. vision-audit)."""
         text = README.read_text(encoding="utf-8")
         norm = text.replace("\\", "/")
         self.assertIn(".claude/skills/audit", norm)
         self.assertIn(".grok/skills/audit", norm)
         self.assertIn(".claude/skills/vision", norm)
         self.assertIn(".grok/skills/vision", norm)
+        self.assertIn(".claude/skills/vision-audit", norm)
+        self.assertIn(".grok/skills/vision-audit", norm)
         self.assertRegex(text, r"audit\.prompt\.md|prompts/audit")
         self.assertRegex(text, r"vision\.prompt\.md|prompts/vision")
+        self.assertRegex(text, r"vision-audit\.prompt\.md|prompts/vision-audit")
         self.assertIn("skills/audit/SKILL.md", norm)
         self.assertIn("skills/vision/SKILL.md", norm)
+        self.assertIn("skills/vision-audit/SKILL.md", norm)
+        self.assertIn("07-independent-vision-review", text)
         self.assertNotIn("仅** govern prompt", text)
         self.assertNotIn("**仅** govern prompt", text)
         self.assertNotRegex(text, r"(?i)--copilot[^\n]{0,80}仅\s*govern\s*prompt")
-        self.assertRegex(text, r"`/govern`.*`/audit`.*`/vision`|`/govern`\s*\+\s*`/audit`\s*\+\s*`/vision`")
+        self.assertRegex(
+            text,
+            r"`/govern`.*`/audit`.*`/vision`.*`/vision-audit`"
+            r"|`/govern`\s*\+\s*`/audit`\s*\+\s*`/vision`\s*\+\s*`/vision-audit`",
+        )
         self.assertRegex(text, r"--claude[^\n]*vision", re.I)
         self.assertRegex(text, r"--grok[^\n]*vision", re.I)
         self.assertRegex(text, r"--copilot[^\n]*vision", re.I)
+        self.assertRegex(text, r"--claude[^\n]*vision-audit|--claude[^\n]*\{govern,audit,vision,vision-audit\}", re.I)
+        self.assertRegex(text, r"--grok[^\n]*vision-audit|--grok[^\n]*\{govern,audit,vision,vision-audit\}", re.I)
+        self.assertRegex(text, r"--copilot[^\n]*vision-audit", re.I)
 
     def _assert_primary_govern_skill(self, path: Path, host_label: str) -> None:
         self.assertTrue(path.is_file(), f"missing {host_label} skill: {path}")

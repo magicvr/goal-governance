@@ -2,12 +2,20 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-29
+updated: 2026-07-30
 parent: null
-version: 1.1.9
+version: 1.1.10
 ---
 
 # Goal Tree
+
+## 2026-07-30 · 路径 D 授权 v0.9.2 冻结 + release-mode evidence（D-026）
+
+用户书面授权 annotated **`v0.9.2`** 并跑 `release_evidence --mode release`。冻结：CHANGELOG 0.9.2；矩阵 `candidateRevision: v0.9.2`；测试守卫与 README/docs 身份同步；含 README 四入口装机树卫生。**不**改各 GOAL status/progress；Root 仍 `active`。证据产物见 artifacts / GOAL-001 执行补记。
+
+## 2026-07-30 · 路径 D 可选卫生（README 四入口装机树 + Goal 三入口历史注）
+
+`/govern` 路径 D：修正 `skills/README.md` 装机树/手动安装/参数表为默认四入口（+ `vision-audit`）；GOAL-001 D-018/执行 D-018·D-019 历史「三入口」加现时注（指向 D-020）。**不**改各 GOAL status/progress；**不** tag；Root 仍 `active`。
 
 ## 2026-07-29 · GOAL-020 阶段 E 与用户确认关门
 
@@ -39,7 +47,7 @@ Dual-pass runtime：Claude+Grok vision **pass**；Copilot **quota fail** → pen
 
 ## 2026-07-28 · Skills `/vision` 第二刀（GOAL-001 D-018）
 
-落地 `06-vision-orchestrator` 与默认 install 三入口（govern/audit/vision）；契约矩阵 vision=pending-runtime-validation。**不**改各 GOAL status/progress。详见 [D-018](GOAL-001-main-vision/01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。
+落地 `06-vision-orchestrator` 与默认 install 三入口（govern/audit/vision；**当日**面，其后 D-020 扩为四入口）；契约矩阵 vision=pending-runtime-validation。**不**改各 GOAL status/progress。详见 [D-018](GOAL-001-main-vision/01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。
 
 ## 2026-07-28 · P-006 愿景组合治理第一刀（GOAL-001 D-017）
 

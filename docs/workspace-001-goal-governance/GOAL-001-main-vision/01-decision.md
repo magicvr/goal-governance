@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-28
-version: 0.3.1
+updated: 2026-07-30
+version: 0.3.2
 ---
 
 # 决策记录 · GOAL-001
@@ -425,6 +425,8 @@ version: 0.3.1
 4. 更新 skills README、AGENTS §9b、govern wrapper 交叉引用、隔离安装测试。
 5. **不构成**：`/vision` runtime-verified；Root 关门；发版 tag。
 
+> **现时注（2026-07-30 · 路径 D 卫生）**：本条记录的是 D-018 **当日**默认面（三入口）。**现时**默认 install 为**四入口**（`/govern` + `/audit` + `/vision` + **`/vision-audit`**），见 [D-020](#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)。勿把本条「三入口」读成现行产品面。
+
 **为什么**：决策层与实现层分入口，避免 `/govern` 既开区又改 Charter；与 P-006 工具分工一致。
 
 **未选**：仅文档不装 skill；把 vision 塞进 `/govern` 单一入口。
@@ -649,5 +651,37 @@ A-018 证明元规则自洽，缺口在 P-006 后产品化回流；用户已书�
 
 ### 影响
 
-- 证据与响应节：[A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)、[02-execution](02-execution.md)  
+- 证据与响应节：[A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)、[02-execution](02-execution.md)
+
+## D-026 · 路径 D 授权：annotated `v0.9.2` + release-mode evidence（2026-07-30）
+
+**状态**：accepted  
+**确认来源**：用户 `/govern 授权路径 D 打 v0.9.2 并跑 release evidence`（书面授权下一正式 tag）。
+
+### 决定
+
+1. 在路径 D（[D-024](#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)）下冻结 **Skills consumer `0.9.2`**：
+   - `CHANGELOG.md` 增加 `## 0.9.2` 节；
+   - 双份矩阵 `candidateRevision: v0.9.2`；
+   - 对应测试守卫与文档身份同步。
+2. 在冻结提交上创建 **annotated tag `v0.9.2`**，并执行  
+   `python scripts/release_evidence.py --mode release --tag v0.9.2 --run-checks --include-web`。
+3. **允许**按 GOAL-008 / `docs/releases` 惯例后续推送 tag 与 Environment `release` 审批后的 GitHub Release（本决策授权 tag + release-mode 证据；推送远程仍记执行事实）。
+4. **明确不构成**：Root / 子目标 `status` 或 `progress` 变更；R-009-X / F-006 closed；阶段 6 终态；阶段 7 开张。
+
+### 为什么
+
+- A-015 F-011 发版候选 recommended open；path-D 已 ready-for-release-evidence，缺的是用户书面 tag 授权。
+- 本拍内容（四入口 runtime、愿景栈、协议回流、README 卫生）适合作为 **0.9.2** patch，且 **v0.9.1** 已占用。
+
+### 未选
+
+- 跳过 release-mode 仅打 lightweight tag  
+- 无冻结直接 tag  
+- 借发版宣称 Root done
+
+### 影响
+
+- 执行与证据路径见 [02-execution](02-execution.md#2026-07-30--路径-d授权-v092--release-mode-evidence)；goal-tree 日志；A-015 F-011 在 tag+evidence 成功后可记为 closed（formal tag 已发生）。
+ 
 - 消费方 core 缺 alignment = 不完整安装；standalone 缺 Charter/plan 不得标完整成功  
