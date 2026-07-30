@@ -159,6 +159,24 @@ function Test-SamePath([string]$PathA, [string]$PathB) {
     }
 }
 
+function Get-FileSha256Hex {
+    param([string]$Path)
+    # Prefer .NET so CI / -NoProfile shells without module autoload still work
+    # (Get-FileHash requires Microsoft.PowerShell.Utility, which is not always loaded).
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $stream = [System.IO.File]::OpenRead($Path)
+        try {
+            $bytes = $sha.ComputeHash($stream)
+            return ([System.BitConverter]::ToString($bytes) -replace '-', '').ToUpperInvariant()
+        } finally {
+            $stream.Dispose()
+        }
+    } finally {
+        $sha.Dispose()
+    }
+}
+
 function Copy-RuleFile {
     param(
         [string]$Source,
@@ -177,8 +195,8 @@ function Copy-RuleFile {
     }
     # Same source content already at dest (e.g. Claude then Codex both install AGENTS.md) — skip prompt
     if ((Test-Path -LiteralPath $Destination -PathType Leaf)) {
-        $srcHash = (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash
-        $dstHash = (Get-FileHash -LiteralPath $Destination -Algorithm SHA256).Hash
+        $srcHash = Get-FileSha256Hex -Path $Source
+        $dstHash = Get-FileSha256Hex -Path $Destination
         if ($srcHash -eq $dstHash) {
             Write-Host "Already present: $Destination"
             return
