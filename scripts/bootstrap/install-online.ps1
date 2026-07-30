@@ -243,6 +243,9 @@ try {
         exit 0
     }
 
+    # Invoke package install with the *same* host process image (pwsh or
+    # Windows PowerShell). Hardcoding "powershell" fails on Linux pwsh-only hosts.
+    $hostExe = (Get-Process -Id $PID).Path
     $installArgs = @(
         '-NoProfile',
         '-ExecutionPolicy', 'Bypass',
@@ -258,7 +261,7 @@ try {
     Write-Host "Running package install: install.ps1 -All -NonInteractive$(if ($Force) { ' -Force' } else { '' })"
     Push-Location $TargetDir
     try {
-        & powershell @installArgs
+        & $hostExe @installArgs
         if ($LASTEXITCODE -ne 0 -and $null -ne $LASTEXITCODE) {
             Write-Err "Package install failed with exit code $LASTEXITCODE"
         }

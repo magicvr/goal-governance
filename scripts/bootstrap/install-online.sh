@@ -76,7 +76,8 @@ resolve_path() {
   local dir base
   dir="$(dirname "$resolved")"
   base="$(basename "$resolved")"
-  (cd "$dir" && pwd)/"$base"
+  # Echo absolute path; avoid invalid `(cd … && pwd)/"$base"` token syntax.
+  echo "$(cd "$dir" && pwd)/${base}"
 }
 
 die() {
