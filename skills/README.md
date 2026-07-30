@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 1.5.2
+version: 1.6.0
 ---
 
 # Skills
@@ -94,11 +94,36 @@ skills/
 └── tests/
 ```
 
-## 安装
+## 安装（双入口 · GOAL-023）
 
-推荐：**从 GitHub Release 下载 skills-only zip**（不是整个 monorepo），解压进目标项目，再装规则与主入口。安装脚本**离线**、不访问网络。
+| 入口 | 是什么 | 网络 |
+|------|--------|------|
+| **1 · Bootstrap** | `scripts/bootstrap/install-online.ps1` / `.sh`（Release 亦挂同名脚本） | 在线：下 **skills zip**；或离线：本地 zip + `.sha256` |
+| **2 · 包内 install** | 解压后的 `skills/install.ps1` / `install.sh` | **离线**（不访问网络） |
 
-### 从 GitHub Release 安装（推荐 · 其他项目）
+**skills zip 内嵌 core**（GOAL-019）：默认安装路径**不**再从网上拉 core。  
+并行 **core-only** 资产 `goal-governance-core-vX.Y.Z.zip` 供 standalone / 无 Skills 场景；**不是**本表默认 Skills 路径（见 [standalone-bootstrap](../docs/standalone-bootstrap.md)、`pack_core_release.py`）。
+
+### 入口 1 · Bootstrap（推荐 · 其他项目）
+
+1. 从 [Releases](https://github.com/magicvr/goal-governance/releases) 取与 tag 对应的 bootstrap 脚本，或 clone monorepo 使用 `scripts/bootstrap/`。  
+2. 在线（已发布 tag）或离线（本地 skills zip + digest）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version X.Y.Z -Force
+# 离线：
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
+  -Version X.Y.Z -ZipPath .\goal-governance-skills-vX.Y.Z.zip -Force
+```
+
+```bash
+bash ./install-online.sh --version X.Y.Z --force
+bash ./install-online.sh --version X.Y.Z --zip-path ./goal-governance-skills-vX.Y.Z.zip --force
+```
+
+Bootstrap 会：校验 SHA-256 → 落到 `./skills` → 调用包内 install **默认 `-All` / `--all`**（四入口 + core → `docs/`）。digest 失败 **fail closed**。详见 [scripts/bootstrap/README.md](../scripts/bootstrap/README.md)。
+
+### 入口 2 · 包内 install（解压后）
 
 1. 打开本仓库 [Releases](https://github.com/magicvr/goal-governance/releases)，下载与 tag 对应的  
    `goal-governance-skills-vX.Y.Z.zip`（可对照同目录的 `.sha256` 校验）。  
@@ -132,10 +157,11 @@ bash ./skills/install.sh --all --skills-dir ./skills
 
 4. 确认 `docs/architecture/principles.md` 等已存在；冷启动先 **`/vision`**（Charter→VP），再建立工作区并 **`/govern`**；Goal 交叉审计用 **`/audit`**；独立 Vision Review 用 **`/vision-audit`**。
 
-> 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 zip / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
-> 本地调试 zip：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
+> 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 **skills zip + core zip + bootstrap 脚本** / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
+> 本地调试 zip：  
+> `python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`  
+> `python scripts/pack_core_release.py --version X.Y.Z --output-dir dist/`  
 > 尚未对齐矩阵/`candidateRevision` 的工作树**不要**推正式 tag；门禁失败则**不会**创建 Release。
-
 ### 0. 从源码树复制包（开发者 / 无 Release 时）
 
 ```bash

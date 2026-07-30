@@ -11,29 +11,41 @@
 - rehearsal 命令：`python scripts/release_evidence.py --mode rehearsal --run-checks --include-web --output artifacts/release-evidence.json`。发布候选命令在维护者创建 annotated tag 后改用 `--mode release --tag vX.Y.Z`；该命令只生成证据，**不**推送 tag。
 - **创建或推送 annotated tag** 仍须维护者授权（人或受控流程）。自动化**不得**把缺少 tag / 门禁失败的工作树写成已发布。
 
-## Skills 安装包（消费方 zip）
+## Skills / Core 安装包（消费方资产 · GOAL-023）
 
-其他项目应安装 **skills-only** 归档，而不是整个 monorepo。
+其他项目应安装 **skills** 归档（**内嵌 core**），而不是整个 monorepo。可选并行挂载 **core-only** 与 **bootstrap** 脚本。
 
 | 资产 | 命名 | 内容 |
 |------|------|------|
-| 主包 | `goal-governance-skills-vX.Y.Z.zip` | 仓库 `skills/` 分发面（prompts、install 适配、templates/contracts 镜像、install 脚本等） |
-| 校验 | `goal-governance-skills-vX.Y.Z.zip.sha256` | `sha256sum` 风格一行：`<hex>  <zip basename>` |
+| 主包（默认安装路径） | `goal-governance-skills-vX.Y.Z.zip` | 仓库 `skills/` 分发面（prompts、install、`core/` **内嵌**、templates/contracts 镜像等） |
+| 主包校验 | `goal-governance-skills-vX.Y.Z.zip.sha256` | `sha256sum` 风格一行：`<hex>  <zip basename>` |
+| 方法论并行包 | `goal-governance-core-vX.Y.Z.zip` | `skills/core/` 子集（standalone / 无 Skills）；**非**默认 skills 安装路径 |
+| 方法论校验 | `goal-governance-core-vX.Y.Z.zip.sha256` | 同上 |
+| Bootstrap | `install-online.ps1` / `install-online.sh` | 入口 1：下 skills zip（或本地 zip）→ 校验 → 包内 install（默认 `-All`） |
+| Bootstrap 说明 | `bootstrap-README.md` | 与 `scripts/bootstrap/README.md` 同源摘要 |
 | 证据 | `release-evidence.json`（及可选 `compatibility-report.json`） | 与该 tag 绑定的发行证据 |
 
-**排除**：`docs/workspace-*` 过程树、`web/`、`artifacts/`、`__pycache__` / `*.pyc` 等缓存。
+**排除**：`docs/workspace-*` 过程树、`web/`、`artifacts/`、`__pycache__` / `*.pyc` 等缓存、`tech-stack.md`。
+
+**双安装入口**（消费方）：
+
+1. **Bootstrap**（Release 脚本或 monorepo `scripts/bootstrap/`）— 可在线或离线 zip。  
+2. **包内** `skills/install.ps1` / `install.sh` — 解压后离线。  
+
+默认 skills 路径**不**要求联网拉取 core；core-only 与 skills 内嵌 core 在同 version 下应字节一致（pack 单测）。
 
 ### 本地打包（维护者 / 调试）
 
 ```bash
 python scripts/pack_skills_release.py --version 0.7.0 --output-dir dist/
+python scripts/pack_core_release.py --version 0.7.0 --output-dir dist/
 # 产出：
-#   dist/goal-governance-skills-v0.7.0.zip
-#   dist/goal-governance-skills-v0.7.0.zip.sha256
+#   dist/goal-governance-skills-v0.7.0.zip (+ .sha256)
+#   dist/goal-governance-core-v0.7.0.zip (+ .sha256)
+# bootstrap 脚本由 CI 复制进 dist/；本地可直接用 scripts/bootstrap/
 ```
 
 打包**不**改写兼容矩阵，**不**宣称新的 verified release identity。
-
 ### 正式发布路径（自动：pack + 门禁 + Environment + Release）
 
 工作流 [`.github/workflows/skills-pack-release.yml`](../../.github/workflows/skills-pack-release.yml)：
@@ -42,13 +54,13 @@ python scripts/pack_skills_release.py --version 0.7.0 --output-dir dist/
 维护者：冻结 CHANGELOG + 矩阵 candidateRevision=tag + 必要 runtime
         → 创建并 push annotated tag vX.Y.Z
               ↓
-        pack job：单测 + skills zip + workflow artifact
+        pack job：单测 + skills zip + core zip + bootstrap 脚本 + workflow artifact
               ↓
         publish job：
           1) environment: release  （Required reviewers + wait timer + main/v* 策略）
           2) release_evidence --mode release --run-checks --include-web  （硬失败则停）
           3) gh release create（若不存在；含 -rc 等 pre-release 段则 --prerelease）
-          4) gh release upload：zip + .sha256 + release-evidence.json + compatibility-report.json
+          4) gh release upload：skills/core zip + digests + bootstrap + release-evidence + compatibility-report
 ```
 
 | 规则 | 说明 |
