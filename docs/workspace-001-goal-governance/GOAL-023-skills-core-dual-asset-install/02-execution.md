@@ -1,11 +1,11 @@
 ---
 id: GOAL-023-skills-core-dual-asset-install
 doc: execution
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-30
 updated: 2026-07-30
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 执行记录 · GOAL-023
@@ -48,7 +48,17 @@ version: 0.3.0
 - **缺陷**：相对 `-ZipPath` / `--zip-path`（及 sha 路径）曾错误解析到 **TargetDir**，导致 CWD 下 `dist\…zip` + 独立 `-TargetDir` 失败。  
 - **修复**：相对路径相对 **进程 CWD**（`Get-Location` / `pwd`）；绝对路径不变。PS + bash 对齐。  
 - **测试**：`test_offline_relative_zip_resolved_against_cwd_not_target`（TargetDir≠CWD + 相对 zip）。bootstrap suite **7**（1 skip WSL bash）。  
-- **仍** `active`；**不**关门；待独立 `/audit`。
+- 其后独立审 A-001 发现同缺陷（文档组合）；修复后 A-002 复审 **pass**。
+
+### 2026-07-30 · 阶段 F · 响应审计 + self close-out + 关门
+
+- 用户 `/govern` 确认路径 **OK A**（先 self close-out 再关门）。  
+- **A-003**（self response）：A-001 F-001 **fixed** 留痕；与 A-002 independent pass 无冲突。  
+- **A-004**（self close-out）：**pass**；对照成功标准全部达成；开放 required = 0。  
+- **关门前复跑**（本机）：pack/bootstrap/skills pack **20** OK（2 skip）；docs **26** OK；skills orchestrator **39** OK。  
+- 成功标准最后一项勾选；路线图 F `[x]`；**status → `done`**；**progress → 100%**（6/6 阶段）。  
+- **未** tag / GitHub Release；Root / Charter / VP 未改。  
+- residual **R-023-BASH-HOST** 仍 non-blocking。
 
 ## 当前进展
 
@@ -59,12 +69,12 @@ version: 0.3.0
 | C 在线 bootstrap | **done** |
 | D 文档双入口 | **done** |
 | E CI / Release 挂接 | **done** |
-| F 回归与关门 | 回归绿；**关门待独立审计** |
+| F 回归与关门 | **done**（A-001/A-002 + A-003/A-004 + OK A） |
 
 ## 下一步
 
-1. 用户或协作者运行 **`/audit`** 对本目标（scope：GOAL-023 C～E 交付）。  
-2. `/govern` 响应 findings 后，再阶段 F 关门（用户确认 → `done`）。
+- 目标已 `done`。路径 D 后续维护另开 **GOAL-024+**。  
+- 可选：CI Linux / 可用 bash 上复跑 `install-online.sh` 离线 e2e（R-023-BASH-HOST）。
 
 ## 实现触点索引
 

@@ -1,11 +1,11 @@
 ---
 id: GOAL-023-skills-core-dual-asset-install
 doc: decision
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-30
 updated: 2026-07-30
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 决策记录 · GOAL-023

@@ -1,12 +1,12 @@
 ---
 id: GOAL-023-skills-core-dual-asset-install
 title: Skills/Core 双资产分发与双入口安装
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-30
 updated: 2026-07-30
-version: 0.3.0
-progress: 83%
+version: 0.4.0
+progress: 100%
 ---
 
 # GOAL-023 · Skills/Core 双资产分发与双入口安装
@@ -22,7 +22,7 @@ progress: 83%
 
 **有界**：本目标交付分发与安装体验；**不**授权 annotated tag / GitHub Release（除非用户另书面授权）；**不**改 Root/Charter/VP status；**不**做「always latest core」在线热更；**不**静默覆盖消费仓已改的 `docs/architecture`。
 
-**关门前状态（2026-07-30）**：阶段 A～E 与回归已完成；**status 保持 `active`**。**停在独立 `/audit` 之前**——不写 self close-out、不标 `done`。
+**关门状态（2026-07-30）**：阶段 A～F 完成；A-001/A-002 independent + A-003 响应 + A-004 self close-out **pass**；用户 **OK A** 确认 → **`done / 100%`**。**未** tag/Release。
 
 ## 成功标准
 
@@ -32,7 +32,7 @@ progress: 83%
 - [x] 在线 bootstrap（PowerShell **完整** + bash **完整脚本**；Windows 无可用 bash 时 e2e skip + 结构断言 residual）可：解析版本 → skills zip + digest → 校验 → 落到目标仓 → 包内 install 默认 `-All`
 - [x] 根 README / skills README / releases 约定写明**两条安装路径**（在线 bootstrap vs 包内脚本）
 - [x] CI/pack/release 路径可产出并挂载双资产 + bootstrap 脚本；本地单测覆盖 pack 与 bootstrap 关网路径
-- [ ] 独立审计通过 + 用户确认关门（阶段 F · **待 `/audit`**）
+- [x] 独立审计通过 + 用户确认关门（阶段 F · A-001/A-002 + A-004 + OK A）
 
 ## 纲领路线图（P-001）
 
@@ -43,9 +43,9 @@ progress: 83%
 | **C · 在线 bootstrap** | 宿主外脚本：下载 skills（含 core）→ 校验 → 调包内 install；fixture 离线可测 | [x] |
 | **D · 文档双入口** | 根 README、skills README、docs/releases、standalone 交叉链 | [x] |
 | **E · CI / Release 挂接** | tag pack 双资产 + bootstrap 脚本产物；与 release evidence 字段对齐（不静默发版） | [x] |
-| **F · 回归与关门** | 回归绿；**独立审计**；用户确认后才 `done` | [ ] 回归绿；关门待 audit |
+| **F · 回归与关门** | 回归绿；独立审计；self close-out；用户确认 `done` | [x] |
 
-**派生 progress**：阶段 A～E 完成 = **5/6 ≈ 83%**（F 未关门）。progress 仅为展示。
+**派生 progress**：阶段 A～F 完成 = **6/6 = 100%**。progress 仅为展示，不单独作为关门依据。
 
 ## 信息就绪与未知项（P-005）
 
@@ -73,6 +73,7 @@ progress: 83%
 
 ## 备注
 
-- **下一步**：`/audit` 对本目标做独立交叉审计；编排器响应后再阶段 F 关门。  
+- **已关门**：A-001/A-002 independent；A-003 响应 F-001 **fixed**；A-004 self close-out **pass**；用户 **OK A**。  
+- residual **R-023-BASH-HOST**（non-blocking）仍可在 CI Linux / 可用 bash 上复审 e2e。  
 - 实现入口：`python scripts/pack_core_release.py --version X.Y.Z --output-dir dist/`  
 - Bootstrap：`scripts/bootstrap/install-online.ps1` / `.sh`

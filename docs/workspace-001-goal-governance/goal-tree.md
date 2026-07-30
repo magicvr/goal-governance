@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 1.1.18
+version: 1.1.19
 ---
 
 # Goal Tree
+
+## 2026-07-30 · GOAL-023 阶段 F 关门（self close-out + OK A）
+
+`/govern`：用户 **OK A**（先自审再关门）。A-003 响应 A-001/A-002：F-001 **fixed**。A-004 self close-out **pass**。关门前：pack/bootstrap/skills-pack **20** OK（2 skip）/ docs **26** / skills **39** OK。GOAL-023 **`done / 100%`**。开放 required = 0；residual R-023-BASH-HOST non-blocking。**未** tag/Release；Root 仍 `active`。下一编号 **GOAL-024**。
 
 ## 2026-07-30 · GOAL-023 阶段 C～E 完成；停在独立审计前
 
@@ -478,7 +482,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-020-methodology-adversarial-audit-fix · 核心方法论对抗性审计与纠错 [done 100%]
 ├── GOAL-021-skills-release-chain-hardening · 加固 Skills「规则→分发→证据→发布」执行链 [done 100%]
 ├── GOAL-022-docs-ssot-skills-mirror-stage · 方法论单一真相源与 Skills 镜像 stage 化 [done 100%]
-└── GOAL-023-skills-core-dual-asset-install · Skills/Core 双资产分发与双入口安装 [active 83%]
+└── GOAL-023-skills-core-dual-asset-install · Skills/Core 双资产分发与双入口安装 [done 100%]
 ```
 
 ## 状态总览
@@ -507,9 +511,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | GOAL-001-main-vision | done | 100% | [GOAL-020-methodology-adversarial-audit-fix/](GOAL-020-methodology-adversarial-audit-fix/) |
 | GOAL-021-skills-release-chain-hardening | 加固 Skills「规则→分发→证据→发布」执行链 | GOAL-001-main-vision | done | 100% | [GOAL-021-skills-release-chain-hardening/](GOAL-021-skills-release-chain-hardening/) |
 | GOAL-022-docs-ssot-skills-mirror-stage | 方法论单一真相源与 Skills 镜像 stage 化 | GOAL-001-main-vision | done | 100% | [GOAL-022-docs-ssot-skills-mirror-stage/](GOAL-022-docs-ssot-skills-mirror-stage/) |
-| GOAL-023-skills-core-dual-asset-install | Skills/Core 双资产分发与双入口安装 | GOAL-001-main-vision | active | 83% | [GOAL-023-skills-core-dual-asset-install/](GOAL-023-skills-core-dual-asset-install/) |
+| GOAL-023-skills-core-dual-asset-install | Skills/Core 双资产分发与双入口安装 | GOAL-001-main-vision | done | 100% | [GOAL-023-skills-core-dual-asset-install/](GOAL-023-skills-core-dual-asset-install/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**GOAL-023** `active / 83%`（A～E done；**关门待独立 `/audit`**）；GOAL-020/021/022 `done`。下一编号 **GOAL-024**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**GOAL-023** `done / 100%`（A～F；A-004 self close-out）。GOAL-020/021/022/023 `done`。下一编号 **GOAL-024**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。当前无未关门路径 D 子目标。
 
 ## 状态图例
 
