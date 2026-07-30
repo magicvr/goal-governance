@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-07-31
 updated: 2026-07-31
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 执行记录 · GOAL-002
@@ -47,10 +47,17 @@ version: 0.4.0
 - 安装曾改 monorepo `AGENTS.md` / `docs/README.md` / `docs/vision/README.md` → **已 git checkout 恢复**；保留 `.agents/skills` dogfood。
 - 成功标准 #4；`progress` 100%；自审 **A-001** pass → `status: done`。
 
+### 2026-07-31 · 响应独立审计 A-002（A-003）
+
+- 用户 `/govern`：工作区2 · 响应 GOAL-002 A-002。
+- 独立关门复审 A-002：**pass**，开放 required = 0；与 A-001 无冲突。
+- 编排响应 **A-003**：F-001～F-003 **accepted-residual**（recommended）；F-004 **fixed**（Root I-001 台账同步）；**维持** `done`，不重开。
+- I-003 仍 non-blocking open（不升格矩阵）。
+
 ## 待办
 
-（目标已关门。）
+（目标已关门；残余 I-003 / F-001～F-003 跟踪发版与后续探针，不在本目标重开。）
 
 ## 进度评估
 
-4/4 成功检查点；A–D 完成；I-003 仍 open（non-blocking，不阻塞关门）。
+4/4 成功检查点；A–D 完成；A-001 + A-002 + A-003 意见闭环；I-003 仍 open（non-blocking）。

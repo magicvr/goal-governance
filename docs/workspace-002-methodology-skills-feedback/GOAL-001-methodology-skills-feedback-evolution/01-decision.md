@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-07-31
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 决策记录 · GOAL-001
@@ -16,7 +16,7 @@ version: 0.1.0
 
 | ID | 级别 | 状态 | 影响 |
 |----|------|------|------|
-| I-001 | required | open | 阻断 GOAL-002 方案冻结，直至 Codex 加载机制有据 |
+| I-001 | required | **verified**（2026-07-31） | GOAL-002 已收口；证据见子目标 attachments + D-002；A-002 F-004 → 本表同步 |
 | I-002 | non-blocking | open | R2 优先级 |
 | I-003 | non-blocking | 已裁决（本轮） | primary 仍为 workspace-001 |
 
@@ -57,3 +57,41 @@ R1 首交付为 **GOAL-002-codex-skills-entry**：为 Codex 增加与现有 Clau
 
 - **先做协议大改再补宿主**：无具体反馈前成本高；宿主缺口已明确。
 - **只写文档不落 install 适配**：无法在 Codex 中实际调用。
+
+## D-003 · 确认 R1 收口（2026-07-31）
+
+**状态**：accepted  
+**触发**：用户 `/govern` 工作区2 · **确认 R1 收口**  
+**依据**：GOAL-002 `done` + A-001/A-002 pass + A-003 响应；Root I-001 verified
+
+### 决定
+
+1. 纲领阶段 **R1（消费宿主补齐与入口一致）** 标为 **完成**。
+2. **收口范围**（本决定所宣称的「完成」仅指下列边界）：
+   - 既有宿主：claude / copilot / grok 安装面与入口（开区前已具备，不在本波重验）。
+   - 本波补齐：Codex 经 [GOAL-002-codex-skills-entry](../GOAL-002-codex-skills-entry/) — 包内 install 源四入口、`--codex` 脚本、主入口 `$govern` dispatch-readonly 探针证据链完整，关门意见无开放 required。
+3. **不**因 R1 收口而：
+   - 将 Root `status` 改为 `done`；
+   - 勾选 Root 方向级成功标准全表（「一轮反馈闭环」属 R2/R3 / VP 退出判据，尚未满足）；
+   - 自动开始 R2 或创建 GOAL-003（须另拍 `/govern`）；
+   - 将 consumer 矩阵 Codex 标为 `committed` / 全入口 `runtime-verified`（GOAL-002 I-003 与 F-002 residual 仍 open）。
+4. 派生 `progress` 按检查点重算为 **1/3 ≈ 33%**（仅展示）。
+
+### 为什么
+
+- R1 名称与 D-002 范围一致：补齐缺失的 Codex 消费入口，使四宿主安装面对齐策略成立。
+- 子目标已合法关门且独立复审 pass；用户本轮书面确认整段收口，结束「进行中」悬置。
+- 把「宿主入口」与「真实问题回流修正 / VP 退出」拆开，避免 R1 完成被误读为 VP-002 可关。
+
+### 未选方案
+
+| 方案 | 未选理由 |
+|------|----------|
+| 等矩阵 committed 再标 R1 完成 | I-003 属发版宣称门禁，非 R1 成功定义；会无限期阻塞宿主补齐收口 |
+| 要求四入口均 Codex runtime-verified 才收口 | 超出 GOAL-002 成功标准与 A-001/A-002 residual 边界；用户未扩大标准 |
+| 顺带标 R2 开始 | 无 I-002 反馈清单与用户立项意图；禁止空转开阶段 |
+
+### 影响
+
+- meta 路线图 R1 → **完成**；`progress` 0% → **33%**。
+- R2 仍 **未开始**；下一拍由用户指定（开 GOAL-003 / 收集 I-002 / 其它）。
