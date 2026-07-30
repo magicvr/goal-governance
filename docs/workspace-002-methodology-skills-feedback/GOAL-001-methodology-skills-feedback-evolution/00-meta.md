@@ -62,7 +62,7 @@ progress: 0%
 
 | id | title | status |
 |----|-------|--------|
-| [GOAL-002-codex-skills-entry](../GOAL-002-codex-skills-entry/00-meta.md) | 添加 Codex 可用的 Skills 入口 | active |
+| [GOAL-002-codex-skills-entry](../GOAL-002-codex-skills-entry/00-meta.md) | 添加 Codex 可用的 Skills 入口 | done |
 
 ## 备注
 

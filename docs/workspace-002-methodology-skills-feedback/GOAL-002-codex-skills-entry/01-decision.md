@@ -1,11 +1,11 @@
 ---
 id: GOAL-002-codex-skills-entry
 doc: decision
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-07-31
 updated: 2026-07-31
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 决策记录 · GOAL-002
