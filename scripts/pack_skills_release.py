@@ -207,15 +207,43 @@ def write_sha256_sidecar(zip_path: Path, sha256_path: Path | None = None) -> tup
     return digest, out
 
 
+def _maybe_stage_mirrors(skills_root: Path, *, skip_stage: bool) -> None:
+    """GOAL-022: when packing monorepo skills/, refresh docs/ → skills mirrors first."""
+    if skip_stage:
+        return
+    repo = skills_root.resolve().parent
+    docs_marker = repo / "docs" / "architecture" / "principles.md"
+    if not docs_marker.is_file():
+        return
+    # Import lazily so temp-tree unit tests without scripts package still work.
+    stage_path = repo / "scripts" / "stage_skills_mirrors.py"
+    if not stage_path.is_file():
+        return
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("stage_skills_mirrors", stage_path)
+    if spec is None or spec.loader is None:
+        raise PackSkillsError(f"cannot load stage script: {stage_path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["stage_skills_mirrors"] = module
+    spec.loader.exec_module(module)
+    try:
+        module.stage_skills_mirrors(repo, check=False, dry_run=False)
+    except module.StageSkillsError as exc:
+        raise PackSkillsError(f"stage skills mirrors failed: {exc}") from exc
+
+
 def pack_skills(
     *,
     version: str,
     output_dir: Path,
     skills_root: Path | None = None,
+    skip_stage: bool = False,
 ) -> PackResult:
     """Pack skills into output_dir as versioned zip + .sha256 sidecar."""
     ver = normalize_version(version)
     source = (skills_root if skills_root is not None else DEFAULT_SKILLS_DIR).resolve()
+    _maybe_stage_mirrors(source, skip_stage=skip_stage)
     files = inventoriable_files(source)
     out = output_dir.resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -256,6 +284,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Skills package root (default: <repo>/skills)",
     )
+    parser.add_argument(
+        "--skip-stage",
+        action="store_true",
+        help="Do not run scripts/stage_skills_mirrors.py before packing (GOAL-022)",
+    )
     return parser
 
 
@@ -267,6 +300,7 @@ def main(argv: list[str] | None = None) -> int:
             version=args.version,
             output_dir=args.output_dir,
             skills_root=args.skills_dir,
+            skip_stage=args.skip_stage,
         )
     except PackSkillsError as exc:
         print(f"Error: {exc}", file=sys.stderr)

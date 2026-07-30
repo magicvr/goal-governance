@@ -38,9 +38,12 @@ INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
 CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
-SKILLS_TEMPLATES = SKILLS_ROOT / "templates" / "goal-folder"
+# GOAL-022: package distribution mirror is core/docs/templates (not skills/templates)
+SKILLS_TEMPLATES = SKILLS_ROOT / "core" / "docs" / "templates" / "goal-folder"
 CORE_WORKSPACE_TEMPLATE = SKILLS_ROOT.parent / "docs" / "templates" / "workspace-context.md"
-SKILLS_WORKSPACE_TEMPLATE = SKILLS_ROOT / "templates" / "workspace-context.md"
+SKILLS_WORKSPACE_TEMPLATE = (
+    SKILLS_ROOT / "core" / "docs" / "templates" / "workspace-context.md"
+)
 CORE_CONTRACTS = SKILLS_ROOT.parent / "docs" / "contracts"
 SKILLS_CONTRACTS = SKILLS_ROOT / "contracts"
 CORE_PRINCIPLES = SKILLS_ROOT.parent / "docs" / "architecture" / "principles.md"
@@ -247,7 +250,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         docs_readme = CORE_TEMPLATES.parent / "README.md"
         skills_readme = SKILLS_ROOT / "README.md"
         self.assertIn("canonical", docs_readme.read_text(encoding="utf-8").lower())
-        self.assertIn("分发镜像", skills_readme.read_text(encoding="utf-8"))
+        self.assertRegex(
+            skills_readme.read_text(encoding="utf-8"),
+            r"分发镜像|stage|core/docs/templates",
+        )
 
     @staticmethod
     def _load_json(path: Path) -> dict[str, object]:
@@ -375,7 +381,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertLessEqual(minimum, protocol_version)
         self.assertLess(protocol_version, maximum)
         self.assertEqual(template_set["canonicalPath"], "docs/templates/goal-folder")
-        self.assertEqual(template_set["mirrorPath"], "skills/templates/goal-folder")
+        self.assertEqual(
+            template_set["mirrorPath"],
+            "skills/core/docs/templates/goal-folder",
+        )
 
         status = payload["adapterCompatibilityStatus"]
         self.assertIn(status, {"I-002-pending", "declared", "verified"})
@@ -856,19 +865,26 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         layout = (core / "architecture" / "directory-layout.md").read_text(encoding="utf-8")
         self.assertIn("workspace-", layout)
         self.assertNotIn("goal-governance/web", layout.replace("\\", "/"))
-        # goal-folder five-pack should match package templates mirror
-        for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
-            self.assertEqual(
-                (core / "templates" / "goal-folder" / name).read_bytes(),
-                (SKILLS_TEMPLATES / name).read_bytes(),
-                f"core templates drift from skills/templates: {name}",
-            )
+        # GOAL-022: skills/templates is pointer-only; five-pack lives under core
+        legacy_templates = SKILLS_ROOT / "templates" / "goal-folder"
+        self.assertFalse(
+            legacy_templates.is_dir(),
+            "skills/templates/goal-folder must not be a hand-maintained third copy",
+        )
+        pointer = (SKILLS_ROOT / "templates" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("core/docs/templates", pointer)
+        # consumer slim README is hand-maintained (not monorepo long-form twin)
+        core_docs_readme = (core / "README.md").read_text(encoding="utf-8")
+        self.assertIn("消费方", core_docs_readme)
+        self.assertNotIn("canonical → Skills 同步台账", core_docs_readme)
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
         self.assertIn("install_core_docs", sh)
         self.assertIn("Install-CoreDocs", ps1)
         self.assertIn("core/docs", sh.replace("\\", "/"))
         self.assertIn("core", ps1)
+        self.assertIn("core/docs/templates", sh.replace("\\", "/"))
+        self.assertIn("core\\docs\\templates", ps1.replace("/", "\\"))
         self.assertIn("vision/alignment.md", sh.replace("\\", "/"))
         self.assertIn("alignment.md", ps1)
         self.assertRegex(sh, r"workspace-|init-workspace")
@@ -1119,19 +1135,24 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
 
     def test_docs_readme_hash_ledger_matches_template_bytes(self) -> None:
-        """The published canonical/mirror ledger must describe the shipped bytes."""
-        readme = (SKILLS_ROOT.parent / "docs" / "README.md").read_text(encoding="utf-8")
+        """Canonical templates/contracts must match staged package mirrors (GOAL-022).
+
+        Monorepo docs/README may still list a hash ledger for humans; stage --check
+        is the machine gate. This test asserts byte equality for owned mirrors.
+        """
         for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
             canonical = CORE_TEMPLATES / name
             mirror = SKILLS_TEMPLATES / name
-            digest = normalized_sha256(canonical)
-            self.assertEqual(digest, normalized_sha256(mirror))
-            self.assertIn(name, readme)
-            self.assertIn(digest, readme)
-        workspace_digest = normalized_sha256(CORE_WORKSPACE_TEMPLATE)
-        self.assertEqual(workspace_digest, normalized_sha256(SKILLS_WORKSPACE_TEMPLATE))
-        self.assertIn("workspace-context.md", readme)
-        self.assertIn(workspace_digest, readme)
+            self.assertEqual(
+                normalized_sha256(canonical),
+                normalized_sha256(mirror),
+                f"template mirror drift: {name}",
+            )
+        self.assertEqual(
+            normalized_sha256(CORE_WORKSPACE_TEMPLATE),
+            normalized_sha256(SKILLS_WORKSPACE_TEMPLATE),
+            "workspace-context mirror drift",
+        )
         for name in (
             "skills-consumer-contract.schema.json",
             "skills-consumer-contract.json",
@@ -1141,10 +1162,19 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         ):
             canonical = CORE_CONTRACTS / name
             mirror = SKILLS_CONTRACTS / name
-            digest = normalized_sha256(canonical)
-            self.assertEqual(digest, normalized_sha256(mirror))
-            self.assertIn(name, readme)
-            self.assertIn(digest, readme)
+            self.assertEqual(
+                normalized_sha256(canonical),
+                normalized_sha256(mirror),
+                f"contract mirror drift: {name}",
+            )
+        # GOAL-022 stage script is the SSOT refresh path
+        stage_script = SKILLS_ROOT.parent / "scripts" / "stage_skills_mirrors.py"
+        self.assertTrue(stage_script.is_file(), "missing stage_skills_mirrors.py")
+        pack_script = (SKILLS_ROOT.parent / "scripts" / "pack_skills_release.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("stage_skills_mirrors", pack_script)
+        self.assertIn("skip_stage", pack_script)
 
     def test_portability_skills_pkg_and_required_architecture(self) -> None:
         """Package may rename skills dir; architecture is co-required (GOAL-019)."""

@@ -73,6 +73,11 @@ jobs:
           echo "Artifact name: ${ARTIFACT}"
           echo "Tag name: ${TAG_NAME:-"(none)"}"
 
+      - name: Stage skills mirrors (GOAL-022)
+        run: |
+          python scripts/stage_skills_mirrors.py
+          python scripts/stage_skills_mirrors.py --check
+
       - name: Run pack unit tests
         run: python -m unittest discover -s scripts/tests -p 'test_pack_skills_release.py' -v
 

@@ -120,7 +120,7 @@
           "const": "docs/templates/goal-folder"
         },
         "mirrorPath": {
-          "const": "skills/templates/goal-folder"
+          "const": "skills/core/docs/templates/goal-folder"
         }
       }
     },

@@ -226,7 +226,9 @@ class VisionProtocolTests(unittest.TestCase):
         fields = parse_frontmatter(template)
         for key in ("vision_role", "plan_refs", "primary_plan"):
             self.assertIn(key, fields)
-        mirror = REPO_ROOT / "skills" / "templates" / "workspace-context.md"
+        mirror = (
+            REPO_ROOT / "skills" / "core" / "docs" / "templates" / "workspace-context.md"
+        )
         self.assertEqual(
             template.read_text(encoding="utf-8"),
             mirror.read_text(encoding="utf-8"),

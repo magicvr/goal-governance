@@ -27,7 +27,7 @@
       "maxExclusive": "0.2.0"
     },
     "canonicalPath": "docs/templates/goal-folder",
-    "mirrorPath": "skills/templates/goal-folder"
+    "mirrorPath": "skills/core/docs/templates/goal-folder"
   },
   "adapterCompatibilityStatus": "declared",
   "adapters": [

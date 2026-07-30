@@ -20,7 +20,7 @@ version: 0.5.1
 | 工作区上下文 | `docs/workspace-<NNN>-<slug>/workspace.md` | 绑定 Root Goal、工作区根范围、plan 字段和共享资料固定引用；不保存目标状态 |
 | 实例真相源 | `docs/workspace-<NNN>-<slug>/` | 目标、决策、执行、审计和附件 |
 
-`skills/templates/goal-folder/` 与 `skills/templates/workspace-context.md` 是上述 canonical 模板的分发镜像，用于离线安装和复制到其他仓库；它们不构成第二套规范。工作区和共享资料细节见 [workspace-protocol.md](workspace-protocol.md)。
+`skills/core/docs/templates/` 是上述 canonical 模板的分发镜像（由 `scripts/stage_skills_mirrors.py` 生成），用于离线安装；不构成第二套规范。工作区和共享资料细节见 [workspace-protocol.md](workspace-protocol.md)。
 
 ## Web 应用（已确定）
 

@@ -4,10 +4,18 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 1.1.13
+version: 1.1.14
 ---
 
 # Goal Tree
+
+## 2026-07-30 · GOAL-022 阶段 A～E 落地（D-002）
+
+`/govern`：用户确认 I-001～I-003 推荐默认并立即实现。`stage_skills_mirrors.py` + pack/CI 挂接；`skills/templates` 收敛为指针；core 精简 README；契约 mirrorPath → `skills/core/docs/templates/goal-folder`。回归：docs 26 / scripts 52（2 skip）/ skills 39 OK；`stage --check` ok。status **`active / 83%`**（待阶段 F 关门审）。**不** tag/Release。
+
+## 2026-07-30 · 创建 GOAL-022（方法论 SSOT + Skills 镜像 stage）
+
+`/govern` 路径 D 单点：新建 [GOAL-022-docs-ssot-skills-mirror-stage](GOAL-022-docs-ssot-skills-mirror-stage/)，承接「只维护 `docs/` canonical，pack/stage 生成镜像」改造。D-001 立项；其后 D-002 见上节。下一编号 **GOAL-023**。
 
 ## 2026-07-30 · GOAL-021 阶段 G 自审与确认关门
 
@@ -431,7 +439,7 @@ GOAL-011 完成当前仓库到 `docs/workspace-001-goal-governance/` 的迁移�
 
 ## 树状结构
 
-> 根目标当前采用“三层交付、一个真相源”：核心方法论与模板、Skills 消费适配器、Web 人类工作台。核心 canonical 模板位于 `docs/templates/goal-folder/`；`skills/templates/goal-folder/` 为分发镜像。
+> 根目标当前采用“三层交付、一个真相源”：核心方法论与模板、Skills 消费适配器、Web 人类工作台。核心 canonical 模板位于 `docs/templates/goal-folder/`；包内分发为 `skills/core/docs/templates/`（stage；GOAL-022）。
 
 ```text
 GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议与消费工具 [active]
@@ -454,7 +462,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
 ├── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
 ├── GOAL-020-methodology-adversarial-audit-fix · 核心方法论对抗性审计与纠错 [done 100%]
-└── GOAL-021-skills-release-chain-hardening · 加固 Skills「规则→分发→证据→发布」执行链 [done 100%]
+├── GOAL-021-skills-release-chain-hardening · 加固 Skills「规则→分发→证据→发布」执行链 [done 100%]
+└── GOAL-022-docs-ssot-skills-mirror-stage · 方法论单一真相源与 Skills 镜像 stage 化 [active 83%]
 ```
 
 ## 状态总览
@@ -482,8 +491,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | done | 100% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
 | GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | GOAL-001-main-vision | done | 100% | [GOAL-020-methodology-adversarial-audit-fix/](GOAL-020-methodology-adversarial-audit-fix/) |
 | GOAL-021-skills-release-chain-hardening | 加固 Skills「规则→分发→证据→发布」执行链 | GOAL-001-main-vision | done | 100% | [GOAL-021-skills-release-chain-hardening/](GOAL-021-skills-release-chain-hardening/) |
+| GOAL-022-docs-ssot-skills-mirror-stage | 方法论单一真相源与 Skills 镜像 stage 化 | GOAL-001-main-vision | active | 83% | [GOAL-022-docs-ssot-skills-mirror-stage/](GOAL-022-docs-ssot-skills-mirror-stage/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。GOAL-020 / **GOAL-021** 均 `done / 100%`；当前无未关门子目标。下一编号 **GOAL-022**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**GOAL-022** `active / 83%`（A～E 已落地，待 F 关门）；GOAL-020/021 `done`。下一编号 **GOAL-023**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
 
 ## 状态图例
 
@@ -498,6 +508,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-022`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-023`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

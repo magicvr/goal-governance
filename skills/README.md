@@ -14,7 +14,7 @@ version: 1.5.2
 
 Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skills 同级必备**（GOAL-019 D-003）：包内 [`core/`](core/) 为消费分发镜像，`install` **默认**安装到目标仓 `docs/architecture/`、`docs/templates/` 与精简 `docs/README.md`。缺 core = **不完整安装**。
 
-在 monorepo 中，规范模板位于 [`docs/templates/`](../docs/templates/)；包内 `templates/` 与 `core/docs/templates/` 为分发镜像。机读契约以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 为逐字节镜像。
+在 monorepo 中，规范模板位于 [`docs/templates/`](../docs/templates/)；包内 **`core/docs/templates/`** 为 stage 生成的分发镜像（GOAL-022）。`skills/templates/` 仅保留指针 README，**不是**第三真相。机读契约以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 由 stage 逐字节生成。改 docs 后运行：`python scripts/stage_skills_mirrors.py`。
 
 **发布与候选证据边界**：
 
@@ -89,9 +89,8 @@ skills/
 │   ├── 05-independent-audit.md         # Goal cross-audit core
 │   ├── 06-vision-orchestrator.md       # vision decision core
 │   └── 07-independent-vision-review.md # independent Vision Review core
-├── templates/goal-folder/              # 包内模板镜像（install --all 同步到 skills 目录）
-├── templates/workspace-context.md
-├── contracts/                          # docs/contracts 的分发镜像
+├── templates/README.md                 # 指针：模板在 core/docs/templates（GOAL-022）
+├── contracts/                          # docs/contracts 的 stage 镜像
 └── tests/
 ```
 

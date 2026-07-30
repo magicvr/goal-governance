@@ -1,18 +1,22 @@
 ---
-title: Skills 分发模板镜像
+title: Skills templates pointer (not a second truth)
 status: active
 created: 2026-07-19
-updated: 2026-07-19
+updated: 2026-07-30
 parent: null
-version: 0.2.0
+version: 0.3.0
 ---
 
-# Skills 分发模板镜像
+# skills/templates · 已收敛
 
-本目录是 Skills 包随安装脚本复制到其他仓库的**分发镜像**。在本仓库中，模板的规范来源是 `docs/templates/goal-folder/`；安装到没有独立核心层的目标仓库后，本镜像自包含可用。
+**GOAL-022**：包内模板分发源为 **`core/docs/templates/`**（由 monorepo `docs/templates/` stage 生成）。
 
-安装后的目标项目只需要使用本目录中的自包含副本；它不需要访问本仓库的 `docs/`。因此这里保留模板文件是有意的复制，而不是第二套规范。
+本目录**不再**维护五件套或 `workspace-context.md` 副本。
 
-修改模板时，先更新 `docs/templates/goal-folder/`，再同步本目录并运行模板一致性测试。
+| 需要 | 使用路径 |
+|------|----------|
+| 消费仓 install 默认落点 | `docs/templates/`（从 `core/docs/templates` 安装） |
+| 包内离线模板 | `skills/core/docs/templates/goal-folder/` |
+| monorepo 编辑 | **只改** `docs/templates/`，再运行 `python scripts/stage_skills_mirrors.py` |
 
-P-005 的信息需求与阶段门禁表也属于镜像内容：目标可带未知项立项，但安装后的模板必须保留级别、延期复核、记录、验证和审计这些未知的结构。
+遗留路径 `skills/templates/goal-folder` 若出现在旧文档中，请改读 `core/docs/templates/goal-folder`。

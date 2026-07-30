@@ -515,7 +515,8 @@ $GrokVisionAuditSrc = Join-Path $PackageRoot 'install\grok\skills\vision-audit\S
 $CopilotSrc = Join-Path $PackageRoot 'install\copilot\copilot-instructions.md'
 $CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
-$TemplatesSrc = Join-Path $PackageRoot 'templates'
+# GOAL-022: package template truth is core/docs/templates (not skills/templates hand mirror)
+$TemplatesSrc = Join-Path $PackageRoot 'core\docs\templates'
 $ContractsSrc = Join-Path $PackageRoot 'contracts'
 $CoreDocsSrc = Join-Path $PackageRoot 'core\docs'
 
@@ -523,7 +524,7 @@ if (-not (Test-Path -LiteralPath $PromptsSrc -PathType Container)) {
     Write-Err "Missing package directory: $PromptsSrc"
 }
 if (-not (Test-Path -LiteralPath $TemplatesSrc -PathType Container)) {
-    Write-Err "Missing package directory: $TemplatesSrc"
+    Write-Err "Missing package directory: $TemplatesSrc (GOAL-022 core templates)"
 }
 if (-not (Test-Path -LiteralPath $ContractsSrc -PathType Container)) {
     Write-Err "Missing package directory: $ContractsSrc"
