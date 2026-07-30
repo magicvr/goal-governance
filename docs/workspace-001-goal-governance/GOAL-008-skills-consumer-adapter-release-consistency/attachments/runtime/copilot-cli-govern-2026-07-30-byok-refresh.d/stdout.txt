@@ -1,0 +1,95 @@
+● skill(govern)
+
+I’ll perform a read-only GOAL-008 governance scan using only the specified repository records and
+report its gate status.
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:end (349 lines read)
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:end (260 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (316 lines read)
+
+● Read AGENTS.md
+  └ L1:end (286 lines read)
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008-*/**"
+  └ 8 files found
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ L1:end (103 lines read)
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:end (185 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:end (270 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:end (144 lines read)
+
+/ Search (grep)
+  │ "GOAL-008|GOAL-008-skills-consumer-adapter-release-consistency" in *.md
+  │ (docs\workspace-001-goal-governance\goal-tree.md)
+  └ 2 lines found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachm
+  │ ents/*"
+  └ 9 files found
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:100 (100 lines read)
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L420:470 (51 lines read)
+
+/ Search (grep)
+  │ "^## A-[0-9]+|^### A-[0-9]+" in *.md (docs\workspace-001-goal-governance\GOAL-008-skills-consume
+  │ r-adapter-release-consistency\03-audit.md)
+  └ 17 lines found
+
+/ Search (grep)
+  │ "open required|Open required|required
+  │ finding|required.*(open|collecting)|closed|verified|closure|done" in
+  │ {00-meta,01-decision,02-execution,03-audit}.md
+  │ (docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency)
+  └ 6 lines found
+
+Governance scan — [workspace-001-goal-governance] GOAL-008: done / 100%. The goal’s 00-meta.md and
+workspace goal-tree.md agree, and its authoritative close-out is A-016 (self, pass). The current
+unreleased-candidate note in D-011 / A-017 explicitly preserves this historical v0.7.0 closure; it
+creates fresh-evidence requirements for a future release candidate rather than reopening GOAL-008.
+
+Related audit findings: A-014 (independent, conditional) originally required Web parser CI replay
+and release identity before closure. A-015 recorded the interim response. A-016 closes those gaps:
+Web CI coverage, six CLI runtime cells, clean release-mode evidence, candidateRevision: v0.7.0,
+annotated tag v0.7.0, and release-candidate evidence. Open required findings: 0; audit conflict:
+none. A-017 confirms that later behavior-source changes correctly make the then-current unreleased
+matrix require fresh runtime evidence, without invalidating the closed historical release.
+
+Required information gates: I-001, I-002, and I-003 are all verified in the final ledger. I-002 is
+closed by the CLI runtime coverage plus GitHub Actions Web parser replay; I-003 is closed by the
+clean release-candidate/tag binding. Open required information gates: 0.
+
+Closure: allowed, and already validly recorded. The goal’s closure does not assert completion of
+stage 7, root-goal completion, or readiness of any later unreleased candidate.
+
+COPILOT_CLI_GOVERN_DISPATCH_OK
+

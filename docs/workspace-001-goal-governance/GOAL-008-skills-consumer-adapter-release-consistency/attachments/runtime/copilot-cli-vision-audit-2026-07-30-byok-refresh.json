@@ -1,0 +1,74 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-07-30T02:56:29.688640Z",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "vision-audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": "COPILOT_PROVIDER_BASE_URL",
+    "model": "gpt-5.6-terra"
+  },
+  "behaviorSources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "e089f634eacf5ce4f3ef4d45267869ff8d521803788f2e44135be260ed3039b3"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "9346b520b470260311649f87327c266a4867792e75f6a0874e42e0fdd1eeb8b4"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "c94c3080b507314be809a77a07805210cc2ec80656aaed477ef76c7dc5acf5e2"
+    },
+    {
+      "path": ".github/prompts/vision-audit.prompt.md",
+      "sha256": "c694b6bf13aa9cf4fe3a63b7949d89d89f6ef6745ea222c0f0254a112704415f"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
+      "sha256": "eec363bf8ba6ccf8b8db86078643736e4d2767be99feabfef68ec1a14919d807"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-vision-audit.txt",
+      "sha256": "e21c479476ced6ae687cb6ba238c92a20afe713a645b16d637793474f9c9901a"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 360.0,
+    "inputSha256": "ed5096e7a27ba657366546a06bb3f8bab18252330887a8aa396f069ebda52813",
+    "inputSummary": "Read-only /vision-audit dispatch probe requiring marker COPILOT_CLI_VISION_AUDIT_DISPATCH_OK after repository-backed skill execution."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "COPILOT_CLI_VISION_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-30-byok-refresh.d/stdout.txt",
+    "stdoutSha256": "8c92dd07ee6a7a3726677ad96861ef1abbb61d66da01c592cf8ad16bef90adc5",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-30-byok-refresh.d/stderr.txt",
+    "stderrSha256": "e2cd69f6b9fe6e8dc6e74391845d8ac4bbbc73068125cf439d52ce5dd6de12bd",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

@@ -46,7 +46,10 @@ version: 0.4.4
 - **计划命令**（冻结提交 + annotated tag 后）：
   - `python scripts/release_evidence.py --mode release --tag v0.9.2 --run-checks --include-web --output artifacts/release-evidence-v0.9.2.json`
   - 可选：`python scripts/compatibility_report.py --output artifacts/compatibility-report-v0.9.2.json`
-- **结果**：见本条下方「执行结果」补记（tag 与 evidence 跑完后填写）。
+- **执行结果（补记）**：
+  1. 首轮 release-mode **失败**：12 宿主入口行为源相对 2026-07-28 evidence **stale**（AGENTS/编排器/wrappers 在 D-025 等维护后已变）。
+  2. **2026-07-30** 全量重采 12 单元均 **pass**（产物 `attachments/runtime/*-2026-07-30-*-refresh.json`）；Grok CLI 宿主版本 **0.2.114**；矩阵证据指针已更新；coverage **ready-for-release-evidence**。
+  3. 本地 tag `v0.9.2` 曾创建后因 stale 删除；在含 runtime 重采的冻结提交上**重建** annotated tag 并重跑 release-mode（见同日后续执行节）。
 - **不构成**：Root status 变更；R-009-X closed；无 Environment 审批则无 GitHub Release。
 
 ## 2026-07-30 · 路径 D 可选卫生：四入口装机树 + Goal「三入口」历史注

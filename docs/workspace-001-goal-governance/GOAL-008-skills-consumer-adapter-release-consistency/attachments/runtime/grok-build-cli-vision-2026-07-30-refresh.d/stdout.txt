@@ -1,0 +1,11 @@
+I'll load the vision skill's scan phase and read only the minimum sources needed for this dispatch probe.Reading Charter and workspace-001 to resolve `vision_id@version` and `primary_plan`.**GROK_VISION_DISPATCH_OK**
+
+| Field | Value |
+|-------|--------|
+| **Skill title** | vision · 愿景与组合治理（Grok Build skill） |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **Orchestrator prompt (06-vision-orchestrator)** | `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\06-vision-orchestrator.md` |
+| **Active Charter** | `vision-goal-governance@0.1.0` (`status: active`, single active) |
+| **workspace-001 `primary_plan`** | **resolves** → `VP-001-governance-platform-delivery` → `docs/vision/plans/VP-001-governance-platform-delivery.md` exists |
+
+**Scan notes (read-only, phase 1 only):** Core (`principles.md`, `workspace-protocol.md`) present; vision tree files present; workspace `vision_role: primary`, `plan_refs` / `primary_plan` both set to the same VP. No writes, no subagents, no questions.

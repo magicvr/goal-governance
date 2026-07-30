@@ -1,0 +1,16 @@
+I'll load the govern skill and run only its scan phase for GOAL-008—read-only, no writes or questions.Located the orchestrator prompt; reading its scan-phase instructions and the minimum GOAL-008 sources.Reading GOAL-008 five-piece files and minimal workspace/vision scan sources.**GROK_GOVERN_DISPATCH_OK**
+
+### Dispatch probe (scan phase only)
+
+| Item | Value |
+|------|--------|
+| **1. Marker** | `GROK_GOVERN_DISPATCH_OK` |
+| **2. Loaded skill** | **Title:** `govern · 目标治理编排（Grok Build skill）` (frontmatter `name: govern`; description: Goal-governance orchestrator) |
+| | **Source path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+| **3. Orchestrator prompt** | Named by skill: `<SKILLS_PKG>/prompts/00-govern-orchestrator.md` |
+| | **Resolved path:** `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\00-govern-orchestrator.md` (`SKILLS_PKG` = `skills/`) |
+| **4. GOAL-008** | **Id:** `GOAL-008-skills-consumer-adapter-release-consistency` |
+| | **Classification:** closed focus (`status: done`, `progress: 100%`); parent `GOAL-001-main-vision`. Workspace context remains **S2** (other unclosed goals under Root), but this focus is not S0/S1/S3/S4-gated. |
+| | **Open required gates:** **none** on GOAL-008. Final ledger (meta + A-016): I-001 / I-002 / I-003 all `verified`; A-016: no open required findings, no residual. A-017 does **not** reopen GOAL-008 (next-candidate host runtime is post-close maintenance, not an open GOAL-008 gate). |
+
+**Scan anchors read:** skill → orchestrator → active Charter → `workspace-001-goal-governance/workspace.md` → `goal-tree.md` → GOAL-008 `00-meta.md` / `03-audit.md`. No files modified; no subagents; no user questions.

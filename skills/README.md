@@ -21,7 +21,7 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 | 身份 | 状态 |
 |------|------|
 | **`v0.9.0`** / **`v0.9.1`** | 已发布 annotated tag / Release 基线。 |
-| **`v0.9.2`（本冻结）** | 矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 **runtime-verified**（2026-07-28；`/vision-audit` 只读 dispatch）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
+| **`v0.9.2`（本冻结）** | 矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 **runtime-verified**（2026-07-30 行为源重采；`/vision-audit` 只读 dispatch）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
 
 Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
@@ -44,9 +44,9 @@ Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；We
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
-| Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-28)`** |
-| Grok Build CLI `0.2.112` | `.grok/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-28)`** |
-| GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` · `/vision-audit` | 四个入口均 `runtime-verified` via BYOK |
+| Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
+| Grok Build CLI `0.2.114` | `.grok/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
+| GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` · `/vision-audit` | 四个入口均 `runtime-verified` via BYOK（2026-07-30） |
 
 核心行为：
 

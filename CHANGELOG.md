@@ -14,7 +14,7 @@ Skills **consumer** patch：默认**四入口**面（`/govern` `/audit` `/vision
 
 - 默认 install 与契约 `requiredEntrypoints`：govern + audit + vision + **vision-audit**。
 - 独立入口：`skills/prompts/07-independent-vision-review.md`；三宿主 wrapper；`/vision-audit` 只写 `docs/vision/reviews.md`。
-- 兼容矩阵：四入口 × Claude Code / Grok Build / Copilot CLI 均为 **runtime-verified**（2026-07-28 refresh/byok；`/vision-audit` 为只读 dispatch，非写盘 e2e）。
+- 兼容矩阵：四入口 × Claude Code `2.1.220` / Grok Build `0.2.114` / Copilot CLI `1.0.75` 均为 **runtime-verified**（**2026-07-30** 对当前行为源重采；Copilot BYOK；`/vision-audit` 为只读 dispatch，非写盘 e2e）。
 - Web parser 保持 automated-verified。
 - 矩阵 `candidateRevision: v0.9.2`；coverage **ready-for-release-evidence**。
 

@@ -50,28 +50,28 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-30-refresh.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-30-refresh.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-30-refresh.json"
           ]
         },
         {
           "name": "vision-audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-audit-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-audit-2026-07-30-refresh.json"
           ]
         }
       ],
@@ -82,7 +82,7 @@
       "kind": "host-adapter",
       "host": {
         "product": "Grok Build CLI",
-        "version": "0.2.112",
+        "version": "0.2.114",
         "build": "9bbd559437",
         "platform": "Windows 11",
         "installationSurface": ".grok/skills/govern and .grok/skills/audit and vision skill/prompt"
@@ -98,28 +98,28 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-30-refresh.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-30-refresh.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-2026-07-30-refresh.json"
           ]
         },
         {
           "name": "vision-audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-audit-2026-07-28.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-audit-2026-07-30-refresh.json"
           ]
         }
       ],
@@ -145,28 +145,28 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-30-byok-refresh.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-28-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-30-byok-refresh.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-2026-07-28-byok-refresh.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-2026-07-30-byok-refresh.json"
           ]
         },
         {
           "name": "vision-audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-28-byok-auth.json"
+            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-30-byok-refresh.json"
           ]
         }
       ],
