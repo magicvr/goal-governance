@@ -3,8 +3,8 @@ doc_type: vision-index
 title: 愿景体系入口
 status: active
 created: 2026-07-28
-updated: 2026-07-30
-version: 0.4.1
+updated: 2026-07-31
+version: 0.4.2
 ---
 
 # 愿景体系 · `docs/vision/`
@@ -33,7 +33,7 @@ version: 0.4.1
 | [reviews.md](reviews.md) | **Vision Review** 台账（`VRev-00N`） |
 | [workspaces.md](workspaces.md) | 工作区贡献图（角色与意图，非进度） |
 | [alignment.md](alignment.md) | 对齐契约与门禁（规则权威） |
-| [consumer-checklist.md](consumer-checklist.md) | Skills / Web / 编排器检查映射 |
+| [consumer-checklist.md](consumer-checklist.md) | Skills / 适配器 / 编排器检查映射（本仓 Web 非现行投资面） |
 
 ## 推荐读序
 

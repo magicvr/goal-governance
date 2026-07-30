@@ -2,14 +2,16 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-07-30
+updated: 2026-07-31
 parent: null
-version: 0.10.7
+version: 0.10.8
 ---
 
 # docs/ · 文档体系
 
 本目录是 **Goal Governance** 的核心规范与运行记录来源：方法论、文档协议、目标、决策、执行、审计与架构说明均以 Markdown 维护。具体目标实例的状态真相只存在于各自 `docs/workspace-<NNN>-<slug>/` 根。仓库级愿景与规划对齐在 `docs/vision/`（**不是**第二套目标状态）。
+
+**现行消费路径**：以 **Skills** 为主（Charter `vision-goal-governance@0.2.0`）。本仓 `web/` 为冻结参考实现，见根 README 与 [vision/charter.md](vision/charter.md)。
 
 ## 目录结构
 

@@ -2,12 +2,20 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-30
+updated: 2026-07-31
 parent: null
-version: 1.1.20
+version: 1.1.21
 ---
 
 # Goal Tree
+
+## 2026-07-31 · Root D-027 路径收束 + V-F-008 fixed
+
+`/govern`：用户「直接操作」。[D-027](GOAL-001-main-vision/01-decision.md#d-027--路径收束协议--skills-问题驱动演进本仓-web-冻结2026-07-31) / [A-020](GOAL-001-main-vision/03-audit.md#a-020--响应-vrev-005-v-f-008路径收束与入口叙事2026-07-31)：协议 + Skills 问题驱动；本仓 Web 冻结参考；根 README + `web/README` 叙事同步。VRev-005 **V-F-008 fixed**。**不**改各 GOAL status/progress；**不**删 `web/`；**不**关 R-009-X。下一编号 **GOAL-024**。
+
+## 2026-07-31 · 愿景 strategic re-align（Charter 0.2.0 · Web 冻结）
+
+`/vision`：用户确认 S1+B1。Charter **`vision-goal-governance@0.2.0`**（[VR-005](../vision/revisions.md)）；VP-001 意图改为协议 + Skills；本仓 Web = **冻结参考实现**（不删代码、非投资面）。[VRev-005](../vision/reviews.md) self **pass**；workspace-001 + Root `serves_summary` re-align 完成；宽阻断解除。**不**改各 GOAL status/progress。实现层收束见上节 D-027。下一编号 **GOAL-024**。
 
 ## 2026-07-30 · 路径 D 授权 v0.10.0 发版（PR → main → tag → Release）
 

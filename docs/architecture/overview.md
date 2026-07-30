@@ -2,9 +2,9 @@
 title: 架构概览
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-31
 parent: null
-version: 0.8.0
+version: 0.8.1
 ---
 
 # 架构概览
@@ -31,10 +31,11 @@ version: 0.8.0
               ┌────────────┴────────────┐
               ▼                         ▼
     ┌──────────────────┐      ┌──────────────────┐
-    │ Skills / 提示词   │      │ Web 人类工作台    │
-    │ AI/Agent 适配器   │      │ 有界受控写入      │
+    │ Skills / 提示词   │      │ 人类 UI（远期）   │
+    │ AI/Agent 适配器   │      │ 本仓 web/ 冻结参考 │
+    │ **现行主路径**    │      │ 预期通用基架      │
     └────────┬─────────┘      └────────┬─────────┘
-             │ 读写                      │ 读 + 门禁后写
+             │ 读写                      │ （非现行投资面）
              └────────────┬─────────────┘
                           ▼
              ┌──────────────────────────┐
@@ -66,16 +67,18 @@ version: 0.8.0
 
 - **真相源**：显式工作区 `docs/workspace-001-goal-governance/`（GOAL-011 已完成自 `docs/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
 - **原则**：[principles.md](principles.md) P-001～**P-006**（含 finding 三路径闭合、P-004.1～4.4、单愿景级联）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
-- **Skills**：`/govern` 实现层主入口、`/audit` 目标交叉入口；`/vision` 决策层为第二刀；多宿主安装与契约镜像；发布一致性以 GOAL-008 惯例与 runtime evidence 为准。
-- **Web**：阶段 6 **有界结项**（GOAL-009 及 012～017）；主路径可读 + 受控写（双门闩，见 `web/README.md`）。扩展能力挂 residual **R-009-X**，不假装产品终态。
-- **Root**：`GOAL-001-main-vision` 保持 `active`，对齐 `VP-001-governance-platform-delivery` / `vision-goal-governance@0.1.0`。
+- **愿景**：[charter.md](../vision/charter.md) **`vision-goal-governance@0.2.0`**：Skills 为现行主消费适配器；本仓 Web 为**冻结参考实现**（非产品投资面）；人类 UI 远期预期通用基架（H-WEB-01）。
+- **Skills**：`/govern` 实现层主入口、`/audit` 目标交叉入口；`/vision` 决策层为第二刀；多宿主安装与契约镜像；发布一致性以 GOAL-008 惯例与 runtime evidence 为准。**现行投资面**随实际项目问题演进。
+- **Web**：阶段 6 **有界结项**后 **冻结**（GOAL-009 及 012～017）；`web/` 可作契约参考与可选回归；**不**默认深化产品。扩展 residual **R-009-X** 仍 accepted，不假装终态、也不假装在投。
+- **Root**：`GOAL-001-main-vision` 保持 `active`，对齐 `VP-001-governance-platform-delivery` / `vision-goal-governance@0.2.0`。
 
 细节以工作区 `goal-tree.md` 与各目标五件套为准；本页若与之冲突，以工作区记录为准。
 
 ## 演进方向（未实现或 residual，仅规划）
 
-1. 多工作区 N1 导航、资料 CRUD 产品、AI 读资料全文等（R-009-X 与后续目标）。
-2. 三交付面持续兼容性、漂移检测与发布验收加固。
-3. 消费适配器对 finding residual / user-overruled 的机读字段（若产品需要）。
+1. 协议与 Skills 随实际项目 / 消费方问题回流（主路径）。
+2. 远期人类 UI：挂接通用 Web 基架时再立项；本仓 FastAPI 非默认产品路径。
+3. 可选：从冻结 `web/` 提炼受控写/FA/隔离契约摘要（V-F-009），非产品推进。
+4. 消费适配器对 finding residual / user-overruled 的机读字段（若产品需要）。
 
 细节技术选型见 [tech-stack.md](tech-stack.md)。

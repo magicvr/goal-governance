@@ -5,37 +5,39 @@ status: active
 parent: null
 plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
-serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
+serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.2.0（协议+Skills 主交付；本仓 Web 冻结参考）
 created: 2026-07-18
-updated: 2026-07-30
-version: 0.9.2
+updated: 2026-07-31
+version: 0.9.3
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
 
-## 现时摘要（2026-07-29）· 单一权威入口
+## 现时摘要（2026-07-31）· 单一权威入口
 
 > **本文件现时 status / 焦点 / 下一编号只以本节为准**（[A-015](03-audit.md#a-015--root-现时状态纲领路线图与退出门禁独立交叉审计2026-07-28) F-007/F-008 已响应）。
 > 下文标注「历史」或旧日期的「当前*」章节**不可**作现时判定。完整树与 status 列以 [goal-tree.md](../goal-tree.md) 为准。执行层「当前进展/下一步」见 [02-execution.md](02-execution.md#当前进展2026-07-28)。
+>
+> **2026-07-31 愿景 re-align + 实现收束**：Charter **`vision-goal-governance@0.2.0`**（[VR-005](../../../vision/revisions.md)）；[VRev-005](../../../vision/reviews.md#vrev-005--charter-020-strategic-后审视2026-07-31)；Root **[D-027](01-decision.md#d-027--路径收束协议--skills-问题驱动演进本仓-web-冻结2026-07-31)** / [A-020](03-audit.md#a-020--响应-vrev-005-v-f-008路径收束与入口叙事2026-07-31) — **V-F-008 fixed**。
 
 ### Root 现时
 
 | 项 | 值 |
 |----|-----|
 | **status** | **`active`** |
-| **progress 宣称** | 不宣称 Root `done`；不宣称阶段 6 终态 |
-| **现行路径** | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) · 路径 D**（仅维护发版/协议；A/B/C 延期）；本拍 **[D-026](01-decision.md#d-026--路径-d授权annotated-v092--release-mode-evidence2026-07-30)** 授权 `v0.9.2` |
-| **子目标** | GOAL-002～022 均 `done / 100%`（GOAL-022 关门见该目标 A-003）；GOAL-020 F-010 recommended follow-up；GOAL-021 residual R-021-RUNTIME-RECAPTURE / R-021-SYMLINK-CI；GOAL-022 residual R-022-ORPHAN-PRUNE / R-022-INSTALL-TEMPLATES-COPY（non-blocking） |
-| **下一编号** | **GOAL-023** |
+| **progress 宣称** | 不宣称 Root `done`；不宣称阶段 6 终态；**不**宣称本仓 Web 产品终态 |
+| **现行路径** | **[D-027](01-decision.md#d-027--路径收束协议--skills-问题驱动演进本仓-web-冻结2026-07-31)**：协议 + Skills 问题驱动；本仓 Web 冻结参考；D-024「不关 Root / 不批量 residual」纪律保留；**[D-026](01-decision.md#d-026--路径-d授权annotated-v092--release-mode-evidence2026-07-30)** 曾授权 `v0.9.2` |
+| **子目标** | GOAL-002～023 均 `done / 100%`（见 goal-tree）；开放 residual 见各目标台账（含 R-009-X accepted） |
+| **下一编号** | **GOAL-024** |
 | **工作区** | `workspace-001-goal-governance` · `root_goal: GOAL-001-main-vision` |
 
-### 三面现时状态
+### 交付面现时状态
 
 | 交付面 | 现时状态 | 结论 |
 |--------|----------|------|
-| 核心方法论与模板 | GOAL-006 / 007 / 010 `done`；D-016/D-017 + **D-025**；**GOAL-020** 对抗审 A-001 `conditional` | 可复用基线在；质量债由 GOAL-020 收敛；**不是** Root 终态 |
-| Skills 消费适配器 | GOAL-008 `done`；018/019 `done`；core 含 `vision/alignment.md`；入口 `/govern` `/audit` `/vision` `/vision-audit` | 阶段 5 已关；含新行为的发版仍按 GOAL-008 惯例刷 runtime；**F-006** 仍 recommended open |
-| Web 工作台 | 阶段 6 **有界结项**（D-015 / A-014）；009 + 012～017 `done`（有界） | 主路径有界可用；**≠ 终态**；扩展/终态 → **R-009-X** 与各子目标 residual |
+| 核心方法论与模板 | GOAL-006 / 007 / 010 `done`；D-016/D-017 + **D-025**；**GOAL-020** 对抗审 A-001 `conditional` | **现行投资面之一**；随实际项目问题演进；**不是** Root 终态 |
+| Skills 消费适配器 | GOAL-008 `done`；018/019/021～023 `done`；入口 `/govern` `/audit` `/vision` `/vision-audit` | **现行主消费适配器**；发版/runtime 按 GOAL-008 惯例；**F-006** 仍 recommended open |
+| Web 工作台 | 阶段 6 **有界结项**（D-015 / A-014）；009 + 012～017 `done`（有界） | **冻结参考实现**（Charter 0.2.0 / VP-001）；**非**现行产品投资面；R-009-X 仍 accepted；预期远期通用基架（H-WEB-01） |
 
 ### 纲领位置（P-001）
 
@@ -54,10 +56,10 @@ version: 0.9.2
 
 | 项 | 值 |
 |----|-----|
-| Charter | [vision-goal-governance@0.1.0](../../../vision/charter.md) · 唯一 `active` |
-| primary_plan | [VP-001-governance-platform-delivery](../../../vision/plans/VP-001-governance-platform-delivery.md) |
+| Charter | [vision-goal-governance@0.2.0](../../../vision/charter.md) · 唯一 `active`（[VR-005](../../../vision/revisions.md) strategic） |
+| primary_plan | [VP-001-governance-platform-delivery](../../../vision/plans/VP-001-governance-platform-delivery.md) · `vision_ref` @0.2.0 |
 | plan_refs | `VP-001-governance-platform-delivery`（与 workspace 一致） |
-| Vision Review | [VRev-001](../../../vision/reviews.md) self **pass**（无 open required）；[VRev-002](../../../vision/reviews.md) independent **conditional**（V-F-001 已 fixed 为 `/vision-audit`） |
+| Vision Review | [VRev-005](../../../vision/reviews.md#vrev-005--charter-020-strategic-后审视2026-07-31) self **pass**（strategic 后；无 open required）；历史 VRev-001～004 见台账 |
 | 实现入口 | `/govern`；决策层 `/vision`；Goal 交叉审 `/audit`；愿景交叉审 `/vision-audit` |
 
 ### 开放门禁清单（现时）
@@ -83,13 +85,13 @@ version: 0.9.2
 | X-PILOT | GOAL-017 有界 done | **R-017-HUMAN-UX**；≠ I-007/I-012 全文 |
 | 终态宣称 | — | **R-009-X 仍 accepted**；路径 D **不**自动 closed |
 
-### 下一步指向（Root · 路径 D）
+### 下一步指向（Root · D-027）
 
-1. **默认**：在 [D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 内做协议修订、发版候选、愿景/入口 dogfood、台账卫生。
-2. **发版**：**D-026** 已授权 **v0.9.2**；GOAL-021 机制已修；若主张新断言策略为发版证明 → **R-021-RUNTIME-RECAPTURE** 全量 runtime 重采后再 tag；推 tag + Environment `release` 后 GitHub Release 才完整。
-3. **单点 residual**：仅当用户书面点名范围时可另立有界子目标（GOAL-022+）。
-4. **改道**：A（阶段 7）/ B（residual 清单）/ C（有界退出）须新的 `/govern` + D-0xx。
-5. **禁止**：无改道宣称阶段 6 终态或 Root `done`；无授权自动 tag/Release；批量开 residual；把 018/019/021 再立项为未完成；仅凭下文历史章节判定焦点。
+1. **默认**：协议/Skills 随实际项目问题演进（有界维护或 GOAL-024+）。
+2. **投资纪律**：**禁止**无新 D 开启本仓 Web 产品目标或消化 R-009-X 终态；删除/归档 `web/` 须另书面决策。
+3. **发版**：仅在协议/Skills 有可验证变更且用户授权时；正式 Release 须 push tag + Environment `release`。
+4. **可选**：V-F-009 契约提炼；V-F-010 `/vision-audit`。
+5. **禁止**：宣称本仓 Web 产品终态或 Root `done`；无授权自动 tag/Release；把历史「三面并进」当现时投资面。
 
 ---
 
@@ -107,10 +109,10 @@ version: 0.9.2
 
 | 项 | 值 |
 |----|-----|
-| Charter | [vision-goal-governance@0.1.0](../../../vision/charter.md) |
+| Charter | [vision-goal-governance@0.2.0](../../../vision/charter.md) |
 | plan_refs | `VP-001-governance-platform-delivery` |
 | primary_plan | [VP-001-governance-platform-delivery](../../../vision/plans/VP-001-governance-platform-delivery.md) |
-| serves_summary | 本 Root 是 primary 工作区的可治理总目标：展开区内路线图与子目标，推进 VP-001，而不把仓库 Charter 标为可 `done` 的 Goal。 |
+| serves_summary | 本 Root 是 primary 工作区的可治理总目标：展开区内路线图与子目标，推进 VP-001（协议 + Skills；本仓 Web 冻结参考），而不把仓库 Charter 标为可 `done` 的 Goal。 |
 
 ## 2026-07-22 · 阶段 6 有界结项（D-015 / A-014）
 

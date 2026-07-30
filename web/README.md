@@ -1,8 +1,15 @@
 # Goal Governance Web
 
-基于 FastAPI、Jinja2 与 Tailwind CSS 的目标治理 Web 应用。它是核心方法论与文档协议的**人类消费适配器**，不拥有独立的目标状态或生命周期定义。
+基于 FastAPI、Jinja2 与 Tailwind CSS 的目标治理 Web 应用。它是核心方法论与文档协议的**人类消费适配器**样本，不拥有独立的目标状态或生命周期定义。
 
-## 当前切片（GOAL-012）
+> ## 状态：冻结参考实现（2026-07-31）
+>
+> - **愿景**：Charter `vision-goal-governance@0.2.0` — 现行主适配器为 **Skills**；人类 UI 为远期类，预期挂通用 Web 基架（H-WEB-01）。
+> - **Root**：[D-027](../docs/workspace-001-goal-governance/GOAL-001-main-vision/01-decision.md#d-027--路径收束协议--skills-问题驱动演进本仓-web-冻结2026-07-31) — 本目录 **非**现行产品投资面；**禁止**无新决策推进 Web 产品功能。
+> - **保留**：阶段 6 有界交付代码与测试，作契约/回归参考；**不**删除目录。
+> - **日常治理**：请用 Skills（`/govern` 等），不要以本 Web 为默认工作台。
+
+## 当前切片（GOAL-012 · 历史有界交付）
 
 - **配置化产品工作区**：通过环境变量绑定工作区根；**默认 fail closed**，不会静默加载本 monorepo 的过程树（dogfood）。
 - **工作区详情**：以**目标树**为主要导航，展示所选工作区内目标的 canonical 上下文（诊断为计算视图）。

@@ -3,8 +3,8 @@ doc_type: vision-roadmap
 title: 愿景规划索引
 status: active
 created: 2026-07-28
-updated: 2026-07-28
-version: 0.1.0
+updated: 2026-07-31
+version: 0.2.0
 ---
 
 # 愿景规划索引（组合编排）
@@ -14,7 +14,7 @@ version: 0.1.0
 
 | id | title | status | vision_ref | lead_workspace | workspace_count | detail |
 |----|-------|--------|------------|----------------|-----------------|--------|
-| VP-001-governance-platform-delivery | 治理平台可复用交付（方法论 · Skills · Web） | active | vision-goal-governance@0.1.0 | workspace-001-goal-governance | 1 | [plans/VP-001-governance-platform-delivery.md](plans/VP-001-governance-platform-delivery.md) |
+| VP-001-governance-platform-delivery | 治理协议与 Skills 可复用交付（Web 冻结） | active | vision-goal-governance@0.2.0 | workspace-001-goal-governance | 1 | [plans/VP-001-governance-platform-delivery.md](plans/VP-001-governance-platform-delivery.md) |
 
 ## 使用说明
 

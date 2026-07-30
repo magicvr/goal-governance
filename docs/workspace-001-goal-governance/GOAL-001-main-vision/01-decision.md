@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-30
-version: 0.3.2
+updated: 2026-07-31
+version: 0.3.3
 ---
 
 # 决策记录 · GOAL-001
@@ -691,3 +691,38 @@ A-018 证明元规则自洽，缺口在 P-006 后产品化回流；用户已书�
 - 执行与证据路径见 [02-execution](02-execution.md#2026-07-30--路径-d授权-v092--release-mode-evidence)；goal-tree 日志；A-015 F-011 在 tag+evidence 成功后可记为 closed（formal tag 已发生）。
  
 - 消费方 core 缺 alignment = 不完整安装；standalone 缺 Charter/plan 不得标完整成功  
+
+## D-027 · 路径收束：协议 + Skills 问题驱动演进；本仓 Web 冻结（2026-07-31）
+
+**状态**：accepted  
+**确认来源**：用户确认愿景包 S1+B1 后指令「直接帮我操作」落盘实现层收束；承接 Charter `vision-goal-governance@0.2.0` / [VR-005](../../../vision/revisions.md) / VP-001 修订 / [VRev-005](../../../vision/reviews.md#vrev-005--charter-020-strategic-后审视2026-07-31)。
+
+### 决定
+
+1. **实现层现行路径**（在愿景已 re-align 前提下，收束并取代「路径 D 仅维护」的**投资叙事**；路径 D 的「不关 Root / 不批量 residual」纪律**保留**）：
+   - **主投资面** = 核心方法论/协议 + **Skills**；演进触发 = **实际项目 dogfood / 消费方问题**（H-EVOL-01）。
+   - **本仓 `web/`** = **冻结参考实现**（阶段 6 有界成果保留）；**禁止**无新决策开启 Web 产品目标或消化 R-009-X 终态。
+   - **不**默认删除 `web/` 代码；删除/归档须另书面 D-0xx。
+2. **响应 VRev-005 V-F-008（fixed）**：同步入口叙事，消除「三面并进 / 本仓 Web 仍在投」误导：
+   - 根 [README.md](../../../README.md)
+   - [web/README.md](../../../web/README.md) 顶部冻结声明
+   - Root 现时摘要 / 执行现时表 / goal-tree 日志
+   - （architecture overview 已在 `/vision` re-align 拍更新）
+3. **R-009-X**：保持 **accepted residual**；路径收束**不**关闭该 residual，**不**宣称阶段 6 产品终态。
+4. **明确不构成**：Root `done`；阶段 7 开张；自动 tag/Release；本仓 Web 退役物理删除；推翻 H-WEB-01（基架取代假设）。
+
+### 为什么
+
+- 愿景层已把 Skills 定为现行主适配器、Web 为冻结参考；若不写 Root D，路径 D 文案与入口 README 仍暗示三面并进，注意力与对外承诺会漂移。
+- 用户已书面确认投资顺序与冻结表述，满足 P-004。
+
+### 未选
+
+- 物理删除 `web/`（B 退役）  
+- 新开 VP-002（本轮用 B1 修订 VP-001）  
+- 借收束关闭 R-009-X 或宣称 Web 终态  
+
+### 影响
+
+- 后续默认 `/govern`：协议/Skills 问题驱动维护或有界子目标（GOAL-024+）；Web 仅只读参考 / 可选回归。
+- 证据：[A-020](03-audit.md#a-020--响应-vrev-005-v-f-008路径收束与入口叙事2026-07-31)、[02-execution](02-execution.md)。

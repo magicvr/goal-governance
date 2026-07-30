@@ -3,8 +3,8 @@ doc_type: vision-workspace-map
 title: 工作区贡献图
 status: active
 created: 2026-07-28
-updated: 2026-07-28
-version: 0.2.0
+updated: 2026-07-31
+version: 0.3.0
 ---
 
 # 工作区贡献图
@@ -13,7 +13,7 @@ version: 0.2.0
 
 | workspace_id | role | plan_refs | primary_plan | root_goal | map_status | serves |
 |--------------|------|-----------|--------------|-----------|------------|--------|
-| workspace-001-goal-governance | primary | VP-001-governance-platform-delivery | VP-001-governance-platform-delivery | GOAL-001-main-vision | active | 承载平台 dogfood 过程树与 Root 可执行路线图；推进 VP-001 |
+| workspace-001-goal-governance | primary | VP-001-governance-platform-delivery | VP-001-governance-platform-delivery | GOAL-001-main-vision | active | Primary dogfood；服务 Charter `vision-goal-governance@0.2.0` 与 VP-001（协议 + Skills；本仓 Web 冻结参考） |
 
 ## 规则摘要
 

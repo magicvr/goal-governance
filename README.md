@@ -1,19 +1,23 @@
 ﻿# Goal Governance
 
-目标治理框架：交付可复用的核心方法论、文档协议与模板，并提供面向 AI/仓库协作的 Skills 和面向人的 Web 工作台，贯通 **目标 → 决策 → 执行 → 审计**。
+目标治理框架：交付可复用的核心方法论、文档协议与模板，并以 **Skills**（AI / Git 仓库协作）为**现行主消费适配器**，贯通 **目标 → 决策 → 执行 → 审计**。
+
+**现行投资面**（Charter `vision-goal-governance@0.2.0` / Root D-027）：核心协议 + Skills，随实际项目问题演进。  
+本仓 `web/` 为阶段 6 **有界冻结参考实现**（非产品投资面；人类 UI 远期预期挂通用基架）。
 
 ## 从这里开始
 
 | 想了解… | 去读 |
 |---------|------|
 | 当前工作区目标与进展 | [docs/workspace-001-goal-governance/goal-tree.md](docs/workspace-001-goal-governance/goal-tree.md) |
+| 仓库愿景 / 投资面 | [docs/vision/charter.md](docs/vision/charter.md) |
 | 文档怎么写、规则是什么 | [docs/README.md](docs/README.md) |
 | 核心模板怎么用 | [docs/templates/README.md](docs/templates/README.md) |
 | AI 必须遵守什么 | [AGENTS.md](AGENTS.md) |
 | Skills 如何安装 | [skills/README.md](skills/README.md)（**双入口**：在线 bootstrap 或包内 `install.*`；skills zip **内嵌** core） |
 | Skills 如何打包 / 发布附件 | [docs/releases/README.md](docs/releases/README.md)、`scripts/pack_skills_release.py`、`scripts/pack_core_release.py` |
 | 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
-| Web 如何启动 | [web/README.md](web/README.md) |
+| Web（冻结参考） | [web/README.md](web/README.md) |
 
 ## 在其他项目中安装 Skills（双入口）
 
@@ -107,7 +111,7 @@ goal-governance/
 │   ├── templates/            # docs/templates 的分发镜像
 │   ├── contracts/            # docs/contracts 的分发镜像
 │   └── install.*
-├── web/                      # FastAPI Web 应用
+├── web/                      # 冻结参考：有界 FastAPI 工作台（非现行投资面）
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── README.md
@@ -118,9 +122,9 @@ goal-governance/
 ```
 
 - **核心文档层**：`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 定义方法论、协议、模板和消费适配器兼容契约；每个 `docs/workspace-<NNN>-<slug>/` 保存自身目标实例。
-- **`skills/`**：AI/Agent 消费核心协议的编排、审计、原语、宿主适配和离线分发包。
-- **`web/`**：FastAPI + Jinja2 + Tailwind CSS + HTMX 的人类工作台；当前直接读取唯一已配置的工作区根，提供只读浏览与文档树诊断，不维护独立状态，也不提供 Web 写入、创建/更新或后台同步入口。
-- **三层交付共享一个真相源**：Skills 按协议读写、Web 当前读取同一工作区文档，不建立独立状态。
+- **`skills/`**：**现行主消费适配器**——AI/Agent 编排、审计、愿景入口、宿主安装与离线分发。
+- **`web/`**：**冻结参考实现**（阶段 6 有界成果）。可读 + 受控写契约样本仍在，**默认不**作为产品推进面；详情见 [web/README.md](web/README.md)。
+- **一个真相源**：Skills（及任何未来 UI）消费同一工作区文档协议，不建立独立状态。
 
 ## 目标模型（摘要）
 
@@ -136,27 +140,9 @@ goal-governance/
 - **GOAL-002～007**：初始化、Skills 闭环、Goal 数据模型、核心方法论与信息就绪治理均已结项。
 - **GOAL-008**：当前三宿主 `/govern` 的最低可用已验证；完整跨宿主/跨版本发布一致性保持 deferred required，在首次支持新宿主/版本或首次对外/可复现发布时复核。
 
-## Web 应用快速启动
+## Web（冻结参考 · 非默认路径）
 
-详细说明见 [web/README.md](web/README.md)。
-
-```powershell
-# 1. 在项目根目录创建/激活虚拟环境（首次）
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r web\requirements.txt
-
-# 2. 启动（任选其一）
-cd web
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
-
-# 或在根目录：
-# uvicorn main:app --app-dir web --reload --host 127.0.0.1 --port 8000
-```
-
-若 `Activate.ps1` 因执行策略被拒，可先 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`，或改用 `.\.venv\Scripts\activate.bat`。
-
-启动后访问：<http://127.0.0.1:8000>
+本仓 Web **不是**当前产品投资面。若需查阅历史有界实现或跑参考回归，见 [web/README.md](web/README.md)（含启动方式）。日常协作请用 **Skills**（`/govern`、`/audit`、`/vision`、`/vision-audit`）。
 
 ## 当前 Web 模块
 

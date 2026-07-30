@@ -4,8 +4,8 @@ doc: audit
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-29
-version: 0.3.7
+updated: 2026-07-31
+version: 0.3.8
 ---
 
 # 审计 · GOAL-001
@@ -1062,4 +1062,41 @@ P-004：若需对同 scope 再做 self 审计，**询问用户**是否自审后�
 
 ```text
 /govern   # 默认 D 内维护；或点名 runtime/发版/协议/单点 residual
+```
+
+## A-020 · 响应 VRev-005 V-F-008：路径收束与入口叙事（2026-07-31）
+
+- **source**：self（编排响应；**非** independent）
+- **auditor**：Grok Build `/govern`
+- **类型 / scope**：response · VRev-005 recommended **V-F-008**（Root 路径收束 + 入口文档叙事）；衔接 Charter 0.2.0 / D-027
+- **verdict**：**pass**（本响应 scope）
+- **用户指令**：愿景 S1+B1 确认后「直接帮我操作」
+
+### 关闭证据
+
+| 项 | 状态 | 证据 |
+|----|------|------|
+| **V-F-008** | **closed · fixed** | [D-027](01-decision.md#d-027--路径收束协议--skills-问题驱动演进本仓-web-冻结2026-07-31)；根 README 投资面改写；`web/README.md` 冻结声明；Root 00-meta / 02-execution / goal-tree 现时同步 |
+| 路径收束 | **accepted** | 主投资面 = 协议 + Skills（问题驱动）；本仓 Web = 冻结参考；禁止无新 D 开 Web 产品 |
+| R-009-X | **仍 accepted** | 不关闭；不宣称 Web 终态 |
+
+### 仍开放（非本条阻断）
+
+| 项 | 状态 |
+|----|------|
+| V-F-009 | recommended open（可选契约提炼） |
+| V-F-010 | recommended open（可选 `/vision-audit`） |
+| A-006 F-006 | recommended open |
+| R-009-X | accepted residual |
+
+### 声明
+
+不修改 Root `status`/`progress`；不删 `web/`；不 tag/Release；不关 R-009-X。
+
+### 结论 + 建议下一步
+
+**pass**：实现层与愿景投资面一致。默认下一拍：实际项目中协议/Skills 问题 → 有界子目标；或用户点名 V-F-009 / 发版。
+
+```text
+/govern   # 协议/Skills 问题驱动；禁止无授权 Web 产品推进
 ```

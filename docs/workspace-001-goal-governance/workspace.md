@@ -9,8 +9,8 @@ vision_role: primary
 plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
 created: 2026-07-20
-updated: 2026-07-28
-version: 0.4.0
+updated: 2026-07-31
+version: 0.4.1
 ---
 
 # 工作区上下文 · Goal Governance 主工作区
@@ -26,7 +26,7 @@ version: 0.4.0
 | canonical 范围 | `docs/workspace-001-goal-governance/` | 当前工作区唯一的目标状态范围。 |
 | 共享资料目录 | `docs/shared-materials/` | 工作区外的共同资料根；不保存目标状态。 |
 | 愿景角色 | `primary` | 本仓唯一 primary；**所有**工作区须挂 VP，角色仅 `primary` / `delivery`（P-006 / alignment 0.5）。 |
-| 规划对齐 | `VP-001-governance-platform-delivery` | `plan_refs` / `primary_plan`；见 [../../vision/plans/VP-001-governance-platform-delivery.md](../../vision/plans/VP-001-governance-platform-delivery.md)。 |
+| 规划对齐 | `VP-001-governance-platform-delivery` | `plan_refs` / `primary_plan`；见 [../../vision/plans/VP-001-governance-platform-delivery.md](../../vision/plans/VP-001-governance-platform-delivery.md)。意图：协议 + Skills；本仓 Web **冻结参考**（Charter `vision-goal-governance@0.2.0`）。 |
 
 ## 固定共享资料引用
 
