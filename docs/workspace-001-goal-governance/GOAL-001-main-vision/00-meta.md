@@ -8,7 +8,7 @@ primary_plan: VP-001-governance-platform-delivery
 serves_summary: Primary Root；在 VP-001 下展开可执行路线图与子目标，服务 vision-goal-governance@0.1.0
 created: 2026-07-18
 updated: 2026-07-30
-version: 0.9.0
+version: 0.9.1
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -25,8 +25,8 @@ version: 0.9.0
 | **status** | **`active`** |
 | **progress 宣称** | 不宣称 Root `done`；不宣称阶段 6 终态 |
 | **现行路径** | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) · 路径 D**（仅维护发版/协议；A/B/C 延期）；本拍 **[D-026](01-decision.md#d-026--路径-d授权annotated-v092--release-mode-evidence2026-07-30)** 授权 `v0.9.2` |
-| **子目标** | GOAL-002～020 均 `done / 100%`；GOAL-020 由 D-005/A-005 用户确认关门，F-010 保留 recommended follow-up |
-| **下一编号** | **GOAL-021** |
+| **子目标** | GOAL-002～020 均 `done / 100%`；GOAL-020 由 D-005/A-005 用户确认关门，F-010 保留 recommended follow-up；**GOAL-021** `active / 14%`（执行链对抗审 A-001；F-001～F-004 required open） |
+| **下一编号** | **GOAL-022** |
 | **工作区** | `workspace-001-goal-governance` · `root_goal: GOAL-001-main-vision` |
 
 ### 三面现时状态
@@ -47,6 +47,7 @@ version: 0.9.0
 | 6 后 · Skills 维护波次 | **已 done**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 归属） | GOAL-018（Release 打包）；GOAL-019（消费方骨架）— **非**阶段 7 预工作、**非** residual 主线 |
 | 6 后 · 协议 / 愿景栈 | **路径 D 维护**（Root 仍 active） | D-016～D-025；P-006；`/vision`；`/vision-audit`；A-018 required closed |
 | 6 后 · 方法论质量 | **GOAL-020 done / 100%** | A～E 完成；A-004 self pass；D-005/A-005 用户确认关门；F-001～F-009/F-011 closed；F-010 recommended follow-up；I-001～I-003 closed；不重开 GOAL-006 |
+| 6 后 · Skills 执行链加固 | **GOAL-021 active / 14%** | A-001 independent 落盘；F-001～F-004 required open；F-005 recommended；阶段 B 起按序 fixed；不自动发版 |
 | 7 | **延期未开**（路径 D；非「缺契约」） | 改道 **A** 须新 D-0xx；见 D-024 §6 |
 
 ### 愿景栈（最小对齐）
@@ -84,11 +85,12 @@ version: 0.9.0
 
 ### 下一步指向（Root · 路径 D）
 
-1. **默认**：在 [D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 内做协议修订、发版候选、愿景/入口 dogfood、台账卫生。
-2. **发版**：**D-026** 已授权 **v0.9.2**；冻结后跑 release-mode evidence；推 tag + Environment `release` 后 GitHub Release 才完整。
-3. **单点 residual**：仅当用户书面点名范围时可立 **一个** 有界子目标（GOAL-020+）。
-4. **改道**：A（阶段 7）/ B（residual 清单）/ C（有界退出）须新的 `/govern` + D-0xx。
-5. **禁止**：无改道宣称阶段 6 终态或 Root `done`；无授权自动 tag/Release；批量开 residual；把 018/019 再立项为未完成；仅凭下文历史章节判定焦点。
+1. **焦点子目标**：[GOAL-021](../GOAL-021-skills-release-chain-hardening/00-meta.md) — 按 A-001 建议顺序闭合 F-001～F-004（及 F-005）；**P1 未闭前不建议新 Skills 包发布**。
+2. **默认**：在 [D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) 内做协议修订、发版候选、愿景/入口 dogfood、台账卫生。
+3. **发版**：**D-026** 已授权 **v0.9.2**；GOAL-021 P1 闭合前对「新行为/新包」发布宜延后或另做风险接受；推 tag + Environment `release` 后 GitHub Release 才完整。
+4. **单点 residual**：仅当用户书面点名范围时可另立有界子目标（GOAL-022+）。
+5. **改道**：A（阶段 7）/ B（residual 清单）/ C（有界退出）须新的 `/govern` + D-0xx。
+6. **禁止**：无改道宣称阶段 6 终态或 Root `done`；无授权自动 tag/Release；批量开 residual；把 018/019 再立项为未完成；仅凭下文历史章节判定焦点。
 
 ---
 
