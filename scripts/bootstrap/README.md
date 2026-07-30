@@ -1,0 +1,61 @@
+---
+title: Bootstrap installers · dual entry point (online)
+status: active
+created: 2026-07-30
+updated: 2026-07-30
+parent: null
+version: 0.1.0
+---
+
+# Bootstrap installers (GOAL-023)
+
+**Entry point 1 — bootstrap** (this directory): obtain the **skills** zip (core **embedded**), verify SHA-256, materialize `./skills`, run package-local install (default `-All` / `--all`).
+
+**Entry point 2 — package-local**: after the zip is already extracted, run `skills/install.ps1` or `skills/install.sh` (offline, no network).
+
+Bootstrap **never** downloads a separate core package for the default skills install path. The optional **core-only** asset (`goal-governance-core-v*.zip`) is a parallel methodology package (standalone / no-Skills); see `docs/standalone-bootstrap.md` and `scripts/pack_core_release.py`.
+
+## Scripts
+
+| Script | Host |
+|--------|------|
+| `install-online.ps1` | Windows PowerShell (complete) |
+| `install-online.sh` | bash + unzip + sha256sum/shasum (complete; requires bash environment) |
+
+## Offline (air-gap / tests)
+
+Relative `-ZipPath` / `--zip-path` (and sidecar paths) resolve against the **process current working directory**, not `--target-dir` / `-TargetDir`. Absolute paths are unchanged.
+
+```powershell
+# CWD = repo root; zip under dist\; install into empty consumer (TargetDir ≠ CWD)
+python scripts/pack_skills_release.py --version 0.0.0-testpack --output-dir dist/ --skip-stage
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\bootstrap\install-online.ps1 `
+  -Version 0.0.0-testpack `
+  -TargetDir C:\path\to\empty-project `
+  -ZipPath dist\goal-governance-skills-v0.0.0-testpack.zip `
+  -Force
+```
+
+```bash
+python scripts/pack_skills_release.py --version 0.0.0-testpack --output-dir dist/ --skip-stage
+bash scripts/bootstrap/install-online.sh \
+  --version 0.0.0-testpack \
+  --target-dir /path/to/empty-project \
+  --zip-path dist/goal-governance-skills-v0.0.0-testpack.zip \
+  --force
+```
+
+Digest mismatch → non-zero exit; package install is not applied from a bad zip.
+
+## Online (Release)
+
+```powershell
+# After a published tag vX.Y.Z with skills zip + .sha256 on the Release
+powershell -NoProfile -ExecutionPolicy Bypass -File install-online.ps1 -Version X.Y.Z -Force
+```
+
+URL shape (D-002):  
+`https://github.com/magicvr/goal-governance/releases/download/vX.Y.Z/goal-governance-skills-vX.Y.Z.zip`  
+(and matching `.sha256`). Prefer **tag-fixed** URLs over floating branch raw links.
+
+Release attachments also include these bootstrap scripts and the core-only zip (CI pack job).

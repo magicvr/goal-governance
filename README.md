@@ -10,22 +10,47 @@
 | 文档怎么写、规则是什么 | [docs/README.md](docs/README.md) |
 | 核心模板怎么用 | [docs/templates/README.md](docs/templates/README.md) |
 | AI 必须遵守什么 | [AGENTS.md](AGENTS.md) |
-| Skills 如何安装 | [skills/README.md](skills/README.md)（推荐：从 [Releases](https://github.com/magicvr/goal-governance/releases) 下载 skills-only zip） |
-| Skills 如何打包 / 发布附件 | [docs/releases/README.md](docs/releases/README.md)、`scripts/pack_skills_release.py` |
+| Skills 如何安装 | [skills/README.md](skills/README.md)（**双入口**：在线 bootstrap 或包内 `install.*`；skills zip **内嵌** core） |
+| Skills 如何打包 / 发布附件 | [docs/releases/README.md](docs/releases/README.md)、`scripts/pack_skills_release.py`、`scripts/pack_core_release.py` |
 | 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
 | Web 如何启动 | [web/README.md](web/README.md) |
 
-## 在其他项目中安装 Skills（Release zip）
+## 在其他项目中安装 Skills（双入口）
 
-其他仓库**不要**依赖 clone 整个 monorepo。从 GitHub Release 取 **skills-only** 安装包：
+其他仓库**不要**依赖 clone 整个 monorepo。从 GitHub Release 取 **skills** 安装包（**内嵌** core 方法论；安装**不必**再从网上拉 core）。
+
+另有并行 **core-only** 资产 `goal-governance-core-vX.Y.Z.zip`（无 Skills / standalone 方法论）；**不是**默认 Skills 安装路径。
+
+### 入口 1 · 在线 / 本地 bootstrap（推荐）
+
+Release 附带 `install-online.ps1` / `install-online.sh`（仓库内：`scripts/bootstrap/`）。默认下载**已内嵌 core 的 skills zip**，校验 SHA-256 后调用包内 install（等价 `-All`）：
 
 ```powershell
-# 1. 下载 goal-governance-skills-vX.Y.Z.zip（及可选 .sha256）到目标项目根
+# 已发布 tag vX.Y.Z 后（在线）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version X.Y.Z -Force
+
+# 或离线：已有 zip + .sha256
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
+  -Version X.Y.Z -ZipPath .\goal-governance-skills-vX.Y.Z.zip -Force
+```
+
+```bash
+bash ./install-online.sh --version X.Y.Z --force
+# 离线：
+bash ./install-online.sh --version X.Y.Z --zip-path ./goal-governance-skills-vX.Y.Z.zip --force
+```
+
+说明见 [scripts/bootstrap/README.md](scripts/bootstrap/README.md)。
+
+### 入口 2 · 包内 install（解压后离线）
+
+```powershell
+# 1. 下载 goal-governance-skills-vX.Y.Z.zip（及 .sha256）到目标项目根
 # 2. 解压并命名为 skills
 Expand-Archive .\goal-governance-skills-vX.Y.Z.zip -DestinationPath .
 Rename-Item .\goal-governance-skills-vX.Y.Z skills
 
-# 3. 安装 /govern + /audit 到当前仓库（Claude / Grok / Copilot）
+# 3. 包内安装（默认四入口 + core → docs/）
 .\skills\install.ps1 -All -SkillsDir .\skills
 ```
 
@@ -48,7 +73,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\skills\install.ps1 -All -S
 ```
 
 详情、单宿主参数与工作区初始化见 [skills/README.md](skills/README.md)。  
-维护者正式发版：annotated `v*` tag + Environment `release` 审批 + 严格 release-evidence（见 [docs/releases/README.md](docs/releases/README.md)）。本地调试：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。
+维护者正式发版：annotated `v*` tag + Environment `release` 审批 + 严格 release-evidence（见 [docs/releases/README.md](docs/releases/README.md)）。本地调试：
+
+```text
+python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/
+python scripts/pack_core_release.py --version X.Y.Z --output-dir dist/
+```
 
 ## 仓库结构
 

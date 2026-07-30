@@ -203,6 +203,65 @@
             "request-url-redacted"
           ]
         },
+        "assertionPolicy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "kind",
+              "pattern",
+              "observed",
+              "bound"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "substring",
+                  "regex",
+                  "min-extra-bytes"
+                ]
+              },
+              "pattern": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minExtraBytes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "observed": {
+                "type": "boolean"
+              },
+              "bound": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "entrypoint",
+                  "protocolVersion"
+                ],
+                "properties": {
+                  "entrypoint": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "protocolVersion": {
+                    "$ref": "#/$defs/semver"
+                  }
+                }
+              }
+            }
+          }
+        },
         "warnings": {
           "type": "array",
           "items": {

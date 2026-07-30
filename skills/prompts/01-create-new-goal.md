@@ -52,7 +52,7 @@ P-001 与 P-005 以 AGENTS 为准；**全文**见 `docs/architecture/principles.
 0. **工作区骨架（仅当需要新建显式工作区 / S0）**  
    - 确认用户给出的 `workspace-slug` 与 Root slug（禁止擅自 `main-vision` 等）。  
    - 创建 `docs/workspace-001-<workspace-slug>/`（首工作区 NNN=`001`，除非用户指定其他编号）。  
-   - 从模板复制 `workspace.md`：优先 `docs/templates/workspace-context.md`，否则 `<SKILLS_PKG>/core/docs/templates/workspace-context.md` 或 `<SKILLS_PKG>/templates/workspace-context.md`。  
+   - 从模板复制 `workspace.md`：优先 `docs/templates/workspace-context.md`，否则 `<SKILLS_PKG>/core/docs/templates/workspace-context.md`。  
    - 写入 frontmatter：`id`、`root_goal`（即将创建的 Root 完整 id）、`canonical_scope`（该工作区路径，以 `/` 结尾）、`shared_materials_catalog`（默认 `none`）、status/created/updated/version。  
    - 确保 `goal-tree.md` 存在（可先空壳，步骤 8 写满）。  
    - **不要**在新项目默认使用 legacy `docs/goals/`。
@@ -64,7 +64,7 @@ P-001 与 P-005 以 AGENTS 为准；**全文**见 `docs/architecture/principles.
 3. 创建 `<workspace-root>/GOAL-NNN-<slug>/`（平铺）。`parent` 与同区链接用短 id；若正文需提及他区目标，落盘用 **Q2** 路径（`docs/workspace-…/GOAL-…/`），对话说明用 **Q3**（`[workspace_id] GOAL-…`）。  
 
 4. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`。  
-5. 模板源：优先 `docs/templates/goal-folder/`；否则 `<SKILLS_PKG>/core/docs/templates/goal-folder/` 或 `<SKILLS_PKG>/templates/goal-folder/`。  
+5. 模板源：优先 `docs/templates/goal-folder/`；否则 `<SKILLS_PKG>/core/docs/templates/goal-folder/`（GOAL-022：包内唯一分发源）。  
 6. Frontmatter：status, created, updated, parent, version；meta 另含 id、title。`progress` 可选：仅当已写显式可枚举检查点时按 P-001 确定性派生；否则省略/显示 `—`，禁止手填百分比。Root 的 slug = 用户确认名。
 7. 正文：meta 概述/成功标准/路线图/信息概览；decision 取舍与信息项；execution 仅事实；audit 可写尚未到复盘节点。  
 8. 更新 `goal-tree.md`（树 + 表）。若本目标为 Root，确保 `workspace.md` 的 `root_goal` 与 id 一致。  

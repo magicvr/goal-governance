@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 1.5.2
+version: 1.7.0
 ---
 
 # Skills
@@ -14,14 +14,14 @@ version: 1.5.2
 
 Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skills 同级必备**（GOAL-019 D-003）：包内 [`core/`](core/) 为消费分发镜像，`install` **默认**安装到目标仓 `docs/architecture/`、`docs/templates/` 与精简 `docs/README.md`。缺 core = **不完整安装**。
 
-在 monorepo 中，规范模板位于 [`docs/templates/`](../docs/templates/)；包内 `templates/` 与 `core/docs/templates/` 为分发镜像。机读契约以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 为逐字节镜像。
+在 monorepo 中，规范模板位于 [`docs/templates/`](../docs/templates/)；包内 **`core/docs/templates/`** 为 stage 生成的分发镜像（GOAL-022）。`skills/templates/` 仅保留指针 README，**不是**第三真相。机读契约以 [`docs/contracts/`](../docs/contracts/) 为 canonical，本包 `contracts/` 由 stage 逐字节生成。改 docs 后运行：`python scripts/stage_skills_mirrors.py`。
 
 **发布与候选证据边界**：
 
 | 身份 | 状态 |
 |------|------|
-| **`v0.9.0`** / **`v0.9.1`** | 已发布 annotated tag / Release 基线。 |
-| **`v0.9.2`（本冻结）** | 矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 **runtime-verified**（2026-07-30 行为源重采；`/vision-audit` 只读 dispatch）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
+| **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** | 已发布 annotated tag / Release 基线。 |
+| **`v0.10.0`（本冻结）** | 矩阵 **`candidateRevision: v0.10.0`**；GOAL-021～023（执行链加固、stage SSOT、双资产 + bootstrap）；四入口 × 三宿主 **runtime-verified**（2026-07-30 证据；behaviorSources 仍匹配）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
 
 Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
@@ -89,17 +89,41 @@ skills/
 │   ├── 05-independent-audit.md         # Goal cross-audit core
 │   ├── 06-vision-orchestrator.md       # vision decision core
 │   └── 07-independent-vision-review.md # independent Vision Review core
-├── templates/goal-folder/              # 包内模板镜像（install --all 同步到 skills 目录）
-├── templates/workspace-context.md
-├── contracts/                          # docs/contracts 的分发镜像
+├── templates/README.md                 # 指针：模板在 core/docs/templates（GOAL-022）
+├── contracts/                          # docs/contracts 的 stage 镜像
 └── tests/
 ```
 
-## 安装
+## 安装（双入口 · GOAL-023）
 
-推荐：**从 GitHub Release 下载 skills-only zip**（不是整个 monorepo），解压进目标项目，再装规则与主入口。安装脚本**离线**、不访问网络。
+| 入口 | 是什么 | 网络 |
+|------|--------|------|
+| **1 · Bootstrap** | `scripts/bootstrap/install-online.ps1` / `.sh`（Release 亦挂同名脚本） | 在线：下 **skills zip**；或离线：本地 zip + `.sha256` |
+| **2 · 包内 install** | 解压后的 `skills/install.ps1` / `install.sh` | **离线**（不访问网络） |
 
-### 从 GitHub Release 安装（推荐 · 其他项目）
+**skills zip 内嵌 core**（GOAL-019）：默认安装路径**不**再从网上拉 core。  
+并行 **core-only** 资产 `goal-governance-core-vX.Y.Z.zip` 供 standalone / 无 Skills 场景；**不是**本表默认 Skills 路径（见 [standalone-bootstrap](../docs/standalone-bootstrap.md)、`pack_core_release.py`）。
+
+### 入口 1 · Bootstrap（推荐 · 其他项目）
+
+1. 从 [Releases](https://github.com/magicvr/goal-governance/releases) 取与 tag 对应的 bootstrap 脚本，或 clone monorepo 使用 `scripts/bootstrap/`。  
+2. 在线（已发布 tag）或离线（本地 skills zip + digest）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version X.Y.Z -Force
+# 离线：
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
+  -Version X.Y.Z -ZipPath .\goal-governance-skills-vX.Y.Z.zip -Force
+```
+
+```bash
+bash ./install-online.sh --version X.Y.Z --force
+bash ./install-online.sh --version X.Y.Z --zip-path ./goal-governance-skills-vX.Y.Z.zip --force
+```
+
+Bootstrap 会：校验 SHA-256 → 落到 `./skills` → 调用包内 install **默认 `-All` / `--all`**（四入口 + core → `docs/`）。digest 失败 **fail closed**。详见 [scripts/bootstrap/README.md](../scripts/bootstrap/README.md)。
+
+### 入口 2 · 包内 install（解压后）
 
 1. 打开本仓库 [Releases](https://github.com/magicvr/goal-governance/releases)，下载与 tag 对应的  
    `goal-governance-skills-vX.Y.Z.zip`（可对照同目录的 `.sha256` 校验）。  
@@ -133,10 +157,11 @@ bash ./skills/install.sh --all --skills-dir ./skills
 
 4. 确认 `docs/architecture/principles.md` 等已存在；冷启动先 **`/vision`**（Charter→VP），再建立工作区并 **`/govern`**；Goal 交叉审计用 **`/audit`**；独立 Vision Review 用 **`/vision-audit`**。
 
-> 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 zip / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
-> 本地调试 zip：`python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`。  
+> 维护者正式发布：推 **annotated** `v*` tag → CI pack → Environment **`release` 审批** → 硬 `release_evidence --mode release` 通过后自动 `gh release create` 并挂 **skills zip + core zip + bootstrap 脚本** / sha256 / evidence。详见 [docs/releases/README.md](../docs/releases/README.md)。  
+> 本地调试 zip：  
+> `python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`  
+> `python scripts/pack_core_release.py --version X.Y.Z --output-dir dist/`  
 > 尚未对齐矩阵/`candidateRevision` 的工作树**不要**推正式 tag；门禁失败则**不会**创建 Release。
-
 ### 0. 从源码树复制包（开发者 / 无 Release 时）
 
 ```bash

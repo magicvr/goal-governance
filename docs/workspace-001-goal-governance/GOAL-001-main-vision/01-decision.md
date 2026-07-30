@@ -94,6 +94,8 @@ version: 0.3.2
 
 三层共享 `docs/goals/` 的 Markdown 文档协议，但只有具体目标文档拥有运行时状态真相；Skills 与 Web 不得各自定义一套生命周期或数据模型。
 
+> **现时注（2026-07-30 · GOAL-022）**：Skills 模板分发镜像路径已收敛为 `skills/core/docs/templates/goal-folder/`（由 `scripts/stage_skills_mirrors.py` 从 `docs/` stage；CI/`pack` 强制）。`skills/templates/` 仅保留指针 README；install `-All` 若物化 `skills/templates/` 为派生副本（R-022-INSTALL-TEMPLATES-COPY）。上句历史「`skills/templates/goal-folder/` 同步分发镜像」**不再**作现时维护指引。
+
 **为什么**：
 
 - 当前 `docs/README.md` 与架构已经把文档定义为 source of truth，并分别描述 Web 与 Skills 的不同职责；将核心方法论单独命名能反映真实依赖关系。
@@ -127,6 +129,8 @@ version: 0.3.2
 | 独立启用说明 | 核心文档层（以 `docs/README.md` 为入口） | 说明如何在空 Git 仓库复制核心包、建立 `docs/goals/goal-tree.md` 和第一个 Root Goal |
 | Skills 模板分发镜像 | `skills/templates/goal-folder/`，仅为 `docs/templates/goal-folder/` 的派生镜像 | 仅在 canonical 模板变更后同步；不得从镜像反向定义核心协议 |
 
+> **现时注（2026-07-30 · GOAL-022）**：上表「Skills 模板分发镜像」行历史路径已 supersede。现时：唯一上游仍是 `docs/templates/goal-folder/`；包内权威分发 = `skills/core/docs/templates/goal-folder/`（stage 生成、入库提交）；手维 `skills/templates/goal-folder` **已取消**。
+
 ### 独立复制与使用场景
 
 阶段 4 必须验证一个不安装 `skills/`、不启动 `web/` 的空 Git 仓库场景：复制 `AGENTS.md`、核心文档入口、`docs/architecture/` 与 `docs/templates/` 后，协作者能按说明建立 `docs/goals/goal-tree.md` 和一个符合五件套、`parent` 与编号规则的 Root Goal。验收记录须指出复制来源、生成路径和核对结果；该场景证明核心包可独立使用，而不是证明 Skills 或 Web 已发布。
@@ -136,6 +140,8 @@ version: 0.3.2
 1. 核心规则和模板的语义变更先落在 canonical 文档层；受影响文档刷新各自的 `updated` 与 `version`，并在核心入口记录本次可复制包的版本/变更范围。
 2. `docs/templates/goal-folder/` 是模板唯一上游。修改模板后必须同步 `skills/templates/goal-folder/`，运行现有镜像一致性测试；镜像不得反向覆盖 canonical 内容。
 3. Skills 安装产物、宿主包装和 Web 消费兼容性不属于阶段 4 的完成事实，分别留给阶段 5、阶段 6 与阶段 7 验收。
+
+> **现时注（2026-07-30 · GOAL-022）**：同步策略第 2 点现时改为：canonical 变更后跑 `python scripts/stage_skills_mirrors.py`（或 pack/CI 自动 stage）；用 `--check` / CI dirty-tree 防漂移。**不再**手同步 `skills/templates/goal-folder/`。
 
 ### 明确不做项
 

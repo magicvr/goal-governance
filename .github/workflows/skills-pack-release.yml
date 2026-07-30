@@ -73,15 +73,28 @@ jobs:
           echo "Artifact name: ${ARTIFACT}"
           echo "Tag name: ${TAG_NAME:-"(none)"}"
 
-      - name: Run pack unit tests
-        run: python -m unittest discover -s scripts/tests -p 'test_pack_skills_release.py' -v
+      - name: Stage skills mirrors (GOAL-022)
+        run: |
+          python scripts/stage_skills_mirrors.py
+          python scripts/stage_skills_mirrors.py --check
 
-      - name: Pack skills zip
+      - name: Run pack unit tests
+        run: |
+          python -m unittest discover -s scripts/tests -p 'test_pack_skills_release.py' -v
+          python -m unittest discover -s scripts/tests -p 'test_pack_core_release.py' -v
+
+      - name: Pack skills + core zips and stage bootstrap scripts
         run: |
           mkdir -p dist
           python scripts/pack_skills_release.py \
             --version "${{ steps.ver.outputs.version }}" \
             --output-dir dist
+          python scripts/pack_core_release.py \
+            --version "${{ steps.ver.outputs.version }}" \
+            --output-dir dist
+          cp scripts/bootstrap/install-online.ps1 dist/
+          cp scripts/bootstrap/install-online.sh dist/
+          cp scripts/bootstrap/README.md dist/bootstrap-README.md
 
       - name: Upload pack artifacts
         uses: actions/upload-artifact@v4
@@ -90,6 +103,11 @@ jobs:
           path: |
             dist/goal-governance-skills-v*.zip
             dist/goal-governance-skills-v*.zip.sha256
+            dist/goal-governance-core-v*.zip
+            dist/goal-governance-core-v*.zip.sha256
+            dist/install-online.ps1
+            dist/install-online.sh
+            dist/bootstrap-README.md
           if-no-files-found: error
 
   publish:
@@ -206,6 +224,11 @@ jobs:
             find "${ROOT}" -type f \( \
               -name 'goal-governance-skills-v*.zip' -o \
               -name 'goal-governance-skills-v*.zip.sha256' -o \
+              -name 'goal-governance-core-v*.zip' -o \
+              -name 'goal-governance-core-v*.zip.sha256' -o \
+              -name 'install-online.ps1' -o \
+              -name 'install-online.sh' -o \
+              -name 'bootstrap-README.md' -o \
               -name 'release-evidence.json' -o \
               -name 'compatibility-report.json' \
             \) 2>/dev/null | sort -u
@@ -215,17 +238,26 @@ jobs:
             ls -laR "${ROOT}" || true
             exit 1
           fi
-          # Require the consumer zip + digest among assets
+          # Require dual assets + digests among assets (GOAL-023)
           zip_ok=0
           sha_ok=0
+          core_zip_ok=0
+          core_sha_ok=0
           for f in "${found[@]}"; do
             case "$(basename "$f")" in
               goal-governance-skills-v*.zip) zip_ok=1 ;;
               goal-governance-skills-v*.zip.sha256) sha_ok=1 ;;
+              goal-governance-core-v*.zip) core_zip_ok=1 ;;
+              goal-governance-core-v*.zip.sha256) core_sha_ok=1 ;;
             esac
           done
           if [[ "${zip_ok}" -ne 1 || "${sha_ok}" -ne 1 ]]; then
             echo "Missing required skills zip and/or .sha256 in asset set"
+            printf '%s\n' "${found[@]}"
+            exit 1
+          fi
+          if [[ "${core_zip_ok}" -ne 1 || "${core_sha_ok}" -ne 1 ]]; then
+            echo "Missing required core zip and/or .sha256 in asset set (GOAL-023)"
             printf '%s\n' "${found[@]}"
             exit 1
           fi

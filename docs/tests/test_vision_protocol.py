@@ -52,7 +52,7 @@ def split_plan_refs(raw: str) -> list[str]:
     return [part.strip() for part in raw.split(",") if part.strip()]
 
 
-def validate_charter(path: Path) -> dict[str, str]:
+def validate_charter(path: Path, *, require_active: bool = False) -> dict[str, str]:
     fields = parse_frontmatter(path)
     if fields.get("doc_type") != "vision-charter":
         raise ValueError("charter doc_type must be vision-charter")
@@ -64,6 +64,9 @@ def validate_charter(path: Path) -> dict[str, str]:
         raise ValueError("charter must not use Goal lifecycle done/status")
     if status not in CHARTER_ALLOWED_STATUS:
         raise ValueError(f"invalid charter status: {status}")
+    # P-006 / GOAL-021 F-004: current-stack authority must be active (superseded only as history).
+    if require_active and status != "active":
+        raise ValueError("charter must be active for current vision stack")
     return fields
 
 
@@ -99,7 +102,6 @@ def validate_workspace_vision_alignment(
     workspace_path: Path,
     *,
     vision_root: Path,
-    require_plans: bool = True,
 ) -> dict[str, str]:
     fields = parse_frontmatter(workspace_path)
     role = fields.get("vision_role", "")
@@ -107,9 +109,7 @@ def validate_workspace_vision_alignment(
         raise ValueError(f"invalid vision_role: {role}")
     plan_refs_raw = fields.get("plan_refs", "").strip()
     primary = fields.get("primary_plan", "").strip()
-    # All supported roles require plan_refs + primary_plan when require_plans.
-    if not require_plans:
-        return fields
+    # P-006 / GOAL-021 F-004: all roles require plans; no require_plans opt-out.
     if not plan_refs_raw:
         raise ValueError("missing plan_refs")
     if not primary:
@@ -117,12 +117,15 @@ def validate_workspace_vision_alignment(
     refs = split_plan_refs(plan_refs_raw)
     if primary not in refs:
         raise ValueError("primary_plan not in plan_refs")
+    charter = validate_charter(vision_root / "charter.md", require_active=True)
     for ref in refs:
         if not VP_ID_RE.fullmatch(ref):
             raise ValueError(f"invalid plan ref: {ref}")
         plan_path = vision_root / "plans" / f"{ref}.md"
         if not plan_path.is_file():
             raise ValueError(f"missing VP file: {ref}")
+        # Validate each plan_ref including vision_ref alignment to active Charter.
+        validate_vision_plan(plan_path, charter)
     return fields
 
 
@@ -131,7 +134,7 @@ def validate_vision_stack(vision_root: Path) -> None:
         path = vision_root / name
         if not path.is_file():
             raise ValueError(f"missing vision file: {name}")
-    charter = validate_charter(vision_root / "charter.md")
+    charter = validate_charter(vision_root / "charter.md", require_active=True)
     plans_dir = vision_root / "plans"
     if not plans_dir.is_dir():
         raise ValueError("missing plans directory")
@@ -223,7 +226,9 @@ class VisionProtocolTests(unittest.TestCase):
         fields = parse_frontmatter(template)
         for key in ("vision_role", "plan_refs", "primary_plan"):
             self.assertIn(key, fields)
-        mirror = REPO_ROOT / "skills" / "templates" / "workspace-context.md"
+        mirror = (
+            REPO_ROOT / "skills" / "core" / "docs" / "templates" / "workspace-context.md"
+        )
         self.assertEqual(
             template.read_text(encoding="utf-8"),
             mirror.read_text(encoding="utf-8"),
@@ -317,6 +322,61 @@ class VisionProtocolTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "vision_ref mismatch"):
                 validate_vision_plan(path, charter)
+
+    def test_superseded_charter_rejected_for_current_stack(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "charter.md"
+            path.write_text(
+                "---\n"
+                "doc_type: vision-charter\n"
+                "vision_id: vision-goal-governance\n"
+                "version: 0.1.0\n"
+                "status: superseded\n"
+                "---\n",
+                encoding="utf-8",
+            )
+            # Historical status still parses without require_active.
+            fields = validate_charter(path)
+            self.assertEqual(fields["status"], "superseded")
+            with self.assertRaisesRegex(ValueError, "must be active"):
+                validate_charter(path, require_active=True)
+
+    def test_workspace_plan_ref_vision_ref_is_checked(self) -> None:
+        """Each plan_ref must validate vision_ref against active Charter (not file existence only)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = Path(tmp) / "vision"
+            plans = vision / "plans"
+            plans.mkdir(parents=True)
+            (vision / "charter.md").write_text(
+                "---\n"
+                "doc_type: vision-charter\n"
+                "vision_id: vision-goal-governance\n"
+                "version: 0.1.0\n"
+                "status: active\n"
+                "---\n",
+                encoding="utf-8",
+            )
+            (plans / "VP-001-sample.md").write_text(
+                "---\n"
+                "doc_type: vision-plan\n"
+                "id: VP-001-sample\n"
+                "status: active\n"
+                "vision_ref: vision-goal-governance@9.9.9\n"
+                "---\n\n## 工作区绑定\n\n| workspace_id |\n",
+                encoding="utf-8",
+            )
+            ws = Path(tmp) / "workspace.md"
+            ws.write_text(
+                "---\n"
+                "id: ws-x\n"
+                "vision_role: delivery\n"
+                "plan_refs: VP-001-sample\n"
+                "primary_plan: VP-001-sample\n"
+                "---\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "vision_ref mismatch"):
+                validate_workspace_vision_alignment(ws, vision_root=vision)
 
 
 if __name__ == "__main__":

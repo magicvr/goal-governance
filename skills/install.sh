@@ -27,6 +27,9 @@ ROOT_SLUG=""
 ROOT_TITLE=""
 WORKSPACE_NNN="001"
 INIT_WORKSPACE_DONE=0
+FORCE=0
+NON_INTERACTIVE=0
+DRY_RUN=0
 
 usage() {
   cat <<'EOF'
@@ -70,6 +73,9 @@ Options:
   --workspace-nnn NNN   Optional three-digit workspace number (default: 001)
   --skills-dir DIR      Skills package / destination directory (default: ./skills)
                         Relative paths are resolved from the current working directory.
+  --force               Overwrite existing files/dirs without prompting
+  --non-interactive     Fail if an overwrite would require a prompt (unless --force)
+  --dry-run             Print planned installs; do not write files
   --help, -h            Show this help
 
 Behavior:
@@ -117,6 +123,12 @@ confirm_overwrite() {
   if [[ ! -e "$path" ]]; then
     return 0
   fi
+  if [[ "$FORCE" -eq 1 ]]; then
+    return 0
+  fi
+  if [[ "$NON_INTERACTIVE" -eq 1 || "$DRY_RUN" -eq 1 ]]; then
+    die "Refusing overwrite in non-interactive mode (use --force): $path"
+  fi
   printf "File already exists: %s\nOverwrite? [y/N] " "$path"
   read -r answer
   case "$answer" in
@@ -129,6 +141,10 @@ copy_file() {
   local src="$1"
   local dest="$2"
   [[ -f "$src" ]] || die "Source file not found: $src"
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    echo "Dry-run: would install file $dest"
+    return 0
+  fi
   mkdir -p "$(dirname "$dest")"
   if confirm_overwrite "$dest"; then
     cp "$src" "$dest"
@@ -148,12 +164,23 @@ copy_dir_merge() {
   fi
 
   if [[ -e "$dest" ]]; then
-    printf "Directory already exists: %s\nOverwrite contents from %s? [y/N] " "$dest" "$label"
-    read -r answer
-    case "$answer" in
-      y|Y|yes|YES) ;;
-      *) echo "Skipped: $dest"; return 0 ;;
-    esac
+    if [[ "$FORCE" -eq 1 ]]; then
+      :
+    elif [[ "$NON_INTERACTIVE" -eq 1 || "$DRY_RUN" -eq 1 ]]; then
+      die "Refusing directory overwrite in non-interactive mode (use --force): $dest"
+    else
+      printf "Directory already exists: %s\nOverwrite contents from %s? [y/N] " "$dest" "$label"
+      read -r answer
+      case "$answer" in
+        y|Y|yes|YES) ;;
+        *) echo "Skipped: $dest"; return 0 ;;
+      esac
+    fi
+  fi
+
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    echo "Dry-run: would install directory $dest/  (from $label)"
+    return 0
   fi
 
   mkdir -p "$dest"
@@ -232,6 +259,11 @@ init_workspace_skeleton() {
     tmpl="$PACKAGE_ROOT/core/docs/templates/workspace-context.md"
   fi
   [[ -f "$tmpl" ]] || die "Missing workspace template: $tmpl (install core first)"
+
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    echo "Dry-run: would scaffold workspace ${scope}"
+    return 0
+  fi
 
   mkdir -p "$ws_dir"
   # Write concrete workspace.md (template is example-filled; generate authoritative frontmatter + body)
@@ -393,6 +425,18 @@ while [[ $# -gt 0 ]]; do
       WORKSPACE_NNN="${1#--workspace-nnn=}"
       shift
       ;;
+    --force)
+      FORCE=1
+      shift
+      ;;
+    --non-interactive)
+      NON_INTERACTIVE=1
+      shift
+      ;;
+    --dry-run)
+      DRY_RUN=1
+      shift
+      ;;
     --skills-dir)
       [[ $# -ge 2 ]] || die "--skills-dir requires a path argument"
       SKILLS_DIR_ARG="$2"
@@ -445,12 +489,13 @@ GROK_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/vision-audit/SKILL.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
-TEMPLATES_SRC="$PACKAGE_ROOT/templates"
+# GOAL-022: package template truth is core/docs/templates (not skills/templates hand mirror)
+TEMPLATES_SRC="$PACKAGE_ROOT/core/docs/templates"
 CONTRACTS_SRC="$PACKAGE_ROOT/contracts"
 CORE_DOCS_SRC="$PACKAGE_ROOT/core/docs"
 
 [[ -d "$PROMPTS_SRC" ]] || die "Missing package directory: $PROMPTS_SRC"
-[[ -d "$TEMPLATES_SRC" ]] || die "Missing package directory: $TEMPLATES_SRC"
+[[ -d "$TEMPLATES_SRC" ]] || die "Missing package directory: $TEMPLATES_SRC (GOAL-022 core templates)"
 [[ -d "$CONTRACTS_SRC" ]] || die "Missing package directory: $CONTRACTS_SRC"
 [[ -d "$CORE_DOCS_SRC" ]] || die "Missing package directory: $CORE_DOCS_SRC (GOAL-019 core mirror)"
 [[ -d "$TARGET_DIR" ]] || die "Current working directory is not a directory: $TARGET_DIR"

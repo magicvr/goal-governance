@@ -63,12 +63,13 @@ class StandaloneBootstrapTests(unittest.TestCase):
             "0.8.0",
             "0.7.0",
             "canonical → Skills",
-            "SHA-256",
-            "docs/templates/goal-folder/",
-            "skills/templates/goal-folder/",
+            "stage_skills_mirrors",
+            "docs/templates/",
+            "skills/core/docs/templates",
             "docs/contracts/",
             "skills/contracts/",
             "P-006",
+            "GOAL-022",
         ):
             self.assertIn(phrase, entry)
 

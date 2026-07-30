@@ -58,27 +58,32 @@ class RuntimeEvidenceTests(unittest.TestCase):
         script: str | None = None,
         output_name: str = "runtime.json",
         timeout_seconds: float = 120,
+        entrypoint: str = "govern",
+        require_assert: list[str] | None = None,
     ) -> tuple[Path, dict[str, object]]:
+        # Pass requires marker + entrypoint token + nontrivial stdout (GOAL-021 F-002).
         command_script = script or (
             "import sys; sys.stdin.read(); "
+            f"print({entrypoint!r}); print('host skill path loaded'); "
             "print('RUNTIME_MARKER'); print('runtime warning', file=sys.stderr)"
         )
         output = root / output_name
         payload = capture_runtime_evidence.capture(
             consumer="test-host",
-            entrypoint="govern",
+            entrypoint=entrypoint,
             protocol_version="0.1.0",
             product="Test Host",
             product_version="1.0.0",
             provider=None,
             model=None,
-            prompt="/govern test\n",
+            prompt=f"/{entrypoint} test\n",
             marker=marker,
             behavior_sources=["behavior.md"],
             command=[sys.executable, "-c", command_script],
             output=output,
             root=root,
             timeout_seconds=timeout_seconds,
+            require_assert=require_assert,
         )
         return output, payload
 
@@ -162,7 +167,8 @@ class RuntimeEvidenceTests(unittest.TestCase):
                 command=[
                     sys.executable,
                     "-c",
-                    "import sys; sys.stdin.read(); print('VISION_MARKER')",
+                    "import sys; sys.stdin.read(); "
+                    "print('vision'); print('host skill path loaded'); print('VISION_MARKER')",
                 ],
                 output=output,
                 root=root,
@@ -224,7 +230,9 @@ class RuntimeEvidenceTests(unittest.TestCase):
                 command=[
                     sys.executable,
                     "-c",
-                    "import sys; sys.stdin.read(); print('VISION_AUDIT_MARKER')",
+                    "import sys; sys.stdin.read(); "
+                    "print('vision-audit'); print('host skill path loaded'); "
+                    "print('VISION_AUDIT_MARKER')",
                 ],
                 output=output,
                 root=root,
@@ -264,10 +272,16 @@ class RuntimeEvidenceTests(unittest.TestCase):
 
     def test_capture_records_fail_without_required_exit_and_marker(self) -> None:
         cases = (
-            ("missing marker", "import sys; sys.stdin.read(); print('other')", 0, False),
+            (
+                "missing marker",
+                "import sys; sys.stdin.read(); print('govern'); print('host skill path loaded'); print('other')",
+                0,
+                False,
+            ),
             (
                 "nonzero exit",
-                "import sys; sys.stdin.read(); print('RUNTIME_MARKER'); raise SystemExit(3)",
+                "import sys; sys.stdin.read(); print('govern'); print('host skill path loaded'); "
+                "print('RUNTIME_MARKER'); raise SystemExit(3)",
                 3,
                 True,
             ),
@@ -283,6 +297,57 @@ class RuntimeEvidenceTests(unittest.TestCase):
                 self.assertEqual(payload["result"]["exitCode"], exit_code)
                 self.assertEqual(
                     payload["result"]["markerObserved"], marker_observed
+                )
+
+    def test_capture_marker_only_must_fail(self) -> None:
+        """GOAL-021 F-002: exit 0 + arbitrary marker alone is not a pass."""
+        with tempfile.TemporaryDirectory(prefix="gg-runtime-marker-only-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            _, payload = self._capture(
+                root,
+                script="import sys; sys.stdin.read(); print('RUNTIME_MARKER')",
+            )
+            self.assertEqual(payload["result"]["verdict"], "fail")
+            self.assertTrue(payload["result"]["markerObserved"])
+            failed = [
+                item["id"]
+                for item in payload["result"]["assertions"]
+                if not item["observed"]
+            ]
+            self.assertIn("entrypoint-token", failed)
+            self.assertIn("nontrivial-stdout", failed)
+
+    def test_compatibility_rechecks_assertions_against_stdout(self) -> None:
+        """Stored observed=true is not trusted; stdout re-evaluation must fail marker-only."""
+        with tempfile.TemporaryDirectory(prefix="gg-runtime-compat-marker-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output, payload = self._capture(root)
+            raw_dir = root / f"{output.stem}.d"
+            (raw_dir / "stdout.txt").write_bytes(b"RUNTIME_MARKER\n")
+            payload["result"]["stdoutSha256"] = sha256(
+                (raw_dir / "stdout.txt").read_bytes()
+            ).hexdigest()
+            # Leave assertion observed flags as true (forged) — consumer must re-check.
+            for item in payload["result"]["assertions"]:
+                item["observed"] = True
+            # Keep a pass-shaped payload; re-check should fail even if schema still passes.
+            payload["result"]["verdict"] = "pass"
+            payload["result"]["markerObserved"] = True
+            payload["result"]["exitCode"] = 0
+            output.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(
+                compatibility_report.ValidationError,
+                "assertions failed re-check",
+            ):
+                compatibility_report._validate_runtime_evidence(
+                    root,
+                    output,
+                    self._runtime_schema(root),
+                    "test-host",
+                    "govern",
+                    "0.1.0",
                 )
 
     def test_capture_records_blocked_timeout(self) -> None:
