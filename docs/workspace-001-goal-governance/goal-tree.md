@@ -4,10 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 1.1.19
+version: 1.1.20
 ---
 
 # Goal Tree
+
+## 2026-07-30 · 路径 D 授权 v0.10.0 发版（PR → main → tag → Release）
+
+用户书面授权 annotated **`v0.10.0`**：冻结 CHANGELOG/矩阵 → 开 PR → CI 绿合并 **main** → tag 并发布资产（skills + core + bootstrap）→ 确认后切回 **dev**。承接 GOAL-021～023。**不**改各 GOAL status/progress 为重新开门；Root 仍 `active`。下一编号 **GOAL-024**。
 
 ## 2026-07-30 · GOAL-023 阶段 F 关门（self close-out + OK A）
 

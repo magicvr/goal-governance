@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 0.10.6
+version: 0.10.7
 ---
 
 # docs/ · 文档体系
@@ -105,11 +105,11 @@ version: 0.1.0
 ## 可复制包版本与变更范围
 
 - **文档入口版本**（本文件 frontmatter）：`0.10.6` — 描述 docs 树导航与协议索引的修订号。  
-- **可复制核心包版本**（对外分发/发版候选身份）：`0.9.2`（四入口 runtime 面 + P-006 愿景栈）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。  
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / **`v0.9.2`（冻结中）**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
+- **可复制核心包版本**（对外分发/发版候选身份）：`0.10.0`（四入口 runtime + stage SSOT + 双资产/bootstrap）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。  
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / **`v0.10.0`（冻结中）**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
 - **快照日期**：2026-07-30。
-- **快照身份**：矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 runtime-verified（**2026-07-30** 对当前行为源重采）；Web parser automated-verified。
-- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.114` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`（`/vision-audit` 为只读 dispatch）。**不**宣称 Root 终态或 R-009-X closed。GOAL-022 推进中：镜像 SSOT stage。
+- **快照身份**：矩阵 **`candidateRevision: v0.10.0`**；默认四入口 × 三宿主 runtime-verified（**2026-07-30** 证据；behaviorSources 对现树 fresh）；Web parser automated-verified。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.114` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`（`/vision-audit` 为只读 dispatch）。**不**宣称 Root 终态或 R-009-X closed。GOAL-021～023 done；发版身份 `v0.10.0`。
 
 ### canonical → Skills 镜像（GOAL-022）
 

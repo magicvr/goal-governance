@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
   "format": "goal-governance.skills-consumer-compatibility-matrix",
   "formatVersion": "1.0.0",
-  "candidateRevision": "v0.9.2",
+  "candidateRevision": "v0.10.0",
   "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
   "protocol": {
     "current": "0.1.0",

@@ -4,7 +4,41 @@
 
 ## Unreleased
 
-（无。当前候选已冻结为 **0.9.2** / `v0.9.2`。）
+（无。当前候选已冻结为 **0.10.0** / `v0.10.0`。）
+
+## 0.10.0 - 2026-07-30
+
+Skills **consumer** minor：执行链加固 + 方法论镜像 stage SSOT + **双资产分发与双入口安装**（GOAL-021～023）。宿主四入口 runtime 证据沿用 2026-07-30 行为源 capture（源 digest 仍匹配现树）；本版不宣称 Root 终态。
+
+### 分发 / 安装（GOAL-023）
+
+- **双资产**：`goal-governance-skills-vX.Y.Z.zip`（内嵌 core）与并行 **`goal-governance-core-vX.Y.Z.zip`**（core-only / standalone）。
+- **双入口**：Release/bootstrap 在线脚本（`install-online.ps1` / `install-online.sh`）与包内 `install.ps1` / `install.sh`；在线默认下 skills zip（含 core），**不**强制再拉 core。
+- CI / Release 路径挂载 skills + core + digests + bootstrap 脚本。
+- bootstrap 相对路径 zip 相对**进程 CWD** 解析；digest 失败 fail closed。
+
+### 方法论镜像 SSOT（GOAL-022）
+
+- `scripts/stage_skills_mirrors.py`：从 `docs/` stage 到 `skills/core/docs/` 与 `skills/contracts/`；pack/CI 强制 stage + dirty-tree 门禁。
+- `skills/templates/` 收敛为指针；包内权威模板源为 `skills/core/docs/templates/`。
+
+### 执行链加固（GOAL-021）
+
+- runtime 证据断言策略 `marker+entrypoint+nontrivial-stdout@1`；兼容性报告重算 stdout，拒绝 marker-only。
+- pack 拒绝 symlink 逃逸；install 增加 force / non-interactive / dry-run。
+- 愿景/工作区校验收紧（active Charter、plan_refs、Root on disk 等）。
+
+### 兼容矩阵 / 证据
+
+- 矩阵 `candidateRevision: v0.10.0`；四入口 × 三宿主仍为 **runtime-verified**（证据路径 2026-07-30；behaviorSources 对现树 fresh）。
+- Web parser 保持 automated-verified。
+- residual（non-blocking）：R-021-RUNTIME-RECAPTURE（若要以新断言 payload 作唯一正式证明可另拍全量重采）、R-021-SYMLINK-CI、R-022-ORPHAN-PRUNE、R-022-INSTALL-TEMPLATES-COPY、R-023-BASH-HOST。
+
+### 非目标（本 tag 不宣称）
+
+- Root / 阶段 6 产品终态；R-009-X closed；F-006 外部采用。
+- bootstrap 安装后再宿主 slash 全路径 e2e 作为 matrix 单元。
+- `/vision-audit` 写盘全路径 e2e。
 
 ## 0.9.2 - 2026-07-30
 

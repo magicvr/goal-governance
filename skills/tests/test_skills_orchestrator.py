@@ -566,7 +566,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.9.2")
+        self.assertEqual(matrix["candidateRevision"], "v0.10.0")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])

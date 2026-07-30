@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 1.6.0
+version: 1.7.0
 ---
 
 # Skills
@@ -20,8 +20,8 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 | 身份 | 状态 |
 |------|------|
-| **`v0.9.0`** / **`v0.9.1`** | 已发布 annotated tag / Release 基线。 |
-| **`v0.9.2`（本冻结）** | 矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 **runtime-verified**（2026-07-30 行为源重采；`/vision-audit` 只读 dispatch）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
+| **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** | 已发布 annotated tag / Release 基线。 |
+| **`v0.10.0`（本冻结）** | 矩阵 **`candidateRevision: v0.10.0`**；GOAL-021～023（执行链加固、stage SSOT、双资产 + bootstrap）；四入口 × 三宿主 **runtime-verified**（2026-07-30 证据；behaviorSources 仍匹配）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
 
 Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
