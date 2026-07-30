@@ -1,0 +1,10 @@
+/vision scan
+
+This is a read-only runtime dispatch probe. Do not modify files, launch subagents, or ask the user questions. Load the installed vision skill and follow its scan phase only. Use repository reads to report:
+
+1. literal marker CLAUDE_VISION_DISPATCH_OK;
+2. the loaded skill title and actual source path;
+3. the vision orchestrator prompt path named by that skill (06-vision-orchestrator);
+4. whether docs/vision/charter.md is active single-vision, current vision_id@version, and primary_plan of workspace-001-goal-governance.
+
+Only emit the marker after reading the installed vision skill, its orchestrator prompt, and current vision/workspace records. A prompt echo is not sufficient.

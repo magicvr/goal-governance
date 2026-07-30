@@ -10,7 +10,7 @@ plan_refs: VP-001-example-plan
 primary_plan: VP-001-example-plan
 created: 2026-07-20
 updated: 2026-07-28
-version: 0.3.0
+version: 0.5.0
 ---
 
 # 工作区上下文 · 示例工作区
@@ -25,12 +25,12 @@ version: 0.3.0
 | Root Goal | `GOAL-001-example-root` | 必须存在，且其 `parent: null`。 |
 | canonical 范围 | `docs/workspace-001-example/` | 当前工作区唯一的目标状态范围。 |
 | 共享资料目录 | `docs/shared-materials/` | 固定路径/URI，或 `none`；不在此文档保存资料内容。 |
-| 愿景角色 | `delivery` | `primary` \| `delivery` \| `sandbox`。 |
-| 规划对齐 | `plan_refs` / `primary_plan` | 指向 `docs/vision/plans/VP-*.md`；非 sandbox opt-out 时必填。 |
+| 愿景角色 | `delivery` | `primary` \| `delivery`。 |
+| 规划对齐 | `plan_refs` / `primary_plan` | 指向 `docs/vision/plans/VP-*.md`；**必填**（无 opt-out）。 |
 
 ## 愿景对齐
 
-仓库若已安装 [docs/vision/](../vision/)，本工作区通过 `plan_refs` 与 `primary_plan` 对齐愿景规划（VP）；VP 再对齐 Charter。细则见 [vision/alignment.md](../vision/alignment.md)。  
+完整治理下仓库**必有**唯一 [docs/vision/](../vision/) Charter。本工作区通过**必填**的 `plan_refs` 与 `primary_plan` 对齐意图（VP）；VP 再对齐 Charter。细则见 [vision/alignment.md](../vision/alignment.md) 与 P-006。  
 **不要**在本文件维护 progress% 或把愿景目录当作第二套目标树。
 
 ## 固定共享资料引用
@@ -43,7 +43,7 @@ version: 0.3.0
 
 ## 串行阶段说明（按需）
 
-本工作区的 MVP、后续阶段和扩展目标应写在 Root Goal 路线图中，并以串行子目标承接。跨区纲领阶段写在 `docs/vision/roadmap.md` 与 `plans/VP-*.md`。只有长期目的、成功边界或战略方向实际变化时，才在决策留痕后修改 Root Goal 定义或修订 Charter。
+本工作区的 MVP、后续阶段和扩展目标应写在 Root Goal 路线图中；纲领阶段通常串行，同一阶段内可由多个子目标并行承接。跨区纲领阶段写在 `docs/vision/roadmap.md` 与 `plans/VP-*.md`。只有长期目的、成功边界或战略方向实际变化时，才在决策留痕后修改 Root Goal 定义或修订 Charter。
 
 ## 备注
 

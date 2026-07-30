@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.5.1
+version: 0.6.0
 role: primitive
 ---
 
@@ -48,7 +48,7 @@ role: primitive
 - 相关信息项 / 信息门禁（可选）：【I-00N；目标定义 / 方案 / 实施 / 验收 / 关门】
 - 相关共享资料引用（可选）：【`reference_id`、`material_id`、`source`、`version`、`sha256`】
 - 你认为的成果/偏差（可选，可先由文档归纳再确认）：
-- 是否调整 status/progress：【否 / 是，说明】— **response/independent 默认否**
+- 是否调整 status / 检查点：【否 / 是，说明】— **response/independent 默认否**；progress 仅在检查点变化后按 P-001 重算，审计不得直接指定百分比
 - auditor（可选）：工具或模型名
 
 # 步骤
@@ -89,8 +89,8 @@ role: primitive
 
 6. 刷新 `updated`。
 7. 立刻跟进可记入 execution（标为计划）；正式取舍写入 decision。
-8. **仅当用户确认且模式允许时**调整 status/progress，并同步 meta 与 goal-tree。  
-   - independent 代贴或纯审计意见：**禁止**擅自改 status/progress。
+8. **仅当用户确认且模式允许时**调整 status 或检查点；检查点变化后按 P-001 重算派生 progress，并同步 meta 与 goal-tree。任何百分比都不得作为 finding 闭合、阶段放行或关门依据。
+   - independent 代贴或纯审计意见：**禁止**擅自改 status、检查点或派生 progress。
 9. 语气具体、可验证；证据不足写明缺口。关门审计还须确认没有开放的关门 required 信息项，或每个 residual 都有用户接受范围与复审触发。
 
 # Verdict 尺度

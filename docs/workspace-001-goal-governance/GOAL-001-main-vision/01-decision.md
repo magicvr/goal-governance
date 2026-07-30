@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-18
-updated: 2026-07-28
-version: 0.2.9
+updated: 2026-07-30
+version: 0.3.2
 ---
 
 # 决策记录 · GOAL-001
@@ -341,15 +341,15 @@ version: 0.2.9
 
 **决定**：
 
-1. **记录阶段 6 有界结项**：阶段 6「AI 协助的人类目标治理 Web 工作台」在**有界交付**意义上完成，证据为 GOAL-009 有界关门 + GOAL-012～017 有界交付（α 详情/受控写、X-AI、N1、共享资料产品、路径试点证据）。  
-2. **GOAL-001 保持 `status: active`**；**不**因本条标 `done`；**不**宣称 Root 或「一期 Web 产品终态」已关闭。  
-3. **GOAL-009 residual R-009-X 仍 `accepted`**，继续约束：  
-   - I-00N 扩展全文 verified（含 I-002/I-008/I-009/I-010 等）  
-   - 人手 UX 全文（R-017-HUMAN-UX 等）  
-   - AI 读资料全文（R-016-AI-READ 等）  
-   - 浏览器/真联调全矩阵（R-014/015/016-E2E 等）  
-   - **阶段 6 终态宣称**与无清单的 Root 终态审  
-4. **阶段 7**（三面一致性、版本化与发布验收）与 **X-DEPLOY / residual 产品** 仍按需另立或触发，不在本条自动立项。  
+1. **记录阶段 6 有界结项**：阶段 6「AI 协助的人类目标治理 Web 工作台」在**有界交付**意义上完成，证据为 GOAL-009 有界关门 + GOAL-012～017 有界交付（α 详情/受控写、X-AI、N1、共享资料产品、路径试点证据）。
+2. **GOAL-001 保持 `status: active`**；**不**因本条标 `done`；**不**宣称 Root 或「一期 Web 产品终态」已关闭。
+3. **GOAL-009 residual R-009-X 仍 `accepted`**，继续约束：
+   - I-00N 扩展全文 verified（含 I-002/I-008/I-009/I-010 等）
+   - 人手 UX 全文（R-017-HUMAN-UX 等）
+   - AI 读资料全文（R-016-AI-READ 等）
+   - 浏览器/真联调全矩阵（R-014/015/016-E2E 等）
+   - **阶段 6 终态宣称**与无清单的 Root 终态审
+4. **阶段 7**（三面一致性、版本化与发布验收）与 **X-DEPLOY / residual 产品** 仍按需另立或触发，不在本条自动立项。
 5. 现时叙事以本条 + [00-meta 阶段 6 有界结项](00-meta.md) + [goal-tree.md](../goal-tree.md) 为准；历史「阶段 6 未开始」快照不得当作现时。
 
 **为什么**：扫描显示 002～017 均 done、无 active 实现目标，但 R-009-X 与阶段 7 未关闭；有界结项可固定阶段 6 成果而不伪装终态。
@@ -367,26 +367,321 @@ version: 0.2.9
 **决定**：
 
 1. **采纳并落盘**对核心协议的一致性修订（不新立子目标、不重开已 `done` 的 GOAL-006/007/010；属 Root 层方法论维护）。
-2. **Finding 合法闭合**（P-003）固定为三路径，与编排器/AGENTS 对齐：  
-   - `fixed`：可核对修正  
-   - `accepted-residual`：用户书面接受残余（范围、期限、复审触发）  
-   - `user-overruled`：用户书面驳回/降级（**单条意见亦可**，不要求先有冲突）  
-3. **P-004 扩表**：在「是否自审」「意见冲突」之外，正式包含单条 finding residual/overruled（4.3）与信息 residual/有界实验/信息冲突（4.4）。  
-4. **隐式工作区**：无显式 `workspace-*/workspace.md` 时，**仅** `docs/goals/` legacy 可作隐式单工作区；否则空治理 scaffold，禁止猜测任意 `<workspace-root>`。  
-5. **其它边界**：P-002 嵌入 P-001 路线图槽位；纲领阶段串行、阶段内可并行；`GOAL-*` 仅区内唯一、跨区须 `workspace_id`；Primary 三处冲突 fail closed；`active` VP 零工作区 14 日空转宽限；编号单调不复用 cancelled。  
-6. **权威文件版本**（本轮）：`principles.md` **0.6.0**；`workspace-protocol.md` **0.4.0**；`alignment.md` **0.2.0**；`overview.md` **0.7.0**；根 `AGENTS.md` / Skills 模板 **0.9.1**；`00-govern-orchestrator` **0.8.1**。  
+2. **Finding 合法闭合**（P-003）固定为三路径，与编排器/AGENTS 对齐：
+   - `fixed`：可核对修正
+   - `accepted-residual`：用户书面接受残余（范围、期限、复审触发）
+   - `user-overruled`：用户书面驳回/降级（**单条意见亦可**，不要求先有冲突）
+3. **P-004 扩表**：在「是否自审」「意见冲突」之外，正式包含单条 finding residual/overruled（4.3）与信息 residual/有界实验/信息冲突（4.4）。
+4. **隐式工作区**：无显式 `workspace-*/workspace.md` 时，**仅** `docs/goals/` legacy 可作隐式单工作区；否则空治理 scaffold，禁止猜测任意 `<workspace-root>`。
+5. **其它边界**：P-002 嵌入 P-001 路线图槽位；纲领阶段串行、阶段内可并行；`GOAL-*` 仅区内唯一、跨区须 `workspace_id`；Primary 三处冲突 fail closed；`active` VP 零工作区 14 日空转宽限；编号单调不复用 cancelled。
+6. **权威文件版本**（本轮）：`principles.md` **0.6.0**；`workspace-protocol.md` **0.4.0**；`alignment.md` **0.2.0**；`overview.md` **0.7.0**；根 `AGENTS.md` / Skills 模板 **0.9.1**；`00-govern-orchestrator` **0.8.1**。
 7. **不构成**：Root / 任一子目标 `done` 变更；R-009-X closed；新 release tag；runtime evidence 刷新义务自动免除（若后续发布含行为面，仍按 GOAL-008 惯例）。
 
 **为什么**：
 
-- 审视发现门禁「何为已解除」在 finding 维度分叉（原则只认修正，AGENTS/编排器已允许 residual），以及根 AGENTS 隐式工作区宽于 protocol，会导致编排器与规范各写各的。  
-- 单条 required finding 无用户否决通道会造成可治理性死锁。  
+- 审视发现门禁「何为已解除」在 finding 维度分叉（原则只认修正，AGENTS/编排器已允许 residual），以及根 AGENTS 隐式工作区宽于 protocol，会导致编排器与规范各写各的。
+- 单条 required finding 无用户否决通道会造成可治理性死锁。
 - 串行/并行、Primary 冲突、VP 空转「长期」等边界糊会在多区与愿景层放大。
 
 **未选方案**：
 
-- **只改 AGENTS/提示词、不改正文 principles**：继续权威分叉。  
-- **禁止 finding residual**：与 dogfood（如 R-009-X）及检查清单已有表述冲突，成本高。  
+- **只改 AGENTS/提示词、不改正文 principles**：继续权威分叉。
+- **禁止 finding residual**：与 dogfood（如 R-009-X）及检查清单已有表述冲突，成本高。
 - **新开 GOAL-020 专做协议修订**：范围是元规则维护，挂 Root 决策更贴切；已关门 GOAL-010 仅追加交叉引用，不重开。
 
 **影响与后续**：见 [02-execution 本轮事实](02-execution.md#2026-07-28--核心协议逻辑一致性修订d-016)；GOAL-010 执行追加交叉说明；`goal-tree` 日志；愿景 `revisions` editorial（alignment 0.2.0）。不改 Root `status`/`progress`。
+
+## D-017 · P-006 愿景组合治理与级联对齐（第一刀）（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户就愿景审计、建愿景工具、路线图/开区/子目标方法论讨论后，逐项确认 D0–D24（含单愿景制、冷启动串行、取消 sandbox opt-out 等），并确认「开始」第一刀文档落盘。
+
+**决定**：
+
+1. 将 **P-006（愿景、组合治理与级联对齐）** 写入 `docs/architecture/principles.md`（**0.7.0**），含：单愿景制、冷启动 Charter→VP→工作区、对齐递归、总流程命名（组合编排 / 纲领路线图 / 阶段计划 / 意图=VP）、结构选型判定树、分层审视、strategic 宽阻断、工具分工与 v1 非目标。
+2. **alignment.md 0.3.0** 为愿景门禁权威：取消 sandbox plan opt-out；`reviews.md`（`VRev-00N`）；lead 多区必填；完整安装必有 Charter。
+3. 同步：`workspace-protocol` **0.6.0**、根 `AGENTS` **0.10.0**（§6d/6e）、vision README/checklist/roadmap/workspaces、模板 `docs/templates/vision/*` 与 workspace-context **0.4.0**、协议测试与 fixtures、`00-govern-orchestrator` **0.9.0**（S0 冷启动顺序；实现层门禁）。
+4. **Skills `/vision` 为第二刀**（本轮不新建 skill 全文）；编排器在无 skill 时仍须按 P-006 引导补齐与 fail closed。
+5. **不构成**：Root/`VP-001` 关门；R-009-X closed；多愿景；恢复 sandbox opt-out。
+
+**为什么**：执行层 P-001～P-005 已闭环，但缺战略/组合层统一叙事时，人与 AI 在「何时改愿景 / 开区 / 拆子目标」上无法对齐；无强制 Charter 则对齐链无源头。
+
+**未选**：多愿景；sandbox 免挂 VP；先工作区后补愿景；把 Vision Review 写入某 Root 的 `03-audit`；本轮一次做完 `/vision` skill 全文。
+
+**影响**：见 [02-execution 本轮](02-execution.md#2026-07-28--p-006-愿景组合治理第一刀d-017)；愿景 `revisions`；`goal-tree` 日志。不改 Root `status`/`progress` 宣称。
+
+## D-018 · Skills `/vision` 决策层第二刀（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 D-017 第一刀落盘后确认「做第二刀」。
+
+**决定**：
+
+1. 新增 **`skills/prompts/06-vision-orchestrator.md`**（决策层核心：V0–V6）。
+2. 默认 install 三入口：`/govern` + `/audit` + **`/vision`**（Claude/Grok skill + Copilot prompt）。
+3. 契约 `hostEntrypoints` / 矩阵 `requiredEntrypoints` 含 `vision`；矩阵 status = **`pending-runtime-validation`**（不伪造 runtime evidence）。
+4. 更新 skills README、AGENTS §9b、govern wrapper 交叉引用、隔离安装测试。
+5. **不构成**：`/vision` runtime-verified；Root 关门；发版 tag。
+
+> **现时注（2026-07-30 · 路径 D 卫生）**：本条记录的是 D-018 **当日**默认面（三入口）。**现时**默认 install 为**四入口**（`/govern` + `/audit` + `/vision` + **`/vision-audit`**），见 [D-020](#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)。勿把本条「三入口」读成现行产品面。
+
+**为什么**：决策层与实现层分入口，避免 `/govern` 既开区又改 Charter；与 P-006 工具分工一致。
+
+**未选**：仅文档不装 skill；把 vision 塞进 `/govern` 单一入口。
+
+**影响**：[02-execution](02-execution.md#2026-07-28--skills-vision-第二刀d-018)；goal-tree 日志。
+
+## D-019 · `/vision` follow-through（runtime + 消费面 + VRev；不发版）（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：目标「完成后继的全部工作（除了正式发版）」；计划 acceptance 1–5。
+
+**决定**：
+
+1. 扩展 `capture_runtime_evidence.py` 接受 `entrypoint=vision`；新增 claude/grok/copilot vision 探针 prompt。
+2. **Dual-pass** 捕获：Claude + Grok **pass** → 矩阵 vision=`runtime-verified`；Copilot **fail**（monthly quota）→ 保持 `pending-runtime-validation`，失败 JSON/stderr 与 scratch log 留痕，**不伪造** verified。
+3. 同步消费面：`skills/AGENTS.template.md`、`install/claude/AGENTS.md`、`install/copilot/copilot-instructions.md` 写入单愿景 / `/vision` vs `/govern` vs `/audit`。
+4. 补录 **VRev-001**（self，charter-init + stack coherence，verdict pass）。
+5. **明确非目标**：annotated tag、GitHub Release、`release_evidence --mode release`。
+
+**为什么**：第二刀 skill 已装，但缺 runtime 证据、消费 AGENTS 叙事与 dogfood Review 则矩阵/install 仍撒谎。
+
+**影响**：[02-execution](02-execution.md#2026-07-28--vision-follow-throughd-019)；GOAL-008 运行时附件；矩阵/README；**不发版**。
+
+## D-020 · 响应 V-F-001：独立 Vision Review 专用入口（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 `/vision` 对 `V-F-001` 的 P-004 裁决中选择“新增 `/vision-audit`”，而非扩展 Goal `/audit` 的 scope 路由。
+
+**决定**：
+
+1. 新增 `07-independent-vision-review.md` 与默认 `/vision-audit` 入口：只写 `docs/vision/reviews.md`（`source: independent` / `VRev-00N`），不改 Charter、VP、Goal 或 Goal `03-audit.md`。
+2. 保持 `/audit` 为 Goal 独立审计；`/vision` 负责 self Review、愿景决策与 Vision finding 响应。三个边界均在 core prompts、Claude/Grok/Copilot 安装入口与消费者说明中明确。
+3. 将 `vision-audit` 加入消费契约和默认安装面；当前候选标记为 `unreleased`，该入口三宿主均 `pending-runtime-validation`，不将结构测试写成 runtime evidence。
+4. 以 `VRev-002` 响应节记录 `V-F-001: fixed`；不创建 Goal 五件套，不改 Root 或子目标 status/progress，不发版。
+
+**为什么**：专用入口保持 Vision Review 与 Goal Audit 的台账、响应方和门禁边界可执行且无歧义；按 scope 扩展 `/audit` 会把既有 Goal 审计契约变为隐式路由。
+
+**未选**：扩展 `/audit` 按 scope 写入 `reviews.md`；接受 residual 或 overrule 该 required finding。
+
+**影响**：实施事实与验证见 [02-execution.md](02-execution.md#2026-07-28--响应-v-f-001独立-vision-review-专用入口d-020不发版)；正式闭合见 [VRev-002](../../../vision/reviews.md#响应--v-f-0012026-07-28)。
+
+## D-021 · `/vision-audit` 三宿主 runtime capture 验证范围（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 `/govern` 指定“为 `/vision-audit` 的三宿主 runtime capture 建立并推进验证范围”。
+
+**决定**：
+
+1. 验证范围固定为 Claude Code CLI `2.1.220`、Grok Build CLI `0.2.112` 与 GitHub Copilot CLI `1.0.75` 的单一 `/vision-audit` 入口。每次 probe 必须只读，读取实际宿主 wrapper、`skills/prompts/07-independent-vision-review.md`、Charter、alignment、reviews 与当前 workspace；不得新增 VRev、修改 Goal 或发版。
+2. 只有 evidence schema 校验通过、进程 exit `0` 且观测到宿主专属 marker，才可将对应矩阵单元标为 `runtime-verified`。行为源、探针输入和输出摘要均由 SHA-256 绑定；任一 wrapper 或核心提示词变更均会使证据失效。
+3. 宿主失败仅记录为失败事实并保持 `pending-runtime-validation`；不以安装结构测试、prompt 回显或历史 `/vision` 证据替代。Copilot 配额恢复后重采其单元；本决定不接受 residual、不关闭任何 Vision finding，也不授权 tag、Release 或关门。
+
+**为什么**：D-020 已确认入口与分发结构，却不能证明真实宿主调度。将 scope 限定在独立入口的 read-only discovery 路径，能验证路由边界而不触发独立审计写入副作用。
+
+**未选**：将三宿主结构测试标成 runtime evidence；运行会追加 VRev 的审计；因 Copilot 配额失败而跳过或推断通过。
+
+**影响**：实施结果见 [02-execution.md](02-execution.md#2026-07-28--vision-audit-三宿主-runtime-captured-021不发版)；候选 matrix 仍为 `unreleased`。
+
+## D-022 · Copilot BYOK replay 与 `/govern` freshness 重采（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户说明 GitHub Copilot 使用 BYOK，并要求重采 `/vision-audit`、处理全矩阵既有 `/govern` evidence 的 freshness。
+
+**决定**：
+
+1. Copilot replay helper 从用户级环境继承 `COPILOT_PROVIDER_BASE_URL`、`COPILOT_PROVIDER_API_KEY`、可选 bearer token 与模型；不打印、落盘或传递其值给工具调用，并以 Copilot 的 `--secret-env-vars` 保护 provider/GitHub token。
+2. `COPILOT_MODEL` 存在时以 `--model` 显式传给 Copilot CLI。capture evidence 仅将 provider 变量名与模型名作为环境身份记录，不记录 URL、密钥或 bearer token。
+3. 全矩阵的 Claude、Grok、Copilot `/govern` 旧 evidence 已逐一以当前行为源重采；Copilot `/vision-audit` 仅在 BYOK provider 成功认证并输出 marker 后升为 `runtime-verified`。不重采或放行 Copilot `/vision`，不发版。
+
+**为什么**：VS Code 继承的终端环境没有用户级 BYOK 变量，旧 helper 只依赖 GitHub token，导致 replay 先表现为额度失败、后表现为 provider 401。显式继承并隐藏敏感变量可让真实 provider 认证与 evidence 边界同时可核对。
+
+**未选**：把 provider 密钥写入仓库、evidence 或决策正文；只在 capture 元数据中声称 BYOK；将 Copilot `/vision` 推断为已验证。
+
+**影响**：实施事实见 [02-execution.md](02-execution.md#2026-07-28--copilot-byok-replay--govern-freshness重采d-022不发版)；候选 matrix 仍为 `unreleased`。
+
+## D-023 · 三宿主 `/audit` 重采与 Copilot `/vision` 复核（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户在 `/govern` 指定“重采三宿主 `/audit`，并复核 Copilot `/vision`，再生成完整 compatibility report”。
+
+**决定**：
+
+1. Claude、Grok、Copilot `/audit` 的旧 evidence 一律以当前 wrapper、核心 prompt、AGENTS 与 probe input 重新采集；只读 dispatch 成功且 marker 已观测时才替换矩阵引用。
+2. Copilot `/vision` 通过同一 BYOK helper 重新采集；成功才从 `pending-runtime-validation` 升为 `runtime-verified`。不以先前的额度失败或 `/vision-audit` 成功推断本单元通过。
+3. 三宿主四入口的 runtime evidence 只证明当前行为源下的只读 dispatch，不等同于 annotated tag、Release 或完整发行结论。
+
+**为什么**：完整兼容报告在 `/govern` freshness 修复后立即暴露 `/audit` evidence 陈旧，Copilot `/vision` 仍是仅剩的 pending entrypoint。按单元重采保持矩阵覆盖与实际宿主结果一致。
+
+**未选**：保留陈旧 audit evidence；将 Copilot vision 写为“由其它入口推断通过”；把 runtime coverage 当作 release-ready。
+
+**影响**：实施事实见 [02-execution.md](02-execution.md#2026-07-28--三宿主-audit-重采--copilot-vision-复核d-023不发版)；后续 compatibility report 以当前 matrix 为准。
+
+## D-024 · A-015 F-008 路径 D：仅维护发版/协议，不关 Root（2026-07-28）
+
+**状态**：accepted
+
+**确认来源**：用户 /govern 响应 GOAL-001 A-015 F-008：采用路径 D（在 F-007 已 fixed、编排器推荐 D 之后的书面择一）。
+
+**决定**（关闭 A-015 **F-008** 的可执行契约）：
+
+### 1. 所选路径
+
+**D = 仅维护发版 / 协议 / 文档卫生，Root 保持 active，不关 Root、不宣称阶段 6 终态。**
+
+A / B / C **显式延期**：未采用本拍；若将来改道，必须再经 /govern 书面裁决并新 D-0xx（可 supersede 本条路径部分，不得静默切换）。
+
+| 路径 | 本拍 |
+|------|------|
+| A · 阶段 7 三面发布验收 | **未选**（延期） |
+| B · residual 清单推进/接受 | **未选**（延期；不批量开 residual） |
+| C · Root/VP 有界退出 | **未选**（延期；不关 Root / 不关 VP-001） |
+| **D · 仅维护不关 Root** | **采用** |
+
+### 2. 最小交付 / 证据（路径 D 下何为「合规推进」）
+
+在 D 有效期间，下列工作**允许**且视为路径内，无需先开阶段 7：
+
+1. **协议与文档**：core / AGENTS / Skills 提示词 / 模板镜像的一致性修订（类 D-016～D-017）。
+2. **愿景栈维护**：Charter/VP/alignment/reviews 的非 strategic 维护；/vision、/vision-audit dogfood（类 D-018～D-023）。
+3. **发版与 runtime**：按 GOAL-008 惯例刷新 runtime evidence、compatibility report、候选 revision、annotated tag / Release（**不**因 tag 自动宣称 Root 或阶段 6 终态）。
+4. **台账卫生**：goal-tree / 现时摘要 / 审计响应（类 A-016）。
+5. **单一 residual 子目标**：**仅当**用户另行书面授权（点名 residual 或范围）时，可立 **一个** 有界子目标；默认不批量推进 R-009-X 全表。
+
+**证据形态**：各次维护记入 GOAL-001 或相关目标的 decision/execution/audit；发版证据挂 GOAL-008 惯例路径；**不**要求本路径产出「阶段 7 验收包」或 Root close-out。
+
+### 3. 明确不做（Non-goals）
+
+1. **不**将阶段 7 标为进行中或冻结其实现范围（除非将来改道 A 并落盘新契约）。
+2. **不**宣称阶段 6 产品终态、一期 Web 终态、或 Root / VP-001 done。
+3. **不** closed **R-009-X**；维护与发版 **不**等同 residual 关闭。
+4. **不**把 **F-006**（真实外部采用）升为 required，或把 dogfood/runtime 当作 F-006 关闭证据。
+5. **不**批量创建 residual / 6X 扩展子目标；**不**把 GOAL-018/019 再立项为「未完成工作」。
+6. **不**无用户书面改道而执行 A（三面终验战役）、B（residual 清单推进）或 C（有界退出）。
+
+### 4. 与 R-009-X / F-006 的关系
+
+| 项 | 关系 |
+|----|------|
+| **R-009-X** | **仍 accepted residual**。对照表见 [00-meta](00-meta.md#r-009-x-对照刷新a-015-f-009--已刷新)。路径 D **不**关闭、**不**扩大、**不**缩小其终态阻断语义。 |
+| **F-006 / A-015 F-010** | **仍 recommended open**。路径 D 的发版/协议维护 **不**构成真实外部消费者采用证据。 |
+| **A-015 F-011** | 发版候选 / runtime 跟踪可在 D 内推进；关闭与否仍按发版惯例，**不**阻断 Root active。 |
+
+### 5. 纲领归属（018 / 019 / 阶段 7 / 后续编号）
+
+| 项 | 归属（本契约） |
+|----|----------------|
+| 阶段 1～5 | 已完成基线 / 已关门（不变） |
+| 阶段 6 | **有界结项**（D-015）；≠ 终态（不变） |
+| **GOAL-018** | 阶段 6 后 **Skills 维护波次**（Release 打包）— **不是**阶段 7 预工作，**不是** residual 主线 |
+| **GOAL-019** | 阶段 6 后 **Skills 维护波次**（消费方骨架）— 同上 |
+| **D-016～D-023** | Root 层 **路径 D 型**协议/愿景/runtime 维护（追溯归属） |
+| **阶段 7** | **延期未开**；无最小交付包；进入须改道 **A**（或用户定义的组合）并新 D-0xx |
+| **GOAL-020+** | 默认仅用于：D 内维护性目标、或用户书面授权的单一 residual、或将来 A/B/C 改道后的契约范围；**禁止**无裁决占用 |
+
+### 6. 进入下一门禁的门槛（改道）
+
+| 目标门禁 | 门槛 |
+|----------|------|
+| 保持 D | 无需额外裁决；按 §2 推进并留痕 |
+| 改道 **A**（阶段 7） | /govern 书面：最小交付包、非目标、验收证据、与 R-009-X/F-006 关系 |
+| 改道 **B**（residual） | /govern 书面：清单或单点 residual、有界成功标准、是否触碰 R-009-X |
+| 改道 **C**（有界退出） | /govern 书面：必须仍 open 的 residual 表、Root/VP 退出证据包、复审触发 |
+| Root / 阶段 6 终态宣称 | **禁止**在纯 D 下；至少 C 或等价有界退出 + residual 书面包，或 R-009-X 合法闭合后再议 |
+
+### 7. 不构成
+
+- Root / 任一子目标 status/progress 变更（本条只定路径，不关门）。
+- R-009-X / F-006 closed。
+- 自动 tag、Release 或「对外 GA」。
+- 取消 D-015 有界结项或重开阶段 6 实现主路径。
+
+**为什么**：
+
+- 实现子目标已全部有界 done；近几拍事实是协议/愿景/runtime 维护，与 D 一致。
+- R-009-X 与 F-006 仍在，A/B/C 任一作为主路径都会要么过大、要么过早关门。
+- F-008 需要的是可追踪契约，不是立刻终验或退出。
+
+**未选方案**：
+
+- **A**：三面终验战役 — 范围未定，易与有界成果/终态混淆。
+- **B**：residual 全表推进 — 用户未授权扩产品终态。
+- **C**：有界退出 — 愿景栈与 dogfood 维护仍活跃，过早 done 冲突。
+- **D+C 或 D+弱 B 组合** — 用户本拍明确「采用路径 D」，不附带退出或 residual 优先项。
+
+**影响与后续**：
+
+- [A-017](03-audit.md) 关闭 F-008（fixed）；刷新 [00-meta 现时摘要](00-meta.md)、[02-execution](02-execution.md)、[goal-tree](../goal-tree.md) 日志。
+- 编排器默认下一步：D 内维护（runtime/发版/协议）或用户点名的单一动作；**不**自动开阶段 7 / residual 战役 / Root 关门。
+
+## D-025 · 响应 A-018：P-006 后核心包 / standalone / AGENTS 回流（2026-07-29）
+
+**状态**：accepted  
+**确认来源**：用户 `/govern 响应 GOAL-001 A-018：优先 F-012 + F-013，再 F-014/F-015`（路径 D 协议维护；书面指定 fixed 优先序）。  
+**P-004**：存在 independent A-018、无同 scope self 全量审；用户以「响应 + 优先序」书面选择**不另做自审、直接按 fixed 修正**。
+
+### 决定
+
+以 **fixed** 路径闭合 A-018 **F-012～F-015**（F-016 recommended 顺手处理）；**不**新开子目标、**不**改 Root status、**不**发版。
+
+| Finding | 闭合路径 | 要点 |
+|---------|----------|------|
+| **F-012** | fixed | `standalone-bootstrap` **0.5.0** 强制 Charter→VP→工作区+Root；复制含 `alignment.md`；`workspace` 必填 plan；测试生成愿景+plan 并断言 |
+| **F-013** | fixed | core 必备 `docs/vision/alignment.md`（+ vision README）；install 默认安装 vision 规则面；扩展 D-004 清单（本条 + GOAL-019 [D-008](../GOAL-019-skills-consumer-workspace-bootstrap/01-decision.md#d-008--core-清单回流愿景-alignment-必备2026-07-29) 注记） |
+| **F-014** | fixed | Charter / tech-stack / standalone / core README / prompts README / AGENTS 模板速链统一 **P-001～P-006**；Charter 为 **editorial**（VR-004），版本仍 0.1.0 |
+| **F-015** | fixed | 根 AGENTS 删除 architecture「可再建」与「未来 /vision」；template §6d/6e 与工作流对齐；install Claude/Copilot 指令同源刷新 |
+| **F-016** | fixed（顺手） | directory-layout 补 `templates/vision/`；docs/README 区分入口版本 vs 可复制包版本 |
+
+### 为什么
+
+A-018 证明元规则自洽，缺口在 P-006 后产品化回流；用户已书面要求按 fixed 优先序修正，属路径 D 允许的协议/文档卫生。
+
+### 未选
+
+- residual / overruled 任一条 required finding  
+- 新开 GOAL-020 专项目标（本拍可在 Root 维护波次内完成）  
+- Charter strategic / re-align（仅措辞补 P-006 引用）
+
+### 影响
+
+- 证据与响应节：[A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)、[02-execution](02-execution.md)
+
+## D-026 · 路径 D 授权：annotated `v0.9.2` + release-mode evidence（2026-07-30）
+
+**状态**：accepted  
+**确认来源**：用户 `/govern 授权路径 D 打 v0.9.2 并跑 release evidence`（书面授权下一正式 tag）。
+
+### 决定
+
+1. 在路径 D（[D-024](#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28)）下冻结 **Skills consumer `0.9.2`**：
+   - `CHANGELOG.md` 增加 `## 0.9.2` 节；
+   - 双份矩阵 `candidateRevision: v0.9.2`；
+   - 对应测试守卫与文档身份同步。
+2. 在冻结提交上创建 **annotated tag `v0.9.2`**，并执行  
+   `python scripts/release_evidence.py --mode release --tag v0.9.2 --run-checks --include-web`。
+3. **允许**按 GOAL-008 / `docs/releases` 惯例后续推送 tag 与 Environment `release` 审批后的 GitHub Release（本决策授权 tag + release-mode 证据；推送远程仍记执行事实）。
+4. **明确不构成**：Root / 子目标 `status` 或 `progress` 变更；R-009-X / F-006 closed；阶段 6 终态；阶段 7 开张。
+
+### 为什么
+
+- A-015 F-011 发版候选 recommended open；path-D 已 ready-for-release-evidence，缺的是用户书面 tag 授权。
+- 本拍内容（四入口 runtime、愿景栈、协议回流、README 卫生）适合作为 **0.9.2** patch，且 **v0.9.1** 已占用。
+
+### 未选
+
+- 跳过 release-mode 仅打 lightweight tag  
+- 无冻结直接 tag  
+- 借发版宣称 Root done
+
+### 影响
+
+- 执行与证据路径见 [02-execution](02-execution.md#2026-07-30--路径-d授权-v092--release-mode-evidence)；goal-tree 日志；A-015 F-011 在 tag+evidence 成功后可记为 closed（formal tag 已发生）。
+ 
+- 消费方 core 缺 alignment = 不完整安装；standalone 缺 Charter/plan 不得标完整成功  

@@ -2,9 +2,9 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-30
 parent: null
-version: 0.10.1
+version: 0.10.5
 ---
 
 # docs/ · 文档体系
@@ -64,13 +64,15 @@ docs/
    - `02-execution.md` — 执行（时间线、事实）
    - `03-audit.md` — 审计/复盘
    - `attachments/` — 附件（可为空，保留目录）
-7. **可执行性与路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清高层路线图（阶段与先后关系），再创建与执行子目标。纲领阶段通常串行；**同一纲领阶段内**可并行子目标。
+7. **可执行性与纲领路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清**纲领路线图**（阶段与先后关系），再创建与执行子目标。纲领阶段通常串行；**同一纲领阶段内**可并行子目标。
+   - `progress`（若有）仅由显式检查点确定性派生；默认等权，显式权重可覆盖。它不放行阶段、不关闭 finding、不覆盖 I-00N 或 `status`，也不进入愿景层。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识（含 P-001 路线图槽位）；独立审计出意见、编排器响应全部意见；finding 合法闭合为 `fixed` / `accepted-residual` / `user-overruled`；「是否自审」、意见冲突、单条必改否决/residual、信息 residual 由用户裁决。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
-10. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/goal-folder/`，消费适配器契约位于 `docs/contracts/`；`skills/templates/goal-folder/` 与 `skills/contracts/` 是供安装脚本和离线复制使用的同步镜像。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
-11. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal。
-12. **工作区与共享资料协议**：显式工作区可从 `docs/templates/workspace-context.md` 创建 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal 与该工作区根 canonical 范围；**仅当**没有显式工作区根且保留 `docs/goals/` 的旧仓库才是 legacy 隐式单工作区——否则不得猜测工作区根。共享资料候选库存和固定引用不能形成第二套目标状态或跨工作区上下文通道。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
-13. **愿景体系（Charter → VP → Workspace）**：`docs/vision/` 维护不可 Goal-`done` 的 Charter、可关门的愿景规划 VP，以及对齐门禁。工作区通过 `plan_refs` / `primary_plan` 挂接 VP。愿景**不是** goal-tree 或 progress 权威。Primary 声明冲突与 `active` VP 零工作区空转规则见 [vision/alignment.md](vision/alignment.md)。
+10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review（`reviews.md`）；工作区角色仅 `primary` / `delivery`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
+11. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/`（含 `goal-folder/`、`workspace-context.md`、`vision/`），消费适配器契约位于 `docs/contracts/`；`skills/templates/` 与 `skills/contracts/` 是供安装脚本和离线复制使用的同步镜像。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
+12. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal（须遵守 P-006 冷启动顺序）。
+13. **工作区与共享资料协议**：显式工作区可从 `docs/templates/workspace-context.md` 创建 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`；**仅当**没有显式工作区根且保留 `docs/goals/` 的旧仓库才是 legacy 隐式单工作区——否则不得猜测工作区根。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
+14. **愿景体系（Charter → VP → Workspace）**：`docs/vision/` 维护不可 Goal-`done` 的唯一 Charter、可关门的意图 VP、组合编排索引、Vision Review 与对齐门禁。愿景**不是** goal-tree 或 progress 权威。见 [vision/alignment.md](vision/alignment.md)。
 
 ## Frontmatter 约定
 
@@ -102,12 +104,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **当前核心文档版本**：`0.9.1`（含 workspace-protocol **0.5.0** A0 限定引用）。工作区根与共享资料协议已就位。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / **`v0.9.1`**（冻结候选；annotated tag 以合并 `main` 后推送为准）。
-- **快照日期**：2026-07-28。
-- **快照身份**：矩阵 **`candidateRevision: v0.9.1`**；六 CLI runtime 2026-07-28 已对当前行为源重采；正式 GitHub Release 仍以 annotated `v0.9.1` + release evidence 为准。
-- **当前工作树边界**：六 CLI 入口 **ready-for-release-evidence**；Web parser 仍为 automated-verified。Copilot 重采因 GitHub 月度配额耗尽，经 `COPILOT_PROVIDER_BASE_URL` BYOK 完成（宿主仍为 Copilot CLI）。
-- **本轮变更范围（0.9.1）**：GOAL-010 D-003 A0 限定引用；finding 三路径/愿景门禁；Charter→VP 对齐；详见根 `CHANGELOG.md`。
+- **文档入口版本**（本文件 frontmatter）：`0.10.5` — 描述 docs 树导航与协议索引的修订号。  
+- **可复制核心包版本**（对外分发/发版候选身份）：`0.9.2`（四入口 runtime 面 + P-006 愿景栈）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。  
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / **`v0.9.2`（冻结中）**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
+- **快照日期**：2026-07-30。
+- **快照身份**：矩阵 **`candidateRevision: v0.9.2`**；默认四入口 × 三宿主 runtime-verified（**2026-07-30** 对当前行为源重采）；Web parser automated-verified。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.114` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`（`/vision-audit` 为只读 dispatch）。**不**宣称 Root 终态或 R-009-X closed。
 
 ### canonical → Skills 同步台账
 
@@ -115,16 +117,16 @@ version: 0.1.0
 
 | 类别 | 文件 | canonical SHA-256 | Skills mirror SHA-256 |
 |------|------|------------------|----------------------|
-| 模板 | `00-meta.md` | `5800252F8AF11CE741B90B04DA15D6FA8A71FBD8A253CB0D60C0AE270CA1F712` | `5800252F8AF11CE741B90B04DA15D6FA8A71FBD8A253CB0D60C0AE270CA1F712` |
+| 模板 | `00-meta.md` | `40649D5FF5E81B1AC411BD301DFA3C31A3376ADCA74420B303AEF07C6248A684` | `40649D5FF5E81B1AC411BD301DFA3C31A3376ADCA74420B303AEF07C6248A684` |
 | 模板 | `01-decision.md` | `C86403B96BA69E9E84B6662FF5B41EF0E637ABE5B2E57D8369E00FBA19F5B796` | `C86403B96BA69E9E84B6662FF5B41EF0E637ABE5B2E57D8369E00FBA19F5B796` |
 | 模板 | `02-execution.md` | `7864D87F7AE97B0AA2E0E1D14E290AC21110CC9C20BDD70382BACDEBCF9EB132` | `7864D87F7AE97B0AA2E0E1D14E290AC21110CC9C20BDD70382BACDEBCF9EB132` |
-| 模板 | `03-audit.md` | `44C72913995F8E27646C57555469A28B4FA06BCCDDBF2799B9D773C7F8920B4C` | `44C72913995F8E27646C57555469A28B4FA06BCCDDBF2799B9D773C7F8920B4C` |
-| 模板 | `workspace-context.md` | `B9A6C8E731A3B9E7751994EDA1AEB2198779869E56EEF3947D63A84CF728DDB5` | `B9A6C8E731A3B9E7751994EDA1AEB2198779869E56EEF3947D63A84CF728DDB5` |
+| 模板 | `03-audit.md` | `93E10520BAEAC0B40DFEABF903B9C15CE65070BA368316258292A839573949A9` | `93E10520BAEAC0B40DFEABF903B9C15CE65070BA368316258292A839573949A9` |
+| 模板 | `workspace-context.md` | `95CC2567A1D0D1A28A55F50037AED20ADA2922E458648F6403E8619C779626DF` | `95CC2567A1D0D1A28A55F50037AED20ADA2922E458648F6403E8619C779626DF` |
 | 契约 | `skills-consumer-contract.schema.json` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` | `AA18EFE1AE85D3A37678DA435B82E1E572E06AD1EA5FFCA84287195C7840D309` |
-| 契约 | `skills-consumer-contract.json` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` | `5624F92DA6A7ED0BD3B72083619437452DAABFA5441ADCD52AF5E0784EF6177D` |
+| 契约 | `skills-consumer-contract.json` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` | `B7A6A21F6391DBAAB53FEB3915B490845E5F65D749FB315490C8A896BFD2335C` |
 | 契约 | `skills-consumer-compatibility-matrix.schema.json` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` | `60E604F9D8847CC592B7E62B0C2B277F6E44050B09EFF79338E3BC5B2EAC9901` |
-| 契约 | `skills-consumer-compatibility-matrix.json` | `0A0D31CFDD5CC927C5AECD1782FC6186A0400C50F11A23B7B562A659E8C9BC0E` | `0A0D31CFDD5CC927C5AECD1782FC6186A0400C50F11A23B7B562A659E8C9BC0E` |
-| 契约 | `runtime-evidence.schema.json` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` | `515B86C1FD7E69C8304DACADF7D9E5BE8014F8C1587705149AFB574D1779D4F5` |
+| 契约 | `skills-consumer-compatibility-matrix.json` | `375E94260771A02F5D568DBBB6CCAAB8CD9B0EF9B6C51186D965B50B9211DF9F` | `375E94260771A02F5D568DBBB6CCAAB8CD9B0EF9B6C51186D965B50B9211DF9F` |
+| 契约 | `runtime-evidence.schema.json` | `3DF446820F3FA24275AD94F99E481481BC2F2B34F5C5ACEC27412526A5F3E693` | `3DF446820F3FA24275AD94F99E481481BC2F2B34F5C5ACEC27412526A5F3E693` |
 
 核验命令：`python -m unittest skills/tests/test_skills_orchestrator.py -v`（包含模板/契约镜像、契约正反 fixtures、安装输出与 P-005 分发断言）；当前工作树应显示 canonical 与 Skills 镜像的同向更新，而非“模板未变更”。
 

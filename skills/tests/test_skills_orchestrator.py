@@ -27,8 +27,12 @@ CLAUDE_GOVERN_SKILL = (
 CLAUDE_AUDIT_SKILL = (
     SKILLS_ROOT / "install" / "claude" / "skills" / "audit" / "SKILL.md"
 )
+CLAUDE_VISION_SKILL = (
+    SKILLS_ROOT / "install" / "claude" / "skills" / "vision" / "SKILL.md"
+)
 GROK_GOVERN_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "govern" / "SKILL.md"
 GROK_AUDIT_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "audit" / "SKILL.md"
+GROK_VISION_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "vision" / "SKILL.md"
 INSTALL_SH = SKILLS_ROOT / "install.sh"
 INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
@@ -333,7 +337,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                     "parent",
                     "version",
                 ],
-                "hostEntrypoints": ["govern", "audit"],
+                "hostEntrypoints": ["govern", "audit", "vision", "vision-audit"],
             },
         )
 
@@ -501,7 +505,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
     def test_d003_declares_baseline_and_tiered_adapter_scope(self) -> None:
         """D-003 keeps commitment separate from version-fixed runtime evidence."""
         manifest = self._load_json(CORE_CONTRACTS / "skills-consumer-contract.json")
-        self.assertEqual(manifest["contractFormatVersion"], "0.2.0")
+        self.assertEqual(manifest["contractFormatVersion"], "0.2.1")
         self.assertEqual(
             manifest["supportBaseline"],
             {
@@ -529,7 +533,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 adapter["supportsProtocol"],
                 {"minInclusive": "0.1.0", "maxExclusive": "0.2.0"},
             )
-            self.assertEqual(adapter["entrypoints"], ["govern", "audit"])
+            self.assertEqual(
+                adapter["entrypoints"], ["govern", "audit", "vision", "vision-audit"]
+            )
         self.assertEqual(by_id["claude-code-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["github-copilot-cli"]["verificationStatus"], "verified")
@@ -551,7 +557,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.9.1")
+        self.assertEqual(matrix["candidateRevision"], "v0.9.2")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -559,7 +565,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             matrix["protocol"]["previousStatus"],
             "not-applicable-first-supported-protocol",
         )
-        self.assertEqual(matrix["requiredEntrypoints"], ["govern", "audit"])
+        self.assertEqual(
+            matrix["requiredEntrypoints"], ["govern", "audit", "vision", "vision-audit"]
+        )
         negative = {item["id"]: item for item in matrix["negativeFixtures"]}
         self.assertIn("unsupported-protocol-0.2.0", negative)
         self.assertIn("no-fabricated-predecessor", negative)
@@ -585,11 +593,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             },
         )
         self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.220")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.112")
-        self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.71")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.114")
+        self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # Claude + Grok + Copilot: all six entrypoints runtime-verified 2026-07-28
+        # Claude + Grok + Copilot: all four entrypoints runtime-verified 2026-07-30
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -602,13 +610,27 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 consumers[consumer_id]["contractVerificationStatus"],
                 adapters_by_id[consumer_id]["verificationStatus"],
             )
-            self.assertEqual(set(entrypoints), {"govern", "audit"})
-            for name in ("govern", "audit"):
+            self.assertEqual(set(entrypoints), {"govern", "audit", "vision", "vision-audit"})
+            for name in ("govern", "audit", "vision", "vision-audit"):
                 self.assertEqual(entrypoints[name]["status"], "runtime-verified")
                 self.assertTrue(entrypoints[name]["evidence"])
                 for path in entrypoints[name]["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                    self.assertIn("2026-07-28", path)
+                    self.assertIn("2026-07-30", path)
+            vision = entrypoints["vision"]
+            self.assertEqual(vision["status"], "runtime-verified")
+            self.assertTrue(vision["evidence"])
+            for path in vision["evidence"]:
+                self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
+                self.assertIn("vision", path)
+                self.assertIn("2026-07-30", path)
+            vision_audit = entrypoints["vision-audit"]
+            self.assertEqual(vision_audit["status"], "runtime-verified")
+            self.assertTrue(vision_audit["evidence"])
+            for path in vision_audit["evidence"]:
+                self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
+                self.assertIn("vision-audit", path)
+                self.assertIn("2026-07-30", path)
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")
@@ -707,6 +729,35 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             audit_prompt,
         )
 
+    def test_progress_is_derived_and_sandbox_role_is_removed(self) -> None:
+        principles = CORE_PRINCIPLES.read_text(encoding="utf-8")
+        for marker in (
+            "派生进度展示（非权威）",
+            "已完成检查点数 / 总检查点数",
+            "`progress=100%` 不自动推导 `status: done`",
+            "不得放行阶段",
+            "不得汇总或解释目标 progress",
+        ):
+            self.assertIn(marker, principles)
+
+        meta = (SKILLS_TEMPLATES / "00-meta.md").read_text(encoding="utf-8")
+        self.assertIn("派生进度展示（可选）", meta)
+        self.assertIn("4 个显式成功检查点中的 2 个完成项", meta)
+
+        orchestrator = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
+        self.assertIn("显式检查点确定性派生", orchestrator)
+        self.assertIn("不能放行阶段、关闭 finding 或覆盖 status", orchestrator)
+
+        alignment = (SKILLS_ROOT.parent / "docs" / "vision" / "alignment.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("`primary` \\| `delivery`", alignment)
+        self.assertNotIn("vision_role: sandbox", alignment)
+        self.assertNotIn("sandbox opt-out", alignment)
+
+        self.assertNotIn("| draft | 0% |", INSTALL_SH.read_text(encoding="utf-8"))
+        self.assertNotIn("| draft | 0% |", INSTALL_PS1.read_text(encoding="utf-8"))
+
     def test_copilot_govern_wrapper_is_primary(self) -> None:
         path = COPILOT_PROMPTS / "govern.md"
         self.assertTrue(path.is_file(), f"missing primary wrapper: {path}")
@@ -724,7 +775,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(ps1, r"00-govern-orchestrator|/govern")
 
     def test_core_d004_mirror_is_complete(self) -> None:
-        """GOAL-019 D-004: skills/core ships methodology subset without tech-stack."""
+        """GOAL-019 D-004 + GOAL-001 D-025: core ships methodology + vision alignment."""
         core = SKILLS_ROOT / "core" / "docs"
         required = (
             core / "README.md",
@@ -738,6 +789,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             core / "templates" / "goal-folder" / "01-decision.md",
             core / "templates" / "goal-folder" / "02-execution.md",
             core / "templates" / "goal-folder" / "03-audit.md",
+            core / "vision" / "alignment.md",
+            core / "vision" / "README.md",
         )
         for path in required:
             self.assertTrue(path.is_file(), f"missing core mirror file: {path}")
@@ -746,8 +799,18 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             "core mirror must not include tech-stack.md",
         )
         principles = (core / "architecture" / "principles.md").read_text(encoding="utf-8")
-        for marker in ("P-001", "P-002", "P-003", "P-004", "P-005"):
+        for marker in ("P-001", "P-002", "P-003", "P-004", "P-005", "P-006"):
             self.assertIn(marker, principles)
+        core_readme = (SKILLS_ROOT / "core" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("P-006", core_readme)
+        self.assertIn("alignment.md", core_readme)
+        self.assertNotIn("P-001～P-005", core_readme)
+        alignment = (core / "vision" / "alignment.md").read_bytes()
+        self.assertEqual(
+            alignment,
+            (SKILLS_ROOT.parent / "docs" / "vision" / "alignment.md").read_bytes(),
+            "core vision/alignment.md must match canonical",
+        )
         layout = (core / "architecture" / "directory-layout.md").read_text(encoding="utf-8")
         self.assertIn("workspace-", layout)
         self.assertNotIn("goal-governance/web", layout.replace("\\", "/"))
@@ -764,6 +827,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("Install-CoreDocs", ps1)
         self.assertIn("core/docs", sh.replace("\\", "/"))
         self.assertIn("core", ps1)
+        self.assertIn("vision/alignment.md", sh.replace("\\", "/"))
+        self.assertIn("alignment.md", ps1)
         self.assertRegex(sh, r"workspace-|init-workspace")
         self.assertRegex(ps1, r"workspace-|InitWorkspace|init-workspace")
         self.assertNotIn(r"docs\goals\goal-tree", ps1)
@@ -845,11 +910,18 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
 
     def test_monorepo_agents_architecture_not_optional_supplement(self) -> None:
-        """GOAL-019 A-001 F-001: root AGENTS must not call architecture optional."""
+        """GOAL-019 A-001 F-001 + A-018 F-015: root AGENTS must not call architecture optional."""
         agents = (SKILLS_ROOT.parent / "AGENTS.md").read_text(encoding="utf-8")
         self.assertNotRegex(agents, r"architecture 原则全文可选补充")
         self.assertNotRegex(agents, r"architecture.*可选补充")
+        self.assertNotRegex(agents, r"按用户要求再考虑是否建立")
+        self.assertNotIn("未来 `/vision`", agents)
+        self.assertNotIn("未来 /vision", agents)
         self.assertRegex(agents, r"同级必备|原则全文\*\*必备\*\*|必备.*同级")
+        self.assertIn("完整安装必备", agents)
+        template = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
+        self.assertIn("P-001～**P-006**", template)
+        self.assertNotIn("P-001～P-005 全文", template)
 
     def test_install_all_ships_contract_mirror(self) -> None:
         sh = INSTALL_SH.read_text(encoding="utf-8")
@@ -859,20 +931,24 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("$ContractsSrc", ps1)
         self.assertIn("'contracts'", ps1)
 
-    def test_install_default_slash_is_govern_and_audit_opt_in_primitives(self) -> None:
-        """Default install: /govern + /audit; form-fill primitives stay opt-in."""
+    def test_install_default_slash_includes_independent_vision_review(self) -> None:
+        """Default install exposes both audit boundaries without form-fill primitives."""
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
         self.assertIn("--with-primitives", sh)
         self.assertRegex(ps1, r"WithPrimitives|with-primitives")
-        self.assertIn("WRAPPER_NAMES=(govern audit)", sh)
-        self.assertIn("$wrapperNames = @('govern', 'audit')", ps1)
+        self.assertIn("WRAPPER_NAMES=(govern audit vision vision-audit)", sh)
+        self.assertIn("$wrapperNames = @('govern', 'audit', 'vision', 'vision-audit')", ps1)
         self.assertIn("INSTALL_PRIMITIVE_WRAPPERS", sh)
         self.assertIn("$WithPrimitives", ps1)
         self.assertIn("new-goal", sh)
         self.assertIn("new-goal", ps1)
         self.assertRegex(sh, r"skills/audit|audit/SKILL")
         self.assertRegex(ps1, r"skills\\audit|audit\\SKILL")
+        self.assertRegex(sh, r"skills/vision|vision/SKILL")
+        self.assertRegex(ps1, r"skills\\vision|vision\\SKILL")
+        self.assertRegex(sh, r"skills/vision-audit|vision-audit/SKILL")
+        self.assertRegex(ps1, r"skills\\vision-audit|vision-audit\\SKILL")
         self.assertRegex(sh, r"INSTALL_PRIMITIVE_WRAPPERS.*1|with-primitives")
 
     def test_agents_template_does_not_force_web_app_dir(self) -> None:
@@ -1057,8 +1133,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         text = README.read_text(encoding="utf-8")
         self.assertIn("/govern", text)
         self.assertIn("/audit", text)
+        self.assertIn("/vision", text)
         self.assertIn("00-govern-orchestrator", text)
         self.assertIn("05-independent-audit", text)
+        self.assertIn("06-vision-orchestrator", text)
         self.assertRegex(text, r"primary|主入口")
         self.assertRegex(text, r"primitive|原语|advanced")
         self.assertRegex(text, r"with-primitives|WithPrimitives")
@@ -1070,24 +1148,37 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(text, r"同级必备|不完整安装")
         self.assertIn("principles", text)
 
-    def test_skills_readme_default_install_documents_govern_and_audit(self) -> None:
-        """F-017 guard: README manual/script sections must match default govern+audit surface."""
+    def test_skills_readme_default_install_documents_govern_audit_vision(self) -> None:
+        """F-017 guard: README must match default four-entrypoint surface (incl. vision-audit)."""
         text = README.read_text(encoding="utf-8")
         norm = text.replace("\\", "/")
-        # Manual install: both skills/paths for each host family
         self.assertIn(".claude/skills/audit", norm)
         self.assertIn(".grok/skills/audit", norm)
+        self.assertIn(".claude/skills/vision", norm)
+        self.assertIn(".grok/skills/vision", norm)
+        self.assertIn(".claude/skills/vision-audit", norm)
+        self.assertIn(".grok/skills/vision-audit", norm)
         self.assertRegex(text, r"audit\.prompt\.md|prompts/audit")
+        self.assertRegex(text, r"vision\.prompt\.md|prompts/vision")
+        self.assertRegex(text, r"vision-audit\.prompt\.md|prompts/vision-audit")
         self.assertIn("skills/audit/SKILL.md", norm)
-        # Must not revive the old "Copilot = only govern prompt" claim
+        self.assertIn("skills/vision/SKILL.md", norm)
+        self.assertIn("skills/vision-audit/SKILL.md", norm)
+        self.assertIn("07-independent-vision-review", text)
         self.assertNotIn("仅** govern prompt", text)
         self.assertNotIn("**仅** govern prompt", text)
         self.assertNotRegex(text, r"(?i)--copilot[^\n]{0,80}仅\s*govern\s*prompt")
-        # Explicit default surface language
-        self.assertRegex(text, r"`/govern`\s*\+\s*`/audit`")
-        self.assertRegex(text, r"--claude[^\n]*audit", re.I)
-        self.assertRegex(text, r"--grok[^\n]*audit", re.I)
-        self.assertRegex(text, r"--copilot[^\n]*(audit|默认双入口)", re.I)
+        self.assertRegex(
+            text,
+            r"`/govern`.*`/audit`.*`/vision`.*`/vision-audit`"
+            r"|`/govern`\s*\+\s*`/audit`\s*\+\s*`/vision`\s*\+\s*`/vision-audit`",
+        )
+        self.assertRegex(text, r"--claude[^\n]*vision", re.I)
+        self.assertRegex(text, r"--grok[^\n]*vision", re.I)
+        self.assertRegex(text, r"--copilot[^\n]*vision", re.I)
+        self.assertRegex(text, r"--claude[^\n]*vision-audit|--claude[^\n]*\{govern,audit,vision,vision-audit\}", re.I)
+        self.assertRegex(text, r"--grok[^\n]*vision-audit|--grok[^\n]*\{govern,audit,vision,vision-audit\}", re.I)
+        self.assertRegex(text, r"--copilot[^\n]*vision-audit", re.I)
 
     def _assert_primary_govern_skill(self, path: Path, host_label: str) -> None:
         self.assertTrue(path.is_file(), f"missing {host_label} skill: {path}")
@@ -1132,6 +1223,54 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertIn("05-independent-audit", text)
         self.assertRegex(text, r"independent|交叉")
 
+    def test_vision_prompt_and_skills_exist(self) -> None:
+        path = PROMPTS / "06-vision-orchestrator.md"
+        self.assertTrue(path.is_file(), f"missing vision core: {path}")
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("P-006", text)
+        self.assertIn("单愿景", text)
+        self.assertIn("VRev", text)
+        self.assertIn("/govern", text)
+        self.assertRegex(text, r"Charter|愿景")
+        for skill, label in (
+            (CLAUDE_VISION_SKILL, "Claude"),
+            (GROK_VISION_SKILL, "Grok"),
+        ):
+            self.assertTrue(skill.is_file(), f"missing {label} vision skill")
+            s = skill.read_text(encoding="utf-8")
+            self.assertRegex(s, r"(?m)^name:\s*vision\s*$")
+            self.assertIn("06-vision-orchestrator", s)
+        copilot = COPILOT_PROMPTS / "vision.md"
+        self.assertTrue(copilot.is_file())
+        self.assertIn("06-vision-orchestrator", copilot.read_text(encoding="utf-8"))
+
+    def test_independent_vision_review_core_is_separate_from_goal_audit(self) -> None:
+        """V-F-001: independent Vision Review has a dedicated ledger boundary."""
+        path = PROMPTS / "07-independent-vision-review.md"
+        self.assertTrue(path.is_file(), f"missing independent Vision Review core: {path}")
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("source: independent", text)
+        self.assertIn("docs/vision/reviews.md", text)
+        self.assertIn("VRev-00N", text)
+        self.assertIn("Goal `03-audit.md`", text)
+        self.assertIn("/vision", text)
+        self.assertIn("/audit", text)
+
+    def test_independent_vision_review_entrypoints_exist(self) -> None:
+        """V-F-001: every installed host gets the dedicated Vision Review entry."""
+        sources = (
+            SKILLS_ROOT / "install" / "claude" / "skills" / "vision-audit" / "SKILL.md",
+            SKILLS_ROOT / "install" / "grok" / "skills" / "vision-audit" / "SKILL.md",
+            COPILOT_PROMPTS / "vision-audit.md",
+        )
+        for path in sources:
+            self.assertTrue(path.is_file(), f"missing independent Vision Review entry: {path}")
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("07-independent-vision-review", text)
+            self.assertIn("reviews.md", text)
+            self.assertIn("/vision", text)
+            self.assertIn("/audit", text)
+
     def test_install_scripts_wire_claude_and_grok_skills(self) -> None:
         sh = INSTALL_SH.read_text(encoding="utf-8")
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
@@ -1140,9 +1279,12 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertIn(".claude/skills/govern", text.replace("\\", "/"))
             self.assertIn(".grok/skills/govern", text.replace("\\", "/"))
             self.assertIn("audit", text)
+            self.assertIn("vision", text)
             self.assertIn("SKILL.md", text)
             self.assertRegex(text, r"00-govern-orchestrator")
             self.assertRegex(text, r"05-independent-audit")
+            self.assertRegex(text, r"06-vision-orchestrator")
+            self.assertRegex(text, r"07-independent-vision-review")
 
     def test_install_ps1_isolated_smoke_script_exists(self) -> None:
         self.assertTrue(
@@ -1199,13 +1341,21 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 target / "AGENTS.md",
                 target / ".claude" / "skills" / "govern" / "SKILL.md",
                 target / ".claude" / "skills" / "audit" / "SKILL.md",
+                target / ".claude" / "skills" / "vision" / "SKILL.md",
+                target / ".claude" / "skills" / "vision-audit" / "SKILL.md",
                 target / ".grok" / "skills" / "govern" / "SKILL.md",
                 target / ".grok" / "skills" / "audit" / "SKILL.md",
+                target / ".grok" / "skills" / "vision" / "SKILL.md",
+                target / ".grok" / "skills" / "vision-audit" / "SKILL.md",
                 target / ".github" / "copilot-instructions.md",
                 target / ".github" / "prompts" / "govern.prompt.md",
                 target / ".github" / "prompts" / "audit.prompt.md",
+                target / ".github" / "prompts" / "vision.prompt.md",
+                target / ".github" / "prompts" / "vision-audit.prompt.md",
                 skills_dest / "prompts" / "00-govern-orchestrator.md",
                 skills_dest / "prompts" / "05-independent-audit.md",
+                skills_dest / "prompts" / "06-vision-orchestrator.md",
+                skills_dest / "prompts" / "07-independent-vision-review.md",
                 skills_dest / "contracts" / "skills-consumer-contract.schema.json",
                 skills_dest / "contracts" / "skills-consumer-contract.json",
                 skills_dest / "contracts" / "skills-consumer-compatibility-matrix.schema.json",
@@ -1227,8 +1377,16 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             audit = (target / ".claude" / "skills" / "audit" / "SKILL.md").read_text(
                 encoding="utf-8"
             )
+            vision = (target / ".claude" / "skills" / "vision" / "SKILL.md").read_text(
+                encoding="utf-8"
+            )
+            vision_audit = (
+                target / ".claude" / "skills" / "vision-audit" / "SKILL.md"
+            ).read_text(encoding="utf-8")
             self.assertIn("00-govern-orchestrator", govern)
             self.assertIn("05-independent-audit", audit)
+            self.assertIn("06-vision-orchestrator", vision)
+            self.assertIn("07-independent-vision-review", vision_audit)
             for name in (
                 "skills-consumer-contract.schema.json",
                 "skills-consumer-contract.json",

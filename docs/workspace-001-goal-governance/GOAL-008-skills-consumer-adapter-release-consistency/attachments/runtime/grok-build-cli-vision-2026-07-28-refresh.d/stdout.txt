@@ -1,0 +1,14 @@
+Running a read-only vision scan: loading the skill and reading the minimum sources for Charter, workspace primary_plan, and the orchestrator path.**GROK_VISION_DISPATCH_OK**
+
+Read-only `/vision` scan complete (no writes, no subagents, no questions).
+
+| Item | Value |
+|------|--------|
+| **1. Marker** | `GROK_VISION_DISPATCH_OK` |
+| **2. Loaded skill** | **vision · 愿景与组合治理（Grok Build skill）** (`name: vision`) |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **3. Orchestrator prompt** | `skills/prompts/06-vision-orchestrator.md` (SKILLS_PKG root = `skills/`) |
+| **4. Active Charter** | `vision-goal-governance@0.1.0` (`status: active`, sole active Charter) |
+| **workspace-001 `primary_plan`** | **Resolves** — `primary_plan` / `plan_refs` = `VP-001-governance-platform-delivery` → file `docs/vision/plans/VP-001-governance-platform-delivery.md` exists; `id` matches; `vision_ref: vision-goal-governance@0.1.0` matches active Charter |
+
+**Scan notes (phase 1 only):** Core architecture present; vision tree present (`charter`, `alignment`, `roadmap`, `revisions`, `reviews`, `workspaces`, `plans/`); workspace-001 is `vision_role: primary` with valid VP hang.

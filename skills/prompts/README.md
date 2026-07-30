@@ -2,9 +2,9 @@
 title: Skills · 提示词模板
 status: active
 created: 2026-07-18
-updated: 2026-07-19
+updated: 2026-07-29
 parent: null
-version: 0.5.0
+version: 0.5.2
 ---
 
 # prompts/ · 目标治理提示词
@@ -13,16 +13,20 @@ version: 0.5.0
 
 | 文件 | 角色 | 用途 |
 |------|------|------|
-| [00-govern-orchestrator.md](00-govern-orchestrator.md) | **primary** | 扫描 goal-tree 与审计意见 → 分类 → P-004 裁决 → 提议确认 → 原语 |
+| [00-govern-orchestrator.md](00-govern-orchestrator.md) | **primary**（实现层） | 扫描 goal-tree 与审计意见 → 分类 → P-004 裁决 → 提议确认 → 原语 |
 | [05-independent-audit.md](05-independent-audit.md) | **independent-audit** | 交叉审计：只出意见（`source: independent`），不改状态 |
+| [06-vision-orchestrator.md](06-vision-orchestrator.md) | **vision-decision** | 愿景/组合：Charter、VP、Review、re-align、结构选型 |
+| [07-independent-vision-review.md](07-independent-vision-review.md) | **independent-vision-review** | 独立 Vision Review：只写 `reviews.md`，不改 Charter / VP / Goal 状态 |
 
 | 入口 | 宿主 |
 |------|------|
 | `/govern` | Claude / Grok skill；Copilot `govern.prompt.md` |
 | `/audit` | Claude / Grok skill；Copilot `audit.prompt.md` |
+| `/vision` | Claude / Grok skill；Copilot `vision.prompt.md` |
+| `/vision-audit` | Claude / Grok skill；Copilot `vision-audit.prompt.md` |
 
 **生命周期**：设立 → 信息发现与就绪判断 →（可审视）→ 方案 → 实施 → 审计/整改 → 关门。
-**交叉意见**由 `/audit` 写入；**响应与放行**由 `/govern` 处理。
+Goal 交叉意见由 `/audit` 写入；独立 Vision Review 由 `/vision-audit` 写入；Goal 的**响应与放行**由 `/govern` 处理，Vision finding 响应由 `/vision` 处理。
 
 ## 原语（primitives / advanced）
 
@@ -56,7 +60,7 @@ version: 0.5.0
 | 主入口 + 交叉入口 | `/govern` 生命周期；`/audit` 独立意见 |
 | 原语可组合 | 01～04 保证文档结构一致 |
 | 信息就绪 | P-005：登记未知、最晚需要阶段、证据与残余风险；按规模拆信息工作 |
-| 遵守 AGENTS | 扁平存储、parent、goal-tree、P-001～P-005 |
+| 遵守 AGENTS | 扁平存储、parent、goal-tree、P-001～**P-006** |
 | 真实 | 禁止编造进度与空话 |
 
 ## 与其他交付物

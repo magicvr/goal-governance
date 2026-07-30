@@ -1,0 +1,20 @@
+I'll load the audit skill and read only the minimum repo sources needed for this dispatch probe—no writes, subagents, or questions.Next I’ll read the independent-audit prompt and GOAL-008’s minimum sources for source/status semantics and one evidence gap.**GROK_AUDIT_DISPATCH_OK**
+
+| # | Item | Value |
+|---|------|--------|
+| 1 | Marker | `GROK_AUDIT_DISPATCH_OK` |
+| 2 | Loaded skill | **Title:** `audit · 独立交叉审计（Grok Build skill）` · **Path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md` |
+| 3 | Independent-audit prompt | Named by skill as `<SKILLS_PKG>/prompts/05-independent-audit.md` · Resolved: `skills/prompts/05-independent-audit.md` (`C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\05-independent-audit.md`) |
+| 4 | Source/status semantics + evidence gap | See below |
+
+### Required source / status semantics (from skill + `05-independent-audit.md`)
+
+- **source** must be `independent` (never self-as-independent).
+- **Default write:** audit opinion only into the audited goal’s `03-audit.md` (A-00N shared with self); optional long form in `attachments/` with an index section.
+- **Forbidden by default:** change goal `status`, checkpoints, derived `progress`, plan body, or goal-tree status columns; progress cannot close findings or authorize advance.
+- **Findings:** each is `required` \| `recommended` (with severity); required findings block corresponding gates until closed via fixed / accepted-residual / user-overruled (responded under `/govern`).
+- **verdict:** `pass` \| `conditional` \| `fail` — `pass` only when scope has no open high-required items and no due required I-00N info gates; P-005 checks `required`/`non-blocking`, latest stage, status, evidence, residual acceptance.
+
+### One current required evidence gap (GOAL-008)
+
+GOAL-008 is historically closed (`done` / I-001–I-003 verified for annotated `v0.7.0`), but **post–GOAL-010** behavior-source changes leave the **current unreleased candidate** with six host matrix cells (`Claude` / `Grok` / `Copilot` × `/govern` / `/audit`) at **`pending-runtime-validation`** and `candidateRevision: unreleased`. Fresh authorized host runtime evidence is still required before any new candidate can be claimed runtime-verified or release-ready (00-meta “当前未发布候选的复核边界”; A-017 / D-011).

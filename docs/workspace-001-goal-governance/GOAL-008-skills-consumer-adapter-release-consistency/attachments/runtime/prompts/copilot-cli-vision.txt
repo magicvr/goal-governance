@@ -1,0 +1,3 @@
+Read-only replay for vision decision-layer dispatch using GitHub Copilot CLI.
+
+Use the repository's AGENTS.md, .github/copilot-instructions.md (if present), skills/prompts/06-vision-orchestrator.md, docs/vision/charter.md, docs/vision/alignment.md, and docs/workspace-001-goal-governance/workspace.md as the only governance sources. Apply /vision scan semantics only: report single-vision status, charter version, primary_plan, and open Vision Review required count if any. Do not edit files, do not run write commands, do not create commits or tags, and do not use VS Code or any IDE plugin. End with the exact marker COPILOT_CLI_VISION_DISPATCH_OK.

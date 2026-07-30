@@ -17,6 +17,7 @@ REQUIRED_VISION_FILES = (
     "charter.md",
     "roadmap.md",
     "revisions.md",
+    "reviews.md",
     "workspaces.md",
     "alignment.md",
     "consumer-checklist.md",
@@ -27,7 +28,7 @@ VP_ALLOWED_STATUS = frozenset({"planned", "active", "closed", "abandoned"})
 GOAL_FORBIDDEN_ON_CHARTER = frozenset(
     {"done", "draft", "blocked", "cancelled"}
 )
-VISION_ROLE_ALLOWED = frozenset({"primary", "delivery", "sandbox"})
+VISION_ROLE_ALLOWED = frozenset({"primary", "delivery"})
 VISION_REF_RE = re.compile(
     r"^(?P<vision_id>[a-z0-9-]+)@(?P<version>\d+\.\d+\.\d+)$"
 )
@@ -106,8 +107,7 @@ def validate_workspace_vision_alignment(
         raise ValueError(f"invalid vision_role: {role}")
     plan_refs_raw = fields.get("plan_refs", "").strip()
     primary = fields.get("primary_plan", "").strip()
-    if role == "sandbox" and not plan_refs_raw and not primary:
-        return fields
+    # All supported roles require plan_refs + primary_plan when require_plans.
     if not require_plans:
         return fields
     if not plan_refs_raw:
@@ -147,10 +147,11 @@ def validate_vision_stack(vision_root: Path) -> None:
         "primary_plan",
         "progress",
         "goal-tree",
+        "单愿景",
     ):
         if phrase not in alignment and phrase.replace("-", "") not in alignment:
             # allow Chinese equivalents already present; English keys required
-            if phrase in {"plan_refs", "primary_plan", "fail closed"}:
+            if phrase in {"plan_refs", "primary_plan", "fail closed", "单愿景"}:
                 raise ValueError(f"alignment missing required phrase: {phrase}")
 
 
@@ -214,6 +215,8 @@ class VisionProtocolTests(unittest.TestCase):
         self.assertIn("fail closed", alignment)
         self.assertIn("progress", alignment.lower())
         self.assertIn("goal-tree", alignment)
+        self.assertIn("Charter **没有 canonical `draft` 状态**", alignment)
+        self.assertIn("战略假设/未知", alignment)
 
     def test_workspace_template_declares_vision_fields(self) -> None:
         template = REPO_ROOT / "docs" / "templates" / "workspace-context.md"
@@ -249,6 +252,38 @@ class VisionProtocolTests(unittest.TestCase):
                 FIXTURES / "invalid-workspace-missing-plans.md",
                 vision_root=FIXTURES / "valid-stack",
             )
+
+    def test_sandbox_role_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "workspace.md"
+            path.write_text(
+                "---\n"
+                "id: ws-sandbox\n"
+                "vision_role: sandbox\n"
+                "plan_refs: VP-001-sample\n"
+                "primary_plan: VP-001-sample\n"
+                "---\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "invalid vision_role"):
+                validate_workspace_vision_alignment(
+                    path, vision_root=FIXTURES / "valid-stack"
+                )
+
+    def test_agents_and_principles_document_p006(self) -> None:
+        principles = (
+            REPO_ROOT / "docs" / "architecture" / "principles.md"
+        ).read_text(encoding="utf-8")
+        agents = (REPO_ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertIn("P-006", principles)
+        self.assertIn("单愿景", principles)
+        self.assertIn("P-006", agents)
+        self.assertIn("单愿景", agents)
+        alignment = (VISION_DIR / "alignment.md").read_text(encoding="utf-8")
+        self.assertIn("primary", alignment)
+        self.assertIn("delivery", alignment)
+        self.assertNotIn("vision_role: sandbox", alignment)
+        self.assertNotIn("sandbox opt-out", alignment)
 
     def test_primary_plan_not_in_refs_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

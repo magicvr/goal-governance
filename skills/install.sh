@@ -48,12 +48,16 @@ Usage (run from target project root):
 Options:
   --claude              Install Claude Code: ./AGENTS.md + project skills
                         ./.claude/skills/govern/  →  /govern
-                        ./.claude/skills/audit/   →  /audit  (cross-audit)
+                        ./.claude/skills/audit/   →  /audit
+                        ./.claude/skills/vision/  →  /vision
+                        ./.claude/skills/vision-audit/ → /vision-audit
   --grok                Install Grok Build project skills
                         ./.grok/skills/govern/  →  /govern
                         ./.grok/skills/audit/   →  /audit
+                        ./.grok/skills/vision/  →  /vision
+                        ./.grok/skills/vision-audit/ → /vision-audit
   --copilot             Install GitHub Copilot rules → ./.github/copilot-instructions.md
-                        and default slashes → govern.prompt.md + audit.prompt.md
+                        and default slashes → govern + audit + vision + vision-audit
   --with-primitives     Also install advanced Copilot slash wrappers (new-goal, …).
                         Opt-in only — avoids form-menu UX.
   --all                 Install Claude + Grok + Copilot + ensure prompts/, templates/ and
@@ -70,15 +74,17 @@ Options:
 
 Behavior:
   - Rule files always install into the current working directory (project root)
-  - Claude skills → ./.claude/skills/govern/ + audit/
-  - Grok skills → ./.grok/skills/govern/ + audit/
-  - Default Copilot slash surface: /govern (primary) + /audit (cross-audit)
+  - Claude skills → govern + audit + vision + vision-audit
+  - Grok skills → govern + audit + vision + vision-audit
+  - Default Copilot slash surface: /govern + /audit + /vision + /vision-audit
   - Advanced form-filling slashes are NOT installed unless --with-primitives
   - Core methodology (GOAL-019 D-004): ALWAYS installs package core/docs → ./docs/
     (architecture + templates + slim docs/README). Missing core = incomplete install.
   - --init-workspace alone is allowed (still installs core); slugs must be explicit (D-005)
   - Core orchestrator: prompts/00-govern-orchestrator.md
   - Cross-audit core: prompts/05-independent-audit.md
+  - Vision decision core: prompts/06-vision-orchestrator.md
+  - Independent Vision Review core: prompts/07-independent-vision-review.md
   - prompts/, templates/ and contracts/ are placed under --skills-dir (with --all)
   - Source files are read from the package next to this script
   - Prompts before overwriting existing files
@@ -172,15 +178,18 @@ Done.
 Next steps:
   1. Review installed rule file(s) and docs/architecture (core methodology; required).
   $step2
-  3. DEFAULT user path: /govern (orchestrator) + /audit (cross-audit)
+  3. DEFAULT user path: /govern (impl) + /audit (Goal cross-audit) + /vision (decision) + /vision-audit (independent Vision Review)
      - Methodology: ./docs/architecture/principles.md
      - Orchestrator: $SKILLS_DIR/prompts/00-govern-orchestrator.md
      - Cross-audit: $SKILLS_DIR/prompts/05-independent-audit.md
+     - Vision: $SKILLS_DIR/prompts/06-vision-orchestrator.md
+    - Independent Vision Review: $SKILLS_DIR/prompts/07-independent-vision-review.md
      - Contract: $SKILLS_DIR/contracts/skills-consumer-contract.json
-     - Claude: /govern + /audit under ./.claude/skills/
-     - Grok:   /govern + /audit under ./.grok/skills/
-     - Copilot: govern.prompt.md + audit.prompt.md
+    - Claude: /govern + /audit + /vision + /vision-audit under ./.claude/skills/
+    - Grok:   /govern + /audit + /vision + /vision-audit under ./.grok/skills/
+    - Copilot: govern + audit + vision + vision-audit prompts
   4. Advanced Copilot form-filling slashes only if you used --with-primitives.
+  5. Cold start: /vision (Charter->VP) then /govern (workspace+Root).
 
 Project root:  $TARGET_DIR
 Skills dir:    $SKILLS_DIR
@@ -287,7 +296,7 @@ version: 0.1.0
 
 | ID | 标题 | Parent | Status | Progress | 路径 |
 |----|------|--------|--------|----------|------|
-| ${root_id} | ${title} | — | draft | 0% | _(not created yet)_ |
+| ${root_id} | ${title} | — | draft | — | _(not created yet)_ |
 EOF
 
   echo "Scaffolded workspace: ${scope}"
@@ -305,10 +314,12 @@ install_core_docs() {
   if [[ -f "$core_docs/architecture/tech-stack.md" ]]; then
     die "core mirror must not ship tech-stack.md (D-004)"
   fi
-  echo "Installing core methodology → ./docs/ (architecture + templates + README)"
+  [[ -f "$core_docs/vision/alignment.md" ]] || die "Missing alignment.md in core vision mirror (GOAL-001 A-018 F-013 / D-025)"
+  echo "Installing core methodology → ./docs/ (architecture + templates + vision rules + README)"
   copy_file "$core_docs/README.md" "$TARGET_DIR/docs/README.md"
   copy_dir_merge "$core_docs/architecture" "$TARGET_DIR/docs/architecture" "core architecture"
   copy_dir_merge "$core_docs/templates" "$TARGET_DIR/docs/templates" "core templates"
+  copy_dir_merge "$core_docs/vision" "$TARGET_DIR/docs/vision" "core vision rules"
 }
 
 # --- parse args ---
@@ -425,8 +436,12 @@ fi
 CLAUDE_AGENTS_SRC="$PACKAGE_ROOT/install/claude/AGENTS.md"
 CLAUDE_GOVERN_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
 CLAUDE_AUDIT_SRC="$PACKAGE_ROOT/install/claude/skills/audit/SKILL.md"
+CLAUDE_VISION_SRC="$PACKAGE_ROOT/install/claude/skills/vision/SKILL.md"
+CLAUDE_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/claude/skills/vision-audit/SKILL.md"
 GROK_GOVERN_SRC="$PACKAGE_ROOT/install/grok/skills/govern/SKILL.md"
 GROK_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/audit/SKILL.md"
+GROK_VISION_SRC="$PACKAGE_ROOT/install/grok/skills/vision/SKILL.md"
+GROK_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/vision-audit/SKILL.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
@@ -444,10 +459,14 @@ if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
   [[ -f "$CLAUDE_AGENTS_SRC" ]] || die "Missing package file: $CLAUDE_AGENTS_SRC"
   [[ -f "$CLAUDE_GOVERN_SRC" ]] || die "Missing package file: $CLAUDE_GOVERN_SRC"
   [[ -f "$CLAUDE_AUDIT_SRC" ]] || die "Missing package file: $CLAUDE_AUDIT_SRC"
+  [[ -f "$CLAUDE_VISION_SRC" ]] || die "Missing package file: $CLAUDE_VISION_SRC"
+  [[ -f "$CLAUDE_VISION_AUDIT_SRC" ]] || die "Missing package file: $CLAUDE_VISION_AUDIT_SRC"
 fi
 if [[ "$INSTALL_GROK" -eq 1 ]]; then
   [[ -f "$GROK_GOVERN_SRC" ]] || die "Missing package file: $GROK_GOVERN_SRC"
   [[ -f "$GROK_AUDIT_SRC" ]] || die "Missing package file: $GROK_AUDIT_SRC"
+  [[ -f "$GROK_VISION_SRC" ]] || die "Missing package file: $GROK_VISION_SRC"
+  [[ -f "$GROK_VISION_AUDIT_SRC" ]] || die "Missing package file: $GROK_VISION_AUDIT_SRC"
 fi
 if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   [[ -f "$COPILOT_SRC" ]] || die "Missing package file: $COPILOT_SRC"
@@ -463,13 +482,17 @@ if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
   copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
   copy_file "$CLAUDE_GOVERN_SRC" "$TARGET_DIR/.claude/skills/govern/SKILL.md"
   copy_file "$CLAUDE_AUDIT_SRC" "$TARGET_DIR/.claude/skills/audit/SKILL.md"
-  echo "Claude skills: /govern  (./.claude/skills/govern/)  +  /audit  (./.claude/skills/audit/)"
+  copy_file "$CLAUDE_VISION_SRC" "$TARGET_DIR/.claude/skills/vision/SKILL.md"
+  copy_file "$CLAUDE_VISION_AUDIT_SRC" "$TARGET_DIR/.claude/skills/vision-audit/SKILL.md"
+  echo "Claude skills: /govern + /audit + /vision + /vision-audit"
 fi
 
 if [[ "$INSTALL_GROK" -eq 1 ]]; then
   copy_file "$GROK_GOVERN_SRC" "$TARGET_DIR/.grok/skills/govern/SKILL.md"
   copy_file "$GROK_AUDIT_SRC" "$TARGET_DIR/.grok/skills/audit/SKILL.md"
-  echo "Grok skills: /govern  (./.grok/skills/govern/)  +  /audit  (./.grok/skills/audit/)"
+  copy_file "$GROK_VISION_SRC" "$TARGET_DIR/.grok/skills/vision/SKILL.md"
+  copy_file "$GROK_VISION_AUDIT_SRC" "$TARGET_DIR/.grok/skills/vision-audit/SKILL.md"
+  echo "Grok skills: /govern + /audit + /vision + /vision-audit"
   # Optional: also ensure AGENTS if missing (Grok reads AGENTS.md as project rules)
   if [[ ! -f "$TARGET_DIR/AGENTS.md" && -f "$CLAUDE_AGENTS_SRC" ]]; then
     echo "Note: no AGENTS.md yet; consider --claude or copy install/claude/AGENTS.md for project rules."
@@ -481,13 +504,13 @@ if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   copy_file "$COPILOT_SRC" "$TARGET_DIR/.github/copilot-instructions.md"
 
   mkdir -p "$TARGET_DIR/.github/prompts"
-  # Default product surface: primary orchestrator + cross-audit (not form-fill primitives)
-  WRAPPER_NAMES=(govern audit)
+  # Default product surface: impl + Goal audit + vision decision + independent Vision Review
+  WRAPPER_NAMES=(govern audit vision vision-audit)
   if [[ "$INSTALL_PRIMITIVE_WRAPPERS" -eq 1 ]]; then
     WRAPPER_NAMES+=(new-goal log-decision update-execution write-audit)
     echo "Including advanced primitive slash wrappers (--with-primitives)"
   else
-    echo "Copilot slash surface: /govern + /audit (pass --with-primitives for form-fill ops)"
+    echo "Copilot slash surface: /govern + /audit + /vision + /vision-audit (pass --with-primitives for form-fill ops)"
   fi
   for name in "${WRAPPER_NAMES[@]}"; do
     copy_file \

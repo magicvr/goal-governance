@@ -1,0 +1,74 @@
+● skill(vision-audit)
+
+I’ll replay the Vision Review discovery path in read-only mode and report only the requested
+dispatch state.
+
+● Read vision-audit.prompt.md
+  │ .github\prompts\vision-audit.prompt.md
+  └ L1:end (28 lines read)
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ L1:end (67 lines read)
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ L1:end (299 lines read)
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ L1:end (100 lines read)
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ L1:end (241 lines read)
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:end (44 lines read)
+
+● Read AGENTS.md
+  └ L1:end (286 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (316 lines read)
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ L280:374 (94 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (316 lines read)
+
+Read-only Vision Review dispatch completed. No files were changed and no VRev was appended.
+
+┌────────────┬─────────────────────────────────────────────────────────────────────────────────┐
+│ Item       │ Loaded state                                                                    │
+├────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ Copilot    │ .github/prompts/vision-audit.prompt.md — /vision-audit independent-review       │
+│ wrapper    │ wrapper, version: 0.1.0; routes only to docs/vision/reviews.md and prohibits    │
+│            │ Charter, VP, Goal, and Goal-audit writes                                        │
+├────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ Core       │ skills/prompts/07-independent-vision-review.md — 07 · 独立 Vision Review,       │
+│ prompt     │ version: 0.1.0; defines source: independent, Vision-only review routing, and    │
+│            │ /vision handling for required-finding responses                                 │
+├────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ Charter    │ vision-goal-governance@0.1.0, status: active                                    │
+├────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ Workspace  │ VP-001-governance-platform-delivery (vision_role: primary)                      │
+│ primary    │                                                                                 │
+│ plan       │                                                                                 │
+├────────────┼─────────────────────────────────────────────────────────────────────────────────┤
+│ Open       │ 0 — V-F-001 is fixed; later findings V-F-002 through V-F-007 are recommended    │
+│ required   │ and fixed                                                                       │
+│ Vision     │                                                                                 │
+│ findings   │                                                                                 │
+└────────────┴─────────────────────────────────────────────────────────────────────────────────┘
+
+The loaded alignment contract confirms /vision-audit is the independent Vision Review entrypoint,
+/vision owns self-review and finding responses, and Goal /audit must not write reviews.md.
+
+COPILOT_CLI_VISION_AUDIT_DISPATCH_OK
+

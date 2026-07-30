@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-20
 parent: null
-version: 0.4.1
+version: 0.5.0
 role: primitive
 ---
 
@@ -26,7 +26,7 @@ role: primitive
 你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`，包括 P-005 的信息就绪与未知项门禁。
 
 # 任务
-在 `02-execution.md` 按时间线追加**已发生事实**；确有进展时同步 progress / status 与 goal-tree。
+在 `02-execution.md` 按时间线追加**已发生事实**；完成检查点时更新其标记并确定性重算派生 progress，status 仅按治理事实更新；同步 goal-tree。
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：
@@ -38,7 +38,7 @@ role: primitive
 - 关联信息项（可选）：【I-00N；收集 / 验证 / 新发现 / 状态变化】
 - 共享资料引用（可选）：【`reference_id`、`material_id`、`source`、`version`、`sha256`；确认状态】
 - 下一步计划（可选，标明为计划）：
-- progress：【保持 / 调整为 N%，并给依据】
+- progress：【无显式检查点则省略/—；有则按完成检查点/总检查点或显式权重重算，并给来源】
 - status：【保持 / draft|active|blocked|done|cancelled】
 
 # 步骤
@@ -55,7 +55,7 @@ role: primitive
 4b. 时间线若提及**他区**目标或产物：落盘用 **Q2** 路径；对话用 **Q3**。本区目标用短 id；禁止改 goal id 形状。
 5. 涉及 I-00N 时：记录实际收集/验证动作与证据路径；新发现的未知追加到信息表，并写明 `required`/`non-blocking`、影响门禁和最晚需要阶段。`deferred` 要保留理由、责任人与复核触发；没有证据时不得把状态改为 `verified`。
 6. 刷新 `updated`。
-7. 调整 progress/status 时：同步 meta 与 goal-tree（树 + 表）；关门前确认没有未处理的关门 required 信息项。
+7. 检查点或 status 变化时：先按 P-001 确定性重算派生 progress（无来源则省略/—），再同步 meta 与 goal-tree（树 + 表）；关门前确认没有未处理的 required finding / 信息项。`progress=100%` 不自动推导 `done`。
 8. 完成某条成功标准时：勾选 meta 并在 execution 点明。
 9. 决策论证写入 `01-decision`；execution 保持时间线事实。
 
@@ -65,7 +65,7 @@ role: primitive
 # 完成标准
 - [ ] 新条目为可核对事实  
 - [ ] updated 已刷新  
-- [ ] progress/status 与 meta、goal-tree 一致（若有变更）  
+- [ ] status 与 meta、goal-tree 一致；progress（若有）可从显式检查点重算且三处展示一致
 - [ ] 工作区绑定已校验；共享资料引用（若有）固定且任何拒绝路径未产生写入
 - [ ] 成功标准勾选与事实一致  
 - [ ] I-00N 状态与可核对证据一致；新未知没有被遗漏或伪装为已知
@@ -76,5 +76,5 @@ role: primitive
 ## 使用注意事项
 
 - 输入区尽量写「改了什么文件 / 达成什么可验证结果」，AI 才能避免空话。
-- 小步提交时 progress 可保持不变，只追加时间线即可。
+- 小步提交未改变检查点时，progress 保持其派生值，只追加时间线即可。
 - 若工作实际属于另一目标，应改记到正确目标，勿堆在错误 ID 下。

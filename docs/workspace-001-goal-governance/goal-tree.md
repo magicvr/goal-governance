@@ -2,16 +2,60 @@
 title: Goal Tree · 目标树与进展总览
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-30
 parent: null
-version: 1.1.1
+version: 1.1.10
 ---
 
 # Goal Tree
 
+## 2026-07-30 · 路径 D 授权 v0.9.2：本地 release-candidate 通过（D-026）
+
+用户书面授权 annotated **`v0.9.2`**。首轮因 12 宿主证据 stale 失败 → 2026-07-30 全量 runtime 重采 pass → 矩阵/测试对齐 → tag `v0.9.2` @ `b491e3a` → `release_evidence --mode release` **checksPassed: true**（`artifacts/release-evidence-v0.9.2.json`）。**未** push tag / **未** GitHub Release（须 Environment `release`）。**不**改各 GOAL status/progress；Root 仍 `active`。
+
+## 2026-07-30 · 路径 D 可选卫生（README 四入口装机树 + Goal 三入口历史注）
+
+`/govern` 路径 D：修正 `skills/README.md` 装机树/手动安装/参数表为默认四入口（+ `vision-audit`）；GOAL-001 D-018/执行 D-018·D-019 历史「三入口」加现时注（指向 D-020）。**不**改各 GOAL status/progress；**不** tag；Root 仍 `active`。
+
+## 2026-07-29 · GOAL-020 阶段 E 与用户确认关门
+
+[GOAL-020-methodology-adversarial-audit-fix](GOAL-020-methodology-adversarial-audit-fix/) 已由 D-005/A-005 `done / 100%`：A-001 independent；A-002/A-003 响应；A-004 self close-out `pass`；F-001～F-009/F-011 closed；F-010 recommended non-blocking follow-up；I-001～I-003 closed。Docs 22 / Skills 39 passed，canonical/core 哈希一致。路径 D 单点协议质量工作；**不**重开 GOAL-006；**不**改 Root/Charter/VP status；阶段 7仍延期。下一编号 **GOAL-021**。
+
+## 2026-07-29 · 响应 GOAL-001 A-018（D-025 · 路径 D）
+
+`/govern` 按用户优先序 **fixed** 闭合 A-018 **F-012～F-015**（F-016 顺手）：standalone 冷启动对齐 P-006；core 分发 `vision/alignment.md`；权威面 P-006；AGENTS dogfood/消费门禁对齐。[D-025](GOAL-001-main-vision/01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29) / [A-019](GOAL-001-main-vision/03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)。测试：standalone 3 ok；skills orchestrator 38 ok。**不**改各 GOAL status/progress；**不** tag；Root 仍 `active`。
+
+## 2026-07-28 · 路径 D：发版候选 runtime 验证（不发版）
+
+`/govern` 路径 D：compatibility **ready-for-release-evidence**（12 宿主入口 runtime-verified，unreleased）；release rehearsal **checksPassed**。产物：`artifacts/compatibility-report-path-d-check.json`、`artifacts/release-evidence-path-d-rehearsal-2026-07-28.json`。修正 test 硬编码 v0.9.1→unreleased。**v0.9.1 已 tag**；下一 tag 须授权（建议 v0.9.2）。**无** tag/Release；**不**改各 GOAL status/progress。
+
+## 2026-07-28 · 响应 GOAL-001 A-015 F-008（路径 D）
+
+用户采用 **路径 D**（仅维护发版/协议，不关 Root）。[D-024](GOAL-001-main-vision/01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) / [A-017](GOAL-001-main-vision/03-audit.md#a-017--响应-a-015--f-008路径-d契约2026-07-28) 关闭 **F-008**（`fixed`）。GOAL-018/019 归属 **Skills 维护波次**；阶段 7 **延期未开**；A/B/C 改道须新裁决。R-009-X 仍 accepted。**不**改各 GOAL status/progress；Root 仍 `active`。
+
+## 2026-07-28 · 响应 GOAL-001 A-015 F-007（现时摘要刷新）
+
+`/govern` 关闭 A-015 **F-007**（`fixed`）：Root [00-meta 现时摘要](GOAL-001-main-vision/00-meta.md#现时摘要2026-07-28-单一权威入口) 与 [02-execution 当前进展/下一步](GOAL-001-main-vision/02-execution.md#当前进展2026-07-28) 已对齐 018/019 done、D-016～D-023、愿景栈与 **下一编号 GOAL-020**。[A-016](GOAL-001-main-vision/03-audit.md#a-016--响应-a-015--f-007刷新-root-现时摘要2026-07-28)。其后 F-008 由路径 D 关闭（见上节）。**不**改各 GOAL status/progress；Root 仍 `active`。
+
+## 2026-07-28 · 响应 V-F-001：独立 Vision Review 专用入口（GOAL-001 D-020；不发版）
+
+用户按 P-004 选择新增 `/vision-audit`，不扩展 `/audit`。核心 `07`、三宿主默认安装与消费者契约已同步；[VRev-002](../vision/reviews.md#响应--v-f-0012026-07-28) 以 `fixed` 闭合入口缺口。新入口三宿主 runtime 仍 pending，矩阵为 `unreleased`。**不**改任何 Goal status/progress。详见 [D-020](GOAL-001-main-vision/01-decision.md#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)。
+
+## 2026-07-28 · `/vision` follow-through（GOAL-001 D-019；不发版）
+
+Dual-pass runtime：Claude+Grok vision **pass**；Copilot **quota fail** → pending。VRev-001；消费 AGENTS 同步 P-006。**无**正式发版。详见 [D-019](GOAL-001-main-vision/01-decision.md#d-019--vision-follow-throughruntime--消费面--vrev不发版2026-07-28)。
+
+## 2026-07-28 · Skills `/vision` 第二刀（GOAL-001 D-018）
+
+落地 `06-vision-orchestrator` 与默认 install 三入口（govern/audit/vision；**当日**面，其后 D-020 扩为四入口）；契约矩阵 vision=pending-runtime-validation。**不**改各 GOAL status/progress。详见 [D-018](GOAL-001-main-vision/01-decision.md#d-018--skills-vision-决策层第二刀2026-07-28)。
+
+## 2026-07-28 · P-006 愿景组合治理第一刀（GOAL-001 D-017）
+
+用户确认 D0–D24 并落盘：P-006；alignment **0.3.0**；取消 sandbox opt-out；冷启动 Charter→VP→区；`reviews.md`；AGENTS **0.10.0**；编排器 **0.9.0**；vision 模板。**不**改各 GOAL status/progress；Root 仍 `active`。`/vision` skill 为第二刀。详见 [D-017](GOAL-001-main-vision/01-decision.md#d-017--p-006-愿景组合治理与级联对齐第一刀2026-07-28) / [执行](GOAL-001-main-vision/02-execution.md#2026-07-28--p-006-愿景组合治理第一刀d-017)。
+
 ## 2026-07-28 · 0.9.1 外部消费准备（A0 后）
 
-外部仓需用 A0：CHANGELOG Unreleased 记 **0.9.1** 候选；预打包 `dist/goal-governance-skills-v0.9.1-rc.1.zip`。正式 `v0.9.1` tag **阻塞于**六单元 runtime 对当前 `AGENTS.md` / `00-govern-orchestrator.md` 的重采（v0.9.0 证据 stale）。矩阵仍 `v0.9.0` 直至重采后改 `candidateRevision`。
+外部仓需用 A0：CHANGELOG Unreleased 记 **0.9.1** 候选；预打包 `dist/goal-governance-skills-v0.9.1-rc.1.zip`。历史：**v0.9.1** 已 annotated tag。其后工作树矩阵为 **`unreleased`**（四入口 × 三宿主 runtime-verified；path-D 2026-07-28 验证 ready）。下一 tag 须另授权。
 
 ## 2026-07-28 · A0 目标限定引用（GOAL-010 D-003）
 
@@ -370,7 +414,7 @@ GOAL-010 已完成跨层的核心协议与 Skills 首先适配。它只为 GOAL-
 
 GOAL-011 完成当前仓库到 `docs/workspace-001-goal-governance/` 的迁移与共享资料候选索引骨架。该过程数据为 dogfood，不随 Web/Skills 发布复制给其他项目。
 
-> 所有目标平铺存放在本目录；层级仅通过各目标 `00-meta.md` 的 `parent` 字段维护。  
+> 所有目标平铺存放在本目录；层级仅通过各目标 `00-meta.md` 的 `parent` 字段维护。
 > **新建、修改状态或调整 parent 后，必须同步更新本文件。**
 
 ## 树状结构
@@ -396,7 +440,8 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-016-shared-materials-product · 实现共享资料区产品（CRUD / 固定引用 / 隔离） [done 100%]
 ├── GOAL-017-human-pilot-feedback · 人类多会话试点与反馈证据（有界） [done 100%]
 ├── GOAL-018-skills-release-packaging · Skills Release 打包与对外安装路径（文档 + pack + CI） [done 100%]
-└── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
+├── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
+└── GOAL-020-methodology-adversarial-audit-fix · 核心方法论对抗性审计与纠错 [done 100%]
 ```
 
 ## 状态总览
@@ -422,8 +467,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-017-human-pilot-feedback | 人类多会话试点与反馈证据（有界） | GOAL-001-main-vision | done | 100% | [GOAL-017-human-pilot-feedback/](GOAL-017-human-pilot-feedback/) |
 | GOAL-018-skills-release-packaging | Skills Release 打包与对外安装路径（文档 + pack + CI） | GOAL-001-main-vision | done | 100% | [GOAL-018-skills-release-packaging/](GOAL-018-skills-release-packaging/) |
 | GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | done | 100% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
+| GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | GOAL-001-main-vision | done | 100% | [GOAL-020-methodology-adversarial-audit-fix/](GOAL-020-methodology-adversarial-audit-fix/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。下一编号 **GOAL-020**。GOAL-001 仍为 `active`（终态 / 阶段 7 / residual 见 **R-009-X**）。GOAL-019 **done**（core+Skills 共交付 + 工作区 scaffold；residual R-019-*）。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。GOAL-020 已由 D-005/A-005 `done / 100%` 关门，F-010 保留 recommended follow-up；当前无未关门子目标。下一编号 **GOAL-021**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
 
 ## 状态图例
 
@@ -438,6 +484,6 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ## 编号规则速查
 
 1. `GOAL-001` 固定为 Root Goal（`parent: null`）。
-2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-020`）。
+2. 新目标从现有最大编号 +1 顺序分配（当前下一个：`GOAL-021`）。
 3. 文件夹命名：`GOAL-NNN-short-slug`（英文短横线 slug）。
 4. 每个目标必须包含：`00-meta.md`、`01-decision.md`、`02-execution.md`、`03-audit.md`、`attachments/`。

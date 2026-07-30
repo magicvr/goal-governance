@@ -1,0 +1,70 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-07-30T02:49:31.123372Z",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "vision-audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.220",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": ".claude/skills/vision-audit/SKILL.md",
+      "sha256": "a404dbf240f24de81d3df8f39a093b38c563fb50380e6788aa22c60dcd235ea2"
+    },
+    {
+      "path": "skills/install/claude/skills/vision-audit/SKILL.md",
+      "sha256": "a404dbf240f24de81d3df8f39a093b38c563fb50380e6788aa22c60dcd235ea2"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "c94c3080b507314be809a77a07805210cc2ec80656aaed477ef76c7dc5acf5e2"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "e089f634eacf5ce4f3ef4d45267869ff8d521803788f2e44135be260ed3039b3"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/claude-vision-audit.txt",
+      "sha256": "151cfa142b24ded516fe7acc8bfcdca2cacd6cd1b8953386726a1a054e64c0a0"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "cmd.exe",
+      "/d",
+      "/s",
+      "/c",
+      "claude -p --no-session-persistence --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 12"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240.0,
+    "inputSha256": "ac930cbb046e3e2eadc55fe6dd819e08da086aea741b979d127a2f8737c6be93",
+    "inputSummary": "Read-only /vision-audit dispatch probe requiring marker CLAUDE_VISION_AUDIT_DISPATCH_OK after repository-backed skill execution."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "CLAUDE_VISION_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-audit-2026-07-30-refresh.d/stdout.txt",
+    "stdoutSha256": "87a58c6281a8fadc4909fea614829f747a1981862fda52d7a8ca93d0482ea051",
+    "stdoutMode": "claude-stream-json-sanitized",
+    "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-audit-2026-07-30-refresh.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

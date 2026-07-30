@@ -1,0 +1,7 @@
+
+You have exceeded your monthly quota (Request ID: DFEC:34D8EC:AE07646:BE3EC6B:6A689CFA)
+
+
+Changes    +0 -0
+AI Credits 0 (7s)
+Resume     copilot --resume=ad11ae2a-4ac9-4a03-86ed-d84957fc8703

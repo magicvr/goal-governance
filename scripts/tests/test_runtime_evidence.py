@@ -112,6 +112,130 @@ class RuntimeEvidenceTests(unittest.TestCase):
                     entrypoint["status"] = "pending-ci-replay"
         return contract, matrix
 
+    def test_cli_accepts_vision_entrypoint_choice(self) -> None:
+        """Shipped capture CLI must accept unit.entrypoint=vision (P-006 decision layer)."""
+        # Drive real argparse path: vision is a legal choice; missing files yield return 1.
+        code = capture_runtime_evidence.main(
+            [
+                "--consumer",
+                "test",
+                "--entrypoint",
+                "vision",
+                "--protocol-version",
+                "0.1.0",
+                "--product",
+                "Test",
+                "--product-version",
+                "1",
+                "--prompt-file",
+                "missing-prompt.txt",
+                "--marker",
+                "M",
+                "--behavior-source",
+                "missing.md",
+                "--output",
+                "out.json",
+                "--",
+                sys.executable,
+                "-c",
+                "pass",
+            ]
+        )
+        self.assertEqual(code, 1)
+
+    def test_capture_api_accepts_vision_entrypoint_and_validates(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-runtime-vision-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output = root / "vision.json"
+            payload = capture_runtime_evidence.capture(
+                consumer="test-host",
+                entrypoint="vision",
+                protocol_version="0.1.0",
+                product="Test Host",
+                product_version="1.0.0",
+                provider=None,
+                model=None,
+                prompt="/vision test\n",
+                marker="VISION_MARKER",
+                behavior_sources=["behavior.md"],
+                command=[
+                    sys.executable,
+                    "-c",
+                    "import sys; sys.stdin.read(); print('VISION_MARKER')",
+                ],
+                output=output,
+                root=root,
+            )
+            self.assertEqual(payload["unit"]["entrypoint"], "vision")
+            self.assertEqual(payload["result"]["verdict"], "pass")
+            Draft202012Validator(
+                self._runtime_schema(root),
+                format_checker=FormatChecker(),
+            ).validate(payload)
+
+    def test_cli_accepts_vision_audit_entrypoint_choice(self) -> None:
+        """Shipped capture CLI must accept the independent vision-audit entrypoint."""
+        # Drive the real argparse path: the accepted choice then fails only on the missing input.
+        code = capture_runtime_evidence.main(
+            [
+                "--consumer",
+                "test",
+                "--entrypoint",
+                "vision-audit",
+                "--protocol-version",
+                "0.1.0",
+                "--product",
+                "Test",
+                "--product-version",
+                "1",
+                "--prompt-file",
+                "missing-prompt.txt",
+                "--marker",
+                "M",
+                "--behavior-source",
+                "missing.md",
+                "--output",
+                "out.json",
+                "--",
+                sys.executable,
+                "-c",
+                "pass",
+            ]
+        )
+        self.assertEqual(code, 1)
+
+    def test_capture_api_accepts_vision_audit_entrypoint_and_validates(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-runtime-vision-audit-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output = root / "vision-audit.json"
+            payload = capture_runtime_evidence.capture(
+                consumer="test-host",
+                entrypoint="vision-audit",
+                protocol_version="0.1.0",
+                product="Test Host",
+                product_version="1.0.0",
+                provider=None,
+                model=None,
+                prompt="/vision-audit alignment\n",
+                marker="VISION_AUDIT_MARKER",
+                behavior_sources=["behavior.md"],
+                command=[
+                    sys.executable,
+                    "-c",
+                    "import sys; sys.stdin.read(); print('VISION_AUDIT_MARKER')",
+                ],
+                output=output,
+                root=root,
+            )
+            self.assertEqual(payload["unit"]["entrypoint"], "vision-audit")
+            self.assertEqual(payload["result"]["verdict"], "pass")
+            Draft202012Validator(
+                self._runtime_schema(root),
+                format_checker=FormatChecker(),
+            ).validate(payload)
+
     def test_capture_writes_schema_valid_payload_and_raw_digests(self) -> None:
         with tempfile.TemporaryDirectory(prefix="gg-runtime-capture-") as tmp:
             root = Path(tmp)

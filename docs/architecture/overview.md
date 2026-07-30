@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-28
 parent: null
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 架构概览
@@ -44,7 +44,7 @@ version: 0.7.0
              └──────────────────────────┘
 ```
 
-`workspace.md` 绑定 Root Goal、canonical 范围、共享资料目录指针与（若有 vision）`plan_refs`/`primary_plan`；**不**保存目标生命周期状态。愿景目录 `docs/vision/` 对齐 Charter→VP，**不是** progress 或审计台账。
+`workspace.md` 绑定 Root Goal、canonical 范围、共享资料目录指针与**必填** `plan_refs`/`primary_plan`；**不**保存目标生命周期状态。愿景目录 `docs/vision/` 为**单愿景**对齐链（Charter→VP→区），**不是** progress 或 Goal 审计台账（Vision Review 另见 `reviews.md`）。
 
 ## 仓库布局
 
@@ -65,8 +65,8 @@ version: 0.7.0
 ## 当前阶段（现时）
 
 - **真相源**：显式工作区 `docs/workspace-001-goal-governance/`（GOAL-011 已完成自 `docs/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
-- **原则**：[principles.md](principles.md) P-001～P-005（含 finding 三路径闭合、P-004.1～4.4）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
-- **Skills**：`/govern` 主入口、`/audit` 交叉入口、多宿主安装与契约镜像；发布一致性以 GOAL-008 惯例与 runtime evidence 为准。
+- **原则**：[principles.md](principles.md) P-001～**P-006**（含 finding 三路径闭合、P-004.1～4.4、单愿景级联）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
+- **Skills**：`/govern` 实现层主入口、`/audit` 目标交叉入口；`/vision` 决策层为第二刀；多宿主安装与契约镜像；发布一致性以 GOAL-008 惯例与 runtime evidence 为准。
 - **Web**：阶段 6 **有界结项**（GOAL-009 及 012～017）；主路径可读 + 受控写（双门闩，见 `web/README.md`）。扩展能力挂 residual **R-009-X**，不假装产品终态。
 - **Root**：`GOAL-001-main-vision` 保持 `active`，对齐 `VP-001-governance-platform-delivery` / `vision-goal-governance@0.1.0`。
 

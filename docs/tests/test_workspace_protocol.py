@@ -121,6 +121,7 @@ class WorkspaceProtocolTests(unittest.TestCase):
             "fail-closed",
             "第二套状态",
             "GOAL-009 R-003",
+            "### 2.6 目标 id 作用域与限定引用",
             "Q2",
             "Q3",
             "文档落盘默认",

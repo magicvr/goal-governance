@@ -1,0 +1,7 @@
+
+You have exceeded your monthly quota (Request ID: 98EC:3AB73:B7432C6:C84FFB7:6A68B6B9)
+
+
+Changes    +0 -0
+AI Credits 0 (12s)
+Resume     copilot --resume=d67a9240-33eb-4eb4-bca5-3cb0bcc6e5d9

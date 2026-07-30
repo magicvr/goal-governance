@@ -366,7 +366,11 @@ def capture(
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--consumer", required=True)
-    parser.add_argument("--entrypoint", choices=("govern", "audit"), required=True)
+    parser.add_argument(
+        "--entrypoint",
+        choices=("govern", "audit", "vision", "vision-audit"),
+        required=True,
+    )
     parser.add_argument("--protocol-version", required=True)
     parser.add_argument("--product", required=True)
     parser.add_argument("--product-version", required=True)

@@ -9,9 +9,14 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DATE = "2026-07-20"
+DATE = "2026-07-29"
 ROOT_ID = "GOAL-001-main-vision"
 ROOT_TITLE = "独立核心根目标"
+VP_ID = "VP-001-example-intent"
+VISION_ID = "vision-example-project"
+VISION_VERSION = "0.1.0"
+WORKSPACE_ID = "standalone-workspace"
+CANONICAL_SCOPE = "docs/workspace-001-main-vision/"
 
 
 class StandaloneBootstrapTests(unittest.TestCase):
@@ -22,7 +27,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
         for phrase in (
             "docs/templates/",
             "docs/contracts/",
-            "workspace-001-main-vision/goal-tree.md",
+            "docs/vision/alignment.md",
+            "goal-tree.md",
             "GOAL-001",
             "git init",
             "skills/",
@@ -31,28 +37,38 @@ class StandaloneBootstrapTests(unittest.TestCase):
             "生成路径",
             "核对结果",
             "P-005",
+            "P-006",
             "信息需求表",
             "docs/workspace-001-main-vision",
             "workspace-context.md",
-            "显式工作区上下文",
+            "plan_refs",
+            "primary_plan",
+            "Charter",
+            "冷启动",
+            "不完整安装",
+            "结构完整 ≠ 行为自动治理",
+            "不存在自动扫描、提醒或写入门禁执行器",
         ):
             self.assertIn(phrase, guide)
+        # Architecture row must not stop at P-005 only
+        self.assertIn("P-001～P-006", guide)
 
     def test_docs_entry_declares_package_version_and_sync_ledger(self) -> None:
         entry = (REPO_ROOT / "docs" / "README.md").read_text(encoding="utf-8")
         for phrase in (
-            "当前核心文档版本",
+            "可复制核心包版本",
+            "文档入口版本",
             "最近发布基线",
             "0.9.1",
             "0.8.0",
             "0.7.0",
-
             "canonical → Skills",
             "SHA-256",
             "docs/templates/goal-folder/",
             "skills/templates/goal-folder/",
             "docs/contracts/",
             "skills/contracts/",
+            "P-006",
         ):
             self.assertIn(phrase, entry)
 
@@ -64,17 +80,21 @@ class StandaloneBootstrapTests(unittest.TestCase):
             target = Path(tmp)
             self._init_git_repo(target)
             self._copy_core_package(target)
+            self._materialize_vision(target)
             self._materialize_root(target)
             self._materialize_workspace(target)
 
+            self._assert_vision_shape(target)
             self._assert_root_shape(target)
             self._assert_workspace_shape(target)
             self.assertIn("P-005", (target / "AGENTS.md").read_text(encoding="utf-8"))
+            self.assertIn("P-006", (target / "AGENTS.md").read_text(encoding="utf-8"))
             principles = (target / "docs" / "architecture" / "principles.md").read_text(
                 encoding="utf-8"
             )
             for phrase in (
                 "P-005",
+                "P-006",
                 "设立许可",
                 "规划门禁",
                 "实施门禁",
@@ -89,6 +109,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
                 "有界实验只能进入其明确的**信息收集范围**",
                 "暂停受影响范围、记录事实，并回流到信息表、决策或路线图",
                 "不是每个目标的固定两个子目标",
+                "单愿景",
             ):
                 self.assertIn(phrase, principles)
             self.assertIn(
@@ -102,6 +123,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
             self.assertTrue(workspace_protocol.is_file())
             self.assertTrue(workspace_template.is_file())
             self.assertIn("隐式单工作区", workspace_protocol.read_text(encoding="utf-8"))
+            self.assertIn("plan_refs", workspace_template.read_text(encoding="utf-8"))
             contract_manifest = target / "docs" / "contracts" / "skills-consumer-contract.json"
             contract_schema = target / "docs" / "contracts" / "skills-consumer-contract.schema.json"
             compatibility_matrix = (
@@ -150,11 +172,16 @@ class StandaloneBootstrapTests(unittest.TestCase):
     def _copy_core_package(target: Path) -> None:
         source_docs = REPO_ROOT / "docs"
         (target / "docs").mkdir()
+        (target / "docs" / "vision").mkdir()
         shutil.copy2(REPO_ROOT / "AGENTS.md", target / "AGENTS.md")
         shutil.copy2(source_docs / "README.md", target / "docs" / "README.md")
         shutil.copytree(source_docs / "architecture", target / "docs" / "architecture")
         shutil.copytree(source_docs / "templates", target / "docs" / "templates")
         shutil.copytree(source_docs / "contracts", target / "docs" / "contracts")
+        shutil.copy2(
+            source_docs / "vision" / "alignment.md",
+            target / "docs" / "vision" / "alignment.md",
+        )
 
     @staticmethod
     def _frontmatter(fields: dict[str, str], body: str) -> str:
@@ -164,10 +191,54 @@ class StandaloneBootstrapTests(unittest.TestCase):
         return "\n".join(lines)
 
     @classmethod
+    def _materialize_vision(cls, target: Path) -> None:
+        vision = target / "docs" / "vision"
+        plans = vision / "plans"
+        plans.mkdir(parents=True, exist_ok=True)
+        (vision / "charter.md").write_text(
+            cls._frontmatter(
+                {
+                    "doc_type": "vision-charter",
+                    "vision_id": VISION_ID,
+                    "title": "独立核心示例愿景",
+                    "status": "active",
+                    "version": VISION_VERSION,
+                    "effective_date": DATE,
+                    "created": DATE,
+                    "updated": DATE,
+                },
+                "# Charter · 独立核心示例\n\n"
+                "## 目的陈述\n\n独立启用验证用最小完备 Charter。\n\n"
+                "## 方向级成功边界\n\n1. 可复制协议。\n\n"
+                "## 非目标\n\n- 不在愿景层维护 progress%。\n",
+            ),
+            encoding="utf-8",
+        )
+        (plans / f"{VP_ID}.md").write_text(
+            cls._frontmatter(
+                {
+                    "doc_type": "vision-plan",
+                    "id": VP_ID,
+                    "title": "独立启用首波意图",
+                    "status": "active",
+                    "vision_ref": f"{VISION_ID}@{VISION_VERSION}",
+                    "lead_workspace": WORKSPACE_ID,
+                    "created": DATE,
+                    "updated": DATE,
+                    "version": "0.1.0",
+                },
+                f"# {VP_ID} · 独立启用首波意图\n\n"
+                "## 意图\n\n建立可挂接的工作区与 Root。\n\n"
+                "## 方向级退出判据\n\n1. 工作区与 Root 已挂本 VP。\n",
+            ),
+            encoding="utf-8",
+        )
+
+    @classmethod
     def _materialize_root(cls, target: Path) -> None:
         workspace = target / "docs" / "workspace-001-main-vision"
         root = workspace / ROOT_ID
-        workspace.mkdir()
+        workspace.mkdir(parents=True, exist_ok=True)
         root.mkdir()
 
         template = target / "docs" / "templates" / "goal-folder"
@@ -187,8 +258,15 @@ class StandaloneBootstrapTests(unittest.TestCase):
         }
         (root / "00-meta.md").write_text(
             cls._frontmatter(
-                {**common, "title": ROOT_TITLE, "progress": "0%"},
-                f"# GOAL-001 · {ROOT_TITLE}\n\n## 概述\n独立核心包生成的 Root Goal。",
+                {
+                    **common,
+                    "title": ROOT_TITLE,
+                    "plan_refs": VP_ID,
+                    "primary_plan": VP_ID,
+                },
+                f"# GOAL-001 · {ROOT_TITLE}\n\n## 概述\n独立核心包生成的 Root Goal。\n\n"
+                f"## 愿景对齐\n\n- primary_plan: `{VP_ID}`\n"
+                f"- serves_summary: 服务独立启用冷启动意图。\n",
             ),
             encoding="utf-8",
         )
@@ -202,7 +280,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
         (root / "02-execution.md").write_text(
             cls._frontmatter(
                 {**common, "doc": "execution"},
-                "# 执行记录 · GOAL-001\n\n## 时间线\n\n### 2026-07-19 · 初始化\n\n- 从 canonical 模板建立 Root。",
+                "# 执行记录 · GOAL-001\n\n## 时间线\n\n### 2026-07-29 · 初始化\n\n"
+                "- 从 canonical 模板建立 Root（Charter→VP 之后）。",
             ),
             encoding="utf-8",
         )
@@ -229,12 +308,12 @@ class StandaloneBootstrapTests(unittest.TestCase):
                     "# Goal Tree",
                     "",
                     "```text",
-                    f"{ROOT_ID} · {ROOT_TITLE} [active 0%]",
+                    f"{ROOT_ID} · {ROOT_TITLE} [active]",
                     "```",
                     "",
                     "| ID | 标题 | Parent | Status | Progress | 路径 |",
                     "|----|------|--------|--------|----------|------|",
-                    f"| {ROOT_ID} | {ROOT_TITLE} | — | active | 0% | {ROOT_ID}/ |",
+                    f"| {ROOT_ID} | {ROOT_TITLE} | — | active | — | {ROOT_ID}/ |",
                     "",
                 ]
             ),
@@ -247,19 +326,22 @@ class StandaloneBootstrapTests(unittest.TestCase):
         (workspace / "workspace.md").write_text(
             cls._frontmatter(
                 {
-                    "id": "standalone-workspace",
+                    "id": WORKSPACE_ID,
                     "title": "独立核心工作区",
                     "status": "active",
                     "root_goal": ROOT_ID,
-                    "canonical_scope": "docs/workspace-001-main-vision/",
+                    "canonical_scope": CANONICAL_SCOPE,
                     "shared_materials_catalog": "none",
+                    "vision_role": "primary",
+                    "plan_refs": VP_ID,
+                    "primary_plan": VP_ID,
                     "created": DATE,
                     "updated": DATE,
                     "version": "0.1.0",
                 },
                 "# 工作区上下文 · 独立核心工作区\n\n"
-                "## 固定共享资料引用\n\n"
-                "`shared_materials_catalog: none`，因此没有共享资料引用。",
+                "## 愿景对齐\n\n"
+                f"`primary_plan: {VP_ID}`；共享资料 `none`。\n",
             ),
             encoding="utf-8",
         )
@@ -276,6 +358,19 @@ class StandaloneBootstrapTests(unittest.TestCase):
                 key, value = line.split(":", 1)
                 fields[key.strip()] = value.strip()
         return fields
+
+    def _assert_vision_shape(self, target: Path) -> None:
+        vision = target / "docs" / "vision"
+        self.assertTrue((vision / "alignment.md").is_file())
+        charter = self._parse_frontmatter(vision / "charter.md")
+        self.assertEqual(charter["status"], "active")
+        self.assertEqual(charter["vision_id"], VISION_ID)
+        self.assertEqual(charter["version"], VISION_VERSION)
+        vp_path = vision / "plans" / f"{VP_ID}.md"
+        self.assertTrue(vp_path.is_file())
+        vp = self._parse_frontmatter(vp_path)
+        self.assertEqual(vp["id"], VP_ID)
+        self.assertEqual(vp["vision_ref"], f"{VISION_ID}@{VISION_VERSION}")
 
     def _assert_root_shape(self, target: Path) -> None:
         workspace = target / "docs" / "workspace-001-main-vision"
@@ -300,7 +395,9 @@ class StandaloneBootstrapTests(unittest.TestCase):
 
         meta = self._parse_frontmatter(root / "00-meta.md")
         self.assertEqual(meta["title"], ROOT_TITLE)
-        self.assertEqual(meta["progress"], "0%")
+        self.assertNotIn("progress", meta)
+        self.assertEqual(meta["primary_plan"], VP_ID)
+        self.assertEqual(meta["plan_refs"], VP_ID)
 
         tree_path = workspace / "goal-tree.md"
         tree_fields = self._parse_frontmatter(tree_path)
@@ -309,17 +406,21 @@ class StandaloneBootstrapTests(unittest.TestCase):
         self.assertEqual(tree_fields["parent"], "null")
         tree = tree_path.read_text(encoding="utf-8")
         self.assertIn(ROOT_ID, tree)
-        self.assertIn("[active 0%]", tree)
+        self.assertIn("[active]", tree)
+        self.assertIn("| active | — |", tree)
 
     def _assert_workspace_shape(self, target: Path) -> None:
         workspace = target / "docs" / "workspace-001-main-vision"
         context = workspace / "workspace.md"
         self.assertTrue(context.is_file())
         fields = self._parse_frontmatter(context)
-        self.assertEqual(fields["id"], "standalone-workspace")
+        self.assertEqual(fields["id"], WORKSPACE_ID)
         self.assertEqual(fields["root_goal"], ROOT_ID)
-        self.assertEqual(fields["canonical_scope"], "docs/workspace-001-main-vision/")
+        self.assertEqual(fields["canonical_scope"], CANONICAL_SCOPE)
         self.assertEqual(fields["shared_materials_catalog"], "none")
+        self.assertEqual(fields["vision_role"], "primary")
+        self.assertEqual(fields["plan_refs"], VP_ID)
+        self.assertEqual(fields["primary_plan"], VP_ID)
 
 
 if __name__ == "__main__":

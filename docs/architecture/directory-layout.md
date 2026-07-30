@@ -2,9 +2,9 @@
 title: 目录布局
 status: active
 created: 2026-07-18
-updated: 2026-07-28
+updated: 2026-07-29
 parent: null
-version: 0.6.1
+version: 0.6.2
 ---
 
 # 目录布局
@@ -33,6 +33,7 @@ goal-governance/
 │   ├── templates/
 │   │   ├── README.md            # 核心模板层说明
 │   │   ├── goal-folder/         # canonical 五件套模板
+│   │   ├── vision/              # Charter / VP 冷启动模板
 │   │   └── workspace-context.md # workspace-<NNN>-<slug>/workspace.md 模板
 │   ├── contracts/               # canonical 机读协议/模板版本与兼容声明
 │   │   ├── skills-consumer-contract.schema.json

@@ -4,9 +4,29 @@ doc: execution
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-19
-updated: 2026-07-20
-version: 1.8.0
+updated: 2026-07-28
+version: 1.8.2
 ---
+
+### 2026-07-28 · 路径 D 发版候选 runtime 验证（不重开；不发版）
+
+- 交叉：GOAL-001 路径 D（D-024）用户指令推进发版候选。
+- `compatibility_report.py --require-ready` → **ready-for-release-evidence**；矩阵 `candidateRevision: unreleased`；12 CLI 入口 evidence 未 stale。
+- `release_evidence.py --mode rehearsal --run-checks --include-web` → **checksPassed: true**（修复 `test_release_evidence.py` 对过期 `v0.9.1` candidate 的硬编码断言后）。
+- 产物：`artifacts/compatibility-report-path-d-check.json`、`artifacts/release-evidence-path-d-rehearsal-2026-07-28.json`。
+- **不**改本目标 status/progress；**不** annotated tag / Release。
+
+
+### 2026-07-28 - `/vision` runtime dual-pass（不重开本目标；不发版）
+
+- 扩展 `scripts/capture_runtime_evidence.py`：`--entrypoint vision`。
+- 探针：`attachments/runtime/prompts/{claude,grok,copilot-cli}-vision.txt`。
+- **Dual-pass 命令**（cwd 仓库根；摘要 scratch `vision-capture-summary.txt`）：
+  - Claude ×2：`python scripts/capture_runtime_evidence.py … --entrypoint vision --marker CLAUDE_VISION_DISPATCH_OK --stdout-mode claude-stream-json-sanitized -- cmd.exe /d /s /c "claude -p …"` → **pass**（pass1 + final `claude-code-cli-vision-2026-07-28.json`）。
+  - Grok ×2：`… --marker GROK_VISION_DISPATCH_OK -- grok --prompt-file …grok-vision.txt …` → **pass**（pass1 + final `grok-build-cli-vision-2026-07-28.json`）。
+  - Copilot ×2：`… --marker COPILOT_CLI_VISION_DISPATCH_OK -- powershell -File …copilot-cli-replay.ps1` → **fail**（stderr monthly quota）；JSON 保留为失败证据；矩阵 vision **pending**。
+- 矩阵/contract mirror 已更新 vision 状态；**无** annotated tag / Release / release_evidence release-mode。
+- 交叉：GOAL-001 D-019；VRev-001。
 
 ### 2026-07-20 - Install GitHub Copilot CLI and complete CLI replay (历史记录)
 

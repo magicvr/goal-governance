@@ -2,16 +2,16 @@
 title: 工作区与共享资料区协议
 status: active
 created: 2026-07-20
-updated: 2026-07-28
+updated: 2026-07-30
 parent: null
-version: 0.5.0
+version: 0.8.1
 ---
 
 # 工作区与共享资料区协议
 
 本协议定义核心文档、Skills 和后续消费适配器共同使用的工作区边界。它保留目标五件套和目标平铺，但不再以全局 `docs/goals/` 作为当前 canonical 布局：每个显式工作区在自己的根目录内保存唯一目标状态。
 
-仓库级愿景体系见 [../vision/](../vision/)：Charter → 愿景规划（VP）→ 工作区/Root 三层对齐；愿景**不是**第二套 goal-tree 或 progress 权威。规则细节以 [../vision/alignment.md](../vision/alignment.md) 为准。
+仓库级愿景体系见 [../vision/](../vision/) 与 [principles.md](principles.md) **P-006**：**单愿景**；冷启动 **Charter → VP → 工作区/Root**；所有工作区必须挂 `plan_refs`/`primary_plan`。愿景**不是**第二套 goal-tree 或 progress 权威。规则细节以 [../vision/alignment.md](../vision/alignment.md) 为准。
 
 ## 1. 范围与术语
 
@@ -35,23 +35,25 @@ version: 0.5.0
 3. 工作区之间不得混合目标、候选、草稿、审计意见、写入请求或 AI 上下文。多个工作区而没有明确焦点时，Skills 和消费适配器必须 fail closed，而非猜测默认工作区。
 4. 平台或宿主可以提供导航，但导航缓存不能成为 canonical 目标状态；跨工作区导航字段、运行时授权和用户操作仍属于消费适配器/产品门禁。
 5. 工作区上下文改变 Root Goal 绑定、canonical 范围或共享资料目录指针时，属于治理变更：必须有可追溯决定，并在受影响目标的执行记录中留下事实。
-6. **目标 id 作用域与限定引用（A0）**：
-   - **存储 id 形状不变**：`GOAL-NNN-short-slug`（Root 固定 `GOAL-001-…`）。**禁止**把工作区编号嵌进 goal id 或文件夹名（否决 `GOAL-{ws}-{nnn}-…` 一类全局扁平 id）。
-   - **`GOAL-*` 仅在本工作区内唯一**；跨工作区 id **允许**重复。
-   - **裸 id 合法条件**（须**同时**满足）：已解析并校验当前工作区；本轮读写/parent/审计/goal-tree 全部落在该区；对用户回显时本轮至少一次声明当前工作区（见下「展示」）。
-   - **必须限定引用**（任一成立）：跨工作区提及/对比/链接；多区并存且焦点未定或刚切换；外部系统、issue、发布说明、VP 证据链接；AI/broker 等载荷；审计涉及他区目标。
-   - **合法限定形式**（等价）：
 
-     | 形式 | 写法 | 默认场景 |
-     |------|------|----------|
-     | **Q1** 双字段 | `workspace_id` + `goal_id` | 机器/API 载荷 |
-     | **Q2** canonical 路径 | `docs/workspace-<NNN>-<slug>/GOAL-NNN-slug/` | **文档落盘默认** |
-     | **Q3** 行内标签 | `[workspace-id] GOAL-NNN-slug` | **对话/编排回显默认** |
+### 2.6 目标 id 作用域与限定引用（A0）
 
-   - **区内 `parent` 与同区相对链接**继续用短 id，不改五件套形状。
-   - **禁止**：仅 `GOAL-NNN-…` 跨区寻址；仅用目录序号冒充 `workspace_id`（须用 `workspace.md` 的 `id` 或完整 Q2 路径）；把 Q 形式写成磁盘文件夹名。
-   - **展示**：Skills/编排器每轮须有工作区页眉（`workspace_id`、canonical 范围、Root、焦点目标）；单区焦点清晰时正文可用短 id；跨区或歧义时正文用 Q3（对话）或 Q2（落盘）。多区无焦点 → fail closed，不输出裸 id 推进建议。用户只说裸 `GOAL-NNN` 且多区时，反问 `workspace_id` 并给候选。
-   - **历史文档**不要求回写限定名；**新写入**的跨区提及遵守本条。Web 展示/复合路由属后续产品切片（A1/A2），本协议不因 A0 自动关闭。
+- **存储 id 形状不变**：`GOAL-NNN-short-slug`（Root 固定 `GOAL-001-…`）。**禁止**把工作区编号嵌进 goal id 或文件夹名（否决 `GOAL-{ws}-{nnn}-…` 一类全局扁平 id）。
+- **`GOAL-*` 仅在本工作区内唯一**；跨工作区 id **允许**重复。
+- **裸 id 合法条件**（须**同时**满足）：已解析并校验当前工作区；本轮读写/parent/审计/goal-tree 全部落在该区；对用户回显时本轮至少一次声明当前工作区（见下「展示」）。
+- **必须限定引用**（任一成立）：跨工作区提及/对比/链接；多区并存且焦点未定或刚切换；外部系统、issue、发布说明、VP 证据链接；AI/broker 等载荷；审计涉及他区目标。
+- **合法限定形式**（等价）：
+
+  | 形式 | 写法 | 默认场景 |
+  |------|------|----------|
+  | **Q1** 双字段 | `workspace_id` + `goal_id` | 机器/API 载荷 |
+  | **Q2** canonical 路径 | `docs/workspace-<NNN>-<slug>/GOAL-NNN-slug/` | **文档落盘默认** |
+  | **Q3** 行内标签 | `[workspace-id] GOAL-NNN-slug` | **对话/编排回显默认** |
+
+- **区内 `parent` 与同区相对链接**继续用短 id，不改五件套形状。
+- **禁止**：仅 `GOAL-NNN-…` 跨区寻址；仅用目录序号冒充 `workspace_id`（须用 `workspace.md` 的 `id` 或完整 Q2 路径）；把 Q 形式写成磁盘文件夹名。
+- **展示**：Skills/编排器每轮须有工作区页眉（`workspace_id`、canonical 范围、Root、焦点目标）；单区焦点清晰时正文可用短 id；跨区或歧义时正文用 Q3（对话）或 Q2（落盘）。多区无焦点 → fail closed，不输出裸 id 推进建议。用户只说裸 `GOAL-NNN` 且多区时，反问 `workspace_id` 并给候选。
+- **历史文档**不要求回写限定名；**新写入**的跨区提及遵守本条。Web 展示/复合路由属后续产品切片（A1/A2），本协议不因 A0 自动关闭。
 
 ## 3. Root Goal、纲领阶段与并行
 
@@ -73,11 +75,13 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 | `canonical_scope` | 当前工作区根；格式为 `docs/workspace-<NNN>-<slug>/`。 |
 | `shared_materials_catalog` | 共享资料目录的固定路径/URI，或 `none`。它只标识资料来源，不保存资料内容。 |
 | `status`、`created`、`updated`、`version` | 与其他 core Markdown 一致的可追溯元信息。 |
-| `vision_role` | `primary` \| `delivery` \| `sandbox`（仓库已安装 `docs/vision/` 时必填）。 |
-| `plan_refs` | 对齐的愿景规划 id 列表（逗号分隔）。非 sandbox opt-out 时至少一项。 |
-| `primary_plan` | 当前焦点 VP；必须出现在 `plan_refs` 中；对应 `docs/vision/plans/<id>.md`。 |
+| `vision_role` | `primary` \| `delivery`（完整治理下必填）。 |
+| `plan_refs` | **必填**，至少一个愿景规划 id（逗号分隔）。**禁止** opt-out。 |
+| `primary_plan` | **必填**；必须出现在 `plan_refs` 中；对应 `docs/vision/plans/<id>.md`。 |
 
 若 `shared_materials_catalog: none`，工作区不得声明共享资料引用。
+
+完整治理下仓库**必有**现行 Charter；新建显式工作区前须已完成冷启动上环（Charter → 可挂接 VP）。缺 Charter 时仅允许引导补齐，不得非引导开区（见 alignment §0、P-006）。
 
 ### 隐式 / legacy 工作区（唯一兼容路径）
 
@@ -91,13 +95,14 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 
 ### 4b. 愿景对齐（三层链）
 
-1. **Charter ← VP ← Workspace/Root**：Root 与工作区通过对齐 `plan_refs` / `primary_plan` 挂接 VP；VP 通过 `vision_ref: {vision_id}@{version}` 精确对齐 Charter。
-2. **Fail closed**：缺 plan 字段、`primary_plan` 无法解析、VP `vision_ref` 与 charter 版本不一致、或 Charter/VP 使用非法 status 时，不得推进受影响的新建/放行/关门。
-3. **Opt-out**：仅 `vision_role: sandbox` 可在留痕后省略 `plan_refs`；`primary` 禁止 opt-out。
-4. **规划与工作区非 1:1**：一 VP 可由 0..N 个工作区推进（`planned` 允许 0）；一工作区可挂 1..N 个 VP，但必须标明 `primary_plan`。
-5. **VP 关门**：轻量纲领确认 + 链接工作区证据；允许有界 closed（residual 点名到区/目标）；禁止把 progress% 或审计台账放进 `docs/vision/`。
+1. **单愿景 · Charter ← VP ← Workspace/Root**：项目内唯一 active Charter；Root 与工作区通过 `plan_refs` / `primary_plan` 挂接 VP；VP 通过 `vision_ref: {vision_id}@{version}` 精确对齐 Charter。
+2. **Fail closed**：缺 Charter（完整安装判定）、缺 plan 字段、`primary_plan` 无法解析、VP `vision_ref` 与 charter 版本不一致、或 Charter/VP 使用非法 status 时，不得推进受影响的新建/放行/关门（引导补齐/re-align 除外）。
+3. **无 plan opt-out**：**所有**工作区必须填写 `plan_refs` 与 `primary_plan`；`vision_role` 仅允许 `primary` / `delivery`。
+4. **规划与工作区非 1:1**：一 VP 可由 0..N 个工作区推进（`planned` 允许 0）；一工作区可挂 1..N 个 VP，但必须标明 `primary_plan`。多区绑定同一 active/推进中 VP 时 **`lead_workspace` 必填**。
+5. **VP 关门**：轻量纲领确认 + 链接工作区证据；多区时 lead 发起 + 用户确认；允许有界 closed（residual 点名到区/目标）；禁止把 progress% 或 Goal 审计台账放进 `docs/vision/`。
 6. **Primary 冲突**：`workspace.md` 的 `vision_role`、`docs/vision/workspaces.md` 的 role、Charter 的 `primary_workspace` 三者冲突时，以 [alignment.md](../vision/alignment.md) 的裁决顺序 fail closed，不得静默选一侧。
-7. 完整规则见 [../vision/alignment.md](../vision/alignment.md)；消费方勾选见 [../vision/consumer-checklist.md](../vision/consumer-checklist.md)。
+7. **跨区**：**禁止**跨工作区 `parent`；跨区提及用 Q1/Q2/Q3（§2.6）。
+8. **结构选型与冷启动**：见 P-006 与 [alignment.md](../vision/alignment.md) §0 / §10；消费方勾选见 [../vision/consumer-checklist.md](../vision/consumer-checklist.md)。
 
 ## 5. 共享资料候选库存与固定引用
 
@@ -127,13 +132,14 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 
 ## 6. Skills 与消费适配器规则
 
-1. 若存在 `docs/vision/charter.md`，先读取 Charter 版本与 [alignment](../vision/alignment.md) 要点，再定位工作区。
-2. 定位用户指定或已配置的工作区 `workspace.md`，校验 Root Goal、canonical scope、共享资料引用，以及（非 sandbox opt-out 时）`plan_refs` / `primary_plan` 与对应 VP 文件后，再扫描该工作区 `goal-tree.md` 与目标记录。
+1. **先判定愿景完整性**：缺 `docs/vision/charter.md`（或现行非 active）→ 报告不完整安装；**仅允许引导补齐** Charter→VP，不得非引导开区/推进/放行/关门。完整时读取 Charter 版本与 [alignment](../vision/alignment.md) 要点，再定位工作区。
+2. 定位用户指定或已配置的工作区 `workspace.md`，校验 Root Goal、canonical scope、共享资料引用，以及**必填**的 `plan_refs` / `primary_plan` 与对应 VP 文件后，再扫描该工作区 `goal-tree.md` 与目标记录。
 3. 若仓库只有一个显式工作区，消费适配器可以使用它作为当前 scope；多个工作区而未指定焦点时必须拒绝受影响读取、写入和放行。
-4. 没有显式工作区根时，**仅当**存在 `docs/goals/` 才可作为 legacy 单工作区；否则 fail closed / 走空治理 scaffold。不得自动发现、合并或把仓库根等猜测路径当作工作区。
-5. 任何创建、决策、执行、审计或提案都必须在已验证的当前工作区内。资料候选库存只补充可核对的文件摘要，不替代固定引用或事实确认。愿景目录不保存目标进度权威。
-6. `/audit` 只在当前工作区目标台账追加 `source: independent` 意见；它不得凭资料目录、愿景规划或索引改变状态或关闭 finding（finding 闭合见 principles P-003 三路径，由 `/govern` 响应）。
-7. 跨工作区目标引用必须使用 §2.6 限定形式（文档默认 **Q2** 路径；对话默认 **Q3** 标签；机器载荷可用 **Q1**）。不得仅凭裸 `GOAL-*` 跨区寻址。
+4. 没有显式工作区根时，**仅当**存在 `docs/goals/` 才可作为 legacy 单工作区（且仍须按不完整/引导规则处理缺 vision）；否则 fail closed / 走空治理 scaffold（顺序：Charter → VP → 工作区）。不得自动发现、合并或把仓库根等猜测路径当作工作区。
+5. 任何创建、决策、执行、审计或提案都必须在已验证的当前工作区内。资料候选库存只补充可核对的文件摘要，不替代固定引用或事实确认。愿景目录不保存目标进度权威；Vision Review 落在 [../vision/reviews.md](../vision/reviews.md)。
+6. `/audit` 只在当前工作区目标台账追加 `source: independent` 意见；它不得凭资料目录、愿景规划或索引改变状态或关闭 finding（finding 闭合见 principles P-003 三路径，由 `/govern` 响应）。愿景层：**self Review / finding 响应**走 `/vision`；**independent Vision Review** 走 `/vision-audit`（只写 [../vision/reviews.md](../vision/reviews.md)）；**禁止** Goal `/audit` 写入 `reviews.md` 或与 Vision Review 混用台账。
+7. 跨工作区目标引用必须使用 §2.6 限定形式（文档默认 **Q2** 路径；对话默认 **Q3** 标签；机器载荷可用 **Q1**）。不得仅凭裸 `GOAL-*` 跨区寻址；**禁止**跨区 `parent`。
+8. Charter `strategic` 后受影响范围未 re-align 前：**宽阻断**（禁新建子目标/放行/关门/非引导开区）。
 
 ## 7. 与后续产品的交接
 
