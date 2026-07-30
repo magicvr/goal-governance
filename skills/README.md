@@ -147,7 +147,7 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
-**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**。填表类 advanced slash 仍为可选。`/vision-audit` 已通过安装结构测试，但三宿主 runtime 均为 **pending-runtime-validation**；`/vision` runtime：Claude + Grok **`runtime-verified`**，Copilot 因配额仍 pending（见矩阵）。
+**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**。填表类 advanced slash 仍为可选。四入口在 Claude / Grok / Copilot CLI 上均为 **`runtime-verified`（2026-07-28）**：`/vision-audit` 证据为只读 dispatch（wrapper 路由、核心提示词加载、愿景发现），**不是**写盘全路径 e2e；见兼容矩阵。
 
 #### Claude Code
 

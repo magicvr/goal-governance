@@ -2,9 +2,9 @@
 title: 治理原则
 status: active
 created: 2026-07-18
-updated: 2026-07-29
+updated: 2026-07-30
 parent: null
-version: 0.10.0
+version: 0.10.1
 ---
 
 # 治理原则
@@ -444,9 +444,10 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 
 ### 6.9 工具分工（落地节奏）
 
-- **`/vision`**：决策层——建/修 Charter、组合编排、VP、Vision Review、re-align 引导（`skills/prompts/06-vision-orchestrator.md`）。
+- **`/vision`**：决策层——建/修 Charter、组合编排、VP、self Vision Review、re-align 引导与 VRev finding 响应（`skills/prompts/06-vision-orchestrator.md`）。
+- **`/vision-audit`**：独立 Vision Review——只追加 `docs/vision/reviews.md`（`source: independent`）；不改 Charter / VP / Goal status（`skills/prompts/07-independent-vision-review.md`）。
 - **`/govern`**：实现层推进；发现缺 Charter、待 re-align 或结构歧义时转入 `/vision` 或 fail closed，**不得**无愿景推进。
-- **落地**：核心文档第一刀 + Skills `/vision` 第二刀（install 默认三入口：govern / audit / vision）。
+- **落地**：核心文档第一刀 + Skills `/vision` 第二刀（install 默认**四入口**：govern / audit / vision / vision-audit）。
 
 ### 6.10 本原则 v1 非目标
 
