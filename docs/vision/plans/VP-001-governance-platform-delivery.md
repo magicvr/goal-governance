@@ -6,8 +6,8 @@ status: active
 vision_ref: vision-goal-governance@0.1.0
 lead_workspace: workspace-001-goal-governance
 created: 2026-07-28
-updated: 2026-07-28
-version: 0.1.0
+updated: 2026-07-30
+version: 0.1.1
 ---
 
 # VP-001 · 治理平台可复用交付
@@ -27,7 +27,7 @@ version: 0.1.0
 在同时满足下列方向时，本 VP **可以**有界或完整关门（证据必须在工作区目标内，本文件只做纲领确认）：
 
 1. 核心协议（含愿景/工作区/资料边界）可独立复制使用，且 dogfood 工作区对齐链完整。
-2. Skills 主路径（`/govern`、`/audit`、安装与发布约定）按既有发布门禁可验证。
+2. Skills 主路径按既有发布门禁可验证：实现层 `/govern`、Goal 交叉审 `/audit`、决策层 `/vision`、独立 Vision Review `/vision-audit`，以及安装与发布约定（默认四入口面）。
 3. Web 主路径在已接受的 residual 边界内可用；未关闭的扩展 residual 已显式点名，不假装终态。
 4. 无未处理的、阻断本规划退出的 required 协议缺口（或已用户书面接受 residual）。
 
@@ -53,4 +53,5 @@ version: 0.1.0
 
 | date | change |
 |------|--------|
+| 2026-07-30 | **editorial**（V-F-007 fixed）：退出判据 §2 Skills 主路径补全 `/vision`、`/vision-audit`；不改意图/退出边界实质；`vision_ref` 仍 `vision-goal-governance@0.1.0`。 |
 | 2026-07-28 | 初创；承接 Root 长期交付意图，作为 Charter v0.1.0 下首个 active VP。 |

@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-07-29
-version: 0.6.0
+updated: 2026-07-30
+version: 0.6.1
 parent: null
 ---
 
@@ -209,6 +209,17 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 | required 闭合 | 与 P-003 同构：`fixed` / `accepted-residual` / `user-overruled` + 留痕 |
 | 强制时机 | Charter 初建；每次 `strategic` 后（P-006） |
 | 长文 | 可链附件；`reviews.md` 必须有编号节 |
+
+### 9.1 工具入口（与 Goal 台账分界）
+
+| 入口 | 写什么 | 不写什么 |
+|------|--------|----------|
+| **`/vision`** | self Vision Review；finding 响应（`fixed` / residual / overruled）；Charter / VP / 组合编排 / re-align 决策 | Goal `03-audit`；不推进子目标执行 |
+| **`/vision-audit`** | independent Vision Review → 仅 `reviews.md`（`source: independent`） | 不改 Charter / VP / Goal status；不自行闭合 finding |
+| **`/audit`** | Goal `03-audit` independent | **禁止**写入 `docs/vision/reviews.md` |
+| **`/govern`** | 实现层推进与 Goal finding 响应 | 无 Charter 时不得假装完整推进 |
+
+独立愿景审视**必须**走 `/vision-audit`；Goal 交叉审计走 `/audit`。两台账不得混写。
 
 ## 10. 结构选型（摘要）
 

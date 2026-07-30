@@ -3,8 +3,8 @@ doc_type: vision-index
 title: 愿景体系入口
 status: active
 created: 2026-07-28
-updated: 2026-07-29
-version: 0.4.0
+updated: 2026-07-30
+version: 0.4.1
 ---
 
 # 愿景体系 · `docs/vision/`
@@ -40,6 +40,15 @@ version: 0.4.0
 1. **日常推进**：`charter.md` → 当前工作区 `primary_plan` 对应的 `plans/VP-*.md` → [alignment.md](alignment.md) 门禁。
 2. **冷启动 / 建区**：Charter（最小完备）→ 首个 VP → 再写工作区 `plan_refs` / `primary_plan` 与 Root。
 3. **修订愿景**：改 charter → [revisions.md](revisions.md) → Vision Review（strategic）→ 更新受影响 VP `vision_ref` → 工作区 re-align（宽阻断见 alignment）。
+
+## 入口速记
+
+| 意图 | 入口 |
+|------|------|
+| 建/修 Charter、VP、self Review、finding 响应 | `/vision` |
+| 独立 Vision Review（只写 [reviews.md](reviews.md)） | `/vision-audit` |
+| 工作区目标推进 | `/govern` |
+| Goal 交叉审计 | `/audit` |
 
 ## 对齐递归（摘要）
 

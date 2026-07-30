@@ -3,8 +3,8 @@ doc_type: vision-consumer-checklist
 title: 愿景体系消费方检查清单
 status: active
 created: 2026-07-28
-updated: 2026-07-29
-version: 0.4.0
+updated: 2026-07-30
+version: 0.4.1
 ---
 
 # 消费方检查清单
@@ -66,3 +66,10 @@ version: 0.4.0
 5. 再扫该区 `goal-tree` 与目标五件套 / 审计意见  
 
 不得发明第二套愿景路径；任何工作区都不得省略 plan。
+
+## F. 愿景 vs Goal 入口（V-F-005）
+
+- [ ] self Vision Review / finding 响应 → **`/vision`**
+- [ ] independent Vision Review → **`/vision-audit`** → 仅 `docs/vision/reviews.md`
+- [ ] Goal 交叉审计 → **`/audit`** → 目标 `03-audit.md`（不写 `reviews.md`）
+- [ ] 实现推进 / Goal finding 响应 → **`/govern`**
