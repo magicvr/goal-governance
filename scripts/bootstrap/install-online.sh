@@ -47,6 +47,38 @@ Default package install: --all --non-interactive [--force].
 EOF
 }
 
+# True for POSIX absolute (/...) and Windows drive-absolute (C:/... or C:\...).
+is_absolute_path() {
+  case "$1" in
+    /*) return 0 ;;
+    [A-Za-z]:/* | [A-Za-z]:\\*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+resolve_path() {
+  # $1 path (may be relative); result is absolute path string.
+  local input="$1"
+  local resolved
+  if is_absolute_path "$input"; then
+    resolved="$input"
+  else
+    resolved="$(pwd)/${input}"
+  fi
+  # Prefer cygpath on Git Bash so drive paths normalize to /c/...
+  if command -v cygpath >/dev/null 2>&1; then
+    case "$resolved" in
+      [A-Za-z]:/* | [A-Za-z]:\\*)
+        resolved="$(cygpath -u "$resolved")"
+        ;;
+    esac
+  fi
+  local dir base
+  dir="$(dirname "$resolved")"
+  base="$(basename "$resolved")"
+  (cd "$dir" && pwd)/"$base"
+}
+
 die() {
   echo "Error: $*" >&2
   exit 1
@@ -139,20 +171,11 @@ LOCAL_SHA=""
 
 if [[ -n "$ZIP_PATH" ]]; then
   # Relative zip/sha paths resolve against process CWD (pwd), not --target-dir.
-  if [[ "$ZIP_PATH" = /* ]]; then
-    LOCAL_ZIP="$ZIP_PATH"
-  else
-    LOCAL_ZIP="$(pwd)/${ZIP_PATH}"
-  fi
-  LOCAL_ZIP="$(cd "$(dirname "$LOCAL_ZIP")" && pwd)/$(basename "$LOCAL_ZIP")"
+  # Windows drive paths (C:/...) must count as absolute (Git Bash / CI).
+  LOCAL_ZIP="$(resolve_path "$ZIP_PATH")"
   [[ -f "$LOCAL_ZIP" ]] || die "Zip path not found: $LOCAL_ZIP"
   if [[ -n "$SHA256_PATH" ]]; then
-    if [[ "$SHA256_PATH" = /* ]]; then
-      LOCAL_SHA="$SHA256_PATH"
-    else
-      LOCAL_SHA="$(pwd)/${SHA256_PATH}"
-    fi
-    LOCAL_SHA="$(cd "$(dirname "$LOCAL_SHA")" && pwd)/$(basename "$LOCAL_SHA")"
+    LOCAL_SHA="$(resolve_path "$SHA256_PATH")"
   elif [[ -f "${LOCAL_ZIP}.sha256" ]]; then
     LOCAL_SHA="${LOCAL_ZIP}.sha256"
   elif [[ -f "$(dirname "$LOCAL_ZIP")/${SHA_NAME}" ]]; then

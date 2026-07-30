@@ -39,12 +39,24 @@ def _load_pack():
 pack = _load_pack()
 
 
+def _powershell_exe() -> str | None:
+    """Prefer pwsh (PowerShell 7+) on CI; fall back to Windows PowerShell 5.x."""
+    for name in ("pwsh", "powershell"):
+        found = shutil.which(name)
+        if found:
+            return found
+    return None
+
+
 def _powershell(
     *args: str, cwd: Path | None = None
 ) -> subprocess.CompletedProcess[str]:
+    exe = _powershell_exe()
+    if not exe:
+        raise unittest.SkipTest("pwsh/powershell not on PATH (Linux hosts skip PS1 e2e)")
     return subprocess.run(
         [
-            "powershell",
+            exe,
             "-NoProfile",
             "-ExecutionPolicy",
             "Bypass",
@@ -65,6 +77,8 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
     def setUp(self) -> None:
         self.assertTrue(BOOTSTRAP_PS1.is_file())
         self.assertTrue(REAL_SKILLS.is_dir())
+        if not _powershell_exe():
+            self.skipTest("pwsh/powershell not on PATH (Linux hosts skip PS1 e2e)")
 
     def _pack_skills(self, out: Path, version: str = "0.0.0-testpack") -> pack.PackResult:
         return pack.pack_skills(

@@ -86,7 +86,20 @@ function Normalize-Version([string]$Raw) {
 }
 
 function Get-FileSha256Hex([string]$Path) {
-    return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+    # Prefer .NET so restricted / minimal hosts without Microsoft.PowerShell.Utility
+    # (Get-FileHash) still verify digests (observed on some GitHub Actions runners).
+    $stream = [System.IO.File]::OpenRead($Path)
+    try {
+        $sha = [System.Security.Cryptography.SHA256]::Create()
+        try {
+            $hash = $sha.ComputeHash($stream)
+            return ([System.BitConverter]::ToString($hash) -replace '-', '').ToLowerInvariant()
+        } finally {
+            $sha.Dispose()
+        }
+    } finally {
+        $stream.Dispose()
+    }
 }
 
 function Read-ExpectedDigest {
