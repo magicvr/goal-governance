@@ -136,11 +136,23 @@ def inventoriable_files(skills_root: Path) -> list[Path]:
 
     files: list[Path] = []
     for path in sorted(root.rglob("*")):
-        if not path.is_file():
-            continue
         rel = path.relative_to(root)
         if should_exclude(rel):
             continue
+        # GOAL-021 F-003: refuse symlinks and path escape (do not follow into zip).
+        if path.is_symlink():
+            raise PackSkillsError(
+                f"refusing symlink in skills pack: {rel.as_posix()}"
+            )
+        if not path.is_file():
+            continue
+        resolved = path.resolve()
+        try:
+            resolved.relative_to(root)
+        except ValueError as error:
+            raise PackSkillsError(
+                f"path escapes skills root after resolve: {rel.as_posix()} -> {resolved}"
+            ) from error
         files.append(path)
     if not files:
         raise PackSkillsError(f"no files to pack under {root}")

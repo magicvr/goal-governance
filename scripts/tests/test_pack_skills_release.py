@@ -141,6 +141,21 @@ class PackSkillsReleaseTests(unittest.TestCase):
                     skills_root=skills,
                 )
 
+    def test_pack_skills_rejects_symlink(self) -> None:
+        """GOAL-021 F-003: symlink members must not enter the zip (escape risk)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            skills = _minimal_skills_tree(base)
+            target = base / "outside-secret.txt"
+            target.write_text("secret\n", encoding="utf-8")
+            link = skills / "leaked-via-symlink.txt"
+            try:
+                link.symlink_to(target)
+            except OSError as exc:
+                self.skipTest(f"symlink creation not permitted: {exc}")
+            with self.assertRaisesRegex(pack.PackSkillsError, "symlink"):
+                pack.inventoriable_files(skills)
+
     def test_cli_packs_real_skills_tree(self) -> None:
         """Drive the shipped CLI entry point against the real repository skills/."""
         self.assertTrue(REAL_SKILLS.is_dir())

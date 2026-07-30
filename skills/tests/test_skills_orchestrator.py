@@ -811,6 +811,48 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             (SKILLS_ROOT.parent / "docs" / "vision" / "alignment.md").read_bytes(),
             "core vision/alignment.md must match canonical",
         )
+        # GOAL-021 F-001: full-file hash consistency for core templates + architecture mirrors
+        # (exclude tech-stack intentionally; docs/README may differ from core slim README).
+        canonical_docs = SKILLS_ROOT.parent / "docs"
+        mirror_pairs = [
+            ("templates/README.md", core / "templates" / "README.md"),
+            ("templates/workspace-context.md", core / "templates" / "workspace-context.md"),
+            (
+                "architecture/principles.md",
+                core / "architecture" / "principles.md",
+            ),
+            (
+                "architecture/workspace-protocol.md",
+                core / "architecture" / "workspace-protocol.md",
+            ),
+            ("architecture/overview.md", core / "architecture" / "overview.md"),
+            (
+                "architecture/directory-layout.md",
+                core / "architecture" / "directory-layout.md",
+            ),
+        ]
+        for rel, mirror_path in mirror_pairs:
+            canonical_path = canonical_docs / rel
+            self.assertTrue(canonical_path.is_file(), f"missing canonical: {rel}")
+            self.assertTrue(mirror_path.is_file(), f"missing core mirror: {rel}")
+            self.assertEqual(
+                sha256(canonical_path.read_bytes()).hexdigest(),
+                sha256(mirror_path.read_bytes()).hexdigest(),
+                f"core mirror hash drift: {rel}",
+            )
+        for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
+            c = canonical_docs / "templates" / "goal-folder" / name
+            m = core / "templates" / "goal-folder" / name
+            self.assertEqual(
+                sha256(c.read_bytes()).hexdigest(),
+                sha256(m.read_bytes()).hexdigest(),
+                f"core goal-folder hash drift: {name}",
+            )
+        templates_readme = (core / "templates" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("version: 0.6.0", templates_readme)
+        self.assertIn("progress", templates_readme)
+        self.assertIn("不放行阶段", templates_readme)
+        self.assertIn("同一阶段内", templates_readme)
         layout = (core / "architecture" / "directory-layout.md").read_text(encoding="utf-8")
         self.assertIn("workspace-", layout)
         self.assertNotIn("goal-governance/web", layout.replace("\\", "/"))
@@ -846,6 +888,15 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         # GOAL-019 A-001 F-002: refuse overwrite when workspace path exists
         self.assertRegex(sh, r"already exists|refuse overwrite")
         self.assertRegex(ps1, r"already exists|refuse overwrite")
+        # GOAL-021 F-005: non-interactive / force / dry-run semantics
+        self.assertIn("--force", sh)
+        self.assertIn("--non-interactive", sh)
+        self.assertIn("--dry-run", sh)
+        self.assertRegex(sh, r"Refusing overwrite in non-interactive mode")
+        self.assertRegex(ps1, r"Force|force")
+        self.assertRegex(ps1, r"NonInteractive|non-interactive")
+        self.assertRegex(ps1, r"DryRun|dry-run")
+        self.assertRegex(ps1, r"Refusing overwrite in non-interactive mode")
 
     @unittest.skipUnless(sys.platform.startswith("win"), "InitWorkspace refuse smoke is Windows/ps1-first")
     def test_init_workspace_refuses_existing_path(self) -> None:

@@ -287,6 +287,69 @@ def _validate_runtime_evidence(
         raise ValidationError(
             f"runtime evidence is not a pass for {consumer_id}/{entrypoint}"
         )
+    # GOAL-021 F-002: re-evaluate structured assertions against stdout; do not trust
+    # summary / stored observed flags / marker-only pass payloads.
+    stdout_path = _repo_path(root, result["stdoutPath"], "runtime stdout")
+    stdout_text = stdout_path.read_text(encoding="utf-8", errors="replace").replace(
+        "\r\n", "\n"
+    )
+    marker = result.get("marker")
+    if not isinstance(marker, str) or not marker or marker not in stdout_text:
+        raise ValidationError(
+            f"runtime evidence marker missing from stdout for {consumer_id}/{entrypoint}"
+        )
+    assertions = result.get("assertions")
+    if not isinstance(assertions, list) or not assertions:
+        # Legacy captures without assertions: reject marker-only / trivial stdout.
+        remainder = stdout_text.replace(marker, "", 1)
+        extra = "".join(remainder.split())
+        if len(extra.encode("utf-8")) < 16:
+            raise ValidationError(
+                f"runtime evidence is marker-only or trivial for {consumer_id}/{entrypoint}"
+            )
+        if entrypoint not in stdout_text:
+            raise ValidationError(
+                f"runtime evidence stdout lacks entrypoint token for {consumer_id}/{entrypoint}"
+            )
+    else:
+        failed: list[str] = []
+        unit = evidence["unit"]
+        for item in assertions:
+            if not isinstance(item, dict):
+                raise ValidationError(
+                    f"runtime evidence assertion is not an object for {consumer_id}/{entrypoint}"
+                )
+            kind = item.get("kind", "substring")
+            pattern = str(item.get("pattern", ""))
+            if kind == "substring":
+                observed = bool(pattern) and pattern in stdout_text
+            elif kind == "min-extra-bytes":
+                min_extra = int(item.get("minExtraBytes", 16))
+                remainder = stdout_text.replace(pattern, "", 1) if pattern else stdout_text
+                extra = "".join(remainder.split())
+                observed = len(extra.encode("utf-8")) >= min_extra
+            elif kind == "regex":
+                observed = bool(pattern) and re.search(pattern, stdout_text) is not None
+            else:
+                raise ValidationError(
+                    f"runtime evidence has unsupported assertion kind {kind!r}"
+                )
+            if not observed:
+                failed.append(str(item.get("id", "?")))
+            bound = item.get("bound") or {}
+            if bound.get("entrypoint") != unit.get("entrypoint"):
+                raise ValidationError(
+                    f"runtime assertion bound entrypoint mismatch for {consumer_id}/{entrypoint}"
+                )
+            if bound.get("protocolVersion") != unit.get("protocolVersion"):
+                raise ValidationError(
+                    f"runtime assertion bound protocol mismatch for {consumer_id}/{entrypoint}"
+                )
+        if failed:
+            raise ValidationError(
+                f"runtime evidence assertions failed re-check for {consumer_id}/{entrypoint}: "
+                + ", ".join(failed)
+            )
 
 
 def validate_inputs(

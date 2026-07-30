@@ -1,11 +1,11 @@
 ---
 id: GOAL-021-skills-release-chain-hardening
 doc: execution
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-30
 updated: 2026-07-30
-version: 0.1.0
+version: 0.3.0
 ---
 
 # 执行记录 · GOAL-021
@@ -14,21 +14,27 @@ version: 0.1.0
 
 ### 2026-07-30 · 目标立项与审计落盘（阶段 A）
 
-- `/govern` 扫描 `workspace-001-goal-governance`：Charter `vision-goal-governance@0.1.0` active；`primary_plan` VP-001 存在且 `vision_ref` 对齐；无阻断开子目标的 open required VRev。
-- 按 D-001 创建五件套：`GOAL-021-skills-release-chain-hardening/`（`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`）。
-- 将用户会话中的执行链对抗审以 **A-001 / independent** 写入 [03-audit.md](03-audit.md)；findings **F-001～F-004 required open**，**F-005 recommended open**。
-- 同步 [goal-tree.md](../goal-tree.md) 树与表；Root 现时摘要下一编号 → **GOAL-022**。
-- **未**执行 F-001～F-005 代码/文档修复；**未** tag / Release。
+- `/govern` 创建五件套与 A-001 independent 台账；同步 goal-tree。
 
-## 待办（计划 · 非事实）
+### 2026-07-30 · 按序修复 F-001～F-005（阶段 B～F · D-002）
 
-1. 阶段 B：同步 core templates README + mirror 一致性测试。
-2. 阶段 C：硬化 `capture_runtime_evidence` + 负例；必要时定 I-001 schema。
-3. 阶段 D：`pack_skills_release` symlink/containment + Linux CI 负例。
-4. 阶段 E：收紧 vision/workspace 协议验证器。
-5. 阶段 F：工作区校验 + install 非交互语义。
-6. 阶段 G：回归 + self close-out + 用户确认关门。
+- F-001：core templates README mirror → 0.6.0 + hash 测试。
+- F-002：runtime assertions + compatibility re-check + marker-only 负例。
+- F-003：pack refuse symlink + containment。
+- F-004：vision/workspace 验证器 fail-closed 收紧。
+- F-005：install force / non-interactive / dry-run；空 workspace id / Root on-disk。
+- 回归（当时）：docs 26 / scripts 49（2 skip）/ skills 39 OK。
+
+### 2026-07-30 · 阶段 G 自审与关门（D-003 / A-003）
+
+- 重跑回归（关门前）：
+  - `python -m unittest discover -s docs/tests` → **26 OK**
+  - `python -m unittest discover -s scripts/tests` → **49 OK**（2 skipped）
+  - `python -m unittest skills.tests.test_skills_orchestrator` → **39 OK**
+- 产物抽检：mirror 0.6.0；`ASSERTION_POLICY` / `is_symlink` / `require_active` / install flags 均在位。
+- A-003 self close-out **pass**；用户确认 **D-003** → status **`done / 100%`**。
+- **未** tag / **未** GitHub Release；**未**全量 runtime 重采。
 
 ## 进度评估
 
-**约 14%（派生）**：仅阶段 A 审计落盘完成；P1 修复未开始。progress 不构成放行或发版证明。
+**100%（派生）**：A～G 全部完成。progress 不构成发版或 Root 关门证明。

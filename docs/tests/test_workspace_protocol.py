@@ -66,15 +66,39 @@ def parse_reference_rows(path: Path) -> list[dict[str, str]]:
     return rows
 
 
-def validate_workspace_context(path: Path) -> None:
+def validate_workspace_context(
+    path: Path, *, require_root_on_disk: bool = False
+) -> None:
     fields = parse_frontmatter(path)
     missing = REQUIRED_CONTEXT_FIELDS - fields.keys()
     if missing:
         raise ValueError(f"missing context fields: {sorted(missing)}")
+    workspace_id = fields.get("id", "").strip()
+    if not workspace_id:
+        raise ValueError("workspace id must be non-empty")
     if not re.fullmatch(r"GOAL-001-[a-z0-9-]+", fields["root_goal"]):
         raise ValueError("root_goal must be a complete GOAL-001 id")
     if not WORKSPACE_SCOPE_RE.fullmatch(fields["canonical_scope"]):
         raise ValueError("canonical_scope must be a workspace root")
+
+    if require_root_on_disk:
+        root_dir = path.parent / fields["root_goal"]
+        if not root_dir.is_dir():
+            raise ValueError("root_goal directory does not exist")
+        meta_path = root_dir / "00-meta.md"
+        if not meta_path.is_file():
+            raise ValueError("root_goal missing 00-meta.md")
+        meta = parse_frontmatter(meta_path)
+        if meta.get("id") != fields["root_goal"]:
+            raise ValueError("root_goal id does not match directory meta id")
+        parent = meta.get("parent", "")
+        if parent not in {"null", ""}:
+            raise ValueError("root_goal parent must be null")
+        # canonical_scope should name this workspace directory.
+        scope = fields["canonical_scope"].rstrip("/")
+        expected_name = path.parent.name
+        if not scope.endswith(expected_name):
+            raise ValueError("canonical_scope does not match workspace directory")
 
     references = parse_reference_rows(path)
     if fields["shared_materials_catalog"] == "none" and references:
@@ -102,7 +126,7 @@ class WorkspaceProtocolTests(unittest.TestCase):
 
         self.assertTrue(workspace.is_dir())
         self.assertFalse((REPO_ROOT / "docs" / "goals").exists())
-        validate_workspace_context(context)
+        validate_workspace_context(context, require_root_on_disk=True)
         fields = parse_frontmatter(context)
         self.assertEqual(fields["root_goal"], "GOAL-001-main-vision")
         self.assertEqual(fields["canonical_scope"], "docs/workspace-001-goal-governance/")
@@ -162,6 +186,27 @@ class WorkspaceProtocolTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "workspace root"):
                 validate_workspace_context(path)
+
+    def test_empty_workspace_id_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "workspace.md"
+            text = (FIXTURES / "valid-workspace.md").read_text(encoding="utf-8")
+            path.write_text(
+                text.replace("id: alpha-workspace", "id: "),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "workspace id must be non-empty"):
+                validate_workspace_context(path)
+
+    def test_missing_root_goal_on_disk_is_rejected_when_required(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "workspace.md"
+            path.write_text(
+                (FIXTURES / "valid-workspace.md").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "root_goal directory does not exist"):
+                validate_workspace_context(path, require_root_on_disk=True)
 
 
 if __name__ == "__main__":

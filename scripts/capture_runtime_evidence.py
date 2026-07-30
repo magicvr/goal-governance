@@ -215,6 +215,91 @@ def _redact_request_urls(value: str) -> str:
     )
 
 
+# Minimum non-marker stdout bytes required for pass (blocks exit0+marker-only forgery).
+# Count is over non-whitespace remainder after removing the first marker occurrence.
+NONTRIVIAL_STDOUT_MIN_EXTRA_BYTES = 16
+ASSERTION_POLICY = "marker+entrypoint+nontrivial-stdout@1"
+
+
+def build_default_assertions(
+    *,
+    marker: str,
+    entrypoint: str,
+    protocol_version: str,
+    extra_patterns: list[str] | None = None,
+) -> list[dict[str, Any]]:
+    """Structured, version-bound assertions required for a pass verdict.
+
+    Marker alone is never sufficient: entrypoint must appear in host output and
+    stdout must contain nontrivial content beyond the marker string.
+    """
+    bound = {
+        "entrypoint": entrypoint,
+        "protocolVersion": protocol_version,
+    }
+    assertions: list[dict[str, Any]] = [
+        {
+            "id": "dispatch-marker",
+            "kind": "substring",
+            "pattern": marker,
+            "bound": dict(bound),
+        },
+        {
+            "id": "entrypoint-token",
+            "kind": "substring",
+            "pattern": entrypoint,
+            "bound": dict(bound),
+        },
+        {
+            "id": "nontrivial-stdout",
+            "kind": "min-extra-bytes",
+            "pattern": marker,
+            "minExtraBytes": NONTRIVIAL_STDOUT_MIN_EXTRA_BYTES,
+            "bound": dict(bound),
+        },
+    ]
+    for index, pattern in enumerate(extra_patterns or [], start=1):
+        if not pattern:
+            raise CaptureError("require-assert patterns must be non-empty")
+        assertions.append(
+            {
+                "id": f"extra-assert-{index}",
+                "kind": "substring",
+                "pattern": pattern,
+                "bound": dict(bound),
+            }
+        )
+    return assertions
+
+
+def evaluate_assertions(stdout: str, assertions: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Recompute ``observed`` for each assertion from stdout (do not trust stored flags)."""
+    evaluated: list[dict[str, Any]] = []
+    for item in assertions:
+        record = dict(item)
+        kind = record.get("kind", "substring")
+        pattern = str(record.get("pattern", ""))
+        if kind == "substring":
+            observed = bool(pattern) and pattern in stdout
+        elif kind == "min-extra-bytes":
+            min_extra = int(record.get("minExtraBytes", NONTRIVIAL_STDOUT_MIN_EXTRA_BYTES))
+            remainder = stdout.replace(pattern, "", 1) if pattern else stdout
+            # Count non-whitespace remaining content so "marker + spaces" still fails.
+            extra = "".join(remainder.split())
+            observed = len(extra.encode("utf-8")) >= min_extra
+        elif kind == "regex":
+            observed = bool(pattern) and re.search(pattern, stdout) is not None
+        else:
+            raise CaptureError(f"unsupported assertion kind: {kind}")
+        record["observed"] = bool(observed)
+        evaluated.append(record)
+    return evaluated
+
+
+def assertions_all_observed(assertions: list[dict[str, Any]]) -> bool:
+    return bool(assertions) and all(bool(item.get("observed")) for item in assertions)
+
+
 def _validate(payload: dict[str, Any], root: Path) -> None:
     schema_path = root / "docs/contracts/runtime-evidence.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
@@ -249,6 +334,7 @@ def capture(
     timeout_seconds: float = 120,
     stdout_mode: str = "raw",
     stderr_mode: str = "raw",
+    require_assert: list[str] | None = None,
 ) -> dict[str, Any]:
     root = root.resolve()
     output = output.resolve()
@@ -256,6 +342,8 @@ def capture(
         output.relative_to(root)
     except ValueError as error:
         raise CaptureError("runtime evidence output must stay inside the repository") from error
+    if not marker:
+        raise CaptureError("marker must be non-empty")
     raw_dir = output.parent / f"{output.stem}.d"
     raw_dir.mkdir(parents=True, exist_ok=True)
     stdout_path = raw_dir / "stdout.txt"
@@ -296,6 +384,14 @@ def capture(
     stdout_path.write_bytes(stdout.replace("\r\n", "\n").encode("utf-8"))
     stderr_path.write_bytes(stderr.replace("\r\n", "\n").encode("utf-8"))
     marker_observed = marker in stdout
+    assertion_defs = build_default_assertions(
+        marker=marker,
+        entrypoint=entrypoint,
+        protocol_version=protocol_version,
+        extra_patterns=list(require_assert or []),
+    )
+    assertions = evaluate_assertions(stdout, assertion_defs)
+    assertions_pass = assertions_all_observed(assertions)
     warnings: list[str] = []
     if timed_out:
         warnings.append(f"Probe timed out after {timeout_seconds:g} seconds.")
@@ -306,12 +402,20 @@ def capture(
     if timed_out:
         verdict = "blocked"
         reason = "Probe exceeded its bounded runtime before a complete result was available."
-    elif exit_code == 0 and marker_observed:
+    elif exit_code == 0 and marker_observed and assertions_pass:
         verdict = "pass"
-        reason = "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."
+        reason = (
+            "Main process exited 0, emitted the required marker, and satisfied "
+            f"structured assertions ({ASSERTION_POLICY}) bound to entrypoint/protocol."
+        )
     else:
         verdict = "fail"
-        reason = "Main process did not both exit 0 and emit the required dispatch marker."
+        failed_ids = [item["id"] for item in assertions if not item.get("observed")]
+        reason = (
+            "Main process did not satisfy exit 0 + marker + structured assertions"
+            + (f" (failed: {', '.join(failed_ids)})" if failed_ids else "")
+            + "."
+        )
     sources = [
         {
             "path": value.replace("\\", "/"),
@@ -345,13 +449,18 @@ def capture(
             "cwd": ".",
             "timeoutSeconds": timeout_seconds,
             "inputSha256": _sha256_bytes(prompt.encode("utf-8")),
-            "inputSummary": f"Read-only /{entrypoint} dispatch probe requiring marker {marker} after repository-backed skill execution.",
+            "inputSummary": (
+                f"Read-only /{entrypoint} dispatch probe requiring marker {marker} "
+                f"and assertion policy {ASSERTION_POLICY} (protocol {protocol_version})."
+            ),
         },
         "result": {
             "exitCode": exit_code,
             "verdict": verdict,
             "marker": marker,
             "markerObserved": marker_observed,
+            "assertionPolicy": ASSERTION_POLICY,
+            "assertions": assertions,
             "stdoutPath": str(stdout_path.relative_to(root)).replace("\\", "/"),
             "stdoutSha256": _sha256_file(stdout_path),
             "stdoutMode": stdout_mode,
@@ -384,6 +493,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--model")
     parser.add_argument("--prompt-file", type=Path, required=True)
     parser.add_argument("--marker", required=True)
+    parser.add_argument(
+        "--require-assert",
+        action="append",
+        default=[],
+        help="Extra substring that must appear in stdout for pass (repeatable).",
+    )
     parser.add_argument("--behavior-source", action="append", default=[], required=True)
     parser.add_argument("--screenshot", action="append", default=[])
     parser.add_argument("--output", type=Path, required=True)
@@ -422,6 +537,7 @@ def main(argv: list[str] | None = None) -> int:
             timeout_seconds=args.timeout_seconds,
             stdout_mode=args.stdout_mode,
             stderr_mode=args.stderr_mode,
+            require_assert=list(args.require_assert or []),
         )
     except (OSError, json.JSONDecodeError, CaptureError) as error:
         print(f"runtime evidence capture failed: {error}", file=sys.stderr)

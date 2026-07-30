@@ -16,6 +16,9 @@ param(
     [switch]$Help,
     [switch]$WithPrimitives,
     [switch]$InitWorkspace,
+    [switch]$Force,
+    [switch]$NonInteractive,
+    [switch]$DryRun,
     [string]$WorkspaceSlug = '',
     [string]$RootSlug = '',
     [string]$RootTitle = '',
@@ -73,6 +76,11 @@ Options:
                            Optional three-digit workspace number (default: 001)
   -SkillsDir / --skills-dir DIR
                            Skills package / destination directory (default: .\skills)
+  -Force / --force         Overwrite existing files/dirs without prompting
+  -NonInteractive / --non-interactive
+                           Fail (exit 1) if an overwrite would require a prompt
+                           (unless -Force). Safe for CI / automation.
+  -DryRun / --dry-run      Print planned installs; do not write files
   -Help / --help           Show this help
 
 Behavior:
@@ -111,6 +119,12 @@ function Confirm-Overwrite([string]$Path) {
     if (-not (Test-Path -LiteralPath $Path)) {
         return $true
     }
+    if ($Force) {
+        return $true
+    }
+    if ($NonInteractive -or $DryRun) {
+        Write-Err "Refusing overwrite in non-interactive mode (use -Force): $Path"
+    }
     $answer = Read-Host "File already exists: $Path`nOverwrite? [y/N]"
     if ($answer -match '^(y|yes)$') {
         return $true
@@ -144,6 +158,10 @@ function Copy-RuleFile {
     if (-not (Test-Path -LiteralPath $Source -PathType Leaf)) {
         Write-Err "Source file not found: $Source"
     }
+    if ($DryRun) {
+        Write-Host "Dry-run: would install file $Destination"
+        return
+    }
     $destDir = Split-Path -Parent $Destination
     if ($destDir -and -not (Test-Path -LiteralPath $destDir)) {
         New-Item -ItemType Directory -Path $destDir -Force | Out-Null
@@ -170,11 +188,21 @@ function Copy-DirMerge {
     }
 
     if (Test-Path -LiteralPath $Destination) {
-        $answer = Read-Host "Directory already exists: $Destination`nOverwrite contents from $Label? [y/N]"
-        if ($answer -notmatch '^(y|yes)$') {
-            Write-Host "Skipped: $Destination"
-            return
+        if ($Force) {
+            # proceed
+        } elseif ($NonInteractive -or $DryRun) {
+            Write-Err "Refusing directory overwrite in non-interactive mode (use -Force): $Destination"
+        } else {
+            $answer = Read-Host "Directory already exists: $Destination`nOverwrite contents from $Label? [y/N]"
+            if ($answer -notmatch '^(y|yes)$') {
+                Write-Host "Skipped: $Destination"
+                return
+            }
         }
+    }
+    if ($DryRun) {
+        Write-Host "Dry-run: would install directory $Destination\  (from $Label)"
+        return
     }
     if (-not (Test-Path -LiteralPath $Destination)) {
         New-Item -ItemType Directory -Path $Destination -Force | Out-Null
@@ -308,6 +336,11 @@ function Initialize-WorkspaceSkeleton {
         Write-Err "Missing workspace template: $tmpl (install core first)"
     }
 
+    if ($DryRun) {
+        Write-Host "Dry-run: would scaffold workspace $scope"
+        return
+    }
+
     New-Item -ItemType Directory -Path $wsDir -Force | Out-Null
 
     $wsText = @"
@@ -436,6 +469,9 @@ while ($i -lt $extraArgs.Count) {
             }
             $i++
         }
+        '^--force$' { $Force = $true; $i++ }
+        '^--non-interactive$' { $NonInteractive = $true; $i++ }
+        '^--dry-run$' { $DryRun = $true; $i++ }
         default { Write-Err "Unknown option: $arg (use -Help)" }
     }
 }
