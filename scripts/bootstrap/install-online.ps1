@@ -155,12 +155,15 @@ try {
     $localSha = $null
 
     if ($ZipPath) {
-        $localZip = Resolve-FullPath $ZipPath $TargetDir
+        # Relative zip/sha paths resolve against process CWD (not TargetDir), so
+        # pack-here\zip + -TargetDir empty-consumer works as documented.
+        $cwd = (Get-Location).Path
+        $localZip = Resolve-FullPath $ZipPath $cwd
         if (-not (Test-Path -LiteralPath $localZip -PathType Leaf)) {
             Write-Err "ZipPath not found: $localZip"
         }
         if ($Sha256Path) {
-            $localSha = Resolve-FullPath $Sha256Path $TargetDir
+            $localSha = Resolve-FullPath $Sha256Path $cwd
         } else {
             $sibling = "$localZip.sha256"
             if (Test-Path -LiteralPath $sibling -PathType Leaf) {

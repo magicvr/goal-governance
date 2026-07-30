@@ -24,7 +24,10 @@ Bootstrap **never** downloads a separate core package for the default skills ins
 
 ## Offline (air-gap / tests)
 
+Relative `-ZipPath` / `--zip-path` (and sidecar paths) resolve against the **process current working directory**, not `--target-dir` / `-TargetDir`. Absolute paths are unchanged.
+
 ```powershell
+# CWD = repo root; zip under dist\; install into empty consumer (TargetDir ≠ CWD)
 python scripts/pack_skills_release.py --version 0.0.0-testpack --output-dir dist/ --skip-stage
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\bootstrap\install-online.ps1 `
   -Version 0.0.0-testpack `

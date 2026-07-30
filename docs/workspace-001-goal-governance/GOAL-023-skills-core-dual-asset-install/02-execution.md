@@ -43,6 +43,13 @@ version: 0.3.0
 - **未** tag/Release；**未** self close-out；**status 仍 active**。  
 - 显式停止点：等待 **独立 `/audit`** 后再关门。
 
+### 2026-07-30 · Bootstrap 相对路径修复（skeptic）
+
+- **缺陷**：相对 `-ZipPath` / `--zip-path`（及 sha 路径）曾错误解析到 **TargetDir**，导致 CWD 下 `dist\…zip` + 独立 `-TargetDir` 失败。  
+- **修复**：相对路径相对 **进程 CWD**（`Get-Location` / `pwd`）；绝对路径不变。PS + bash 对齐。  
+- **测试**：`test_offline_relative_zip_resolved_against_cwd_not_target`（TargetDir≠CWD + 相对 zip）。bootstrap suite **7**（1 skip WSL bash）。  
+- **仍** `active`；**不**关门；待独立 `/audit`。
+
 ## 当前进展
 
 | 阶段 | 状态 |

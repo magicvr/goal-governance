@@ -39,7 +39,9 @@ def _load_pack():
 pack = _load_pack()
 
 
-def _powershell(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
+def _powershell(
+    *args: str, cwd: Path | None = None
+) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [
             "powershell",
@@ -111,6 +113,45 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
             # Core must come from embedded package path, not a separate network core asset.
             self.assertIn("SHA-256 OK", proc.stdout)
             self.assertNotIn("goal-governance-core-v", proc.stdout)
+
+    def test_offline_relative_zip_resolved_against_cwd_not_target(self) -> None:
+        """Skeptic: -ZipPath relative to CWD when TargetDir is a different empty tree."""
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            pack_here = base / "pack-here"
+            pack_here.mkdir()
+            target = base / "consumer-empty"
+            target.mkdir()
+            result = self._pack_skills(pack_here)
+            # CWD = pack-here parent (base); relative zip path as docs show.
+            rel_zip = Path("pack-here") / result.zip_path.name
+            rel_sha = Path("pack-here") / result.sha256_path.name
+            self.assertTrue((base / rel_zip).is_file())
+            proc = _powershell(
+                "-File",
+                str(BOOTSTRAP_PS1),
+                "-Version",
+                result.version,
+                "-TargetDir",
+                str(target),
+                "-ZipPath",
+                str(rel_zip),
+                "-Sha256Path",
+                str(rel_sha),
+                "-Force",
+                cwd=base,
+            )
+            self.assertEqual(
+                proc.returncode,
+                0,
+                msg=f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}",
+            )
+            self.assertTrue(
+                (target / "docs" / "architecture" / "principles.md").is_file(),
+                msg=proc.stdout,
+            )
+            # Must not have looked under TargetDir\pack-here
+            self.assertFalse((target / "pack-here").exists())
 
     def test_offline_bootstrap_fail_closed_on_digest_mismatch(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

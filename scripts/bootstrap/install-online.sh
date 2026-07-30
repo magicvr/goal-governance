@@ -138,18 +138,21 @@ LOCAL_ZIP=""
 LOCAL_SHA=""
 
 if [[ -n "$ZIP_PATH" ]]; then
+  # Relative zip/sha paths resolve against process CWD (pwd), not --target-dir.
   if [[ "$ZIP_PATH" = /* ]]; then
     LOCAL_ZIP="$ZIP_PATH"
   else
-    LOCAL_ZIP="${TARGET_DIR}/${ZIP_PATH}"
+    LOCAL_ZIP="$(pwd)/${ZIP_PATH}"
   fi
+  LOCAL_ZIP="$(cd "$(dirname "$LOCAL_ZIP")" && pwd)/$(basename "$LOCAL_ZIP")"
   [[ -f "$LOCAL_ZIP" ]] || die "Zip path not found: $LOCAL_ZIP"
   if [[ -n "$SHA256_PATH" ]]; then
     if [[ "$SHA256_PATH" = /* ]]; then
       LOCAL_SHA="$SHA256_PATH"
     else
-      LOCAL_SHA="${TARGET_DIR}/${SHA256_PATH}"
+      LOCAL_SHA="$(pwd)/${SHA256_PATH}"
     fi
+    LOCAL_SHA="$(cd "$(dirname "$LOCAL_SHA")" && pwd)/$(basename "$LOCAL_SHA")"
   elif [[ -f "${LOCAL_ZIP}.sha256" ]]; then
     LOCAL_SHA="${LOCAL_ZIP}.sha256"
   elif [[ -f "$(dirname "$LOCAL_ZIP")/${SHA_NAME}" ]]; then
