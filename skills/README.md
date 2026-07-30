@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-31
 parent: null
-version: 1.7.2
+version: 1.8.0
 ---
 
 # Skills
@@ -20,8 +20,8 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 | 身份 | 状态 |
 |------|------|
-| **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** | 已发布 annotated tag / Release 基线。 |
-| **`v0.10.0`（本冻结）** | 矩阵 **`candidateRevision: v0.10.0`**；GOAL-021～023（执行链加固、stage SSOT、双资产 + bootstrap）；四入口 × 三宿主 **runtime-verified**（2026-07-30 证据；behaviorSources 仍匹配）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
+| **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** / **`v0.10.0`** | 已发布 annotated tag / Release 基线。 |
+| **`v0.11.0`（本冻结）** | 矩阵 **`candidateRevision: v0.11.0`**；GOAL-002 Codex 安装面（`--codex` / `-All`）+ 文档 pin；四入口 × 三宿主 **runtime-verified**（2026-07-30 证据）。**不**宣称 Codex 矩阵 `committed` / `runtime-verified`。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
 
 Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
@@ -109,28 +109,28 @@ skills/
 
 ### 入口 1 · Bootstrap（推荐 · 其他项目）
 
-**当前示例 pin 最新正式 tag `v0.10.0`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
+**当前示例 pin 最新正式 tag `v0.11.0`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
 
 在目标项目根执行（先落盘 bootstrap，再跑；默认**不**管道直跑）：
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.10.0 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.11.0 -Force
 
 # 离线（本地 skills zip + .sha256）：
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.10.0 -ZipPath .\goal-governance-skills-v0.10.0.zip -Force
+  -Version 0.11.0 -ZipPath .\goal-governance-skills-v0.11.0.zip -Force
 ```
 
 ```bash
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.10.0 --force
+bash ./install-online.sh --version 0.11.0 --force
 
 # 离线：
-bash ./install-online.sh --version 0.10.0 --zip-path ./goal-governance-skills-v0.10.0.zip --force
+bash ./install-online.sh --version 0.11.0 --zip-path ./goal-governance-skills-v0.11.0.zip --force
 ```
 
 Bootstrap 会：校验 SHA-256 → 落到 `./skills` → 调用包内 install **默认 `-All` / `--all`**（四入口 + core → `docs/`）。digest 失败 **fail closed**。详见 [scripts/bootstrap/README.md](../scripts/bootstrap/README.md)。

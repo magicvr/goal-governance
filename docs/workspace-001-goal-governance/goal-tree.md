@@ -28,6 +28,10 @@ version: 1.2.0
 
 `/vision`：用户确认 S1+B1。Charter **`vision-goal-governance@0.2.0`**（[VR-005](../vision/revisions.md)）；VP-001 意图改为协议 + Skills；本仓 Web = **冻结参考实现**（不删代码、非投资面）。[VRev-005](../vision/reviews.md) self **pass**；workspace-001 + Root `serves_summary` re-align 完成；宽阻断解除。**不**改各 GOAL status/progress。实现层收束见上节 D-027。下一编号 **GOAL-024**。
 
+## 2026-07-31 · 路径 D 授权 v0.11.0 发版（PR → main → tag → Release）
+
+用户授权 annotated **`v0.11.0`**：冻结 CHANGELOG/矩阵 → 开 PR → CI 绿合并 **main** → tag 并发布资产（skills + core + bootstrap；含 Codex install surface）→ 确认后切回 **dev**。承接 GOAL-002（Codex）与 workspace-002 R1。**不**宣称 Codex 矩阵 runtime-verified；**不**改各 GOAL status/progress 为重新开门；Root 仍 `active`。下一编号 **GOAL-024**。
+
 ## 2026-07-30 · 路径 D 授权 v0.10.0 发版（PR → main → tag → Release）
 
 用户书面授权 annotated **`v0.10.0`**：冻结 CHANGELOG/矩阵 → 开 PR → CI 绿合并 **main** → tag 并发布资产（skills + core + bootstrap）→ 确认后切回 **dev**。承接 GOAL-021～023。**不**改各 GOAL status/progress 为重新开门；Root 仍 `active`。下一编号 **GOAL-024**。

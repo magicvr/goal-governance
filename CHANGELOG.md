@@ -4,9 +4,34 @@
 
 ## Unreleased
 
-### Docs
+（无。当前候选已冻结为 **0.11.0** / `v0.11.0`。）
 
-- 入口 1 bootstrap：**Release 固定 tag URL** 直拉 `install-online.*` 再安装（示例 pin **`v0.10.0`**）；发版清单要求此后始终同步最新正式 tag（GOAL-023 **D-003**）。默认不推荐管道直跑。
+## 0.11.0 - 2026-07-31
+
+Skills **consumer** minor：新增 **OpenAI Codex** 安装面（GOAL-002 · workspace-002）+ 入口 1 bootstrap 文档 pin 同步最新正式 tag（GOAL-023 D-003）。三宿主四入口 runtime 证据沿用 2026-07-30；本版**不**宣称 Codex 为矩阵 `committed` / `runtime-verified`。
+
+### 宿主 / 安装（GOAL-002）
+
+- 包内 `skills/install/codex/skills/{govern,audit,vision,vision-audit}/SKILL.md` → 消费方 `.agents/skills/*`（官方 REPO skill 根）。
+- `install.ps1` / `install.sh`：`-Codex` / `--codex`；**`-All` / `--all` 纳入 Codex**（与 Claude / Grok / Copilot 并列）。
+- 主入口 `$govern` 只读 dispatch 探针（Codex CLI · 目标附件证据链）；**非**矩阵单元、**非**写盘 e2e。
+
+### 文档 / pin（GOAL-023 D-003）
+
+- 入口 1 bootstrap 示例 pin **`v0.11.0`**（Release 固定 tag URL；禁止 branch raw 作权威入口）。
+
+### 兼容矩阵 / 证据
+
+- 矩阵 `candidateRevision: v0.11.0`；四入口 × 三宿主（Claude / Grok / Copilot）仍为 **runtime-verified**（证据路径 2026-07-30；behaviorSources 对现树 fresh）。
+- 刷新 12 份 2026-07-30 runtime evidence 中 `AGENTS.md` behaviorSource digest（`docs(agents)` 后树变更；**未**全量重采宿主会话；R-021-RUNTIME-RECAPTURE residual 仍 open）。
+- Web parser 保持 automated-verified。
+- **Codex 不在 matrix 声明面**（I-003 residual / non-blocking）：install surface shipped only。
+
+### 非目标（本 tag 不宣称）
+
+- Codex 矩阵 `committed` / `runtime-verified` 或四入口全量 runtime 重采。
+- Root / 阶段 6 产品终态；R-009-X closed；F-006 外部采用。
+- `/vision-audit` 写盘全路径 e2e。
 
 ## 0.10.0 - 2026-07-30
 
