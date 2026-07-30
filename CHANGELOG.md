@@ -25,6 +25,11 @@ Skills **consumer** patch：默认**四入口**面（`/govern` `/audit` `/vision
 - 文档卫生：`skills/README` 装机树/手动安装对齐四入口；Goal 历史「三入口」叙述加现时注（D-018→D-020）。
 - standalone / core 分发含 `vision/alignment.md`；权威面与 AGENTS 门禁语义对齐 P-006。
 
+### 发布热修（同 tag 内容补丁 · 2026-07-30）
+
+- 修正 runtime evidence 的 stdout/stderr/behaviorSource **SHA-256** 与 git `text eol=lf` 一致（Windows 采集时 CRLF 哈希导致 Linux CI `stdout digest is stale`）。
+- `capture_runtime_evidence` / `compatibility_report` 统一按 LF 落盘与比对，避免再发版门禁假失败。
+
 ### 非目标（本 tag 不宣称）
 
 - Root / 阶段 6 产品终态；R-009-X closed；F-006 外部采用。

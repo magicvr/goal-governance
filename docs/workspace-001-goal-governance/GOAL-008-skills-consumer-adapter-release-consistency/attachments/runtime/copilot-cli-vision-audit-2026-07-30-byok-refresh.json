@@ -26,11 +26,11 @@
     },
     {
       "path": "skills/prompts/07-independent-vision-review.md",
-      "sha256": "c94c3080b507314be809a77a07805210cc2ec80656aaed477ef76c7dc5acf5e2"
+      "sha256": "948f95d33fcf5ca62c98a09229d053103ca5edbe5960f51439bd18f70cc9d622"
     },
     {
       "path": ".github/prompts/vision-audit.prompt.md",
-      "sha256": "c694b6bf13aa9cf4fe3a63b7949d89d89f6ef6745ea222c0f0254a112704415f"
+      "sha256": "80ce7081b8b199333fef3c00a714b396d0ca82a5763c5ded5f0bf3585ecd882c"
     },
     {
       "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
@@ -38,7 +38,7 @@
     },
     {
       "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-vision-audit.txt",
-      "sha256": "e21c479476ced6ae687cb6ba238c92a20afe713a645b16d637793474f9c9901a"
+      "sha256": "ed5096e7a27ba657366546a06bb3f8bab18252330887a8aa396f069ebda52813"
     }
   ],
   "invocation": {
@@ -60,10 +60,10 @@
     "marker": "COPILOT_CLI_VISION_AUDIT_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-30-byok-refresh.d/stdout.txt",
-    "stdoutSha256": "8c92dd07ee6a7a3726677ad96861ef1abbb61d66da01c592cf8ad16bef90adc5",
+    "stdoutSha256": "0b503725013c7c22f710d56c1797356715a57fa749c0aa0f62032a7f6eaec27d",
     "stdoutMode": "raw",
     "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-30-byok-refresh.d/stderr.txt",
-    "stderrSha256": "e2cd69f6b9fe6e8dc6e74391845d8ac4bbbc73068125cf439d52ce5dd6de12bd",
+    "stderrSha256": "29bce54ece0c52837443ed2b2ed85d8b6569e58d68ccd7b89ff0de91bbdcb4ef",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."

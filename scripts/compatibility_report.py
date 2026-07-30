@@ -61,6 +61,11 @@ def _sha256(path: Path) -> str:
     return sha256(path.read_bytes()).hexdigest()
 
 
+def _sha256_lf(path: Path) -> str:
+    """Hash path bytes with CRLF normalized to LF (git text eol=lf)."""
+    return sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def _repo_path(root: Path, value: Any, label: str, *, directory_ok: bool = False) -> Path:
     if not isinstance(value, str) or not value:
         raise ValidationError(f"{label} must be a non-empty repository-relative path")
@@ -263,14 +268,16 @@ def _validate_runtime_evidence(
         )
     for source in evidence["behaviorSources"]:
         source_path = _repo_path(root, source["path"], "runtime behavior source")
-        if _sha256(source_path) != source["sha256"]:
+        # Compare LF-normalized digests so Windows autocrlf working trees match
+        # git text=eol=lf blobs and Linux CI checkouts.
+        if _sha256_lf(source_path) != source["sha256"]:
             raise ValidationError(
                 f"runtime evidence behavior source is stale: {source['path']}"
             )
     result = evidence["result"]
     for label in ("stdout", "stderr"):
         raw_path = _repo_path(root, result[f"{label}Path"], f"runtime {label}")
-        if _sha256(raw_path) != result[f"{label}Sha256"]:
+        if _sha256_lf(raw_path) != result[f"{label}Sha256"]:
             raise ValidationError(
                 f"runtime evidence {label} digest is stale for {consumer_id}/{entrypoint}"
             )

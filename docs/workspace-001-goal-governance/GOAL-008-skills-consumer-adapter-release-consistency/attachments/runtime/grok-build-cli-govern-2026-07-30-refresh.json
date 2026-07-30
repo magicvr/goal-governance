@@ -67,7 +67,7 @@
     "marker": "GROK_GOVERN_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-30-refresh.d/stdout.txt",
-    "stdoutSha256": "6524670f0b5a62bf341279ffc2b3adfbc1030dc3e3ea83dec1f405fa3312acf4",
+    "stdoutSha256": "32af7fcfd539540bd8c497c87f35e280703e378aaff3646eccdfb71443f48da3",
     "stdoutMode": "raw",
     "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-30-refresh.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
