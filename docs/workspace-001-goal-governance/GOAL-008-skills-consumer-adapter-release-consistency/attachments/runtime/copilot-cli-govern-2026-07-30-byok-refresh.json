@@ -56,10 +56,10 @@
     "marker": "COPILOT_CLI_GOVERN_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-30-byok-refresh.d/stdout.txt",
-    "stdoutSha256": "1e8ef2ecc6f2b7f7835b5e4c37f6e1f82040bc4213546be5c53356f9fa4b11ef",
+    "stdoutSha256": "06d15c99bf807e65bbfc84fbda4e6dc3a249e84f522ab0a14a29899f0ebc0dee",
     "stdoutMode": "raw",
     "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-30-byok-refresh.d/stderr.txt",
-    "stderrSha256": "87d00ddd0d8524e865ac98a88330bd2c77b1ac52900ff639b530269a1ef0569d",
+    "stderrSha256": "e6c92beafcc2cd3bc17f252799cf64ed30b32b9cfbc5e7feca46072c0307da55",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0 and emitted the required marker after the host reported the loaded skill and repository-derived facts."

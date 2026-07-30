@@ -36,6 +36,11 @@ def _sha256_file(path: Path) -> str:
     return _sha256_bytes(path.read_bytes())
 
 
+def _sha256_repo_text(path: Path) -> str:
+    """Hash text the way git stores it under text eol=lf (.gitattributes)."""
+    return _sha256_bytes(path.read_bytes().replace(b"\r\n", b"\n"))
+
+
 def _repo_file(root: Path, value: str, label: str) -> Path:
     relative = Path(value)
     if relative.is_absolute() or ".." in relative.parts:
@@ -287,8 +292,9 @@ def capture(
         stderr = _redact_request_urls(stderr)
     elif stderr_mode != "raw":
         raise CaptureError(f"unsupported stderr mode: {stderr_mode}")
-    stdout_path.write_text(stdout, encoding="utf-8")
-    stderr_path.write_text(stderr, encoding="utf-8")
+    # Persist LF only so digests match git text=eol=lf and Linux CI checkout.
+    stdout_path.write_bytes(stdout.replace("\r\n", "\n").encode("utf-8"))
+    stderr_path.write_bytes(stderr.replace("\r\n", "\n").encode("utf-8"))
     marker_observed = marker in stdout
     warnings: list[str] = []
     if timed_out:
@@ -309,7 +315,7 @@ def capture(
     sources = [
         {
             "path": value.replace("\\", "/"),
-            "sha256": _sha256_file(_repo_file(root, value, "behavior source")),
+            "sha256": _sha256_repo_text(_repo_file(root, value, "behavior source")),
         }
         for value in behavior_sources
     ]

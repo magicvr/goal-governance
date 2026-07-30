@@ -56,7 +56,7 @@
     "marker": "CLAUDE_VISION_DISPATCH_OK",
     "markerObserved": true,
     "stdoutPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-30-refresh.d/stdout.txt",
-    "stdoutSha256": "c112b9de0975429069fef7318683579c5f3ad9a4f742d69de7b94f6026322595",
+    "stdoutSha256": "7fb5dccfae1e47f38a26a650b4a3267b94e3a7ae210cfd741fa23a5160d8248e",
     "stdoutMode": "claude-stream-json-sanitized",
     "stderrPath": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-30-refresh.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
