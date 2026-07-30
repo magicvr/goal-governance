@@ -44,6 +44,10 @@ try {
         (Join-Path $TempRoot '.grok\skills\audit\SKILL.md'),
         (Join-Path $TempRoot '.grok\skills\vision\SKILL.md'),
         (Join-Path $TempRoot '.grok\skills\vision-audit\SKILL.md'),
+        (Join-Path $TempRoot '.agents\skills\govern\SKILL.md'),
+        (Join-Path $TempRoot '.agents\skills\audit\SKILL.md'),
+        (Join-Path $TempRoot '.agents\skills\vision\SKILL.md'),
+        (Join-Path $TempRoot '.agents\skills\vision-audit\SKILL.md'),
         (Join-Path $TempRoot '.github\copilot-instructions.md'),
         (Join-Path $TempRoot '.github\prompts\govern.prompt.md'),
         (Join-Path $TempRoot '.github\prompts\audit.prompt.md'),
@@ -115,6 +119,31 @@ try {
     }
     if ($auditText -notmatch 'workspace-<NNN>-<slug>/workspace\.md') {
         Write-Host 'FAIL: Claude audit skill missing workspace context ref'
+        $contentOk = $false
+    }
+
+    $codexGovernText = Get-Content -LiteralPath (Join-Path $TempRoot '.agents\skills\govern\SKILL.md') -Raw -Encoding UTF8
+    $codexAuditText = Get-Content -LiteralPath (Join-Path $TempRoot '.agents\skills\audit\SKILL.md') -Raw -Encoding UTF8
+    $codexVisionText = Get-Content -LiteralPath (Join-Path $TempRoot '.agents\skills\vision\SKILL.md') -Raw -Encoding UTF8
+    $codexVisionAuditText = Get-Content -LiteralPath (Join-Path $TempRoot '.agents\skills\vision-audit\SKILL.md') -Raw -Encoding UTF8
+    if ($codexGovernText -notmatch '00-govern-orchestrator') {
+        Write-Host 'FAIL: Codex govern skill missing 00-govern-orchestrator ref'
+        $contentOk = $false
+    }
+    if ($codexAuditText -notmatch '05-independent-audit') {
+        Write-Host 'FAIL: Codex audit skill missing 05-independent-audit ref'
+        $contentOk = $false
+    }
+    if ($codexVisionText -notmatch '06-vision-orchestrator') {
+        Write-Host 'FAIL: Codex vision skill missing 06-vision-orchestrator ref'
+        $contentOk = $false
+    }
+    if ($codexVisionAuditText -notmatch '07-independent-vision-review') {
+        Write-Host 'FAIL: Codex vision-audit skill missing 07-independent-vision-review ref'
+        $contentOk = $false
+    }
+    if ($codexGovernText -notmatch 'host:\s*codex') {
+        Write-Host 'FAIL: Codex govern skill missing host: codex metadata'
         $contentOk = $false
     }
 

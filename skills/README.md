@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-31
 parent: null
-version: 1.7.1
+version: 1.7.2
 ---
 
 # Skills
@@ -47,6 +47,7 @@ Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；We
 | Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
 | Grok Build CLI `0.2.114` | `.grok/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
 | GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` · `/vision-audit` | 四个入口均 `runtime-verified` via BYOK（2026-07-30） |
+| OpenAI Codex | `.agents/skills/{govern,audit,vision,vision-audit}/` | `$govern` · `$audit` · `$vision` · `$vision-audit` | **install surface shipped**（GOAL-002）；runtime 探针见目标证据链（非矩阵 committed） |
 
 核心行为：
 
@@ -75,6 +76,8 @@ skills/
 │   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md
 │   ├── grok/
 │   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md
+│   ├── codex/
+│   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md  # → .agents/skills/
 │   └── copilot/
 │       ├── copilot-instructions.md
 │       └── prompts/
@@ -156,12 +159,12 @@ Rename-Item .\goal-governance-skills-vX.Y.Z skills
 
 ```bash
 bash ./skills/install.sh --all --skills-dir ./skills
-# 或单宿主：--claude / --grok / --copilot（同样会装 core）
+# 或单宿主：--claude / --grok / --copilot / --codex（同样会装 core）
 ```
 
 ```powershell
 .\skills\install.ps1 -All -SkillsDir .\skills
-# 或：-Claude / -Grok / -Copilot（同样会装 core）
+# 或：-Claude / -Grok / -Copilot / -Codex（同样会装 core）
 ```
 
 4. 确认 `docs/architecture/principles.md` 等已存在；冷启动先 **`/vision`**（Charter→VP），再建立工作区并 **`/govern`**；Goal 交叉审计用 **`/audit`**；独立 Vision Review 用 **`/vision-audit`**。
@@ -183,7 +186,7 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
-**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**。填表类 advanced slash 仍为可选。四入口在 Claude / Grok / Copilot CLI 上均为 **`runtime-verified`（2026-07-28）**：`/vision-audit` 证据为只读 dispatch（wrapper 路由、核心提示词加载、愿景发现），**不是**写盘全路径 e2e；见兼容矩阵。
+**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**（Codex 侧为 `$govern` 等）。填表类 advanced slash 仍为可选。四入口在 Claude / Grok / Copilot CLI 上均为 **`runtime-verified`（2026-07-28）**：`/vision-audit` 证据为只读 dispatch（wrapper 路由、核心提示词加载、愿景发现），**不是**写盘全路径 e2e；见兼容矩阵。Codex 已提供 install 面（GOAL-002），**尚未**写入矩阵 `committed` / runtime-verified。
 
 #### Claude Code
 
@@ -220,6 +223,26 @@ cp ./skills/install/grok/skills/vision/SKILL.md .grok/skills/vision/SKILL.md
 cp ./skills/install/grok/skills/vision-audit/SKILL.md .grok/skills/vision-audit/SKILL.md
 ```
 
+#### OpenAI Codex
+
+```text
+install/claude/AGENTS.md
+  →  <repo>/AGENTS.md
+install/codex/skills/{govern,audit,vision,vision-audit}/SKILL.md
+  →  <repo>/.agents/skills/{govern,audit,vision,vision-audit}/SKILL.md
+```
+
+（官方 REPO skill 根为 `.agents/skills`；显式调用 `$govern` / `$audit` / `$vision` / `$vision-audit`。）
+
+```bash
+mkdir -p .agents/skills/govern .agents/skills/audit .agents/skills/vision .agents/skills/vision-audit
+cp ./skills/install/claude/AGENTS.md ./AGENTS.md
+cp ./skills/install/codex/skills/govern/SKILL.md .agents/skills/govern/SKILL.md
+cp ./skills/install/codex/skills/audit/SKILL.md .agents/skills/audit/SKILL.md
+cp ./skills/install/codex/skills/vision/SKILL.md .agents/skills/vision/SKILL.md
+cp ./skills/install/codex/skills/vision-audit/SKILL.md .agents/skills/vision-audit/SKILL.md
+```
+
 #### GitHub Copilot
 
 ```text
@@ -250,8 +273,9 @@ install/copilot/prompts/vision-audit.md
 | `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
 | `--grok` / `-Grok` | `.grok/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
 | `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit`/`vision`/`vision-audit` prompts + **core → docs/** |
+| `--codex` / `-Codex` | `AGENTS.md` + `.agents/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
 | `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
-| `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts + **core** |
+| `--all` / `-All` | Claude + Grok + Copilot + Codex + prompts/templates/contracts + **core** |
 | `--init-workspace` / `-InitWorkspace` | 可选：scaffold `docs/workspace-NNN-slug/`（**须**同时给 slug） |
 | `--workspace-slug` / `-WorkspaceSlug` | 与 init-workspace 联用；小写短横线；**禁止静默默认** |
 | `--root-slug` / `-RootSlug` | 与 init-workspace 联用 → 计划中的 `GOAL-001-<slug>` |
@@ -264,6 +288,7 @@ bash ./skills/install.sh --all --skills-dir ./skills
 bash ./skills/install.sh --claude --skills-dir ./skills
 bash ./skills/install.sh --grok --skills-dir ./skills
 bash ./skills/install.sh --copilot --skills-dir ./skills
+bash ./skills/install.sh --codex --skills-dir ./skills
 ```
 
 ```powershell
@@ -271,6 +296,7 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 .\skills\install.ps1 -Claude -SkillsDir .\skills
 .\skills\install.ps1 -Grok -SkillsDir .\skills
 .\skills\install.ps1 -Copilot -SkillsDir .\skills
+.\skills\install.ps1 -Codex -SkillsDir .\skills
 ```
 
 可选：安装同时 scaffold 工作区骨架（**不**创建 Root 五件套；slug 必须显式给出）：

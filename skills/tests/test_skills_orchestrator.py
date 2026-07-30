@@ -33,6 +33,9 @@ CLAUDE_VISION_SKILL = (
 GROK_GOVERN_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "govern" / "SKILL.md"
 GROK_AUDIT_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "audit" / "SKILL.md"
 GROK_VISION_SKILL = SKILLS_ROOT / "install" / "grok" / "skills" / "vision" / "SKILL.md"
+CODEX_GOVERN_SKILL = SKILLS_ROOT / "install" / "codex" / "skills" / "govern" / "SKILL.md"
+CODEX_AUDIT_SKILL = SKILLS_ROOT / "install" / "codex" / "skills" / "audit" / "SKILL.md"
+CODEX_VISION_SKILL = SKILLS_ROOT / "install" / "codex" / "skills" / "vision" / "SKILL.md"
 INSTALL_SH = SKILLS_ROOT / "install.sh"
 INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
@@ -1282,6 +1285,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
     def test_grok_govern_skill_source(self) -> None:
         self._assert_primary_govern_skill(GROK_GOVERN_SKILL, "Grok Build")
 
+    def test_codex_govern_skill_source(self) -> None:
+        self._assert_primary_govern_skill(CODEX_GOVERN_SKILL, "Codex")
+        text = CODEX_GOVERN_SKILL.read_text(encoding="utf-8")
+        self.assertRegex(text, r"(?m)^  host:\s*codex\s*$")
+
     def _assert_audit_skill(self, path: Path, host_label: str) -> None:
         self.assertTrue(path.is_file(), f"missing {host_label} audit skill: {path}")
         text = path.read_text(encoding="utf-8")
@@ -1295,6 +1303,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
 
     def test_grok_audit_skill_source(self) -> None:
         self._assert_audit_skill(GROK_AUDIT_SKILL, "Grok Build")
+
+    def test_codex_audit_skill_source(self) -> None:
+        self._assert_audit_skill(CODEX_AUDIT_SKILL, "Codex")
 
     def test_copilot_audit_wrapper(self) -> None:
         path = COPILOT_PROMPTS / "audit.md"
@@ -1316,6 +1327,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         for skill, label in (
             (CLAUDE_VISION_SKILL, "Claude"),
             (GROK_VISION_SKILL, "Grok"),
+            (CODEX_VISION_SKILL, "Codex"),
         ):
             self.assertTrue(skill.is_file(), f"missing {label} vision skill")
             s = skill.read_text(encoding="utf-8")
@@ -1342,6 +1354,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         sources = (
             SKILLS_ROOT / "install" / "claude" / "skills" / "vision-audit" / "SKILL.md",
             SKILLS_ROOT / "install" / "grok" / "skills" / "vision-audit" / "SKILL.md",
+            SKILLS_ROOT / "install" / "codex" / "skills" / "vision-audit" / "SKILL.md",
             COPILOT_PROMPTS / "vision-audit.md",
         )
         for path in sources:
@@ -1357,8 +1370,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         ps1 = INSTALL_PS1.read_text(encoding="utf-8")
         for text, label in ((sh, "install.sh"), (ps1, "install.ps1")):
             self.assertRegex(text, r"--grok|-Grok", msg=f"{label} needs grok flag")
+            self.assertRegex(text, r"--codex|-Codex", msg=f"{label} needs codex flag")
             self.assertIn(".claude/skills/govern", text.replace("\\", "/"))
             self.assertIn(".grok/skills/govern", text.replace("\\", "/"))
+            self.assertIn(".agents/skills/govern", text.replace("\\", "/"))
+            self.assertIn("install/codex/skills", text.replace("\\", "/"))
             self.assertIn("audit", text)
             self.assertIn("vision", text)
             self.assertIn("SKILL.md", text)
@@ -1428,6 +1444,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 target / ".grok" / "skills" / "audit" / "SKILL.md",
                 target / ".grok" / "skills" / "vision" / "SKILL.md",
                 target / ".grok" / "skills" / "vision-audit" / "SKILL.md",
+                target / ".agents" / "skills" / "govern" / "SKILL.md",
+                target / ".agents" / "skills" / "audit" / "SKILL.md",
+                target / ".agents" / "skills" / "vision" / "SKILL.md",
+                target / ".agents" / "skills" / "vision-audit" / "SKILL.md",
                 target / ".github" / "copilot-instructions.md",
                 target / ".github" / "prompts" / "govern.prompt.md",
                 target / ".github" / "prompts" / "audit.prompt.md",
