@@ -78,8 +78,8 @@ updated: 2026-07-31
 | 版本 | `0.2.0` |
 | 生效日 | 2026-07-31 |
 | 状态 | `active` |
-| Primary 工作区 | `workspace-001-goal-governance`（奠基封存；Root done） |
-| 现行 active VP | [VP-002](plans/VP-002-methodology-skills-feedback-evolution.md)（0 区空转；待 workspace-002） |
+| Primary 工作区 | `workspace-001-goal-governance`（奠基封存；Root done；monorepo primary 身份保留） |
+| 现行 active VP | [VP-002](plans/VP-002-methodology-skills-feedback-evolution.md)（lead = `workspace-002-methodology-skills-feedback` · delivery） |
 | 组合编排 | [roadmap.md](roadmap.md)：VP-001 closed · VP-002 active · VP-003 planned |
 
 修订史见 [revisions.md](revisions.md)。引用格式：`vision-goal-governance@0.2.0`。

@@ -4,7 +4,7 @@ title: 愿景规划索引
 status: active
 created: 2026-07-28
 updated: 2026-07-31
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 愿景规划索引（组合编排）
@@ -15,14 +15,14 @@ version: 0.3.0
 | id | title | status | vision_ref | lead_workspace | workspace_count | detail |
 |----|-------|--------|------------|----------------|-----------------|--------|
 | VP-001-governance-platform-delivery | 治理协议与 Skills 可复用交付（奠基 · 有界关） | **closed** | vision-goal-governance@0.2.0 | workspace-001-goal-governance | 1 | [plans/VP-001-governance-platform-delivery.md](plans/VP-001-governance-platform-delivery.md) |
-| VP-002-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | **active** | vision-goal-governance@0.2.0 | —（待 workspace-002） | 0 | [plans/VP-002-methodology-skills-feedback-evolution.md](plans/VP-002-methodology-skills-feedback-evolution.md) |
+| VP-002-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | **active** | vision-goal-governance@0.2.0 | workspace-002-methodology-skills-feedback | 1 | [plans/VP-002-methodology-skills-feedback-evolution.md](plans/VP-002-methodology-skills-feedback-evolution.md) |
 | VP-003-human-ui-workbench-deferred | 人类 UI / Web 工作台（延期 · 待通用基架） | **planned** | vision-goal-governance@0.2.0 | — | 0 | [plans/VP-003-human-ui-workbench-deferred.md](plans/VP-003-human-ui-workbench-deferred.md) |
 
 ## 波次关系（2026-07-31）
 
 ```text
 意图 1 奠基  → VP-001 closed（workspace-001 Root 有界 done）
-意图 2 演进  → VP-002 active（空转至开 workspace-002；复核 ≤2026-08-14）
+意图 2 演进  → VP-002 active（lead = workspace-002-methodology-skills-feedback；空转已结束）
 意图 3 人类 UI → VP-003 planned（冻结；H-WEB-01）
 ```
 
