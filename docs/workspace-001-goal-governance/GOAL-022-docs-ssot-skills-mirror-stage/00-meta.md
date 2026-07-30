@@ -1,12 +1,12 @@
 ---
 id: GOAL-022-docs-ssot-skills-mirror-stage
 title: 方法论单一真相源与 Skills 镜像 stage 化
-status: active
+status: done
 parent: GOAL-001-main-vision
 created: 2026-07-30
 updated: 2026-07-30
-version: 0.2.0
-progress: 83%
+version: 0.3.0
+progress: 100%
 ---
 
 # GOAL-022 · 方法论单一真相源与 Skills 镜像 stage 化
@@ -25,7 +25,7 @@ progress: 83%
 - [x] 五件套不再出现「docs + core + skills/templates」三边手维；`skills/templates` 已收敛为指针
 - [x] 字节一致类镜像由自动化断言；消费方精简 README / vision 短说明为手维例外
 - [x] docs / scripts / skills 相关测试绿；技能 README / core README / docs 同步说明已更新
-- [ ] 阶段自审或关门审通过且用户确认（若选关门）
+- [x] 阶段自审或关门审通过且用户确认（A-001 independent + A-002 response + A-003 self close-out；D-003）
 
 ## 纲领路线图（P-001）
 
@@ -36,9 +36,9 @@ progress: 83%
 | **C · pack / CI 挂接** | pack 前 stage；workflow 与本地 `pack_skills_release` 一致；防手改镜像漂移 | [x] |
 | **D · 消冗余与文档** | 收敛 `skills/templates`；更新 skills/core README、docs 台账、install/开发者路径说明 | [x] |
 | **E · 变换面（按 A 决议）** | 消费方 README 手维精简；vision README 保持手维；I-004 AGENTS residual | [x] |
-| **F · 回归与关门** | 全量相关测试；自审/用户确认；开放 required=0 | [ ] |
+| **F · 回归与关门** | 全量相关测试；自审/用户确认；开放 required=0 | [x] |
 
-**派生 progress**：5/6 = **83%**。progress 仅为展示，不构成放行或发版证明。
+**派生 progress**：6/6 = **100%**。progress 仅为展示，不构成放行或发版证明。
 
 ## 信息就绪与未知项（P-005）
 
@@ -48,6 +48,13 @@ progress: 83%
 | I-002 | required | `skills/templates/` 收敛策略 | 阶段 D | A | 用户裁决 | **closed** | — | D-002：取消手维；core/docs/templates 唯一分发源 |
 | I-003 | required | core `docs/README` 策略 | 阶段 E | A | 用户裁决 | **closed** | — | D-002：手维真正精简稿 |
 | I-004 | non-blocking | AGENTS 家族是否纳入本目标 | 可选范围 | F 前 | residual | **closed (out of scope)** | follow-up | D-002：本目标不纳入；可另立 |
+
+## 残余风险（关门后仍 open · non-blocking）
+
+| ID | 级别 | 说明 | 复审触发 |
+|----|------|------|----------|
+| **R-022-ORPHAN-PRUNE** | non-blocking | stage 不清理「canonical 已删、镜像仍在」孤儿；当前 orphans=0 | 见 D-003 |
+| **R-022-INSTALL-TEMPLATES-COPY** | non-blocking | install `-All` 仍物化 `skills/templates/` 派生副本 | 见 D-003 |
 
 ## 父目标
 

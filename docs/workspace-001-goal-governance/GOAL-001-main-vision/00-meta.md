@@ -25,8 +25,8 @@ version: 0.9.2
 | **status** | **`active`** |
 | **progress 宣称** | 不宣称 Root `done`；不宣称阶段 6 终态 |
 | **现行路径** | **[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) · 路径 D**（仅维护发版/协议；A/B/C 延期）；本拍 **[D-026](01-decision.md#d-026--路径-d授权annotated-v092--release-mode-evidence2026-07-30)** 授权 `v0.9.2` |
-| **子目标** | GOAL-002～021 均 `done / 100%`；GOAL-020 F-010 recommended follow-up；GOAL-021 residual R-021-RUNTIME-RECAPTURE / R-021-SYMLINK-CI（non-blocking） |
-| **下一编号** | **GOAL-022** |
+| **子目标** | GOAL-002～022 均 `done / 100%`（GOAL-022 关门见该目标 A-003）；GOAL-020 F-010 recommended follow-up；GOAL-021 residual R-021-RUNTIME-RECAPTURE / R-021-SYMLINK-CI；GOAL-022 residual R-022-ORPHAN-PRUNE / R-022-INSTALL-TEMPLATES-COPY（non-blocking） |
+| **下一编号** | **GOAL-023** |
 | **工作区** | `workspace-001-goal-governance` · `root_goal: GOAL-001-main-vision` |
 
 ### 三面现时状态
@@ -153,7 +153,7 @@ GOAL-008 已按 A-013 完成阶段 5 发布一致性关门，状态为 `done / 1
 
 - 生命周期、P-001～P-006、目标元数据和五件套写作约定。
 - canonical 文档入口：`docs/README.md`、`docs/architecture/`、`docs/templates/goal-folder/`。
-- `docs/templates/goal-folder/` 是规范模板；`skills/templates/goal-folder/` 是供离线安装与复制的同步分发镜像。
+- `docs/templates/goal-folder/` 是规范模板（canonical）。包内分发镜像由 **stage** 生成到 `skills/core/docs/templates/goal-folder/`（GOAL-022）；`skills/templates/README.md` 仅为指针。install `-All` 若再写 `skills/templates/`，视为**派生副本**，禁止手维、禁止在 monorepo 对 `./skills` 跑 `-All` 当同步手段。
 
 ### 2. Skills
 

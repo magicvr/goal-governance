@@ -4,14 +4,18 @@ status: active
 created: 2026-07-18
 updated: 2026-07-30
 parent: null
-version: 1.1.14
+version: 1.1.15
 ---
 
 # Goal Tree
 
+## 2026-07-30 · GOAL-022 响应 A-001 + 阶段 F 关门（D-003）
+
+`/govern`：F-001 **accepted-residual** R-022-ORPHAN-PRUNE；F-002 **accepted-residual** R-022-INSTALL-TEMPLATES-COPY；F-003 **fixed**（Root meta/decision 现时注）。A-002 response + A-003 self close-out **pass** → GOAL-022 **`done / 100%`**。开放 required = 0。关门前：docs 26 / scripts 52（2 skip）/ skills 39 OK；`stage --check` 28 pairs ok。**未** tag/Release；Root 仍 `active`。下一编号 **GOAL-023**。
+
 ## 2026-07-30 · GOAL-022 阶段 A～E 落地（D-002）
 
-`/govern`：用户确认 I-001～I-003 推荐默认并立即实现。`stage_skills_mirrors.py` + pack/CI 挂接；`skills/templates` 收敛为指针；core 精简 README；契约 mirrorPath → `skills/core/docs/templates/goal-folder`。回归：docs 26 / scripts 52（2 skip）/ skills 39 OK；`stage --check` ok。status **`active / 83%`**（待阶段 F 关门审）。**不** tag/Release。
+`/govern`：用户确认 I-001～I-003 推荐默认并立即实现。`stage_skills_mirrors.py` + pack/CI 挂接；`skills/templates` 收敛为指针；core 精简 README；契约 mirrorPath → `skills/core/docs/templates/goal-folder`。回归：docs 26 / scripts 52（2 skip）/ skills 39 OK；`stage --check` ok。status 曾为 `active / 83%`；关门见上节。**不** tag/Release。
 
 ## 2026-07-30 · 创建 GOAL-022（方法论 SSOT + Skills 镜像 stage）
 
@@ -463,7 +467,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 ├── GOAL-019-skills-consumer-workspace-bootstrap · Skills 消费方工作区骨架落地（空仓可运行） [done 100%]
 ├── GOAL-020-methodology-adversarial-audit-fix · 核心方法论对抗性审计与纠错 [done 100%]
 ├── GOAL-021-skills-release-chain-hardening · 加固 Skills「规则→分发→证据→发布」执行链 [done 100%]
-└── GOAL-022-docs-ssot-skills-mirror-stage · 方法论单一真相源与 Skills 镜像 stage 化 [active 83%]
+└── GOAL-022-docs-ssot-skills-mirror-stage · 方法论单一真相源与 Skills 镜像 stage 化 [done 100%]
 ```
 
 ## 状态总览
@@ -491,9 +495,9 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-019-skills-consumer-workspace-bootstrap | Skills 消费方工作区骨架落地（空仓可运行） | GOAL-001-main-vision | done | 100% | [GOAL-019-skills-consumer-workspace-bootstrap/](GOAL-019-skills-consumer-workspace-bootstrap/) |
 | GOAL-020-methodology-adversarial-audit-fix | 核心方法论对抗性审计与纠错 | GOAL-001-main-vision | done | 100% | [GOAL-020-methodology-adversarial-audit-fix/](GOAL-020-methodology-adversarial-audit-fix/) |
 | GOAL-021-skills-release-chain-hardening | 加固 Skills「规则→分发→证据→发布」执行链 | GOAL-001-main-vision | done | 100% | [GOAL-021-skills-release-chain-hardening/](GOAL-021-skills-release-chain-hardening/) |
-| GOAL-022-docs-ssot-skills-mirror-stage | 方法论单一真相源与 Skills 镜像 stage 化 | GOAL-001-main-vision | active | 83% | [GOAL-022-docs-ssot-skills-mirror-stage/](GOAL-022-docs-ssot-skills-mirror-stage/) |
+| GOAL-022-docs-ssot-skills-mirror-stage | 方法论单一真相源与 Skills 镜像 stage 化 | GOAL-001-main-vision | done | 100% | [GOAL-022-docs-ssot-skills-mirror-stage/](GOAL-022-docs-ssot-skills-mirror-stage/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**GOAL-022** `active / 83%`（A～E 已落地，待 F 关门）；GOAL-020/021 `done`。下一编号 **GOAL-023**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
+阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**GOAL-022** `done / 100%`（residual R-022-ORPHAN-PRUNE / R-022-INSTALL-TEMPLATES-COPY non-blocking）；GOAL-020/021 `done`。下一编号 **GOAL-023**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。
 
 ## 状态图例
 
