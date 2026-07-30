@@ -2,9 +2,9 @@
 title: Bootstrap installers · dual entry point (online)
 status: active
 created: 2026-07-30
-updated: 2026-07-30
+updated: 2026-07-31
 parent: null
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Bootstrap installers (GOAL-023)
@@ -49,13 +49,27 @@ Digest mismatch → non-zero exit; package install is not applied from a bad zip
 
 ## Online (Release)
 
+**Docs pin the latest published tag** (currently **`v0.10.0`**). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
+
+Fetch bootstrap from the Release, then run (save to disk first; avoid `curl | bash` / `irm | iex` as the default path):
+
 ```powershell
-# After a published tag vX.Y.Z with skills zip + .sha256 on the Release
-powershell -NoProfile -ExecutionPolicy Bypass -File install-online.ps1 -Version X.Y.Z -Force
+# Current latest formal tag: v0.10.0
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.ps1" `
+  -OutFile .\install-online.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.10.0 -Force
 ```
 
-URL shape (D-002):  
-`https://github.com/magicvr/goal-governance/releases/download/vX.Y.Z/goal-governance-skills-vX.Y.Z.zip`  
-(and matching `.sha256`). Prefer **tag-fixed** URLs over floating branch raw links.
+```bash
+curl -fsSL -o install-online.sh \
+  "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.sh"
+chmod +x install-online.sh
+bash ./install-online.sh --version 0.10.0 --force
+```
+
+URL shape (D-002 / D-003):
+
+- Bootstrap: `https://github.com/magicvr/goal-governance/releases/download/vX.Y.Z/install-online.ps1` (or `.sh`)
+- Skills zip: `https://github.com/magicvr/goal-governance/releases/download/vX.Y.Z/goal-governance-skills-vX.Y.Z.zip` (+ matching `.sha256`)
 
 Release attachments also include these bootstrap scripts and the core-only zip (CI pack job).

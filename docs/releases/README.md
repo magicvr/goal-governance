@@ -29,10 +29,12 @@
 
 **双安装入口**（消费方）：
 
-1. **Bootstrap**（Release 脚本或 monorepo `scripts/bootstrap/`）— 可在线或离线 zip。  
+1. **Bootstrap**（Release **tag 固定 URL** 拉 `install-online.*`，或 monorepo `scripts/bootstrap/`）— 可在线或离线 zip。  
 2. **包内** `skills/install.ps1` / `install.sh` — 解压后离线。  
 
 默认 skills 路径**不**要求联网拉取 core；core-only 与 skills 内嵌 core 在同 version 下应字节一致（pack 单测）。
+
+**文档 pin 规则（GOAL-023 D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例**必须**使用**当前最新正式 annotated tag**（现为 `v0.10.0`）。每次正式发版后同步改写示例中的 tag/version；**禁止**以 `main`/branch raw 或无版本 pin 的 always-latest 作权威安装入口。
 
 ### 本地打包（维护者 / 调试）
 
@@ -77,9 +79,10 @@ python scripts/pack_core_release.py --version 0.7.0 --output-dir dist/
 2. 兼容矩阵 `candidateRevision` **等于**将要打的 tag（如 `v0.8.0`），required 单元无 uncovered。  
 3. 需要宣称的宿主 runtime 证据已按 GOAL-008 惯例就位。  
 4. 本地可先：`python scripts/release_evidence.py --mode release --tag vX.Y.Z --run-checks --include-web --output artifacts/release-evidence.json`。  
-5. `git tag -a vX.Y.Z -m "..."` 并 `git push origin vX.Y.Z`（tag 必须打在**含本工作流**的 commit 上，通常为已合并的 `main`）。  
-6. 打开 Actions → 等待 pack → 在 Environment **release** 上 **Approve**（并满足 wait timer）。  
-7. 确认 GitHub Release 资产齐全；消费方按 [skills/README.md](../../skills/README.md) 安装。
+5. **同步安装文档 pin（D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例中的 tag / `-Version` / zip 名改为**本发版 tag**（消费方复制即对最新正式版；命令仍版本固定）。  
+6. `git tag -a vX.Y.Z -m "..."` 并 `git push origin vX.Y.Z`（tag 必须打在**含本工作流**的 commit 上，通常为已合并的 `main`）。  
+7. 打开 Actions → 等待 pack → 在 Environment **release** 上 **Approve**（并满足 wait timer）。  
+8. 确认 GitHub Release 资产齐全（含 `install-online.ps1` / `.sh`）；消费方按 [skills/README.md](../../skills/README.md) 安装。
 
 #### 手工重挂（不重新打 tag）
 

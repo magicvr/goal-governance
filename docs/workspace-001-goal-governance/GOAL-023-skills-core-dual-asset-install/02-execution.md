@@ -4,8 +4,8 @@ doc: execution
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-30
-updated: 2026-07-30
-version: 0.4.0
+updated: 2026-07-31
+version: 0.4.1
 ---
 
 # 执行记录 · GOAL-023
@@ -71,10 +71,18 @@ version: 0.4.0
 | E CI / Release 挂接 | **done** |
 | F 回归与关门 | **done**（A-001/A-002 + A-003/A-004 + OK A） |
 
+### 2026-07-31 · D-003 文档收口（入口 1 Release 直拉 + pin 最新 tag）
+
+- 用户确认：入口 1 应支持从 GitHub 固定 tag 直拉 bootstrap（无需浏览器下载脚本）；示例始终对应**最新正式 tag**。  
+- **D-003** 落盘于 `01-decision.md`。  
+- 文档已改：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例 pin **`v0.10.0`**（`Invoke-WebRequest` / `curl` 拉脚本 → 再跑 install-online）；`docs/releases/README.md` 增加 pin 规则与发版清单第 5 步。  
+- **未**改 bootstrap 脚本行为；**未**改 goal status（仍 `done`）。
+
 ## 下一步
 
 - 目标已 `done`。路径 D 后续维护另开 **GOAL-024+**。  
-- 可选：CI Linux / 可用 bash 上复跑 `install-online.sh` 离线 e2e（R-023-BASH-HOST）。
+- 可选：CI Linux / 可用 bash 上复跑 `install-online.sh` 离线 e2e（R-023-BASH-HOST）。  
+- 下次正式发版：按 D-003 把三处 README 入口 1 的 tag 示例改到新 tag。
 
 ## 实现触点索引
 

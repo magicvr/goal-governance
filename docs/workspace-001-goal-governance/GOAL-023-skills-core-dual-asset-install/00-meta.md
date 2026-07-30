@@ -4,8 +4,8 @@ title: Skills/Core 双资产分发与双入口安装
 status: done
 parent: GOAL-001-main-vision
 created: 2026-07-30
-updated: 2026-07-30
-version: 0.4.0
+updated: 2026-07-31
+version: 0.4.1
 progress: 100%
 ---
 
@@ -23,6 +23,8 @@ progress: 100%
 **有界**：本目标交付分发与安装体验；**不**授权 annotated tag / GitHub Release（除非用户另书面授权）；**不**改 Root/Charter/VP status；**不**做「always latest core」在线热更；**不**静默覆盖消费仓已改的 `docs/architecture`。
 
 **关门状态（2026-07-30）**：阶段 A～F 完成；A-001/A-002 independent + A-003 响应 + A-004 self close-out **pass**；用户 **OK A** 确认 → **`done / 100%`**。**未** tag/Release。
+
+**关门后文档收口（2026-07-31 · D-003）**：入口 1 README 改为 Release 固定 tag 直拉 bootstrap；示例 pin 最新正式 tag 并写入发版清单（目标仍 `done`）。
 
 ## 成功标准
 
