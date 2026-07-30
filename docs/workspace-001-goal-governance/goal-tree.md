@@ -9,9 +9,9 @@ version: 1.1.10
 
 # Goal Tree
 
-## 2026-07-30 · 路径 D 授权 v0.9.2 冻结 + release-mode evidence（D-026）
+## 2026-07-30 · 路径 D 授权 v0.9.2：本地 release-candidate 通过（D-026）
 
-用户书面授权 annotated **`v0.9.2`** 并跑 `release_evidence --mode release`。冻结：CHANGELOG 0.9.2；矩阵 `candidateRevision: v0.9.2`；测试守卫与 README/docs 身份同步；含 README 四入口装机树卫生。**不**改各 GOAL status/progress；Root 仍 `active`。证据产物见 artifacts / GOAL-001 执行补记。
+用户书面授权 annotated **`v0.9.2`**。首轮因 12 宿主证据 stale 失败 → 2026-07-30 全量 runtime 重采 pass → 矩阵/测试对齐 → tag `v0.9.2` @ `b491e3a` → `release_evidence --mode release` **checksPassed: true**（`artifacts/release-evidence-v0.9.2.json`）。**未** push tag / **未** GitHub Release（须 Environment `release`）。**不**改各 GOAL status/progress；Root 仍 `active`。
 
 ## 2026-07-30 · 路径 D 可选卫生（README 四入口装机树 + Goal 三入口历史注）
 

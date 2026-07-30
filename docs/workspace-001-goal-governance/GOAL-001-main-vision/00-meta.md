@@ -66,7 +66,7 @@ version: 0.9.0
 | **A-015 F-008** | required | **closed · fixed**（[D-024](01-decision.md#d-024--a-015-f-008-路径-d仅维护发版协议不关-root2026-07-28) / [A-017](03-audit.md#a-017--响应-a-015--f-008路径-d契约2026-07-28)） | 曾缺退出路径契约；现以路径 D 为准 |
 | **R-009-X** | accepted residual | **仍 accepted** | 产品终态 / I 全文 verified / 人手 UX 全文 / AI 读资料全文等（见下表）；**路径 D 不关闭** |
 | **A-006 F-006**（A-015 F-010 确认） | recommended | open | 不阻断 D 维护；影响将来 A/对外 GA 复盘 |
-| **发版候选**（A-015 F-011） | recommended | **closing · D-026** | 用户已授权 **v0.9.2**；矩阵 `candidateRevision: v0.9.2`；release-mode evidence 见本拍执行；正式 GitHub Release 仍须 push tag + Environment `release` |
+| **发版候选**（A-015 F-011） | recommended | **local closed · D-026** | annotated **`v0.9.2`** + release-candidate evidence **checksPassed**（本地）；正式 GitHub Release 仍须 push tag + Environment `release` |
 | **A-015 F-007** | required | **closed · fixed**（A-016） | 现时以本节为准 |
 | **A-015 F-009** | recommended | **closed · fixed**（对照表已在现时摘要；A-016/A-017） | 曾缺 R-009-X 有界 vs 终态对照 |
 | **A-018 F-012～F-015** | required | **closed · fixed**（[D-025](01-decision.md#d-025--响应-a-018p-006-后核心包--standalone--agents-回流2026-07-29) / [A-019](03-audit.md#a-019--响应-a-018-f-012f-0152026-07-29)） | 核心方法论文档/standalone/core/AGENTS 回流 |
