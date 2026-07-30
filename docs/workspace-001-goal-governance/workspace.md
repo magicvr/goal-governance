@@ -10,14 +10,14 @@ plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
 created: 2026-07-20
 updated: 2026-07-31
-version: 0.5.0
+version: 0.5.1
 ---
 
 # 工作区上下文 · Goal Governance 主工作区（奠基封存）
 
 本工作区承载仓库 **VP-001 奠基波** 的 Root Goal 及其全部目标生命周期记录。`goal-tree.md` 与所有 `GOAL-*` 文件夹直接位于本目录；它们是本工作区唯一的目标状态真相。
 
-**2026-07-31**：Root **有界 done**；VP-001 **closed**。本区 **不再** 为演进开新子目标。真实项目反馈演进 → 新开 `workspace-002-*` 挂 [VP-002](../../vision/plans/VP-002-methodology-skills-feedback-evolution.md)。
+**2026-07-31**：Root **有界 done**；VP-001 **closed**。本区 **不再** 为演进开新子目标。真实项目反馈演进 → 已开 [workspace-002-methodology-skills-feedback](../workspace-002-methodology-skills-feedback/workspace.md) 挂 [VP-002](../../vision/plans/VP-002-methodology-skills-feedback-evolution.md)（delivery lead）。
 
 ## 绑定
 

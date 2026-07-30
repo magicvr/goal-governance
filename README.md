@@ -31,28 +31,28 @@
 ### 入口 1 · 在线 / 本地 bootstrap（推荐）
 
 从 **GitHub Release 固定 tag** 拉取 bootstrap 脚本（无需浏览器另存），脚本再下载**已内嵌 core 的 skills zip**、校验 SHA-256，并调用包内 install（等价 `-All`）。  
-**当前示例 pin 最新正式 tag `v0.10.0`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
+**当前示例 pin 最新正式 tag `v0.11.0`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
 
 ```powershell
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.10.0 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.11.0 -Force
 
 # 离线：已有 skills zip + .sha256 时（脚本同样可从同 tag Release 拉取）
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.10.0 -ZipPath .\goal-governance-skills-v0.10.0.zip -Force
+  -Version 0.11.0 -ZipPath .\goal-governance-skills-v0.11.0.zip -Force
 ```
 
 ```bash
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.10.0 --force
+bash ./install-online.sh --version 0.11.0 --force
 
 # 离线：
-bash ./install-online.sh --version 0.10.0 --zip-path ./goal-governance-skills-v0.10.0.zip --force
+bash ./install-online.sh --version 0.11.0 --zip-path ./goal-governance-skills-v0.11.0.zip --force
 ```
 
 说明见 [scripts/bootstrap/README.md](scripts/bootstrap/README.md)。默认**不**推荐 `curl | bash` / `irm | iex` 管道直跑（先落盘再执行，便于审阅）。

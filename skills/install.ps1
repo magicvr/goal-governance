@@ -1,4 +1,4 @@
-# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot)
+# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot + Codex)
 # Run from the target project root. No network access required.
 #
 # Typical flow:
@@ -12,6 +12,7 @@ param(
     [switch]$Claude,
     [switch]$Grok,
     [switch]$Copilot,
+    [switch]$Codex,
     [switch]$All,
     [switch]$Help,
     [switch]$WithPrimitives,
@@ -43,6 +44,7 @@ Usage (run from target project root):
   .\install.ps1 -Claude [-SkillsDir DIR]
   .\install.ps1 -Grok [-SkillsDir DIR]
   .\install.ps1 -Copilot [-SkillsDir DIR] [-WithPrimitives]
+  .\install.ps1 -Codex [-SkillsDir DIR]
   .\install.ps1 -All [-SkillsDir DIR] [-WithPrimitives]
   .\install.ps1 -InitWorkspace -WorkspaceSlug SLUG -RootSlug SLUG [host flags...]
   .\install.ps1 -Help
@@ -60,9 +62,14 @@ Options:
                            .\.grok\skills\vision-audit\ -> /vision-audit
   -Copilot / --copilot     Install GitHub Copilot rules -> .\.github\copilot-instructions.md
                            and default slashes -> govern + audit + vision + vision-audit
+  -Codex / --codex         Install OpenAI Codex: .\AGENTS.md + project skills
+                           .\.agents\skills\govern\  ->  `$govern / /govern
+                           .\.agents\skills\audit\   ->  `$audit / /audit
+                           .\.agents\skills\vision\  ->  `$vision / /vision
+                           .\.agents\skills\vision-audit\ -> `$vision-audit / /vision-audit
   -WithPrimitives / --with-primitives
                            Also install advanced Copilot form-fill slash wrappers. Opt-in only.
-  -All / --all             Install Claude + Grok + Copilot + prompts/templates/contracts under -SkillsDir
+  -All / --all             Install Claude + Grok + Copilot + Codex + prompts/templates/contracts under -SkillsDir
   -InitWorkspace / --init-workspace
                            GOAL-019: create docs\workspace-NNN-SLUG\ with workspace.md + goal-tree.md
                            (does NOT create GOAL-* five-pack; use /govern for Root)
@@ -86,6 +93,7 @@ Options:
 Behavior:
     - Claude skills -> govern + audit + vision + vision-audit
     - Grok skills -> govern + audit + vision + vision-audit
+    - Codex skills -> govern + audit + vision + vision-audit under .\.agents\skills\
     - Default Copilot slash surface: /govern + /audit + /vision + /vision-audit
   - Core methodology (GOAL-019 D-004): ALWAYS installs package core\docs -> .\docs\
     (architecture + templates + slim docs\README). Missing core = incomplete install.
@@ -100,6 +108,7 @@ Behavior:
 Examples:
   cd C:\path\to\your-project
   .\skills\install.ps1 -Claude -SkillsDir .\skills
+  .\skills\install.ps1 -Codex -SkillsDir .\skills
   .\skills\install.ps1 -All -SkillsDir .\skills
   .\skills\install.ps1 -All -InitWorkspace -WorkspaceSlug my-product -RootSlug product-vision -SkillsDir .\skills
 "@
@@ -150,6 +159,24 @@ function Test-SamePath([string]$PathA, [string]$PathB) {
     }
 }
 
+function Get-FileSha256Hex {
+    param([string]$Path)
+    # Prefer .NET so CI / -NoProfile shells without module autoload still work
+    # (Get-FileHash requires Microsoft.PowerShell.Utility, which is not always loaded).
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $stream = [System.IO.File]::OpenRead($Path)
+        try {
+            $bytes = $sha.ComputeHash($stream)
+            return ([System.BitConverter]::ToString($bytes) -replace '-', '').ToUpperInvariant()
+        } finally {
+            $stream.Dispose()
+        }
+    } finally {
+        $sha.Dispose()
+    }
+}
+
 function Copy-RuleFile {
     param(
         [string]$Source,
@@ -165,6 +192,15 @@ function Copy-RuleFile {
     $destDir = Split-Path -Parent $Destination
     if ($destDir -and -not (Test-Path -LiteralPath $destDir)) {
         New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+    }
+    # Same source content already at dest (e.g. Claude then Codex both install AGENTS.md) — skip prompt
+    if ((Test-Path -LiteralPath $Destination -PathType Leaf)) {
+        $srcHash = Get-FileSha256Hex -Path $Source
+        $dstHash = Get-FileSha256Hex -Path $Destination
+        if ($srcHash -eq $dstHash) {
+            Write-Host "Already present: $Destination"
+            return
+        }
     }
     if (Confirm-Overwrite -Path $Destination) {
         Copy-Item -LiteralPath $Source -Destination $Destination -Force
@@ -241,6 +277,7 @@ $step2
      - Contract: $SkillsDir\contracts\skills-consumer-contract.json
     - Claude: /govern + /audit + /vision + /vision-audit under .\.claude\skills\
     - Grok:   /govern + /audit + /vision + /vision-audit under .\.grok\skills\
+    - Codex:  `$govern + `$audit + `$vision + `$vision-audit under .\.agents\skills\
     - Copilot: govern + audit + vision + vision-audit prompts
   4. Advanced Copilot form-filling slashes only if you used -WithPrimitives.
   5. Cold start: /vision (Charter->VP) then /govern (workspace+Root).
@@ -431,6 +468,7 @@ while ($i -lt $extraArgs.Count) {
         '^--claude$' { $Claude = $true; $i++ }
         '^--grok$' { $Grok = $true; $i++ }
         '^--copilot$' { $Copilot = $true; $i++ }
+        '^--codex$' { $Codex = $true; $i++ }
         '^--all$' { $All = $true; $i++ }
         '^--with-primitives$' { $WithPrimitives = $true; $i++ }
         '^--init-workspace$' { $InitWorkspace = $true; $i++ }
@@ -476,7 +514,7 @@ while ($i -lt $extraArgs.Count) {
     }
 }
 
-if ($Help -or (-not $Claude -and -not $Grok -and -not $Copilot -and -not $All -and -not $InitWorkspace)) {
+if ($Help -or (-not $Claude -and -not $Grok -and -not $Copilot -and -not $Codex -and -not $All -and -not $InitWorkspace)) {
     Show-Usage
     if ($Help) { exit 0 } else { exit 1 }
 }
@@ -494,6 +532,7 @@ if ($All) {
     $Claude = $true
     $Grok = $true
     $Copilot = $true
+    $Codex = $true
     $installExtras = $true
 } else {
     $installExtras = $false
@@ -512,6 +551,10 @@ $GrokGovernSrc = Join-Path $PackageRoot 'install\grok\skills\govern\SKILL.md'
 $GrokAuditSrc = Join-Path $PackageRoot 'install\grok\skills\audit\SKILL.md'
 $GrokVisionSrc = Join-Path $PackageRoot 'install\grok\skills\vision\SKILL.md'
 $GrokVisionAuditSrc = Join-Path $PackageRoot 'install\grok\skills\vision-audit\SKILL.md'
+$CodexGovernSrc = Join-Path $PackageRoot 'install\codex\skills\govern\SKILL.md'
+$CodexAuditSrc = Join-Path $PackageRoot 'install\codex\skills\audit\SKILL.md'
+$CodexVisionSrc = Join-Path $PackageRoot 'install\codex\skills\vision\SKILL.md'
+$CodexVisionAuditSrc = Join-Path $PackageRoot 'install\codex\skills\vision-audit\SKILL.md'
 $CopilotSrc = Join-Path $PackageRoot 'install\copilot\copilot-instructions.md'
 $CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
@@ -567,6 +610,23 @@ if ($Grok) {
         Write-Err "Missing package file: $GrokVisionAuditSrc"
     }
 }
+if ($Codex) {
+    if (-not (Test-Path -LiteralPath $ClaudeAgentsSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $ClaudeAgentsSrc (Codex reuses Claude AGENTS.md source)"
+    }
+    if (-not (Test-Path -LiteralPath $CodexGovernSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $CodexGovernSrc"
+    }
+    if (-not (Test-Path -LiteralPath $CodexAuditSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $CodexAuditSrc"
+    }
+    if (-not (Test-Path -LiteralPath $CodexVisionSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $CodexVisionSrc"
+    }
+    if (-not (Test-Path -LiteralPath $CodexVisionAuditSrc -PathType Leaf)) {
+        Write-Err "Missing package file: $CodexVisionAuditSrc"
+    }
+}
 if ($Copilot) {
     if (-not (Test-Path -LiteralPath $CopilotSrc -PathType Leaf)) {
         Write-Err "Missing package file: $CopilotSrc"
@@ -600,6 +660,16 @@ if ($Grok) {
     if (-not (Test-Path -LiteralPath $agentsPath -PathType Leaf) -and (Test-Path -LiteralPath $ClaudeAgentsSrc -PathType Leaf)) {
         Write-Host 'Note: no AGENTS.md yet; consider -Claude or copy install\claude\AGENTS.md for project rules.'
     }
+}
+
+if ($Codex) {
+    # D-002: REPO skills under .agents/skills; AGENTS.md reuses Claude source (same protocol)
+    Copy-RuleFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
+    Copy-RuleFile -Source $CodexGovernSrc -Destination (Join-Path $TargetDir '.agents\skills\govern\SKILL.md')
+    Copy-RuleFile -Source $CodexAuditSrc -Destination (Join-Path $TargetDir '.agents\skills\audit\SKILL.md')
+    Copy-RuleFile -Source $CodexVisionSrc -Destination (Join-Path $TargetDir '.agents\skills\vision\SKILL.md')
+    Copy-RuleFile -Source $CodexVisionAuditSrc -Destination (Join-Path $TargetDir '.agents\skills\vision-audit\SKILL.md')
+    Write-Host 'Codex skills: $govern + $audit + $vision + $vision-audit under .agents/skills/'
 }
 
 if ($Copilot) {

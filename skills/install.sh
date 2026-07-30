@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot)
+# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot + Codex)
 # Run from the target project root. No network access required.
 #
 # Typical flow:
@@ -19,6 +19,7 @@ SKILLS_DIR_ARG="./skills"
 INSTALL_CLAUDE=0
 INSTALL_GROK=0
 INSTALL_COPILOT=0
+INSTALL_CODEX=0
 INSTALL_EXTRAS=0
 INSTALL_PRIMITIVE_WRAPPERS=0
 INIT_WORKSPACE=0
@@ -44,6 +45,7 @@ Usage (run from target project root):
   ./install.sh --claude [--skills-dir DIR]
   ./install.sh --grok [--skills-dir DIR]
   ./install.sh --copilot [--skills-dir DIR] [--with-primitives]
+  ./install.sh --codex [--skills-dir DIR]
   ./install.sh --all [--skills-dir DIR] [--with-primitives]
   ./install.sh --init-workspace --workspace-slug SLUG --root-slug SLUG [host flags…]
   ./install.sh --help
@@ -61,9 +63,14 @@ Options:
                         ./.grok/skills/vision-audit/ → /vision-audit
   --copilot             Install GitHub Copilot rules → ./.github/copilot-instructions.md
                         and default slashes → govern + audit + vision + vision-audit
+  --codex               Install OpenAI Codex: ./AGENTS.md + project skills
+                        ./.agents/skills/govern/  →  \$govern / /govern
+                        ./.agents/skills/audit/   →  \$audit / /audit
+                        ./.agents/skills/vision/  →  \$vision / /vision
+                        ./.agents/skills/vision-audit/ → \$vision-audit / /vision-audit
   --with-primitives     Also install advanced Copilot slash wrappers (new-goal, …).
                         Opt-in only — avoids form-menu UX.
-  --all                 Install Claude + Grok + Copilot + ensure prompts/, templates/ and
+  --all                 Install Claude + Grok + Copilot + Codex + ensure prompts/, templates/ and
                         contracts/ under --skills-dir; primary entry remains /govern
   --init-workspace      GOAL-019: create docs/workspace-NNN-SLUG/ with workspace.md +
                         goal-tree.md (does NOT create GOAL-* five-pack; use /govern for Root)
@@ -82,6 +89,7 @@ Behavior:
   - Rule files always install into the current working directory (project root)
   - Claude skills → govern + audit + vision + vision-audit
   - Grok skills → govern + audit + vision + vision-audit
+  - Codex skills → govern + audit + vision + vision-audit under ./.agents/skills/
   - Default Copilot slash surface: /govern + /audit + /vision + /vision-audit
   - Advanced form-filling slashes are NOT installed unless --with-primitives
   - Core methodology (GOAL-019 D-004): ALWAYS installs package core/docs → ./docs/
@@ -99,6 +107,7 @@ Behavior:
 Examples:
   cd /path/to/your-project
   bash ./skills/install.sh --claude --skills-dir ./skills
+  bash ./skills/install.sh --codex --skills-dir ./skills
   bash ./skills/install.sh --all --skills-dir ./skills
   bash ./skills/install.sh --all --init-workspace \
     --workspace-slug my-product --root-slug product-vision \
@@ -146,6 +155,24 @@ copy_file() {
     return 0
   fi
   mkdir -p "$(dirname "$dest")"
+  # Same source content already at dest (e.g. Claude then Codex both install AGENTS.md) — skip prompt
+  if [[ -f "$dest" ]]; then
+    local src_hash dest_hash
+    if command -v sha256sum >/dev/null 2>&1; then
+      src_hash="$(sha256sum "$src" | awk '{print $1}')"
+      dest_hash="$(sha256sum "$dest" | awk '{print $1}')"
+    elif command -v shasum >/dev/null 2>&1; then
+      src_hash="$(shasum -a 256 "$src" | awk '{print $1}')"
+      dest_hash="$(shasum -a 256 "$dest" | awk '{print $1}')"
+    else
+      src_hash=""
+      dest_hash="diff"
+    fi
+    if [[ -n "$src_hash" && "$src_hash" == "$dest_hash" ]]; then
+      echo "Already present: $dest"
+      return 0
+    fi
+  fi
   if confirm_overwrite "$dest"; then
     cp "$src" "$dest"
     echo "Installed: $dest"
@@ -214,6 +241,7 @@ Next steps:
      - Contract: $SKILLS_DIR/contracts/skills-consumer-contract.json
     - Claude: /govern + /audit + /vision + /vision-audit under ./.claude/skills/
     - Grok:   /govern + /audit + /vision + /vision-audit under ./.grok/skills/
+    - Codex:  \$govern + \$audit + \$vision + \$vision-audit under ./.agents/skills/
     - Copilot: govern + audit + vision + vision-audit prompts
   4. Advanced Copilot form-filling slashes only if you used --with-primitives.
   5. Cold start: /vision (Charter->VP) then /govern (workspace+Root).
@@ -374,10 +402,15 @@ while [[ $# -gt 0 ]]; do
       INSTALL_COPILOT=1
       shift
       ;;
+    --codex)
+      INSTALL_CODEX=1
+      shift
+      ;;
     --all)
       INSTALL_CLAUDE=1
       INSTALL_GROK=1
       INSTALL_COPILOT=1
+      INSTALL_CODEX=1
       INSTALL_EXTRAS=1
       shift
       ;;
@@ -457,7 +490,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ "$INSTALL_CLAUDE" -eq 0 && "$INSTALL_GROK" -eq 0 && "$INSTALL_COPILOT" -eq 0 && "$INIT_WORKSPACE" -eq 0 ]]; then
+if [[ "$INSTALL_CLAUDE" -eq 0 && "$INSTALL_GROK" -eq 0 && "$INSTALL_COPILOT" -eq 0 && "$INSTALL_CODEX" -eq 0 && "$INIT_WORKSPACE" -eq 0 ]]; then
   usage
   exit 1
 fi
@@ -486,6 +519,10 @@ GROK_GOVERN_SRC="$PACKAGE_ROOT/install/grok/skills/govern/SKILL.md"
 GROK_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/audit/SKILL.md"
 GROK_VISION_SRC="$PACKAGE_ROOT/install/grok/skills/vision/SKILL.md"
 GROK_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/vision-audit/SKILL.md"
+CODEX_GOVERN_SRC="$PACKAGE_ROOT/install/codex/skills/govern/SKILL.md"
+CODEX_AUDIT_SRC="$PACKAGE_ROOT/install/codex/skills/audit/SKILL.md"
+CODEX_VISION_SRC="$PACKAGE_ROOT/install/codex/skills/vision/SKILL.md"
+CODEX_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/codex/skills/vision-audit/SKILL.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
@@ -512,6 +549,13 @@ if [[ "$INSTALL_GROK" -eq 1 ]]; then
   [[ -f "$GROK_AUDIT_SRC" ]] || die "Missing package file: $GROK_AUDIT_SRC"
   [[ -f "$GROK_VISION_SRC" ]] || die "Missing package file: $GROK_VISION_SRC"
   [[ -f "$GROK_VISION_AUDIT_SRC" ]] || die "Missing package file: $GROK_VISION_AUDIT_SRC"
+fi
+if [[ "$INSTALL_CODEX" -eq 1 ]]; then
+  [[ -f "$CLAUDE_AGENTS_SRC" ]] || die "Missing package file: $CLAUDE_AGENTS_SRC (Codex reuses Claude AGENTS.md source)"
+  [[ -f "$CODEX_GOVERN_SRC" ]] || die "Missing package file: $CODEX_GOVERN_SRC"
+  [[ -f "$CODEX_AUDIT_SRC" ]] || die "Missing package file: $CODEX_AUDIT_SRC"
+  [[ -f "$CODEX_VISION_SRC" ]] || die "Missing package file: $CODEX_VISION_SRC"
+  [[ -f "$CODEX_VISION_AUDIT_SRC" ]] || die "Missing package file: $CODEX_VISION_AUDIT_SRC"
 fi
 if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   [[ -f "$COPILOT_SRC" ]] || die "Missing package file: $COPILOT_SRC"
@@ -542,6 +586,16 @@ if [[ "$INSTALL_GROK" -eq 1 ]]; then
   if [[ ! -f "$TARGET_DIR/AGENTS.md" && -f "$CLAUDE_AGENTS_SRC" ]]; then
     echo "Note: no AGENTS.md yet; consider --claude or copy install/claude/AGENTS.md for project rules."
   fi
+fi
+
+if [[ "$INSTALL_CODEX" -eq 1 ]]; then
+  # D-002: REPO skills under .agents/skills; AGENTS.md reuses Claude source (same protocol)
+  copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  copy_file "$CODEX_GOVERN_SRC" "$TARGET_DIR/.agents/skills/govern/SKILL.md"
+  copy_file "$CODEX_AUDIT_SRC" "$TARGET_DIR/.agents/skills/audit/SKILL.md"
+  copy_file "$CODEX_VISION_SRC" "$TARGET_DIR/.agents/skills/vision/SKILL.md"
+  copy_file "$CODEX_VISION_AUDIT_SRC" "$TARGET_DIR/.agents/skills/vision-audit/SKILL.md"
+  echo "Codex skills: \$govern + \$audit + \$vision + \$vision-audit under .agents/skills/"
 fi
 
 if [[ "$INSTALL_COPILOT" -eq 1 ]]; then

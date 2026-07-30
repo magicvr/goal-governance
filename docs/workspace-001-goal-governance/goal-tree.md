@@ -9,12 +9,16 @@ version: 1.2.0
 
 # Goal Tree
 
-> **工作区封存（2026-07-31）**：Root **GOAL-001 `done`**；VP-001 **closed**。本树**不再**分配新编号。演进 → **VP-002** + 待开 **workspace-002**。
+> **工作区封存（2026-07-31）**：Root **GOAL-001 `done`**；VP-001 **closed**。本树**不再**分配新编号。演进 → **VP-002** + **[workspace-002-methodology-skills-feedback](../workspace-002-methodology-skills-feedback/)**（已开区）。
+
+## 2026-07-31 · workspace-002 已开（指针 · 非本区目标）
+
+演进交付在 [workspace-002-methodology-skills-feedback](../workspace-002-methodology-skills-feedback/)：Root `GOAL-001-methodology-skills-feedback-evolution` · 首子目标 `GOAL-002-codex-skills-entry`。**本树仍不分配 GOAL-024+**。
 
 ## 2026-07-31 · Root 有界关门 + VP 三波次
 
-用户确认：VP-001 有界关 · VP-002 active（0 区空转至 2026-08-14）· VP-003 planned · **GOAL-001 done** · 后继 workspace-002↔VP-002。  
-[D-028](GOAL-001-main-vision/01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) / [A-021](GOAL-001-main-vision/03-audit.md#a-021--root-有界关门审计close-out2026-07-31) **pass**。goal-tree：Root **done**；002～023 仍 done。**不**关 R-009-X；**不** scaffold 002。
+用户确认：VP-001 有界关 · VP-002 active · VP-003 planned · **GOAL-001 done** · 后继 workspace-002↔VP-002（同日稍后已 scaffold 002）。  
+[D-028](GOAL-001-main-vision/01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) / [A-021](GOAL-001-main-vision/03-audit.md#a-021--root-有界关门审计close-out2026-07-31) **pass**。goal-tree：Root **done**；002～023 仍 done。**不**关 R-009-X。
 
 ## 2026-07-31 · Root D-027 路径收束 + V-F-008 fixed
 
@@ -23,6 +27,10 @@ version: 1.2.0
 ## 2026-07-31 · 愿景 strategic re-align（Charter 0.2.0 · Web 冻结）
 
 `/vision`：用户确认 S1+B1。Charter **`vision-goal-governance@0.2.0`**（[VR-005](../vision/revisions.md)）；VP-001 意图改为协议 + Skills；本仓 Web = **冻结参考实现**（不删代码、非投资面）。[VRev-005](../vision/reviews.md) self **pass**；workspace-001 + Root `serves_summary` re-align 完成；宽阻断解除。**不**改各 GOAL status/progress。实现层收束见上节 D-027。下一编号 **GOAL-024**。
+
+## 2026-07-31 · 路径 D 授权 v0.11.0 发版（PR → main → tag → Release）
+
+用户授权 annotated **`v0.11.0`**：冻结 CHANGELOG/矩阵 → 开 PR → CI 绿合并 **main** → tag 并发布资产（skills + core + bootstrap；含 Codex install surface）→ 确认后切回 **dev**。承接 GOAL-002（Codex）与 workspace-002 R1。**不**宣称 Codex 矩阵 runtime-verified；**不**改各 GOAL status/progress 为重新开门；Root 仍 `active`。下一编号 **GOAL-024**。
 
 ## 2026-07-30 · 路径 D 授权 v0.10.0 发版（PR → main → tag → Release）
 

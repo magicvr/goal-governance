@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-07-31
 parent: null
-version: 1.7.1
+version: 1.8.0
 ---
 
 # Skills
@@ -20,8 +20,8 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 | 身份 | 状态 |
 |------|------|
-| **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** | 已发布 annotated tag / Release 基线。 |
-| **`v0.10.0`（本冻结）** | 矩阵 **`candidateRevision: v0.10.0`**；GOAL-021～023（执行链加固、stage SSOT、双资产 + bootstrap）；四入口 × 三宿主 **runtime-verified**（2026-07-30 证据；behaviorSources 仍匹配）。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
+| **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** / **`v0.10.0`** | 已发布 annotated tag / Release 基线。 |
+| **`v0.11.0`（本冻结）** | 矩阵 **`candidateRevision: v0.11.0`**；GOAL-002 Codex 安装面（`--codex` / `-All`）+ 文档 pin；四入口 × 三宿主 **runtime-verified**（2026-07-30 证据）。**不**宣称 Codex 矩阵 `committed` / `runtime-verified`。正式 GitHub Release 以 annotated tag + release evidence + Environment `release` 为准。 |
 
 Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
@@ -47,6 +47,7 @@ Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；We
 | Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
 | Grok Build CLI `0.2.114` | `.grok/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
 | GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` · `/vision-audit` | 四个入口均 `runtime-verified` via BYOK（2026-07-30） |
+| OpenAI Codex | `.agents/skills/{govern,audit,vision,vision-audit}/` | `$govern` · `$audit` · `$vision` · `$vision-audit` | **install surface shipped**（GOAL-002）；runtime 探针见目标证据链（非矩阵 committed） |
 
 核心行为：
 
@@ -75,6 +76,8 @@ skills/
 │   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md
 │   ├── grok/
 │   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md
+│   ├── codex/
+│   │   └── skills/{govern,audit,vision,vision-audit}/SKILL.md  # → .agents/skills/
 │   └── copilot/
 │       ├── copilot-instructions.md
 │       └── prompts/
@@ -106,28 +109,28 @@ skills/
 
 ### 入口 1 · Bootstrap（推荐 · 其他项目）
 
-**当前示例 pin 最新正式 tag `v0.10.0`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
+**当前示例 pin 最新正式 tag `v0.11.0`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
 
 在目标项目根执行（先落盘 bootstrap，再跑；默认**不**管道直跑）：
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.10.0 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.11.0 -Force
 
 # 离线（本地 skills zip + .sha256）：
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.10.0 -ZipPath .\goal-governance-skills-v0.10.0.zip -Force
+  -Version 0.11.0 -ZipPath .\goal-governance-skills-v0.11.0.zip -Force
 ```
 
 ```bash
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.10.0/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.10.0 --force
+bash ./install-online.sh --version 0.11.0 --force
 
 # 离线：
-bash ./install-online.sh --version 0.10.0 --zip-path ./goal-governance-skills-v0.10.0.zip --force
+bash ./install-online.sh --version 0.11.0 --zip-path ./goal-governance-skills-v0.11.0.zip --force
 ```
 
 Bootstrap 会：校验 SHA-256 → 落到 `./skills` → 调用包内 install **默认 `-All` / `--all`**（四入口 + core → `docs/`）。digest 失败 **fail closed**。详见 [scripts/bootstrap/README.md](../scripts/bootstrap/README.md)。
@@ -156,12 +159,12 @@ Rename-Item .\goal-governance-skills-vX.Y.Z skills
 
 ```bash
 bash ./skills/install.sh --all --skills-dir ./skills
-# 或单宿主：--claude / --grok / --copilot（同样会装 core）
+# 或单宿主：--claude / --grok / --copilot / --codex（同样会装 core）
 ```
 
 ```powershell
 .\skills\install.ps1 -All -SkillsDir .\skills
-# 或：-Claude / -Grok / -Copilot（同样会装 core）
+# 或：-Claude / -Grok / -Copilot / -Codex（同样会装 core）
 ```
 
 4. 确认 `docs/architecture/principles.md` 等已存在；冷启动先 **`/vision`**（Charter→VP），再建立工作区并 **`/govern`**；Goal 交叉审计用 **`/audit`**；独立 Vision Review 用 **`/vision-audit`**。
@@ -183,7 +186,7 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
-**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**。填表类 advanced slash 仍为可选。四入口在 Claude / Grok / Copilot CLI 上均为 **`runtime-verified`（2026-07-28）**：`/vision-audit` 证据为只读 dispatch（wrapper 路由、核心提示词加载、愿景发现），**不是**写盘全路径 e2e；见兼容矩阵。
+**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**（Codex 侧为 `$govern` 等）。填表类 advanced slash 仍为可选。四入口在 Claude / Grok / Copilot CLI 上均为 **`runtime-verified`（2026-07-28）**：`/vision-audit` 证据为只读 dispatch（wrapper 路由、核心提示词加载、愿景发现），**不是**写盘全路径 e2e；见兼容矩阵。Codex 已提供 install 面（GOAL-002），**尚未**写入矩阵 `committed` / runtime-verified。
 
 #### Claude Code
 
@@ -220,6 +223,26 @@ cp ./skills/install/grok/skills/vision/SKILL.md .grok/skills/vision/SKILL.md
 cp ./skills/install/grok/skills/vision-audit/SKILL.md .grok/skills/vision-audit/SKILL.md
 ```
 
+#### OpenAI Codex
+
+```text
+install/claude/AGENTS.md
+  →  <repo>/AGENTS.md
+install/codex/skills/{govern,audit,vision,vision-audit}/SKILL.md
+  →  <repo>/.agents/skills/{govern,audit,vision,vision-audit}/SKILL.md
+```
+
+（官方 REPO skill 根为 `.agents/skills`；显式调用 `$govern` / `$audit` / `$vision` / `$vision-audit`。）
+
+```bash
+mkdir -p .agents/skills/govern .agents/skills/audit .agents/skills/vision .agents/skills/vision-audit
+cp ./skills/install/claude/AGENTS.md ./AGENTS.md
+cp ./skills/install/codex/skills/govern/SKILL.md .agents/skills/govern/SKILL.md
+cp ./skills/install/codex/skills/audit/SKILL.md .agents/skills/audit/SKILL.md
+cp ./skills/install/codex/skills/vision/SKILL.md .agents/skills/vision/SKILL.md
+cp ./skills/install/codex/skills/vision-audit/SKILL.md .agents/skills/vision-audit/SKILL.md
+```
+
 #### GitHub Copilot
 
 ```text
@@ -250,8 +273,9 @@ install/copilot/prompts/vision-audit.md
 | `--claude` / `-Claude` | `AGENTS.md` + `.claude/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
 | `--grok` / `-Grok` | `.grok/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
 | `--copilot` / `-Copilot` | copilot-instructions + `govern`/`audit`/`vision`/`vision-audit` prompts + **core → docs/** |
+| `--codex` / `-Codex` | `AGENTS.md` + `.agents/skills/{govern,audit,vision,vision-audit}` + **core → docs/** |
 | `--with-primitives` / `-WithPrimitives` | 可选：四个 advanced 填表 slash（new-goal 等） |
-| `--all` / `-All` | Claude + Grok + Copilot + prompts/templates/contracts + **core** |
+| `--all` / `-All` | Claude + Grok + Copilot + Codex + prompts/templates/contracts + **core** |
 | `--init-workspace` / `-InitWorkspace` | 可选：scaffold `docs/workspace-NNN-slug/`（**须**同时给 slug） |
 | `--workspace-slug` / `-WorkspaceSlug` | 与 init-workspace 联用；小写短横线；**禁止静默默认** |
 | `--root-slug` / `-RootSlug` | 与 init-workspace 联用 → 计划中的 `GOAL-001-<slug>` |
@@ -264,6 +288,7 @@ bash ./skills/install.sh --all --skills-dir ./skills
 bash ./skills/install.sh --claude --skills-dir ./skills
 bash ./skills/install.sh --grok --skills-dir ./skills
 bash ./skills/install.sh --copilot --skills-dir ./skills
+bash ./skills/install.sh --codex --skills-dir ./skills
 ```
 
 ```powershell
@@ -271,6 +296,7 @@ bash ./skills/install.sh --copilot --skills-dir ./skills
 .\skills\install.ps1 -Claude -SkillsDir .\skills
 .\skills\install.ps1 -Grok -SkillsDir .\skills
 .\skills\install.ps1 -Copilot -SkillsDir .\skills
+.\skills\install.ps1 -Codex -SkillsDir .\skills
 ```
 
 可选：安装同时 scaffold 工作区骨架（**不**创建 Root 五件套；slug 必须显式给出）：

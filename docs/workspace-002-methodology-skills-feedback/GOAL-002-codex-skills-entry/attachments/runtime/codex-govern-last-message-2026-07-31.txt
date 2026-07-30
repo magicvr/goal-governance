@@ -1,0 +1,5 @@
+CODEX-GOVERN-PROBE host=codex-cli skill=govern path=.agents/skills/govern/SKILL.md status=loaded
+SKILLS_PKG=C:\Users\magicvr\Documents\Code\goal-governance\skills
+ORCHESTRATOR_EXISTS=yes
+WORKSPACE_FOCUS=workspace-002 GOAL-002-codex-skills-entry
+OUTCOME=dispatch-readonly

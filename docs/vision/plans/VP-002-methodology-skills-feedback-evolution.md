@@ -4,10 +4,10 @@ id: VP-002-methodology-skills-feedback-evolution
 title: 真实项目反馈驱动的协议与 Skills 演进
 status: active
 vision_ref: vision-goal-governance@0.2.0
-lead_workspace: 
+lead_workspace: workspace-002-methodology-skills-feedback
 created: 2026-07-31
 updated: 2026-07-31
-version: 0.1.0
+version: 0.2.0
 ---
 
 # VP-002 · 真实项目反馈驱动的协议与 Skills 演进
@@ -21,20 +21,18 @@ version: 0.1.0
 
 ### 交付容器
 
-- **主交付工作区（待开）**：`workspace-002-*`（slug 开区时用户确认）+ 新区 Root，挂本 VP 为 `primary_plan`。
+- **主交付工作区（已开）**：`workspace-002-methodology-skills-feedback` + Root `GOAL-001-methodology-skills-feedback-evolution`，挂本 VP 为 `primary_plan`；`vision_role: delivery`。
 - **不**在 `workspace-001-goal-governance` 的已 done Root 下继续开演进子目标（奠基树封存）。
 
 ### 空转声明（alignment §5.1）
 
-本 VP 创建时 **工作区数 = 0**（用户确认：后继有真实项目反馈时再开 workspace-002）。
-
 | 项 | 值 |
 |----|-----|
-| 空转接受 | **是**（用户 2026-07-31 书面：VP-002 active + 后继开区 002） |
-| 空转起算 | 2026-07-31（本文件 `updated`） |
-| 下一复核日 | **2026-08-14**（≤14 日宽限） |
-| 宽限内禁止 | 把本 VP 当作「已在推进的交付证据」；不得无区宣称演进成果 |
-| 超宽限 | 须新书面续空转（再 ≤14 日）/ 挂区 / 改 `planned` / `abandoned`，否则相关放行/关门 fail closed |
+| 空转状态 | **已结束**（2026-07-31 挂区） |
+| 历史空转接受 | 是（创建时 0 区；复核原定 2026-08-14） |
+| 空转起算 | 2026-07-31 |
+| 挂区日 | **2026-07-31** · `workspace-002-methodology-skills-feedback` |
+| 说明 | 挂区后不再适用「0 区空转 fail closed」；交付证据在工作区目标内 |
 
 ## 方向级退出判据
 
@@ -49,7 +47,7 @@ version: 0.1.0
 
 | workspace_id | root_goal | role | joined | notes |
 |--------------|-----------|------|--------|-------|
-| — | — | — | — | **待开** `workspace-002-*` 为 lead；开区交 `/govern` S0（已有 Charter/VP，scaffold 区+Root） |
+| workspace-002-methodology-skills-feedback | GOAL-001-methodology-skills-feedback-evolution | delivery / **lead** | 2026-07-31 | 用户 `/govern` 确认 slug；首子目标 GOAL-002-codex-skills-entry |
 
 ## 关门记录
 
@@ -64,3 +62,4 @@ version: 0.1.0
 | date | change |
 |------|--------|
 | 2026-07-31 | 初创 `active`；承接 VP-001 residual 中的演进焦点（H-EVOL-01）；用户接受零区空转至 2026-08-14 或首开 workspace-002。 |
+| 2026-07-31 | **挂区**：`workspace-002-methodology-skills-feedback` 为 lead；空转结束；Root + GOAL-002（Codex Skills 入口）立项。 |

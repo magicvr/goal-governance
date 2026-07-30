@@ -5,10 +5,10 @@ status: done
 parent: null
 plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
-serves_summary: 奠基 Root（有界 done）；服务已关 VP-001 / vision-goal-governance@0.2.0；演进见 VP-002 + 待开 workspace-002
+serves_summary: 奠基 Root（有界 done）；服务已关 VP-001 / vision-goal-governance@0.2.0；演进见 VP-002 + workspace-002-methodology-skills-feedback
 created: 2026-07-18
 updated: 2026-07-31
-version: 1.0.0
+version: 1.0.1
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -19,7 +19,7 @@ version: 1.0.0
 >
 > **有界关门**：[D-028](01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) / [A-021](03-audit.md#a-021--root-有界关门审计close-out2026-07-31) **pass**。  
 > **不等于** Charter done、Web 产品终态、协议停止演进。  
-> **演进容器**：**VP-002** + 待开 **workspace-002-***（禁止在本 done Root 下开 GOAL-024+）。
+> **演进容器**：**VP-002** + **[workspace-002-methodology-skills-feedback](../../workspace-002-methodology-skills-feedback/)**（禁止在本 done Root 下开 GOAL-024+）。
 
 ### Root 现时
 
@@ -46,7 +46,7 @@ version: 1.0.0
 |----|-----|
 | Charter | [vision-goal-governance@0.2.0](../../../vision/charter.md) · 仍 `active`（不可 done） |
 | 本 Root primary_plan | [VP-001](../../../vision/plans/VP-001-governance-platform-delivery.md) · **closed** |
-| 组合编排 | VP-001 closed · **VP-002 active**（0 区空转至 2026-08-14）· VP-003 planned |
+| 组合编排 | VP-001 closed · **VP-002 active**（lead workspace-002）· VP-003 planned |
 | Vision Review | [VRev-006](../../../vision/reviews.md) portfolio close-out |
 
 ### Residual（不因 Root done 而关闭）
@@ -60,9 +60,8 @@ version: 1.0.0
 ### 下一步（本 Root 已关）
 
 1. **禁止**在本树新建子目标或改回 active 假装未关（除非用户新 D 重开）。  
-2. **有真实项目反馈时**：`/govern` scaffold **workspace-002** + Root，`primary_plan=VP-002`。  
-3. **空转**：VP-002 复核日 **2026-08-14** 前挂区或续空转/改 planned。  
-4. 只读查阅本区过程树与冻结 `web/` 参考实现。
+2. **演进区已开**：[workspace-002-methodology-skills-feedback](../../workspace-002-methodology-skills-feedback/) · Root + GOAL-002（Codex Skills 入口）；推进请对该区 `/govern`。  
+3. 只读查阅本区过程树与冻结 `web/` 参考实现。
 
 ---
 
