@@ -1,13 +1,20 @@
 ---
 title: Goal Tree · 目标树与进展总览
-status: active
+status: archived
 created: 2026-07-18
 updated: 2026-07-31
 parent: null
-version: 1.1.21
+version: 1.2.0
 ---
 
 # Goal Tree
+
+> **工作区封存（2026-07-31）**：Root **GOAL-001 `done`**；VP-001 **closed**。本树**不再**分配新编号。演进 → **VP-002** + 待开 **workspace-002**。
+
+## 2026-07-31 · Root 有界关门 + VP 三波次
+
+用户确认：VP-001 有界关 · VP-002 active（0 区空转至 2026-08-14）· VP-003 planned · **GOAL-001 done** · 后继 workspace-002↔VP-002。  
+[D-028](GOAL-001-main-vision/01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) / [A-021](GOAL-001-main-vision/03-audit.md#a-021--root-有界关门审计close-out2026-07-31) **pass**。goal-tree：Root **done**；002～023 仍 done。**不**关 R-009-X；**不** scaffold 002。
 
 ## 2026-07-31 · Root D-027 路径收束 + V-F-008 fixed
 
@@ -472,7 +479,7 @@ GOAL-011 完成当前仓库到 `docs/workspace-001-goal-governance/` 的迁移�
 > 根目标当前采用“三层交付、一个真相源”：核心方法论与模板、Skills 消费适配器、Web 人类工作台。核心 canonical 模板位于 `docs/templates/goal-folder/`；包内分发为 `skills/core/docs/templates/`（stage；GOAL-022）。
 
 ```text
-GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议与消费工具 [active]
+GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议与消费工具 [done · 有界奠基关]
 ├── GOAL-002-project-bootstrap · 完成项目初始化（文档体系 + Web 基础框架 + Skills 方向） [done 100%]
 ├── GOAL-003-skills-practice · 完善 Skills 并在本项目中实践验证 [done 100%]
 ├── GOAL-004-core-data-model · 实现核心数据模型与 Goal 基础管理 [done 100%]
@@ -501,7 +508,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 
 | ID | 标题 | Parent | Status | Progress | 路径 |
 |----|------|--------|--------|----------|------|
-| GOAL-001-main-vision | 交付可复用的目标治理方法论、文档协议与消费工具 | — | active | — | [GOAL-001-main-vision/](GOAL-001-main-vision/) |
+| GOAL-001-main-vision | 交付可复用的目标治理方法论、文档协议与消费工具 | — | **done** | — | [GOAL-001-main-vision/](GOAL-001-main-vision/) |
 | GOAL-002-project-bootstrap | 完成项目初始化（文档体系 + Web 基础框架 + Skills 方向） | GOAL-001-main-vision | done | 100% | [GOAL-002-project-bootstrap/](GOAL-002-project-bootstrap/) |
 | GOAL-003-skills-practice | 完善 Skills 并在本项目中实践验证 | GOAL-001-main-vision | done | 100% | [GOAL-003-skills-practice/](GOAL-003-skills-practice/) |
 | GOAL-004-core-data-model | 实现核心数据模型与 Goal 基础管理 | GOAL-001-main-vision | done | 100% | [GOAL-004-core-data-model/](GOAL-004-core-data-model/) |
@@ -525,7 +532,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-022-docs-ssot-skills-mirror-stage | 方法论单一真相源与 Skills 镜像 stage 化 | GOAL-001-main-vision | done | 100% | [GOAL-022-docs-ssot-skills-mirror-stage/](GOAL-022-docs-ssot-skills-mirror-stage/) |
 | GOAL-023-skills-core-dual-asset-install | Skills/Core 双资产分发与双入口安装 | GOAL-001-main-vision | done | 100% | [GOAL-023-skills-core-dual-asset-install/](GOAL-023-skills-core-dual-asset-install/) |
 
-阶段 6：**有界结项**（GOAL-001 D-015 / A-014；009 + 012～017 done 有界）。**≠ 终态**。现行路径 **D-024 · 路径 D**（仅维护；阶段 7 延期；A/B/C 须改道）。**GOAL-023** `done / 100%`（A～F；A-004 self close-out）。GOAL-020/021/022/023 `done`。下一编号 **GOAL-024**。GOAL-001 仍为 `active`（终态 / residual 见 **R-009-X**）。GOAL-018/019 = Skills 维护波次 done。当前无未关门路径 D 子目标。
+**Root GOAL-001：`done`（有界奠基 · D-028 / A-021）**。阶段 6 有界 + Web 冻结（≠ 产品终态；**R-009-X** → VP-003）。全树子目标 done。**本区无下一编号**。演进：**VP-002** + 待开 workspace-002。
 
 ## 状态图例
 

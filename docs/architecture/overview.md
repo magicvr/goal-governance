@@ -67,10 +67,10 @@ version: 0.8.1
 
 - **真相源**：显式工作区 `docs/workspace-001-goal-governance/`（GOAL-011 已完成自 `docs/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
 - **原则**：[principles.md](principles.md) P-001～**P-006**（含 finding 三路径闭合、P-004.1～4.4、单愿景级联）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
-- **愿景**：[charter.md](../vision/charter.md) **`vision-goal-governance@0.2.0`**：Skills 为现行主消费适配器；本仓 Web 为**冻结参考实现**（非产品投资面）；人类 UI 远期预期通用基架（H-WEB-01）。
-- **Skills**：`/govern` 实现层主入口、`/audit` 目标交叉入口；`/vision` 决策层为第二刀；多宿主安装与契约镜像；发布一致性以 GOAL-008 惯例与 runtime evidence 为准。**现行投资面**随实际项目问题演进。
-- **Web**：阶段 6 **有界结项**后 **冻结**（GOAL-009 及 012～017）；`web/` 可作契约参考与可选回归；**不**默认深化产品。扩展 residual **R-009-X** 仍 accepted，不假装终态、也不假装在投。
-- **Root**：`GOAL-001-main-vision` 保持 `active`，对齐 `VP-001-governance-platform-delivery` / `vision-goal-governance@0.2.0`。
+- **愿景**：[charter.md](../vision/charter.md) **`vision-goal-governance@0.2.0`**。组合编排：VP-001 **closed**（奠基）· VP-002 **active**（反馈演进，待 workspace-002）· VP-003 **planned**（人类 UI）。
+- **Skills**：现行主消费适配器；演进挂 **VP-002**（真实项目反馈）。
+- **Web**：冻结参考（`web/`）；产品波 **VP-003**；R-009-X 仍 accepted。
+- **workspace-001**：Root `GOAL-001-main-vision` **有界 done**；区 **archived**。演进须新开 **workspace-002** 挂 VP-002。
 
 细节以工作区 `goal-tree.md` 与各目标五件套为准；本页若与之冲突，以工作区记录为准。
 

@@ -1,11 +1,11 @@
 ---
 id: GOAL-001-main-vision
 doc: decision
-status: active
+status: done
 parent: null
 created: 2026-07-18
 updated: 2026-07-31
-version: 0.3.3
+version: 0.4.0
 ---
 
 # 决策记录 · GOAL-001
@@ -726,3 +726,48 @@ A-018 证明元规则自洽，缺口在 P-006 后产品化回流；用户已书�
 
 - 后续默认 `/govern`：协议/Skills 问题驱动维护或有界子目标（GOAL-024+）；Web 仅只读参考 / 可选回归。
 - 证据：[A-020](03-audit.md#a-020--响应-vrev-005-v-f-008路径收束与入口叙事2026-07-31)、[02-execution](02-execution.md)。
+- **其后**由 [D-028](#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) 有界关闭本 Root；演进不再在本树继续。
+
+## D-028 · Root 有界关门：奠基完成；演进改挂 VP-002 + workspace-002（2026-07-31）
+
+**状态**：accepted  
+**确认来源**：用户书面确认结构：`VP-001 有界关 + VP-002 active + VP-003 planned + 工作区001 Root 有界 done，后继反馈新开工作区 002 对接 VP-002`。
+
+### 决定
+
+1. **收窄本 Root 成功边界（有界）**为本波次「奠基交付」完成，**不等于** Charter 完成、不等于 Web 产品终态、不等于协议永不修订：
+   - 核心方法论/协议可独立复制；愿景栈对齐；
+   - Skills 四入口与安装/发布路径可用；
+   - 本仓 Web 阶段 6 有界 + **冻结参考**（D-027）；
+   - 子目标 GOAL-002～023 均已 `done`；开放 required finding = 0。
+2. **GOAL-001-main-vision → `status: done`**（有界关门）；同步五件套 frontmatter 与 [goal-tree.md](../goal-tree.md)。
+3. **VP 组合**（决策层已/同轮落盘）：
+   - **VP-001** → `closed`（有界）；
+   - **VP-002** → `active`（真实项目反馈演进；**零区空转**接受至 **2026-08-14** 或首开 workspace-002）；
+   - **VP-003** → `planned`（人类 UI 延期）。
+4. **workspace-001**：`status: archived`；`primary_plan` 仍为已关 **VP-001**（历史对齐）；**禁止**在本 done Root 下为 VP-002 新建子目标。
+5. **演进容器**：**新开** `docs/workspace-002-<slug>/`（slug 开区时确认）+ 新区 Root，挂 **VP-002** 为 `primary_plan`。
+6. **Residual 移交**（不关闭、不假装 fixed）：
+   | 项 | 去向 |
+   |----|------|
+   | R-009-X | VP-003 / 台账 |
+   | A-006 F-006 recommended | VP-002 |
+   | H-WEB-01 / H-EVOL-01 | Charter 战略假设 |
+   | V-F-009 / V-F-010 | 可选后续 |
+
+### 为什么
+
+- 意图 1（奠基）与意图 2（演进）混在同一 Root/VP 会导致永远关不掉或 done 后仍在同树开工。
+- 用户选择 **Root 有界 done + 新区承接演进**，语义干净。
+
+### 未选
+
+- Root 保持 active 仅换挂 VP-002（方案 A）  
+- 在 done Root 下继续 GOAL-024+  
+- 关闭 R-009-X 或宣称 Web 终态  
+- 立即 scaffold workspace-002（待真实反馈）  
+
+### 影响
+
+- 关门审：[A-021](03-audit.md#a-021--root-有界关门审计close-out2026-07-31)。  
+- 组合编排：[roadmap.md](../../../vision/roadmap.md)；VP-002 空转规则见该 VP 正文。  

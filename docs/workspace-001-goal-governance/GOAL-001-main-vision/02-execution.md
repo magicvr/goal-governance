@@ -1,35 +1,43 @@
 ---
 id: GOAL-001-main-vision
 doc: execution
-status: active
+status: done
 parent: null
 created: 2026-07-18
 updated: 2026-07-31
-version: 0.4.5
+version: 0.5.0
 ---
 
 # 执行记录 · GOAL-001
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
-## 当前进展（2026-07-31）
+## 当前进展（2026-07-31）· **有界关门**
 
-> **现时权威**：与 [00-meta 现时摘要](00-meta.md#现时摘要2026-07-31-单一权威入口) 对齐。下方历史时间线保留原貌，**不可**单独作为「现在做到哪」的判定。
+> **现时权威**：与 [00-meta 现时摘要](00-meta.md#现时摘要2026-07-31-单一权威入口--有界关门) 对齐。本 Root **`done`**。
 
 | 方向 | 状态 | 说明 |
 |------|------|------|
-| 核心方法论与模板 | **现行投资面之一** | 基线 done；随实际项目问题演进 |
-| Skills | **现行主消费适配器** | 四入口；问题驱动演进 |
-| Web | **冻结参考实现** | 阶段 6 有界结项保留；**非**投资面；R-009-X 仍 accepted |
-| 愿景栈 | **@0.2.0 re-align 完成** | Charter/VP-001/VRev-005；宽阻断已解除 |
-| Root 路径 | **[D-027](01-decision.md#d-027--路径收束协议--skills-问题驱动演进本仓-web-冻结2026-07-31)** | 协议 + Skills；Web 冻结；D-024 不关 Root 纪律保留 |
-| Root | **`active`** | 下一编号 **GOAL-024** |
+| 核心方法论与模板 | 奠基 **done** | 后续修正 → VP-002 |
+| Skills | 奠基 **done** | 四入口；F-006 → VP-002 |
+| Web | **冻结参考** | R-009-X → VP-003 |
+| 愿景 | VP-001 **closed**；VP-002 **active**（0 区）；VP-003 **planned** | 见 roadmap |
+| Root | **`done`** | [D-028](01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) / [A-021](03-audit.md#a-021--root-有界关门审计close-out2026-07-31) |
+| 工作区 | **archived** | 禁止本树再开演进子目标 |
 
-## 下一步（根目标视角 · 2026-07-31）
+## 下一步（本 Root 已关）
 
-1. **默认**：协议/Skills 在实际项目中的问题 → 有界维护或 GOAL-024+。  
-2. **禁止**：无新 D 开本仓 Web 产品；宣称 Web 终态 / Root done；无授权 tag/Release。  
-3. **可选**：V-F-009 契约提炼；V-F-010 `/vision-audit`；用户授权发版。  
+1. 有真实反馈 → `/govern` 开 **workspace-002** + Root，挂 **VP-002**。  
+2. VP-002 空转复核 ≤ **2026-08-14**。  
+3. 本区仅只读过程与参考。  
+
+## 2026-07-31 · Root 有界关门 D-028 + A-021
+
+- **用户结构**：VP-001 有界关 + VP-002 active + VP-003 planned + WS-001 Root done；后继 WS-002↔VP-002。
+- **决策**：[D-028](01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31)。
+- **关门审**：[A-021](03-audit.md#a-021--root-有界关门审计close-out2026-07-31) **pass**。
+- **同轮愿景**：VP-001 closed；VP-002/VP-003 落盘；roadmap / workspaces / workspace.md archived。
+- **未做**：scaffold workspace-002；关 R-009-X；删 `web/`。
 
 ## 2026-07-31 · 路径收束 D-027 + V-F-008 fixed
 

@@ -1,11 +1,11 @@
 ---
 id: GOAL-001-main-vision
 doc: audit
-status: active
+status: done
 parent: null
 created: 2026-07-18
 updated: 2026-07-31
-version: 0.3.8
+version: 0.4.0
 ---
 
 # 审计 · GOAL-001
@@ -1099,4 +1099,38 @@ P-004：若需对同 scope 再做 self 审计，**询问用户**是否自审后�
 
 ```text
 /govern   # 协议/Skills 问题驱动；禁止无授权 Web 产品推进
+```
+
+## A-021 · Root 有界关门审计（close-out）（2026-07-31）
+
+- **source**：self
+- **auditor**：Grok Build `/govern` + `/vision` 同轮
+- **类型 / scope**：close-out · GOAL-001 有界奠基完成；**不**关 Charter；**不**关 R-009-X
+- **verdict**：**pass**（有界）
+- **用户指令**：VP-001 有界关 + VP-002 active + VP-003 planned + WS-001 Root 有界 done；后继 WS-002↔VP-002
+- **P-004**：用户书面选定 Root done + 新区演进；跳过额外 independent 关门审（本条为 self close-out）
+
+### 成功边界对照（D-028 有界）
+
+| 边界 | 结果 | 证据 |
+|------|------|------|
+| 协议可复制 + 愿景栈 | **通过** | Charter 0.2.0；standalone/core；alignment |
+| Skills 四入口 + 安装发布 | **通过（有界）** | GOAL-008/018/019/021～023 done；F-006 recommended 移交 VP-002 |
+| Web 冻结参考 | **通过** | 阶段 6 有界；D-027；R-009-X 仍 accepted → VP-003 |
+| 子目标全 done | **通过** | GOAL-002～023 done；goal-tree |
+| 开放 required finding | **0** | 见 00-meta 现时清单 |
+| Charter / Web 终态 | **不在本关范围** | 明确非宣称 |
+
+### Findings
+
+- 无 required。
+- residual 移交见 [D-028](01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31)。
+
+### 结论
+
+**pass · 有界关门**：GOAL-001 **`done`**。演进工作 **不得** 在本树继续；下一实现容器 = **workspace-002 + VP-002**（空转复核 ≤2026-08-14）。
+
+```text
+/govern  # 有真实反馈时：scaffold workspace-002 + Root，primary_plan=VP-002
+/vision  # 空转续期 / VP-002 状态调整
 ```

@@ -1,7 +1,7 @@
 ---
 id: workspace-001-goal-governance
-title: Goal Governance 主工作区
-status: active
+title: Goal Governance 主工作区（奠基 · 封存）
+status: archived
 root_goal: GOAL-001-main-vision
 canonical_scope: docs/workspace-001-goal-governance/
 shared_materials_catalog: docs/shared-materials/
@@ -10,23 +10,26 @@ plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
 created: 2026-07-20
 updated: 2026-07-31
-version: 0.4.1
+version: 0.5.0
 ---
 
-# 工作区上下文 · Goal Governance 主工作区
+# 工作区上下文 · Goal Governance 主工作区（奠基封存）
 
-本工作区承载当前仓库的 Root Goal 及其全部目标生命周期记录。`goal-tree.md` 与所有 `GOAL-*` 文件夹直接位于本目录；它们是本工作区唯一的目标状态真相。
+本工作区承载仓库 **VP-001 奠基波** 的 Root Goal 及其全部目标生命周期记录。`goal-tree.md` 与所有 `GOAL-*` 文件夹直接位于本目录；它们是本工作区唯一的目标状态真相。
+
+**2026-07-31**：Root **有界 done**；VP-001 **closed**。本区 **不再** 为演进开新子目标。真实项目反馈演进 → 新开 `workspace-002-*` 挂 [VP-002](../../vision/plans/VP-002-methodology-skills-feedback-evolution.md)。
 
 ## 绑定
 
 | 字段 | 当前值 | 说明 |
 |------|--------|------|
 | 工作区 ID | `workspace-001-goal-governance` | 共享资料引用的 `workspace_id` 必须一致。 |
-| Root Goal | `GOAL-001-main-vision` | 必须存在，且其 `parent: null`。 |
-| canonical 范围 | `docs/workspace-001-goal-governance/` | 当前工作区唯一的目标状态范围。 |
+| Root Goal | `GOAL-001-main-vision` | `parent: null`；**status: done**（有界奠基关）。 |
+| canonical 范围 | `docs/workspace-001-goal-governance/` | 本区唯一目标状态范围（封存只读推进纪律）。 |
 | 共享资料目录 | `docs/shared-materials/` | 工作区外的共同资料根；不保存目标状态。 |
-| 愿景角色 | `primary` | 本仓唯一 primary；**所有**工作区须挂 VP，角色仅 `primary` / `delivery`（P-006 / alignment 0.5）。 |
-| 规划对齐 | `VP-001-governance-platform-delivery` | `plan_refs` / `primary_plan`；见 [../../vision/plans/VP-001-governance-platform-delivery.md](../../vision/plans/VP-001-governance-platform-delivery.md)。意图：协议 + Skills；本仓 Web **冻结参考**（Charter `vision-goal-governance@0.2.0`）。 |
+| 愿景角色 | `primary` | monorepo 奠基过程树 primary；演进交付区开区前仍为此。 |
+| 规划对齐 | `VP-001-governance-platform-delivery`（**closed**） | 历史 `primary_plan`；**不**改挂 VP-002。 |
+| 工作区 status | `archived` | 奠基完成封存；非删除。 |
 
 ## 固定共享资料引用
 
