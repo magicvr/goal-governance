@@ -1,11 +1,11 @@
 ---
 id: GOAL-003-consumer-governance-ergonomics
 doc: audit
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 审计 · GOAL-003
@@ -39,4 +39,4 @@ version: 0.3.0
 ## 当前审计状态
 
 - A-001 self + A-002 Grok Build independent 均为 **pass**；A-003 已统一响应，开放 required = 0。
-- `cross` 门禁已满足；当前具备 `/govern` 关门条件，状态变更仍须在关门写入中同步 meta / Root / goal-tree。
+- `cross` 门禁已满足；D-009 已关门，目标 `done`。recommended finding 保持其复审触发，不改变 verdict。

@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 执行记录 · GOAL-001
@@ -59,11 +59,17 @@ version: 0.6.0
 - 子目标 7/7 阶段完成，派生 progress 100%，但 `status` 仍 `active`，等待 cross close-out audit 与 finding 响应。
 - Root R2 仍进行中；Root progress 保持 1/3 = 33%。
 
+### 2026-08-04 · GOAL-003 关门 + Root R2 完成
+
+- GOAL-003 A-001 self、A-002 Grok Build independent 均 pass；A-003 响应后开放 required = 0。
+- D-009 将子目标标为 `done`；Root D-005 将 R2 标为完成。
+- Root progress 由 1/3 = 33% 派生为 2/3 = 67%；Root 仍 `active`，R3 未开始。
+
 ## 待办
 
-1. 执行 GOAL-003 self + Grok Build cross-audit。
-2. 响应 findings 并决定子目标关门；随后评估 Root R2 是否满足阶段退出条件。
+1. 等待下一次 `/govern` 决定是否启动 R3（有界闭环验证与 VP 退出准备）。
+2. Web CT legacy writer 仅在子目标记录的触发条件出现时立项复审。
 
 ## 进度评估
 
-Root 纲领 **1/3** 阶段完成（R1）；R2 进行中、R3 未开始；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。
+Root 纲领 **2/3** 阶段完成（R1、R2）；R3 未开始；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。

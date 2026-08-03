@@ -1,11 +1,11 @@
 ---
 id: GOAL-003-consumer-governance-ergonomics
 doc: execution
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 执行记录 · GOAL-003
@@ -17,6 +17,7 @@ version: 0.5.0
 | E-001 | 2026-08-04 | S2～S6 实现与 checkpoint | recorded | [E-001-s2-s6-implementation.md](02-execution/E-001-s2-s6-implementation.md) |
 | E-002 | 2026-08-04 | S7 全量回归与发布准备 | recorded | [E-002-s7-full-regression.md](02-execution/E-002-s7-full-regression.md) |
 | E-003 | 2026-08-04 | self 预检 required 修复 | recorded | [E-003-self-preflight-fixes.md](02-execution/E-003-self-preflight-fixes.md) |
+| E-004 | 2026-08-04 | cross close-out 与 lifecycle 同步 | recorded | [E-004-close-out.md](02-execution/E-004-close-out.md) |
 
 > 下方为切换前的 legacy inline 时间线，继续有效且只读；新事实写入 `02-execution/E-NNN-*.md`。
 
@@ -56,9 +57,8 @@ version: 0.5.0
 
 ## 待办
 
-1. 按 `cross` 模式完成 self + 用户指定 Grok Build 独立审计。
-2. 响应全部 findings；无开放 required 后关门并同步 Root / goal-tree。
+- 无当前目标待办。A-001 F-003 / A-002 F-001 作为 recommended open，仅在其记录的 Web CT 触发条件出现时复审。
 
 ## 进度评估
 
-路线图完成 **7/7（100%）**；S7 全量回归通过，self 预检修复 checkpoint `ac6a741`。progress 不推导 `done`；正式 cross close-out audit 与 finding 响应仍未完成。
+路线图完成 **7/7（100%）**；A-001 self、A-002 Grok Build independent、A-003 response 均已落盘，开放 required = 0；D-009 关门，目标 `done`。

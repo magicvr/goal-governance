@@ -1,11 +1,11 @@
 ---
 id: GOAL-003-consumer-governance-ergonomics
 title: 修复消费仓门禁与长流程治理摩擦
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.4.0
+version: 0.5.0
 progress: 100%
 ---
 
@@ -15,7 +15,7 @@ progress: 100%
 
 承接真实项目使用中确认的五类问题，修正消费仓与生产仓的证据边界、长记录存储、审计启动、长流程 Git 回溯以及 Skills 更新体验，使治理协议在长目标和实际消费仓中既可审计，也可持续使用。
 
-本目标属于 Root 纲领 **R2（反馈驱动的协议 / Skills 修正）**。范围横跨核心原则、目标模板、Skills 编排、消费契约与安装/更新路径，尚不可直接执行；先按 P-001 冻结问题与契约，再分阶段实施。当前立项不代表任一方案已经实现或通过审计。
+本目标属于 Root 纲领 **R2（反馈驱动的协议 / Skills 修正）**。范围横跨核心原则、目标模板、Skills 编排、消费契约与安装/更新路径；已按 P-001 完成 S1～S7，并经 A-001 self + A-002 Grok Build independent + A-003 响应关门。
 
 ## 已确认反馈输入
 
@@ -52,7 +52,7 @@ S1 先行；S2～S6 可在各自 required 信息项闭合后并行；S7 汇总�
 
 ## 派生进度展示
 
-`progress: 100%` = 上方 7 个显式阶段完成 **7 / 7**（等权）。progress 仅展示，不放行阶段、不关闭 finding、不推导 `done`；当前仍须完成 cross close-out audit 后才可关门。
+`progress: 100%` = 上方 7 个显式阶段完成 **7 / 7**（等权）。progress 仅展示；`done` 另由 D-009 与 A-001～A-003 的 cross close-out 证据成立。
 
 ## 信息就绪与未知项
 
