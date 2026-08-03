@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
-updated: 2026-08-03
-version: 0.1.0
+updated: 2026-08-04
+version: 0.2.0
 ---
 
 # 决策记录 · GOAL-003
@@ -57,3 +57,67 @@ version: 0.1.0
 **为什么**：共同基线先行可减少规则冲突；中段能力相对独立，允许并行；最终必须由统一兼容矩阵证明组合后仍可消费。
 
 **未选方案**：边分析边直接修改 canonical 规则；它会在阈值、P-004、安全提交和更新信任模型未定时制造不可审计的既成事实。
+
+## D-003 · producer / consumer 证据职责按安装 profile 分离（2026-08-04）
+
+**决定**：
+
+1. `skills-consumer-contract.json` 与其 schema 是消费安装必需的协议契约。
+2. compatibility matrix、matrix schema、runtime-evidence schema、捕获脚本和 release evidence 属于 producer / release 验证面；可以进入生产仓发行检查，但不得成为消费仓目标推进门禁，也不随默认消费安装复制。
+3. 生产仓继续对 adapter runtime、矩阵和 release 证据 fail closed；本修正不得以“消费仓不需要”为由削弱生产发布门禁。
+4. 消费仓若主动参与适配器开发，可显式选择 producer profile；默认 profile 不要求用户删除任何门禁或文件。
+
+**理由**：当前 `-All` 把整个 `skills/contracts/` 复制到消费仓，导致角色语义只靠人理解；按 allowlist 安装可以让责任边界成为可执行行为。
+
+## D-004 · 三类 append-only 台账从第一条记录起使用平铺目录（2026-08-04）
+
+**决定**：
+
+1. 新目标仍保留 `01-decision.md`、`02-execution.md`、`03-audit.md` 作为稳定 frontmatter 与索引入口；同时创建同名无扩展目录 `01-decision/`、`02-execution/`、`03-audit/`。
+2. 独立记录分别写为 `D-NNN-<slug>.md`、`E-NNN-<slug>.md`、`A-NNN-<slug>.md`，目录内只允许单层平铺；编号在目标内各台账单调不复用。
+3. “多记录文件”按语义判定：允许追加两个或以上独立 D/E/A 记录的台账即属于多记录台账，不等待文件变大才采用目录。`00-meta.md` 不属于此类。
+4. legacy inline 文件继续有效；兼容 reader 同时读取索引文件 inline 内容与目录文件。legacy 索引达到 **32 KiB、800 行、12 条独立记录任一条件**时，下一次追加前必须迁移或改写到目录；单条记录超过 32 KiB 时把证据正文放 `attachments/`，台账文件保留摘要与索引。
+5. 迁移不重编号、不改语义；索引文件登记目录条目。迁移工具先 dry-run，验证解析等价后原子替换并保留 Git 可回溯点。
+
+**未选方案**：只以字节阈值决定新目标何时拆分。它会让所有台账先经历一次可避免的重写，并让不同语言/格式在阈值附近产生不稳定行为。
+
+## D-005 · 审计启动改为风险分级而非逐次询问（2026-08-04）
+
+| 模式 | 适用范围 | 必需意见 |
+|------|----------|----------|
+| `none` | 低风险、可逆、无门禁语义变化的局部维护；允许由下一阶段或关门审计兜底 | 无阶段意见；仍需事实与验证 |
+| `self` | 常规、边界清楚、可逆的非平凡实施或阶段验收 | 覆盖 scope 的 self |
+| `independent` | 高影响但判定标准明确的 security / data / migration / production / release / compatibility 门禁 | 至少一个指定 provider 的 independent；self 非固定前置 |
+| `cross` | 元规则、治理协议、不可逆或跨边界变更、证据矛盾，或用户要求多工具 | self + 至少一个指定 provider 的 independent；多 provider 各自保留意见 |
+
+**决定**：
+
+1. `/govern` 在实施前记录 scope、风险因子、模式和 provider 集；能由规则唯一判定时不询问用户。
+2. 仅在 `independent` / `cross` 已被判定且用户未指定、会话无可用 provider 时，请用户指定工具；本目标已授权 Grok Build，无需重复询问。
+3. provider 失败、超时或无可核对输出时不伪造 independent 意见；对应门禁保持未满足。
+4. 删除“只要已有 independent 且无 self 就逐次询问是否自审”的固定交互。是否需要 self 由上表模式决定。
+5. required finding、意见冲突、accepted-residual、user-overruled、信息冲突仍按 P-004 请求用户裁决；风险分级不得静默关闭责任决策。
+
+## D-006 · 长流程默认创建安全 Git checkpoint（2026-08-04）
+
+**决定**：
+
+1. 长治理运行默认 `checkpoint_mode: auto`；用户可在任务开始时禁用。小型原子变更只需最终 checkpoint。
+2. 合理节点是：方案/信息门禁冻结后、每个可独立验证的实现切片后、required finding 合法闭合后、关门前最终验证后。
+3. 每次提交只允许显式列出的 owned paths；禁止 `git add -A`。若 owned path 含任务开始前的未提交改动或与无关改动不可分离，停止自动提交并报告，不擅自暂存或覆盖。
+4. 验证失败、无实际 diff、commit 失败、非 Git 仓库均不宣称 checkpoint 成功；失败不改变治理门禁。成功后把 commit hash 和覆盖 scope 记入执行台账。
+5. checkpoint 是恢复点，不是实现、审计或发布通过证据。
+
+## D-007 · 提供包内事务型 Skills updater（2026-08-04）
+
+**决定**：
+
+1. Skills 包携带跨平台 updater，支持固定版本或 `latest` 发现、GitHub Release 在线源与 zip + `.sha256` 离线源。
+2. updater 在写入前验证 SHA-256、zip 路径安全、包结构和协议兼容；协议 minor 边界变化默认 fail closed，需显式允许升级。
+3. 更新前备份现有 Skills 包与会被 installer 管理的外部文件；新包安装或验证失败时自动恢复。成功后写安装状态（版本、协议、来源摘要、时间），保留可定位的回滚信息。
+4. 已安装 managed 文件与当前包来源不同视为本地修改；默认停止并报告冲突，只有显式 force-managed 才覆盖。
+5. 首次获得 updater 仍需安装包含该能力的新包；此后更新不再要求删除并完整重装。
+
+## D-008 · 本目标不拆五个子目标（2026-08-04）
+
+S1 证明五个切片共享同一协议版本、模板、installer、镜像与集成回归；在当前单人实现中拆子目标会增加跨目标 finding 与发布一致性成本。保留为 S2～S6 并行阶段，使用独立 checkpoint 隔离回溯。

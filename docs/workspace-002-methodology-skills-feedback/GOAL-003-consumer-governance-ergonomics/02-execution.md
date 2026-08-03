@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
-updated: 2026-08-03
-version: 0.1.0
+updated: 2026-08-04
+version: 0.2.0
 ---
 
 # 执行记录 · GOAL-003
@@ -34,12 +34,22 @@ version: 0.1.0
 - `python -m unittest discover -s docs/tests -v`：**25/26 passed**；唯一失败为既有 `test_dogfood_workspace_and_root_align_to_vp` 仍断言 workspace-001 的 VP-001 `status: active`，而现行 VP-001 为 `closed`。失败路径不涉及 workspace-002 / GOAL-003，本目标未顺带修改该旧测试。
 - `git diff --check` 通过；GOAL-003 新文件另做尾随空白检查通过。
 
+### 2026-08-04 · S1 现状复现、量化与契约冻结
+
+- FB-001：确认 `skills/install.ps1` 与 `install.sh` 的 `-All/--all` 会把 `skills/contracts/**` 整目录复制给消费仓；目录同时包含 consumer contract、compatibility matrix 与 runtime-evidence schema。生产验证脚本依赖后两类，普通消费目标不应依赖。
+- FB-002：全仓统计确认长文件不是审计专属问题：最大 `03-audit.md` 为 229,150 B / 3,975 行 / 64 条 A；最大 `01-decision.md` 为 90,354 B / 1,152 行 / 47 条 D；超过 32 KiB 的 canonical 台账有 7 份。Web reader 与 controlled-change 当前仍硬编码单文件。
+- FB-003：定位 P-004.1 固定询问与 Skills orchestrator 回归；冻结四级风险矩阵、会话 provider 集及“需要但未指定时才询问”的交互边界。
+- FB-004：确认现有 `.github/prompts/commit.prompt.md` 是独立提交提示且含 `git add -A`，`/govern` 没有安全 checkpoint 契约；冻结 owned paths + 验证成功前置规则。
+- FB-005：确认现有 bootstrap 固定版本，`-Force` 直接替换 `skills`，install 仅同内容幂等；没有版本发现、协议预检或失败回滚 updater。
+- I-001～I-006 verified，I-007 已完成方案基线并留 S7 fixture 复核；D-003～D-008 冻结 S2～S6 实施契约。
+- S1 完成；S2～S6 进入实现，决定不拆新子目标。
+
 ## 待办
 
-1. 执行 S1：建立五项问题的最小复现、责任边界、兼容基线与验收矩阵。
-2. 关闭 I-001～I-007 中对应下一阶段的 required 信息项，再冻结 S2～S6 方案。
-3. S1 结束时判断是否按独立范围拆分子目标，不提前机械拆分。
+1. 实施 S2～S6，并在每个可独立验证切片后创建 checkpoint commit。
+2. S7 执行 legacy/current fixture、安装/更新回滚、mirror、Web 与发行一致性回归。
+3. 按 `cross` 模式完成 self + 用户指定 Grok Build 独立审计，再响应全部 required findings。
 
 ## 进度评估
 
-路线图完成 **0/7**；目标已立项，尚未实施任何修正，也尚无正式 A-00N 审计意见。
+路线图完成 **1/7（14%）**；S1 事实与方案已冻结，尚未实施 S2～S6，也尚无正式 A-00N 审计意见。
