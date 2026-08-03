@@ -184,18 +184,43 @@ def managed_file_pairs(package: Path, target: Path) -> list[tuple[Path, Path]]:
     return pairs
 
 
-def modified_managed_files(package: Path, target: Path) -> list[Path]:
+def modified_managed_files(
+    package: Path,
+    target: Path,
+    incoming_package: Path | None = None,
+) -> list[Path]:
+    current = {destination: source for source, destination in managed_file_pairs(package, target)}
+    incoming = (
+        {destination: source for source, destination in managed_file_pairs(incoming_package, target)}
+        if incoming_package is not None
+        else {}
+    )
     modified: list[Path] = []
-    for source, destination in managed_file_pairs(package, target):
+    for destination, source in current.items():
         if source.is_file() and destination.is_file() and file_sha256(source) != file_sha256(destination):
             modified.append(destination)
-    return modified
+    for destination, source in incoming.items():
+        if destination in current or not source.is_file() or not destination.is_file():
+            continue
+        if file_sha256(source) != file_sha256(destination):
+            modified.append(destination)
+    return sorted(set(modified))
 
 
-def backup_external_files(package: Path, target: Path, backup: Path) -> list[str]:
+def backup_external_files(
+    package: Path,
+    target: Path,
+    backup: Path,
+    incoming_package: Path | None = None,
+) -> list[str]:
     absent: list[str] = []
     project_backup = backup / "project"
-    for _source, destination in managed_file_pairs(package, target):
+    destinations = {destination for _source, destination in managed_file_pairs(package, target)}
+    if incoming_package is not None:
+        destinations.update(
+            destination for _source, destination in managed_file_pairs(incoming_package, target)
+        )
+    for destination in sorted(destinations):
         relative = destination.relative_to(target)
         if destination.is_file():
             saved = project_backup / relative
@@ -291,7 +316,7 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         incoming_protocol = protocol_version(read_contract(incoming))
         assert_protocol_compatible(current_protocol, incoming_protocol, args.allow_protocol_upgrade)
 
-        modified = modified_managed_files(skills, target)
+        modified = modified_managed_files(skills, target, incoming)
         if modified and not args.force_managed:
             shown = ", ".join(str(path.relative_to(target)) for path in modified[:8])
             raise UpdateError(f"managed files have local changes; review or pass --force-managed: {shown}")
@@ -309,7 +334,7 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         backup = target / ".goal-governance-updates" / f"{stamp}-v{version}"
         backup.mkdir(parents=True, exist_ok=False)
-        absent = backup_external_files(skills, target, backup)
+        absent = backup_external_files(skills, target, backup, incoming)
         old_skills = backup / "skills"
         shutil.move(str(skills), str(old_skills))
         try:

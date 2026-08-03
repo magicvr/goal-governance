@@ -163,6 +163,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             self.assertTrue((SKILLS_TEMPLATES / name / ".gitkeep").is_file())
         for name in ("decision.md", "execution.md", "audit.md"):
             self.assertTrue((SKILLS_TEMPLATES.parent / "ledger-entry" / name).is_file())
+        decision_entry = (SKILLS_TEMPLATES.parent / "ledger-entry" / "decision.md").read_text(
+            encoding="utf-8"
+        )
+        execution_entry = (SKILLS_TEMPLATES.parent / "ledger-entry" / "execution.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## D-NNN", decision_entry)
+        self.assertIn("## YYYY-MM-DD", execution_entry)
 
     def test_primitives_exist_and_marked(self) -> None:
         for fname in (

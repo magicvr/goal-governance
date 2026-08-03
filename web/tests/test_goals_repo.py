@@ -338,7 +338,7 @@ class GoalsRepositoryTests(unittest.TestCase):
             )
             (goal / "02-execution").mkdir()
             (goal / "02-execution" / "E-001-directory.md").write_text(
-                "---\nid: GOAL-001-root\ndoc: execution-entry\nversion: 0.1.0\n---\n\n### 2026-07-20 · Directory fact\n",
+                "---\nid: GOAL-001-root\ndoc: execution-entry\nversion: 0.1.0\n---\n\n# E-001 · Directory entry\n\n## 2026-07-20 · Directory fact\n",
                 encoding="utf-8",
             )
             (goal / "03-audit").mkdir()

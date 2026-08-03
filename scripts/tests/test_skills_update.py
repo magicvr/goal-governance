@@ -147,6 +147,51 @@ class SkillsUpdateTests(unittest.TestCase):
                     update.update_package(_args(target, result, skip_install=False))
             self.assertEqual(marker.read_text(encoding="utf-8"), "old\n")
 
+    def test_new_managed_path_conflicts_and_rolls_back_when_install_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = root / "consumer"
+            target.mkdir()
+            shutil.copytree(SKILLS, target / "skills")
+            incoming_skills = root / "incoming-skills"
+            shutil.copytree(SKILLS, incoming_skills)
+            new_source = incoming_skills / "install" / "codex" / "skills" / "new-surface" / "SKILL.md"
+            new_source.parent.mkdir(parents=True)
+            new_source.write_text("incoming managed file\n", encoding="utf-8")
+            new_destination = target / ".agents" / "skills" / "new-surface" / "SKILL.md"
+            new_destination.parent.mkdir(parents=True)
+            new_destination.write_text("local unmanaged file\n", encoding="utf-8")
+
+            modified = update.modified_managed_files(
+                target / "skills",
+                target,
+                incoming_skills,
+            )
+            self.assertIn(new_destination, modified)
+
+            new_destination.unlink()
+            result = pack.pack_skills(
+                version="0.0.0-testupdate",
+                output_dir=root / "dist",
+                skills_root=incoming_skills,
+                skip_stage=True,
+            )
+
+            def fail_after_new_write(package: Path, consumer: Path) -> None:
+                written = consumer / ".agents" / "skills" / "new-surface" / "SKILL.md"
+                written.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(
+                    package / "install" / "codex" / "skills" / "new-surface" / "SKILL.md",
+                    written,
+                )
+                raise update.UpdateError("boom after new managed write")
+
+            with mock.patch.object(update, "run_installer", side_effect=fail_after_new_write):
+                with self.assertRaisesRegex(update.UpdateError, "boom after new managed write"):
+                    update.update_package(_args(target, result, skip_install=False))
+
+            self.assertFalse(new_destination.exists())
+
     def test_managed_file_conflict_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp)

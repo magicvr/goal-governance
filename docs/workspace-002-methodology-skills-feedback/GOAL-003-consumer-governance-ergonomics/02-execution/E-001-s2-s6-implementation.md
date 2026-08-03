@@ -9,9 +9,11 @@ updated: 2026-08-04
 version: 0.1.0
 ---
 
-# E-001 · 2026-08-04 · S2～S6 实现与 checkpoint
+# E-001 · S2～S6 实现与 checkpoint
 
-## 已发生事实
+## 2026-08-04 · S2～S6 实现与 checkpoint
+
+### 已发生事实
 
 - **S2**：消费契约增加 `evidenceBoundary` 与 ledger 目录；默认安装和消费发行包只携带 consumer contract + schema。隔离 `-All` 回归预置三个 producer-only 文件后仍成功，且这些文件逐字节保持不变。
 - **S3**：canonical 模板改为稳定索引 + `D/E/A-NNN-slug.md` 平铺条目；Web reader 合并 legacy inline 与目录条目，新建目标创建三个 ledger 目录。本目标从本条开始 dogfood additive migration。
@@ -20,7 +22,7 @@ version: 0.1.0
 - **S6**：新增 `skills/update.py` 与 PowerShell/Bash 入口，支持固定版/最新版本、在线/离线 SHA-256、协议预检、managed-file 冲突检测、备份与失败自动恢复。
 - 创建实现 checkpoint **`51872c9`**（`feat(governance): 修复消费门禁与长流程体验`），只包含本切片 owned paths。
 
-## 证据
+### 证据
 
 | 主张 | 路径 / 命令 / commit |
 |------|----------------------|
