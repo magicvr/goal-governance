@@ -622,7 +622,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.11.0")
+        self.assertEqual(matrix["candidateRevision"], "v0.12.0")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -658,11 +658,11 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             },
         )
         self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.220")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.114")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.118")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # Claude + Grok + Copilot: all four entrypoints runtime-verified 2026-07-30
+        # Claude + Grok + Copilot: all four entrypoints runtime-verified 2026-08-04
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -681,21 +681,21 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 self.assertTrue(entrypoints[name]["evidence"])
                 for path in entrypoints[name]["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                    self.assertIn("2026-07-30", path)
+                    self.assertIn("2026-08-04", path)
             vision = entrypoints["vision"]
             self.assertEqual(vision["status"], "runtime-verified")
             self.assertTrue(vision["evidence"])
             for path in vision["evidence"]:
                 self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                 self.assertIn("vision", path)
-                self.assertIn("2026-07-30", path)
+                self.assertIn("2026-08-04", path)
             vision_audit = entrypoints["vision-audit"]
             self.assertEqual(vision_audit["status"], "runtime-verified")
             self.assertTrue(vision_audit["evidence"])
             for path in vision_audit["evidence"]:
                 self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                 self.assertIn("vision-audit", path)
-                self.assertIn("2026-07-30", path)
+                self.assertIn("2026-08-04", path)
         web = consumers["web-readonly-parser"]
         self.assertEqual(web["kind"], "goal-document-parser")
         self.assertEqual(web["supportCommitment"], "not-applicable")

@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
   "format": "goal-governance.skills-consumer-compatibility-matrix",
   "formatVersion": "1.0.0",
-  "candidateRevision": "v0.11.0",
+  "candidateRevision": "v0.12.0",
   "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
   "protocol": {
     "current": "0.1.0",
@@ -50,40 +50,40 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-govern-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/claude-code-cli-govern-2026-08-04.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-audit-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/claude-code-cli-audit-2026-08-04.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/claude-code-cli-vision-2026-08-04.json"
           ]
         },
         {
           "name": "vision-audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/claude-code-cli-vision-audit-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/claude-code-cli-vision-audit-2026-08-04.json"
           ]
         }
       ],
-      "evidenceScope": "Current worktree: /govern, /audit, /vision, and /vision-audit have fresh runtime evidence. The vision-audit probe is read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
+      "evidenceScope": "Candidate v0.12.0: all four entrypoints were freshly runtime-verified on 2026-08-04 against current behavior sources. The vision-audit probe remains read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
     },
     {
       "id": "grok-build-cli",
       "kind": "host-adapter",
       "host": {
         "product": "Grok Build CLI",
-        "version": "0.2.114",
-        "build": "9bbd559437",
+        "version": "0.2.118",
+        "build": "1e1687c1cf",
         "platform": "Windows 11",
         "installationSurface": ".grok/skills/govern and .grok/skills/audit and vision skill/prompt"
       },
@@ -98,32 +98,32 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-govern-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/grok-build-cli-govern-2026-08-04.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-audit-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/grok-build-cli-audit-2026-08-04.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/grok-build-cli-vision-2026-08-04.json"
           ]
         },
         {
           "name": "vision-audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/grok-build-cli-vision-audit-2026-07-30-refresh.json"
+            "docs/releases/runtime/v0.12.0/grok-build-cli-vision-audit-2026-08-04.json"
           ]
         }
       ],
-      "evidenceScope": "Current worktree: /govern, /audit, /vision, and /vision-audit have fresh runtime evidence. The vision-audit probe is read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
+      "evidenceScope": "Candidate v0.12.0: all four entrypoints were freshly runtime-verified on 2026-08-04 against current behavior sources. The vision-audit probe remains read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
     },
     {
       "id": "github-copilot-cli",
@@ -145,32 +145,32 @@
           "name": "govern",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-govern-2026-07-30-byok-refresh.json"
+            "docs/releases/runtime/v0.12.0/github-copilot-cli-govern-2026-08-04.json"
           ]
         },
         {
           "name": "audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-audit-2026-07-30-byok-refresh.json"
+            "docs/releases/runtime/v0.12.0/github-copilot-cli-audit-2026-08-04.json"
           ]
         },
         {
           "name": "vision",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-2026-07-30-byok-refresh.json"
+            "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-2026-08-04.json"
           ]
         },
         {
           "name": "vision-audit",
           "status": "runtime-verified",
           "evidence": [
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/copilot-cli-vision-audit-2026-07-30-byok-refresh.json"
+            "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-audit-2026-08-04.json"
           ]
         }
       ],
-      "evidenceScope": "Current worktree: BYOK-aware replay refreshed all four Copilot entrypoints on 2026-07-28. Runtime evidence verifies read-only dispatch only; no release claim follows from these captures."
+      "evidenceScope": "Candidate v0.12.0: BYOK-aware replay freshly runtime-verified all four Copilot entrypoints on 2026-08-04 against current behavior sources. Runtime evidence verifies read-only dispatch; release identity still requires the separate annotated-tag and release-evidence gates."
     },
     {
       "id": "web-readonly-parser",

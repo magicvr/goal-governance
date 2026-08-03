@@ -1,11 +1,11 @@
 ---
 id: GOAL-003-consumer-governance-ergonomics
 doc: audit
-status: done
+status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.4.0
+version: 0.6.0
 ---
 
 # 审计 · GOAL-003
@@ -19,6 +19,8 @@ version: 0.4.0
 | A-001 | 2026-08-04 | self | GOAL-003 close-out | pass | 0 | [A-001-self-close-out.md](03-audit/A-001-self-close-out.md) |
 | A-002 | 2026-08-04 | independent | GOAL-003 close-out at `c1736b8` | pass | 0 | [A-002-grok-build-close-out.md](03-audit/A-002-grok-build-close-out.md) |
 | A-003 | 2026-08-04 | self | response to A-001/A-002 | pass | 0 | [A-003-govern-response.md](03-audit/A-003-govern-response.md) |
+| A-004 | 2026-08-04 | independent | close-out intention + consumer upgrade README at `7c4548b` | conditional | 1 | [A-004-intent-and-consumer-upgrade-guide.md](03-audit/A-004-intent-and-consumer-upgrade-guide.md) |
+| A-005 | 2026-08-04 | self | response to A-004 F-001 through v0.12.0 candidate preflight | conditional | 1 | [A-005-govern-fixed-response.md](03-audit/A-005-govern-fixed-response.md) |
 
 ## 当前门禁状态
 
@@ -30,6 +32,8 @@ version: 0.4.0
 | self 意见 | A-001 pass | required findings 均 fixed；F-003 recommended open 不阻断 |
 | independent 意见 | A-002 pass | Grok Build `0.2.118` / `grok-4.5`；独立复跑 26 / 143 / 66，开放 required = 0 |
 | 编排响应 | A-003 pass | required 结论无冲突；重复 recommended writer finding 保持 open、带触发条件，不阻断 |
+| 本轮独立复核 | A-004 conditional | 当前源码实现与 README 指南成立；正式 `v0.11.0` 不含 updater，compatibility readiness 失败；F-001 required open |
+| F-001 响应路径 | D-010 + A-005 fixed in progress | 目标已恢复 `active / 6/7`；`v0.12.0` 候选冻结、12 格 runtime 与 rehearsal 通过，正式 Release 闭环未完成前仍开放 |
 
 ## 立项时 legacy snapshot（2026-08-03）
 
@@ -38,5 +42,6 @@ version: 0.4.0
 
 ## 当前审计状态
 
-- A-001 self + A-002 Grok Build independent 均为 **pass**；A-003 已统一响应，开放 required = 0。
-- `cross` 门禁已满足；D-009 已关门，目标 `done`。recommended finding 保持其复审触发，不改变 verdict。
+- A-001 self + A-002 Grok Build independent 的历史 close-out 均为 **pass**；A-003 已响应当时意见集。
+- A-004 对“确实达成消费仓升级意图”作更宽的正式消费边界复核，verdict **conditional**，新增 **F-001 required open**；其与既有 close-out 放行口径存在 P-004 门禁冲突，须由 `/govern` / 用户响应。
+- 用户已在 D-010 选择 `fixed`；A-005 记录候选预检通过但不关闭 F-001。目标与 Root 投影已恢复为整改中；正式 Release、资产核对和真实消费更新证据齐备前，F-001 仍为 required/open；recommended findings 保持各自复审触发。

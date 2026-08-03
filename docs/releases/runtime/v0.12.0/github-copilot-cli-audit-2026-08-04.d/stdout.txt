@@ -1,0 +1,144 @@
+● skill(audit)
+
+I will replay the audit from the repository’s governance sources only, then report the independent
+verdict and any open required findings without modifying the worktree.
+
+/ Search (glob)
+  │ "{AGENTS.md,.github/copilot-instructions.md,skills/prompts/05-independent-audit.md,docs/workspac
+  │ e-001-goal-governance/goal-tree.md}"
+  └ 4 files found
+
+/ Search (glob)
+  │ "**/*GOAL-008*" in docs\workspace-001-goal-governance
+  └ No matches found
+
+/ Search (glob)
+  │ "GOAL-008*/**" in docs\workspace-001-goal-governance
+  └ No matches found
+
+The requested governance entrypoints are present. I am locating the exact GOAL-008 record set and
+reading the audit prompt, repository instructions, tree, and records together so the replay uses
+only the specified evidence.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (299 lines read)
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:end (242 lines read)
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ L1:end (108 lines read)
+
+● Read AGENTS.md
+  └ L1:end (270 lines read)
+
+/ Search (grep)
+  │ "GOAL-008" in **/*
+  └ 10 files found
+
+/ Search (grep)
+  │ "GOAL-008|008" in docs/workspace-001-goal-governance/goal-tree.md
+  └ 97 lines found
+
+/ Search (grep)
+  │ "008" in docs/workspace-001-goal-governance/**
+  └ 9 files found
+
+● List workspace goal records (shell)
+  │ Get-ChildItem -LiteralPath
+  │ 'C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance' -Force |
+  │ Select-Object Name,FullName,Attributes
+  └ 28 lines…
+
+GOAL-008 is the recorded target GOAL-008-skills-consumer-adapter-release-consistency, marked done /
+100% in the tree. The workspace is explicitly archived, so I will now inspect its binding plus every
+ GOAL-008 ledger/index record and derive the closure verdict from those records only.
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:end (47 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:end (144 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:end (270 lines read)
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ L1:end (103 lines read)
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:end (185 lines read)
+
+/ Search (glob)
+  │ "**/*" in
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency
+  └ 7 files found
+
+The records contain two distinct states that must not be conflated: the historical v0.7.0 close-out
+is documented as complete, while the later unreleased behavior source is explicitly pending fresh
+runtime validation. I am checking the remaining ledger entries and evidence index now to determine
+whether that later trigger reopens GOAL-008 or only creates open requirements for a future
+candidate.
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:90 (90 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L140:end (54 lines read)
+
+/ Search (grep)
+  │ "required|collecting|deferred|pending|verified|closed|open|required|done|conditional|pass|fail"
+  │ in GOAL-008-skills-consumer-adapter-release-consistency/{00-meta.md,01-decision.md,02-execution.
+  │ md,03-audit.md} (docs\workspace-001-goal-governance)
+  └ No matches found
+
+● List GOAL-008 evidence records (shell)
+  │ Get-ChildItem -LiteralPath 'C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-g
+  │ oal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachments' -Recurse -File
+  │ | Select-Object FullName,Length | Sort-Object FullName
+  └ 11 lines…
+
+Independent replay verdict: PASS for the historical GOAL-008 v0.7.0 close-out; CONDITIONAL for any
+new/current candidate release.
+
+Evidence supports the historical closure:
+
+ - Copilot CLI 1.0.71 /govern and /audit replays passed with exit 0 and observed markers, using
+read-only execution and no VS Code or IDE plugin.
+ - GitHub Actions run 29700051047 passed on Ubuntu and Windows, with Web parser coverage and no
+uncovered cells.
+ - Commit 8a33ecd21d9183a680c9c0d63e471469f5e515a8 was bound to annotated tag v0.7.0.
+ - Release-candidate evidence reported clean-tree checks and candidateRevision: v0.7.0.
+ - The records state I-001, I-002, and I-003 verified, with no open required findings or accepted
+residual risk for that historical candidate.
+
+Open required findings remain for a future candidate:
+
+ - I-002 required / collecting: changed Skills behavior sources require fresh runtime validation;
+the six host /govern and /audit cells are pending-runtime-validation.
+ - I-003 required / not release-ready: the current candidate is unreleased; no fresh clean release
+candidate, authorized annotated tag, or release-mode evidence exists.
+ - The current rehearsal passing does not close either finding, and the records explicitly state
+that this bounded freshness transition does not reopen the historical GOAL-008 close-out.
+
+No files were modified or written. The independent opinion therefore remains a read-only replay
+result rather than a new A-NNN ledger entry. Use /govern GOAL-008 to acknowledge the historical pass
+ and keep I-002/I-003 gated for the next candidate.
+
+COPILOT_CLI_AUDIT_DISPATCH_OK

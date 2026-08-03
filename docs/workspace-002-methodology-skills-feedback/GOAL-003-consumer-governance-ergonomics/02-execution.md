@@ -1,11 +1,11 @@
 ---
 id: GOAL-003-consumer-governance-ergonomics
 doc: execution
-status: done
+status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 执行记录 · GOAL-003
@@ -18,6 +18,7 @@ version: 0.6.0
 | E-002 | 2026-08-04 | S7 全量回归与发布准备 | recorded | [E-002-s7-full-regression.md](02-execution/E-002-s7-full-regression.md) |
 | E-003 | 2026-08-04 | self 预检 required 修复 | recorded | [E-003-self-preflight-fixes.md](02-execution/E-003-self-preflight-fixes.md) |
 | E-004 | 2026-08-04 | cross close-out 与 lifecycle 同步 | recorded | [E-004-close-out.md](02-execution/E-004-close-out.md) |
+| E-005 | 2026-08-04 | A-004 F-001 fixed 候选冻结与预检 | recorded | [E-005-v0-12-release-candidate.md](02-execution/E-005-v0-12-release-candidate.md) |
 
 > 下方为切换前的 legacy inline 时间线，继续有效且只读；新事实写入 `02-execution/E-NNN-*.md`。
 
@@ -57,8 +58,9 @@ version: 0.6.0
 
 ## 待办
 
-- 无当前目标待办。A-001 F-003 / A-002 F-001 作为 recommended open，仅在其记录的 Web CT 触发条件出现时复审。
+- 执行 D-010：通过 `v0.12.0` strict release evidence、annotated tag / GitHub Release、正式资产核对与真实消费更新，关闭 A-004 F-001。
+- A-004 F-002/F-003 仍为 recommended，不升级为本次 required 门禁。
 
 ## 进度评估
 
-路线图完成 **7/7（100%）**；A-001 self、A-002 Grok Build independent、A-003 response 均已落盘，开放 required = 0；D-009 关门，目标 `done`。
+路线图当前完成 **6/7（86%）**；A-004 F-001 required/open 使 S7 回到整改中，目标 `active`。正式 Release 与消费更新证据闭合前不恢复 `done`。

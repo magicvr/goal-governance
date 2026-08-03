@@ -4,7 +4,29 @@
 
 ## Unreleased
 
-（无。当前候选已冻结为 **0.11.0** / `v0.11.0`。）
+（无。当前候选已冻结为 **0.12.0** / `v0.12.0`。）
+
+## 0.12.0 - 2026-08-04
+
+Skills **consumer** minor：把真实消费反馈闭成可发布能力，包括 producer / consumer 证据分层、可扩展 ledger、风险分级审计、安全 checkpoint 与事务型 Skills updater（workspace-002 GOAL-003）。
+
+### 更新 / 分发
+
+- 新增 `skills/update.py`、`update.ps1`、`update.sh`：支持固定版 / latest、在线 Release / 离线 zip、SHA-256、协议 minor 预检、managed-file 冲突检查、备份与失败自动恢复。
+- 默认消费包只携带 consumer contract + schema；compatibility matrix、runtime-evidence schema 与 release evidence 保持 producer-only，消费仓不再继承生产发布门禁。
+- 根 README、Skills README 与 bootstrap README 的固定安装示例同步到 `v0.12.0`；Skills README 增加安装后更新入口。
+
+### 治理协议 / 长流程
+
+- 新目标从第一条记录起使用 `01-decision/`、`02-execution/`、`03-audit/` 平铺 ledger；legacy inline 继续兼容读取。
+- 审计模式按 `none` / `self` / `independent` / `cross` 风险分级；required finding、冲突与 residual 继续按 P-004 fail closed。
+- `/govern` 长流程在可验证节点使用显式 owned paths 创建 Git checkpoint；脏树重叠、验证失败或提交失败时停止自动提交。
+
+### 兼容矩阵 / 证据
+
+- 矩阵 `candidateRevision: v0.12.0`；Claude Code `2.1.220`、Grok Build `0.2.118` 与 GitHub Copilot CLI `1.0.75` 的四入口于 2026-08-04 重新执行，共 12 个单元 `runtime-verified`。
+- 版本化 runtime evidence 位于 `docs/releases/runtime/v0.12.0/`，其行为源与 stdout/stderr 摘要由 canonical 校验器复核。
+- Web parser 保持 `automated-verified`；Codex 继续只声明 install surface，不进入本次 committed/runtime-verified 矩阵。
 
 ## 0.11.0 - 2026-07-31
 

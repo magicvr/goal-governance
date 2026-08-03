@@ -1,0 +1,96 @@
+I will read the specified governance sources and GOAL-008 records, then apply scan-only rules
+without modifying the repository.
+
+/ Search (glob)
+  │ ".github/copilot-instructions.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "AGENTS.md"
+  └ 2 files found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/**/GOAL-008*"
+  └ No matches found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/goal-tree.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "skills/prompts/00-govern-orchestrator.md"
+  └ 1 file found
+
+The required governance files are present; the GOAL-008 glob needs a directory listing because the
+records may use a nested or differently named path.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (299 lines read)
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:end (254 lines read)
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:end (242 lines read)
+
+● Read AGENTS.md
+  └ L1:end (270 lines read)
+
+● view view the file at C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-gov…
+  └ GOAL-001-main-vision
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ L1:end (103 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (333 lines read)
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:end (262 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:end (193 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:end (716 lines read)
+
+/ Search (glob)
+  │ "**/*.md" in
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency
+  └ 8 files found
+
+治理扫描：GOAL-008
+
+ - 状态 / 进度：done / 100%，父目标为 GOAL-001-main-vision。goal-tree.md 记录 GOAL-008 已于
+2026-07-22 完成，目标记录的最终状态由 00-meta.md、D-010 和 A-016 确认为 done / 100%。
+ - 最终成果：I-001、I-002、I-003 均为 verified。最终候选绑定 annotated tag v0.7.0、commit
+8a33ecd21d9183a680c9c0d63e471469f5e515a8，GitHub Actions run 29700051047 在 Ubuntu 和 Windows
+上通过，Web parser CI 无 uncovered cells。
+ - 相关审计意见： - A-014（independent，conditional）：当时 Copilot CLI 两个入口已通过，但 Web
+CI、发布身份仍开放。已由 A-016 后续关闭。
+ - A-016（self，pass）：I-001/I-002/I-003 及 A-014 响应均完成；无开放 required findings，无 accepted
+ residual risk。
+ - A-017（self，pass）：GOAL-010 后的行为源变化使未来候选 unreleased、六个宿主入口需重新 runtime
+validation；该事实不重开历史 v0.7.0 关门，也不否定 GOAL-008 的最终关闭。
+ - 早期 A-010 的 F-001～F-003 属于历史开放门禁，后续 A-011～A-016 已完成台账对齐、候选 runtime、Web
+CI 和 release evidence 的关闭链路。
+ - required 信息门禁： - I-001：verified，canonical/mirror schema、fixtures 和契约测试。
+ - I-002：verified / closed，六个 CLI runtime cells 加 Web parser CI 均有证据。
+ - I-003：verified / closed，clean candidate、release evidence、annotated tag v0.7.0 已绑定。
+ - 当前未发现未关闭的 required finding、未决冲突或 residual-risk 接受需求。
+ - 关闭判断：允许关闭，且根据现有权威记录已经关闭。此次只读 replay 不产生新的状态变更。GOAL-010
+之后的 unreleased 候选仅构成未来发布前的新证据门禁，不构成 GOAL-008 历史关闭的撤销。
+
+COPILOT_CLI_GOVERN_DISPATCH_OK

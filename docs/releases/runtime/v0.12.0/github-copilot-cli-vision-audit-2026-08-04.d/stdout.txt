@@ -1,0 +1,56 @@
+● skill(vision-audit)
+
+I’m loading only the specified governance sources and will perform the requested read-only dispatch
+check.
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ L1:end (324 lines read)
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ L1:end (241 lines read)
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:end (47 lines read)
+
+● Read vision-audit.prompt.md
+  │ .github\prompts\vision-audit.prompt.md
+  └ L1:end (28 lines read)
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ L1:end (85 lines read)
+
+● Read AGENTS.md
+  └ L1:end (270 lines read)
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ L1:end (100 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (299 lines read)
+
+The Copilot wrapper and independent-review core are loaded. I’m checking the remaining review ledger
+ entries solely to determine whether any required Vision finding is still open.
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ L326:449 (123 lines read)
+
+Read-only /vision-audit discovery completed.
+
+ - Loaded wrapper: .github/prompts/vision-audit.prompt.md (/vision-audit, independent Vision
+Review).
+ - Loaded core prompt: skills/prompts/07-independent-vision-review.md (v0.1.0).
+ - Current Charter: vision-goal-governance@0.2.0, status: active.
+ - Workspace primary_plan: VP-001-governance-platform-delivery (closed historical plan for archived
+workspace-001-goal-governance).
+ - Open required Vision findings:
+  0. The review ledger records no open required findings; all listed required/recommended findings
+have documented closure where applicable.
+
+COPILOT_CLI_VISION_AUDIT_DISPATCH_OK

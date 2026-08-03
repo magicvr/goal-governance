@@ -1,11 +1,11 @@
 ---
 id: GOAL-003-consumer-governance-ergonomics
 doc: decision
-status: done
+status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 决策记录 · GOAL-003
@@ -15,6 +15,7 @@ version: 0.3.0
 | D-ID | 日期 | 标题 | 状态 | 文件 |
 |------|------|------|------|------|
 | D-009 | 2026-08-04 | GOAL-003 关门并完成 Root R2 | accepted | [D-009-close-out.md](01-decision/D-009-close-out.md) |
+| D-010 | 2026-08-04 | A-004 F-001 采用 fixed 与 v0.12.0 受控发布切片 | accepted | [D-010-fixed-v0-12-release.md](01-decision/D-010-fixed-v0-12-release.md) |
 
 > D-001～D-008 为切换前的 legacy inline 决策，继续有效且只读；新决策写入 `01-decision/D-NNN-*.md`。
 
