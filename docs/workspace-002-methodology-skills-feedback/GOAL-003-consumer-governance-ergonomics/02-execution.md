@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 执行记录 · GOAL-003
@@ -16,6 +16,7 @@ version: 0.4.0
 |------|------|------|------|------|
 | E-001 | 2026-08-04 | S2～S6 实现与 checkpoint | recorded | [E-001-s2-s6-implementation.md](02-execution/E-001-s2-s6-implementation.md) |
 | E-002 | 2026-08-04 | S7 全量回归与发布准备 | recorded | [E-002-s7-full-regression.md](02-execution/E-002-s7-full-regression.md) |
+| E-003 | 2026-08-04 | self 预检 required 修复 | recorded | [E-003-self-preflight-fixes.md](02-execution/E-003-self-preflight-fixes.md) |
 
 > 下方为切换前的 legacy inline 时间线，继续有效且只读；新事实写入 `02-execution/E-NNN-*.md`。
 
@@ -60,4 +61,4 @@ version: 0.4.0
 
 ## 进度评估
 
-路线图完成 **7/7（100%）**；S7 全量回归通过，checkpoint `ef39f9c`。progress 不推导 `done`；正式 cross close-out audit 与 finding 响应仍未完成。
+路线图完成 **7/7（100%）**；S7 全量回归通过，self 预检修复 checkpoint `ac6a741`。progress 不推导 `done`；正式 cross close-out audit 与 finding 响应仍未完成。
