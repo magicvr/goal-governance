@@ -94,6 +94,40 @@ class SkillsUpdateTests(unittest.TestCase):
             rollback = Path(str(report["rollback_path"]))
             self.assertTrue((rollback / "skills" / "old-marker.txt").is_file())
 
+    @unittest.skipUnless(sys.platform.startswith("win"), "real installer path is Windows-first")
+    def test_offline_update_runs_real_consumer_installer(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = root / "consumer"
+            target.mkdir()
+            shutil.copytree(SKILLS, target / "skills")
+            result = pack.pack_skills(
+                version="0.0.0-testupdate",
+                output_dir=root / "dist",
+                skills_root=SKILLS,
+                skip_stage=True,
+            )
+
+            report = update.update_package(_args(target, result, skip_install=False))
+
+            self.assertEqual(report["result"], "updated")
+            self.assertTrue((target / "AGENTS.md").is_file())
+            self.assertTrue(
+                (target / ".agents" / "skills" / "govern" / "SKILL.md").is_file()
+            )
+            self.assertTrue(
+                (target / "skills" / "contracts" / "skills-consumer-contract.json").is_file()
+            )
+            for producer_only in (
+                "skills-consumer-compatibility-matrix.schema.json",
+                "skills-consumer-compatibility-matrix.json",
+                "runtime-evidence.schema.json",
+            ):
+                self.assertFalse(
+                    (target / "skills" / "contracts" / producer_only).exists(),
+                    msg=f"producer-only evidence shipped to consumer update: {producer_only}",
+                )
+
     def test_install_failure_restores_previous_package(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
