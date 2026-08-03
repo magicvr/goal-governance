@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 执行记录 · GOAL-001
@@ -47,10 +47,16 @@ version: 0.4.0
 - S1 完成，派生 progress 1/7 = 14%；S2～S6 进入实现且不拆新子目标。
 - Root R2 仍进行中；Root progress 保持 1/3 = 33%。
 
+### 2026-08-04 · GOAL-003 S2～S6 实现 checkpoint
+
+- GOAL-003 的消费证据 profile、可扩展 ledger、风险审计、Git checkpoint 与事务 updater 已落地；实现提交 `51872c9`。
+- 子目标完成 6/7 阶段，派生 progress 86%；S7 全量回归与 cross-audit 仍未完成。
+- Root R2 仍进行中；Root progress 保持 1/3 = 33%。
+
 ## 待办
 
-1. 推进 GOAL-003 S2～S6 实现与 checkpoint。
-2. S7 汇总回归后执行 cross-audit 与关门响应。
+1. 完成 GOAL-003 S7 全量回归。
+2. 执行 self + Grok Build cross-audit、响应 findings 并决定子目标关门。
 
 ## 进度评估
 

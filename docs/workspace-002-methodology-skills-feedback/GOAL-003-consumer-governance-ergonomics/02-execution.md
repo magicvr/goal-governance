@@ -5,10 +5,18 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 执行记录 · GOAL-003
+
+## 执行索引
+
+| E-ID | 日期 | 标题 | 状态 | 文件 |
+|------|------|------|------|------|
+| E-001 | 2026-08-04 | S2～S6 实现与 checkpoint | recorded | [E-001-s2-s6-implementation.md](02-execution/E-001-s2-s6-implementation.md) |
+
+> 下方为切换前的 legacy inline 时间线，继续有效且只读；新事实写入 `02-execution/E-NNN-*.md`。
 
 ## 时间线
 
@@ -46,10 +54,9 @@ version: 0.2.0
 
 ## 待办
 
-1. 实施 S2～S6，并在每个可独立验证切片后创建 checkpoint commit。
-2. S7 执行 legacy/current fixture、安装/更新回滚、mirror、Web 与发行一致性回归。
-3. 按 `cross` 模式完成 self + 用户指定 Grok Build 独立审计，再响应全部 required findings。
+1. S7 执行 legacy/current fixture、安装/更新回滚、mirror、Web 与发行一致性全量回归。
+2. 按 `cross` 模式完成 self + 用户指定 Grok Build 独立审计，再响应全部 required findings。
 
 ## 进度评估
 
-路线图完成 **1/7（14%）**；S1 事实与方案已冻结，尚未实施 S2～S6，也尚无正式 A-00N 审计意见。
+路线图完成 **6/7（86%）**；S2～S6 已在 checkpoint `51872c9` 落地并通过定向回归；S7 与正式 A-00N 关门审计仍未完成。

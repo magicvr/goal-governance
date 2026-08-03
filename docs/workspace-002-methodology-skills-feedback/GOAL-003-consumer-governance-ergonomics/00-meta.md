@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.2.0
-progress: 14%
+version: 0.3.0
+progress: 86%
 ---
 
 # GOAL-003 · 修复消费仓门禁与长流程治理摩擦
@@ -41,18 +41,18 @@ progress: 14%
 | 阶段 | 名称 | 状态 | 退出条件 |
 |------|------|------|----------|
 | **S1** | 现状复现与契约冻结 | **完成**（2026-08-04） | I-001～I-007 完成当前阶段所需收集；五项问题均有可复现路径、责任边界与验收矩阵 |
-| **S2** | producer / consumer 证据门禁修正 | **进行中** | 消费仓不再继承生产 runtime evidence 门禁；生产发布证据要求未被削弱 |
-| **S3** | 可扩展记录布局与迁移 | **进行中** | 拆分谓词、索引/平铺布局、编号、迁移与兼容读取落地并验证 |
-| **S4** | 风险分级审计编排 | **进行中** | 审计模式选择、独立工具路由、多意见合并及缺工具交互规则落地并验证 |
-| **S5** | Git checkpoint 工作流 | **进行中** | 合理节点、提交范围、失败/恢复和脏树保护落地并验证 |
-| **S6** | Skills 更新与同步路径 | **进行中** | 版本发现、校验、兼容判断、增量更新与回滚落地并验证 |
-| **S7** | 集成回归、迁移与发布准备 | 未开始 | canonical / 镜像无漂移；当前与兼容消费 fixture 通过；关门证据可核对 |
+| **S2** | producer / consumer 证据门禁修正 | **完成**（2026-08-04） | 消费仓不再继承生产 runtime evidence 门禁；生产发布证据要求未被削弱 |
+| **S3** | 可扩展记录布局与迁移 | **完成**（2026-08-04） | 拆分谓词、索引/平铺布局、编号、迁移与兼容读取落地并验证 |
+| **S4** | 风险分级审计编排 | **完成**（2026-08-04） | 审计模式选择、独立工具路由、多意见合并及缺工具交互规则落地并验证 |
+| **S5** | Git checkpoint 工作流 | **完成**（2026-08-04） | 合理节点、提交范围、失败/恢复和脏树保护落地并验证 |
+| **S6** | Skills 更新与同步路径 | **完成**（2026-08-04） | 版本发现、校验、兼容判断、增量更新与回滚落地并验证 |
+| **S7** | 集成回归、迁移与发布准备 | **进行中** | canonical / 镜像无漂移；当前与兼容消费 fixture 通过；关门证据可核对 |
 
 S1 先行；S2～S6 可在各自 required 信息项闭合后并行；S7 汇总验收。是否为 S2～S6 创建子目标，待 S1 按独立范围、依赖与并行价值判断，不在立项时机械拆分。
 
 ## 派生进度展示
 
-`progress: 14%` = 上方 7 个显式阶段完成 **1 / 7**（等权，四舍五入）。progress 仅展示，不放行阶段、不关闭 finding、不推导 `done`。
+`progress: 86%` = 上方 7 个显式阶段完成 **6 / 7**（等权，四舍五入）。progress 仅展示，不放行阶段、不关闭 finding、不推导 `done`。
 
 ## 信息就绪与未知项
 
@@ -64,7 +64,7 @@ S1 先行；S2～S6 可在各自 required 信息项闭合后并行；S7 汇总�
 | I-004 | required | 独立审计工具如何由用户按会话指定一个或多个；能力、可用性、失败与未指定时如何处理 | S4 实施 | S4 实施前 | 盘点宿主可调用工具；定义 provider 列表、顺序/并行、结果归并与 fail-closed 契约 | **verified**（2026-08-04） | — | provider 为会话级有序集合；independent/cross 需要 provider，缺失时仅在实施前询问；本目标用户已指定 Grok Build |
 | I-005 | required | “合理提交节点”的确定性定义，以及 staged/unstaged、无关用户改动、验证失败、无变更、commit 失败和禁用策略 | S5 方案冻结 | S5 前 | 构造脏树/部分失败/恢复矩阵；评估事务边界、提交 ownership 与可回滚证据 | **verified**（2026-08-04） | — | D-006 冻结阶段/独立切片/finding 闭合 checkpoint；仅显式 owned paths，验证失败或路径重叠不提交 |
 | I-006 | required | Skills 更新源、版本发现、兼容判断、信任/摘要、增量覆盖、回滚、离线与各宿主约束 | S6 方案冻结 | S6 前 | 对照当前 pinned bootstrap/install；比较 update / sync / reinstall 模型并做威胁与兼容分析 | **verified**（2026-08-04） | — | D-007 选择包内 updater：latest/固定版、在线/离线、SHA-256、协议预检、备份、失败自动恢复 |
-| I-007 | required | 新规则对现有仓库、旧五件套、当前/前一协议与安装面的兼容和迁移基线 | S7 验收 | S7 前 | 建 legacy/current fixture 矩阵、迁移 dry-run、回滚与发布证据要求 | **verified for plan**（2026-08-04） | S7 以 fixture 实测复核 | legacy inline 继续可读；新目录为 additive protocol；consumer 负例、legacy/current parser、updater rollback 纳入 S7 |
+| I-007 | required | 新规则对现有仓库、旧五件套、当前/前一协议与安装面的兼容和迁移基线 | S7 验收 | S7 前 | 建 legacy/current fixture 矩阵、迁移 dry-run、回滚与发布证据要求 | **collecting**（2026-08-04） | S7 以 fixture 实测复核 | legacy inline 继续可读；新目录为 additive protocol；consumer 负例、legacy/current parser、updater rollback 已有定向回归，待 S7 全量复核 |
 
 ## 父目标
 
@@ -73,5 +73,5 @@ S1 先行；S2～S6 可在各自 required 信息项闭合后并行；S7 汇总�
 ## 备注
 
 - 本目标修正的是通用方法论与 Skills 产品边界，不要求消费仓自行打补丁。
-- 在 S3 冻结并迁移前，本目标仍使用现行五件套和单一 `03-audit.md`，避免用未决方案承载自身权威记录。
+- 本目标保留 S1 前的 legacy inline 历史；S2～S7 新事实与审计开始使用同名平铺 ledger 目录，作为 additive migration 样本。
 - 涉及 `docs/architecture`、`docs/templates`、`docs/contracts` 或 `docs/vision/alignment.md` 的 canonical 变更时，必须同轮运行 mirror stage 与 `--check`。

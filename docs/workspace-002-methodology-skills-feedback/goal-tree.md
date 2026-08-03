@@ -40,12 +40,16 @@ I-001/I-002 verified；D-002 冻结；阶段 C 实现 `install/codex` + `--codex
 
 完成消费/生产证据边界、长台账量化、风险审计矩阵、安全 Git checkpoint 与事务 updater 基线；I-001～I-006 verified，I-007 完成方案基线。S1 **完成**，S2～S6 进入实现；GOAL-003 `progress` **14%（1/7）**。Root R2 仍进行中，Root `progress` 保持 33%。下一编号 **GOAL-004**。
 
+## 2026-08-04 · GOAL-003 S2～S6 实现 checkpoint
+
+消费证据 profile、可扩展 ledger、风险审计编排、安全 Git checkpoint 与事务 updater 已在 `51872c9` 落地并通过定向回归。S2～S6 **完成**，S7 进行中；GOAL-003 `progress` **86%（6/7）**。Root R2 仍进行中，Root `progress` 保持 33%。下一编号 **GOAL-004**。
+
 ## 树
 
 ```text
 GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱动的协议与 Skills 演进  progress 33% (R1 完成；R2 进行中)
 ├── GOAL-002-codex-skills-entry                 [done]    添加 Codex 可用的 Skills 入口  progress 100%
-└── GOAL-003-consumer-governance-ergonomics     [active]  修复消费仓门禁与长流程治理摩擦  progress 14%
+└── GOAL-003-consumer-governance-ergonomics     [active]  修复消费仓门禁与长流程治理摩擦  progress 86%
 ```
 
 ## 状态表
@@ -54,7 +58,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 |----|-------|--------|--------|----------|---------|
 | GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 33% (1/3 纲领阶段；R1 完成、R2 进行中) | 2026-08-03 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% (4/4 检查点) | 2026-07-31 |
-| GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | active | 14% (1/7 阶段) | 2026-08-04 |
+| GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | active | 86% (6/7 阶段) | 2026-08-04 |
 
 ## 编号
 
