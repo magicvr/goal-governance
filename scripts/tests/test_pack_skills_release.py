@@ -90,6 +90,13 @@ class PackSkillsReleaseTests(unittest.TestCase):
         self.assertTrue(pack.should_exclude(Path("__pycache__") / "a.pyc"))
         self.assertTrue(pack.should_exclude(Path("tests") / "x.pyc"))
         self.assertTrue(pack.should_exclude(Path("docs") / "workspace-001-x" / "a.md"))
+        self.assertTrue(pack.should_exclude(Path("contracts") / "runtime-evidence.schema.json"))
+        self.assertTrue(
+            pack.should_exclude(Path("contracts") / "skills-consumer-compatibility-matrix.json")
+        )
+        self.assertFalse(
+            pack.should_exclude(Path("contracts") / "skills-consumer-contract.json")
+        )
         self.assertFalse(pack.should_exclude(Path("prompts") / "00-govern-orchestrator.md"))
 
     def test_pack_skills_on_temp_tree_excludes_caches(self) -> None:
@@ -129,6 +136,8 @@ class PackSkillsReleaseTests(unittest.TestCase):
             self.assertNotIn("/web/", joined)
             self.assertNotIn("artifacts/", joined)
             self.assertNotIn("tech-stack.md", joined)
+            self.assertNotIn("runtime-evidence.schema.json", joined)
+            self.assertNotIn("skills-consumer-compatibility-matrix.json", joined)
 
     def test_pack_skills_rejects_incomplete_tree(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -201,6 +210,13 @@ class PackSkillsReleaseTests(unittest.TestCase):
             self.assertIn(f"{root}/core/docs/architecture/principles.md", names)
             self.assertIn(f"{root}/core/docs/architecture/workspace-protocol.md", names)
             self.assertTrue(any(n.startswith(f"{root}/contracts/") for n in names))
+            self.assertIn(f"{root}/contracts/skills-consumer-contract.json", names)
+            self.assertIn(f"{root}/contracts/skills-consumer-contract.schema.json", names)
+            self.assertNotIn(f"{root}/contracts/runtime-evidence.schema.json", names)
+            self.assertNotIn(
+                f"{root}/contracts/skills-consumer-compatibility-matrix.json", names
+            )
+            self.assertIn(f"{root}/update.py", names)
             for bad in (
                 "__pycache__",
                 "docs/workspace-",

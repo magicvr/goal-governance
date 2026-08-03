@@ -73,3 +73,7 @@ URL shape (D-002 / D-003):
 - Skills zip: `https://github.com/magicvr/goal-governance/releases/download/vX.Y.Z/goal-governance-skills-vX.Y.Z.zip` (+ matching `.sha256`)
 
 Release attachments also include these bootstrap scripts and the core-only zip (CI pack job).
+
+## Update after first install
+
+Bootstrap is the first-install entry. A package that includes `skills/update.py` can update itself thereafter with `skills/update.ps1` or `skills/update.sh`; it supports fixed/latest Release discovery, offline zip + sidecar, protocol preflight, managed-file conflict detection, backup and automatic rollback. This avoids deleting and reinstalling `skills/` for every compatible release. Python 3 is required for the shared transactional updater.

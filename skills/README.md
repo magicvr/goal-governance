@@ -94,6 +94,7 @@ skills/
 │   └── 07-independent-vision-review.md # independent Vision Review core
 ├── templates/README.md                 # 指针：模板在 core/docs/templates（GOAL-022）
 ├── contracts/                          # docs/contracts 的 stage 镜像
+├── update.py / update.ps1 / update.sh  # 安装后的事务更新入口
 └── tests/
 ```
 
@@ -134,6 +135,31 @@ bash ./install-online.sh --version 0.11.0 --zip-path ./goal-governance-skills-v0
 ```
 
 Bootstrap 会：校验 SHA-256 → 落到 `./skills` → 调用包内 install **默认 `-All` / `--all`**（四入口 + core → `docs/`）。digest 失败 **fail closed**。详见 [scripts/bootstrap/README.md](../scripts/bootstrap/README.md)。
+
+默认消费安装只复制 `skills-consumer-contract.json` 与其 schema。compatibility matrix、runtime-evidence schema 与 release evidence 属于 producer / release profile，仍由本生产仓发行门禁验证，但不会成为普通消费仓的目标门禁；旧安装中即使仍有这些文件，也不要求用户手工删除。
+
+### 已安装 Skills 更新（无需重装）
+
+包含 updater 的版本安装一次后，可在消费项目根执行：
+
+```powershell
+# 先看计划，再应用固定版本；latest 为显式选择
+.\skills\update.ps1 --version X.Y.Z --dry-run
+.\skills\update.ps1 --version X.Y.Z
+.\skills\update.ps1 --latest
+
+# 离线：zip 与同名 .sha256 放在本地
+.\skills\update.ps1 --version X.Y.Z --zip-path .\goal-governance-skills-vX.Y.Z.zip
+```
+
+```bash
+bash ./skills/update.sh --version X.Y.Z --dry-run
+bash ./skills/update.sh --version X.Y.Z
+bash ./skills/update.sh --latest
+bash ./skills/update.sh --version X.Y.Z --zip-path ./goal-governance-skills-vX.Y.Z.zip
+```
+
+updater 需要 Python 3；它会验证 Release SHA-256、拒绝 zip path traversal、检查协议 minor 边界和 managed 文件本地修改，备份旧包与受管文件，再调用新包 installer。失败自动恢复；成功输出 `rollback_path` 并写 `skills/.goal-governance-install.json`。协议边界变化和本地受管修改默认 fail closed，分别需审阅后显式 `--allow-protocol-upgrade` / `--force-managed`。
 
 ### 入口 2 · 包内 install（解压后）
 

@@ -61,6 +61,11 @@ _SECTION_DOC_TYPES = {
     "execution": "execution",
     "audit": "audit",
 }
+_LEDGER_ENTRY_PATTERNS = {
+    "decision": re.compile(r"^D-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*\.md$"),
+    "execution": re.compile(r"^E-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*\.md$"),
+    "audit": re.compile(r"^A-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*\.md$"),
+}
 _RECOVERY_RECORD_NAME = ".goal-write-recovery.json"
 _UNSET = object()
 
@@ -382,7 +387,11 @@ class GoalsRepository:
 
         self._transactional_write(
             writes,
-            created_directories=(goal_dir, goal_dir / "attachments"),
+            created_directories=(
+                goal_dir,
+                goal_dir / "attachments",
+                *(goal_dir / Path(filename).stem for filename in _SECTION_FILES.values()),
+            ),
         )
         return self._written_goal(goal_id)
 
@@ -1185,49 +1194,106 @@ class GoalsRepository:
         return GoalLoadResult(goal, goal_dir, meta_text, tuple(issues))
 
     def _load_decision(self, path: Path) -> tuple[DecisionDoc, tuple[ValidationIssue, ...]]:
-        text, issue = self._read_text(path, IssueSeverity.WARNING)
-        if issue:
-            return DecisionDoc(body_markdown=""), (issue,)
-        parsed = parse_section_document(text, path)
+        body, metadata, issues = self._load_ledger(path, "decision")
         return (
             DecisionDoc(
-                body_markdown=parsed.body_markdown,
-                entries=parse_decision_entries(parsed.body_markdown),
-                metadata=parsed.metadata,
+                body_markdown=body,
+                entries=parse_decision_entries(body),
+                metadata=metadata,
             ),
-            parsed.issues,
+            issues,
         )
 
     def _load_execution(self, path: Path) -> tuple[ExecutionDoc, tuple[ValidationIssue, ...]]:
-        text, issue = self._read_text(path, IssueSeverity.WARNING)
-        if issue:
-            return ExecutionDoc(body_markdown=""), (issue,)
-        parsed = parse_section_document(text, path)
+        body, metadata, issues = self._load_ledger(path, "execution")
         return (
             ExecutionDoc(
-                body_markdown=parsed.body_markdown,
-                entries=parse_execution_entries(parsed.body_markdown),
-                metadata=parsed.metadata,
+                body_markdown=body,
+                entries=parse_execution_entries(body),
+                metadata=metadata,
             ),
-            parsed.issues,
+            issues,
         )
 
     def _load_audit(self, path: Path) -> tuple[AuditDoc, tuple[ValidationIssue, ...]]:
-        text, issue = self._read_text(path, IssueSeverity.WARNING)
-        if issue:
-            return AuditDoc(body_markdown=""), (issue,)
-        parsed = parse_section_document(text, path)
+        body, metadata, issues = self._load_ledger(path, "audit")
         return (
             AuditDoc(
-                body_markdown=parsed.body_markdown,
+                body_markdown=body,
                 conclusion_state=parse_audit_conclusion_state(
-                    parsed.body_markdown,
-                    parsed.metadata,
+                    body,
+                    metadata,
                 ),
-                metadata=parsed.metadata,
+                metadata=metadata,
             ),
-            parsed.issues,
+            issues,
         )
+
+    def _load_ledger(
+        self,
+        index_path: Path,
+        section_name: str,
+    ) -> tuple[str, Mapping[str, object], tuple[ValidationIssue, ...]]:
+        """Load a stable index plus flat ledger entries, preserving legacy inline bodies."""
+        text, issue = self._read_text(index_path, IssueSeverity.WARNING)
+        if issue:
+            return "", {}, (issue,)
+
+        parsed_index = parse_section_document(text, index_path)
+        bodies = [parsed_index.body_markdown]
+        issues = list(parsed_index.issues)
+        entry_dir = index_path.with_suffix("")
+        containment_issue = self._containment_issue(entry_dir, IssueSeverity.WARNING)
+        if containment_issue:
+            issues.append(containment_issue)
+            return parsed_index.body_markdown, parsed_index.metadata, tuple(issues)
+        if not entry_dir.exists():
+            return parsed_index.body_markdown, parsed_index.metadata, tuple(issues)
+        if not entry_dir.is_dir():
+            issues.append(
+                self._issue(
+                    "invalid_ledger_directory",
+                    IssueSeverity.WARNING,
+                    entry_dir,
+                    "Ledger entry path must be a directory.",
+                )
+            )
+            return parsed_index.body_markdown, parsed_index.metadata, tuple(issues)
+
+        pattern = _LEDGER_ENTRY_PATTERNS[section_name]
+        for entry_path in sorted(entry_dir.iterdir(), key=lambda candidate: candidate.name):
+            if entry_path.name.startswith("."):
+                continue
+            if entry_path.is_dir():
+                issues.append(
+                    self._issue(
+                        "nested_ledger_directory",
+                        IssueSeverity.WARNING,
+                        entry_path,
+                        "Ledger directories are flat; nested directories are not read.",
+                    )
+                )
+                continue
+            if not pattern.fullmatch(entry_path.name):
+                issues.append(
+                    self._issue(
+                        "invalid_ledger_entry_name",
+                        IssueSeverity.WARNING,
+                        entry_path,
+                        f"Ledger entry filename does not match {pattern.pattern}.",
+                    )
+                )
+                continue
+            entry_text, entry_issue = self._read_text(entry_path, IssueSeverity.WARNING)
+            if entry_issue:
+                issues.append(entry_issue)
+                continue
+            parsed_entry = parse_section_document(entry_text, entry_path)
+            issues.extend(parsed_entry.issues)
+            if parsed_entry.body_markdown.strip():
+                bodies.append(parsed_entry.body_markdown)
+
+        return "\n\n".join(body.rstrip() for body in bodies if body.strip()), parsed_index.metadata, tuple(issues)
 
     def _load_attachments(
         self,
