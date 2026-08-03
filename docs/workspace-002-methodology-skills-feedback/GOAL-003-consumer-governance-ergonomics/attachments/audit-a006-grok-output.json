@@ -1,0 +1,72 @@
+{
+  "verdict": "pass",
+  "f001_status": "fixed",
+  "open_required_count": 0,
+  "same_version_update_sufficient": true,
+  "same_version_reason": "A-004/D-010 require a real consumer update from formal v0.12.0 assets, not a v0.11-to-v0.12 self-upgrade. v0.11.0 has no updater, so the first updater-bearing release can only be proven by official-zip bootstrap plus installed-updater dry-run/real transaction against formal v0.12.0. On-disk install-state 0.12.0, matching skills archive SHA-256, and rollback dir evidence satisfy that first-updater-version bar without proving cross-version upgrade.",
+  "evidence": [
+    {
+      "gate": "A-004/D-010 fixed closure criteria",
+      "status": "pass",
+      "detail": "A-004 F-001 required fixed path and D-010 accept fixed for 0.12.0/v0.12.0: freeze matrix/CHANGELOG/pins, refresh 12 runtime cells, require-ready plus strict release evidence, annotated tag/Release, formal-asset checks, and one real consumer update. Independent disk/GitHub evidence covers those items; F-002/F-003 remain recommended only."
+    },
+    {
+      "gate": "annotated tag v0.12.0 plus peeled commit",
+      "status": "pass",
+      "detail": "Local and origin refs/tags/v0.12.0 object d969de55; peeled commit 0748c8d8480e7f87f23578b60ec24dc809d6d8d7; annotated message v0.12.0: transactional updater and consumer release closure."
+    },
+    {
+      "gate": "Actions run 30859281729 plus published Release assets",
+      "status": "pass",
+      "detail": "Workflow Skills pack (tag) run 30859281729 completed success on headSha 0748c8d and headBranch v0.12.0. GitHub Release v0.12.0 is non-draft/non-prerelease with core/skills zips, both .sha256 sidecars, release-evidence.json, compatibility-report.json, install-online scripts, and bootstrap-README."
+    },
+    {
+      "gate": "zip sidecar hashes plus release-evidence selected fields",
+      "status": "pass",
+      "detail": "Local core zip SHA-256 05236aa06b59b6b3925ac2da8bcbbc792f522ae21dad6b87084295aa097c8f7f and skills zip b7407b01ba492e1e6c2d6444be2e609c7a9d5d80a4a641dbcbe9eb04a166ccb0 match sidecars and published asset digests. release-evidence binds commit 0748c8d, annotatedTag v0.12.0, tagObject d969de55, candidateRevision v0.12.0, coverage ready-for-release-evidence with uncovered empty, checksPassed true, and workingTree.clean true."
+    },
+    {
+      "gate": "compatibility candidate/readiness/uncovered plus 12 runtime JSON units",
+      "status": "pass",
+      "detail": "compatibility-report source commit is 0748c8d with v0.12.0 at HEAD; matrix candidateRevision is v0.12.0; coverage is ready-for-release-evidence with uncovered empty. Exactly 12 runtime JSON units are committed for Claude/Grok/Copilot times govern/audit/vision/vision-audit."
+    },
+    {
+      "gate": "official skills zip updater/README plus producer-only exclusions",
+      "status": "pass",
+      "detail": "Official skills zip contains update.py, update.ps1, update.sh, and README. Producer-only compatibility matrix/schema and runtime-evidence schema are absent; consumer contract and schema are present."
+    },
+    {
+      "gate": "consumer manifest/rollback/updaters/hosts/contracts/producer-only absence",
+      "status": "pass",
+      "detail": "skills/.goal-governance-install.json records version 0.12.0, source magicvr/goal-governance@v0.12.0, and archive SHA-256 b7407b01. Its rollbackPath exists with Skills and project host backups. Updaters and four host surfaces are present; consumer contracts are present; producer-only filename hit count is zero."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-001",
+      "level": "required",
+      "status": "fixed",
+      "summary": "Formal v0.12.0 Release now ships updater and upgrade guide; compatibility readiness has 12 fresh runtime units; consumer completed a real same-version update to formal v0.12.0 with manifest/rollback evidence."
+    },
+    {
+      "id": "F-002",
+      "level": "recommended",
+      "status": "open",
+      "summary": "A-004 discoverability/manual-rollback README polish remains open; no independent evidence upgrades it to required or closes it."
+    },
+    {
+      "id": "F-003",
+      "level": "recommended",
+      "status": "open",
+      "summary": "A-004 migration dry-run/tooling gap remains open; additive migration evidence does not independently close it."
+    }
+  ],
+  "limitations": [
+    "The auditor did not re-execute the online updater transaction; it verified on-disk install-state, rollback state, and official assets.",
+    "The audit did not load AGENTS.md or /audit skills and did not treat A-005 as authority.",
+    "The transaction is same-version v0.12.0 to v0.12.0; no cross-version upgrade evidence is claimed.",
+    "Published release-evidence.json retains releaseStatus release-candidate while attached to the formal Release.",
+    "The independent audit does not decide lifecycle state."
+  ],
+  "recommendation": "Accept F-001 as fixed on independent formal-asset and same-version real-update evidence; keep F-002/F-003 recommended; record release/run/hash/update facts without claiming cross-version proof."
+}

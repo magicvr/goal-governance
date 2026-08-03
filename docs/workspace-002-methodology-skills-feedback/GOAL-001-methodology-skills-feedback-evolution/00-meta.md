@@ -8,8 +8,8 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.5.0
-progress: 33%
+version: 0.6.0
+progress: 67%
 ---
 
 # GOAL-001 · 真实项目反馈驱动的协议与 Skills 演进
@@ -23,7 +23,7 @@ progress: 33%
 ## 成功标准（Root 方向级 · 暂定）
 
 - [x] 至少完成 **一轮** 有界「反馈 → 协议/Skills 修正 → 可核对验证」闭环（子目标证据链完整）
-- [ ] 修正后的协议/Skills 仍满足完整安装与发布门禁（或 residual 用户书面接受；GOAL-003 A-004 F-001 fixed 中）
+- [x] 修正后的协议/Skills 仍满足完整安装与发布门禁（GOAL-003 `v0.12.0` formal Release；A-004 F-001 fixed）
 - [ ] 无阻断本波次退出的 required 协议缺口；未关闭项显式 residual
 - [ ] **不**要求「永远修到完美」或关闭 Web 终态
 
@@ -32,14 +32,15 @@ progress: 33%
 | 阶段 | 名称 | 状态 | 说明 |
 |------|------|------|------|
 | **R1** | 消费宿主补齐与入口一致 | **完成**（2026-07-31） | claude / copilot / grok 既有；Codex 经 [GOAL-002](../GOAL-002-codex-skills-entry/) 补齐（install 面 + 主入口 runtime）；用户 `/govern` 确认收口（D-003） |
-| **R2** | 反馈驱动的协议 / Skills 修正 | **整改中**（2026-08-04） | [GOAL-003](../GOAL-003-consumer-governance-ergonomics/) A-004 F-001 选择 fixed；`v0.12.0` 正式 Release 闭环完成前开放 required = 1 |
+| **R2** | 反馈驱动的协议 / Skills 修正 | **完成**（2026-08-04） | [GOAL-003](../GOAL-003-consumer-governance-ergonomics/) `v0.12.0` 正式 Release / consumer update / A-006 independent pass；F-001 fixed，开放 required = 0 |
 | **R3** | 有界闭环验证与 VP 退出准备 | 未开始 | 对齐 VP-002 退出判据；证据可核对后才议 VP 关门 |
 
 同一纲领阶段内可并行多个子目标；阶段间通常串行。
 
 ## 派生进度展示
 
-`progress: 33%` = 纲领阶段 R1～R3 中已完成 **1 / 3**（等权：仅 R1 完成，四舍五入）。R2 因 GOAL-003 A-004 F-001 恢复整改中；progress **仅展示**，不放行阶段、不关闭 finding、不推导 Root `done`。
+`progress: 67%` = 纲领阶段 R1～R3 中已完成 **2 / 3**（等权：R1/R2 完成，四舍五入）。R2 恢复完成的依据是 GOAL-003 D-011 与 A-006/A-007；progress **仅展示**，不启动 R3、不推导 Root `done`。
+
 ## 信息就绪与未知项
 
 | ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
@@ -62,7 +63,7 @@ progress: 33%
 | id | title | status |
 |----|-------|--------|
 | [GOAL-002-codex-skills-entry](../GOAL-002-codex-skills-entry/00-meta.md) | 添加 Codex 可用的 Skills 入口 | done |
-| [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/00-meta.md) | 修复消费仓门禁与长流程治理摩擦 | active |
+| [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/00-meta.md) | 修复消费仓门禁与长流程治理摩擦 | done |
 
 ## 备注
 

@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-08-04
 parent: null
-version: 0.10.9
+version: 0.11.0
 ---
 
 # docs/ · 文档体系
@@ -106,12 +106,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **文档入口版本**（本文件 frontmatter）：`0.10.9` — 描述 docs 树导航与协议索引的修订号。
-- **可复制核心包版本**（对外分发/发版候选身份）：`0.12.0`（事务 updater + consumer-only evidence profile + 长流程治理修正）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / **`v0.12.0`（冻结中）**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
+- **文档入口版本**（本文件 frontmatter）：`0.11.0` — 描述 docs 树导航与协议索引的修订号。
+- **可复制核心包版本**（对外已发布身份）：`0.12.0`（事务 updater + consumer-only evidence profile + 长流程治理修正）。入口文修订号与发布身份刻意分离。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / **`v0.12.0`**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
 - **快照日期**：2026-08-04。
-- **快照身份**：矩阵 **`candidateRevision: v0.12.0`**；默认四入口 × 三宿主 runtime-verified（**2026-08-04** 重采；behaviorSources 对现树 fresh）；Web parser automated-verified；Codex 仅 install surface（非矩阵）。
-- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.118` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`（`/vision-audit` 为只读 dispatch）。Codex `$govern` 探针见 GOAL-002 附件。**不**宣称 Root 终态或 Codex 矩阵 verified。GOAL-002 done；候选身份 `v0.12.0`。
+- **快照身份**：正式 Release **`v0.12.0`**；矩阵 `candidateRevision` 同为 `v0.12.0`；默认四入口 × 三宿主 runtime-verified（**2026-08-04** 重采）；Web parser automated-verified；Codex 仅 install surface（非矩阵）。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.118` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`。Actions run `30859281729` 已通过 gated publish；Codex `$govern` 探针见 GOAL-002 附件。**不**宣称 Root 终态或 Codex 矩阵 verified。
 
 ### canonical → Skills 镜像（GOAL-022）
 

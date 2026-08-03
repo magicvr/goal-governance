@@ -4,7 +4,7 @@ status: active
 created: 2026-07-31
 updated: 2026-08-04
 parent: null
-version: 0.3.0
+version: 0.4.0
 ---
 
 # Goal Tree
@@ -56,21 +56,25 @@ A-001 self 与 A-002 Grok Build independent 均 **pass**；A-003 统一响应后
 
 A-004 把正式消费 Release 纳入 GOAL-003 成功边界，确认 `v0.11.0` 不含 updater 且 producer compatibility readiness 失败，新增 F-001 required/open。用户以 `/govern` 选择 `fixed`：D-010 冻结 `v0.12.0` 受控发布切片；GOAL-003 恢复 **`active / 86%（6/7）`**，Root R2 恢复整改中，Root `progress` **33%（1/3）**。正式 Release、资产核对与真实消费更新完成前不恢复关门。下一编号仍 **GOAL-004**。
 
+## 2026-08-04 · v0.12.0 正式 Release，A-004 F-001 fixed
+
+`0748c8d` annotated tag `v0.12.0` 经 Actions run `30859281729` 与 Environment `release` 成功发布；双 zip digest、strict evidence、consumer-only 包边界及隔离消费 dry-run + real update 可核对。A-006 Grok Build independent **pass**，F-001 **fixed**，A-007 响应后开放 required = 0。D-011 恢复 GOAL-003 **`done / 100%（7/7）`**；Root R2 完成、Root `progress` **67%（2/3）**，R3 仍未开始。下一编号仍 **GOAL-004**。
+
 ## 树
 
 ```text
-GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱动的协议与 Skills 演进  progress 33% (R1 完成；R2 整改中；R3 未开始)
+GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱动的协议与 Skills 演进  progress 67% (R1/R2 完成；R3 未开始)
 ├── GOAL-002-codex-skills-entry                 [done]    添加 Codex 可用的 Skills 入口  progress 100%
-└── GOAL-003-consumer-governance-ergonomics     [active]  修复消费仓门禁与长流程治理摩擦  progress 86%
+└── GOAL-003-consumer-governance-ergonomics     [done]    修复消费仓门禁与长流程治理摩擦  progress 100%
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 33% | 2026-08-04 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-08-04 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
-| GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | active | 86% | 2026-08-04 |
+| GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 
 ## 编号
 

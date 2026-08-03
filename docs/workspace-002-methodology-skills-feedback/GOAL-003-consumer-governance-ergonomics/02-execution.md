@@ -1,11 +1,11 @@
 ---
 id: GOAL-003-consumer-governance-ergonomics
 doc: execution
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 执行记录 · GOAL-003
@@ -19,6 +19,7 @@ version: 0.7.0
 | E-003 | 2026-08-04 | self 预检 required 修复 | recorded | [E-003-self-preflight-fixes.md](02-execution/E-003-self-preflight-fixes.md) |
 | E-004 | 2026-08-04 | cross close-out 与 lifecycle 同步 | recorded | [E-004-close-out.md](02-execution/E-004-close-out.md) |
 | E-005 | 2026-08-04 | A-004 F-001 fixed 候选冻结与预检 | recorded | [E-005-v0-12-release-candidate.md](02-execution/E-005-v0-12-release-candidate.md) |
+| E-006 | 2026-08-04 | v0.12.0 正式 Release 与真实消费更新 | recorded | [E-006-v0-12-formal-release.md](02-execution/E-006-v0-12-formal-release.md) |
 
 > 下方为切换前的 legacy inline 时间线，继续有效且只读；新事实写入 `02-execution/E-NNN-*.md`。
 
@@ -56,11 +57,11 @@ version: 0.7.0
 - I-001～I-006 verified，I-007 已完成方案基线并留 S7 fixture 复核；D-003～D-008 冻结 S2～S6 实施契约。
 - S1 完成；S2～S6 进入实现，决定不拆新子目标。
 
-## 待办
+## 后续跟踪
 
-- 执行 D-010：通过 `v0.12.0` strict release evidence、annotated tag / GitHub Release、正式资产核对与真实消费更新，关闭 A-004 F-001。
-- A-004 F-002/F-003 仍为 recommended，不升级为本次 required 门禁。
+- A-004 F-002/F-003 仍为 recommended/open，按各自复审触发处理，不升级为本次 required 门禁。
+- 下一次实际版本升级可补跨版本 updater e2e；本次只声明首个 updater 版本的正式同版本事务。
 
 ## 进度评估
 
-路线图当前完成 **6/7（86%）**；A-004 F-001 required/open 使 S7 回到整改中，目标 `active`。正式 Release 与消费更新证据闭合前不恢复 `done`。
+路线图完成 **7/7（100%）**；A-004 F-001 已由正式 Release、真实消费事务与 A-006 independent pass 按 `fixed` 闭合。A-007 响应后开放 required = 0，D-011 恢复目标 `done`。
