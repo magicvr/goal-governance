@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-07-31
-version: 0.2.0
+updated: 2026-08-03
+version: 0.3.0
 ---
 
 # 决策记录 · GOAL-001
@@ -17,7 +17,7 @@ version: 0.2.0
 | ID | 级别 | 状态 | 影响 |
 |----|------|------|------|
 | I-001 | required | **verified**（2026-07-31） | GOAL-002 已收口；证据见子目标 attachments + D-002；A-002 F-004 → 本表同步 |
-| I-002 | non-blocking | open | R2 优先级 |
+| I-002 | non-blocking | **verified**（2026-08-03） | FB-001～FB-005 已由 GOAL-003 承接；R2 启动 |
 | I-003 | non-blocking | 已裁决（本轮） | primary 仍为 workspace-001 |
 
 ## D-001 · 开区 workspace-002 + Root 服务 VP-002（2026-07-31）
@@ -95,3 +95,30 @@ R1 首交付为 **GOAL-002-codex-skills-entry**：为 Codex 增加与现有 Clau
 
 - meta 路线图 R1 → **完成**；`progress` 0% → **33%**。
 - R2 仍 **未开始**；下一拍由用户指定（开 GOAL-003 / 收集 I-002 / 其它）。
+
+## D-004 · 启动 R2 并创建 GOAL-003（2026-08-03）
+
+**状态**：accepted
+
+**触发**：用户 `$govern` 在 workspace-002 提交五项真实项目问题并明确要求新建目标解决
+
+### 决定
+
+1. Root I-002 从 `open` 改为 **verified**：首批 R2 反馈清单已经由用户直接提供。
+2. 创建 [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/)，统一承接消费仓证据门禁、长记录布局、审计启动、Git checkpoint 与 Skills 更新五类问题。
+3. Root 纲领 R2 从“未开始”改为 **进行中**；GOAL-003 先写 P-001 路线图和 required 信息项，不在立项时伪造具体方案。
+4. Root `progress` 仍为 **1/3 = 33%**：R2 开始不等于 R2 完成，百分比不作放行依据。
+
+### 为什么
+
+- 用户反馈直接满足 I-002 的收集动作，且范围与 VP-002 的真实问题回流意图一致。
+- 五项问题跨多个门禁域并包含多块可独立验收工作，须先在大目标内建立纲领路线图。
+- 先作为一个 R2 目标冻结共同边界，可在 S1 后再按依赖与并行价值决定是否拆子目标。
+
+### 未选方案
+
+| 方案 | 未选理由 |
+|------|----------|
+| 维持 R2 未开始，只把问题留在聊天 | 反馈会丢失，且不满足用户明确的新建目标指令 |
+| 直接创建五个平级子目标 | 尚未冻结共同契约、兼容矩阵与阶段依赖，违反 P-001 |
+| 因 R2 启动把 Root progress 提高到 67% | progress 仅按完成纲领阶段计数；R2 尚未完成 |

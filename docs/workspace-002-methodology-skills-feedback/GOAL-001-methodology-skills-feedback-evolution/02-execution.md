@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-07-31
-version: 0.2.0
+updated: 2026-08-03
+version: 0.3.0
 ---
 
 # 执行记录 · GOAL-001
@@ -34,11 +34,18 @@ version: 0.2.0
 - 派生 progress：**1/3 → 33%**（等权；仅展示）。
 - 残余跟踪（不阻断 R1）：GOAL-002 I-003 / F-002（矩阵）；F-001 日志编码；F-003 非主入口 runtime。
 
+### 2026-08-03 · 首批真实反馈落盘并启动 R2（D-004）
+
+- 用户提交五项实际项目问题：消费仓 runtime evidence 门禁、长记录可读性、审计启动摩擦、长流程 Git 回溯、Skills 更新成本。
+- Root I-002 → **verified**；D-004 启动 R2。
+- 创建 [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/) 五件套，登记 7 阶段路线图与 I-001～I-007。
+- R2 → **进行中**；Root progress 仍为 **1/3 = 33%**，未因新目标立项虚增。
+
 ## 待办
 
-1. 收集或登记 R2 反馈（I-002），或用户指定开 **GOAL-003+**（消费问题 / 发版矩阵 / 其它）。
-2. 勿在无问题清单时机械堆 R2 细目标。
+1. 推进 GOAL-003 S1：复现、边界与验收矩阵。
+2. S1 后再判断 S2～S6 是否需要独立子目标，勿机械拆分。
 
 ## 进度评估
 
-Root 纲领 **1/3** 阶段完成（R1）；R2/R3 未开始；I-001 verified；Root 仍 `active`。progress 见 meta。
+Root 纲领 **1/3** 阶段完成（R1）；R2 进行中、R3 未开始；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。
