@@ -1,0 +1,115 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-03T22:11:32.966161Z",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "0.2.118",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": "GROK_MODELS_BASE_URL",
+    "model": "grok-4.5"
+  },
+  "behaviorSources": [
+    {
+      "path": ".grok/skills/govern/SKILL.md",
+      "sha256": "96102d3a72fadc18497b3b677a85949634769643689851279b7893d8a22b1b01"
+    },
+    {
+      "path": "skills/install/grok/skills/govern/SKILL.md",
+      "sha256": "96102d3a72fadc18497b3b677a85949634769643689851279b7893d8a22b1b01"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "17d903ff8547aa07d642e2d0f9d0ed4aa0925a7a5512c6aa8dfe6a1175a9013f"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "fdf04b74703eebf9ce844e2b04bd3744f17fab40690047ccd0a536220554bb0b"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-govern.txt",
+      "sha256": "a2764b2f7692a86b6ca7a847753f936c2b0ca4c3d28ea8fef701c3ba55c1f5e4"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "grok",
+      "--prompt-file",
+      "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-govern.txt",
+      "--model",
+      "grok-4.5",
+      "--output-format",
+      "plain",
+      "--permission-mode",
+      "dontAsk",
+      "--disallowed-tools",
+      "Edit,Write,NotebookEdit",
+      "--max-turns",
+      "10",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240.0,
+    "inputSha256": "a2764b2f7692a86b6ca7a847753f936c2b0ca4c3d28ea8fef701c3ba55c1f5e4",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker GROK_GOVERN_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "GROK_GOVERN_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "GROK_GOVERN_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "GROK_GOVERN_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.12.1/grok-build-cli-govern-2026-08-04.d/stdout.txt",
+    "stdoutSha256": "0865d0da0c39ec368af8705ec90339bd03dc57e9b607f949ca6a894c6b92eb31",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/releases/runtime/v0.12.1/grok-build-cli-govern-2026-08-04.d/stderr.txt",
+    "stderrSha256": "87e787c6ff9dd5a02030f658d5342b69c677fc294f4d3a56f9b8548663055e0a",
+    "stderrMode": "request-url-redacted",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

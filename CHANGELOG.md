@@ -4,7 +4,17 @@
 
 ## Unreleased
 
-（无。最新正式版本为 **0.12.0** / `v0.12.0`。）
+（无。最新正式版本为 **0.12.1** / `v0.12.1`。）
+
+## 0.12.1 - 2026-08-04
+
+Skills **consumer** patch：完成 workspace-002 GOAL-003 的 A-009/F-001 发布闭环，固化 `v0.12.1` 的 release identity、安装 pin 与可核验资产证据。
+
+### 发布身份 / 证据
+
+- 兼容矩阵 `candidateRevision` 固定为 `v0.12.1`；2026-08-04 的四入口 × 三宿主 runtime captures 在行为源 hash 未变化的前提下复制到 `docs/releases/runtime/v0.12.1/` 并重新校验。
+- GOAL-003 的 A-008 close-out 保持 `pass`，A-009/F-001 仅在本版 tag、Actions、Environment、Release 资产与 digest 全部核验后闭合。
+- 根 README、Skills README 与 bootstrap README 的固定安装示例同步到 `v0.12.1`。
 
 ## 0.12.0 - 2026-08-04
 

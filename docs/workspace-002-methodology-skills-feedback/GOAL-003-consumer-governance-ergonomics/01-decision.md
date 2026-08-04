@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-03
 updated: 2026-08-04
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 决策记录 · GOAL-003
@@ -17,6 +17,7 @@ version: 0.5.0
 | D-009 | 2026-08-04 | GOAL-003 关门并完成 Root R2 | accepted | [D-009-close-out.md](01-decision/D-009-close-out.md) |
 | D-010 | 2026-08-04 | A-004 F-001 采用 fixed 与 v0.12.0 受控发布切片 | accepted | [D-010-fixed-v0-12-release.md](01-decision/D-010-fixed-v0-12-release.md) |
 | D-011 | 2026-08-04 | v0.12.0 正式闭环并恢复 GOAL-003 关门 | accepted | [D-011-v0-12-f001-close-out.md](01-decision/D-011-v0-12-f001-close-out.md) |
+| D-012 | 2026-08-04 | A-009 F-001 fixed path for v0.12.1 release | accepted | [D-012-v0-12-1-release-path.md](01-decision/D-012-v0-12-1-release-path.md) |
 
 > D-001～D-008 为切换前的 legacy inline 决策，继续有效且只读；新决策写入 `01-decision/D-NNN-*.md`。
 

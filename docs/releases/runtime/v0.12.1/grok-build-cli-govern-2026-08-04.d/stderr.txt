@@ -1,0 +1,6 @@
+[2m2026-08-03T22:10:52.599203Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mEdit
+[2m2026-08-03T22:10:52.599608Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mWrite
+[2m2026-08-03T22:10:52.599613Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mNotebookEdit
+[2m2026-08-03T22:10:52.771610Z[0m [33m WARN[0m auto worktree gc failed [3merror[0m[2m=[0mneither $GROK_HOME nor $HOME is set
+[2m2026-08-03T22:10:52.777894Z[0m [33m WARN[0m auto worktree gc failed [3merror[0m[2m=[0mneither $GROK_HOME nor $HOME is set
+[2m2026-08-03T22:11:15.694273Z[0m [31mERROR[0m tool_error: tool_output_error [3msession_id[0m[2m=[0m019fc9ae-03d9-74e3-94c4-0845c0cf4510 [3mtool_name[0m[2m=[0m"list_dir" [3meffective_tool_name[0m[2m=[0m"list_dir" [3mmodel_id[0m[2m=[0m"grok-4.5" [3merror_kind[0m[2m=[0m"tool_output_error"

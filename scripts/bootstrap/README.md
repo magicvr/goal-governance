@@ -49,22 +49,22 @@ Digest mismatch → non-zero exit; package install is not applied from a bad zip
 
 ## Online (Release)
 
-**Docs pin the latest published tag** (currently **`v0.12.0`**). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
+**Docs pin the latest published tag** (currently **`v0.12.1`**). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
 
 Fetch bootstrap from the Release, then run (save to disk first; avoid `curl | bash` / `irm | iex` as the default path):
 
 ```powershell
-# Current latest formal tag: v0.12.0
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.12.0/install-online.ps1" `
+# Current latest formal tag: v0.12.1
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.12.1/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.12.0 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.12.1 -Force
 ```
 
 ```bash
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.12.0/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.12.1/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.12.0 --force
+bash ./install-online.sh --version 0.12.1 --force
 ```
 
 URL shape (D-002 / D-003):

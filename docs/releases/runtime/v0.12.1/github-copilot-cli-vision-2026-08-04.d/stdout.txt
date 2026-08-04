@@ -1,0 +1,44 @@
+● skill(vision)
+
+我将按只读 /vision 扫描语义核对限定来源，并仅报告请求的状态字段。
+
+● Read AGENTS.md
+  └ L1:end (270 lines read)
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ L1:end (241 lines read)
+
+● Read 06-vision-orchestrator.md
+  │ skills\prompts\06-vision-orchestrator.md
+  └ L1:end (202 lines read)
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ L1:end (85 lines read)
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:end (47 lines read)
+
+/ Search (glob)
+  │ ".github/copilot-instructions.md"
+  └ 1 file found
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (299 lines read)
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ L1:end (324 lines read)
+
+Vision dispatch: V2, portfolio/intent context. Single-vision invariant is satisfied by the sole
+active Charter, vision-goal-governance@0.2.0.
+
+For workspace-001-goal-governance, primary_plan is VP-001-governance-platform-delivery; the archived
+ primary workspace records that VP-001 is closed. The specified read-only sources do not include
+docs/vision/reviews.md, so an open Vision Review required count cannot be established under the
+requested source restriction.
+
+COPILOT_CLI_VISION_DISPATCH_OK
