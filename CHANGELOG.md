@@ -4,7 +4,12 @@
 
 ## Unreleased
 
-（无。最新正式版本为 **0.12.1** / `v0.12.1`。）
+仓库维护（**不构成新方法论 / Skills Release**）：
+
+- 物理退役已冻结的 FastAPI Web 资产及其专属 CI、compatibility consumer 与 release-evidence check；VP-003 保持 `planned` 并正式挂起。
+- Skills 三宿主四入口契约、runtime evidence、安装面、核心原则与模板不变；canonical matrix / core 导航镜像仅随现行仓库边界做 editorial stage。
+
+最新正式版本仍为 **0.12.1** / `v0.12.1`。
 
 ## 0.12.1 - 2026-08-04
 

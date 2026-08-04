@@ -8,8 +8,8 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: VP-002 R3 的一次性仓库卫生与退出准备；退役冻结 Web 实现，不激活 VP-003
 created: 2026-08-04
 updated: 2026-08-04
-version: 0.1.0
-progress: 25%
+version: 0.5.0
+progress: 75%
 ---
 
 # GOAL-004 · 移除冻结 Web 资产并挂起 VP-003
@@ -22,11 +22,11 @@ progress: 25%
 
 ## 成功标准
 
-- [ ] 仓库中不再存在 `web/`，且现行 CI、release workflow 与 release-evidence 不再安装或执行 Web 专属依赖/测试。
-- [ ] compatibility matrix 只保留 canonical Skills host adapters；Web parser consumer 与专属校验已删除，schema 与其余 readiness 门禁保持有效。
-- [ ] 根入口、现行架构说明、Charter / VP / roadmap 和两个工作区的现时摘要均准确描述“资产已退役、VP-003 挂起”；历史 ledgers 不批量改写。
-- [ ] `docs/architecture/principles.md`、`workspace-protocol.md`、`docs/templates/**`、`skills/prompts/**`、`skills/install/**`、`skills/core/**` 相对基线无变化。
-- [ ] canonical-to-Skills stage、定向测试、完整非 Web 回归与 `git diff --check` 通过；唯一允许的 Skills 内容变化是生成的 compatibility matrix 镜像。
+- [x] 仓库中不再存在 `web/`，且现行 CI、release workflow 与 release-evidence 不再安装或执行 Web 专属依赖/测试。
+- [x] compatibility matrix 只保留 canonical Skills host adapters；Web parser consumer 与专属校验已删除，schema 与其余 readiness 门禁保持有效。
+- [x] 根入口、现行架构说明、Charter / VP / roadmap 和两个工作区的现时摘要均准确描述“资产已退役、VP-003 挂起”；历史 ledgers 不批量改写。
+- [x] `docs/architecture/principles.md`、`workspace-protocol.md`、`docs/templates/**`、`skills/prompts/**`、`skills/install/**` 相对基线无变化；core 只允许由 stage 生成的 `overview.md` / `directory-layout.md` editorial 镜像变化。
+- [x] canonical-to-Skills stage、定向测试、完整非 Web 回归与 `git diff --check` 通过；Skills 变化只允许生成的 compatibility matrix、上述两份 core 导航镜像、生产者测试中 Web consumer 断言的删除，以及 `skills/README.md` 的现行状态修正。
 - [ ] independent close-out audit 为 `pass`，开放 required finding = 0；目标与 goal-tree 同步为 `done / 100%`。
 
 ## 纲领路线图（P-001）
@@ -34,13 +34,13 @@ progress: 25%
 | 阶段 | 名称 | 状态 | 退出条件 |
 |------|------|------|----------|
 | **S1** | 决策、库存与边界冻结 | **完成**（2026-08-04） | workspace-001 D-029、VP-003 挂起、I-001～I-003 verified、删除与保护边界固定 |
-| **S2** | Web 资产与主动依赖移除 | 未开始 | `web/`、CI/release Web check、matrix Web consumer 与对应测试清除 |
-| **S3** | 现行叙事收束与完整验证 | 未开始 | 当前入口无失效 Web 路径；stage/mirror、核心与 Skills 边界、非 Web 回归通过 |
+| **S2** | Web 资产与主动依赖移除 | **完成**（2026-08-04） | `web/`、CI/release Web check、matrix Web consumer 与对应测试清除 |
+| **S3** | 现行叙事收束与完整验证 | **完成**（2026-08-04） | 当前入口无失效 Web 路径；stage/mirror、核心与 Skills 边界、非 Web 回归通过 |
 | **S4** | independent 复核与关门 | 未开始 | 正式 A-001 落盘、开放 required = 0、目标和 Root/goal-tree 同步 |
 
 ## 派生进度展示
 
-`progress: 25%` = S1～S4 中已完成 **1 / 4**（等权）。它只表示决策与边界已冻结，不代表删除、验证或关门完成。
+`progress: 75%` = S1～S4 中已完成 **3 / 4**（等权）。资产删除与完整验证已完成；S4 independent 复核和治理关门尚未完成，因此目标仍为 `active`。
 
 ## 信息就绪与未知项
 
@@ -48,7 +48,7 @@ progress: 25%
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | 冻结 Web 的物理资产和主动依赖边界是什么 | S2 实施 | S1 | `git ls-files web` + 全仓 active reference scan | **verified**（2026-08-04） | 新引用出现则回流 | 63 个 tracked `web/` 文件；主动依赖集中于 CI、release workflow、release-evidence、compatibility matrix/report 及对应测试；历史工作区记录保留 |
 | I-002 | required | VP “挂起”如何使用合法状态表达 | 愿景写入 | S1 | 核对 VP 状态枚举与现有 VP-003 | **verified**（2026-08-04） | 状态 schema 变化时复核 | 保持 `status: planned`，正文写正式挂起、无排期/无绑定/恢复须新书面决策 |
-| I-003 | required | 哪些核心/Skills 路径必须保持不变，matrix 镜像如何处理 | S3 验证与关门 | S1 | 固定 Git 基线并对照 stage 白名单 | **verified**（2026-08-04） | 任一受保护路径出现 diff 即 fail closed | 基线 `e7a49bef173389f1fbcf5774d65ad3d8c74ed3b8`；只改 canonical matrix 后运行 stage；仅 `skills/contracts/...matrix.json` 允许生成变化 |
+| I-003 | required | 哪些核心/Skills 路径必须保持不变，现行 core 导航与 matrix 镜像如何处理 | S3 验证与关门 | S1/S2 回流 | 固定 Git 基线、扫描失效路径并对照 stage 白名单 | **verified**（2026-08-04；D-002 精化） | 任一未授权保护路径出现 diff 即 fail closed | 基线 `e7a49bef173389f1fbcf5774d65ad3d8c74ed3b8`；principles/protocol/templates/prompts/install 不改；canonical `overview`/`directory-layout` 与 matrix 做 editorial 修正后 stage；允许三份生成镜像、`skills/tests/test_skills_orchestrator.py` 的 Web consumer 断言删除及两份现行入口叙事修正 |
 
 ## 审计模式
 

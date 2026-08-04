@@ -9,8 +9,8 @@ vision_role: delivery
 plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 created: 2026-07-31
-updated: 2026-07-31
-version: 0.1.0
+updated: 2026-08-04
+version: 0.2.0
 ---
 
 # 工作区上下文 · 方法论与 Skills 反馈演进
@@ -49,7 +49,7 @@ version: 0.1.0
 - **禁止**把 [workspace-001](../workspace-001-goal-governance/) 已 done Root 下的编号或状态当作本区真相。
 - 跨区提及目标：文档默认 **Q2** 路径，对话默认 **Q3** 标签。
 - 共享资料只按固定版本和哈希引用；内容须用户确认才可成事实或证据。
-- 本区不把本仓 Web 产品终态作为成功条件（人类 UI 见 **VP-003**）。
+- 本区不把本仓 Web 产品终态作为成功条件（人类 UI 见 **VP-003**）；GOAL-004 只承接冻结资产退役和 producer 边界验证，不激活 VP-003。
 
 ## 备注
 

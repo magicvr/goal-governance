@@ -4,14 +4,14 @@ status: active
 created: 2026-07-18
 updated: 2026-08-04
 parent: null
-version: 0.11.0
+version: 0.11.1
 ---
 
 # docs/ · 文档体系
 
 本目录是 **Goal Governance** 的核心规范与运行记录来源：方法论、文档协议、目标、决策、执行、审计与架构说明均以 Markdown 维护。具体目标实例的状态真相只存在于各自 `docs/workspace-<NNN>-<slug>/` 根。仓库级愿景与规划对齐在 `docs/vision/`（**不是**第二套目标状态）。
 
-**现行消费路径**：以 **Skills** 为主（Charter `vision-goal-governance@0.2.0`）。本仓 `web/` 为冻结参考实现，见根 README 与 [vision/charter.md](vision/charter.md)。
+**现行消费路径**：以 **Skills** 为主（Charter `vision-goal-governance@0.2.0`）。冻结 Web 资产已物理退役；VP-003 保持 `planned` 并正式挂起，未来 UI 重新激活须新书面决策。
 
 ## 目录结构
 
@@ -72,7 +72,7 @@ docs/
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
 10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review（`reviews.md`）；工作区角色仅 `primary` / `delivery`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
 11. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/`（含 `goal-folder/`、`workspace-context.md`、`vision/`），消费适配器契约位于 `docs/contracts/`。Skills 包镜像由 **`python scripts/stage_skills_mirrors.py`** 生成到 `skills/core/docs/` 与 `skills/contracts/`（GOAL-022）；pack/CI 强制 stage。`skills/core/docs/README.md` 为消费方**手维精简稿**。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
-12. **独立启用**：不安装 `skills/`、不启动 `web/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal（须遵守 P-006 冷启动顺序）。
+12. **独立启用**：不安装 `skills/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal（须遵守 P-006 冷启动顺序）。
 13. **工作区与共享资料协议**：显式工作区可从 `docs/templates/workspace-context.md` 创建 `docs/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`；**仅当**没有显式工作区根且保留 `docs/goals/` 的旧仓库才是 legacy 隐式单工作区——否则不得猜测工作区根。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
 14. **愿景体系（Charter → VP → Workspace）**：`docs/vision/` 维护不可 Goal-`done` 的唯一 Charter、可关门的意图 VP、组合编排索引、Vision Review 与对齐门禁。愿景**不是** goal-tree 或 progress 权威。见 [vision/alignment.md](vision/alignment.md)。
 
@@ -106,12 +106,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **文档入口版本**（本文件 frontmatter）：`0.11.0` — 描述 docs 树导航与协议索引的修订号。
-- **可复制核心包版本**（对外已发布身份）：`0.12.0`（事务 updater + consumer-only evidence profile + 长流程治理修正）。入口文修订号与发布身份刻意分离。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / **`v0.12.0`**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
+- **文档入口版本**（本文件 frontmatter）：`0.11.1` — 描述 docs 树导航与协议索引的修订号。
+- **可复制核心包版本**（对外已发布身份）：`0.12.1`（事务 updater + consumer-only evidence profile + 长流程治理修正）。入口文修订号与发布身份刻意分离。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / **`v0.12.1`**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
 - **快照日期**：2026-08-04。
-- **快照身份**：正式 Release **`v0.12.0`**；矩阵 `candidateRevision` 同为 `v0.12.0`；默认四入口 × 三宿主 runtime-verified（**2026-08-04** 重采）；Web parser automated-verified；Codex 仅 install surface（非矩阵）。
-- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.118` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`。Actions run `30859281729` 已通过 gated publish；Codex `$govern` 探针见 GOAL-002 附件。**不**宣称 Root 终态或 Codex 矩阵 verified。
+- **快照身份**：最近正式 Release **`v0.12.1`**；已发布时点的四入口 × 三宿主 runtime evidence 保持不变。当前 `Unreleased` 矩阵已移除退役的 Web parser consumer；这不构成新 Release 或新包身份。Codex 仍仅是 install surface（非矩阵）。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.118` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`。Actions run `30865670069` 已通过 `v0.12.1` gated publish；Codex `$govern` 探针见 GOAL-002 附件。**不**宣称 Root 终态或 Codex 矩阵 verified。
 
 ### canonical → Skills 镜像（GOAL-022）
 
@@ -147,7 +147,7 @@ python scripts/stage_skills_mirrors.py --check
 |------|------|------|
 | 核心方法论、模板与契约 | 生命周期、治理原则、文档协议、canonical 五件套与工作区上下文模板、消费适配器兼容契约；可独立应用，不依赖 Skills 或 Web | `docs/README.md`、`docs/architecture/`、`docs/templates/`、`docs/contracts/` |
 | 文档实例 | 每个工作区的目标与过程权威记录 | `docs/workspace-<NNN>-<slug>/` |
-| Web 应用 | 当前仅解析/浏览目标文档；完整闭环能力留待后续阶段，且与 Skills 为独立辅助工具体系 | `web/` |
+| 人类 UI | VP-003 远期适配器类；当前无绑定实现，重新激活须新决策与通用基架边界 | `docs/vision/plans/VP-003-human-ui-workbench-deferred.md` |
 | Skills / 提示词 | 独立的 AI 辅助闭环工具体系，按核心协议读写与推进目标，并分发模板/契约镜像 | `skills/`、根目录 `AGENTS.md` 等 |
 
 ## 推荐阅读顺序

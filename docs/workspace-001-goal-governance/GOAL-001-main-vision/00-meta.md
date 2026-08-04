@@ -39,7 +39,7 @@ version: 1.0.2
 |--------|------|------|
 | 核心方法论与模板 | 奠基 done | 修正 → **VP-002** |
 | Skills | 奠基 done | F-006 等 → **VP-002** |
-| Web | 历史有界；物理退役进行中 | R-009-X → **VP-003**（`planned` + 正式挂起） |
+| Web | 历史有界；冻结资产已物理退役 | R-009-X → **VP-003**（`planned` + 正式挂起） |
 
 ### 愿景栈（关门时）
 
@@ -62,7 +62,7 @@ version: 1.0.2
 
 1. **禁止**在本树新建子目标或改回 active 假装未关（除非用户新 D 重开）。  
 2. **演进区已开**：[workspace-002-methodology-skills-feedback](../../workspace-002-methodology-skills-feedback/) · Root + GOAL-002（Codex Skills 入口）；推进请对该区 `/govern`。  
-3. 只读查阅本区历史过程；冻结 `web/` 资产的退役事实由 workspace-002 GOAL-004 记录。
+3. 只读查阅本区历史过程；冻结 Web 资产的完成退役事实由 workspace-002 GOAL-004 记录。
 
 ---
 

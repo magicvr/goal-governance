@@ -2,9 +2,9 @@
 title: 技术栈
 status: active
 created: 2026-07-18
-updated: 2026-07-29
+updated: 2026-08-04
 parent: null
-version: 0.5.1
+version: 0.6.0
 ---
 
 # 技术栈
@@ -22,17 +22,9 @@ version: 0.5.1
 
 `skills/core/docs/templates/` 是上述 canonical 模板的分发镜像（由 `scripts/stage_skills_mirrors.py` 生成），用于离线安装；不构成第二套规范。工作区和共享资料细节见 [workspace-protocol.md](workspace-protocol.md)。
 
-## Web 应用（已确定）
+## 人类 UI（远期，未绑定实现）
 
-| 层 | 技术 | 说明 |
-|----|------|------|
-| 后端 | Python 3.10+ / FastAPI | 路由、模板渲染、后续 API |
-| 模板 | Jinja2 | 服务端 HTML |
-| 样式 | Tailwind CSS（CDN） | 快速布局，暂无构建管线 |
-| 交互 | HTMX（CDN） | 渐进增强，减少自写 JS |
-| 服务器 | Uvicorn | ASGI |
-
-依赖清单：[web/requirements.txt](../../web/requirements.txt)
+本仓冻结的 FastAPI Web 资产已由 workspace-002 GOAL-004 物理退役。未来人类 UI 仍属于 VP-003 远期适配器类；在通用基架和新的书面决策落盘前，不指定后端、模板、样式、交互或服务器栈。
 
 ## 文档
 
@@ -44,16 +36,15 @@ version: 0.5.1
 
 ## 运行位置
 
-- 应用代码：`web/`
 - 建议虚拟环境：仓库根 `.venv`
-- 启动方式见 [web/README.md](../../web/README.md)
+- 当前没有本仓应用启动入口；未来 UI 另按新目标登记。
 
 ## 明确未采用（当前阶段）
 
 - 前端 SPA 框架（React / Vue 等）
 - 数据库（Postgres 等）— 目标仍以 Markdown 文件为主
 - 认证 / 多租户
-- Tailwind 本地构建管线（后续可按需引入）
+- 任何具体 UI 栈（待 VP-003 重新激活后选型）
 
 ## 三层交付中的 Skills
 

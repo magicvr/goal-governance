@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 执行记录 · GOAL-001
@@ -72,9 +72,15 @@ version: 0.8.0
 - D-006 创建 [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/) 完整五件套；S1 决策/库存/保护边界完成，目标 `active / 25%`。
 - Root R3 改为**进行中**；Root progress 仍为 **2/3 = 67%**。尚未宣称物理删除、回归、independent audit、R3 或 VP-002 关门完成。
 
+### 2026-08-04 · GOAL-004 S2 / S3 完成
+
+- `web/` 物理资产与主动 CI/release/compatibility 依赖已清除；VP-003 仍为 `planned` 且正式挂起。
+- canonical/mirror stage、保护路径检查、三宿主 compatibility readiness 与完整非 Web rehearsal 均通过；GOAL-004 为 `active / 75%`。
+- S4 independent close-out 尚未执行；Root R3 保持进行中，Root progress 仍为 **2/3 = 67%**。
+
 ## 待办
 
-1. 推进 GOAL-004 的 S2～S4：资产删除、主动依赖/叙事收束、完整验证与 independent close-out。
+1. 推进 GOAL-004 的 S4 independent close-out 并响应全部 findings。
 2. GOAL-004 关门后另核对 R3 / Root / VP-002 退出判据，不自动关门。
 
 ## 进度评估

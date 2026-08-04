@@ -28,7 +28,7 @@ version: 0.6.0
 |------|------|------|
 | 核心方法论与模板 | 奠基 **done** | 后续修正 → VP-002 |
 | Skills | 奠基 **done** | 四入口；F-006 → VP-002 |
-| Web | **冻结参考** | R-009-X → VP-003 |
+| Web | **历史有界；资产已退役** | R-009-X → VP-003（正式挂起） |
 | 愿景 | VP-001 **closed**；VP-002 **active**（0 区）；VP-003 **planned** | 见 roadmap |
 | Root | **`done`** | [D-028](01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) / [A-021](03-audit.md#a-021--root-有界关门审计close-out2026-07-31) |
 | 工作区 | **archived** | 禁止本树再开演进子目标 |

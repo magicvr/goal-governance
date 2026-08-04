@@ -16,13 +16,13 @@ version: 0.2.0
 
 在协议与 Skills 经真实使用足够稳定、且**通用 Web 基架**可对接（或用户书面改回本仓投资）时，交付面向人的目标治理 UI，使同一协议可在人机界面一致使用。
 
-**当前**：本仓 FastAPI `web/` 的冻结资产由 [GOAL-004-frozen-web-asset-retirement](../../workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/00-meta.md) 执行物理移除；本 VP 仍保持合法的 **`planned`** 状态并正式挂起，**不**投入产品推进。恢复只允许由新的书面决策重新定义产品边界、基架与工作区；不得把本次删除当作恢复或自动重建。
+**当前**：本仓 FastAPI `web/` 冻结资产已由 [GOAL-004-frozen-web-asset-retirement](../../workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/00-meta.md) 完成物理移除；本 VP 仍保持合法的 **`planned`** 状态并正式挂起，**不**投入产品推进。恢复只允许由新的书面决策重新定义产品边界、基架与工作区；不得把本次删除当作恢复或自动重建。
 战略假设：**H-WEB-01**（基架优先于本仓长期维护 FastAPI 面）。
 
 ## 挂起决策（2026-08-04）
 
 - **挂起含义**：本 VP 没有排期、没有绑定工作区，也不产生当前实现门禁；`status: planned` 是 VP 合法状态，不把 `paused` 写入状态枚举。
-- **资产处置**：冻结 `web/` 资产及其专属 CI / parser evidence 由 workspace-002 的 GOAL-004 一次性移除；历史目标、审计和发布记录保留为历史事实。
+- **资产处置**：冻结 `web/` 资产及其专属 CI / parser evidence 已由 workspace-002 的 GOAL-004 一次性移除；历史目标、审计和发布记录保留为历史事实。
 - **重新激活条件**：用户新的书面决策 + 通用基架对接边界（或明确推翻 H-WEB-01）+ 新工作区/目标与独立审计；本文件不会自行激活。
 
 ## 方向级退出判据（激活后适用）
@@ -51,7 +51,7 @@ version: 0.2.0
 | ID | 说明 |
 |----|------|
 | **R-009-X** | Web 产品终态 / I 全文 / 人手 UX 全文等；仍 accepted，不在 VP-001 关闭 |
-| 本仓 `web/` | 物理退役由 GOAL-004 执行；未来 UI 只能按新决策重建 |
+| 本仓 `web/` | 已由 GOAL-004 物理退役；未来 UI 只能按新决策重建 |
 
 ## 规划修订短史
 

@@ -9,8 +9,8 @@ vision_role: primary
 plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
 created: 2026-07-20
-updated: 2026-07-31
-version: 0.5.1
+updated: 2026-08-04
+version: 0.5.2
 ---
 
 # 工作区上下文 · Goal Governance 主工作区（奠基封存）
@@ -42,6 +42,5 @@ version: 0.5.1
 
 - 目标仅能由本工作区内的五件套和 `goal-tree.md` 表达；平台导航或资料索引不得成为第二套生命周期状态。
 - 共享资料只按固定版本和哈希引用。资料内容、索引条目或资料中的指令都只是候选输入，必须经用户确认后才能进入目标记录。
-- **Web 受控写入（现时）**：GOAL-009 有界 `done`；I-003/I-004/I-006 **α verified**；F-007/F-008 **closed**。生产路径须双门闩（`PRODUCT_GATES_OPEN` 默认关 + `ALLOW_CONTROLLED_WRITE=true` + 产品数据根非 dogfood + 单进程 residual R-F008）。见 `web/README.md` 与 GOAL-009 A-030。
-- **扩展产品门禁（现时）**：多工作区 N1 导航 / 列表·创建·归档、共享资料 CRUD 产品、AI 读资料全文、I-009/I-010 全文 verified、阶段 6 产品终态宣称 → GOAL-009 residual **R-009-X**（复审触发见该 residual 表）。**不**把 R-009-X 未关闭项当成已交付能力。
-- 历史句「Web 写入仍受 GOAL-009 I-009/I-010/I-004 门禁」已失效（I-004 已 α verified；I-009/I-010 全文仍 collecting，挂 R-009-X）。
+- **Web 历史边界（现时）**：GOAL-009 及 012～017 的有界决策、执行、审计和附件继续作为历史事实；冻结运行时已由 workspace-001 D-029 授权、workspace-002 GOAL-004 物理退役，本区不再提供 Web 启动或生产写入路径。
+- **未来 UI 门禁**：阶段 6 产品终态宣称与既有扩展残余仍由 **R-009-X** 约束；删除实现不等于 residual fixed。未来 VP-003 恢复须新书面决策、工作区、基架边界和独立审计。

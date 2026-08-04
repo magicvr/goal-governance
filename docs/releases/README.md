@@ -8,8 +8,9 @@
 - CI 使用 `scripts/compatibility_report.py` 与 `scripts/release_evidence.py` 生成 JSON 报告、测试结果和 SHA-256 清单，并将其作为 workflow artifact 或 release attachment 保存。运行了检查时，任一检查失败会让命令和 CI 失败；报告文件仍会保留失败事实。
 - `release-evidence.schema.json` 描述并约束证据格式。`rehearsal` 证明一条可重放路径被执行，不等同于 GitHub Release；`release-candidate` 仅在 annotated `vMAJOR.MINOR.PATCH` tag 指向 HEAD、矩阵 `candidateRevision` 与该 tag 一致、工作树干净、CHANGELOG 有同版本节、兼容矩阵无未覆盖 required 单元且全部检查通过时生成。
 - 检查结果只能由 `release_evidence.py` 内部执行并记录，API/CLI 都不接受调用方注入的“已通过”结果；传入的 compatibility report 必须与当前 HEAD 重新生成的 source、contract、matrix、mirror 与 coverage 全部一致。
-- rehearsal 命令：`python scripts/release_evidence.py --mode rehearsal --run-checks --include-web --output artifacts/release-evidence.json`。发布候选命令在维护者创建 annotated tag 后改用 `--mode release --tag vX.Y.Z`；该命令只生成证据，**不**推送 tag。
+- rehearsal 命令：`python scripts/release_evidence.py --mode rehearsal --run-checks --output artifacts/release-evidence.json`。发布候选命令在维护者创建 annotated tag 后改用 `--mode release --tag vX.Y.Z`；该命令只生成证据，**不**推送 tag。
 - **创建或推送 annotated tag** 仍须维护者授权（人或受控流程）。自动化**不得**把缺少 tag / 门禁失败的工作树写成已发布。
+- `docs/releases/runtime/v*/` 是对应发布时点的 SHA 固定原始 capture，不随仓库后续退役决定回写。`v0.12.1` stdout 中对 Web parser / Web CI 的提及仅证明 capture 当时观察到的历史状态；自 workspace-002 GOAL-004 起，它们不再构成当前 Web consumer、支持声明或回归门禁，也不得据此恢复已删除资产。
 
 ## Skills / Core 安装包（消费方资产 · GOAL-023）
 
@@ -60,7 +61,7 @@ python scripts/pack_core_release.py --version 0.7.0 --output-dir dist/
               ↓
         publish job：
           1) environment: release  （Required reviewers + wait timer + main/v* 策略）
-          2) release_evidence --mode release --run-checks --include-web  （硬失败则停）
+          2) release_evidence --mode release --run-checks  （硬失败则停）
           3) gh release create（若不存在；含 -rc 等 pre-release 段则 --prerelease）
           4) gh release upload：skills/core zip + digests + bootstrap + release-evidence + compatibility-report
 ```
@@ -78,7 +79,7 @@ python scripts/pack_core_release.py --version 0.7.0 --output-dir dist/
 1. 工作树干净；`CHANGELOG.md` 有对应版本节。  
 2. 兼容矩阵 `candidateRevision` **等于**将要打的 tag（如 `v0.8.0`），required 单元无 uncovered。  
 3. 需要宣称的宿主 runtime 证据已按 GOAL-008 惯例就位。  
-4. 本地可先：`python scripts/release_evidence.py --mode release --tag vX.Y.Z --run-checks --include-web --output artifacts/release-evidence.json`。  
+4. 本地可先：`python scripts/release_evidence.py --mode release --tag vX.Y.Z --run-checks --output artifacts/release-evidence.json`。
 5. **同步安装文档 pin（D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例中的 tag / `-Version` / zip 名改为**本发版 tag**（消费方复制即对最新正式版；命令仍版本固定）。  
 6. `git tag -a vX.Y.Z -m "..."` 并 `git push origin vX.Y.Z`（tag 必须打在**含本工作流**的 commit 上，通常为已合并的 `main`）。  
 7. 打开 Actions → 等待 pack → 在 Environment **release** 上 **Approve**（并满足 wait timer）。  

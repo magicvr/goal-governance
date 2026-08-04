@@ -171,33 +171,6 @@
         }
       ],
       "evidenceScope": "Candidate v0.12.1: BYOK-aware replay uses the 2026-08-04 runtime captures, copied into the v0.12.1 evidence namespace and revalidated against unchanged behavior-source hashes. Runtime evidence verifies read-only dispatch; release identity still requires the separate annotated-tag and release-evidence gates."
-    },
-    {
-      "id": "web-readonly-parser",
-      "kind": "goal-document-parser",
-      "host": {
-        "product": "Goal document parser",
-        "version": "repository-worktree",
-        "platform": "Python web test environment",
-        "installationSurface": "web/tests"
-      },
-      "supportsProtocol": {
-        "minInclusive": "0.1.0",
-        "maxExclusive": "0.2.0"
-      },
-      "supportCommitment": "not-applicable",
-      "contractVerificationStatus": "not-applicable",
-      "entrypoints": [
-        {
-          "name": "goal-document-parser",
-          "status": "automated-verified",
-          "evidence": [
-            "web/tests",
-            "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/web-parser-ci-replay-2026-07-20.json"
-          ]
-        }
-      ],
-      "evidenceScope": "Web parses goal documents only; it is not a manifest adapter. automated-verified remains bound to web/tests plus CI provenance record. Skills consumer zip release does not require Web product feature completion."
     }
   ]
 }

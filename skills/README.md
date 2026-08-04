@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-08-04
 parent: null
-version: 1.9.2
+version: 1.9.3
 ---
 
 # Skills
@@ -23,7 +23,7 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 | **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** / **`v0.10.0`** / **`v0.11.0`** | 已发布 annotated tag / Release 基线。 |
 | **[`v0.12.1`](https://github.com/magicvr/goal-governance/releases/tag/v0.12.1)（已发布）** | annotated tag 绑定 merge commit `1c21f246377025f295363dbfb7b149b6f7e9fd9e`；strict evidence 与 gated Actions run [`30865670069`](https://github.com/magicvr/goal-governance/actions/runs/30865670069) 通过，9 项 Release 资产已完成下载后 digest/package 核验。事务 updater、consumer-only contract profile 与四入口 × 三宿主 runtime evidence 已进入正式资产。**不**宣称 Codex 矩阵 `committed` / `runtime-verified`。 |
 
-Claude Code / Grok Build / Copilot CLI 为 `committed` + `runtime-verified`；Web parser 为 `automated-verified`。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
+当前 `Unreleased` 生产者矩阵仅保留 Claude Code / Grok Build / Copilot CLI，三者均为 `committed` + `runtime-verified`；冻结的 Web parser consumer 已退役。此仓库维护不改写 `v0.12.1` 的已发布身份，也不发布新 Skills 包。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
 ## 产品模型（必读）
 

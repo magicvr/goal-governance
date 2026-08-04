@@ -435,9 +435,6 @@ def validate_inputs(
     }
     if set(adapters_by_id) != host_consumer_ids:
         raise ValidationError("matrix host adapters must exactly match canonical adapters")
-    if "web-readonly-parser" not in consumers_by_id:
-        raise ValidationError("matrix omits Web readonly parser consumer")
-
     allowed_statuses = {
         "pending-runtime-validation",
         "runtime-verified",
@@ -519,37 +516,6 @@ def validate_inputs(
                 raise ValidationError(
                     f"{adapter_id}/{name} runtime-verified status requires machine-readable JSON evidence"
                 )
-
-    web = consumers_by_id["web-readonly-parser"]
-    if web.get("kind") != "goal-document-parser":
-        raise ValidationError("web-readonly-parser must remain a goal document parser")
-    if web.get("supportCommitment") != "not-applicable":
-        raise ValidationError("web-readonly-parser must not be declared as a manifest adapter")
-    if web.get("contractVerificationStatus") != "not-applicable":
-        raise ValidationError("web-readonly-parser must not copy an adapter verification status")
-    if not _range_contains(
-        web.get("supportsProtocol"), current_protocol, "web-readonly-parser supportsProtocol"
-    ):
-        raise ValidationError("web-readonly-parser does not cover the current protocol")
-    if set(_entrypoint_map(web)) != {"goal-document-parser"}:
-        raise ValidationError("web-readonly-parser must expose only its parser test cell")
-    for entry in _entrypoint_map(web).values():
-        status = entry.get("status")
-        if status not in allowed_statuses:
-            raise ValidationError(f"web-readonly-parser has invalid status {status!r}")
-        evidence = entry.get("evidence")
-        if not isinstance(evidence, list):
-            raise ValidationError("web-readonly-parser evidence must be an array")
-        for evidence_path in evidence:
-            _repo_path(
-                root,
-                evidence_path,
-                "web-readonly-parser evidence",
-                directory_ok=True,
-            )
-        if status in {"runtime-verified", "automated-verified"} and not evidence:
-            raise ValidationError("web-readonly-parser verified status requires evidence")
-
 
 def generate_report(root: Path = REPO_ROOT) -> dict[str, Any]:
     root = root.resolve()
