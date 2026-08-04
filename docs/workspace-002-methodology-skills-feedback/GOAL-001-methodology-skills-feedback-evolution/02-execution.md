@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.9.0
+version: 1.0.0
 ---
 
 # 执行记录 · GOAL-001
@@ -78,10 +78,17 @@ version: 0.9.0
 - canonical/mirror stage、保护路径检查、三宿主 compatibility readiness 与完整非 Web rehearsal 均通过；GOAL-004 为 `active / 75%`。
 - S4 independent close-out 尚未执行；Root R3 保持进行中，Root progress 仍为 **2/3 = 67%**。
 
+### 2026-08-04 · GOAL-004 关门；Root R3 保持进行中
+
+- A-003 independent finding-closure 在 clean checkpoint `80df540` 上给出 `pass`；F-001 `fixed`，F-002 non-blocking，开放 required = 0。
+- D-006 将 GOAL-004 同步为 `done / 100%`；冻结 Web 资产、主动依赖和对应回归面已完成退役，VP-003 保持 `planned` 且正式挂起。
+- 本子目标关门只完成 R3 的一次性仓库卫生切片。Root R3 仍为**进行中**，Root progress 仍为 **2/3 = 67%**；Root/VP-002 退出需要单独审视，不从 A-003 自动继承。
+- 本轮没有创建 tag、GitHub Release 或新方法论 / Skills 版本。
+
 ## 待办
 
-1. 推进 GOAL-004 的 S4 independent close-out 并响应全部 findings。
-2. GOAL-004 关门后另核对 R3 / Root / VP-002 退出判据，不自动关门。
+1. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
+2. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
 
 ## 进度评估
 

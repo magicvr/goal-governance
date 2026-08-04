@@ -1,15 +1,15 @@
 ---
 id: GOAL-004-frozen-web-asset-retirement
 title: 移除冻结 Web 资产并挂起 VP-003
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: VP-002 R3 的一次性仓库卫生与退出准备；退役冻结 Web 实现，不激活 VP-003
 created: 2026-08-04
 updated: 2026-08-04
-version: 0.7.0
-progress: 75%
+version: 0.8.0
+progress: 100%
 ---
 
 # GOAL-004 · 移除冻结 Web 资产并挂起 VP-003
@@ -27,7 +27,7 @@ progress: 75%
 - [x] 根入口、现行架构说明、Charter / VP / roadmap 和两个工作区的现时摘要均准确描述“资产已退役、VP-003 挂起”；历史 ledgers 不批量改写。
 - [x] `docs/architecture/principles.md`、`workspace-protocol.md`、`docs/templates/**`、`skills/prompts/**`、`skills/install/**` 相对基线无变化；core 只允许由 stage 生成的 `overview.md` / `directory-layout.md` editorial 镜像变化。
 - [x] canonical-to-Skills stage、定向测试、完整非 Web 回归与 `git diff --check` 通过；Skills 变化只允许生成的 compatibility matrix、上述两份 core 导航镜像、生产者测试中 Web consumer 断言的删除，以及 `skills/README.md` 的现行状态修正。
-- [ ] independent close-out audit 为 `pass`，开放 required finding = 0；目标与 goal-tree 同步为 `done / 100%`。
+- [x] independent close-out audit 为 `pass`，开放 required finding = 0；目标与 goal-tree 同步为 `done / 100%`。
 
 ## 纲领路线图（P-001）
 
@@ -36,11 +36,11 @@ progress: 75%
 | **S1** | 决策、库存与边界冻结 | **完成**（2026-08-04） | workspace-001 D-029、VP-003 挂起、I-001～I-003 verified、删除与保护边界固定 |
 | **S2** | Web 资产与主动依赖移除 | **完成**（2026-08-04） | `web/`、CI/release Web check、matrix Web consumer 与对应测试清除 |
 | **S3** | 现行叙事收束与完整验证 | **完成**（2026-08-04） | 当前入口无失效 Web 路径；stage/mirror、核心与 Skills 边界、非 Web 回归通过 |
-| **S4** | independent 复核与关门 | **进行中**（A-001/A-002 conditional；closure evidence 待复审） | 正式意见落盘、开放 required = 0、目标和 Root/goal-tree 同步 |
+| **S4** | independent 复核与关门 | **完成**（2026-08-04；A-003 pass） | 正式意见落盘、F-001 fixed、开放 required = 0、目标和 Root/goal-tree 同步 |
 
 ## 派生进度展示
 
-`progress: 75%` = S1～S4 中已完成 **3 / 4**（等权）。资产删除与完整验证已完成；A-002 要求的新一代 closure evidence 已绑定 clean source `1416aa2`，但尚未通过 independent finding-closure，因此 S4 未完成、目标仍为 `active`。
+`progress: 100%` = S1～S4 中已完成 **4 / 4**（等权）。A-003 在 clean checkpoint `80df540` 上独立复核 source=`1416aa2` 的 closure evidence 与当前重跑结果，判定 F-001 `fixed`、开放 required = 0；该完成态不构成新方法论 / Skills Release，也不自动关闭 Root R3 或 VP-002。
 
 ## 信息就绪与未知项
 

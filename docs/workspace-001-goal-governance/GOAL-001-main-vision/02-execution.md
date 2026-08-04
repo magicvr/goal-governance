@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-07-18
 updated: 2026-08-04
-version: 0.6.0
+version: 0.7.0
 ---
 
 # 执行记录 · GOAL-001
@@ -15,6 +15,7 @@ version: 0.6.0
 | E-ID | 日期 | 标题 | 状态 | 文件 |
 |------|------|------|------|------|
 | E-001 | 2026-08-04 | D-029 授权后的 Web 资产退役交接至 workspace-002 | recorded | [02-execution/E-001-web-retirement-handoff.md](02-execution/E-001-web-retirement-handoff.md) |
+| E-002 | 2026-08-04 | workspace-002 GOAL-004 退役完成回执 | recorded | [02-execution/E-002-web-retirement-completion-receipt.md](02-execution/E-002-web-retirement-completion-receipt.md) |
 
 > 既有日期时间线保留为 legacy inline；新事实从 `02-execution/` 写入。
 

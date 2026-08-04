@@ -8,7 +8,7 @@ primary_plan: VP-001-governance-platform-delivery
 serves_summary: 奠基 Root（有界 done）；服务已关 VP-001 / vision-goal-governance@0.2.0；演进见 VP-002 + workspace-002-methodology-skills-feedback
 created: 2026-07-18
 updated: 2026-08-04
-version: 1.0.2
+version: 1.0.3
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
@@ -31,7 +31,7 @@ version: 1.0.2
 | **子目标** | GOAL-002～023 均 `done / 100%` |
 | **本区编号** | **封存**（不再分配 GOAL-024+） |
 | **工作区** | `workspace-001-goal-governance` · `status: archived` |
-| **后置决策** | [D-029](01-decision/D-029-retire-frozen-web-assets.md)：授权退役冻结 Web；实施由 workspace-002 GOAL-004 承接，Root 不重开 |
+| **后置决策** | [D-029](01-decision/D-029-retire-frozen-web-assets.md)：授权退役冻结 Web；workspace-002 GOAL-004 已 `done / 100%`、A-003 pass，Root 不重开 |
 
 ### 交付面结项
 
@@ -47,7 +47,7 @@ version: 1.0.2
 |----|-----|
 | Charter | [vision-goal-governance@0.2.0](../../../vision/charter.md) · 仍 `active`（不可 done） |
 | 本 Root primary_plan | [VP-001](../../../vision/plans/VP-001-governance-platform-delivery.md) · **closed** |
-| 组合编排 | VP-001 closed · **VP-002 active**（lead workspace-002）· VP-003 planned |
+| 组合编排 | VP-001 closed · **VP-002 active**（lead workspace-002）· VP-003 planned（正式挂起） |
 | Vision Review | [VRev-006](../../../vision/reviews.md) portfolio close-out |
 
 ### Residual（不因 Root done 而关闭）

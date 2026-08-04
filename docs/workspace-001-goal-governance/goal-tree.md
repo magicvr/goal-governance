@@ -4,12 +4,16 @@ status: archived
 created: 2026-07-18
 updated: 2026-08-04
 parent: null
-version: 1.2.1
+version: 1.2.2
 ---
 
 # Goal Tree
 
 > **工作区封存（2026-07-31）**：Root **GOAL-001 `done`**；VP-001 **closed**。本树**不再**分配新编号。演进 → **VP-002** + **[workspace-002-methodology-skills-feedback](../workspace-002-methodology-skills-feedback/)**（已开区）。
+
+## 2026-08-04 · 冻结 Web 退役完成回执
+
+[workspace-002 GOAL-004](../workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/) 已 **`done / 100%`**；A-003 independent **pass**，开放 required = 0。VP-003 保持 `planned` 且正式挂起；本区 Root 仍 **`done`**、工作区仍 archived、全树 status/progress 不变，不创建 GOAL-024。
 
 ## 2026-08-04 · Root D-029 后置授权：退役冻结 Web
 
