@@ -1,0 +1,115 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-03T22:12:37.668505Z",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "vision",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "0.2.118",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": "GROK_MODELS_BASE_URL",
+    "model": "grok-4.5"
+  },
+  "behaviorSources": [
+    {
+      "path": ".grok/skills/vision/SKILL.md",
+      "sha256": "2851f037865ba9db25c40fb145bcf785862ee284c4c391faebf1d06804f47d39"
+    },
+    {
+      "path": "skills/install/grok/skills/vision/SKILL.md",
+      "sha256": "2851f037865ba9db25c40fb145bcf785862ee284c4c391faebf1d06804f47d39"
+    },
+    {
+      "path": "skills/prompts/06-vision-orchestrator.md",
+      "sha256": "54c6ba619646f4e1a9b20560fd02a1a7dec9369dd824174882b6b72bcaf95123"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "fdf04b74703eebf9ce844e2b04bd3744f17fab40690047ccd0a536220554bb0b"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-vision.txt",
+      "sha256": "1a1c855921be711919811ccd829ce25d2713f123ee9cee4459e4d6bc3c203e99"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "grok",
+      "--prompt-file",
+      "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-vision.txt",
+      "--model",
+      "grok-4.5",
+      "--output-format",
+      "plain",
+      "--permission-mode",
+      "dontAsk",
+      "--disallowed-tools",
+      "Edit,Write,NotebookEdit",
+      "--max-turns",
+      "10",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240.0,
+    "inputSha256": "1a1c855921be711919811ccd829ce25d2713f123ee9cee4459e4d6bc3c203e99",
+    "inputSummary": "Read-only /vision dispatch probe requiring marker GROK_VISION_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "GROK_VISION_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "GROK_VISION_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "GROK_VISION_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-2026-08-04.d/stdout.txt",
+    "stdoutSha256": "3f4812e506ac96697b27d471c0e4e7e2ffca90b7cc3b533f342c058f2ab49a5f",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-2026-08-04.d/stderr.txt",
+    "stderrSha256": "d13704d13458f7e71cac8223f3d98484e5bac8e24809a2fda6cea1076e740d20",
+    "stderrMode": "request-url-redacted",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

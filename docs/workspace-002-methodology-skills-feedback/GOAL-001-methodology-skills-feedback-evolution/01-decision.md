@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-07-31
-version: 0.2.0
+updated: 2026-08-04
+version: 0.4.0
 ---
 
 # 决策记录 · GOAL-001
@@ -17,7 +17,7 @@ version: 0.2.0
 | ID | 级别 | 状态 | 影响 |
 |----|------|------|------|
 | I-001 | required | **verified**（2026-07-31） | GOAL-002 已收口；证据见子目标 attachments + D-002；A-002 F-004 → 本表同步 |
-| I-002 | non-blocking | open | R2 优先级 |
+| I-002 | non-blocking | **verified**（2026-08-03） | FB-001～FB-005 已由 GOAL-003 承接；R2 启动 |
 | I-003 | non-blocking | 已裁决（本轮） | primary 仍为 workspace-001 |
 
 ## D-001 · 开区 workspace-002 + Root 服务 VP-002（2026-07-31）
@@ -95,3 +95,47 @@ R1 首交付为 **GOAL-002-codex-skills-entry**：为 Codex 增加与现有 Clau
 
 - meta 路线图 R1 → **完成**；`progress` 0% → **33%**。
 - R2 仍 **未开始**；下一拍由用户指定（开 GOAL-003 / 收集 I-002 / 其它）。
+
+## D-004 · 启动 R2 并创建 GOAL-003（2026-08-03）
+
+**状态**：accepted
+
+**触发**：用户 `$govern` 在 workspace-002 提交五项真实项目问题并明确要求新建目标解决
+
+### 决定
+
+1. Root I-002 从 `open` 改为 **verified**：首批 R2 反馈清单已经由用户直接提供。
+2. 创建 [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/)，统一承接消费仓证据门禁、长记录布局、审计启动、Git checkpoint 与 Skills 更新五类问题。
+3. Root 纲领 R2 从“未开始”改为 **进行中**；GOAL-003 先写 P-001 路线图和 required 信息项，不在立项时伪造具体方案。
+4. Root `progress` 仍为 **1/3 = 33%**：R2 开始不等于 R2 完成，百分比不作放行依据。
+
+### 为什么
+
+- 用户反馈直接满足 I-002 的收集动作，且范围与 VP-002 的真实问题回流意图一致。
+- 五项问题跨多个门禁域并包含多块可独立验收工作，须先在大目标内建立纲领路线图。
+- 先作为一个 R2 目标冻结共同边界，可在 S1 后再按依赖与并行价值决定是否拆子目标。
+
+### 未选方案
+
+| 方案 | 未选理由 |
+|------|----------|
+| 维持 R2 未开始，只把问题留在聊天 | 反馈会丢失，且不满足用户明确的新建目标指令 |
+| 直接创建五个平级子目标 | 尚未冻结共同契约、兼容矩阵与阶段依赖，违反 P-001 |
+| 因 R2 启动把 Root progress 提高到 67% | progress 仅按完成纲领阶段计数；R2 尚未完成 |
+
+## D-005 · 完成 R2 反馈修正阶段（2026-08-04）
+
+**状态**：accepted
+
+**依据**：[GOAL-003 D-009](../GOAL-003-consumer-governance-ergonomics/01-decision/D-009-close-out.md)；A-001 self / A-002 Grok Build independent 均 pass；A-003 响应后开放 required = 0。
+
+### 决定
+
+1. R2 标为 **完成**；Root progress 由 1/3 = 33% 派生为 2/3 = 67%。
+2. GOAL-003 标为 `done`，构成首轮“真实反馈 → 协议/Skills 修正 → 全量验证 → cross close-out”闭环。
+3. R3 仍未开始；Root 保持 `active`，不自动关闭 VP-002。
+4. Web controlled-change legacy writer 作为子目标 recommended open 继续按触发条件复审，不提升为 Root required。
+
+### 为什么
+
+R2 的首批五项问题已有实现、兼容回归、consumer 包抽样与双来源审计；没有开放 required finding。R3 的 VP 退出准备是下一独立阶段，不能借 R2 完成静默启动或宣称方向关门。

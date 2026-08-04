@@ -1,0 +1,4 @@
+[2m2026-08-03T22:12:38.629389Z[0m [33m WARN[0m auto worktree gc failed [3merror[0m[2m=[0mneither $GROK_HOME nor $HOME is set
+[2m2026-08-03T22:12:38.764084Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mEdit
+[2m2026-08-03T22:12:38.764113Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mWrite
+[2m2026-08-03T22:12:38.764118Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mNotebookEdit

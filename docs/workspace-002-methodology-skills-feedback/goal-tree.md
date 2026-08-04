@@ -2,9 +2,9 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-07-31
+updated: 2026-08-04
 parent: null
-version: 0.1.5
+version: 0.4.0
 ---
 
 # Goal Tree
@@ -32,26 +32,56 @@ I-001/I-002 verified；D-002 冻结；阶段 C 实现 `install/codex` + `--codex
 
 用户确认 R1 收口（D-003）：纲领 R1 **完成**；Root `progress` **33%**（1/3）；Root 仍 `active`；R2 未开始。下一编号仍 **GOAL-003**。
 
+## 2026-08-03 · GOAL-003 立项 + Root R2 启动
+
+用户 `$govern` 提交五项实际项目反馈；Root I-002 **verified**，R2 改为**进行中**。创建 **GOAL-003-consumer-governance-ergonomics**（`active`，0/7），先按 P-001 建路线图与信息门禁；尚未实施或审计。Root `progress` 保持 33%。下一编号 **GOAL-004**。
+
+## 2026-08-04 · GOAL-003 S1 契约冻结
+
+完成消费/生产证据边界、长台账量化、风险审计矩阵、安全 Git checkpoint 与事务 updater 基线；I-001～I-006 verified，I-007 完成方案基线。S1 **完成**，S2～S6 进入实现；GOAL-003 `progress` **14%（1/7）**。Root R2 仍进行中，Root `progress` 保持 33%。下一编号 **GOAL-004**。
+
+## 2026-08-04 · GOAL-003 S2～S6 实现 checkpoint
+
+消费证据 profile、可扩展 ledger、风险审计编排、安全 Git checkpoint 与事务 updater 已在 `51872c9` 落地并通过定向回归。S2～S6 **完成**，S7 进行中；GOAL-003 `progress` **86%（6/7）**。Root R2 仍进行中，Root `progress` 保持 33%。下一编号 **GOAL-004**。
+
+## 2026-08-04 · GOAL-003 S7 全量回归
+
+文档 26、Web 143、Skills/发行/更新 65 项测试全部通过；环境跳过项单列，mirror 34 对一致。S7 **完成**，GOAL-003 `progress` **100%（7/7）**，但 cross close-out audit 尚未完成，`status` 保持 `active`。Root R2 仍进行中，Root `progress` 保持 33%。下一编号 **GOAL-004**。
+
+## 2026-08-04 · GOAL-003 cross close-out + Root R2 完成
+
+A-001 self 与 A-002 Grok Build independent 均 **pass**；A-003 统一响应后开放 required = 0。D-009 将 GOAL-003 标为 **`done`**；Root D-005 将 R2 标为完成，Root `progress` **67%（2/3）**，仍 `active`，R3 未开始。唯一 Web legacy-writer finding 为 recommended open、带复审触发。下一编号 **GOAL-004**。
+
+## 2026-08-04 · 响应 A-004 F-001，按 fixed 恢复 S7 / R2
+
+A-004 把正式消费 Release 纳入 GOAL-003 成功边界，确认 `v0.11.0` 不含 updater 且 producer compatibility readiness 失败，新增 F-001 required/open。用户以 `/govern` 选择 `fixed`：D-010 冻结 `v0.12.0` 受控发布切片；GOAL-003 恢复 **`active / 86%（6/7）`**，Root R2 恢复整改中，Root `progress` **33%（1/3）**。正式 Release、资产核对与真实消费更新完成前不恢复关门。下一编号仍 **GOAL-004**。
+
+## 2026-08-04 · v0.12.0 正式 Release，A-004 F-001 fixed
+
+`0748c8d` annotated tag `v0.12.0` 经 Actions run `30859281729` 与 Environment `release` 成功发布；双 zip digest、strict evidence、consumer-only 包边界及隔离消费 dry-run + real update 可核对。A-006 Grok Build independent **pass**，F-001 **fixed**，A-007 响应后开放 required = 0。D-011 恢复 GOAL-003 **`done / 100%（7/7）`**；Root R2 完成、Root `progress` **67%（2/3）**，R3 仍未开始。下一编号仍 **GOAL-004**。
+
 ## 树
 
 ```text
-GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱动的协议与 Skills 演进  progress 33% (R1 完成)
-└── GOAL-002-codex-skills-entry                 [done]    添加 Codex 可用的 Skills 入口  progress 100%
+GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱动的协议与 Skills 演进  progress 67% (R1/R2 完成；R3 未开始)
+├── GOAL-002-codex-skills-entry                 [done]    添加 Codex 可用的 Skills 入口  progress 100%
+└── GOAL-003-consumer-governance-ergonomics     [done]    修复消费仓门禁与长流程治理摩擦  progress 100%
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 33% (1/3 纲领阶段；R1 完成) | 2026-07-31 |
-| GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% (4/4 检查点) | 2026-07-31 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-08-04 |
+| GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
+| GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 002 |
-| 下一可用 | **GOAL-003** |
+| 最大编号 | 003 |
+| 下一可用 | **GOAL-004** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

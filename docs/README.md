@@ -2,9 +2,9 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-07-31
+updated: 2026-08-04
 parent: null
-version: 0.10.8
+version: 0.11.0
 ---
 
 # docs/ · 文档体系
@@ -68,7 +68,7 @@ docs/
    - `attachments/` — 附件（可为空，保留目录）
 7. **可执行性与纲领路线图（P-001）**：若目标尚不能直接执行（明显需要拆解），须先在该目标的 `00-meta.md` 或 `01-decision.md` 写清**纲领路线图**（阶段与先后关系），再创建与执行子目标。纲领阶段通常串行；**同一纲领阶段内**可并行子目标。
    - `progress`（若有）仅由显式检查点确定性派生；默认等权，显式权重可覆盖。它不放行阶段、不关闭 finding、不覆盖 I-00N 或 `status`，也不进入愿景层。
-8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识（含 P-001 路线图槽位）；独立审计出意见、编排器响应全部意见；finding 合法闭合为 `fixed` / `accepted-residual` / `user-overruled`；「是否自审」、意见冲突、单条必改否决/residual、信息 residual 由用户裁决。**正式审计意见**写入被审目标 `03-audit.md`（`A-00N` + `source`；长文可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
+8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识（含 P-001 路线图槽位）；按风险选择 `none` / `self` / `independent` / `cross`，独立审计只出意见、编排器响应全部意见；finding 合法闭合为 `fixed` / `accepted-residual` / `user-overruled`；模式/provider 歧义、意见冲突、单条必改否决/residual、信息 residual 由用户裁决。**正式审计意见**写入被审目标 `03-audit.md` 索引与 `03-audit/A-NNN-*.md`（`source` 必填；长证据可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
 10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review（`reviews.md`）；工作区角色仅 `primary` / `delivery`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
 11. **核心模板、契约与分发镜像**：规范模板位于 `docs/templates/`（含 `goal-folder/`、`workspace-context.md`、`vision/`），消费适配器契约位于 `docs/contracts/`。Skills 包镜像由 **`python scripts/stage_skills_mirrors.py`** 生成到 `skills/core/docs/` 与 `skills/contracts/`（GOAL-022）；pack/CI 强制 stage。`skills/core/docs/README.md` 为消费方**手维精简稿**。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
@@ -106,12 +106,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **文档入口版本**（本文件 frontmatter）：`0.10.8` — 描述 docs 树导航与协议索引的修订号。  
-- **可复制核心包版本**（对外分发/发版候选身份）：`0.11.0`（Codex 安装面 + 既有四入口 × 三宿主 runtime + 双资产/bootstrap）。二者**刻意分离**：入口文可快于尚未 tag 的包身份。  
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / **`v0.11.0`（冻结中）**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
-- **快照日期**：2026-07-31。
-- **快照身份**：矩阵 **`candidateRevision: v0.11.0`**；默认四入口 × 三宿主 runtime-verified（**2026-07-30** 证据；behaviorSources 对现树 fresh）；Web parser automated-verified；Codex 仅 install surface（非矩阵）。
-- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.114` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`（`/vision-audit` 为只读 dispatch）。Codex `$govern` 探针见 GOAL-002 附件。**不**宣称 Root 终态或 Codex 矩阵 verified。GOAL-002 done；发版身份 `v0.11.0`。
+- **文档入口版本**（本文件 frontmatter）：`0.11.0` — 描述 docs 树导航与协议索引的修订号。
+- **可复制核心包版本**（对外已发布身份）：`0.12.0`（事务 updater + consumer-only evidence profile + 长流程治理修正）。入口文修订号与发布身份刻意分离。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / **`v0.12.0`**；正式 GitHub Release 仍以 annotated tag + release evidence 为准。
+- **快照日期**：2026-08-04。
+- **快照身份**：正式 Release **`v0.12.0`**；矩阵 `candidateRevision` 同为 `v0.12.0`；默认四入口 × 三宿主 runtime-verified（**2026-08-04** 重采）；Web parser automated-verified；Codex 仅 install surface（非矩阵）。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.220`、Grok Build `0.2.118` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`。Actions run `30859281729` 已通过 gated publish；Codex `$govern` 探针见 GOAL-002 附件。**不**宣称 Root 终态或 Codex 矩阵 verified。
 
 ### canonical → Skills 镜像（GOAL-022）
 
@@ -139,7 +139,7 @@ python scripts/stage_skills_mirrors.py --check
 
 `pack_skills_release.py` 在 monorepo 下打包前会自动 stage。CI 在测试前 stage 并要求工作树无漂移。核验：`python -m unittest skills/tests/test_skills_orchestrator.py scripts/tests/test_stage_skills_mirrors.py -v`。
 
-`contractSchemaId` 指向 schema 的 canonical `$id`；安装包中的 manifest 通过 `canonical.schemaPath` 指向随包的本地 schema。`supportBaseline` 记录首个/上一支持协议，adapter 的 `supportCommitment` 区分已声明范围与当前承诺，`verificationStatus` 只表示版本固定的实际入口运行时证据是否已经取得；它不替代其他入口、manifest 解析、CI 或 release 验收。该 `$id` 是 schema 身份而不是当前 release 的承诺；I-003 仍负责把提交、tag/release、digest 和可重放证据关联起来。
+`contractSchemaId` 指向 schema 的 canonical `$id`；manifest 的 `evidenceBoundary` 机读区分默认 consumer profile 与 producer-only 证据。普通消费安装只携带 consumer contract + schema，不要求 compatibility matrix / runtime evidence，也不要求用户删除旧安装残留；生产仓发行验证仍使用完整 `docs/contracts/`。`supportBaseline` 记录首个/上一支持协议，adapter 的 `supportCommitment` 区分已声明范围与当前承诺，`verificationStatus` 只表示版本固定的实际入口运行时证据是否已经取得；它不替代其他入口、manifest 解析、CI 或 release 验收。
 
 ## 三层交付关系
 

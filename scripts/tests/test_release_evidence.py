@@ -179,12 +179,12 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
             report["matrix"]["previousProtocolStatus"],
             "not-applicable-first-supported-protocol",
         )
-        self.assertEqual(report["matrix"]["candidateRevision"], "v0.11.0")
+        self.assertEqual(report["matrix"]["candidateRevision"], "v0.12.1")
         uncovered = {
             (cell["consumer"], cell["entrypoint"])
             for cell in report["coverage"]["uncovered"]
         }
-        # v0.11.0 freeze: four entrypoints × three hosts runtime-verified
+        # v0.12.1 freeze: four entrypoints x three hosts runtime-verified
         # (govern/audit/vision/vision-audit); candidateRevision bound to annotated tag.
         # Codex install surface is shipped but not a matrix consumer.
         self.assertEqual(uncovered, set())
@@ -245,7 +245,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self.assertIsNone(evidence["source"]["annotatedTag"])
         self.assertIsNone(evidence["source"]["tagObject"])
         self.assertEqual(evidence["protocol"]["version"], "0.1.0")
-        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.11.0")
+        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.12.1")
         self.assertIn("checksPassed", evidence)
         schema = json.loads(
             (REPO_ROOT / "docs/releases/release-evidence.schema.json").read_text(

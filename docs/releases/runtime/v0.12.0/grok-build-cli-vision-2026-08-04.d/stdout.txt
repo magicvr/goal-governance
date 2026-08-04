@@ -1,0 +1,17 @@
+Running a read-only vision scan: loading the skill and orchestrator, then reading Charter and workspace-001.Reading the orchestrator scan phase and the Charter / workspace-001 sources.Verifying that `primary_plan` resolves to an existing VP file.**GROK_VISION_DISPATCH_OK**
+
+### Dispatch probe report (scan only)
+
+| Item | Value |
+|------|--------|
+| **1. Marker** | `GROK_VISION_DISPATCH_OK` |
+| **2. Loaded skill** | title: **vision · 愿景与组合治理（Grok Build skill）** (`name: vision`) |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **3. Orchestrator prompt** | SKILLS_PKG = `skills/` → **`skills/prompts/06-vision-orchestrator.md`** (absolute: `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\06-vision-orchestrator.md`) |
+| **4. Active Charter** | **`vision-goal-governance@0.2.0`** (`status: active`, `doc_type: vision-charter`) |
+| **workspace-001 `primary_plan`** | **resolves** — `primary_plan` / `plan_refs` = `VP-001-governance-platform-delivery`; file `docs/vision/plans/VP-001-governance-platform-delivery.md` exists with matching `id`, `vision_ref: vision-goal-governance@0.2.0`, `status: closed` |
+
+### Scan notes (minimal)
+
+- Core docs present under `docs/architecture/` (not re-validated beyond path existence in this probe).
+- `docs/workspace-001-goal-governance/workspace.md`: `vision_role: primary`, workspace `status: archived` (foundational close); plan pointer still valid, not re-homed to VP-002.

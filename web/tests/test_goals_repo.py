@@ -276,6 +276,11 @@ class GoalsRepositoryTests(unittest.TestCase):
                 "02-execution.md",
                 "03-audit.md",
             )))
+            self.assertTrue(all((created_dir / name).is_dir() for name in (
+                "01-decision",
+                "02-execution",
+                "03-audit",
+            )))
 
             meta_path = created_dir / "00-meta.md"
             meta_path.write_text(
@@ -320,6 +325,41 @@ class GoalsRepositoryTests(unittest.TestCase):
                 "└── GOAL-002-child-goal · Renamed Child [done 100%]",
                 tree_text,
             )
+
+    def test_ledger_directories_merge_with_legacy_inline_sections(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            goal = root / "GOAL-001-root"
+            _write_complete_goal(goal, "GOAL-001-root", None)
+            (goal / "01-decision").mkdir()
+            (goal / "01-decision" / "D-002-directory.md").write_text(
+                "---\nid: GOAL-001-root\ndoc: decision-entry\nversion: 0.1.0\n---\n\n## D-002 · Directory decision\n",
+                encoding="utf-8",
+            )
+            (goal / "02-execution").mkdir()
+            (goal / "02-execution" / "E-001-directory.md").write_text(
+                "---\nid: GOAL-001-root\ndoc: execution-entry\nversion: 0.1.0\n---\n\n# E-001 · Directory entry\n\n## 2026-07-20 · Directory fact\n",
+                encoding="utf-8",
+            )
+            (goal / "03-audit").mkdir()
+            (goal / "03-audit" / "A-001-directory.md").write_text(
+                "---\nid: GOAL-001-root\ndoc: audit-entry\nversion: 0.1.0\n---\n\n## 最终结论\n",
+                encoding="utf-8",
+            )
+
+            result = GoalsRepository(root).get_goal("GOAL-001-root")
+            self.assertIsNotNone(result.goal)
+            assert result.goal is not None
+            self.assertEqual(
+                [entry.id for entry in result.goal.decision.entries],
+                ["D-001", "D-002"],
+            )
+            self.assertEqual(
+                [entry.title for entry in result.goal.execution.entries],
+                ["Fact", "Directory fact"],
+            )
+            self.assertEqual(result.goal.audit.conclusion_state, AuditConclusionState.FINAL)
+            self.assertNotIn("invalid_ledger_entry_name", _codes(result))
 
     def test_create_first_goal_as_the_only_root(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

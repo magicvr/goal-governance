@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-07-31
-version: 0.2.0
+updated: 2026-08-04
+version: 0.7.0
 ---
 
 # 执行记录 · GOAL-001
@@ -34,11 +34,42 @@ version: 0.2.0
 - 派生 progress：**1/3 → 33%**（等权；仅展示）。
 - 残余跟踪（不阻断 R1）：GOAL-002 I-003 / F-002（矩阵）；F-001 日志编码；F-003 非主入口 runtime。
 
+### 2026-08-03 · 首批真实反馈落盘并启动 R2（D-004）
+
+- 用户提交五项实际项目问题：消费仓 runtime evidence 门禁、长记录可读性、审计启动摩擦、长流程 Git 回溯、Skills 更新成本。
+- Root I-002 → **verified**；D-004 启动 R2。
+- 创建 [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/) 五件套，登记 7 阶段路线图与 I-001～I-007。
+- R2 → **进行中**；Root progress 仍为 **1/3 = 33%**，未因新目标立项虚增。
+
+### 2026-08-04 · GOAL-003 S1 契约冻结
+
+- GOAL-003 完成五项反馈的复现与量化，I-001～I-006 verified，I-007 完成方案基线。
+- S1 完成，派生 progress 1/7 = 14%；S2～S6 进入实现且不拆新子目标。
+- Root R2 仍进行中；Root progress 保持 1/3 = 33%。
+
+### 2026-08-04 · GOAL-003 S2～S6 实现 checkpoint
+
+- GOAL-003 的消费证据 profile、可扩展 ledger、风险审计、Git checkpoint 与事务 updater 已落地；实现提交 `51872c9`。
+- 子目标完成 6/7 阶段，派生 progress 86%；S7 全量回归与 cross-audit 仍未完成。
+- Root R2 仍进行中；Root progress 保持 1/3 = 33%。
+
+### 2026-08-04 · GOAL-003 S7 全量回归
+
+- GOAL-003 文档 26、Web 143、Skills/发行/更新 65 项测试全部通过；环境跳过项单列，mirror 34 对一致。
+- 子目标 7/7 阶段完成，派生 progress 100%，但 `status` 仍 `active`，等待 cross close-out audit 与 finding 响应。
+- Root R2 仍进行中；Root progress 保持 1/3 = 33%。
+
+### 2026-08-04 · GOAL-003 关门 + Root R2 完成
+
+- GOAL-003 A-001 self、A-002 Grok Build independent 均 pass；A-003 响应后开放 required = 0。
+- D-009 将子目标标为 `done`；Root D-005 将 R2 标为完成。
+- Root progress 由 1/3 = 33% 派生为 2/3 = 67%；Root 仍 `active`，R3 未开始。
+
 ## 待办
 
-1. 收集或登记 R2 反馈（I-002），或用户指定开 **GOAL-003+**（消费问题 / 发版矩阵 / 其它）。
-2. 勿在无问题清单时机械堆 R2 细目标。
+1. 等待下一次 `/govern` 决定是否启动 R3（有界闭环验证与 VP 退出准备）。
+2. Web CT legacy writer 仅在子目标记录的触发条件出现时立项复审。
 
 ## 进度评估
 
-Root 纲领 **1/3** 阶段完成（R1）；R2/R3 未开始；I-001 verified；Root 仍 `active`。progress 见 meta。
+Root 纲领 **2/3** 阶段完成（R1、R2）；R3 未开始；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。

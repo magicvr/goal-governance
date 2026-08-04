@@ -1,0 +1,108 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-03T22:15:03.148363Z",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "vision-audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": "COPILOT_PROVIDER_BASE_URL",
+    "model": "gpt-5.6-terra"
+  },
+  "behaviorSources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "fdf04b74703eebf9ce844e2b04bd3744f17fab40690047ccd0a536220554bb0b"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "e52e60dad08c6a4faef546bd0feaa3c3ca5783d314b46d801fffe64d033b8018"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "948f95d33fcf5ca62c98a09229d053103ca5edbe5960f51439bd18f70cc9d622"
+    },
+    {
+      "path": ".github/prompts/vision-audit.prompt.md",
+      "sha256": "80ce7081b8b199333fef3c00a714b396d0ca82a5763c5ded5f0bf3585ecd882c"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
+      "sha256": "eec363bf8ba6ccf8b8db86078643736e4d2767be99feabfef68ec1a14919d807"
+    },
+    {
+      "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-vision-audit.txt",
+      "sha256": "ed5096e7a27ba657366546a06bb3f8bab18252330887a8aa396f069ebda52813"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 360.0,
+    "inputSha256": "ed5096e7a27ba657366546a06bb3f8bab18252330887a8aa396f069ebda52813",
+    "inputSummary": "Read-only /vision-audit dispatch probe requiring marker COPILOT_CLI_VISION_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "COPILOT_CLI_VISION_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "COPILOT_CLI_VISION_AUDIT_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "COPILOT_CLI_VISION_AUDIT_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-audit-2026-08-04.d/stdout.txt",
+    "stdoutSha256": "9e385755fb25a76e7f21cf09622ba52880de277265881494747b74c1da01c66b",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-audit-2026-08-04.d/stderr.txt",
+    "stderrSha256": "a0155fa198a1acf37ec42cc1e74804cb3efdd8a96dd98464f2c32c1d3e8c26d5",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

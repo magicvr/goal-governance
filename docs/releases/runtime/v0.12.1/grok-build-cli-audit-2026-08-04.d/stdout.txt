@@ -1,0 +1,32 @@
+I'll load the audit skill and the minimum repository sources for GOAL-008, then report the probe fields without writing anything.Next I'll read the independent-audit prompt and GOAL-008's current status/evidence sources.## GROK_AUDIT_DISPATCH_OK
+
+Read-only probe complete (no files modified, no audit appended, no subagents, no questions).
+
+### 1. Marker
+**GROK_AUDIT_DISPATCH_OK**
+
+### 2. Loaded skill
+| Field | Value |
+|--------|--------|
+| **Title** | `audit · 独立交叉审计（Grok Build skill）` |
+| **Source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md` |
+
+### 3. Independent-audit prompt named by that skill
+| Field | Value |
+|--------|--------|
+| **Named path** | `<SKILLS_PKG>/prompts/05-independent-audit.md` |
+| **Resolved SKILLS_PKG** | `skills/` (contains `prompts/05-independent-audit.md` and `prompts/00-govern-orchestrator.md`) |
+| **Actual path** | `skills/prompts/05-independent-audit.md` |
+
+### 4. Required source / status semantics + one current evidence gap
+
+**Source / status semantics (from skill + `05-independent-audit.md`):**
+- Audit **source must be** `independent` (never self-as-independent).
+- Default write mode: **opinion only** into the target’s `03-audit.md` index + `03-audit/A-NNN-*.md`; **must not** change goal `status` / checkpoints / derived `progress` / plan body / goal-tree status.
+- Findings use severity class **`required` \| `recommended`**; open **required** findings block the related gate / close-out until closed via `fixed` / `accepted-residual` / `user-overruled`.
+- P-005 information items use level **`required` \| `non-blocking`** with lifecycle status such as **`collecting` / `verified` / `deferred`**; a non-residual **required** item at its latest stage blocks that gate.
+- Verdict scale: `pass` \| `conditional` \| `fail`.
+
+**One current required evidence gap (GOAL-008):**
+- Goal status is **`done` / 100%** for historical **`v0.7.0`** close-out (I-001–I-003 closed there).
+- **Gap for the current unreleased candidate** (post GOAL-010 behavior-source change, per `00-meta.md` / A-017): compatibility matrix is `candidateRevision: unreleased`, and the six Claude/Grok/Copilot `/govern` + `/audit` host cells are **`pending-runtime-validation`** — **fresh host runtime evidence** is still required before any later candidate may be claimed `runtime-verified` or release-ready.

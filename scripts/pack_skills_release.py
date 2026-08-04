@@ -40,6 +40,13 @@ EXCLUDED_DIR_NAMES = frozenset(
 )
 EXCLUDED_FILE_SUFFIXES = frozenset({".pyc", ".pyo", ".pyd"})
 EXCLUDED_FILE_NAMES = frozenset({".DS_Store", "Thumbs.db"})
+PRODUCER_ONLY_CONTRACTS = frozenset(
+    {
+        "contracts/skills-consumer-compatibility-matrix.json",
+        "contracts/skills-consumer-compatibility-matrix.schema.json",
+        "contracts/runtime-evidence.schema.json",
+    }
+)
 
 
 class PackSkillsError(ValueError):
@@ -96,6 +103,8 @@ def should_exclude(relative: Path) -> bool:
         return True
     # Defense in depth: never ship monorepo process trees even if mis-rooted.
     joined = relative.as_posix()
+    if joined in PRODUCER_ONLY_CONTRACTS:
+        return True
     if "docs/workspace-" in joined or joined.startswith("web/") or joined.startswith(
         "artifacts/"
     ):

@@ -188,6 +188,9 @@ class VisionProtocolTests(unittest.TestCase):
             ws_fields["primary_plan"], "VP-001-governance-platform-delivery"
         )
         root_fields = parse_frontmatter(root_meta)
+        workspace_fields = parse_frontmatter(workspace)
+        self.assertEqual(workspace_fields.get("status"), "archived")
+        self.assertEqual(root_fields.get("status"), "done")
         self.assertEqual(
             root_fields.get("primary_plan"), ws_fields["primary_plan"]
         )
@@ -198,7 +201,7 @@ class VisionProtocolTests(unittest.TestCase):
             VISION_DIR / "plans" / f"{ws_fields['primary_plan']}.md",
             validate_charter(VISION_DIR / "charter.md"),
         )
-        self.assertEqual(plan["status"], "active")
+        self.assertEqual(plan["status"], "closed")
 
     def test_protocol_and_agents_document_three_layer_chain(self) -> None:
         protocol = (

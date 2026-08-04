@@ -1,0 +1,27 @@
+I'll load the govern skill and run only its scan phase for GOAL-008, reading the minimum sources needed for classification and open gates.GOAL-008 is marked done. Scanning its meta, audit ledger, and info gates for open required items.**GROK_GOVERN_DISPATCH_OK**
+
+## Dispatch probe (scan only)
+
+| Item | Value |
+|------|--------|
+| **1. Marker** | `GROK_GOVERN_DISPATCH_OK` |
+| **2. Loaded skill** | Title: **govern · 目标治理编排（Grok Build skill）** (`name: govern`) · Source: `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+| **3. Orchestrator prompt** | Named by skill: `<SKILLS_PKG>/prompts/00-govern-orchestrator.md` · Resolved: `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\00-govern-orchestrator.md` (`SKILLS_PKG` = `skills/`) |
+| **4. GOAL-008** | See below |
+
+### GOAL-008 classification & open required gates
+
+**Focus:** `[workspace-001-goal-governance] GOAL-008-skills-consumer-adapter-release-consistency`
+
+| Field | Current |
+|-------|---------|
+| **status / progress** | `done` / `100%` |
+| **parent** | `GOAL-001-main-vision` |
+| **workspace** | `workspace-001-goal-governance` (explicit; `status: archived`; Root done; VP-001 closed) |
+| **Classification** | **S2 context exists in repo history, but this focus goal is closed** — not an open `draft`/`active`/`blocked` target. Not **S4** for GOAL-008 (no open required findings/info gates on this goal). Scan treats focus as **closed goal / no further gate work on GOAL-008**. |
+| **Opinion ledger (authoritative)** | A-016 close-out: `verdict: pass`; A-017 freshness review: does not reopen GOAL-008 |
+| **Open required gates** | **None** |
+| **Info items** | I-001, I-002, I-003 all **verified** (final ledger in `00-meta` / A-016) |
+| **Open required findings** | **0** (A-016: no residual; local required closed; GOAL-001 F-005 handled at root, not reopened on GOAL-008) |
+
+**Note (scan only):** Charter `vision-goal-governance` `v0.2.0` is active. Historical mid-file `collecting` rows in `00-meta` / `03-audit` are superseded by the top close-out ledger; A-017 bounds post-close unreleased candidate work to *future* release evidence, not open GOAL-008 gates.

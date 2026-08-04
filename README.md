@@ -1,11 +1,11 @@
-﻿# Goal Governance
+# Goal Governance
 
 目标治理框架：交付可复用的核心方法论、文档协议与模板，并以 **Skills**（AI / Git 仓库协作）为**现行主消费适配器**，贯通 **目标 → 决策 → 执行 → 审计**。
 
 **愿景波次**（Charter `vision-goal-governance@0.2.0`）：
 
 1. **VP-001** 奠基 — **closed**（`workspace-001` Root 有界 **done**，过程树封存）  
-2. **VP-002** 真实项目反馈演进 — **active**（待开 `workspace-002`；空转复核 ≤2026-08-14）  
+2. **VP-002** 真实项目反馈演进 — **active**（`workspace-002` delivery 已承接）
 3. **VP-003** 人类 UI — **planned**（本仓 `web/` 为冻结参考；预期通用基架）
 
 ## 从这里开始
@@ -17,7 +17,7 @@
 | 文档怎么写、规则是什么 | [docs/README.md](docs/README.md) |
 | 核心模板怎么用 | [docs/templates/README.md](docs/templates/README.md) |
 | AI 必须遵守什么 | [AGENTS.md](AGENTS.md) |
-| Skills 如何安装 | [skills/README.md](skills/README.md)（**双入口**：在线 bootstrap 或包内 `install.*`；skills zip **内嵌** core） |
+| Skills 如何安装 / 升级 | [skills/README.md](skills/README.md)（**双入口**：在线 bootstrap 或包内 `install.*`；安装后用 `update.*`；skills zip **内嵌** core） |
 | Skills 如何打包 / 发布附件 | [docs/releases/README.md](docs/releases/README.md)、`scripts/pack_skills_release.py`、`scripts/pack_core_release.py` |
 | 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
 | Web（冻结参考） | [web/README.md](web/README.md) |
@@ -31,28 +31,28 @@
 ### 入口 1 · 在线 / 本地 bootstrap（推荐）
 
 从 **GitHub Release 固定 tag** 拉取 bootstrap 脚本（无需浏览器另存），脚本再下载**已内嵌 core 的 skills zip**、校验 SHA-256，并调用包内 install（等价 `-All`）。  
-**当前示例 pin 最新正式 tag `v0.11.0`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
+**当前示例 pin 最新正式 tag `v0.12.1`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
 
 ```powershell
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.12.1/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.11.0 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.12.1 -Force
 
 # 离线：已有 skills zip + .sha256 时（脚本同样可从同 tag Release 拉取）
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.11.0 -ZipPath .\goal-governance-skills-v0.11.0.zip -Force
+  -Version 0.12.1 -ZipPath .\goal-governance-skills-v0.12.1.zip -Force
 ```
 
 ```bash
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.11.0/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.12.1/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.11.0 --force
+bash ./install-online.sh --version 0.12.1 --force
 
 # 离线：
-bash ./install-online.sh --version 0.11.0 --zip-path ./goal-governance-skills-v0.11.0.zip --force
+bash ./install-online.sh --version 0.12.1 --zip-path ./goal-governance-skills-v0.12.1.zip --force
 ```
 
 说明见 [scripts/bootstrap/README.md](scripts/bootstrap/README.md)。默认**不**推荐 `curl | bash` / `irm | iex` 管道直跑（先落盘再执行，便于审阅）。
