@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-04
 updated: 2026-08-04
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 决策记录 · GOAL-004
@@ -22,3 +22,4 @@ I-001～I-003 均已在 [00-meta.md](00-meta.md) 以 live repository evidence �
 | D-002 | 2026-08-04 | 响应现行 core 导航引用并精化保护边界 | accepted | [01-decision/D-002-core-navigation-boundary.md](01-decision/D-002-core-navigation-boundary.md) |
 | D-003 | 2026-08-04 | 已发布 runtime evidence 的退役解释边界 | accepted | [01-decision/D-003-runtime-evidence-retirement-boundary.md](01-decision/D-003-runtime-evidence-retirement-boundary.md) |
 | D-004 | 2026-08-04 | 以 fixed 路径响应 A-001 F-001 | accepted | [01-decision/D-004-respond-a001-f001.md](01-decision/D-004-respond-a001-f001.md) |
+| D-005 | 2026-08-04 | 以父提交绑定模型响应 A-002 | accepted | [01-decision/D-005-bind-closure-evidence.md](01-decision/D-005-bind-closure-evidence.md) |

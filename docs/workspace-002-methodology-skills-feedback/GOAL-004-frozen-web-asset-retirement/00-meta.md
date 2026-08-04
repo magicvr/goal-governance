@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: VP-002 R3 的一次性仓库卫生与退出准备；退役冻结 Web 实现，不激活 VP-003
 created: 2026-08-04
 updated: 2026-08-04
-version: 0.6.0
+version: 0.7.0
 progress: 75%
 ---
 
@@ -36,11 +36,11 @@ progress: 75%
 | **S1** | 决策、库存与边界冻结 | **完成**（2026-08-04） | workspace-001 D-029、VP-003 挂起、I-001～I-003 verified、删除与保护边界固定 |
 | **S2** | Web 资产与主动依赖移除 | **完成**（2026-08-04） | `web/`、CI/release Web check、matrix Web consumer 与对应测试清除 |
 | **S3** | 现行叙事收束与完整验证 | **完成**（2026-08-04） | 当前入口无失效 Web 路径；stage/mirror、核心与 Skills 边界、非 Web 回归通过 |
-| **S4** | independent 复核与关门 | **进行中**（A-001 conditional；F-001 fixed 候选待复审） | 正式意见落盘、开放 required = 0、目标和 Root/goal-tree 同步 |
+| **S4** | independent 复核与关门 | **进行中**（A-001/A-002 conditional；closure evidence 待复审） | 正式意见落盘、开放 required = 0、目标和 Root/goal-tree 同步 |
 
 ## 派生进度展示
 
-`progress: 75%` = S1～S4 中已完成 **3 / 4**（等权）。资产删除与完整验证已完成；A-001 F-001 的 fixed 证据已补齐但尚未通过 independent finding-closure，因此 S4 未完成、目标仍为 `active`。
+`progress: 75%` = S1～S4 中已完成 **3 / 4**（等权）。资产删除与完整验证已完成；A-002 要求的新一代 closure evidence 已绑定 clean source `1416aa2`，但尚未通过 independent finding-closure，因此 S4 未完成、目标仍为 `active`。
 
 ## 信息就绪与未知项
 
