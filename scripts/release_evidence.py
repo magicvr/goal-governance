@@ -116,7 +116,7 @@ def _run_check(
 
 
 def _run_required_checks(
-    root: Path, include_web: bool, *, include_tool_tests: bool = True
+    root: Path, *, include_tool_tests: bool = True
 ) -> list[dict[str, Any]]:
     core_python = _python_with_imports(root, ("jsonschema",))
     checks = [
@@ -160,16 +160,6 @@ def _run_required_checks(
                 ],
                 root=root,
             ),
-        )
-    if include_web:
-        web_python = _python_with_imports(root, ("frontmatter", "fastapi", "httpx"))
-        checks.append(
-            _run_check(
-                "web-parser-tests",
-                [web_python, "-m", "unittest", "discover", "-s", "tests", "-v"],
-                root / "web",
-                root=root,
-            )
         )
     return checks
 
@@ -389,15 +379,12 @@ def generate_evidence(
     root: Path = REPO_ROOT,
     *,
     run_checks: bool = False,
-    include_web: bool = False,
 ) -> dict[str, Any]:
     root = root.resolve()
     if mode not in {"rehearsal", "release"}:
         raise ReleaseEvidenceError(f"unknown mode: {mode}")
     if mode == "release" and not run_checks:
         raise ReleaseEvidenceError("release-candidate mode requires internally executed checks")
-    if mode == "release" and not include_web:
-        raise ReleaseEvidenceError("release-candidate mode requires Web parser checks")
     _validate_compatibility_report(compatibility)
     current_compatibility = compatibility_report.generate_report(root)
     _reports_match(compatibility, current_compatibility, root)
@@ -429,14 +416,14 @@ def generate_evidence(
             raise ReleaseEvidenceError(
                 "release-candidate mode requires matrix candidateRevision to equal the annotated tag"
             )
-        checks = _run_required_checks(root, include_web=True)
+        checks = _run_required_checks(root)
         _validate_checks(checks)
         if not checks:
             raise ReleaseEvidenceError("release-candidate mode requires executed checks")
         if not all(check["passed"] for check in checks):
             raise ReleaseEvidenceError("release-candidate mode requires every check to pass")
     else:
-        checks = _run_required_checks(root, include_web) if run_checks else []
+        checks = _run_required_checks(root) if run_checks else []
         _validate_checks(checks)
     all_passed = bool(checks) and all(check["passed"] for check in checks)
     evidence = {
@@ -485,7 +472,6 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--mode", choices=("rehearsal", "release"), default="rehearsal")
     parser.add_argument("--tag", help="required tag in release mode")
     parser.add_argument("--run-checks", action="store_true")
-    parser.add_argument("--include-web", action="store_true")
     parser.add_argument("--compatibility-report", type=Path)
     parser.add_argument("--root", type=Path, default=REPO_ROOT, help=argparse.SUPPRESS)
     parser.add_argument(
@@ -497,8 +483,6 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.mode == "release" and not args.run_checks:
             raise ReleaseEvidenceError("release mode requires --run-checks")
-        if args.mode == "release" and not args.include_web:
-            raise ReleaseEvidenceError("release mode requires --include-web")
         generated_compatibility = compatibility_report.generate_report(args.root)
         if args.compatibility_report:
             compatibility = json.loads(args.compatibility_report.read_text(encoding="utf-8"))
@@ -514,7 +498,6 @@ def main(argv: list[str] | None = None) -> int:
             args.tag,
             args.root,
             run_checks=args.run_checks,
-            include_web=args.include_web,
         )
         _write_json(args.output, evidence)
     except (OSError, json.JSONDecodeError, ReleaseEvidenceError, compatibility_report.ValidationError) as error:

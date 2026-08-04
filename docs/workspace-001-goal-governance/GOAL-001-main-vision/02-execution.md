@@ -4,11 +4,20 @@ doc: execution
 status: done
 parent: null
 created: 2026-07-18
-updated: 2026-07-31
-version: 0.5.0
+updated: 2026-08-04
+version: 0.7.0
 ---
 
 # 执行记录 · GOAL-001
+
+## 执行索引（legacy inline + 新增平铺记录）
+
+| E-ID | 日期 | 标题 | 状态 | 文件 |
+|------|------|------|------|------|
+| E-001 | 2026-08-04 | D-029 授权后的 Web 资产退役交接至 workspace-002 | recorded | [02-execution/E-001-web-retirement-handoff.md](02-execution/E-001-web-retirement-handoff.md) |
+| E-002 | 2026-08-04 | workspace-002 GOAL-004 退役完成回执 | recorded | [02-execution/E-002-web-retirement-completion-receipt.md](02-execution/E-002-web-retirement-completion-receipt.md) |
+
+> 既有日期时间线保留为 legacy inline；新事实从 `02-execution/` 写入。
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
@@ -20,7 +29,7 @@ version: 0.5.0
 |------|------|------|
 | 核心方法论与模板 | 奠基 **done** | 后续修正 → VP-002 |
 | Skills | 奠基 **done** | 四入口；F-006 → VP-002 |
-| Web | **冻结参考** | R-009-X → VP-003 |
+| Web | **历史有界；资产已退役** | R-009-X → VP-003（正式挂起） |
 | 愿景 | VP-001 **closed**；VP-002 **active**（0 区）；VP-003 **planned** | 见 roadmap |
 | Root | **`done`** | [D-028](01-decision.md#d-028--root-有界关门奠基完成演进改挂-vp-002--workspace-0022026-07-31) / [A-021](03-audit.md#a-021--root-有界关门审计close-out2026-07-31) |
 | 工作区 | **archived** | 禁止本树再开演进子目标 |

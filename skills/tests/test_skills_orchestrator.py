@@ -654,7 +654,6 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "claude-code-cli",
                 "grok-build-cli",
                 "github-copilot-cli",
-                "web-readonly-parser",
             },
         )
         self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.220")
@@ -696,12 +695,6 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                 self.assertIn("vision-audit", path)
                 self.assertIn("2026-08-04", path)
-        web = consumers["web-readonly-parser"]
-        self.assertEqual(web["kind"], "goal-document-parser")
-        self.assertEqual(web["supportCommitment"], "not-applicable")
-        self.assertEqual(web["contractVerificationStatus"], "not-applicable")
-        self.assertEqual(web["entrypoints"][0]["status"], "automated-verified")
-
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""
         if not (CORE_PRINCIPLES.is_file() and CORE_AGENTS.is_file()):

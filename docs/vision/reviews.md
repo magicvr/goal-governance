@@ -3,8 +3,8 @@ doc_type: vision-reviews
 title: 愿景审视台账（Vision Review）
 status: active
 created: 2026-07-28
-updated: 2026-07-31
-version: 0.3.0
+updated: 2026-08-04
+version: 0.3.1
 parent: null
 ---
 
@@ -107,8 +107,22 @@ parent: null
 | Finding | 状态 | 证据 |
 |---------|------|------|
 | **V-F-008** | **closed · fixed** | Root [D-027](../workspace-001-goal-governance/GOAL-001-main-vision/01-decision.md#d-027--路径收束协议--skills-问题驱动演进本仓-web-冻结2026-07-31) / [A-020](../workspace-001-goal-governance/GOAL-001-main-vision/03-audit.md#a-020--响应-vrev-005-v-f-008路径收束与入口叙事2026-07-31)；根 README + `web/README` 冻结叙事 |
-| V-F-009 | recommended open | 可选契约提炼 |
+| **V-F-009** | **closed · user-overruled** | 用户决定冻结资产保留成本高于价值，选择完整退役且不先提炼；D-029 / GOAL-004 D-001 |
 | V-F-010 | recommended open | 可选 `/vision-audit` |
+
+### 响应 · V-F-009（2026-08-04）
+
+| 字段 | 值 |
+|------|-----|
+| 闭合路径 | **user-overruled** |
+| 用户裁决 | 彻底移除冻结 Web 资产；保留它或先做可选契约提炼已经得不偿失 |
+| 响应入口 | `/vision` 决策层 + `/govern` 实施层 |
+
+**范围与证据**
+
+- 本裁决只否决 V-F-009 的“从现存 `web/services` 提炼摘要”可选建议，不改 Charter 的未来人类 UI 方向，也不把 R-009-X 写成 fixed。
+- 授权见 workspace-001 Root [D-029](../workspace-001-goal-governance/GOAL-001-main-vision/01-decision/D-029-retire-frozen-web-assets.md)；实施边界见 workspace-002 GOAL-004 [D-001](../workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/01-decision/D-001-retirement-scope.md)。
+- 未来 UI 若重新激活，应在新基架和新目标中重新定义契约，不依赖已退役源码。
 
 ---
 

@@ -188,7 +188,10 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         # (govern/audit/vision/vision-audit); candidateRevision bound to annotated tag.
         # Codex install surface is shipped but not a matrix consumer.
         self.assertEqual(uncovered, set())
-        self.assertNotIn(("web-readonly-parser", "goal-document-parser"), uncovered)
+        self.assertEqual(
+            {consumer["id"] for consumer in report["coverage"]["consumers"]},
+            {"claude-code-cli", "grok-build-cli", "github-copilot-cli"},
+        )
         self.assertEqual(report["coverage"]["status"], "ready-for-release-evidence")
 
     def test_compatibility_report_uses_supplied_root_for_mirrors(self) -> None:
@@ -292,7 +295,6 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                 "--mode",
                 "release",
                 "--run-checks",
-                "--include-web",
                 "--tag",
                 "v-does-not-exist",
                 "--output",
@@ -315,9 +317,10 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                 matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
                 matrix["candidateRevision"] = "v1.2.3"
                 for consumer in matrix["consumers"]:
-                    if consumer["id"] == "web-readonly-parser":
-                        consumer["entrypoints"][0]["status"] = "pending-ci-replay"
-                        consumer["entrypoints"][0]["evidence"] = ["web/tests"]
+                    if consumer["id"] == "claude-code-cli":
+                        consumer["entrypoints"][0]["status"] = (
+                            "pending-runtime-validation"
+                        )
                 matrix_path.write_text(
                     json.dumps(matrix, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8",
@@ -340,7 +343,6 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                     "v1.2.3",
                     root,
                     run_checks=True,
-                    include_web=True,
                 )
 
     def test_release_mode_rejects_dirty_tree_and_missing_changelog_version(self) -> None:
@@ -374,7 +376,6 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                         "v1.2.3",
                         root,
                         run_checks=True,
-                        include_web=True,
                     )
 
         with tempfile.TemporaryDirectory(prefix="gg-release-changelog-") as tmp:
@@ -411,7 +412,6 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                         tag,
                         root,
                         run_checks=True,
-                        include_web=True,
                     )
 
     def test_release_mode_accepts_annotated_semver_tag_when_gates_are_met(self) -> None:
@@ -445,7 +445,6 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                     "v1.2.3",
                     root,
                     run_checks=True,
-                    include_web=True,
                 )
         self.assertEqual(evidence["releaseStatus"], "release-candidate")
         self.assertEqual(evidence["source"]["annotatedTag"], "v1.2.3")
@@ -534,7 +533,11 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         stale = deepcopy(report)
         stale["coverage"]["status"] = "pending"
         stale["coverage"]["uncovered"] = [
-            {"consumer": "web-readonly-parser", "entrypoint": "goal-document-parser", "status": "pending-ci-replay"}
+            {
+                "consumer": "claude-code-cli",
+                "entrypoint": "govern",
+                "status": "pending-runtime-validation",
+            }
         ]
         with self.assertRaisesRegex(
             release_evidence.ReleaseEvidenceError, "coverage is stale"
@@ -572,7 +575,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                 root=REPO_ROOT,
                 run_checks=True,
             )
-        run_checks.assert_called_once_with(REPO_ROOT.resolve(), False)
+        run_checks.assert_called_once_with(REPO_ROOT.resolve())
         self.assertTrue(evidence["checksPassed"])
         self.assertEqual(evidence["checks"], passing)
 
@@ -617,7 +620,6 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                         "v1.2.3",
                         root,
                         run_checks=True,
-                        include_web=True,
                     )
 
 

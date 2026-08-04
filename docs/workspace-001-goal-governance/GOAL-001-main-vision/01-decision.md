@@ -4,11 +4,19 @@ doc: decision
 status: done
 parent: null
 created: 2026-07-18
-updated: 2026-07-31
-version: 0.4.0
+updated: 2026-08-04
+version: 0.5.0
 ---
 
 # 决策记录 · GOAL-001
+
+## Ledger 索引（legacy inline + 新增平铺记录）
+
+| D-ID | 日期 | 标题 | 状态 | 文件 |
+|------|------|------|------|------|
+| D-029 | 2026-08-04 | 退役冻结 Web 资产并授权 VP-003 正式挂起 | accepted | [01-decision/D-029-retire-frozen-web-assets.md](01-decision/D-029-retire-frozen-web-assets.md) |
+
+> D-001～D-028 保留为 legacy inline 历史；超过台账阈值后，新决定从 `01-decision/` 写入。
 
 ## D-001 · 采用「目标中心」而非「文档中心」
 

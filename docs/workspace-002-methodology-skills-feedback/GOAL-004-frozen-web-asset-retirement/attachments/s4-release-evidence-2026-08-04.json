@@ -1,0 +1,895 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/release-evidence/v1",
+  "format": "goal-governance.release-evidence",
+  "formatVersion": "1.0.0",
+  "generatedAt": "2026-08-04T02:28:22.624921Z",
+  "releaseStatus": "rehearsal",
+  "source": {
+    "commit": "9ae56dac938fc967241f796915de06534c3bc6b1",
+    "branch": "dev",
+    "annotatedTag": null,
+    "tagObject": null
+  },
+  "protocol": {
+    "version": "0.1.0",
+    "contractSha256": "b191baa5219512b80c39ef99a5b4a134edb28b9a9af39d191c410ee18988033b",
+    "matrixSha256": "ade80d629a5634dde6aab81819b98c33eef10471cc5648194468b1510186f10a",
+    "candidateRevision": "v0.12.1"
+  },
+  "compatibilityReport": {
+    "coverageStatus": "ready-for-release-evidence",
+    "uncovered": [],
+    "mirrorPassed": true
+  },
+  "checks": [
+    {
+      "name": "skills-contract-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "skills/tests/test_skills_orchestrator.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "305a326e675ae9d29cdb069969a509f919496fdbdfb94da4d4c3304cbe37efb3",
+      "output": "test_agents_template_does_not_force_web_app_dir (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_agents_template_does_not_force_web_app_dir) ... ok\ntest_candidate_compatibility_matrix_keeps_runtime_coverage_explicit (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_candidate_compatibility_matrix_keeps_runtime_coverage_explicit)\nVerified host cells and remaining candidate gaps must stay distinct. ... ok\ntest_claude_audit_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_claude_audit_skill_source) ... ok\ntest_claude_govern_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_claude_govern_skill_source) ... ok\ntest_codex_audit_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_codex_audit_skill_source) ... ok\ntest_codex_govern_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_codex_govern_skill_source) ... ok\ntest_contract_schema_manifest_and_fixtures_enforce_d002_semantics (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_contract_schema_manifest_and_fixtures_enforce_d002_semantics)\nValidate D-002/D-003 schema identity, fields, and boundary fixtures. ... ok\ntest_copilot_audit_wrapper (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_copilot_audit_wrapper) ... ok\ntest_copilot_govern_wrapper_is_primary (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_copilot_govern_wrapper_is_primary) ... ok\ntest_core_contracts_are_mirrored_by_skills_package (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_core_contracts_are_mirrored_by_skills_package)\nThe distributed contract must remain a byte-for-byte mirror of canonical docs. ... ok\ntest_core_d004_mirror_is_complete (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_core_d004_mirror_is_complete)\nGOAL-019 D-004 + GOAL-001 D-025: core ships methodology + vision alignment. ... ok\ntest_core_templates_are_mirrored_by_skills_package (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_core_templates_are_mirrored_by_skills_package)\nThe Skills package must distribute the canonical core templates unchanged. ... ok\ntest_d003_declares_baseline_and_tiered_adapter_scope (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_d003_declares_baseline_and_tiered_adapter_scope)\nD-003 keeps commitment separate from version-fixed runtime evidence. ... ok\ntest_docs_readme_hash_ledger_matches_template_bytes (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_docs_readme_hash_ledger_matches_template_bytes)\nCanonical templates/contracts must match staged package mirrors (GOAL-022). ... ok\ntest_govern_ergonomics_contract_is_shipped (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_govern_ergonomics_contract_is_shipped) ... ok\ntest_grok_audit_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_grok_audit_skill_source) ... ok\ntest_grok_govern_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_grok_govern_skill_source) ... ok\ntest_independent_audit_prompt_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_independent_audit_prompt_exists) ... ok\ntest_independent_vision_review_core_is_separate_from_goal_audit (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_independent_vision_review_core_is_separate_from_goal_audit)\nV-F-001: independent Vision Review has a dedicated ledger boundary. ... ok\ntest_independent_vision_review_entrypoints_exist (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_independent_vision_review_entrypoints_exist)\nV-F-001: every installed host gets the dedicated Vision Review entry. ... ok\ntest_information_readiness_is_shipped_to_all_rule_surfaces (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_information_readiness_is_shipped_to_all_rule_surfaces)\nP-005 must survive the reusable rule and host-install surfaces. ... ok\ntest_init_workspace_refuses_existing_path (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_init_workspace_refuses_existing_path)\nGOAL-019 A-001 F-002: second -InitWorkspace on same path must fail. ... ok\ntest_install_all_ships_contract_mirror (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_all_ships_contract_mirror) ... ok\ntest_install_default_slash_includes_independent_vision_review (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_default_slash_includes_independent_vision_review)\nDefault install exposes both audit boundaries without form-fill primitives. ... ok\ntest_install_ps1_isolated_all_produces_govern_and_audit (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_isolated_all_produces_govern_and_audit)\nExecute install.ps1 -All in a temp project; assert default product surface. ... ok\ntest_install_ps1_isolated_smoke_script_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_isolated_smoke_script_exists) ... ok\ntest_install_ps1_with_primitives_keeps_information_readiness (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_with_primitives_keeps_information_readiness)\nOptional Copilot primitives must not silently fall behind P-005. ... ok\ntest_install_scripts_install_govern (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_scripts_install_govern) ... ok\ntest_install_scripts_wire_claude_and_grok_skills (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_scripts_wire_claude_and_grok_skills) ... ok\ntest_monorepo_agents_architecture_not_optional_supplement (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_monorepo_agents_architecture_not_optional_supplement)\nGOAL-019 A-001 F-001 + A-018 F-015: root AGENTS must not call architecture optional. ... ok\ntest_orchestrator_encodes_lifecycle_and_classification (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_orchestrator_encodes_lifecycle_and_classification) ... ok\ntest_p005_core_contract_guards_unknown_information_gates (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_p005_core_contract_guards_unknown_information_gates)\nKeep P-005's actual gates from regressing to a keyword-only policy. ... ok\ntest_p005_operational_contract_guards_prompts_and_templates (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_p005_operational_contract_guards_prompts_and_templates)\nPrompts/templates must operationalize gates, not merely name P-005. ... ok\ntest_portability_skills_pkg_and_required_architecture (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_portability_skills_pkg_and_required_architecture)\nPackage may rename skills dir; architecture is co-required (GOAL-019). ... ok\ntest_primary_orchestrator_file_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_primary_orchestrator_file_exists) ... ok\ntest_primitives_exist_and_marked (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_primitives_exist_and_marked) ... ok\ntest_progress_is_derived_and_sandbox_role_is_removed (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_progress_is_derived_and_sandbox_role_is_removed) ... ok\ntest_prompts_readme_primary_vs_primitive (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_prompts_readme_primary_vs_primitive) ... ok\ntest_skills_readme_default_install_documents_govern_audit_vision (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_skills_readme_default_install_documents_govern_audit_vision)\nF-017 guard: README must match default four-entrypoint surface (incl. vision-audit). ... ok\ntest_skills_readme_documents_primary_and_audit_paths (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_skills_readme_documents_primary_and_audit_paths) ... ok\ntest_vision_prompt_and_skills_exist (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_vision_prompt_and_skills_exist) ... ok\ntest_workspace_protocol_is_shipped_to_skills_surfaces (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_workspace_protocol_is_shipped_to_skills_surfaces)\nWorkspace isolation and fixed-reference rules must not remain core-doc-only. ... ok\n\n----------------------------------------------------------------------\nRan 42 tests in 2.878s\n\nOK\n",
+      "outputTail": "independent_vision_review)\nDefault install exposes both audit boundaries without form-fill primitives. ... ok\ntest_install_ps1_isolated_all_produces_govern_and_audit (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_isolated_all_produces_govern_and_audit)\nExecute install.ps1 -All in a temp project; assert default product surface. ... ok\ntest_install_ps1_isolated_smoke_script_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_isolated_smoke_script_exists) ... ok\ntest_install_ps1_with_primitives_keeps_information_readiness (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_with_primitives_keeps_information_readiness)\nOptional Copilot primitives must not silently fall behind P-005. ... ok\ntest_install_scripts_install_govern (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_scripts_install_govern) ... ok\ntest_install_scripts_wire_claude_and_grok_skills (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_scripts_wire_claude_and_grok_skills) ... ok\ntest_monorepo_agents_architecture_not_optional_supplement (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_monorepo_agents_architecture_not_optional_supplement)\nGOAL-019 A-001 F-001 + A-018 F-015: root AGENTS must not call architecture optional. ... ok\ntest_orchestrator_encodes_lifecycle_and_classification (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_orchestrator_encodes_lifecycle_and_classification) ... ok\ntest_p005_core_contract_guards_unknown_information_gates (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_p005_core_contract_guards_unknown_information_gates)\nKeep P-005's actual gates from regressing to a keyword-only policy. ... ok\ntest_p005_operational_contract_guards_prompts_and_templates (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_p005_operational_contract_guards_prompts_and_templates)\nPrompts/templates must operationalize gates, not merely name P-005. ... ok\ntest_portability_skills_pkg_and_required_architecture (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_portability_skills_pkg_and_required_architecture)\nPackage may rename skills dir; architecture is co-required (GOAL-019). ... ok\ntest_primary_orchestrator_file_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_primary_orchestrator_file_exists) ... ok\ntest_primitives_exist_and_marked (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_primitives_exist_and_marked) ... ok\ntest_progress_is_derived_and_sandbox_role_is_removed (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_progress_is_derived_and_sandbox_role_is_removed) ... ok\ntest_prompts_readme_primary_vs_primitive (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_prompts_readme_primary_vs_primitive) ... ok\ntest_skills_readme_default_install_documents_govern_audit_vision (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_skills_readme_default_install_documents_govern_audit_vision)\nF-017 guard: README must match default four-entrypoint surface (incl. vision-audit). ... ok\ntest_skills_readme_documents_primary_and_audit_paths (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_skills_readme_documents_primary_and_audit_paths) ... ok\ntest_vision_prompt_and_skills_exist (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_vision_prompt_and_skills_exist) ... ok\ntest_workspace_protocol_is_shipped_to_skills_surfaces (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_workspace_protocol_is_shipped_to_skills_surfaces)\nWorkspace isolation and fixed-reference rules must not remain core-doc-only. ... ok\n\n----------------------------------------------------------------------\nRan 42 tests in 2.878s\n\nOK\n"
+    },
+    {
+      "name": "standalone-bootstrap-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/tests",
+        "-p",
+        "test_standalone_bootstrap.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "57fff0cf614b0390bbc76a943f5b992545b6150af0319a75544ba603991b992a",
+      "output": "test_docs_entry_declares_package_version_and_sync_ledger (test_standalone_bootstrap.StandaloneBootstrapTests.test_docs_entry_declares_package_version_and_sync_ledger) ... ok\ntest_empty_git_repo_can_bootstrap_core_root_without_adapters (test_standalone_bootstrap.StandaloneBootstrapTests.test_empty_git_repo_can_bootstrap_core_root_without_adapters) ... ok\ntest_guide_declares_core_sources_and_boundaries (test_standalone_bootstrap.StandaloneBootstrapTests.test_guide_declares_core_sources_and_boundaries) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.319s\n\nOK\n",
+      "outputTail": "test_docs_entry_declares_package_version_and_sync_ledger (test_standalone_bootstrap.StandaloneBootstrapTests.test_docs_entry_declares_package_version_and_sync_ledger) ... ok\ntest_empty_git_repo_can_bootstrap_core_root_without_adapters (test_standalone_bootstrap.StandaloneBootstrapTests.test_empty_git_repo_can_bootstrap_core_root_without_adapters) ... ok\ntest_guide_declares_core_sources_and_boundaries (test_standalone_bootstrap.StandaloneBootstrapTests.test_guide_declares_core_sources_and_boundaries) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.319s\n\nOK\n"
+    },
+    {
+      "name": "release-evidence-tool-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "42a174484cdf5bfb6734cbb1bcc9d0df95800cb6c8b179a763808d05658cec63",
+      "output": "wrote release evidence: C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-release-cli-failure-7y70vsmv\\evidence.json\nrelease status: rehearsal\nchecks passed: False\n\ntest_offline_bootstrap_fail_closed_on_digest_mismatch (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_offline_bootstrap_fail_closed_on_digest_mismatch) ... ok\ntest_offline_bootstrap_success_installs_core_and_hosts (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_offline_bootstrap_success_installs_core_and_hosts) ... ok\ntest_offline_relative_zip_resolved_against_cwd_not_target (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_offline_relative_zip_resolved_against_cwd_not_target)\nSkeptic: -ZipPath relative to CWD when TargetDir is a different empty tree. ... ok\ntest_bash_offline_when_available (test_bootstrap_install_online.BootstrapShStructuralTests.test_bash_offline_when_available) ... skipped \"bash on PATH is not usable (e.g. WSL stub without distro): 'w\\\\x00s\\\\x00l\\\\x00:\\\\x00 \\\\x00\\ufffdhKm0R \\\\x00l\\\\x00o\\\\x00c\\\\x00a\\\\x00l\\\\x00h\\\\x00o\\\\x00s\\\\x00t\\\\x00 \\\\x00\\ufffdN\\\\x06tM\\ufffdn\\\\x7f\\\\x0c\\ufffdFO*g\\\\\\\\\\ufffd\\ufffdP0R \\\\x00W\\\\x00S\\\\x00L\\\\x00\\\\x020N\\\\x00A\\\\x00T\\\\x00 \\\\x00!j\\\\x0f_\\\\x0bN\\ufffdv \\\\x00W\\\\x00S\\\\x00L\\\\x00 \\\\x00\\\\nN/e\\\\x01c \\\\x00l\\\\x00o\\\\x00c\\\\x00a\\\\x00l\\\\x00h\\\\x00o\\\\x00s\\\\x00t\\\\x00 \\\\x00\\ufffdN\\\\x06t\\\\x020\\\\n\\\\x00\\\\n\\\\x00<3>WSL (59927) ERROR: CreateProcessCommon:559: execvpe(/bin/bash) failed: No such file or directory\\\\n'\"\ntest_bash_script_exists_and_declares_offline_flags (test_bootstrap_install_online.BootstrapShStructuralTests.test_bash_script_exists_and_declares_offline_flags) ... ok\ntest_root_readme_mentions_dual_entry_and_embedded_core (test_bootstrap_install_online.BootstrapWorkflowAndDocsContractTests.test_root_readme_mentions_dual_entry_and_embedded_core) ... ok\ntest_workflow_packs_core_and_bootstrap (test_bootstrap_install_online.BootstrapWorkflowAndDocsContractTests.test_workflow_packs_core_and_bootstrap) ... ok\ntest_historical_provider_failure_remains_explicit (test_grok_runtime_fixture.GrokRuntimeFixtureTests.test_historical_provider_failure_remains_explicit) ... ok\ntest_replay_command_uses_api_model_not_adapter_id (test_grok_runtime_fixture.GrokRuntimeFixtureTests.test_replay_command_uses_api_model_not_adapter_id) ... ok\ntest_runtime_attachment_scopes_adapter_id_and_model_failure (test_grok_runtime_fixture.GrokRuntimeFixtureTests.test_runtime_attachment_scopes_adapter_id_and_model_failure) ... ok\ntest_archive_names (test_pack_core_release.PackCoreReleaseTests.test_archive_names) ... ok\ntest_cli_packs_real_core_tree (test_pack_core_release.PackCoreReleaseTests.test_cli_packs_real_core_tree) ... ok\ntest_core_subset_matches_skills_embedded_core (test_pack_core_release.PackCoreReleaseTests.test_core_subset_matches_skills_embedded_core)\nI-004: same version, core-only members \\u2286 skills zip core/ byte-identical. ... ok\ntest_pack_core_on_temp_tree (test_pack_core_release.PackCoreReleaseTests.test_pack_core_on_temp_tree) ... ok\ntest_pack_core_rejects_incomplete_and_tech_stack (test_pack_core_release.PackCoreReleaseTests.test_pack_core_rejects_incomplete_and_tech_stack) ... ok\ntest_real_core_subset_of_real_skills_pack (test_pack_core_release.PackCoreReleaseTests.test_real_core_subset_of_real_skills_pack) ... ok\ntest_cli_packs_real_skills_tree (test_pack_skills_release.PackSkillsReleaseTests.test_cli_packs_real_skills_tree)\nDrive the shipped CLI entry point against the real repository skills/. ... ok\ntest_normalize_version_strips_v_and_rejects_empty (test_pack_skills_release.PackSkillsReleaseTests.test_normalize_version_strips_v_and_rejects_empty) ... ok\ntest_pack_skills_on_temp_tree_excludes_caches (test_pack_skills_release.PackSkillsReleaseTests.test_pack_skills_on_temp_tree_excludes_caches) ... ok\ntest_pack_skills_rejects_incomplete_tree (test_pack_skills_release.PackSkillsReleaseTests.test_pack_skills_rejects_incomplete_tree) ... ok\ntest_pack_skills_rejects_symlink (test_pack_skills_release.PackSkillsReleaseTests.test_pack_skills_rejects_symlink)\nGOAL-021 F-003: symlink members must not enter the zip (escape risk). ... skipped \"symlink creation not permitted: [WinError 1314] �ͻ���û���������Ȩ��: 'C:\\\\\\\\Users\\\\\\\\magicvr\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\tmpss35o20x\\\\\\\\outside-secret.txt' -> 'C:\\\\\\\\Users\\\\\\\\magicvr\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\tmpss35o20x\\\\\\\\skills\\\\\\\\leaked-via-symlink.txt'\"\ntest_should_exclude_caches_and_forbidden_prefixes (test_pack_skills_release.PackSkillsReleaseTests.test_should_exclude_caches_and_forbidden_prefixes) ... ok\ntest_publish_job_is_environment_gated_and_fail_closed (test_pack_skills_release.SkillsPackWorkflowContractTests.test_publish_job_is_environment_gated_and_fail_closed) ... ok\ntest_cli_rebuilds_a_repository_relative_directory (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_cli_rebuilds_a_repository_relative_directory) ... ok\ntest_rebuild_is_stable_and_ignores_root_control_files (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rebuild_is_stable_and_ignores_root_control_files) ... ok\ntest_rebuilds_sorted_candidate_inventory_with_hashes (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rebuilds_sorted_candidate_inventory_with_hashes) ... ok\ntest_rejects_output_outside_the_materials_root (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rejects_output_outside_the_materials_root) ... ok\ntest_rejects_symbolic_links_when_supported (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rejects_symbolic_links_when_supported) ... skipped 'symbolic links require unavailable Windows privileges'\ntest_repository_skeleton_is_an_empty_candidate_inventory (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_repository_skeleton_is_an_empty_candidate_inventory) ... ok\ntest_compatibility_report_rejects_a_fake_negative_fixture (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_rejects_a_fake_negative_fixture) ... ok\ntest_compatibility_report_rejects_evidence_path_escape (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_rejects_evidence_path_escape) ... ok\ntest_compatibility_report_tracks_uncovered_candidate_runtime_cells (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_tracks_uncovered_candidate_runtime_cells) ... ok\ntest_compatibility_report_uses_supplied_root_for_mirrors (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_uses_supplied_root_for_mirrors) ... ok\ntest_generate_evidence_does_not_accept_caller_supplied_checks (test_release_evidence.ReleaseEvidenceToolTests.test_generate_evidence_does_not_accept_caller_supplied_checks) ... ok\ntest_malformed_compatibility_report_fails_cleanly (test_release_evidence.ReleaseEvidenceToolTests.test_malformed_compatibility_report_fails_cleanly) ... ok\ntest_matrix_matches_its_json_schema (test_release_evidence.ReleaseEvidenceToolTests.test_matrix_matches_its_json_schema) ... ok\ntest_matrix_rejects_an_unbound_candidate_revision (test_release_evidence.ReleaseEvidenceToolTests.test_matrix_rejects_an_unbound_candidate_revision) ... ok\ntest_rehearsal_checks_are_executed_internally (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_checks_are_executed_internally) ... ok\ntest_rehearsal_cli_fails_when_an_executed_check_fails (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_cli_fails_when_an_executed_check_fails) ... release evidence failed: one or more checks failed\nok\ntest_rehearsal_evidence_never_claims_a_release (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_evidence_never_claims_a_release) ... ok\ntest_rehearsal_rejects_stale_coverage (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_rejects_stale_coverage) ... ok\ntest_rehearsal_rejects_stale_mirror_result (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_rejects_stale_mirror_result) ... ok\ntest_release_mode_accepts_annotated_semver_tag_when_gates_are_met (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_accepts_annotated_semver_tag_when_gates_are_met) ... ok\ntest_release_mode_rejects_an_unverifiable_tag (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_rejects_an_unverifiable_tag) ... ok\ntest_release_mode_rejects_dirty_tree_and_missing_changelog_version (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_rejects_dirty_tree_and_missing_changelog_version) ... ok\ntest_release_mode_requires_candidate_revision_to_match_tag (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_requires_candidate_revision_to_match_tag) ... ok\ntest_release_mode_requires_ready_coverage (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_requires_ready_coverage) ... ok\ntest_release_rejects_stale_compatibility_report (test_release_evidence.ReleaseEvidenceToolTests.test_release_rejects_stale_compatibility_report) ... ok\ntest_behavior_source_digest_tampering_is_rejected (test_runtime_evidence.RuntimeEvidenceTests.test_behavior_source_digest_tampering_is_rejected) ... ok\ntest_capture_api_accepts_vision_audit_entrypoint_and_validates (test_runtime_evidence.RuntimeEvidenceTests.test_capture_api_accepts_vision_audit_entrypoint_and_validates) ... ok\ntest_capture_api_accepts_vision_entrypoint_and_validates (test_runtime_evidence.RuntimeEvidenceTests.test_capture_api_accepts_vision_entrypoint_and_validates) ... ok\ntest_capture_marker_only_must_fail (test_runtime_evidence.RuntimeEvidenceTests.test_capture_marker_only_must_fail)\nGOAL-021 F-002: exit 0 + arbitrary marker alone is not a pass. ... ok\ntest_capture_records_blocked_timeout (test_runtime_evidence.RuntimeEvidenceTests.test_capture_records_blocked_timeout) ... ok\ntest_capture_records_fail_without_required_exit_and_marker (test_runtime_evidence.RuntimeEvidenceTests.test_capture_records_fail_without_required_exit_and_marker) ... ok\ntest_capture_writes_schema_valid_payload_and_raw_digests (test_runtime_evidence.RuntimeEvidenceTests.test_capture_writes_schema_valid_payload_and_raw_digests) ... ok\ntest_claude_stream_sanitizer_omits_thinking_and_tool_result_content (test_runtime_evidence.RuntimeEvidenceTests.test_claude_stream_sanitizer_omits_thinking_and_tool_result_content) ... ok\ntest_cli_accepts_vision_audit_entrypoint_choice (test_runtime_evidence.RuntimeEvidenceTests.test_cli_accepts_vision_audit_entrypoint_choice)\nShipped capture CLI must accept the independent vision-audit entrypoint. ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'\nok\ntest_cli_accepts_vision_entrypoint_choice (test_runtime_evidence.RuntimeEvidenceTests.test_cli_accepts_vision_entrypoint_choice)\nShipped capture CLI must accept unit.entrypoint=vision (P-006 decision layer). ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'\nok\ntest_compatibility_rechecks_assertions_against_stdout (test_runtime_evidence.RuntimeEvidenceTests.test_compatibility_rechecks_assertions_against_stdout)\nStored observed=true is not trusted; stdout re-evaluation must fail marker-only. ... ok\ntest_raw_output_digest_tampering_is_rejected (test_runtime_evidence.RuntimeEvidenceTests.test_raw_output_digest_tampering_is_rejected) ... ok\ntest_request_url_redaction_preserves_error_without_private_endpoint (test_runtime_evidence.RuntimeEvidenceTests.test_request_url_redaction_preserves_error_without_private_endpoint) ... ok\ntest_runtime_verified_requires_valid_machine_readable_json (test_runtime_evidence.RuntimeEvidenceTests.test_runtime_verified_requires_valid_machine_readable_json) ... ok\ntest_install_failure_restores_previous_package (test_skills_update.SkillsUpdateTests.test_install_failure_restores_previous_package) ... ok\ntest_managed_file_conflict_fails_closed (test_skills_update.SkillsUpdateTests.test_managed_file_conflict_fails_closed) ... ok\ntest_new_managed_path_conflicts_and_rolls_back_when_install_fails (test_skills_update.SkillsUpdateTests.test_new_managed_path_conflicts_and_rolls_back_when_install_fails) ... ok\ntest_offline_dry_run_verifies_digest_and_protocol (test_skills_update.SkillsUpdateTests.test_offline_dry_run_verifies_digest_and_protocol) ... ok\ntest_offline_update_runs_real_consumer_installer (test_skills_update.SkillsUpdateTests.test_offline_update_runs_real_consumer_installer) ... ok\ntest_offline_update_writes_state_and_keeps_rollback (test_skills_update.SkillsUpdateTests.test_offline_update_writes_state_and_keeps_rollback) ... ok\ntest_safe_extract_rejects_path_traversal (test_skills_update.SkillsUpdateTests.test_safe_extract_rejects_path_traversal) ... ok\ntest_check_detects_drift (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_check_detects_drift) ... ok\ntest_repo_root_stage_check_clean_after_write (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_repo_root_stage_check_clean_after_write) ... ok\ntest_stage_copies_and_strips_legacy_templates (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_stage_copies_and_strips_legacy_templates) ... ok\n\n----------------------------------------------------------------------\nRan 72 tests in 50.580s\n\nOK (skipped=3)\n",
+      "outputTail": "ntime_evidence.RuntimeEvidenceTests.test_capture_api_accepts_vision_audit_entrypoint_and_validates) ... ok\ntest_capture_api_accepts_vision_entrypoint_and_validates (test_runtime_evidence.RuntimeEvidenceTests.test_capture_api_accepts_vision_entrypoint_and_validates) ... ok\ntest_capture_marker_only_must_fail (test_runtime_evidence.RuntimeEvidenceTests.test_capture_marker_only_must_fail)\nGOAL-021 F-002: exit 0 + arbitrary marker alone is not a pass. ... ok\ntest_capture_records_blocked_timeout (test_runtime_evidence.RuntimeEvidenceTests.test_capture_records_blocked_timeout) ... ok\ntest_capture_records_fail_without_required_exit_and_marker (test_runtime_evidence.RuntimeEvidenceTests.test_capture_records_fail_without_required_exit_and_marker) ... ok\ntest_capture_writes_schema_valid_payload_and_raw_digests (test_runtime_evidence.RuntimeEvidenceTests.test_capture_writes_schema_valid_payload_and_raw_digests) ... ok\ntest_claude_stream_sanitizer_omits_thinking_and_tool_result_content (test_runtime_evidence.RuntimeEvidenceTests.test_claude_stream_sanitizer_omits_thinking_and_tool_result_content) ... ok\ntest_cli_accepts_vision_audit_entrypoint_choice (test_runtime_evidence.RuntimeEvidenceTests.test_cli_accepts_vision_audit_entrypoint_choice)\nShipped capture CLI must accept the independent vision-audit entrypoint. ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'\nok\ntest_cli_accepts_vision_entrypoint_choice (test_runtime_evidence.RuntimeEvidenceTests.test_cli_accepts_vision_entrypoint_choice)\nShipped capture CLI must accept unit.entrypoint=vision (P-006 decision layer). ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'\nok\ntest_compatibility_rechecks_assertions_against_stdout (test_runtime_evidence.RuntimeEvidenceTests.test_compatibility_rechecks_assertions_against_stdout)\nStored observed=true is not trusted; stdout re-evaluation must fail marker-only. ... ok\ntest_raw_output_digest_tampering_is_rejected (test_runtime_evidence.RuntimeEvidenceTests.test_raw_output_digest_tampering_is_rejected) ... ok\ntest_request_url_redaction_preserves_error_without_private_endpoint (test_runtime_evidence.RuntimeEvidenceTests.test_request_url_redaction_preserves_error_without_private_endpoint) ... ok\ntest_runtime_verified_requires_valid_machine_readable_json (test_runtime_evidence.RuntimeEvidenceTests.test_runtime_verified_requires_valid_machine_readable_json) ... ok\ntest_install_failure_restores_previous_package (test_skills_update.SkillsUpdateTests.test_install_failure_restores_previous_package) ... ok\ntest_managed_file_conflict_fails_closed (test_skills_update.SkillsUpdateTests.test_managed_file_conflict_fails_closed) ... ok\ntest_new_managed_path_conflicts_and_rolls_back_when_install_fails (test_skills_update.SkillsUpdateTests.test_new_managed_path_conflicts_and_rolls_back_when_install_fails) ... ok\ntest_offline_dry_run_verifies_digest_and_protocol (test_skills_update.SkillsUpdateTests.test_offline_dry_run_verifies_digest_and_protocol) ... ok\ntest_offline_update_runs_real_consumer_installer (test_skills_update.SkillsUpdateTests.test_offline_update_runs_real_consumer_installer) ... ok\ntest_offline_update_writes_state_and_keeps_rollback (test_skills_update.SkillsUpdateTests.test_offline_update_writes_state_and_keeps_rollback) ... ok\ntest_safe_extract_rejects_path_traversal (test_skills_update.SkillsUpdateTests.test_safe_extract_rejects_path_traversal) ... ok\ntest_check_detects_drift (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_check_detects_drift) ... ok\ntest_repo_root_stage_check_clean_after_write (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_repo_root_stage_check_clean_after_write) ... ok\ntest_stage_copies_and_strips_legacy_templates (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_stage_copies_and_strips_legacy_templates) ... ok\n\n----------------------------------------------------------------------\nRan 72 tests in 50.580s\n\nOK (skipped=3)\n"
+    },
+    {
+      "name": "diff-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": "",
+      "outputTail": ""
+    }
+  ],
+  "checksPassed": true,
+  "digests": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "2dba8903ee5d633f8e5083be23fb88f103d5f59c82983eff5868314a67f41c58"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "bf2e28e51320b493b16490baf79702f812ae18699e31f4c96db95de0ea48e170"
+    },
+    {
+      "path": "docs/contracts/fixtures/invalid/declared-adapter-without-commitment.json",
+      "sha256": "142b49e832220333f89a7013792610be036062ac96afa98a51e413e124a26fbc"
+    },
+    {
+      "path": "docs/contracts/fixtures/invalid/fabricated-predecessor-0.0.0.json",
+      "sha256": "512b118ee186c8b2b9c5dba7c2ba9b713d19d341c380bd2878ce7edfe67bac46"
+    },
+    {
+      "path": "docs/contracts/fixtures/invalid/missing-contract-schema-id.json",
+      "sha256": "d627d1cc4cf95ce8367d00d350ea3132f07c7e33f4ab1513e7bde6b631d77af1"
+    },
+    {
+      "path": "docs/contracts/fixtures/invalid/missing-support-baseline.json",
+      "sha256": "16cb621b7a1838c2b1bf976e7d83d7531dbadf569e13cb4d047bfc265b82f3b0"
+    },
+    {
+      "path": "docs/contracts/fixtures/invalid/reversed-protocol-range.json",
+      "sha256": "a853b6958ea87440da9defd245c53fbd990055276a0ab229d4da3a2947a16e7f"
+    },
+    {
+      "path": "docs/contracts/fixtures/invalid/unstable-cross-minor-range.json",
+      "sha256": "ec194dadc2bd31f25da2fc6d8110bdc8c0461e8e4443bb7765af9f1a002b890c"
+    },
+    {
+      "path": "docs/contracts/fixtures/invalid/unsupported-protocol-0.2.0.json",
+      "sha256": "53ca55d5173027323808b869903e61986c0ea663c93fc85628ec7769a48a2733"
+    },
+    {
+      "path": "docs/contracts/fixtures/valid/declared-adapter-0.1.0.json",
+      "sha256": "d8814ca6cab84c654e933e16b8c0f2ab4e5b64ec5c132236dd008969172fc0b7"
+    },
+    {
+      "path": "docs/contracts/fixtures/valid/manifest-0.1.0.json",
+      "sha256": "638d0dd9706ca3b7fab51927d3aa90c2ae144b4371eca3d2fd6992b9f086078d"
+    },
+    {
+      "path": "docs/contracts/runtime-evidence.schema.json",
+      "sha256": "24a1814ea507f51c8939e1e3b98eb24389752c2fca36d300913bce53f60c1c79"
+    },
+    {
+      "path": "docs/contracts/skills-consumer-compatibility-matrix.json",
+      "sha256": "ade80d629a5634dde6aab81819b98c33eef10471cc5648194468b1510186f10a"
+    },
+    {
+      "path": "docs/contracts/skills-consumer-compatibility-matrix.schema.json",
+      "sha256": "60e604f9d8847cc592b7e62b0c2b277f6e44050b09eff79338e3bc5b2eac9901"
+    },
+    {
+      "path": "docs/contracts/skills-consumer-contract.json",
+      "sha256": "b191baa5219512b80c39ef99a5b4a134edb28b9a9af39d191c410ee18988033b"
+    },
+    {
+      "path": "docs/contracts/skills-consumer-contract.schema.json",
+      "sha256": "ea6f4bc50a66091d02e1e2f38378fe11d7f4d1a81773e68643cbc9a6ddb67b51"
+    },
+    {
+      "path": "docs/releases/README.md",
+      "sha256": "3ad4d6816488cb0e37805b8186ca1b8d8d83f2dc38c3714526a06df117c85d77"
+    },
+    {
+      "path": "docs/releases/release-evidence.schema.json",
+      "sha256": "4b0619f43b992f49f6fd0a859e7413a818c13b6e857d2976cb985f7b0b081f12"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-audit-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-audit-2026-08-04.d/stdout.txt",
+      "sha256": "d8392388f6150e374204b4ff658f7998d1144a983414c0d5029560d0d9e1a51c"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-audit-2026-08-04.json",
+      "sha256": "6c2c6f43174ecc0c480bf5d555163f32fb834fa8b26a09348722557080e377c8"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-govern-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-govern-2026-08-04.d/stdout.txt",
+      "sha256": "7a1ad1d4f932ad0c5a987313089b20500048b9aa1a9d19706931b2aaf6199999"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-govern-2026-08-04.json",
+      "sha256": "0192e607a12ddcba8fb77f5524b9650c036204931505cb42753c4f6a4a73e29b"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-vision-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-vision-2026-08-04.d/stdout.txt",
+      "sha256": "ec7fba4d734736275be21eeee6fcc972dea16657d291eacbdfbd324a37703df2"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-vision-2026-08-04.json",
+      "sha256": "cba52642b7d8ede103beca2a04ea9e265cdf4039093540a8c68f362de06597ea"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-vision-audit-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-vision-audit-2026-08-04.d/stdout.txt",
+      "sha256": "5b39f04a2fd04c63564cf425980adb2f460bde7b45cba5a463303189c04c2e69"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/claude-code-cli-vision-audit-2026-08-04.json",
+      "sha256": "d5b1d4ddba640f97448d21b11d527ae4e8a0e945c72543c8664b836f0d848015"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-audit-2026-08-04.d/stderr.txt",
+      "sha256": "c2240f45c46a659dba369f2640a01d79660d015b63b3e42a24baad7279f0dae8"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-audit-2026-08-04.d/stdout.txt",
+      "sha256": "69812d2f32bafbf7e578bf0994c5a921c569c5b52e3b02995bd39f83931ea3da"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-audit-2026-08-04.json",
+      "sha256": "c4a86fd5c73504df3ad59b95b529341c95b71d0a2b5a6eaf8356c545360dabea"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-govern-2026-08-04.d/stderr.txt",
+      "sha256": "72f40a56a95379d348049fcb11c5a05306f86f11b9241e9a409fac54d2cbf198"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-govern-2026-08-04.d/stdout.txt",
+      "sha256": "ce6351b77ebe9271c2e6e11b0491565c9cf65c56af0f3171a5215a59d2962e92"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-govern-2026-08-04.json",
+      "sha256": "c46defd7080fef3b264ebc783d884476d494e8fcdd5e09b40671b48f9f8a5e43"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-2026-08-04.d/stderr.txt",
+      "sha256": "c4634cbfa539423f6a31ddfb405a4da430296730ed73d7fed72e37da702387e6"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-2026-08-04.d/stdout.txt",
+      "sha256": "97586b517af420b474f67dd6ee7d749cf761427b53939de0809fc138281b77a7"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-2026-08-04.json",
+      "sha256": "ab886381dc2039bfe4e3e27d3a2a7eae44e0273e3bcdf6de44ae77f0119c27f7"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-audit-2026-08-04.d/stderr.txt",
+      "sha256": "a0155fa198a1acf37ec42cc1e74804cb3efdd8a96dd98464f2c32c1d3e8c26d5"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-audit-2026-08-04.d/stdout.txt",
+      "sha256": "9e385755fb25a76e7f21cf09622ba52880de277265881494747b74c1da01c66b"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/github-copilot-cli-vision-audit-2026-08-04.json",
+      "sha256": "a3aab15493e30f086f6420afc6378108f17038ac7ed65f4b6bf3d0f67bb90b10"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-audit-2026-08-04.d/stderr.txt",
+      "sha256": "4cd2ba397066496720a60b938df69965dedf95e98edb8dea400a995a5b475c60"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-audit-2026-08-04.d/stdout.txt",
+      "sha256": "55e00524be6acd662f353aa022326a8879bb06988da4a54146c896ae745a8b4d"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-audit-2026-08-04.json",
+      "sha256": "bd49e67102ee3055be11cb7097c3b14569d0f154fdb118072a06edc36e797402"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-govern-2026-08-04.d/stderr.txt",
+      "sha256": "87e787c6ff9dd5a02030f658d5342b69c677fc294f4d3a56f9b8548663055e0a"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-govern-2026-08-04.d/stdout.txt",
+      "sha256": "0865d0da0c39ec368af8705ec90339bd03dc57e9b607f949ca6a894c6b92eb31"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-govern-2026-08-04.json",
+      "sha256": "b05920429a1a42a53be354192152928bb3a378e680551b25f9013b7fbfb35df7"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-2026-08-04.d/stderr.txt",
+      "sha256": "d13704d13458f7e71cac8223f3d98484e5bac8e24809a2fda6cea1076e740d20"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-2026-08-04.d/stdout.txt",
+      "sha256": "3f4812e506ac96697b27d471c0e4e7e2ffca90b7cc3b533f342c058f2ab49a5f"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-2026-08-04.json",
+      "sha256": "df5857352a10b44af43325c6337bd0003fd0b5219e19fa3fcce22b0ad75826a8"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-audit-2026-08-04.d/stderr.txt",
+      "sha256": "12a8740bbb9d92903523a5ff9971609d5072385e05408cbcfafe22a0b1929f77"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-audit-2026-08-04.d/stdout.txt",
+      "sha256": "11815019ccb8fb57a1f9787db85a65eab04c1583cef6fe167b6cb235ec6ec6e7"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.0/grok-build-cli-vision-audit-2026-08-04.json",
+      "sha256": "97e7c623ce2a66f24b70523a778b46e6e5fcb13f07e11cdce1793f0ec01cf8dd"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-audit-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-audit-2026-08-04.d/stdout.txt",
+      "sha256": "d8392388f6150e374204b4ff658f7998d1144a983414c0d5029560d0d9e1a51c"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-audit-2026-08-04.json",
+      "sha256": "2eefed334c79d60c8bf783b287525f24298f65b22a51f1d67569c8c26f3577ea"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-govern-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-govern-2026-08-04.d/stdout.txt",
+      "sha256": "7a1ad1d4f932ad0c5a987313089b20500048b9aa1a9d19706931b2aaf6199999"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-govern-2026-08-04.json",
+      "sha256": "22797a359aeba4d44c4a1613d9484d30977539052bdd7f55cdfb024fe7d384dd"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-vision-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-vision-2026-08-04.d/stdout.txt",
+      "sha256": "ec7fba4d734736275be21eeee6fcc972dea16657d291eacbdfbd324a37703df2"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-vision-2026-08-04.json",
+      "sha256": "19414ae015fd557ed807866e36935c1ab72392fafe33f8bb74f7a9206fc8640e"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-vision-audit-2026-08-04.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-vision-audit-2026-08-04.d/stdout.txt",
+      "sha256": "5b39f04a2fd04c63564cf425980adb2f460bde7b45cba5a463303189c04c2e69"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/claude-code-cli-vision-audit-2026-08-04.json",
+      "sha256": "d9f4d6c8e865b7d5638187065f7f067326dc3fea142edef18026a9d5a044df65"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-audit-2026-08-04.d/stderr.txt",
+      "sha256": "c2240f45c46a659dba369f2640a01d79660d015b63b3e42a24baad7279f0dae8"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-audit-2026-08-04.d/stdout.txt",
+      "sha256": "69812d2f32bafbf7e578bf0994c5a921c569c5b52e3b02995bd39f83931ea3da"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-audit-2026-08-04.json",
+      "sha256": "b0372dd9a0325bef5f9ca6ce0ab47b97788a026c58de8c1a5962292affbec0f6"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-govern-2026-08-04.d/stderr.txt",
+      "sha256": "72f40a56a95379d348049fcb11c5a05306f86f11b9241e9a409fac54d2cbf198"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-govern-2026-08-04.d/stdout.txt",
+      "sha256": "ce6351b77ebe9271c2e6e11b0491565c9cf65c56af0f3171a5215a59d2962e92"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-govern-2026-08-04.json",
+      "sha256": "8bd9b390a29e89ac1b9bddac4a6e887f40e04d5973cf0c0f6e45b6df014cc8c3"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-2026-08-04.d/stderr.txt",
+      "sha256": "c4634cbfa539423f6a31ddfb405a4da430296730ed73d7fed72e37da702387e6"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-2026-08-04.d/stdout.txt",
+      "sha256": "97586b517af420b474f67dd6ee7d749cf761427b53939de0809fc138281b77a7"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-2026-08-04.json",
+      "sha256": "a89ff1c5cd88350f64650478ad3ff2b1bc43aa71791f13a0172cbe446b4e451b"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-audit-2026-08-04.d/stderr.txt",
+      "sha256": "a0155fa198a1acf37ec42cc1e74804cb3efdd8a96dd98464f2c32c1d3e8c26d5"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-audit-2026-08-04.d/stdout.txt",
+      "sha256": "9e385755fb25a76e7f21cf09622ba52880de277265881494747b74c1da01c66b"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-audit-2026-08-04.json",
+      "sha256": "0e318b181f000b2aadd9af27f338f0f9edc1a774894152eadc75ba7952638d7e"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-audit-2026-08-04.d/stderr.txt",
+      "sha256": "4cd2ba397066496720a60b938df69965dedf95e98edb8dea400a995a5b475c60"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-audit-2026-08-04.d/stdout.txt",
+      "sha256": "55e00524be6acd662f353aa022326a8879bb06988da4a54146c896ae745a8b4d"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-audit-2026-08-04.json",
+      "sha256": "14491e668409fd344eb974eeaa5747fa3498b6a313e31d36e6893d16aad43864"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-govern-2026-08-04.d/stderr.txt",
+      "sha256": "87e787c6ff9dd5a02030f658d5342b69c677fc294f4d3a56f9b8548663055e0a"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-govern-2026-08-04.d/stdout.txt",
+      "sha256": "0865d0da0c39ec368af8705ec90339bd03dc57e9b607f949ca6a894c6b92eb31"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-govern-2026-08-04.json",
+      "sha256": "7eadb447a86dbd46dbfe3c6ecf0d6a1b4d4274fabe89a692116d1ead354930ae"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-vision-2026-08-04.d/stderr.txt",
+      "sha256": "d13704d13458f7e71cac8223f3d98484e5bac8e24809a2fda6cea1076e740d20"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-vision-2026-08-04.d/stdout.txt",
+      "sha256": "3f4812e506ac96697b27d471c0e4e7e2ffca90b7cc3b533f342c058f2ab49a5f"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-vision-2026-08-04.json",
+      "sha256": "a4961be061e3fc65ecd24f6582c34cbb2b0e8c9ad7bb1c48cc7ce47e312fc04f"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-vision-audit-2026-08-04.d/stderr.txt",
+      "sha256": "12a8740bbb9d92903523a5ff9971609d5072385e05408cbcfafe22a0b1929f77"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-vision-audit-2026-08-04.d/stdout.txt",
+      "sha256": "11815019ccb8fb57a1f9787db85a65eab04c1583cef6fe167b6cb235ec6ec6e7"
+    },
+    {
+      "path": "docs/releases/runtime/v0.12.1/grok-build-cli-vision-audit-2026-08-04.json",
+      "sha256": "4be61742722488d215b747c269c0a8060b6ff16e123437c13ce110ffc1cd53b4"
+    },
+    {
+      "path": "docs/templates/goal-folder/00-meta.md",
+      "sha256": "e26588e169bc9d17b2b1f77ce9c636b5f261e0bced43011aff1adff3ce3f3463"
+    },
+    {
+      "path": "docs/templates/goal-folder/01-decision/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/templates/goal-folder/01-decision.md",
+      "sha256": "79d6751eebc742b01121c533aa7c284bd6a1828ac41322f10afe7b0f33f7f532"
+    },
+    {
+      "path": "docs/templates/goal-folder/02-execution/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/templates/goal-folder/02-execution.md",
+      "sha256": "7a22348c8baac21cf90a4749f8ae273132d588bc8f5efca0e437950078d0752f"
+    },
+    {
+      "path": "docs/templates/goal-folder/03-audit/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/templates/goal-folder/03-audit.md",
+      "sha256": "450d17f46c953835316919fa7f419c7154f33cfbb5ec7059875a0220af5e64a1"
+    },
+    {
+      "path": "docs/templates/goal-folder/attachments/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "scripts/__init__.py",
+      "sha256": "c6f78e4a4cae860377cdb2708aee3905441571424f6c4c904465a5640c24748e"
+    },
+    {
+      "path": "scripts/bootstrap/install-online.ps1",
+      "sha256": "2c1108c702420ce3c9b957ef5c8a71836cb523df4019d820ade96f01c1efb55a"
+    },
+    {
+      "path": "scripts/bootstrap/install-online.sh",
+      "sha256": "1f81bf114fc218380fad8051abf73487cbcf952fc7b6953259dec330dead2632"
+    },
+    {
+      "path": "scripts/bootstrap/README.md",
+      "sha256": "63d077d8d78a7a4b2dbe9d0fb0a14eb7b4a0c2260a2cbbc269638439b77375b9"
+    },
+    {
+      "path": "scripts/capture_runtime_evidence.py",
+      "sha256": "b37c8cc2e2edbcc85220d7474fa067511146ec20fa028a1a5861111c520debd5"
+    },
+    {
+      "path": "scripts/compatibility_report.py",
+      "sha256": "81ab873eccaeb33563c42fe169dc2fcb6ad5bcb2ed21aee481665b248a124ac6"
+    },
+    {
+      "path": "scripts/pack_core_release.py",
+      "sha256": "b6c5698b1d0b73e19fb75b0be303bcf5635fe4f89f2e3fcdc0cf64edce01cf11"
+    },
+    {
+      "path": "scripts/pack_skills_release.py",
+      "sha256": "a92c0237a2f9607b35d45ad0c618b796b2f8fc29ddadfb00ea235a5d1f51f2a2"
+    },
+    {
+      "path": "scripts/rebuild_shared_materials_index.py",
+      "sha256": "22aba7de51916a5fb0f8ca75d56ae14d53774408b217553a26fca7e163d4dd9b"
+    },
+    {
+      "path": "scripts/release_evidence.py",
+      "sha256": "c02af0d788818ad54201bdc04de52ecda5ab511a08e0fb353a02f1b3c5315535"
+    },
+    {
+      "path": "scripts/requirements.txt",
+      "sha256": "15d09bfe7284d57724c11172cf3f917c77663a7f5e3018eaded2dd1b33e42789"
+    },
+    {
+      "path": "scripts/stage_skills_mirrors.py",
+      "sha256": "29c1249a829bf3f35d3bc674dcaa81048002326b14b7aa165f276d7f03ce44b6"
+    },
+    {
+      "path": "scripts/tests/test_bootstrap_install_online.py",
+      "sha256": "c49b6f37abaa2d14ada53ae0e6410f7ce7c3b6a6f0e76b3a48425ef0a2bcf128"
+    },
+    {
+      "path": "scripts/tests/test_grok_runtime_fixture.py",
+      "sha256": "8f88a7eed6b6fb23ccfdc8497b2b313fe046cf9555e8d77806964bc948752a86"
+    },
+    {
+      "path": "scripts/tests/test_pack_core_release.py",
+      "sha256": "a477dfb6d4e44b47bfb1b4fb65ace8cc305d8238b241d85176d93caa50efc292"
+    },
+    {
+      "path": "scripts/tests/test_pack_skills_release.py",
+      "sha256": "01bff9899a924c93266e159450d996b7ae1665cb80247df6a94731ff59a557ad"
+    },
+    {
+      "path": "scripts/tests/test_rebuild_shared_materials_index.py",
+      "sha256": "7873b1d297b95c8641a44338e281cd6d39f9bd590169c1859235e91bee21ad1c"
+    },
+    {
+      "path": "scripts/tests/test_release_evidence.py",
+      "sha256": "379c1c0f037184b59eb5e033e32e344ff5a378b971ab79096be7df70c7a59f0d"
+    },
+    {
+      "path": "scripts/tests/test_runtime_evidence.py",
+      "sha256": "4f10e0591b2c53d6c30e4ebbc22989bd2c0f159cf6646e4bf3b37b50ec047562"
+    },
+    {
+      "path": "scripts/tests/test_skills_update.py",
+      "sha256": "b6eec1e215a0c0bd4353e01d8fb9727358c98bac6914678b3054c3f26b07ae70"
+    },
+    {
+      "path": "scripts/tests/test_stage_skills_mirrors.py",
+      "sha256": "82d2958f099ef054d144c26666429756b0c63d08d26e1629625b5bbfac79caa0"
+    },
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "d2f4174a548fc4b3b49db83f7e7054cbfae43a478e901d85cd0550e2c14e7650"
+    },
+    {
+      "path": "skills/contracts/fixtures/invalid/declared-adapter-without-commitment.json",
+      "sha256": "142b49e832220333f89a7013792610be036062ac96afa98a51e413e124a26fbc"
+    },
+    {
+      "path": "skills/contracts/fixtures/invalid/fabricated-predecessor-0.0.0.json",
+      "sha256": "512b118ee186c8b2b9c5dba7c2ba9b713d19d341c380bd2878ce7edfe67bac46"
+    },
+    {
+      "path": "skills/contracts/fixtures/invalid/missing-contract-schema-id.json",
+      "sha256": "d627d1cc4cf95ce8367d00d350ea3132f07c7e33f4ab1513e7bde6b631d77af1"
+    },
+    {
+      "path": "skills/contracts/fixtures/invalid/missing-support-baseline.json",
+      "sha256": "16cb621b7a1838c2b1bf976e7d83d7531dbadf569e13cb4d047bfc265b82f3b0"
+    },
+    {
+      "path": "skills/contracts/fixtures/invalid/reversed-protocol-range.json",
+      "sha256": "a853b6958ea87440da9defd245c53fbd990055276a0ab229d4da3a2947a16e7f"
+    },
+    {
+      "path": "skills/contracts/fixtures/invalid/unstable-cross-minor-range.json",
+      "sha256": "ec194dadc2bd31f25da2fc6d8110bdc8c0461e8e4443bb7765af9f1a002b890c"
+    },
+    {
+      "path": "skills/contracts/fixtures/invalid/unsupported-protocol-0.2.0.json",
+      "sha256": "53ca55d5173027323808b869903e61986c0ea663c93fc85628ec7769a48a2733"
+    },
+    {
+      "path": "skills/contracts/fixtures/valid/declared-adapter-0.1.0.json",
+      "sha256": "d8814ca6cab84c654e933e16b8c0f2ab4e5b64ec5c132236dd008969172fc0b7"
+    },
+    {
+      "path": "skills/contracts/fixtures/valid/manifest-0.1.0.json",
+      "sha256": "638d0dd9706ca3b7fab51927d3aa90c2ae144b4371eca3d2fd6992b9f086078d"
+    },
+    {
+      "path": "skills/contracts/runtime-evidence.schema.json",
+      "sha256": "24a1814ea507f51c8939e1e3b98eb24389752c2fca36d300913bce53f60c1c79"
+    },
+    {
+      "path": "skills/contracts/skills-consumer-compatibility-matrix.json",
+      "sha256": "ade80d629a5634dde6aab81819b98c33eef10471cc5648194468b1510186f10a"
+    },
+    {
+      "path": "skills/contracts/skills-consumer-compatibility-matrix.schema.json",
+      "sha256": "60e604f9d8847cc592b7e62b0c2b277f6e44050b09eff79338e3bc5b2eac9901"
+    },
+    {
+      "path": "skills/contracts/skills-consumer-contract.json",
+      "sha256": "b191baa5219512b80c39ef99a5b4a134edb28b9a9af39d191c410ee18988033b"
+    },
+    {
+      "path": "skills/contracts/skills-consumer-contract.schema.json",
+      "sha256": "ea6f4bc50a66091d02e1e2f38378fe11d7f4d1a81773e68643cbc9a6ddb67b51"
+    },
+    {
+      "path": "skills/core/docs/architecture/directory-layout.md",
+      "sha256": "f9eed3ead1f6905a50f0724fcb5637327ed9c303787fe527b337c7e73917cba1"
+    },
+    {
+      "path": "skills/core/docs/architecture/overview.md",
+      "sha256": "d96ed147c83b0d870a3dd72ba151b12cf6d99ba7d3336abfc4f41818871fbf10"
+    },
+    {
+      "path": "skills/core/docs/architecture/principles.md",
+      "sha256": "c5d97cef16b1ef0e3eb07cf761bca10fe25c5002cfbe4bd382c139c281c0086b"
+    },
+    {
+      "path": "skills/core/docs/architecture/workspace-protocol.md",
+      "sha256": "d40987d593a501992a5b09363d8433bac62912c52793481643869d332ef642f0"
+    },
+    {
+      "path": "skills/core/docs/README.md",
+      "sha256": "17f04679a1b8a40c8dd606976385e81a3ad20664e414fc650698ef6e14e1ca70"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/00-meta.md",
+      "sha256": "e26588e169bc9d17b2b1f77ce9c636b5f261e0bced43011aff1adff3ce3f3463"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/01-decision/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/01-decision.md",
+      "sha256": "79d6751eebc742b01121c533aa7c284bd6a1828ac41322f10afe7b0f33f7f532"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/02-execution/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/02-execution.md",
+      "sha256": "7a22348c8baac21cf90a4749f8ae273132d588bc8f5efca0e437950078d0752f"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/03-audit/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/03-audit.md",
+      "sha256": "450d17f46c953835316919fa7f419c7154f33cfbb5ec7059875a0220af5e64a1"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/attachments/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "skills/core/docs/templates/ledger-entry/audit.md",
+      "sha256": "dc3cecc6e9ddaed30ca9e36a5f12835f18aeebc2a72737988a5269408b244970"
+    },
+    {
+      "path": "skills/core/docs/templates/ledger-entry/decision.md",
+      "sha256": "cfbfe1e36986a79f30cdf03797337dcb1fd94eaa2ea1e5b6d2856001c528a5c9"
+    },
+    {
+      "path": "skills/core/docs/templates/ledger-entry/execution.md",
+      "sha256": "012aa88381e564f89b036e802cb056a405e600fcd47b9319a68b996f34450dd4"
+    },
+    {
+      "path": "skills/core/docs/templates/README.md",
+      "sha256": "b799bf6d792cc28108d5d7d7a254320fd6c89e1f29c37c1ce5fc6a7f7c573481"
+    },
+    {
+      "path": "skills/core/docs/templates/vision/charter.md",
+      "sha256": "e2efad8606f59ccc13473446e61bc8afd92f76e5b3a29b8ac6de3fd17f20287f"
+    },
+    {
+      "path": "skills/core/docs/templates/vision/vision-plan.md",
+      "sha256": "d6d0c20effd5bd1a9fba94f4f6bef99f14be74372b81673d47f4479ed895bce7"
+    },
+    {
+      "path": "skills/core/docs/templates/workspace-context.md",
+      "sha256": "95cc2567a1d0d1a28a55f50037aed20ada2922e458648f6403e8619c779626df"
+    },
+    {
+      "path": "skills/core/docs/vision/alignment.md",
+      "sha256": "1985bd812b987e03d61697d3875cc3ad459abb7666ffa36d9e7809de99bd2e3a"
+    },
+    {
+      "path": "skills/core/docs/vision/README.md",
+      "sha256": "886f9158d82856072296dce71c83620580307c1e9ac4a78f46d2d398e1065921"
+    },
+    {
+      "path": "skills/core/README.md",
+      "sha256": "0eeae0914c308ffdb0ef4180e78fe30196dd3fb0cf738274459f3d0772532900"
+    },
+    {
+      "path": "skills/install/claude/AGENTS.md",
+      "sha256": "7a6003a4430fbbaae6e124f5e1f5c5dc6d238de6841e534b00ed7b71f4664f6e"
+    },
+    {
+      "path": "skills/install/claude/skills/audit/SKILL.md",
+      "sha256": "15e078b255b6e1e27177ed46c71a0fb5788c1af447e3a49499267412a0e108e9"
+    },
+    {
+      "path": "skills/install/claude/skills/govern/SKILL.md",
+      "sha256": "d4acc96b61c1d878f9703560927992f22e57ad0c497bc6547b599a968a509bb5"
+    },
+    {
+      "path": "skills/install/claude/skills/vision/SKILL.md",
+      "sha256": "746fad9b96e5b17ab26ff3809d8fe56ea6910aafc8119284816ddf40c2d81c7d"
+    },
+    {
+      "path": "skills/install/claude/skills/vision-audit/SKILL.md",
+      "sha256": "ab4ac81664be52221ddd7115fba5add03ee0815104bd87c88694b1d45737f95c"
+    },
+    {
+      "path": "skills/install/codex/skills/audit/SKILL.md",
+      "sha256": "6d06f7d9d0add01429cb17619ec36e060a4b248e2df7feb93ec32b68e2e87d69"
+    },
+    {
+      "path": "skills/install/codex/skills/govern/SKILL.md",
+      "sha256": "64c78045adc5abfd6142c3d1acdf10c7571c419bfb41f7ef58e9170bf92c6a49"
+    },
+    {
+      "path": "skills/install/codex/skills/vision/SKILL.md",
+      "sha256": "f20f69a31c55453a03d9369a374301b8f65d9e6da3950a16f251fc3f47b481f8"
+    },
+    {
+      "path": "skills/install/codex/skills/vision-audit/SKILL.md",
+      "sha256": "a128a2faa9e93b6fd01c5c887453663c2714a0523798e65ad7c8b2696bc2015c"
+    },
+    {
+      "path": "skills/install/copilot/copilot-instructions.md",
+      "sha256": "ba759e9e6e9472dbc3110beaa9f99b1cb762d66cbe8403774b894da37d2291e1"
+    },
+    {
+      "path": "skills/install/copilot/prompts/audit.md",
+      "sha256": "9c997b4323364b810118935bf6b676d14360d98cd7561be07cd807b1e1808468"
+    },
+    {
+      "path": "skills/install/copilot/prompts/govern.md",
+      "sha256": "887e8d029f2b274cc518dbae496c8b90ae2539dc8db05b1a012b298740ba8675"
+    },
+    {
+      "path": "skills/install/copilot/prompts/log-decision.md",
+      "sha256": "eab3a6bc8e1061f23589e06c18a91c515192b80ecd6db6ea4446e34e05f9f1c9"
+    },
+    {
+      "path": "skills/install/copilot/prompts/new-goal.md",
+      "sha256": "b181694d85ceae58c17e98009b4c1e1e7bea8fdc047047f29419ad955850f963"
+    },
+    {
+      "path": "skills/install/copilot/prompts/update-execution.md",
+      "sha256": "4cf514f47628a7c0aba25862287ce51c866bc5d5ca0bce8b697c86bc45587333"
+    },
+    {
+      "path": "skills/install/copilot/prompts/vision-audit.md",
+      "sha256": "b779928669f9fcba9f2a3875e0a7a3ec750c176beb58557d6e4c14316ce4b32d"
+    },
+    {
+      "path": "skills/install/copilot/prompts/vision.md",
+      "sha256": "3857bcfd8b6de28454a78610915cbd6e8ca1121a9f70c901d924e8323652ae16"
+    },
+    {
+      "path": "skills/install/copilot/prompts/write-audit.md",
+      "sha256": "61c16274b0d872def9aa19e8c9fbf5f3b014d8144b611084e1cb93efc98fcfd8"
+    },
+    {
+      "path": "skills/install/grok/skills/audit/SKILL.md",
+      "sha256": "fae2de5dee3ce72c97ef6d7d0d7deefe389ff05ac6f401fb5c05036353cdd133"
+    },
+    {
+      "path": "skills/install/grok/skills/govern/SKILL.md",
+      "sha256": "96102d3a72fadc18497b3b677a85949634769643689851279b7893d8a22b1b01"
+    },
+    {
+      "path": "skills/install/grok/skills/vision/SKILL.md",
+      "sha256": "2851f037865ba9db25c40fb145bcf785862ee284c4c391faebf1d06804f47d39"
+    },
+    {
+      "path": "skills/install/grok/skills/vision-audit/SKILL.md",
+      "sha256": "fcbc2d31631311aae55fcd09b2a82d2f345bf8fb3ca5fd005a6c864c93ef8fff"
+    },
+    {
+      "path": "skills/install.ps1",
+      "sha256": "ec5ff40bd53b63ff3e7c20da9cf7f941933fe810210b62c4aed35bbf961237cc"
+    },
+    {
+      "path": "skills/install.sh",
+      "sha256": "cf466b9b059e16a766703b1485ee357eb90d3d0bdf8338c0d77069189ff06678"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "17d903ff8547aa07d642e2d0f9d0ed4aa0925a7a5512c6aa8dfe6a1175a9013f"
+    },
+    {
+      "path": "skills/prompts/01-create-new-goal.md",
+      "sha256": "6877685f8b150695e193c1b68a61ba346cfc8f5d1dadeaf9d24a6eca466ad521"
+    },
+    {
+      "path": "skills/prompts/02-record-decision.md",
+      "sha256": "2bf3bbc1df4d2854b7a45ffcf648eb7a7483d39181baadeb8a57e5fdd8a8228e"
+    },
+    {
+      "path": "skills/prompts/03-update-execution.md",
+      "sha256": "ed701d8543957db57c867125db7f67cfead82f2305b87013d2351d36a3329a05"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "284e226b8bca8b509f85ce8425de23a4fe689097ae7f4fee65457de2361c16df"
+    },
+    {
+      "path": "skills/prompts/05-independent-audit.md",
+      "sha256": "213b7989092c436d22378fc4519acf7928d049e7177a149f13b9d196515351e7"
+    },
+    {
+      "path": "skills/prompts/06-vision-orchestrator.md",
+      "sha256": "54c6ba619646f4e1a9b20560fd02a1a7dec9369dd824174882b6b72bcaf95123"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "948f95d33fcf5ca62c98a09229d053103ca5edbe5960f51439bd18f70cc9d622"
+    },
+    {
+      "path": "skills/prompts/README.md",
+      "sha256": "f98c41ea233e46a360f6c62c48ffc6fbe5087c715b3bd42789dedf8dfcb530b9"
+    },
+    {
+      "path": "skills/README.md",
+      "sha256": "e9d2fab319110605f53568f7f62a91094942821b414e97e8976fbbe3efefbf8f"
+    },
+    {
+      "path": "skills/templates/README.md",
+      "sha256": "69093d19014e97f7895778bf451cf33f31b92179de7f0b8d3fb9efabe316727f"
+    },
+    {
+      "path": "skills/tests/test_install_ps1_isolated.ps1",
+      "sha256": "1beaeee8bb8859db3448547d23b919e52fb1878fa9e33a27b4fdb69f0514ec58"
+    },
+    {
+      "path": "skills/tests/test_skills_orchestrator.py",
+      "sha256": "dc2e6e90056f07d689592e48a1be2572e01b2522579af5efa302fa04e3bc739a"
+    },
+    {
+      "path": "skills/update.ps1",
+      "sha256": "aae2b418404c7e6f5420269306662bbcac4f0605e0c805521d9816bf0a2f98bf"
+    },
+    {
+      "path": "skills/update.py",
+      "sha256": "0551a8237f7a55913808de0b9ae16376381e0c756eebb7b089d02aca71dc156b"
+    },
+    {
+      "path": "skills/update.sh",
+      "sha256": "3f463d0322b5ea96aac9f364c54211884402f7caf506941b1557205459fb167c"
+    }
+  ],
+  "workingTree": {
+    "statusShort": [
+      "M docs/workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/03-audit.md",
+      "?? docs/workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/03-audit/A-001-independent-close-out.md",
+      "?? docs/workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/attachments/s4-compatibility-report-2026-08-04.json"
+    ],
+    "clean": false
+  }
+}

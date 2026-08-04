@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 决策记录 · GOAL-001
@@ -60,7 +60,7 @@ R1 首交付为 **GOAL-002-codex-skills-entry**：为 Codex 增加与现有 Clau
 
 ## D-003 · 确认 R1 收口（2026-07-31）
 
-**状态**：accepted  
+**状态**：accepted
 **触发**：用户 `/govern` 工作区2 · **确认 R1 收口**  
 **依据**：GOAL-002 `done` + A-001/A-002 pass + A-003 响应；Root I-001 verified
 
@@ -139,3 +139,30 @@ R1 首交付为 **GOAL-002-codex-skills-entry**：为 Codex 增加与现有 Clau
 ### 为什么
 
 R2 的首批五项问题已有实现、兼容回归、consumer 包抽样与双来源审计；没有开放 required finding。R3 的 VP 退出准备是下一独立阶段，不能借 R2 完成静默启动或宣称方向关门。
+
+## D-006 · 启动 R3 并创建 GOAL-004 退役冻结 Web 资产（2026-08-04）
+
+**状态**：accepted
+
+**触发**：用户决定彻底移除冻结 Web 资产、挂起对应 VP，并明确允许在 workspace-002 新建目标记录实施。
+
+### 决定
+
+1. 启动 Root **R3 有界闭环验证与 VP 退出准备**；创建 [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/) 承接一次性删除、producer gate 收束、保护验证与 independent close-out。
+2. GOAL-004 的 `primary_plan` 仍为 **VP-002**：这是本活动工作区的仓库卫生/退出准备，不是 VP-003 产品实施；VP-003 只作为跨区决策对象保持 `planned` 且正式挂起。
+3. workspace-001 的历史所有权由其 Root **D-029** 后置授权；本区不跨区设置 `parent`，也不重开封存 Root。
+4. R3 改为**进行中**，Root progress 保持 **2/3 = 67%**；GOAL-004 关门不自动等于 R3/Root/VP-002 关门，退出判据仍须另行核对。
+5. 审计模式固定为 **independent**；不改核心方法论/Skills 行为，不发布新版本。
+
+### 为什么
+
+- 删除横跨 Web 源码、CI、release evidence、compatibility matrix 与现行叙事，具备独立范围、门禁和证据，应建立单独目标。
+- R3 本来负责有界验证与 VP 退出准备；消除冻结资产造成的反复回归/审计成本，正是收束 producer 仓维护边界的一部分。
+
+### 未选方案
+
+| 方案 | 未选理由 |
+|------|----------|
+| 在 workspace-001 新建 GOAL-024 | archived Root 已 done，违反封存纪律 |
+| 只写 VP、不建实施目标 | 无法追踪删除、测试和 independent audit 闭环 |
+| 因启动 R3 把 progress 提高到 100% | progress 只按完成阶段计数；R3 尚未完成 |

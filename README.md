@@ -6,7 +6,7 @@
 
 1. **VP-001** 奠基 — **closed**（`workspace-001` Root 有界 **done**，过程树封存）  
 2. **VP-002** 真实项目反馈演进 — **active**（`workspace-002` delivery 已承接）
-3. **VP-003** 人类 UI — **planned**（本仓 `web/` 为冻结参考；预期通用基架）
+3. **VP-003** 人类 UI — **planned + 正式挂起**（冻结 Web 资产已退役；恢复须新决策与通用基架）
 
 ## 从这里开始
 
@@ -20,7 +20,7 @@
 | Skills 如何安装 / 升级 | [skills/README.md](skills/README.md)（**双入口**：在线 bootstrap 或包内 `install.*`；安装后用 `update.*`；skills zip **内嵌** core） |
 | Skills 如何打包 / 发布附件 | [docs/releases/README.md](docs/releases/README.md)、`scripts/pack_skills_release.py`、`scripts/pack_core_release.py` |
 | 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
-| Web（冻结参考） | [web/README.md](web/README.md) |
+| 冻结 Web 退役决策与执行 | [workspace-002 GOAL-004](docs/workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/00-meta.md) |
 
 ## 在其他项目中安装 Skills（双入口）
 
@@ -114,19 +114,13 @@ goal-governance/
 │   ├── templates/            # docs/templates 的分发镜像
 │   ├── contracts/            # docs/contracts 的分发镜像
 │   └── install.*
-├── web/                      # 冻结参考：有界 FastAPI 工作台（非现行投资面）
-│   ├── main.py
-│   ├── requirements.txt
-│   ├── README.md
-│   ├── static/
-│   └── templates/
 ├── .editorconfig
 └── .gitignore
 ```
 
 - **核心文档层**：`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 定义方法论、协议、模板和消费适配器兼容契约；每个 `docs/workspace-<NNN>-<slug>/` 保存自身目标实例。
 - **`skills/`**：**现行主消费适配器**——AI/Agent 编排、审计、愿景入口、宿主安装与离线分发。
-- **`web/`**：**冻结参考实现**（阶段 6 有界成果）。可读 + 受控写契约样本仍在，**默认不**作为产品推进面；详情见 [web/README.md](web/README.md)。
+- **Web**：冻结参考实现已由 workspace-002 GOAL-004 物理退役；历史目标与审计证据仍保留在 `docs/workspace-001-goal-governance/`，未来 UI 不从旧资产自动恢复。
 - **一个真相源**：Skills（及任何未来 UI）消费同一工作区文档协议，不建立独立状态。
 
 ## 目标模型（摘要）
@@ -143,14 +137,6 @@ goal-governance/
 - **GOAL-002～007**：初始化、Skills 闭环、Goal 数据模型、核心方法论与信息就绪治理均已结项。
 - **GOAL-008**：当前三宿主 `/govern` 的最低可用已验证；完整跨宿主/跨版本发布一致性保持 deferred required，在首次支持新宿主/版本或首次对外/可复现发布时复核。
 
-## Web（冻结参考 · 非默认路径）
+## 人类 UI（未来适配器类）
 
-本仓 Web **不是**当前产品投资面。若需查阅历史有界实现或跑参考回归，见 [web/README.md](web/README.md)（含启动方式）。日常协作请用 **Skills**（`/govern`、`/audit`、`/vision`、`/vision-audit`）。
-
-## 当前 Web 模块
-
-- **目标概览**：展示目标、状态、进度及目标树 / 文档诊断。
-- **目标详情**：展示成功标准、附件、Decision、Execution 和 Audit 的基础信息，并在需要时回退到原始 Markdown。
-- **兼容入口**：`/decision`、`/execution`、`/audit` 会跳回目标工作台。
-
-当前 Web 是读取运行中工作区目标文档的只读工作台，而非仅有页面与路由骨架。它直接以 `docs/workspace-001-goal-governance/` 为当前真相源，不使用独立数据库或第二状态层，因此没有需要与目标文件“同步”的副本；当前也不提供 Web 写入、创建/更新或写入同步。任何写入能力须由独立目标实现，并遵守同一文档协议与审计约束。
+本仓不再携带 Web 运行时或回归资产。VP-003 仍保留未来人类 UI 的方向，但当前无产品实现、无排期、无绑定工作区；恢复须新的书面决策、通用基架边界和独立审计。日常协作请用 **Skills**（`/govern`、`/audit`、`/vision`、`/vision-audit`）。

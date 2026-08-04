@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.7.0
+version: 1.0.0
 ---
 
 # 执行记录 · GOAL-001
@@ -65,11 +65,31 @@ version: 0.7.0
 - D-009 将子目标标为 `done`；Root D-005 将 R2 标为完成。
 - Root progress 由 1/3 = 33% 派生为 2/3 = 67%；Root 仍 `active`，R3 未开始。
 
+### 2026-08-04 · GOAL-004 立项 + Root R3 启动
+
+- 用户决定彻底退役冻结 Web 资产、正式挂起 VP-003，并允许在本工作区建立实施目标。
+- workspace-001 Root D-029 完成历史授权；VP-003 保持 `planned` 并写明正式挂起与重新激活条件。
+- D-006 创建 [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/) 完整五件套；S1 决策/库存/保护边界完成，目标 `active / 25%`。
+- Root R3 改为**进行中**；Root progress 仍为 **2/3 = 67%**。尚未宣称物理删除、回归、independent audit、R3 或 VP-002 关门完成。
+
+### 2026-08-04 · GOAL-004 S2 / S3 完成
+
+- `web/` 物理资产与主动 CI/release/compatibility 依赖已清除；VP-003 仍为 `planned` 且正式挂起。
+- canonical/mirror stage、保护路径检查、三宿主 compatibility readiness 与完整非 Web rehearsal 均通过；GOAL-004 为 `active / 75%`。
+- S4 independent close-out 尚未执行；Root R3 保持进行中，Root progress 仍为 **2/3 = 67%**。
+
+### 2026-08-04 · GOAL-004 关门；Root R3 保持进行中
+
+- A-003 independent finding-closure 在 clean checkpoint `80df540` 上给出 `pass`；F-001 `fixed`，F-002 non-blocking，开放 required = 0。
+- D-006 将 GOAL-004 同步为 `done / 100%`；冻结 Web 资产、主动依赖和对应回归面已完成退役，VP-003 保持 `planned` 且正式挂起。
+- 本子目标关门只完成 R3 的一次性仓库卫生切片。Root R3 仍为**进行中**，Root progress 仍为 **2/3 = 67%**；Root/VP-002 退出需要单独审视，不从 A-003 自动继承。
+- 本轮没有创建 tag、GitHub Release 或新方法论 / Skills 版本。
+
 ## 待办
 
-1. 等待下一次 `/govern` 决定是否启动 R3（有界闭环验证与 VP 退出准备）。
-2. Web CT legacy writer 仅在子目标记录的触发条件出现时立项复审。
+1. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
+2. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
 
 ## 进度评估
 
-Root 纲领 **2/3** 阶段完成（R1、R2）；R3 未开始；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。
+Root 纲领 **2/3** 阶段完成（R1、R2）；R3 进行中；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。

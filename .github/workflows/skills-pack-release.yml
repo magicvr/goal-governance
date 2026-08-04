@@ -155,7 +155,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install check dependencies
-        run: python -m pip install -r scripts/requirements.txt -r web/requirements.txt
+        run: python -m pip install -r scripts/requirements.txt
 
       # Evidence gate must run on a clean tree. Download pack artifacts only after it passes
       # (untracked pack-out/ would fail `git status --short` clean-tree checks).
@@ -173,7 +173,6 @@ jobs:
             --mode release \
             --tag "${TAG}" \
             --run-checks \
-            --include-web \
             --compatibility-report "${REPORT_DIR}/compatibility-report.json" \
             --output "${REPORT_DIR}/release-evidence.json"
           mkdir -p "${GITHUB_WORKSPACE}/../release-assets"
