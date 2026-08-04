@@ -2,14 +2,18 @@
 title: Goal Tree · 目标树与进展总览
 status: archived
 created: 2026-07-18
-updated: 2026-07-31
+updated: 2026-08-04
 parent: null
-version: 1.2.0
+version: 1.2.1
 ---
 
 # Goal Tree
 
 > **工作区封存（2026-07-31）**：Root **GOAL-001 `done`**；VP-001 **closed**。本树**不再**分配新编号。演进 → **VP-002** + **[workspace-002-methodology-skills-feedback](../workspace-002-methodology-skills-feedback/)**（已开区）。
+
+## 2026-08-04 · Root D-029 后置授权：退役冻结 Web
+
+用户决定冻结 Web 的持续回归/审计成本已超过价值。[D-029](GOAL-001-main-vision/01-decision/D-029-retire-frozen-web-assets.md) 窄幅取代 D-027 的“不默认删除”约束；Root 仍 **`done`**、本区仍 **archived**，不新建 GOAL-024。物理退役由 [workspace-002 GOAL-004](../workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/) 承接；VP-003 保持 `planned` 并正式挂起。全树 status/progress 不变。
 
 ## 2026-07-31 · workspace-002 已开（指针 · 非本区目标）
 
@@ -540,7 +544,7 @@ GOAL-001-main-vision · 交付可复用的目标治理方法论、文档协议�
 | GOAL-022-docs-ssot-skills-mirror-stage | 方法论单一真相源与 Skills 镜像 stage 化 | GOAL-001-main-vision | done | 100% | [GOAL-022-docs-ssot-skills-mirror-stage/](GOAL-022-docs-ssot-skills-mirror-stage/) |
 | GOAL-023-skills-core-dual-asset-install | Skills/Core 双资产分发与双入口安装 | GOAL-001-main-vision | done | 100% | [GOAL-023-skills-core-dual-asset-install/](GOAL-023-skills-core-dual-asset-install/) |
 
-**Root GOAL-001：`done`（有界奠基 · D-028 / A-021）**。阶段 6 有界 + Web 冻结（≠ 产品终态；**R-009-X** → VP-003）。全树子目标 done。**本区无下一编号**。演进：**VP-002** + 待开 workspace-002。
+**Root GOAL-001：`done`（有界奠基 · D-028 / A-021）**。阶段 6 历史有界；D-029 已授权物理退役冻结 Web（≠ 关闭 **R-009-X**；VP-003 正式挂起）。全树子目标 done。**本区无下一编号**。演进与退役实施：**VP-002** + workspace-002。
 
 ## 状态图例
 

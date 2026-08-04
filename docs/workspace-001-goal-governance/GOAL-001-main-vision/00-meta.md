@@ -7,13 +7,13 @@ plan_refs: VP-001-governance-platform-delivery
 primary_plan: VP-001-governance-platform-delivery
 serves_summary: 奠基 Root（有界 done）；服务已关 VP-001 / vision-goal-governance@0.2.0；演进见 VP-002 + workspace-002-methodology-skills-feedback
 created: 2026-07-18
-updated: 2026-07-31
-version: 1.0.1
+updated: 2026-08-04
+version: 1.0.2
 ---
 
 # GOAL-001 · 交付可复用的目标治理方法论、文档协议与消费工具
 
-## 现时摘要（2026-07-31）· 单一权威入口 · **有界关门**
+## 现时摘要（2026-08-04）· 单一权威入口 · **有界关门**
 
 > **本文件现时 status 只以本节为准**。完整树见 [goal-tree.md](../goal-tree.md)。
 >
@@ -31,6 +31,7 @@ version: 1.0.1
 | **子目标** | GOAL-002～023 均 `done / 100%` |
 | **本区编号** | **封存**（不再分配 GOAL-024+） |
 | **工作区** | `workspace-001-goal-governance` · `status: archived` |
+| **后置决策** | [D-029](01-decision/D-029-retire-frozen-web-assets.md)：授权退役冻结 Web；实施由 workspace-002 GOAL-004 承接，Root 不重开 |
 
 ### 交付面结项
 
@@ -38,7 +39,7 @@ version: 1.0.1
 |--------|------|------|
 | 核心方法论与模板 | 奠基 done | 修正 → **VP-002** |
 | Skills | 奠基 done | F-006 等 → **VP-002** |
-| Web | 有界 + 冻结 | R-009-X → **VP-003** |
+| Web | 历史有界；物理退役进行中 | R-009-X → **VP-003**（`planned` + 正式挂起） |
 
 ### 愿景栈（关门时）
 
@@ -61,7 +62,7 @@ version: 1.0.1
 
 1. **禁止**在本树新建子目标或改回 active 假装未关（除非用户新 D 重开）。  
 2. **演进区已开**：[workspace-002-methodology-skills-feedback](../../workspace-002-methodology-skills-feedback/) · Root + GOAL-002（Codex Skills 入口）；推进请对该区 `/govern`。  
-3. 只读查阅本区过程树与冻结 `web/` 参考实现。
+3. 只读查阅本区历史过程；冻结 `web/` 资产的退役事实由 workspace-002 GOAL-004 记录。
 
 ---
 
@@ -82,7 +83,7 @@ version: 1.0.1
 | Charter | [vision-goal-governance@0.2.0](../../../vision/charter.md) |
 | plan_refs | `VP-001-governance-platform-delivery` |
 | primary_plan | [VP-001-governance-platform-delivery](../../../vision/plans/VP-001-governance-platform-delivery.md) |
-| serves_summary | 本 Root 是 primary 工作区的可治理总目标：展开区内路线图与子目标，推进 VP-001（协议 + Skills；本仓 Web 冻结参考），而不把仓库 Charter 标为可 `done` 的 Goal。 |
+| serves_summary | 本 Root 是 primary 工作区的可治理总目标：展开区内路线图与子目标，推进 VP-001（协议 + Skills；Web 历史切片其后由 D-029 授权退役），而不把仓库 Charter 标为可 `done` 的 Goal。 |
 
 ## 2026-07-22 · 阶段 6 有界结项（D-015 / A-014）
 

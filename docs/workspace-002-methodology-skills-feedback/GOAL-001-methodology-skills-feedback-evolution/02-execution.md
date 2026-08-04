@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 执行记录 · GOAL-001
@@ -65,11 +65,18 @@ version: 0.7.0
 - D-009 将子目标标为 `done`；Root D-005 将 R2 标为完成。
 - Root progress 由 1/3 = 33% 派生为 2/3 = 67%；Root 仍 `active`，R3 未开始。
 
+### 2026-08-04 · GOAL-004 立项 + Root R3 启动
+
+- 用户决定彻底退役冻结 Web 资产、正式挂起 VP-003，并允许在本工作区建立实施目标。
+- workspace-001 Root D-029 完成历史授权；VP-003 保持 `planned` 并写明正式挂起与重新激活条件。
+- D-006 创建 [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/) 完整五件套；S1 决策/库存/保护边界完成，目标 `active / 25%`。
+- Root R3 改为**进行中**；Root progress 仍为 **2/3 = 67%**。尚未宣称物理删除、回归、independent audit、R3 或 VP-002 关门完成。
+
 ## 待办
 
-1. 等待下一次 `/govern` 决定是否启动 R3（有界闭环验证与 VP 退出准备）。
-2. Web CT legacy writer 仅在子目标记录的触发条件出现时立项复审。
+1. 推进 GOAL-004 的 S2～S4：资产删除、主动依赖/叙事收束、完整验证与 independent close-out。
+2. GOAL-004 关门后另核对 R3 / Root / VP-002 退出判据，不自动关门。
 
 ## 进度评估
 
-Root 纲领 **2/3** 阶段完成（R1、R2）；R3 未开始；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。
+Root 纲领 **2/3** 阶段完成（R1、R2）；R3 进行中；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。

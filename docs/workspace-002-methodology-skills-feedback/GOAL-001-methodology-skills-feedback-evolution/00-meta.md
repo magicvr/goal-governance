@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-08-04
-version: 0.6.0
+version: 0.7.0
 progress: 67%
 ---
 
@@ -33,13 +33,13 @@ progress: 67%
 |------|------|------|------|
 | **R1** | 消费宿主补齐与入口一致 | **完成**（2026-07-31） | claude / copilot / grok 既有；Codex 经 [GOAL-002](../GOAL-002-codex-skills-entry/) 补齐（install 面 + 主入口 runtime）；用户 `/govern` 确认收口（D-003） |
 | **R2** | 反馈驱动的协议 / Skills 修正 | **完成**（2026-08-04） | [GOAL-003](../GOAL-003-consumer-governance-ergonomics/) `v0.12.0` 正式 Release / consumer update / A-006 independent pass；F-001 fixed，开放 required = 0 |
-| **R3** | 有界闭环验证与 VP 退出准备 | 未开始 | 对齐 VP-002 退出判据；证据可核对后才议 VP 关门 |
+| **R3** | 有界闭环验证与 VP 退出准备 | **进行中**（2026-08-04） | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 先退役冻结 Web 资产并验证 producer/Skills 边界；不因此自动关闭 Root 或 VP-002 |
 
 同一纲领阶段内可并行多个子目标；阶段间通常串行。
 
 ## 派生进度展示
 
-`progress: 67%` = 纲领阶段 R1～R3 中已完成 **2 / 3**（等权：R1/R2 完成，四舍五入）。R2 恢复完成的依据是 GOAL-003 D-011 与 A-006/A-007；progress **仅展示**，不启动 R3、不推导 Root `done`。
+`progress: 67%` = 纲领阶段 R1～R3 中已完成 **2 / 3**（等权：R1/R2 完成，R3 进行中，四舍五入）。R2 恢复完成的依据是 GOAL-003 D-011 与 A-006/A-007；progress **仅展示**，不把 R3 启动推导为 Root `done`。
 
 ## 信息就绪与未知项
 
@@ -64,9 +64,10 @@ progress: 67%
 |----|-------|--------|
 | [GOAL-002-codex-skills-entry](../GOAL-002-codex-skills-entry/00-meta.md) | 添加 Codex 可用的 Skills 入口 | done |
 | [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/00-meta.md) | 修复消费仓门禁与长流程治理摩擦 | done |
+| [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/00-meta.md) | 移除冻结 Web 资产并挂起 VP-003 | active |
 
 ## 备注
 
-- 开区决策见 [01-decision.md](01-decision.md) D-001；R1 收口见 **D-003**；R2 启动见 **D-004**。
+- 开区决策见 [01-decision.md](01-decision.md) D-001；R1 收口见 **D-003**；R2 启动见 **D-004**；R3 启动见 **D-006**。
 - 编号自 GOAL-001 起；**不**延续 workspace-001 的 GOAL-024+。
 - R1 收口 **不**等于 Root 成功标准全勾、**不**等于 VP-002 可关门；GOAL-002 I-003（矩阵 committed）仍 non-blocking residual，不阻断 R1。

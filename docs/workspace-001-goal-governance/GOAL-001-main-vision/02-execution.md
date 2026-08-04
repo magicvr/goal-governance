@@ -4,11 +4,19 @@ doc: execution
 status: done
 parent: null
 created: 2026-07-18
-updated: 2026-07-31
-version: 0.5.0
+updated: 2026-08-04
+version: 0.6.0
 ---
 
 # 执行记录 · GOAL-001
+
+## 执行索引（legacy inline + 新增平铺记录）
+
+| E-ID | 日期 | 标题 | 状态 | 文件 |
+|------|------|------|------|------|
+| E-001 | 2026-08-04 | D-029 授权后的 Web 资产退役交接至 workspace-002 | recorded | [02-execution/E-001-web-retirement-handoff.md](02-execution/E-001-web-retirement-handoff.md) |
+
+> 既有日期时间线保留为 legacy inline；新事实从 `02-execution/` 写入。
 
 总目标的执行通过子目标推进。本文件只记录根目标层的里程碑与协调事项。
 
