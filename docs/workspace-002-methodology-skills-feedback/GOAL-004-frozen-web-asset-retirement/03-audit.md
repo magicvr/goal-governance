@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-04
 updated: 2026-08-04
-version: 0.1.0
+version: 0.3.0
 ---
 
 # 审计 · GOAL-004
@@ -17,15 +17,15 @@ version: 0.1.0
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
 | 影响本 scope 的 I-00N | I-001～I-003 **verified** | 删除、VP 状态与保护边界已冻结 |
-| 到期 required 是否已 verified / residual | S2 可实施 | S3 保护验证与 S4 independent 尚未完成 |
+| 到期 required 是否已 verified / residual | I-001～I-003 verified；F-001 fixed candidate | S4 重跑证据已持久化，等待 independent finding-closure |
 | 资料引用（若有）是否固定且用户确认 | 无 | live repository scan + 用户书面决策 |
 
 ## 意见台账索引
 
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
-| — | — | — | — | — | independent close-out 尚未执行 | — |
+| A-001 | 2026-08-04 | independent | GOAL-004 S1-S4 close-out；9ae56da 对照 e7a49be | conditional | F-001 required | [03-audit/A-001-independent-close-out.md](03-audit/A-001-independent-close-out.md) |
 
 ## 结论状态
 
-S1 完成；尚未到达 close-out 审计节点。
+S1-S3 已完成事实核验；A-001 independent verdict 为 `conditional`。D-004/E-004 已补齐 F-001 fixed 候选证据，但在新的 independent finding-closure 落盘前仍按 open 处理并阻断关门。
