@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import contextlib
 import importlib.util
+import io
 import json
 import shutil
 import subprocess
@@ -96,6 +98,10 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self._git(root, "init")
         self._git(root, "config", "user.name", "Goal Governance Tests")
         self._git(root, "config", "user.email", "tests@example.invalid")
+        # Auto-gc can detach a background process writing .git/objects after
+        # commit/tag, racing TemporaryDirectory cleanup (flaky CI: Errno 39
+        # Directory not empty on Linux runners). Temp fixtures never need gc.
+        self._git(root, "config", "gc.auto", "0")
         self._git(root, "add", ".")
         self._git(root, "commit", "-m", "test contracts")
 
@@ -121,6 +127,9 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self._git(root, "init")
         self._git(root, "config", "user.name", "Goal Governance Tests")
         self._git(root, "config", "user.email", "tests@example.invalid")
+        # See _init_contract_repo: disable auto-gc so no background process
+        # outlives the git command and races temp-dir cleanup.
+        self._git(root, "config", "gc.auto", "0")
         self._git(root, "add", ".")
         self._git(root, "commit", "-m", "test release")
         self._git(root, "tag", "-a", f"v{version}", "-m", f"release {version}")
@@ -378,7 +387,9 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                         run_checks=True,
                     )
 
-        with tempfile.TemporaryDirectory(prefix="gg-release-changelog-") as tmp:
+        with tempfile.TemporaryDirectory(
+            prefix="gg-release-changelog-", ignore_cleanup_errors=True
+        ) as tmp:
             root = Path(tmp)
             self._copy_contract_surfaces(root)
             (root / "payload.txt").write_text("payload\n", encoding="utf-8")
@@ -491,13 +502,18 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
                 release_evidence,
                 "_run_check",
                 side_effect=check_results,
-            ):
+            ), contextlib.redirect_stderr(io.StringIO()) as captured:
                 result = release_evidence.main(
                     ["--mode", "rehearsal", "--run-checks", "--output", str(output)]
                 )
             evidence = json.loads(output.read_text(encoding="utf-8"))
         self.assertEqual(result, 1)
         self.assertFalse(evidence["checksPassed"])
+        # Failure diagnostics must name the failed check(s) with command and exit code.
+        self.assertIn("failed check: skills-contract-tests", captured.getvalue())
+        self.assertIn("failed check: diff-whitespace", captured.getvalue())
+        self.assertIn("exitCode: 1", captured.getvalue())
+        self.assertIn("forced failure", captured.getvalue())
 
     def test_malformed_compatibility_report_fails_cleanly(self) -> None:
         with tempfile.TemporaryDirectory(prefix="gg-release-malformed-") as tmp:
