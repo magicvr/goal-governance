@@ -100,15 +100,18 @@ Copy-Item (Join-Path $target 'docs\templates\vision\vision-plan.md') (Join-Path 
 | `docs/vision/README.md` | 目录入口（可从本包 `docs/vision/README.md` 复制后改写，或极简自拟） |
 | `docs/vision/roadmap.md` | 组合编排索引；至少列出本 VP |
 | `docs/vision/revisions.md` | Charter 修订台账（可仅表头 + 初建一行） |
-| `docs/vision/reviews.md` | Vision Review 台账；Charter 初建后**宜**有一条 VRev（可为 self），文件本身为 MUST |
+| `docs/vision/reviews.md` | Vision Review 稳定索引；文件本身为 MUST |
+| `docs/vision/reviews/VRev-NNN-<slug>.md` | 单条正式报告；Charter 初建后宜有一条 self VRev，新安装从第一条起使用目录 |
 | `docs/vision/workspaces.md` | 工作区贡献图（开区前可写「尚无区」；开区后更新） |
 | `docs/vision/consumer-checklist.md` | 与 alignment MUST 表一致的勾选（可从本包复制） |
 
 ```powershell
 # 示例：从源仓复制愿景树骨架后改写（路径按实际调整）
-foreach ($name in @('README.md','roadmap.md','revisions.md','reviews.md','workspaces.md','consumer-checklist.md')) {
+foreach ($name in @('README.md','roadmap.md','revisions.md','workspaces.md','consumer-checklist.md')) {
   Copy-Item (Join-Path $source "docs\vision\$name") (Join-Path $vision $name) -ErrorAction SilentlyContinue
 }
+Copy-Item (Join-Path $source 'docs\templates\vision\reviews-index.md') (Join-Path $vision 'reviews.md')
+New-Item -ItemType Directory -Path (Join-Path $vision 'reviews') -Force | Out-Null
 ```
 
 若源仓复制不可用，可手写极简占位文件，但**不得**省略文件名后仍宣称完整启用。规则权威仍是已复制的 `alignment.md`，不是 dogfood 过程记录。
@@ -198,7 +201,7 @@ GOAL-001-main-vision · <项目总目标> [active]
 3. **核对结果**：
    - `git rev-parse --is-inside-work-tree` → `true`
    - Charter `status: active`；VP `vision_ref` 精确匹配 Charter
-   - 愿景树 MUST 文件均存在：`README`、`roadmap`、`revisions`、`reviews`、`workspaces`、`consumer-checklist`、`alignment`
+   - 愿景树 MUST 文件均存在：`README`、`roadmap`、`revisions`、`reviews`、`workspaces`、`consumer-checklist`、`alignment`；已有 VRev 时每条索引都链接 `reviews/VRev-NNN-*.md`
    - `workspace.md` 含 `plan_refs` 与 `primary_plan`，且 VP 文件存在
    - Root `parent: null`；`id` = 文件夹名；五件套齐全  
 4. **边界**：无 `skills/` / `web/`；本验证不代表 Skills 安装或 Web 发布完成；保证等级默认 **L0**（见 principles P-003）。

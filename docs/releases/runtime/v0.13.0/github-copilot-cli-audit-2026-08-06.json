@@ -1,0 +1,122 @@
+{
+    "schemaId":  "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+    "format":  "goal-governance.host-runtime-evidence",
+    "formatVersion":  "1.0.0",
+    "capturedAt":  "2026-08-06T03:16:28.249605Z",
+    "unit":  {
+                 "consumer":  "github-copilot-cli",
+                 "entrypoint":  "audit",
+                 "protocolVersion":  "0.1.0"
+             },
+    "environment":  {
+                        "product":  "GitHub Copilot CLI",
+                        "version":  "1.0.75",
+                        "platform":  "Windows-10-10.0.26200-SP0",
+                        "provider":  null,
+                        "model":  null
+                    },
+    "behaviorSources":  [
+                            {
+                                "path":  "AGENTS.md",
+                                "sha256":  "f6e2982be48672dddad96c3fc88b15515b8110493aadfd3d961ef76fc8c1e177"
+                            },
+                            {
+                                "path":  ".github/copilot-instructions.md",
+                                "sha256":  "e52e60dad08c6a4faef546bd0feaa3c3ca5783d314b46d801fffe64d033b8018"
+                            },
+                            {
+                                "path":  "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
+                                "sha256":  "eec363bf8ba6ccf8b8db86078643736e4d2767be99feabfef68ec1a14919d807"
+                            },
+                            {
+                                "path":  "skills/prompts/05-independent-audit.md",
+                                "sha256":  "213b7989092c436d22378fc4519acf7928d049e7177a149f13b9d196515351e7"
+                            },
+                            {
+                                "path":  ".github/prompts/audit.prompt.md",
+                                "sha256":  "9c997b4323364b810118935bf6b676d14360d98cd7561be07cd807b1e1808468"
+                            },
+                            {
+                                "path":  "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-audit.txt",
+                                "sha256":  "64b43ab10c2266fb753d3d98c02164969e91188c9b97bb66c28a102b724eed92"
+                            }
+                        ],
+    "invocation":  {
+                       "command":  [
+                                       "powershell.exe",
+                                       "-NoProfile",
+                                       "-NonInteractive",
+                                       "-File",
+                                       "docs\\workspace-001-goal-governance\\GOAL-008-skills-consumer-adapter-release-consistency\\attachments\\runtime\\prompts\\copilot-cli-replay.ps1"
+                                   ],
+                       "cwd":  ".",
+                       "timeoutSeconds":  360.0,
+                       "inputSha256":  "64b43ab10c2266fb753d3d98c02164969e91188c9b97bb66c28a102b724eed92",
+                       "inputSummary":  "Read-only /audit dispatch probe requiring marker COPILOT_CLI_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+                   },
+    "result":  {
+                   "exitCode":  0,
+                   "verdict":  "pass",
+                   "marker":  "COPILOT_CLI_AUDIT_DISPATCH_OK",
+                   "markerObserved":  true,
+                   "assertionPolicy":  "marker+entrypoint+nontrivial-stdout@1",
+                   "assertions":  [
+                                      {
+                                          "id":  "dispatch-marker",
+                                          "kind":  "substring",
+                                          "pattern":  "COPILOT_CLI_AUDIT_DISPATCH_OK",
+                                          "bound":  {
+                                                        "entrypoint":  "audit",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      },
+                                      {
+                                          "id":  "entrypoint-token",
+                                          "kind":  "substring",
+                                          "pattern":  "audit",
+                                          "bound":  {
+                                                        "entrypoint":  "audit",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      },
+                                      {
+                                          "id":  "nontrivial-stdout",
+                                          "kind":  "min-extra-bytes",
+                                          "pattern":  "COPILOT_CLI_AUDIT_DISPATCH_OK",
+                                          "minExtraBytes":  16,
+                                          "bound":  {
+                                                        "entrypoint":  "audit",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      },
+                                      {
+                                          "id":  "extra-assert-1",
+                                          "kind":  "substring",
+                                          "pattern":  "audit",
+                                          "bound":  {
+                                                        "entrypoint":  "audit",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      }
+                                  ],
+                   "stdoutPath":  "docs/releases/runtime/v0.13.0/github-copilot-cli-audit-2026-08-06.d/stdout.txt",
+                   "stdoutSha256":  "89076f5d0ba8db9cb7f9b9903d451dbf18eec4a90a5d27fb03d8d838b025a1e1",
+                   "stdoutMode":  "raw",
+                   "stderrPath":  "docs/releases/runtime/v0.13.0/github-copilot-cli-audit-2026-08-06.d/stderr.txt",
+                   "stderrSha256":  "7635c4da9d1458da1487098a533d414bdbdac726b039ab35b16e06cf79b87503",
+                   "stderrMode":  "raw",
+                   "warnings":  [
+
+                                ],
+                   "reason":  "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+               },
+    "artifacts":  {
+                      "screenshots":  [
+
+                                      ]
+                  }
+}

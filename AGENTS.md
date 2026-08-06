@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-08-04
+updated: 2026-08-06
 parent: null
-version: 0.11.0
+version: 0.12.0
 ---
 
 # AGENTS.md
@@ -203,7 +203,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 4. **对齐递归**：子目标→父目标→Root→VP→Charter（源头）。机读字段链 + 语义不与上一级边界/非目标明显冲突。
 5. **所有工作区**必须 `plan_refs` + `primary_plan`；当前规范角色仅 `primary` / `delivery`，不存在 plan opt-out。
 6. 缺 plan、VP 缺失、或 `vision_ref` 与 charter 版本不一致 → **fail closed**。
-7. `docs/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 见 `docs/vision/reviews.md`（`VRev-00N`）。
+7. `docs/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 由 `docs/vision/reviews.md` 稳定索引与 `docs/vision/reviews/VRev-NNN-<slug>.md` 平铺报告共同构成。legacy inline 继续可读；新条目写报告并更新索引。
 8. 细则：`docs/vision/alignment.md`；原则全文 **P-006**；协议摘要：`docs/architecture/workspace-protocol.md` §4b。
 
 ## 6e. 级联流程、结构选型与分层审视（P-006 操作摘要）
@@ -383,7 +383,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | 按 prompts 文件定位包目录 | 包名可以是 `skills` 或其他 |
 | 独立审只出意见；编排器响应 | P-003 |
 | 审计意见写入 `03-audit/A-00N-*.md` 并更新索引（A-00N + source） | P-003 落盘 |
-| Vision Review → `docs/vision/reviews.md`（VRev-00N） | P-006；≠ Goal audit |
+| Vision Review → `docs/vision/reviews.md` 索引 + `reviews/VRev-NNN-*.md` 报告 | P-006；≠ Goal audit；self/independent 共用 VRev 序列 |
 | finding：fixed / residual / overruled | P-003 / Vision Review 同构 |
 | 冲突 / 是否自审 / residual → 问用户 + 建议 | P-004 |
 | 单愿景；冷启动 Charter→VP→区 | P-006；工作区角色仅 primary/delivery |

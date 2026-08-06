@@ -3,8 +3,8 @@ doc_type: vision-consumer-checklist
 title: 愿景体系消费方检查清单
 status: active
 created: 2026-07-28
-updated: 2026-07-30
-version: 0.4.1
+updated: 2026-08-06
+version: 0.5.0
 ---
 
 # 消费方检查清单
@@ -19,7 +19,7 @@ version: 0.4.1
 - [ ] 根 `AGENTS.md`（或等价 AI 规则）
 - [ ] `docs/README.md`
 - [ ] `docs/architecture/principles.md`、`workspace-protocol.md`
-- [ ] `docs/templates/goal-folder/`、`workspace-context.md`、`templates/vision/charter.md` + `vision-plan.md`
+- [ ] `docs/templates/goal-folder/`、`workspace-context.md`、`templates/vision/charter.md` + `vision-plan.md` + `reviews-index.md` + `review.md`
 - [ ] `docs/vision/alignment.md`、`README.md`
 - [ ] 愿景树 **MUST** 文件均存在（**不是**建议）：`roadmap.md`、`revisions.md`、`reviews.md`、`workspaces.md`、`consumer-checklist.md`
 - [ ] 分发 Skills/Web 时：`docs/contracts/` 消费契约存在
@@ -62,7 +62,7 @@ version: 0.4.1
 1. **完整安装？** 无 active Charter → 不完整；仅引导 Charter→VP  
 2. 读 charter 版本与 alignment 要点（单愿景、角色仅 primary/delivery、无 opt-out、宽阻断）
 3. 定位并校验当前 `workspace.md`（含**必填** plan 字段）  
-4. 解析 `primary_plan` → 读对应 VP；检查 `reviews.md` 开放 required（若影响本动作）  
+4. 解析 `primary_plan` → 读对应 VP；合并扫描 `reviews.md` legacy inline 与 `reviews/VRev-NNN-*.md`，检查开放 required（若影响本动作）
 5. 再扫该区 `goal-tree` 与目标五件套 / 审计意见  
 
 不得发明第二套愿景路径；任何工作区都不得省略 plan。
@@ -70,6 +70,6 @@ version: 0.4.1
 ## F. 愿景 vs Goal 入口（V-F-005）
 
 - [ ] self Vision Review / finding 响应 → **`/vision`**
-- [ ] independent Vision Review → **`/vision-audit`** → 仅 `docs/vision/reviews.md`
+- [ ] independent Vision Review → **`/vision-audit`** → `reviews/VRev-NNN-*.md` 报告 + `reviews.md` 索引
 - [ ] Goal 交叉审计 → **`/audit`** → 目标 `03-audit.md`（不写 `reviews.md`）
 - [ ] 实现推进 / Goal finding 响应 → **`/govern`**

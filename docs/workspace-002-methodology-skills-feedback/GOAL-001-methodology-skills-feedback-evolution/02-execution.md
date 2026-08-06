@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-08-04
-version: 1.0.0
+updated: 2026-08-06
+version: 1.1.0
 ---
 
 # 执行记录 · GOAL-001
@@ -85,10 +85,23 @@ version: 1.0.0
 - 本子目标关门只完成 R3 的一次性仓库卫生切片。Root R3 仍为**进行中**，Root progress 仍为 **2/3 = 67%**；Root/VP-002 退出需要单独审视，不从 A-003 自动继承。
 - 本轮没有创建 tag、GitHub Release 或新方法论 / Skills 版本。
 
+### 2026-08-06 · GOAL-005 立项与协议冻结
+
+- 用户提交 Vision Review 单文件持续增长问题，并授权 `/govern` 在工作区 2 完成方法论修改、PR、main 合并与新版本发布。
+- D-007 创建 [GOAL-005-vision-review-ledger-scaling](../GOAL-005-vision-review-ledger-scaling/) 完整五件套；其 D-001 冻结稳定索引 + 平铺 VRev 报告、legacy 兼容、现有记录迁移与发布终态。
+- GOAL-005 为 `active / 20%`（S1 1/5）；Root R3 保持进行中，Root progress 保持 2/3 = 67%。
+
+### 2026-08-06 · GOAL-005 S2～S4 完成
+
+- Vision Review 索引/报告迁移、canonical/Skills/安装同步、测试与 12 个 fresh runtime evidence 已完成；GOAL-005 E-002 记录 `32 + 42 + 72` 测试、mirror check 与 compatibility readiness。
+- A-001 self 与 A-002 independent cross 均 `pass`，开放 required = 0；GOAL-005 E-003 将 S4 推进完成（S4 close-out 意见为 A-003 self + A-004 independent，均 `pass`），目标为 `active / 80%`。
+- Root R3 保持进行中、Root progress 保持 2/3 = 67%；S5 PR/main/tag/Release 仍待完成。
+
 ## 待办
 
-1. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
-2. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
+1. 完成 GOAL-005 的 S2～S5、cross close-out 与正式发布。
+2. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
+3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
 
 ## 进度评估
 

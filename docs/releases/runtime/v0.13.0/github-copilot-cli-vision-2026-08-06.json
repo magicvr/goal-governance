@@ -1,0 +1,122 @@
+{
+    "schemaId":  "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+    "format":  "goal-governance.host-runtime-evidence",
+    "formatVersion":  "1.0.0",
+    "capturedAt":  "2026-08-06T03:17:31.605894Z",
+    "unit":  {
+                 "consumer":  "github-copilot-cli",
+                 "entrypoint":  "vision",
+                 "protocolVersion":  "0.1.0"
+             },
+    "environment":  {
+                        "product":  "GitHub Copilot CLI",
+                        "version":  "1.0.75",
+                        "platform":  "Windows-10-10.0.26200-SP0",
+                        "provider":  null,
+                        "model":  null
+                    },
+    "behaviorSources":  [
+                            {
+                                "path":  "AGENTS.md",
+                                "sha256":  "f6e2982be48672dddad96c3fc88b15515b8110493aadfd3d961ef76fc8c1e177"
+                            },
+                            {
+                                "path":  ".github/copilot-instructions.md",
+                                "sha256":  "e52e60dad08c6a4faef546bd0feaa3c3ca5783d314b46d801fffe64d033b8018"
+                            },
+                            {
+                                "path":  "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
+                                "sha256":  "eec363bf8ba6ccf8b8db86078643736e4d2767be99feabfef68ec1a14919d807"
+                            },
+                            {
+                                "path":  "skills/prompts/06-vision-orchestrator.md",
+                                "sha256":  "0cb89644fe24bf89f955ab006321516f11e947bd9fd9f7a8684395171a2dc969"
+                            },
+                            {
+                                "path":  ".github/prompts/vision.prompt.md",
+                                "sha256":  "b4074c0089e3050e597703427a22346b28fc8f196049f3beba883c7b815bbe5d"
+                            },
+                            {
+                                "path":  "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-vision.txt",
+                                "sha256":  "3f7068e3eabb5f6a8ef46f72530bfb84422fafc2ada31ded483fcdab051b5d71"
+                            }
+                        ],
+    "invocation":  {
+                       "command":  [
+                                       "powershell.exe",
+                                       "-NoProfile",
+                                       "-NonInteractive",
+                                       "-File",
+                                       "docs\\workspace-001-goal-governance\\GOAL-008-skills-consumer-adapter-release-consistency\\attachments\\runtime\\prompts\\copilot-cli-replay.ps1"
+                                   ],
+                       "cwd":  ".",
+                       "timeoutSeconds":  360.0,
+                       "inputSha256":  "3f7068e3eabb5f6a8ef46f72530bfb84422fafc2ada31ded483fcdab051b5d71",
+                       "inputSummary":  "Read-only /vision dispatch probe requiring marker COPILOT_CLI_VISION_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+                   },
+    "result":  {
+                   "exitCode":  0,
+                   "verdict":  "pass",
+                   "marker":  "COPILOT_CLI_VISION_DISPATCH_OK",
+                   "markerObserved":  true,
+                   "assertionPolicy":  "marker+entrypoint+nontrivial-stdout@1",
+                   "assertions":  [
+                                      {
+                                          "id":  "dispatch-marker",
+                                          "kind":  "substring",
+                                          "pattern":  "COPILOT_CLI_VISION_DISPATCH_OK",
+                                          "bound":  {
+                                                        "entrypoint":  "vision",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      },
+                                      {
+                                          "id":  "entrypoint-token",
+                                          "kind":  "substring",
+                                          "pattern":  "vision",
+                                          "bound":  {
+                                                        "entrypoint":  "vision",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      },
+                                      {
+                                          "id":  "nontrivial-stdout",
+                                          "kind":  "min-extra-bytes",
+                                          "pattern":  "COPILOT_CLI_VISION_DISPATCH_OK",
+                                          "minExtraBytes":  16,
+                                          "bound":  {
+                                                        "entrypoint":  "vision",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      },
+                                      {
+                                          "id":  "extra-assert-1",
+                                          "kind":  "substring",
+                                          "pattern":  "vision",
+                                          "bound":  {
+                                                        "entrypoint":  "vision",
+                                                        "protocolVersion":  "0.1.0"
+                                                    },
+                                          "observed":  true
+                                      }
+                                  ],
+                   "stdoutPath":  "docs/releases/runtime/v0.13.0/github-copilot-cli-vision-2026-08-06.d/stdout.txt",
+                   "stdoutSha256":  "21d22c4a14453499926120a3974f8188bcc57cbec3077a822e8645d5746694ec",
+                   "stdoutMode":  "raw",
+                   "stderrPath":  "docs/releases/runtime/v0.13.0/github-copilot-cli-vision-2026-08-06.d/stderr.txt",
+                   "stderrSha256":  "541004b71b5b76eb0e0dec892301c7ab81e060edeef766524d54ec976d960f69",
+                   "stderrMode":  "raw",
+                   "warnings":  [
+
+                                ],
+                   "reason":  "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+               },
+    "artifacts":  {
+                      "screenshots":  [
+
+                                      ]
+                  }
+}

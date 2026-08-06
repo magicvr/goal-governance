@@ -885,7 +885,7 @@ P-004：若需对同 scope 再做 self 审计，**询问用户**是否自审后�
 | canonical ↔ Skills 镜像漂移（architecture/templates） | 历史已关门目标正文的批量回写 |
 | 过时「仅 P-001～P-005」权威面 | monorepo dogfood 过程树内容正确性 |
 
-本意见与 [VRev-002](../../vision/reviews.md)（愿景入口可执行性，V-F-001 已 fixed）互补：本条审的是**方法论文档与产品化路径**，不是 Vision Review 入口路由。
+本意见与 [VRev-002](../../vision/reviews/VRev-002-vision-governance-audit-routing.md)（愿景入口可执行性，V-F-001 已 fixed）互补：本条审的是**方法论文档与产品化路径**，不是 Vision Review 入口路由。
 
 ### 成果（有证据）
 

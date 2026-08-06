@@ -1,0 +1,149 @@
+● skill(audit)
+
+● Request failed due to a transient API error. Retrying...
+
+我会仅读取指定治理文件与 GOAL-008
+记录，按独立审计语义核对证据、开放必改项及关门结论，不写入任何仓库文件。
+
+/ Search (glob)
+  │ "AGENTS.md"
+  └ 2 files found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/goal-tree.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/**/GOAL-008*/*"
+  └ 4 files found
+
+/ Search (glob)
+  │ "skills/prompts/05-independent-audit.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ ".github/copilot-instructions.md"
+  └ 1 file found
+
+● Read AGENTS.md
+  └ L1:end (411 lines read)
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ L1:end (108 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (333 lines read)
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:end (568 lines read)
+
+/ Search (glob)
+  │ "**/*" in
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency
+  └ 8 files found
+
+工作区树已确认 GOAL-008 在已封存的 workspace-001 中标为 done /
+100%。由于本次明确要求只读，我将把审计意见保留在本次响应中，不执行提示词中的落盘步骤，并继续通读
+GOAL-008 的全部记录及既有审计意见。
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ L1:end (103 lines read)
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:end (262 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:end (193 lines read)
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:end (716 lines read)
+
+✗ Search (glob)
+  │ "**/*" in docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistenc
+  │ y\02-execution
+  └ rg: C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-008-
+    skills-consumer-adapter-release-consistency\02-execution: IO error for operation on
+    C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-008-skil
+    ls-consumer-adapter-release-consistency\02-execution: 系统找不到指定的文件。 (os error 2)
+
+✗ Search (glob)
+  │ "**/*" in
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  └ rg: C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-008-
+    skills-consumer-adapter-release-consistency\03-audit: IO error for operation on
+    C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-008-skil
+    ls-consumer-adapter-release-consistency\03-audit: 系统找不到指定的文件。 (os error 2)
+
+✗ Search (glob)
+  │ "**/*" in docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistenc
+  │ y\01-decision
+  └ rg: C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-008-
+    skills-consumer-adapter-release-consistency\01-decision: IO error for operation on
+    C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-008-skil
+    ls-consumer-adapter-release-consistency\01-decision: 系统找不到指定的文件。 (os error 2)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (333 lines read)
+
+记录显示一个关键分层：A-014 的 Copilot CLI 两个入口证据确实通过，但它当时明确保持 conditional；A-016
+ 随后以 Web CI 与 v0.7.0 release-candidate 证据作了 self close-out。为判断该关门结论是否可被本次独立
+ replay 重复核对，我只读取 GOAL-008 引用的四个证据附件，不扩展到其他治理来源。
+
+● Read copilot-cli-audit-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-audit-2026-07-20.json
+  └ L1:end (70 lines read)
+
+● Read web-parser-ci-replay-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\web-parser-ci-replay-2026-07-20.json
+  └ L1:end (39 lines read)
+
+● Read copilot-cli-govern-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-govern-2026-07-20.json
+  └ L1:end (70 lines read)
+
+● Read release-candidate-v0.7.0-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\release-candidate-v0.7.0-2026-07-20.json
+  └ L1:end (28 lines read)
+
+Independent replay verdict: conditional. GOAL-008’s historical v0.7.0 close-out is supported by a
+coherent, immutable evidence chain: Copilot CLI 1.0.71 /govern and /audit probes both exited 0 and
+emitted their required markers; Web CI run 29700051047 passed on Ubuntu and Windows at commit
+8a33ecd21d9183a680c9c0d63e471469f5e515a8; and the annotated v0.7.0 candidate summary reports
+complete compatibility coverage, mirror success, and passing contract, bootstrap, release-evidence,
+and Web parser checks. This supports A-016’s historical pass for that tagged candidate.
+
+No required finding remains open for the historical v0.7.0 closure. I-001, I-002, and I-003 are
+recorded as verified, and A-014’s then-open Web CI, overall runtime, release-identity, and
+parent-finding dependencies were explicitly addressed by the later close-out evidence.
+
+The qualification is material: the GOAL-008 records also preserve that subsequent behavior-source
+changes made v0.7.0 runtime evidence stale for the current candidateRevision: unreleased, with six
+host runtime cells marked pending-runtime-validation. That is not evidence to reopen or invalidate
+the completed historical v0.7.0 goal, but it is an open required gate for any new release claim
+based on the unreleased candidate. /govern should retain GOAL-008’s historical closure and route
+future release work through the successor scope that owns those runtime replays; it must not treat
+v0.7.0 evidence as coverage for the changed candidate.
+
+No audit ledger was written because this replay was explicitly read-only. The normal target path
+would be
+docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/03-audit.md
+plus its 03-audit/A-NNN-*.md entry.
+
+COPILOT_CLI_AUDIT_DISPATCH_OK
+

@@ -1,0 +1,65 @@
+● skill(vision)
+
+I’m locating the requested governance sources and will limit the replay to their recorded state.
+
+/ Search (glob)
+  │ ".github/copilot-instructions.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "skills/prompts/06-vision-orchestrator.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "AGENTS.md"
+  └ 2 files found
+
+● Read 06-vision-orchestrator.md
+  │ skills\prompts\06-vision-orchestrator.md
+  └ L1:end (203 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (299 lines read)
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:end (46 lines read)
+
+● Read AGENTS.md
+  └ L1:end (269 lines read)
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ L1:end (250 lines read)
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ L1:end (85 lines read)
+
+The Charter and named workspace satisfy the declared alignment fields; I’m reading the Vision Review
+ ledger to determine the required-finding count without expanding into implementation records.
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ L1:end (37 lines read)
+
+● Read VP-001-governance-platform-delivery.md
+  │ docs\vision\plans\VP-001-governance-platform-delivery.md
+  └ L1:end (45 lines read)
+
+/ Search (glob)
+  │ "reviews/VRev-*.md" in docs\vision
+  └ No matches found
+
+Vision scan: Single-vision status is valid: exactly one active Charter,
+vision-goal-governance@0.2.0. The named workspace is aligned as vision_role: primary, with
+primary_plan: VP-001-governance-platform-delivery; that VP exists, matches the Charter version, and
+is closed as the archived foundation wave.
+
+Vision Review required findings: 0 open. The ledger contains VRev-001 through VRev-006, each
+projecting zero open required findings. Dispatch classification: V2 portfolio/intent context, with
+no Vision Review or alignment blocker indicated for this read-only replay.
+
+COPILOT_CLI_VISION_DISPATCH_OK
+

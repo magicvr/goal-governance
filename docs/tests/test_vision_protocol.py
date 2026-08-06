@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -33,6 +34,10 @@ VISION_REF_RE = re.compile(
     r"^(?P<vision_id>[a-z0-9-]+)@(?P<version>\d+\.\d+\.\d+)$"
 )
 VP_ID_RE = re.compile(r"^VP-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*$")
+VREV_ID_RE = re.compile(r"^VRev-\d{3}$")
+VREV_FILENAME_RE = re.compile(
+    r"^(?P<id>VRev-\d{3})-[a-z0-9]+(?:-[a-z0-9]+)*\.md$"
+)
 
 
 def parse_frontmatter(path: Path) -> dict[str, str]:
@@ -129,6 +134,72 @@ def validate_workspace_vision_alignment(
     return fields
 
 
+def validate_vision_review_ledger(vision_root: Path) -> set[str]:
+    index_path = vision_root / "reviews.md"
+    index_text = index_path.read_text(encoding="utf-8")
+    if "| open required |" not in index_text:
+        raise ValueError("reviews index missing open required projection")
+
+    legacy_ids = set(
+        re.findall(r"^### (VRev-\d{3})\b", index_text, re.MULTILINE)
+    )
+    report_ids: dict[str, Path] = {}
+    reports_dir = vision_root / "reviews"
+    if reports_dir.is_dir():
+        for report_path in sorted(reports_dir.glob("VRev-*.md")):
+            match = VREV_FILENAME_RE.fullmatch(report_path.name)
+            if match is None:
+                raise ValueError(f"invalid VRev filename: {report_path.name}")
+            fields = parse_frontmatter(report_path)
+            report_id = fields.get("id", "")
+            if not VREV_ID_RE.fullmatch(report_id):
+                raise ValueError(f"invalid VRev id: {report_id}")
+            if report_id != match.group("id"):
+                raise ValueError(
+                    f"VRev filename/id mismatch: {report_path.name} != {report_id}"
+                )
+            if fields.get("doc_type") != "vision-review":
+                raise ValueError(f"VRev doc_type must be vision-review: {report_path}")
+            if fields.get("source") not in {"self", "independent"}:
+                raise ValueError(f"invalid VRev source: {report_path}")
+            if report_id in report_ids:
+                raise ValueError(f"duplicate VRev report id: {report_id}")
+            report_ids[report_id] = report_path
+
+    duplicated = legacy_ids.intersection(report_ids)
+    if duplicated:
+        raise ValueError(
+            "VRev ids duplicated across legacy inline and reports: "
+            + ", ".join(sorted(duplicated))
+        )
+
+    index_rows: dict[str, str] = {}
+    for line in index_text.splitlines():
+        if not re.match(r"^\| VRev-\d{3} \|", line):
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) != 8:
+            raise ValueError(f"invalid VRev index row: {line}")
+        review_id = cells[0]
+        if review_id in index_rows:
+            raise ValueError(f"duplicate VRev index id: {review_id}")
+        if not re.fullmatch(r"\d+", cells[5]):
+            raise ValueError(f"open required must be numeric: {review_id}")
+        index_rows[review_id] = line
+
+    ledger_ids = legacy_ids.union(report_ids)
+    if set(index_rows) != ledger_ids:
+        raise ValueError(
+            "VRev index/report mismatch: "
+            f"index={sorted(index_rows)}, ledger={sorted(ledger_ids)}"
+        )
+    for review_id, report_path in report_ids.items():
+        relative = report_path.relative_to(vision_root).as_posix()
+        if relative not in index_rows[review_id]:
+            raise ValueError(f"VRev index missing report link: {review_id}")
+    return ledger_ids
+
+
 def validate_vision_stack(vision_root: Path) -> None:
     for name in REQUIRED_VISION_FILES:
         path = vision_root / name
@@ -143,6 +214,7 @@ def validate_vision_stack(vision_root: Path) -> None:
         raise ValueError("at least one plans/VP-*.md required")
     for plan_path in plan_files:
         validate_vision_plan(plan_path, charter)
+    validate_vision_review_ledger(vision_root)
     alignment = (vision_root / "alignment.md").read_text(encoding="utf-8")
     for phrase in (
         "fail closed",
@@ -159,12 +231,33 @@ def validate_vision_stack(vision_root: Path) -> None:
 
 
 class VisionProtocolTests(unittest.TestCase):
+    def _copy_valid_vision_fixture(self, tmp: str) -> Path:
+        vision = Path(tmp) / "vision"
+        shutil.copytree(FIXTURES / "valid-stack", vision)
+        return vision
+
     def test_repo_vision_stack_is_complete_and_valid(self) -> None:
         validate_vision_stack(VISION_DIR)
         charter = validate_charter(VISION_DIR / "charter.md")
         self.assertEqual(charter["vision_id"], "vision-goal-governance")
         self.assertEqual(charter["status"], "active")
         self.assertNotEqual(charter["status"], "done")
+        self.assertEqual(
+            validate_vision_review_ledger(VISION_DIR),
+            {f"VRev-{number:03d}" for number in range(1, 7)},
+        )
+
+    def test_vision_review_reports_have_unique_ids_and_index_links(self) -> None:
+        review_ids = validate_vision_review_ledger(VISION_DIR)
+        reports = sorted((VISION_DIR / "reviews").glob("VRev-*.md"))
+        self.assertEqual(len(reports), len(review_ids))
+        self.assertFalse(
+            re.search(
+                r"^### VRev-\d{3}\b",
+                (VISION_DIR / "reviews.md").read_text(encoding="utf-8"),
+                re.MULTILINE,
+            )
+        )
 
     def test_dogfood_workspace_and_root_align_to_vp(self) -> None:
         workspace = (
@@ -239,6 +332,70 @@ class VisionProtocolTests(unittest.TestCase):
 
     def test_fixture_valid_stack_passes(self) -> None:
         validate_vision_stack(FIXTURES / "valid-stack")
+
+    def test_legacy_and_directory_reports_are_merged(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = self._copy_valid_vision_fixture(tmp)
+            index = vision / "reviews.md"
+            text = index.read_text(encoding="utf-8")
+            text += (
+                "\n### VRev-002 · Legacy record\n\n"
+                "Historical inline report retained for compatibility.\n"
+                "\n| VRev-002 | 2026-07-29 | independent | legacy | pass | 0 | "
+                "legacy record | reviews.md |\n"
+            )
+            index.write_text(text, encoding="utf-8")
+            self.assertEqual(
+                validate_vision_review_ledger(vision),
+                {"VRev-001", "VRev-002"},
+            )
+
+    def test_duplicate_legacy_and_report_id_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = self._copy_valid_vision_fixture(tmp)
+            index = vision / "reviews.md"
+            index.write_text(
+                index.read_text(encoding="utf-8")
+                + "\n### VRev-001 · Duplicate legacy record\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicated across legacy"):
+                validate_vision_review_ledger(vision)
+
+    def test_duplicate_report_id_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = self._copy_valid_vision_fixture(tmp)
+            shutil.copy2(
+                vision / "reviews" / "VRev-001-charter-init.md",
+                vision / "reviews" / "VRev-001-other.md",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate VRev report id"):
+                validate_vision_review_ledger(vision)
+
+    def test_report_filename_and_id_must_match(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = self._copy_valid_vision_fixture(tmp)
+            report = vision / "reviews" / "VRev-001-charter-init.md"
+            report.write_text(
+                report.read_text(encoding="utf-8").replace("id: VRev-001", "id: VRev-002", 1),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "filename/id mismatch"):
+                validate_vision_review_ledger(vision)
+
+    def test_report_link_must_be_present_in_index(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = self._copy_valid_vision_fixture(tmp)
+            index = vision / "reviews.md"
+            index.write_text(
+                index.read_text(encoding="utf-8").replace(
+                    "reviews/VRev-001-charter-init.md",
+                    "reviews/VRev-001-missing.md",
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "missing report link"):
+                validate_vision_review_ledger(vision)
 
     def test_fixture_charter_done_is_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "must not use Goal lifecycle"):

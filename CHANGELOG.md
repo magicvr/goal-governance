@@ -4,12 +4,31 @@
 
 ## Unreleased
 
-仓库维护（**不构成新方法论 / Skills Release**）：
+暂无。
+
+最新正式版本为 **0.13.0** / `v0.13.0`。
+
+## 0.13.0 - 2026-08-06
+
+愿景治理协议 minor：把持续增长的 Vision Review 台账改为稳定索引与独立报告，保留 legacy inline 兼容并迁移本仓既有 VRev。
+
+### 愿景审视台账
+
+- `docs/vision/reviews.md` 收窄为稳定索引与当前 `open required` 投影；一条正式意见一个 `docs/vision/reviews/VRev-NNN-<slug>.md` 报告。
+- self / independent 共用 `VRev-NNN` 序列；finding 响应追加在原报告，保留原 verdict/finding，不改写历史结论。
+- legacy inline 与目录报告合并读取；达到 32 KiB、800 行或 12 条记录任一阈值后，下一条必须写独立报告。全新安装从第一条 VRev 起使用目录。
+- 本仓 `VRev-001`～`VRev-006` 已无重编号迁移，索引链接、编号唯一性、legacy 合并和文件名/id 一致性纳入自动化验证。
+
+### Skills / 分发 / 证据
+
+- `/vision`、`/vision-audit`、Claude/Codex/Grok/Copilot 安装面、bootstrap、consumer checklist 与 Vision 模板同步新写入契约。
+- canonical → Skills 镜像一致；核心包新增 `vision/reviews-index.md` 与 `vision/review.md` 模板。
+- Claude Code `2.1.223`、Grok Build `0.2.118`、GitHub Copilot CLI `1.0.75` 的四入口于 2026-08-06 重新执行，共 12 个单元 `runtime-verified`；证据位于 `docs/releases/runtime/v0.13.0/`。
+
+### 仓库维护
 
 - 物理退役已冻结的 FastAPI Web 资产及其专属 CI、compatibility consumer 与 release-evidence check；VP-003 保持 `planned` 并正式挂起。
-- Skills 三宿主四入口契约、runtime evidence、安装面、核心原则与模板不变；canonical matrix / core 导航镜像仅随现行仓库边界做 editorial stage。
-
-最新正式版本仍为 **0.12.1** / `v0.12.1`。
+- 冻结 Web 资产退役保持为历史仓库维护事实；本版不恢复 Web 产品或 consumer。
 
 ## 0.12.1 - 2026-08-04
 
