@@ -22,7 +22,7 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 |------|------|
 | **`v0.9.0`** / **`v0.9.1`** / **`v0.9.2`** / **`v0.10.0`** / **`v0.11.0`** | 已发布 annotated tag / Release 基线。 |
 | **[`v0.12.1`](https://github.com/magicvr/goal-governance/releases/tag/v0.12.1)（已发布）** | annotated tag 绑定 merge commit `1c21f246377025f295363dbfb7b149b6f7e9fd9e`；strict evidence 与 gated Actions run [`30865670069`](https://github.com/magicvr/goal-governance/actions/runs/30865670069) 通过，9 项 Release 资产已完成下载后 digest/package 核验。事务 updater、consumer-only contract profile 与四入口 × 三宿主 runtime evidence 已进入正式资产。**不**宣称 Codex 矩阵 `committed` / `runtime-verified`。 |
-| **`v0.13.0`（发布候选）** | Vision Review 稳定索引 + 独立报告、legacy 兼容迁移与 2026-08-06 四入口 × 三宿主 fresh runtime evidence 已就绪；正式 commit、Actions run、资产 digest 在 gated Release 成功后追加。 |
+| **[`v0.13.0`](https://github.com/magicvr/goal-governance/releases/tag/v0.13.0)（已发布）** | annotated tag 绑定 merge commit `33934efc83e24e78435e469832dd38266474e8ad`；strict evidence 与 gated Actions run [`31073547050`](https://github.com/magicvr/goal-governance/actions/runs/31073547050)（Environment `release` 审批）通过，9 项 Release 资产完成下载后 digest/package 核验，隔离消费安装 + dry-run + real update 验证版本 `0.13.0`。Vision Review 稳定索引 + 独立报告与 legacy 兼容迁移进入正式资产。**不**宣称 Codex 矩阵 `committed` / `runtime-verified`。 |
 
 当前 `Unreleased` 生产者矩阵仅保留 Claude Code / Grok Build / Copilot CLI，三者均为 `committed` + `runtime-verified`；冻结的 Web parser consumer 已退役。候选在 annotated tag 与 strict release evidence 完成前仍不构成正式 Release。权威字段见 [`docs/contracts/skills-consumer-contract.json`](../docs/contracts/skills-consumer-contract.json) 与 [`docs/contracts/skills-consumer-compatibility-matrix.json`](../docs/contracts/skills-consumer-compatibility-matrix.json)。
 
