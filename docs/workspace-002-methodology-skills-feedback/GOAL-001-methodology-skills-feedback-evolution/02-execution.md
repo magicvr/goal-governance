@@ -94,7 +94,7 @@ version: 1.1.0
 ### 2026-08-06 · GOAL-005 S2～S4 完成
 
 - Vision Review 索引/报告迁移、canonical/Skills/安装同步、测试与 12 个 fresh runtime evidence 已完成；GOAL-005 E-002 记录 `32 + 42 + 72` 测试、mirror check 与 compatibility readiness。
-- A-001 self 与 A-002 independent cross 均 `pass`，开放 required = 0；GOAL-005 E-003 将 S4 推进完成，目标为 `active / 80%`。
+- A-001 self 与 A-002 independent cross 均 `pass`，开放 required = 0；GOAL-005 E-003 将 S4 推进完成（S4 close-out 意见为 A-003 self + A-004 independent，均 `pass`），目标为 `active / 80%`。
 - Root R3 保持进行中、Root progress 保持 2/3 = 67%；S5 PR/main/tag/Release 仍待完成。
 
 ## 待办

@@ -28,7 +28,9 @@ version: 0.2.0
 |------|------|--------|-------|---------|---------------|------|
 | A-001 | 2026-08-06 | self | S2/S3 implementation + candidate evidence | pass | 0 | [A-001-self-candidate-verification.md](03-audit/A-001-self-candidate-verification.md) |
 | A-002 | 2026-08-06 | independent | S2/S3 migration, ledger contract, tests, candidate runtime | pass | 0 | [A-002-independent-cross-verification.md](03-audit/A-002-independent-cross-verification.md) |
+| A-003 | 2026-08-06 | self | S4 full regression + candidate evidence | pass | 0 | [A-003-self-s4-full-regression.md](03-audit/A-003-self-s4-full-regression.md) |
+| A-004 | 2026-08-06 | independent | S4 full validation + candidate evidence (close-out review) | pass | 0 | [A-004-independent-s4-regression.md](03-audit/A-004-independent-s4-regression.md) |
 
 ## 结论状态
 
-Self 与 independent cross audit 均通过且无开放 required。S5 仍受 PR、merged-main、annotated tag、Environment、资产 digest 与消费边界门禁约束。
+Self 与 independent cross audit 均通过且无开放 required（A-001/A-002 覆盖 S2/S3；A-003 self 与 A-004 independent 覆盖 S4 全量验证）。S5 仍受 PR、merged-main、annotated tag、Environment、资产 digest 与消费边界门禁约束。
