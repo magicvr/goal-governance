@@ -508,6 +508,16 @@ def main(argv: list[str] | None = None) -> int:
     print(f"checks passed: {evidence['checksPassed']}")
     if args.run_checks and not evidence["checksPassed"]:
         print("release evidence failed: one or more checks failed", file=sys.stderr)
+        for check in evidence.get("checks", []):
+            if check.get("passed") is False:
+                print(f"failed check: {check['name']}", file=sys.stderr)
+                print(f"  command: {' '.join(check.get('command', []))}", file=sys.stderr)
+                print(f"  exitCode: {check.get('exitCode')}", file=sys.stderr)
+                tail = (check.get("outputTail") or "").strip()
+                if tail:
+                    print("  output tail:", file=sys.stderr)
+                    for line in tail.splitlines()[-40:]:
+                        print(f"    {line}", file=sys.stderr)
         return 1
     return 0
 
