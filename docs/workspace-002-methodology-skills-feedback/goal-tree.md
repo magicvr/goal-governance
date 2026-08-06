@@ -12,6 +12,10 @@ version: 0.8.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-08-06 · GOAL-005 闭门（S5 正式发布完成）
+
+PR #11 以 merge commit `33934efc` 合入 main；annotated `v0.13.0` tag 指向 merged main 并经 `skills-pack-release` run `31073547050`（Environment `release` 审批 + wait timer）发布 9 项 Release 资产；本地重下载 sha256 逐项一致、release evidence 全过；隔离消费方完成包边界 + 安装 + dry-run + real update（版本 `0.13.0`）。A-003 self + A-004 independent（S4）与 A-005 闭门审计均 `pass`、开放 required = 0。GOAL-005 标为 **`done / 100%`（5/5）**。Root R3 仍进行中、Root progress 保持 **67%（2/3）**。下一编号 **GOAL-006**。
+
 ## 2026-08-06 · GOAL-005 S4 cross close-out 完成
 
 完成 self A-001 与 independent A-002，均为 `pass`，开放 required = 0。GOAL-005 推进为 **`active / 80%`**（S1～S4 4/5）；S5 PR、main 合并、annotated tag 与正式 Release 尚未完成。Root R3 仍进行中，Root progress 保持 **67%（2/3）**。下一编号 **GOAL-006**。
@@ -91,7 +95,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-002-codex-skills-entry                 [done]    添加 Codex 可用的 Skills 入口  progress 100%
 ├── GOAL-003-consumer-governance-ergonomics     [done]    修复消费仓门禁与长流程治理摩擦  progress 100%
 ├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
-└── GOAL-005-vision-review-ledger-scaling        [active]  愿景审视台账分片与正式发布      progress 80%
+└── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ```
 
 ## 状态表
@@ -102,7 +106,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
-| GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-08-06 |
+| GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 
 ## 编号
 

@@ -97,9 +97,14 @@ version: 1.1.0
 - A-001 self 与 A-002 independent cross 均 `pass`，开放 required = 0；GOAL-005 E-003 将 S4 推进完成（S4 close-out 意见为 A-003 self + A-004 independent，均 `pass`），目标为 `active / 80%`。
 - Root R3 保持进行中、Root progress 保持 2/3 = 67%；S5 PR/main/tag/Release 仍待完成。
 
+### 2026-08-06 · GOAL-005 S5 正式发布与闭门
+
+- PR #11 以 merge commit `33934efc` 合入 main；annotated `v0.13.0` tag（tag object `29d5b28c`）指向 merged main，经 `skills-pack-release` run `31073547050`（Environment `release` 审批）发布 9 项 Release 资产；本地重下载 sha256 逐项一致，release-mode evidence 全过，隔离消费方（包边界 + 安装 + dry-run + real update）版本 `0.13.0`。
+- GOAL-005 E-004 / D-003 / A-005 落盘，目标 **`done / 100%`（5/5）**；Root R3 保持进行中、Root progress 保持 2/3 = 67%。
+
 ## 待办
 
-1. 完成 GOAL-005 的 S2～S5、cross close-out 与正式发布。
+1. ~~完成 GOAL-005 的 S2～S5、cross close-out 与正式发布~~（已闭门，2026-08-06）。
 2. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
 3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
 

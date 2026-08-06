@@ -24,3 +24,4 @@ version: 0.1.0
 |------|------|------|------|------|
 | D-001 | 2026-08-06 | 冻结 Vision Review 可扩展台账终态 | accepted | [D-001-vision-review-ledger-contract.md](01-decision/D-001-vision-review-ledger-contract.md) |
 | D-002 | 2026-08-06 | 冻结 `0.13.0` 候选身份与 fresh runtime evidence | accepted | [D-002-v0-13-0-candidate.md](01-decision/D-002-v0-13-0-candidate.md) |
+| D-003 | 2026-08-06 | 闭门 · GOAL-005 done（S5 正式发布完成） | accepted | [D-003-close-out-v0-13-0-released.md](01-decision/D-003-close-out-v0-13-0-released.md) |
