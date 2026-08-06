@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-08-04
-version: 0.5.0
+updated: 2026-08-06
+version: 0.6.0
 ---
 
 # 决策记录 · GOAL-001
@@ -166,3 +166,20 @@ R2 的首批五项问题已有实现、兼容回归、consumer 包抽样与双�
 | 在 workspace-001 新建 GOAL-024 | archived Root 已 done，违反封存纪律 |
 | 只写 VP、不建实施目标 | 无法追踪删除、测试和 independent audit 闭环 |
 | 因启动 R3 把 progress 提高到 100% | progress 只按完成阶段计数；R3 尚未完成 |
+
+## D-007 · 在 R3 创建 GOAL-005 修复 Vision Review 台账增长缺口（2026-08-06）
+
+**状态**：accepted
+
+**触发**：用户在实际使用中发现 `docs/vision/reviews.md` 仍把全部愿景审视与响应保存在单文件，并明确要求通过 `/govern` 在工作区 2 立项、完成修正和正式发布。
+
+### 决定
+
+1. 在 Root R3 内创建 [GOAL-005-vision-review-ledger-scaling](../GOAL-005-vision-review-ledger-scaling/)；parent 为本 Root，服务 VP-002。
+2. 目标范围覆盖 canonical 协议、现有 VRev 迁移、Skills/模板/安装/测试同步、cross audit、PR/main 与正式 Release；不缩减为仅调整文档措辞或未来写入。
+3. Root R3 保持进行中，progress 保持 2/3 = 67%；GOAL-005 立项或关门均不自动关闭 Root/VP-002，退出仍须独立审视。
+4. 核心元规则与发布边界采用 `cross` 模式；GOAL-005 S4 需 self + independent，开放 required = 0 后才可发布。
+
+### 为什么
+
+该问题来自真实消费使用，符合 VP-002 与 R3 的协议缺口收束边界；影响规范、分发与历史权威记录，具备独立交付、验证和发布门禁，必须用单独目标承接。

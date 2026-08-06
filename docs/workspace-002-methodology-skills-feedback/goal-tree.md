@@ -2,15 +2,19 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-08-04
+updated: 2026-08-06
 parent: null
-version: 0.7.0
+version: 0.8.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-08-06 · GOAL-005 立项 + S1 协议冻结
+
+用户要求修复 Vision Review 单文件增长缺口并发布新版本。创建 **GOAL-005-vision-review-ledger-scaling**（`active / 20%`），D-001 冻结稳定索引 + 独立 VRev 报告、legacy 兼容、现有记录迁移、cross audit 与正式发布边界。Root R3 仍进行中，Root progress 保持 **67%（2/3）**。下一编号 **GOAL-006**。
 
 ## 2026-08-04 · GOAL-004 independent close-out
 
@@ -78,7 +82,8 @@ A-004 把正式消费 Release 纳入 GOAL-003 成功边界，确认 `v0.11.0` �
 GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱动的协议与 Skills 演进  progress 67% (R1/R2 完成；R3 进行中)
 ├── GOAL-002-codex-skills-entry                 [done]    添加 Codex 可用的 Skills 入口  progress 100%
 ├── GOAL-003-consumer-governance-ergonomics     [done]    修复消费仓门禁与长流程治理摩擦  progress 100%
-└── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
+├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
+└── GOAL-005-vision-review-ledger-scaling        [active]  愿景审视台账分片与正式发布      progress 20%
 ```
 
 ## 状态表
@@ -89,13 +94,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
+| GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | active | 20% | 2026-08-06 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 004 |
-| 下一可用 | **GOAL-005** |
+| 最大编号 | 005 |
+| 下一可用 | **GOAL-006** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）
