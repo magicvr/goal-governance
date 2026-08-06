@@ -1,0 +1,13 @@
+I'll load the vision skill and run only its scan-phase reads: skill metadata, orchestrator path, Charter, and workspace-001 primary_plan resolution.Next I'll read the orchestrator scan phase, active Charter, and workspace-001 primary_plan binding.Confirming the referenced primary_plan VP file resolves on disk.## Vision scan (read-only dispatch probe)
+
+**GROK_VISION_DISPATCH_OK**
+
+| Item | Value |
+|------|--------|
+| **Loaded skill title** | `vision` · 愿景与组合治理（Grok Build skill） |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **Orchestrator prompt** | `skills/prompts/06-vision-orchestrator.md` (SKILLS_PKG = `skills/`) |
+| **Active Charter** | `vision-goal-governance@0.2.0` (`status: active`) |
+| **workspace-001 `primary_plan`** | **Resolves** — `primary_plan: VP-001-governance-platform-delivery` → `docs/vision/plans/VP-001-governance-platform-delivery.md` (`id` match; `vision_ref: vision-goal-governance@0.2.0`; plan `status: closed`; workspace `status: archived`) |
+
+Scan-phase only: repository reads performed; no writes, no subagents, no user questions.

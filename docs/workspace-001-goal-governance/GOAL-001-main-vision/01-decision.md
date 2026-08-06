@@ -482,7 +482,7 @@ version: 0.5.0
 
 **未选**：扩展 `/audit` 按 scope 写入 `reviews.md`；接受 residual 或 overrule 该 required finding。
 
-**影响**：实施事实与验证见 [02-execution.md](02-execution.md#2026-07-28--响应-v-f-001独立-vision-review-专用入口d-020不发版)；正式闭合见 [VRev-002](../../../vision/reviews.md#响应--v-f-0012026-07-28)。
+**影响**：实施事实与验证见 [02-execution.md](02-execution.md#2026-07-28--响应-v-f-001独立-vision-review-专用入口d-020不发版)；正式闭合见 [VRev-002](../../../vision/reviews/VRev-002-vision-governance-audit-routing.md)。
 
 ## D-021 · `/vision-audit` 三宿主 runtime capture 验证范围（2026-07-28）
 
@@ -703,7 +703,7 @@ A-018 证明元规则自洽，缺口在 P-006 后产品化回流；用户已书�
 ## D-027 · 路径收束：协议 + Skills 问题驱动演进；本仓 Web 冻结（2026-07-31）
 
 **状态**：accepted  
-**确认来源**：用户确认愿景包 S1+B1 后指令「直接帮我操作」落盘实现层收束；承接 Charter `vision-goal-governance@0.2.0` / [VR-005](../../../vision/revisions.md) / VP-001 修订 / [VRev-005](../../../vision/reviews.md#vrev-005--charter-020-strategic-后审视2026-07-31)。
+**确认来源**：用户确认愿景包 S1+B1 后指令「直接帮我操作」落盘实现层收束；承接 Charter `vision-goal-governance@0.2.0` / [VR-005](../../../vision/revisions.md) / VP-001 修订 / [VRev-005](../../../vision/reviews/VRev-005-charter-0-2-0-strategic-review.md)。
 
 ### 决定
 

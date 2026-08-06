@@ -48,7 +48,7 @@ version: 1.0.3
 | Charter | [vision-goal-governance@0.2.0](../../../vision/charter.md) · 仍 `active`（不可 done） |
 | 本 Root primary_plan | [VP-001](../../../vision/plans/VP-001-governance-platform-delivery.md) · **closed** |
 | 组合编排 | VP-001 closed · **VP-002 active**（lead workspace-002）· VP-003 planned（正式挂起） |
-| Vision Review | [VRev-006](../../../vision/reviews.md) portfolio close-out |
+| Vision Review | [VRev-006](../../../vision/reviews/VRev-006-portfolio-wave-review.md) portfolio close-out |
 
 ### Residual（不因 Root done 而关闭）
 

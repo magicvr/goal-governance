@@ -12,6 +12,14 @@ version: 0.8.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-08-06 · GOAL-005 S4 cross close-out 完成
+
+完成 self A-001 与 independent A-002，均为 `pass`，开放 required = 0。GOAL-005 推进为 **`active / 80%`**（S1～S4 4/5）；S5 PR、main 合并、annotated tag 与正式 Release 尚未完成。Root R3 仍进行中，Root progress 保持 **67%（2/3）**。下一编号 **GOAL-006**。
+
+## 2026-08-06 · GOAL-005 S2 / S3 完成，候选验证通过
+
+完成 Vision Review 迁移、canonical/Skills/安装同步、测试补强与 12 个 2026-08-06 fresh runtime captures。`python scripts/stage_skills_mirrors.py --check`、docs `32`、Skills `42`、scripts `72` 项测试和 `compatibility_report.py --require-ready` 均通过。D-002 冻结候选 `0.13.0`；GOAL-005 推进为 **`active / 60%`**（S1～S3 3/5），S4 cross close-out 与 S5 正式发布未完成。Root R3 仍进行中，Root progress 保持 **67%（2/3）**。下一编号 **GOAL-006**。
+
 ## 2026-08-06 · GOAL-005 立项 + S1 协议冻结
 
 用户要求修复 Vision Review 单文件增长缺口并发布新版本。创建 **GOAL-005-vision-review-ledger-scaling**（`active / 20%`），D-001 冻结稳定索引 + 独立 VRev 报告、legacy 兼容、现有记录迁移、cross audit 与正式发布边界。Root R3 仍进行中，Root progress 保持 **67%（2/3）**。下一编号 **GOAL-006**。
@@ -83,7 +91,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-002-codex-skills-entry                 [done]    添加 Codex 可用的 Skills 入口  progress 100%
 ├── GOAL-003-consumer-governance-ergonomics     [done]    修复消费仓门禁与长流程治理摩擦  progress 100%
 ├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
-└── GOAL-005-vision-review-ledger-scaling        [active]  愿景审视台账分片与正式发布      progress 20%
+└── GOAL-005-vision-review-ledger-scaling        [active]  愿景审视台账分片与正式发布      progress 80%
 ```
 
 ## 状态表
@@ -94,7 +102,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
-| GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | active | 20% | 2026-08-06 |
+| GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-08-06 |
 
 ## 编号
 

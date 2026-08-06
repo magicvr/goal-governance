@@ -1,176 +1,176 @@
 {
-  "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
-  "format": "goal-governance.skills-consumer-compatibility-matrix",
-  "formatVersion": "1.0.0",
-  "candidateRevision": "v0.12.1",
-  "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
-  "protocol": {
-    "current": "0.1.0",
-    "previous": null,
-    "previousStatus": "not-applicable-first-supported-protocol"
-  },
-  "requiredEntrypoints": [
-    "govern",
-    "audit",
-    "vision",
-    "vision-audit"
-  ],
-  "negativeFixtures": [
-    {
-      "id": "unsupported-protocol-0.2.0",
-      "kind": "unsupported-protocol",
-      "path": "docs/contracts/fixtures/invalid/unsupported-protocol-0.2.0.json",
-      "assertion": "Protocol 0.2.0 is outside every declared 0.1.x adapter range."
-    },
-    {
-      "id": "no-fabricated-predecessor",
-      "kind": "fabricated-predecessor",
-      "path": "docs/contracts/fixtures/invalid/fabricated-predecessor-0.0.0.json",
-      "assertion": "previousSupportedProtocol is null; no 0.0.x or other predecessor fixture may be claimed."
-    }
-  ],
-  "consumers": [
-    {
-      "id": "claude-code-cli",
-      "kind": "host-adapter",
-      "host": {
-        "product": "Claude Code CLI",
-        "version": "2.1.220",
-        "platform": "Windows 11",
-        "installationSurface": ".claude/skills/govern and .claude/skills/audit and vision skill/prompt"
-      },
-      "supportsProtocol": {
-        "minInclusive": "0.1.0",
-        "maxExclusive": "0.2.0"
-      },
-      "supportCommitment": "committed",
-      "contractVerificationStatus": "verified",
-      "entrypoints": [
-        {
-          "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/claude-code-cli-govern-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/claude-code-cli-audit-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "vision",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/claude-code-cli-vision-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "vision-audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/claude-code-cli-vision-audit-2026-08-04.json"
-          ]
-        }
-      ],
-      "evidenceScope": "Candidate v0.12.1: all four entrypoints use the 2026-08-04 runtime captures, copied into the v0.12.1 evidence namespace and revalidated against unchanged behavior-source hashes. The vision-audit probe remains read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
-    },
-    {
-      "id": "grok-build-cli",
-      "kind": "host-adapter",
-      "host": {
-        "product": "Grok Build CLI",
-        "version": "0.2.118",
-        "build": "1e1687c1cf",
-        "platform": "Windows 11",
-        "installationSurface": ".grok/skills/govern and .grok/skills/audit and vision skill/prompt"
-      },
-      "supportsProtocol": {
-        "minInclusive": "0.1.0",
-        "maxExclusive": "0.2.0"
-      },
-      "supportCommitment": "committed",
-      "contractVerificationStatus": "verified",
-      "entrypoints": [
-        {
-          "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/grok-build-cli-govern-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/grok-build-cli-audit-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "vision",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/grok-build-cli-vision-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "vision-audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/grok-build-cli-vision-audit-2026-08-04.json"
-          ]
-        }
-      ],
-      "evidenceScope": "Candidate v0.12.1: all four entrypoints use the 2026-08-04 runtime captures, copied into the v0.12.1 evidence namespace and revalidated against unchanged behavior-source hashes. The vision-audit probe remains read-only and verifies installed-wrapper routing, core prompt loading, and repository-backed vision discovery."
-    },
-    {
-      "id": "github-copilot-cli",
-      "kind": "host-adapter",
-      "host": {
-        "product": "GitHub Copilot CLI",
-        "version": "1.0.75",
-        "platform": "Windows 11",
-        "installationSurface": "%APPDATA%/npm/@github/copilot and vision skill/prompt"
-      },
-      "supportsProtocol": {
-        "minInclusive": "0.1.0",
-        "maxExclusive": "0.2.0"
-      },
-      "supportCommitment": "committed",
-      "contractVerificationStatus": "verified",
-      "entrypoints": [
-        {
-          "name": "govern",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/github-copilot-cli-govern-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/github-copilot-cli-audit-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "vision",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-2026-08-04.json"
-          ]
-        },
-        {
-          "name": "vision-audit",
-          "status": "runtime-verified",
-          "evidence": [
-            "docs/releases/runtime/v0.12.1/github-copilot-cli-vision-audit-2026-08-04.json"
-          ]
-        }
-      ],
-      "evidenceScope": "Candidate v0.12.1: BYOK-aware replay uses the 2026-08-04 runtime captures, copied into the v0.12.1 evidence namespace and revalidated against unchanged behavior-source hashes. Runtime evidence verifies read-only dispatch; release identity still requires the separate annotated-tag and release-evidence gates."
-    }
-  ]
+    "schemaId":  "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
+    "format":  "goal-governance.skills-consumer-compatibility-matrix",
+    "formatVersion":  "1.0.0",
+    "candidateRevision":  "v0.13.0",
+    "canonicalContractPath":  "docs/contracts/skills-consumer-contract.json",
+    "protocol":  {
+                     "current":  "0.1.0",
+                     "previous":  null,
+                     "previousStatus":  "not-applicable-first-supported-protocol"
+                 },
+    "requiredEntrypoints":  [
+                                "govern",
+                                "audit",
+                                "vision",
+                                "vision-audit"
+                            ],
+    "negativeFixtures":  [
+                             {
+                                 "id":  "unsupported-protocol-0.2.0",
+                                 "kind":  "unsupported-protocol",
+                                 "path":  "docs/contracts/fixtures/invalid/unsupported-protocol-0.2.0.json",
+                                 "assertion":  "Protocol 0.2.0 is outside every declared 0.1.x adapter range."
+                             },
+                             {
+                                 "id":  "no-fabricated-predecessor",
+                                 "kind":  "fabricated-predecessor",
+                                 "path":  "docs/contracts/fixtures/invalid/fabricated-predecessor-0.0.0.json",
+                                 "assertion":  "previousSupportedProtocol is null; no 0.0.x or other predecessor fixture may be claimed."
+                             }
+                         ],
+    "consumers":  [
+                      {
+                          "id":  "claude-code-cli",
+                          "kind":  "host-adapter",
+                          "host":  {
+                                       "product":  "Claude Code CLI",
+                                       "version":  "2.1.223",
+                                       "platform":  "Windows 11",
+                                       "installationSurface":  ".claude/skills/govern and .claude/skills/audit and vision skill/prompt"
+                                   },
+                          "supportsProtocol":  {
+                                                   "minInclusive":  "0.1.0",
+                                                   "maxExclusive":  "0.2.0"
+                                               },
+                          "supportCommitment":  "committed",
+                          "contractVerificationStatus":  "verified",
+                          "entrypoints":  [
+                                              {
+                                                  "name":  "govern",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/claude-code-cli-govern-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "audit",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/claude-code-cli-audit-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "vision",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/claude-code-cli-vision-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "vision-audit",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/claude-code-cli-vision-audit-2026-08-06.json"
+                                                               ]
+                                              }
+                                          ],
+                          "evidenceScope":  "Candidate v0.13.0: fresh 2026-08-06 runtime captures are bound to the changed Vision Review behavior sources; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+                      },
+                      {
+                          "id":  "grok-build-cli",
+                          "kind":  "host-adapter",
+                          "host":  {
+                                       "product":  "Grok Build CLI",
+                                       "version":  "0.2.118",
+                                       "build":  "1e1687c1cf",
+                                       "platform":  "Windows 11",
+                                       "installationSurface":  ".grok/skills/govern and .grok/skills/audit and vision skill/prompt"
+                                   },
+                          "supportsProtocol":  {
+                                                   "minInclusive":  "0.1.0",
+                                                   "maxExclusive":  "0.2.0"
+                                               },
+                          "supportCommitment":  "committed",
+                          "contractVerificationStatus":  "verified",
+                          "entrypoints":  [
+                                              {
+                                                  "name":  "govern",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/grok-build-cli-govern-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "audit",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/grok-build-cli-audit-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "vision",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/grok-build-cli-vision-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "vision-audit",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/grok-build-cli-vision-audit-2026-08-06.json"
+                                                               ]
+                                              }
+                                          ],
+                          "evidenceScope":  "Candidate v0.13.0: fresh 2026-08-06 runtime captures are bound to the changed Vision Review behavior sources; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+                      },
+                      {
+                          "id":  "github-copilot-cli",
+                          "kind":  "host-adapter",
+                          "host":  {
+                                       "product":  "GitHub Copilot CLI",
+                                       "version":  "1.0.75",
+                                       "platform":  "Windows 11",
+                                       "installationSurface":  "%APPDATA%/npm/@github/copilot and vision skill/prompt"
+                                   },
+                          "supportsProtocol":  {
+                                                   "minInclusive":  "0.1.0",
+                                                   "maxExclusive":  "0.2.0"
+                                               },
+                          "supportCommitment":  "committed",
+                          "contractVerificationStatus":  "verified",
+                          "entrypoints":  [
+                                              {
+                                                  "name":  "govern",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/github-copilot-cli-govern-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "audit",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/github-copilot-cli-audit-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "vision",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/github-copilot-cli-vision-2026-08-06.json"
+                                                               ]
+                                              },
+                                              {
+                                                  "name":  "vision-audit",
+                                                  "status":  "runtime-verified",
+                                                  "evidence":  [
+                                                                   "docs/releases/runtime/v0.13.0/github-copilot-cli-vision-audit-2026-08-06.json"
+                                                               ]
+                                              }
+                                          ],
+                          "evidenceScope":  "Candidate v0.13.0: fresh 2026-08-06 runtime captures are bound to the changed Vision Review behavior sources; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+                      }
+                  ]
 }

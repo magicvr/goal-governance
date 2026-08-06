@@ -163,7 +163,7 @@ version: 0.7.0
 - **边界**：`/audit` 只写 Goal `03-audit.md`；`/vision-audit` 只写 `docs/vision/reviews.md`；`/vision` 保留 self Review、决策与 finding 响应。
 - **已执行验证**：独立入口核心、原 `/vision`、Claude/Grok/Copilot 安装源、Windows PowerShell 隔离安装、消费者契约和 Skills 镜像的聚焦 `unittest` 均通过。
 - **运行时证据**：新入口三宿主均 `pending-runtime-validation`；矩阵为 `unreleased`，未将安装结构测试记为 runtime-verified。
-- **审视闭合**：[VRev-002 的 V-F-001 响应](../../../vision/reviews.md#响应--v-f-0012026-07-28) 记录为 `fixed`。Root 保持 `active`，不改 progress，不发版。
+- **审视闭合**：[VRev-002 的 V-F-001 响应](../../../vision/reviews/VRev-002-vision-governance-audit-routing.md) 记录为 `fixed`。Root 保持 `active`，不改 progress，不发版。
 
 ## 2026-07-28 · `/vision` follow-through（D-019；不发版）
 
@@ -174,7 +174,7 @@ version: 0.7.0
   - Copilot：两次 **fail**（stderr: monthly quota）；矩阵 vision 仍 pending；scratch `vision-capture-copilot.log`
 - **矩阵/README**：Claude+Grok vision runtime-verified；Copilot pending；skills README 状态表已对齐。
 - **消费面**：AGENTS.template / Claude install AGENTS / Copilot instructions 含 P-006 与**当时**三入口。
-- **Dogfood**：[VRev-001](../../../vision/reviews.md) self pass；**无** tag/Release/release_evidence release-mode。
+- **Dogfood**：[VRev-001](../../../vision/reviews/VRev-001-charter-init-stack-coherence.md) self pass；**无** tag/Release/release_evidence release-mode。
 - 命令摘要见 GOAL-008 执行与 scratch `vision-capture-summary.txt`。
 - **现时注（2026-07-30）**：D-019 当时默认面为三入口；**现时**默认四入口（+ `/vision-audit`，[D-020](01-decision.md#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)）。本条不改历史 runtime 事实。
 

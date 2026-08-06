@@ -91,6 +91,12 @@ version: 1.1.0
 - D-007 创建 [GOAL-005-vision-review-ledger-scaling](../GOAL-005-vision-review-ledger-scaling/) 完整五件套；其 D-001 冻结稳定索引 + 平铺 VRev 报告、legacy 兼容、现有记录迁移与发布终态。
 - GOAL-005 为 `active / 20%`（S1 1/5）；Root R3 保持进行中，Root progress 保持 2/3 = 67%。
 
+### 2026-08-06 · GOAL-005 S2～S4 完成
+
+- Vision Review 索引/报告迁移、canonical/Skills/安装同步、测试与 12 个 fresh runtime evidence 已完成；GOAL-005 E-002 记录 `32 + 42 + 72` 测试、mirror check 与 compatibility readiness。
+- A-001 self 与 A-002 independent cross 均 `pass`，开放 required = 0；GOAL-005 E-003 将 S4 推进完成，目标为 `active / 80%`。
+- Root R3 保持进行中、Root progress 保持 2/3 = 67%；S5 PR/main/tag/Release 仍待完成。
+
 ## 待办
 
 1. 完成 GOAL-005 的 S2～S5、cross close-out 与正式发布。

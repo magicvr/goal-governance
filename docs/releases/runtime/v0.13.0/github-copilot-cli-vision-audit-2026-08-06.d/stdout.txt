@@ -1,0 +1,45 @@
+● skill(vision-audit)
+
+I am loading the specified governance sources and the independent-review wrapper/core prompt without
+ modifying the worktree.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:end (299 lines read)
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ L1:end (100 lines read)
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ L1:end (37 lines read)
+
+● Read vision-audit.prompt.md
+  │ .github\prompts\vision-audit.prompt.md
+  └ L1:end (28 lines read)
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ L1:end (85 lines read)
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ L1:end (250 lines read)
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ L1:end (46 lines read)
+
+● Read AGENTS.md
+  └ L1:end (269 lines read)
+
+Loaded wrapper: .github/prompts/vision-audit.prompt.md v0.2.0.
+Loaded core prompt: skills/prompts/07-independent-vision-review.md v0.2.0.
+
+Current Charter: vision-goal-governance@0.2.0 (active).
+Workspace workspace-001-goal-governance primary plan: VP-001-governance-platform-delivery (closed).
+Open required Vision findings: 0.
+
+COPILOT_CLI_VISION_AUDIT_DISPATCH_OK
+

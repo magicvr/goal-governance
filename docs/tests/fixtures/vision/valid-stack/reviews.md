@@ -26,32 +26,6 @@ parent: null
 
 ## 条目索引
 
-| id | date | source | scope | verdict | summary |
-|----|------|--------|-------|---------|---------|
-| — | — | — | — | — | （尚无条目；初建 Charter 的补录 Review 可在此追加） |
-
----
-
-## 条目正文
-
-（按 `VRev-00N` 追加节。模板：）
-
-```markdown
-### VRev-00N · <短标题>（YYYY-MM-DD）
-
-| 字段 | 值 |
-|------|-----|
-| source | self \| independent |
-| scope | charter-init \| charter-strategic \| portfolio \| other |
-| verdict | pass \| conditional \| fail |
-| auditor | <工具或人> |
-
-**摘要** …
-
-**Findings**
-- [required|recommended] …
-
-**建议 class**：editorial | strategic | no-change
-
-**闭合**（若有 required）：路径 / 证据链接 / 用户裁决
-```
+| id | date | source | scope | verdict | open required | summary | file |
+|----|------|--------|-------|---------|---------------|---------|------|
+| VRev-001 | 2026-07-28 | self | charter-init | pass | 0 | fixture review | [VRev-001-charter-init.md](reviews/VRev-001-charter-init.md) |

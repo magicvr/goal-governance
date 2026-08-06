@@ -34,7 +34,7 @@ version: 1.2.2
 
 ## 2026-07-31 · 愿景 strategic re-align（Charter 0.2.0 · Web 冻结）
 
-`/vision`：用户确认 S1+B1。Charter **`vision-goal-governance@0.2.0`**（[VR-005](../vision/revisions.md)）；VP-001 意图改为协议 + Skills；本仓 Web = **冻结参考实现**（不删代码、非投资面）。[VRev-005](../vision/reviews.md) self **pass**；workspace-001 + Root `serves_summary` re-align 完成；宽阻断解除。**不**改各 GOAL status/progress。实现层收束见上节 D-027。下一编号 **GOAL-024**。
+`/vision`：用户确认 S1+B1。Charter **`vision-goal-governance@0.2.0`**（[VR-005](../vision/revisions.md)）；VP-001 意图改为协议 + Skills；本仓 Web = **冻结参考实现**（不删代码、非投资面）。[VRev-005](../vision/reviews/VRev-005-charter-0-2-0-strategic-review.md) self **pass**；workspace-001 + Root `serves_summary` re-align 完成；宽阻断解除。**不**改各 GOAL status/progress。实现层收束见上节 D-027。下一编号 **GOAL-024**。
 
 ## 2026-07-31 · 路径 D 授权 v0.11.0 发版（PR → main → tag → Release）
 
@@ -112,7 +112,7 @@ version: 1.2.2
 
 ## 2026-07-28 · 响应 V-F-001：独立 Vision Review 专用入口（GOAL-001 D-020；不发版）
 
-用户按 P-004 选择新增 `/vision-audit`，不扩展 `/audit`。核心 `07`、三宿主默认安装与消费者契约已同步；[VRev-002](../vision/reviews.md#响应--v-f-0012026-07-28) 以 `fixed` 闭合入口缺口。新入口三宿主 runtime 仍 pending，矩阵为 `unreleased`。**不**改任何 Goal status/progress。详见 [D-020](GOAL-001-main-vision/01-decision.md#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)。
+用户按 P-004 选择新增 `/vision-audit`，不扩展 `/audit`。核心 `07`、三宿主默认安装与消费者契约已同步；[VRev-002](../vision/reviews/VRev-002-vision-governance-audit-routing.md) 以 `fixed` 闭合入口缺口。新入口三宿主 runtime 仍 pending，矩阵为 `unreleased`。**不**改任何 Goal status/progress。详见 [D-020](GOAL-001-main-vision/01-decision.md#d-020--响应-v-f-001独立-vision-review-专用入口2026-07-28)。
 
 ## 2026-07-28 · `/vision` follow-through（GOAL-001 D-019；不发版）
 

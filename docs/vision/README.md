@@ -3,8 +3,8 @@ doc_type: vision-index
 title: 愿景体系入口
 status: active
 created: 2026-07-28
-updated: 2026-07-31
-version: 0.4.2
+updated: 2026-08-06
+version: 0.5.0
 ---
 
 # 愿景体系 · `docs/vision/`
@@ -30,7 +30,8 @@ version: 0.4.2
 | [roadmap.md](roadmap.md) | **组合编排**索引（VP 波次，非 progress%） |
 | [plans/](plans/) | 单个 `VP-*.md` **意图**权威正文 |
 | [revisions.md](revisions.md) | Charter 修订时间线（`VR-`） |
-| [reviews.md](reviews.md) | **Vision Review** 台账（`VRev-00N`） |
+| [reviews.md](reviews.md) | **Vision Review** 稳定索引与当前 required 投影 |
+| [reviews/](reviews/) | 单条 `VRev-NNN-<slug>.md` 正式报告（self / independent 共用序列） |
 | [workspaces.md](workspaces.md) | 工作区贡献图（角色与意图，非进度） |
 | [alignment.md](alignment.md) | 对齐契约与门禁（规则权威） |
 | [consumer-checklist.md](consumer-checklist.md) | Skills / 适配器 / 编排器检查映射（本仓 Web 非现行投资面） |
@@ -46,7 +47,7 @@ version: 0.4.2
 | 意图 | 入口 |
 |------|------|
 | 建/修 Charter、VP、self Review、finding 响应 | `/vision` |
-| 独立 Vision Review（只写 [reviews.md](reviews.md)） | `/vision-audit` |
+| 独立 Vision Review（写 VRev 报告并更新 [reviews.md](reviews.md)） | `/vision-audit` |
 | 工作区目标推进 | `/govern` |
 | Goal 交叉审计 | `/audit` |
 
