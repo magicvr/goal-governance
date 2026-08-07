@@ -2,9 +2,9 @@
 title: 目录布局
 status: active
 created: 2026-07-18
-updated: 2026-08-04
+updated: 2026-08-07
 parent: null
-version: 0.6.4
+version: 0.6.5
 ---
 
 # 目录布局
@@ -51,6 +51,13 @@ goal-governance/
 │   │   └── workspace-context.md
 │   ├── contracts/             # docs/contracts 的同步镜像
 │   └── install.*
+├── mcp/                       # MCP 通道实现（VP-004 R4 起；与 skills/ 并列，通道资产分离）
+│   ├── server.py              # MCP stdio server（四治理入口 + lifecycle 工具）
+│   ├── entries.py             # 四入口映射（单一真相源）
+│   ├── kernel.py              # L2 共享等价内核
+│   ├── lifecycle.py / doctor.py / config.py / governance-root.schema.json
+│   ├── README.md              # 使用、Docker 与版本语义
+│   └── Dockerfile             # GHCR 发布形态（File zip 不含本目录实现）
 ```
 
 ## 约束
@@ -63,4 +70,5 @@ goal-governance/
 - 共享资料只以版本/哈希固定引用出现在工作区上下文或受控记录中，不能成为跨工作区目标状态或第二真相源。
 - `GOAL-*` id 仅工作区内唯一，**形状不嵌工作区编号**；跨区引用见 [workspace-protocol.md](workspace-protocol.md) §2.6（文档默认 **Q2** 路径，对话默认 **Q3** 标签）。
 - `docs/contracts/` 是消费适配器版本与兼容声明的 canonical；`skills/contracts/` 由 stage 从 docs 生成，必须逐字节一致且不得另立版本真相。
+- **通道资产分离（VP-004 R4 / A-012 F-007）**：`mcp/` 与 `skills/` 是并列通道资产。`mcp/` 实现（含 `skills/tests/test_mcp_*.py` 集成测试）**不**进入 File 发布 zip（`scripts/pack_skills_release.py` 结构性排除）；MCP 通道发布资产为 GHCR Docker 镜像（与 File 资产同 tag 同版本，见 `mcp/README.md`）。
 - **stage 门禁（本 monorepo）**：改 `docs/architecture` 白名单、`docs/templates/**`、`docs/vision/alignment.md` 或 `docs/contracts/**` 后，必须运行 `python scripts/stage_skills_mirrors.py` 并**提交**生成的 `skills/core` / `skills/contracts` 变更；禁止手改镜像、禁止只交 docs。AI 操作入口见根 `AGENTS.md` §8c；说明见 [../README.md](../README.md)。

@@ -63,7 +63,7 @@ LIFECYCLE_TOOLS: list[dict[str, Any]] = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）"},
                 "confirm": {"type": "boolean", "description": "确认写盘；默认 false 拒绝写入"},
                 "channel": {"type": "string", "description": "安装通道标识（默认 mcp）"},
             },
@@ -78,7 +78,7 @@ LIFECYCLE_TOOLS: list[dict[str, Any]] = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）"},
                 "confirm": {"type": "boolean", "description": "确认写盘；默认 false 拒绝写入"},
             },
             "additionalProperties": False,
@@ -93,7 +93,7 @@ LIFECYCLE_TOOLS: list[dict[str, Any]] = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）"},
                 "confirm": {"type": "boolean", "description": "确认写盘；默认 false 拒绝写入"},
             },
             "additionalProperties": False,
@@ -105,7 +105,7 @@ LIFECYCLE_TOOLS: list[dict[str, Any]] = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）"},
             },
             "additionalProperties": False,
         },
@@ -174,6 +174,18 @@ class MCPServer:
     ) -> dict[str, Any]:
         root_value = arguments.get("root")
         root = Path(root_value).resolve() if root_value else self.repo_root
+        # F-005 (A-012): lifecycle tools are bound to the server's --repo-root.
+        # A client-supplied root outside that bound fails closed, so the
+        # managed-paths allowlist can never be applied against an arbitrary
+        # local directory the server was not started for.
+        try:
+            root.relative_to(self.repo_root)
+        except ValueError as error:
+            raise MCPError(
+                -32602,
+                f"lifecycle root must stay inside the server-bound repo root "
+                f"({self.repo_root}): {root}",
+            ) from error
         confirm = bool(arguments.get("confirm", False))
         if name in ("install", "upgrade", "uninstall"):
             try:
@@ -310,6 +322,14 @@ class MCPServer:
             try:
                 if method == "initialize":
                     result = self.handle_initialize(params)
+                elif not self.initialized:
+                    # F-004 (A-012): strict MCP ordering — nothing but
+                    # initialize may be served before the handshake completes.
+                    raise MCPError(
+                        -32002,
+                        "Server not initialized: call initialize before "
+                        "tools/list, tools/call or ping",
+                    )
                 elif method == "tools/list":
                     result = self.handle_tools_list()
                 elif method == "tools/call":

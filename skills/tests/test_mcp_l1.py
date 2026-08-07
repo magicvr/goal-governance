@@ -270,5 +270,78 @@ class McpVersionPinTests(unittest.TestCase):
         self.assertEqual(init["result"]["serverInfo"]["version"], "0.13.0")
 
 
+class McpInitializeGateTests(unittest.TestCase):
+    """F-004 (A-012): strict MCP ordering — nothing but initialize is served
+    before the handshake completes (error -32002)."""
+
+    def test_tools_list_before_initialize_fails_closed(self) -> None:
+        server = McpServerProcess(REPO_ROOT)
+        self.addCleanup(server.close)
+        payload = server.request("tools/list", request_id=1)
+        self.assertIn("error", payload)
+        self.assertEqual(payload["error"]["code"], -32002)
+
+    def test_tools_call_before_initialize_fails_closed(self) -> None:
+        server = McpServerProcess(REPO_ROOT)
+        self.addCleanup(server.close)
+        payload = server.request(
+            "tools/call",
+            {"name": "audit", "arguments": {"task": "x", "goal_id": "y"}},
+            request_id=1,
+        )
+        self.assertIn("error", payload)
+        self.assertEqual(payload["error"]["code"], -32002)
+
+    def test_ping_before_initialize_fails_closed(self) -> None:
+        server = McpServerProcess(REPO_ROOT)
+        self.addCleanup(server.close)
+        payload = server.request("ping", request_id=1)
+        self.assertIn("error", payload)
+        self.assertEqual(payload["error"]["code"], -32002)
+
+    def test_after_initialize_tools_work(self) -> None:
+        server = McpServerProcess(REPO_ROOT)
+        self.addCleanup(server.close)
+        init = server.request("initialize", {"protocolVersion": "2025-03-26"}, request_id=1)
+        self.assertNotIn("error", init)
+        payload = server.request("tools/list", request_id=2)
+        self.assertNotIn("error", payload)
+        self.assertIsInstance(payload["result"]["tools"], list)
+
+
+class McpLifecycleRootBoundaryTests(unittest.TestCase):
+    """F-005 (A-012): lifecycle tools are bound to the server --repo-root; a
+    client-supplied root outside it fails closed (-32602)."""
+
+    def setUp(self) -> None:
+        self.server = McpServerProcess(REPO_ROOT)
+        self.addCleanup(self.server.close)
+        init = self.server.request("initialize", {"protocolVersion": "2025-03-26"}, request_id=1)
+        self.assertNotIn("error", init)
+
+    def _call(self, name: str, arguments: dict[str, Any], request_id: int = 3) -> dict[str, Any]:
+        return self.server.request(
+            "tools/call", {"name": name, "arguments": arguments}, request_id=request_id
+        )
+
+    def test_install_root_outside_repo_root_fails_closed(self) -> None:
+        payload = self._call("install", {"root": str(REPO_ROOT.parent), "confirm": False})
+        self.assertIn("error", payload)
+        self.assertEqual(payload["error"]["code"], -32602)
+        self.assertIn("must stay inside", payload["error"]["message"])
+
+    def test_doctor_root_outside_repo_root_fails_closed(self) -> None:
+        payload = self._call("doctor", {"root": str(REPO_ROOT.parent)})
+        self.assertIn("error", payload)
+        self.assertEqual(payload["error"]["code"], -32602)
+
+    def test_install_root_inside_repo_root_reaches_confirm_gate(self) -> None:
+        # Containment passes; the next gate is confirm=false refusing to write.
+        payload = self._call("install", {"root": str(REPO_ROOT), "confirm": False})
+        self.assertNotIn("error", payload)
+        self.assertTrue(payload["result"]["isError"])
+        self.assertIn("confirmation", payload["result"]["content"][0]["text"])
+
+
 if __name__ == "__main__":
     unittest.main()

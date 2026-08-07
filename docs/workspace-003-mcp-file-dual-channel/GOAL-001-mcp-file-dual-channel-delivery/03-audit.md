@@ -17,7 +17,7 @@ version: 0.10.0
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
 | 影响本 scope 的 I-00N | I-001～I-004 全部 closed | 见 00-meta 信息表（与 01-decision 同源） |
-| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1/R2/R3 纲领关门（A-003/A-005/A-006）+ 最终关门（A-007/A-008）+ 关门复审 A-009 + R4 复关 A-011 + 关门后独立复审 A-012 + 响应登记 A-013 + 维护轮响应 A-014 |
+| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1/R2/R3 纲领关门（A-003/A-005/A-006）+ 最终关门（A-007/A-008）+ 关门复审 A-009 + R4 复关 A-011 + 关门后独立复审 A-012 + 响应登记 A-013 + 维护轮响应 A-014/A-015 |
 | 资料引用（若有）是否固定且用户确认 | 无 | 表空 |
 
 ## 意见台账索引
@@ -38,6 +38,7 @@ version: 0.10.0
 | A-012 | 2026-08-07 | independent | 关门后独立审计：方法论/Skills 完整性 + MCP server 体系（未加载 skill） | pass | 0（F-001～F-008 recommended） | `03-audit/A-012-independent-post-close-methodology-mcp.md` |
 | A-013 | 2026-08-07 | self | 响应 A-012（independent pass）· 登记 F-001～F-008（编排器；无 required、无冲突；不回退关门） | pass | 0 | `03-audit/A-013-response-a012-register-findings-self.md` |
 | A-014 | 2026-08-07 | self | 维护轮响应：F-001 选项 A 重捕获 L3 + F-002/F-003 fixed（203 测试绿；不回退状态） | pass | 0 | `03-audit/A-014-maintenance-f001-a-f002-f003-fixed-self.md` |
+| A-015 | 2026-08-07 | self | 维护轮响应：F-004/F-005/F-007 fixed（initialize 门禁 + lifecycle root 边界 + directory-layout mcp/；210 测试绿；不回退状态） | pass | 0 | `03-audit/A-015-maintenance-f004-f005-f007-fixed-self.md` |
 
 ## 结论状态
 
@@ -50,3 +51,5 @@ Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-0
 **2026-08-07 响应登记（A-013，self）**：A-012 无 required、无冲突 → 不触发 P-004、不阻断任何门禁；F-001～F-008 全部**登记**为 open 非必改项（拟处置 + 触发条件留痕；不宣布闭合）。F-001（选项 A 重捕获 L3 / 选项 B 历史路径注解）待用户选择；F-002/F-003/F-004/F-005/F-007 归维护轮；F-006 移交 VP-002 消费面；F-008 并入 I-007（首次真实 GHCR 发布验收关闭）。Root/子目标/VP-004/workspace 状态与 goal-tree **无变化**。
 
 **2026-08-07 维护轮响应（A-014，self）**：用户确认「F-001 选 A，修 F-002/F-003」。**F-001 fixed**——四宿主 L3 以同 prompt/同版本重捕获，`behaviorSources` 绑定当前树 `mcp/*` 哈希（全 pass；entries/kernel 哈希与 R1 一致，server 为合法演进后当前哈希）；runtime README 增捕获点与重捕获节；Root 00-meta 宿主表备注恢复字面成立。**F-002 fixed**——`GOAL_GOVERNANCE_MCP_VERSION` 发布钉（`__init__.py` 环境钉 + Dockerfile ARG/ENV + workflow build-args 同源），`MCP_LAYOUT_VERSION` 独立，doctor 分列报告。**F-003 fixed**——pack 排除 `skills/tests/test_mcp_*.py`（实测 77 成员 0 混入）。全量 203 测试绿 + stage 36 对 0 漂移。F-004/F-005/F-007 仍 open 归后续维护轮；F-006 归 VP-002；F-008/I-007 于首次真实 GHCR 发布验收关闭。Root/子目标/VP-004/workspace 状态与 goal-tree **无变化**。
+
+**2026-08-07 维护轮响应（A-015，self）**：用户确认「修 F-004/F-005/F-007」，三条全部 **fixed**。**F-004**——MCP server 强制握手门禁：`initialize` 之外的方法在握手完成前返回 `-32002`。**F-005**——lifecycle `root` 必须 ⊆ server `--repo-root`，越界 `-32602` fail closed；README 增信任模型节。**F-007**——`directory-layout.md`（v0.6.5）增 `mcp/` 布局与通道资产分离约束；§8c stage 镜像刷新（1 复制，`--check` 0 漂移）。全量 **210 测试绿**（+7 新增）。A-012 登记项至此 **F-001～F-005、F-007 全部 fixed**；剩余 F-006（归 VP-002）与 F-008/I-007（首次真实 GHCR 发布验收）。Root/子目标/VP-004/workspace 状态与 goal-tree **无变化**。

@@ -68,6 +68,19 @@ docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-
 
 `commit` 不进工具集（便利可选、与治理正交，VP-004 入口面）。
 
+## 安全与信任模型（F-005 · A-012）
+
+- **server 绑定单一仓库根**（`--repo-root`，默认 cwd）：lifecycle 工具
+  （`install`/`upgrade`/`uninstall`/`doctor`）的 `root` 参数**必须**落在该绑定根
+  内（`root ⊆ --repo-root`，越界 **fail closed**，返回明确错误）——managed-paths
+  allowlist 永远只对 server 启动时绑定的仓库生效，客户端不能借 `root` 指向任意
+  本机目录。
+- 写盘仍受双重门禁：**allowlist**（仅 `AGENTS.md` managed 段 + `.goal-governance/`）
+  与 **confirm=true 默认拒绝**；未初始化（`initialize` 前）不提供任何工具调用
+  （F-004）。
+- Docker 形态下容器固定 `--repo-root /workspace`，客户端零参数；stdio 本地进程
+  与 Docker 同语义。
+
 ## 消费方式（宿主示例）
 
 MCP 客户端配置指向容器（stdio 直连，见上）或本地 `python mcp/server.py`（stdio）。
