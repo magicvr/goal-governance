@@ -4,16 +4,33 @@
 
 ## Unreleased
 
-（workspace-003 / VP-004：双通道交付与可配置治理根。正式发布身份仍以 annotated tag + release evidence 为准。）
+（空；2026-08-08 发布 v0.13.1。）
+
+## 0.13.1 - 2026-08-08
+
+消费交付双通道（workspace-003 / VP-004）完整发布 + 消费面路径收敛（workspace-002 / VP-002 GOAL-006）patch：分发正文相对化 `{governance_root}`、MCP Docker 发布资产、证据链与一致性门禁补强。协议（`protocol 0.1.0`）与契约（`contractFormatVersion 0.4.0`）不变。
 
 ### 消费交付双通道（MCP + File）与可配置治理根
 
-- **R1 等价内核**：`skills/mcp/` MCP stdio server（四治理入口工具 `vision`/`vision-audit`/`govern`/`audit`，`commit` 不入集）+ L2 共享等价内核（VP-004 十条检查点）；合同 `deliveryChannel: files | mcp` 分列（`contractFormatVersion` 0.4.0）；L1 分列测试 + 四宿主 L3 抽稀探针。
+- **R1 等价内核**：`mcp/` MCP stdio server（四治理入口工具 `vision`/`vision-audit`/`govern`/`audit`，`commit` 不入集）+ L2 共享等价内核（VP-004 十条检查点）；合同 `deliveryChannel: files | mcp` 分列（`contractFormatVersion` 0.4.0）；L1 分列测试 + 四宿主 L3 抽稀探针。
 - **R2 产品化**：bootstrap 双入口（`-Channel files|mcp`，推荐 MCP 同屏声明 File 仍一等）；薄壳 lifecycle（managed 标记、allowlist、默认确认写盘）；`doctor` + 官方 gitignore 片段。
-- **R3 可配置治理根**：`governance_root` 解析（默认 `docs`，`.goal-governance.json` pin，仓外 fail closed，内部布局冻结）；canonical 权威面（alignment / workspace-protocol / 根 AGENTS / templates / consumer-checklist / standalone-bootstrap）路径叙述相对化；AGENTS.md 版本 0.12.0 → 0.13.0（独立于发布版本演进）。
-- v0.13.0 runtime evidence 因 AGENTS.md 行为源变更于 2026-08-07 整批刷新（12 单元仍全 `runtime-verified`）。
+- **R3 可配置治理根**：`governance_root` 解析（默认 `docs`，`.goal-governance.json` pin，仓外 fail closed，内部布局冻结）；canonical 权威面路径叙述相对化。
+- **R4 MCP Docker 发布资产与通道资产分离**：MCP 实现迁至仓库根 `mcp/`（File zip 结构性排除实现与 `tests/test_mcp_*`）；`mcp/Dockerfile` + GHCR 同 tag 发布管线（`skills-pack-release.yml` docker 步骤，契约测试断言）；`-Channel mcp` 薄装重定义；README 安装指南。
+- **MCP server 硬化**（A-012 修复）：`initialize` 握手门禁（未握手一律 `-32002`）；lifecycle `root` 必须 ⊆ server `--repo-root`（越界 `-32602` fail closed）；`GOAL_GOVERNANCE_MCP_VERSION` 发布钉（镜像内版本与 GHCR tag 同源，`MCP_LAYOUT_VERSION` 独立，doctor 分列报告）；四宿主 L3 证据重捕获绑定当前树。
+- v0.13.1 runtime evidence 于 2026-08-08 整批重捕获（12 单元仍全 `runtime-verified`；行为源含消费面相对化后文件）。
 
-最新正式版本为 **0.13.0** / `v0.13.0`。
+### 消费面路径收敛（F-006 / R-001 扫尾）
+
+- 四治理 prompts（00/05/06/07 与 01～04 原语）、MCP 薄壳、安装形态（`skills/install/**`、dogfood `.grok/.claude/.agents/.github`）与 canonical 扫尾（`overview`/`directory-layout`/`docs/README`）的硬编码 `docs/…` 路径**相对化为 `{governance_root}`**（默认 `docs`，可经 `.goal-governance.json` 配置，仓外 fail closed）。
+- `AGENTS.template.md` 路径类引用并入 **`{{GOVERNANCE_ROOT}}`** 占位（与既有 `{{...}}` 安装时替换机制一致）；使用说明补治理根条目。
+- 防再犯测试：`skills/tests/test_consumer_surface_relativeization.py`（无裸 `docs/` + `governance_root≠docs` 消费场景 e2e：模拟安装到非 docs 根 + 路径读取断言）。
+
+### 工具链与门禁
+
+- **M-001**：`capture_runtime_evidence.py` 新增 `--check` 一致性校验（枚举证据 `behaviorSources` 与当前树哈希比对；`--evidence-dir` 可重复、check 模式必填；历史时点证据须显式检查），10 条测试；发布 workflow pack job 挂接该检查（证据一致性进 CI 门禁）。
+- 矩阵证据刷新：`skills-consumer-compatibility-matrix.json` `candidateRevision` → `v0.13.1`，12 个 2026-08-08 runtime captures 绑定当前树；Codex 维持 install surface（非矩阵 committed）。
+
+最新正式版本为 **0.13.1** / `v0.13.1`。
 
 ## 0.13.0 - 2026-08-06
 

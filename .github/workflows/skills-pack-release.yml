@@ -78,6 +78,13 @@ jobs:
           python scripts/stage_skills_mirrors.py
           python scripts/stage_skills_mirrors.py --check
 
+      # M-001 (A-016): the L3 host-evidence ledger must match the current tree
+      # before anything ships; a stale behavior source fails the pack job.
+      - name: Evidence consistency gate (M-001)
+        run: |
+          python scripts/capture_runtime_evidence.py --check \
+            --evidence-dir docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence
+
       - name: Run pack unit tests
         run: |
           python -m unittest discover -s scripts/tests -p 'test_pack_skills_release.py' -v

@@ -298,6 +298,30 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
             publish_block.index("gh release create"),
         )
 
+    def test_pack_job_pins_evidence_consistency_gate(self) -> None:
+        """M-001 (A-016): the pack job must run the L3 evidence consistency
+        check before tests/pack, so a stale behavior source fails the build."""
+        workflow = (REPO_ROOT / ".github/workflows/skills-pack-release.yml").read_text(
+            encoding="utf-8"
+        )
+        pack_block = workflow.split("\n  publish:")[0]
+        self.assertIn("Evidence consistency gate (M-001)", pack_block)
+        self.assertIn("capture_runtime_evidence.py --check", pack_block)
+        self.assertIn(
+            "--evidence-dir docs/workspace-003-mcp-file-dual-channel/"
+            "GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence",
+            pack_block,
+        )
+        # The gate must run before the pack unit tests and before packing.
+        self.assertLess(
+            pack_block.index("capture_runtime_evidence.py --check"),
+            pack_block.index("Run pack unit tests"),
+        )
+        self.assertLess(
+            pack_block.index("capture_runtime_evidence.py --check"),
+            pack_block.index("Pack skills + core zips"),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
