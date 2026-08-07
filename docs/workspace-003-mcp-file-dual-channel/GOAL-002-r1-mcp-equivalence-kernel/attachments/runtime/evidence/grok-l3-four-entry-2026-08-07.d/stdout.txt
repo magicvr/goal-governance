@@ -1,0 +1,10 @@
+正在只读核对四个治理入口的 skill 与编排角色边界。## 四入口 dispatch 与角色边界
+
+| 入口 | 角色边界 |
+|------|----------|
+| **vision** | 决策层：建修 Charter、VP（组合编排）、Vision Review（self）、re-align、结构选型；冷启动优先（Charter→VP）；不推进 Goal 执行（交 `/govern`）；独立 VRev 交 `/vision-audit`。 |
+| **vision-audit** | 独立 Vision Review：只写 `docs/vision/reviews` 台账（`source: independent`）；不改 Charter / VP / Goal 状态；finding 响应交 `/vision`。 |
+| **govern** | 实现层编排：扫描工作区与审计台账、P-004 裁决、提议下一步、确认后写目标五件套（原语 01–04）；交叉审计交 `/audit`，愿景决策交 `/vision`。 |
+| **audit** | Goal 交叉审计：只出意见到被审目标 `03-audit`（`source: independent`）；不直接改 `status` / `progress`；响应交 `/govern`；不写 vision reviews。 |
+
+GROK_L3_FOUR_ENTRY_OK

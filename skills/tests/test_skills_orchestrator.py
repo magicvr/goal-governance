@@ -329,6 +329,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "evidenceBoundary",
                 "protocol",
                 "supportBaseline",
+                # VP-004 R1 (workspace-003): dual-channel split.
+                "deliveryChannels",
                 "templateSet",
                 "adapterCompatibilityStatus",
                 "adapters",
@@ -515,6 +517,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "evidenceBoundary",
                 "protocol",
                 "supportBaseline",
+                # VP-004 R1 (workspace-003): dual-channel split required.
+                "deliveryChannels",
                 "templateSet",
                 "adapterCompatibilityStatus",
                 "adapters",
@@ -569,7 +573,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
     def test_d003_declares_baseline_and_tiered_adapter_scope(self) -> None:
         """D-003 keeps commitment separate from version-fixed runtime evidence."""
         manifest = self._load_json(CORE_CONTRACTS / "skills-consumer-contract.json")
-        self.assertEqual(manifest["contractFormatVersion"], "0.3.0")
+        # 0.4.0 since VP-004 R1 (workspace-003): deliveryChannels split added.
+        self.assertEqual(manifest["contractFormatVersion"], "0.4.0")
         self.assertEqual(manifest["evidenceBoundary"]["defaultProfile"], "consumer")
         self.assertEqual(
             manifest["supportBaseline"],

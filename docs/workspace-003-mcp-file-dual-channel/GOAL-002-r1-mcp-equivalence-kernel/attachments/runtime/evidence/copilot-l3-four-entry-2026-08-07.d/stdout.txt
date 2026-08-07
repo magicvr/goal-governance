@@ -1,0 +1,38 @@
+/ Search (glob)
+  │ "**/prompts/0*.md"
+  └ 8 files found
+
+/ Search (glob)
+  │ "skills/**"
+  └ 95 files found
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:60 (60 lines read)
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ L1:60 (60 lines read)
+
+● Read 06-vision-orchestrator.md
+  │ skills\prompts\06-vision-orchestrator.md
+  └ L1:60 (60 lines read)
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ L1:60 (60 lines read)
+
+核实完成（基于 skills/prompts/ 的四个入口 prompt 与 SKILL 描述，只读）：
+
+ 1. vision — 决策层入口（P-006）：建修唯一 Charter、VP（组合编排）、Vision Review、strategic
+re-align、结构选型；冷启动优先（Charter→VP 后再交 govern 开区）。不做子目标执行、不改 goal-tree
+进度。
+ 2. vision-audit — 愿景交叉审入口：只写独立意见到 docs/vision/reviews.md 索引 +
+reviews/VRev-NNN-*.md 报告；禁止改 Charter / VP / Goal 状态、goal-tree.md、Goal 03-audit。
+ 3. govern — 实现层单一主入口：扫描工作区与审计台账 → 意见分类 → P-004 用户裁决 → 提议下一步 →
+确认后调用原语 01–04 写入目标五件套；响应全部审计意见、负责放行/关门。
+ 4. audit — Goal 交叉审计入口：只以 source: independent 追加意见到被审目标 03-audit/A-NNN-*.md
+并更新索引；禁止改 status / 检查点 / progress / 方案正文 / goal-tree 状态列。
+
+COPILOT_L3_FOUR_ENTRY_OK
+

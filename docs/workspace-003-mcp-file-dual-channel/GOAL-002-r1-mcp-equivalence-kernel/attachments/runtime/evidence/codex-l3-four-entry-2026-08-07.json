@@ -1,0 +1,142 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-07T12:00:06.642920Z",
+  "unit": {
+    "consumer": "codex-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "OpenAI Codex CLI",
+    "version": "0.146.1",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/claude-l3-four-entry.txt",
+      "sha256": "a423385d4a74fdc3abbbe6d9436e3bb1bfd1c179ec2d70b625601c5a948e9190"
+    },
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/grok-l3-four-entry.txt",
+      "sha256": "5d98a018e6b82a689334161176ff42eef526c1f0b0f251ac73145c043d853d78"
+    },
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/codex-l3-four-entry.txt",
+      "sha256": "107ebc4b14e36927517508bb490b357df9c3b61241cdf146ed6d8f636a974f4e"
+    },
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/copilot-l3-four-entry.txt",
+      "sha256": "fe57e7b7242073d090826385e1fc55217eb60678796f5eaa9cebf524500f4720"
+    },
+    {
+      "path": "skills/mcp/entries.py",
+      "sha256": "ab183e159afdb0eec39a3c3837881d88334cfb18e3c8fd0efd5e3a62342961ed"
+    },
+    {
+      "path": "skills/mcp/kernel.py",
+      "sha256": "ad7dd871d1813957cec8f7546ffcebac508cb1b879535b278853c44036675b22"
+    },
+    {
+      "path": "skills/mcp/server.py",
+      "sha256": "02ae49de4cbd86709e15b8fcd96b002a94d322c3bc4ed3296a058005d640736e"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "cmd.exe",
+      "/d",
+      "/s",
+      "/c",
+      "codex exec --sandbox read-only --skip-git-repo-check --ephemeral --json -C ."
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 120,
+    "inputSha256": "107ebc4b14e36927517508bb490b357df9c3b61241cdf146ed6d8f636a974f4e",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker CODEX_L3_FOUR_ENTRY_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "CODEX_L3_FOUR_ENTRY_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "CODEX_L3_FOUR_ENTRY_OK",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "CODEX_L3_FOUR_ENTRY_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-2",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-3",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-l3-four-entry-2026-08-07.d/stdout.txt",
+    "stdoutSha256": "ba638c2aa9c2b13626a4e645cc5d17267b2be6b946fff0b71f5479a98451ec8e",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-l3-four-entry-2026-08-07.d/stderr.txt",
+    "stderrSha256": "21ea6b50107692f9da4575a91039e4478ac120c34616453bdcd853edeca2132e",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

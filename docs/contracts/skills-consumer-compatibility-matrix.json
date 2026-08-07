@@ -172,5 +172,23 @@
                                           ],
                           "evidenceScope":  "Candidate v0.13.0: fresh 2026-08-06 runtime captures are bound to the changed Vision Review behavior sources; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
                       }
-                  ]
+                  ],
+    "deliveryChannels":  [
+                             {
+                                 "channel":  "files",
+                                 "status":  "first-class",
+                                 "evidenceLevels":  ["L1", "L2", "L3"],
+                                 "entrypoints":  ["vision", "vision-audit", "govern", "audit"],
+                                 "runtime":  "skills zip + install 脚本；File-classic 可用",
+                                 "notes":  "VP-004 R1：生产仓自举权威；L1 证据直接驱动 File 资产"
+                             },
+                             {
+                                 "channel":  "mcp",
+                                 "status":  "first-class",
+                                 "evidenceLevels":  ["L1", "L2", "L3"],
+                                 "entrypoints":  ["vision", "vision-audit", "govern", "audit"],
+                                 "runtime":  "MCP stdio 进程（Python 3，零第三方依赖；Docker 可选）",
+                                 "notes":  "VP-004 R1：四入口工具等价；不替代仓内实例真相；L3 证据为宿主入口面（MCP 进程面由 L1/L2 覆盖）"
+                             }
+                         ]
 }

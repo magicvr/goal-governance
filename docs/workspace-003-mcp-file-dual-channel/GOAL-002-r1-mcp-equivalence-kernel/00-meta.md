@@ -1,15 +1,15 @@
 ---
 id: GOAL-002-r1-mcp-equivalence-kernel
 title: R1：MCP/File 等价验证内核
-status: active
+status: done
 parent: GOAL-001-mcp-file-dual-channel-delivery
 plan_refs: VP-004-mcp-file-dual-channel-delivery
 primary_plan: VP-004-mcp-file-dual-channel-delivery
 serves_summary: 服务 VP-004 R1；定义 MCP 最小运行形态、四治理入口映射、deliveryChannel 合同分列与 File/MCP 共享 L2 验证内核
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.1.0
-progress: 0%
+version: 0.3.0
+progress: 100%
 ---
 
 # GOAL-002 · R1：MCP/File 等价验证内核
@@ -18,16 +18,16 @@ progress: 0%
 
 在 `workspace-003-mcp-file-dual-channel` 的 Root `GOAL-001-mcp-file-dual-channel-delivery` 下，推进 VP-004 的 R1 阶段。目标是先把 MCP 通道的最小运行形态与四治理入口映射讲清，再建立 `deliveryChannel: files | mcp` 的合同分列、File/MCP 分通道 L1 证据与共享 L2 fixture/断言内核。
 
-本目标处于方案与信息澄清阶段；现有仓库尚未提供 MCP Server/tool 实现、`deliveryChannel` 合同字段或 File/MCP 共享 L2 fixture，均不得假定为已存在。
+R1 方案已冻结（D-002/D-003/D-004）且实现已落盘（`skills/mcp/` + 合同分列 + L2/L1 测试）；C1–C3 完成，C4（self + independent 审计闭合）进行中。
 
 ## 成功标准（R1 子目标检查点）
 
-- [ ] C1：I-001 已有可核对结论：MCP 运行时形态、四治理入口映射、tool 名称与关键参数边界已记录。
-- [ ] C2：`deliveryChannel` 合同分列及 L1/L2/L3 证据分级已冻结，并与现有 File contract/schema 不冲突。
-- [ ] C3：共享 L2 fixture/核心断言与 File/MCP 分通道 L1 测试均已实现，且没有用 MCP mock 替代 File 证据。
-- [ ] C4：R1 证据完成 self + independent 审视；所有 required 信息与 finding 按合法路径闭合。
+- [x] C1：I-001 已有可核对结论：MCP 运行时形态、四治理入口映射、tool 名称与关键参数边界已记录（D-002）。
+- [x] C2：`deliveryChannel` 合同分列及 L1/L2/L3 证据分级已冻结（D-003），并与现有 File contract/schema 不冲突。
+- [x] C3：共享 L2 fixture/核心断言与 File/MCP 分通道 L1 测试均已实现（25 条新增全绿），且没有用 MCP mock 替代 File 证据。
+- [x] C4：R1 证据完成 self + independent 审视（A-001/A-002/A-003 全 pass，无 required findings）；所有 required 信息与 finding 按合法路径闭合。
 
-`progress: 0%` = C1–C4 已完成 0 / 4。progress 仅为展示，不放行 R1，不关闭信息门禁，也不推导本目标 `done`。
+`progress: 100%` = C1–C4 已完成 4 / 4（等权）。R1 子目标 `done`（关门审计见 03-audit A-003）。
 
 ## 纲领路线图与边界
 
@@ -42,10 +42,10 @@ progress: 0%
 
 | ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
-| I-001 | required | MCP 最小运行时形态与 Skills/宿主入口到 `vision`、`vision-audit`、`govern`、`audit` 的映射 | R1 方案冻结 | 方案澄清 | 对照现有 File 入口、MCP 合同草案与可运行边界 | open | 进入方案前复核 | 待确认 |
-| I-002 | required | 共享 L2 fixture 范围、等价断言及其在 `docs/tests`/`skills` 中的落点 | R1 实施 | 合同与测试设计 | 对照 VP-004 R1 检查点并设计 File/MCP 分列测试 | open | 进入实施前复核 | 待确认 |
-| I-003 | required | `cross` 审计所需 independent provider | R1 实施与验证 | 实施前 | 由用户指定可用 provider；失败不得静默降级 | open | provider 未指定前保持阻断 | 待用户指定 |
-| I-004 | non-blocking | P0 宿主 L3 探针环境是否本机/CI 可用 | R1 宿主验收 | R1 验收 | 各宿主只读 dispatch 探针 | open | 不可用时按范围记录 residual | 待确认 |
+| I-001 | required | MCP 最小运行时形态与 Skills/宿主入口到 `vision`、`vision-audit`、`govern`、`audit` 的映射 | R1 方案冻结 | 方案澄清 | 对照现有 File 入口、MCP 合同草案与可运行边界 | **closed** | — | D-002；`skills/mcp/` 实现 + `test_mcp_l1.py` 全绿 |
+| I-002 | required | 共享 L2 fixture 范围、等价断言及其在 `docs/tests`/`skills` 中的落点 | R1 实施 | 合同与测试设计 | 对照 VP-004 R1 检查点并设计 File/MCP 分列测试 | **closed** | — | D-003；`kernel.py` + L2/L1 测试全绿 |
+| I-003 | required | `cross` 审计所需 independent provider | R1 实施与验证 | 实施前 | 由用户指定可用 provider；失败不得静默降级 | **closed** | — | D-004：用户指定 grok build / grok-4.5 / thinking high |
+| I-004 | non-blocking | P0 宿主 L3 探针环境是否本机/CI 可用 | R1 宿主验收 | R1 验收 | 各宿主只读 dispatch 探针 | **closed** | — | 四宿主 L3 探针全 pass（attachments/runtime/evidence/） |
 
 ## 愿景对齐
 
