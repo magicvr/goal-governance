@@ -312,7 +312,13 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
             "GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence",
             pack_block,
         )
-        # The gate must run before the pack unit tests and before packing.
+        # The gate must run after deps are installed (jsonschema) and before
+        # the pack unit tests and before packing.
+        self.assertIn("Install check dependencies", pack_block)
+        self.assertLess(
+            pack_block.index("Install check dependencies"),
+            pack_block.index("capture_runtime_evidence.py --check"),
+        )
         self.assertLess(
             pack_block.index("capture_runtime_evidence.py --check"),
             pack_block.index("Run pack unit tests"),
