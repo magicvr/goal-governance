@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-08-06
-version: 1.1.0
+updated: 2026-08-08
+version: 1.2.0
 ---
 
 # 执行记录 · GOAL-001
@@ -102,11 +102,18 @@ version: 1.1.0
 - PR #11 以 merge commit `33934efc` 合入 main；annotated `v0.13.0` tag（tag object `29d5b28c`）指向 merged main，经 `skills-pack-release` run `31073547050`（Environment `release` 审批）发布 9 项 Release 资产；本地重下载 sha256 逐项一致，release-mode evidence 全过，隔离消费方（包边界 + 安装 + dry-run + real update）版本 `0.13.0`。
 - GOAL-005 E-004 / D-003 / A-005 落盘，目标 **`done / 100%`（5/5）**；Root R3 保持进行中、Root progress 保持 2/3 = 67%。
 
+### 2026-08-08 · 接收跨区移交项 F-006（VP-002 消费面波次）
+
+- workspace-003 编排器（用户 `/govern` 指令）正式移交 **F-006** 至本区 VP-002 消费面波次承接；本记录为接收登记，不改变任何 status/progress/审计序列。
+- F-006 内容（源自 [workspace-003 Root A-012](../../workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-012-independent-post-close-methodology-mcp.md) F-006，A-013 登记）：**消费面路径收敛未完成**——`skills/AGENTS.template.md` 与四治理 prompts（00/05/06/07）仍硬编码 `docs/…`；monorepo 默认 `docs` 可用，但 `governance_root≠docs` 的 File 消费仓依赖 AI 自觉读 alignment 定义句，易误读。拟处置：模板与 prompts 改为 `{governance_root}` 或安装时按 pin 展开。
+- 与 A-009 R-001 扫尾同类（workspace-003 Root A-010 已留痕「overview/directory-layout/docs-README 裸路径扫尾归 VP-002 协议面波次，触发 = VP-002 推进或下一次协议面修订」）；F-006 与本区该扫尾合并跟踪。
+
 ## 待办
 
 1. ~~完成 GOAL-005 的 S2～S5、cross close-out 与正式发布~~（已闭门，2026-08-06）。
 2. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
 3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
+4. **承接 F-006（消费面路径收敛）**：`skills/AGENTS.template.md` 与四治理 prompts 硬编码 `docs/…` → 相对化 `{governance_root}` 或安装时按 pin 展开（跨区移交，2026-08-08 接收；与 A-009 R-001 扫尾合并跟踪）。触发 = VP-002 推进或下一次协议面修订；登记见上方时间线。
 
 ## 进度评估
 

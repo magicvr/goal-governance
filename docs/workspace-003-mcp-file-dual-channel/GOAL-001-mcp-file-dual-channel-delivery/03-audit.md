@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-08
-version: 0.14.0
+version: 0.15.0
 ---
 
 # 审计 · GOAL-001
@@ -64,3 +64,5 @@ Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-0
 **2026-08-08 维护项立项（E-010）**：用户指令将 **A-016 防再犯建议**（为 `scripts/capture_runtime_evidence.py` 或 CI 增加「L3 证据 `behaviorSources` 与当前树哈希」一致性检查）**立项为维护项 M-001**（registered，未执行）：范围/验收标准（实现变更后检查红、重捕获后绿、基线 210 测试绿）/触发（下一维护轮或下次改 `mcp/` 前）/归属（workspace-003 工具链维护，不 reopening）均留痕于 `02-execution/E-010-register-maintenance-item-m001.md`。其余仍开放项不变：F-006（VP-002）、F-008 / I-007（首次真实 GHCR 发布验收）。状态与 goal-tree **无变化**。
 
 **2026-08-08 M-001 执行完成（A-018，self，pass）**：`capture_runtime_evidence.py` 新增 **`--check`** 一致性校验（`check_evidence_file` / `run_evidence_check`：枚举 `behaviorSources` 比对当前树，复用 `_repo_file` 防穿越与 `_sha256_repo_text` 哈希语义；非证据 JSON 跳过；`--evidence-dir` 可重复且 check 模式必填——**历史时点证据绑定捕获时点树，不隐式全仓扫描**）；10 条新测试（一致绿/stale 红/缺失红/穿越拒/非证据跳过/计数/CLI exit 码/缺目录/多目录）；端到端 workspace-003 L3 证据 **ok（4 文件）**、历史发布证据目录显式检查正确红；全量 **234 passed** 无回归；维护钩子文档入 GOAL-002 runtime README。**M-001 done**；A-016 建议 3（防再犯）闭环，F-001 复发根因有测试层兜底。仍开放：F-006（VP-002）、F-008 / I-007（首次真实 GHCR 发布验收）。状态与 goal-tree **无变化**。
+
+**2026-08-08 F-006 跨区移交（E-012）**：用户指令将 **F-006**（消费面路径收敛：`skills/AGENTS.template.md` 与四治理 prompts 硬编码 `docs/…` 相对化）**正式移交 workspace-002 / VP-002 消费面波次承接**——接收登记已落 [workspace-002 Root 02-execution](../../workspace-002-methodology-skills-feedback/GOAL-001-methodology-skills-feedback-evolution/02-execution.md)（时间线 + 待办 4，与 A-009 R-001 扫尾合并跟踪，触发 = VP-002 推进或下一次协议面修订）；未改动 workspace-002 任何 status/progress/审计序列。**本区对 F-006 的跟踪关闭**（ownership 转移，非 fixed）。本区仍开放项仅剩：**F-008 / I-007**（首次真实 `v*` GHCR 发布验收时关闭）。状态与 goal-tree **无变化**。
