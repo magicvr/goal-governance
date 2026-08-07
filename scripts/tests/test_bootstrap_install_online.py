@@ -230,7 +230,11 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
         """VP-004 R2/R4 dual entry: -Channel mcp = thin shell via GHCR image; no File 大包, no mcp code."""
         if not _build_mcp_test_image():
             self.skipTest("docker not available for MCP image build")
-        with tempfile.TemporaryDirectory() as tmp:
+        # The MCP channel runs a docker container that writes the consumer dir
+        # as root; tempfile cleanup may hit EPERM on those files (CI flake
+        # class), so tolerate cleanup errors — leftover files live in system
+        # /tmp and are harmless.
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
             base = Path(tmp)
             pack_out = base / "pack"
             target = base / "consumer"
@@ -450,7 +454,8 @@ class BootstrapShStructuralTests(unittest.TestCase):
         )
         if probe.returncode != 0 or "ok" not in (probe.stdout or ""):
             self.skipTest(f"bash on PATH is not usable: {probe.stderr!r}")
-        with tempfile.TemporaryDirectory() as tmp:
+        # Same docker-root cleanup tolerance as the PS mcp-channel e2e above.
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
             base = Path(tmp)
             pack_out = base / "pack"
             target = base / "consumer"
