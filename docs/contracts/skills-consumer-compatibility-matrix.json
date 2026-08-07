@@ -75,7 +75,7 @@
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.0: runtime captures refreshed 2026-08-08 after consumer-surface relativeization (GOAL-006 F-006); formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.1: runtime captures refreshed 2026-08-08 after consumer-surface relativeization (GOAL-006 F-006); evidence files live under releases/runtime/v0.13.0/ (patch reuses the versioned dir with date-suffixed filenames); formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   },
   {
    "id": "grok-build-cli",
@@ -123,7 +123,7 @@
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.0: runtime captures refreshed 2026-08-08 after consumer-surface relativeization (GOAL-006 F-006); formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.1: runtime captures refreshed 2026-08-08 after consumer-surface relativeization (GOAL-006 F-006); evidence files live under releases/runtime/v0.13.0/ (patch reuses the versioned dir with date-suffixed filenames); formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   },
   {
    "id": "github-copilot-cli",
@@ -170,7 +170,7 @@
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.0: runtime captures refreshed 2026-08-08 after consumer-surface relativeization (GOAL-006 F-006); formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.1: runtime captures refreshed 2026-08-08 after consumer-surface relativeization (GOAL-006 F-006); evidence files live under releases/runtime/v0.13.0/ (patch reuses the versioned dir with date-suffixed filenames); formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   }
  ],
  "deliveryChannels": [

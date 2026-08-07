@@ -107,8 +107,8 @@ version: 0.1.0
 ## 可复制包版本与变更范围
 
 - **文档入口版本**（本文件 frontmatter）：`0.11.1` — 描述 docs 树导航与协议索引的修订号。
-- **可复制核心包版本**（对外发布身份）：`0.13.0`（Vision Review 稳定索引 + 独立报告、legacy 迁移与消费写入契约）。入口文修订号与发布身份刻意分离。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / **`v0.13.0`**（annotated tag `29d5b28c` 绑定 merge commit `33934efc`，gated run `31073547050` 经 Environment `release` 发布 9 项资产，digest 与隔离消费验证完成）。
+- **可复制核心包版本**（对外发布身份）：`0.13.1`（消费面路径相对化 `{governance_root}` + MCP Docker 发布资产 + 证据一致性门禁）。入口文修订号与发布身份刻意分离。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / **`v0.13.0`**（annotated tag `29d5b28c` 绑定 merge commit `33934efc`，gated run `31073547050` 经 Environment `release` 发布 9 项资产，digest 与隔离消费验证完成）/ **`v0.13.1`**（2026-08-08 发布；digest/run 发布后回填）。
 - **快照日期**：2026-08-06。
 - **快照身份**：`v0.13.0` 已正式发布（annotated tag + gated workflow + release-mode evidence 确立）。Codex 仍仅是 install surface（非矩阵）。
 - **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.223`、Grok Build `0.2.118` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`；证据日期 2026-08-06。**不**预填 Actions run、Release digest、Root 终态或 Codex 矩阵 verified。

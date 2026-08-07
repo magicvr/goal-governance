@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-08
-version: 0.16.0
+version: 0.17.0
 ---
 
 # 审计 · GOAL-001
@@ -42,6 +42,8 @@ version: 0.16.0
 | A-016 | 2026-08-07 | independent | 独立复审 F-001～F-005、F-007 关闭证据（A-014/A-015；亲自核验 210 测试 / stage / 实包 / 哈希 / git 时序） | conditional | 0（F-001r recommended：F-001 关闭证据在 A-015 改 server.py 后再次过期） | `03-audit/A-016-independent-f001-f007-closure-review.md` |
 | A-017 | 2026-08-07 | self | 响应 A-016：F-001r fixed（四宿主 L3 重捕获绑定当前树 server `cd31cbde…`；全 pass）；F-002/F-003/F-004/F-005/F-007 维持 fixed | pass | 0 | `03-audit/A-017-response-a016-l3-recapture-self.md` |
 | A-018 | 2026-08-08 | self | 响应 M-001：capture `--check` 一致性校验落地（check_evidence_file/run_evidence_check + 10 测试；workspace-003 证据 4 文件 ok；234 测试绿；A-016 建议 3 闭环） | pass | 0 | `03-audit/A-018-response-m001-executed-self.md` |
+| A-019 | 2026-08-08 | independent | 独立审计 v0.13.1 发布准备物（grok build / grok-4.5 / thinking high；亲自验证 243 测试/stage/require-ready/rehearsal/M-001/契约测试/本地 pack） | conditional | 0（F-001 required：安装 pin 未同步 v0.13.1；F-002/F-003 recommended） | `03-audit/A-019-independent-v0131-release-prep.md` |
+| A-020 | 2026-08-08 | self | 响应 A-019：F-001 fixed（三入口 + mcp/docs README pin 同步 v0.13.1）、F-002 fixed（evidenceScope）、F-003 fixed（书面复用策略）；门禁复跑全绿；发布准备就绪 | pass | 0 | `03-audit/A-020-response-v0131-prep-self.md` |
 
 ## 结论状态
 

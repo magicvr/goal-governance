@@ -9,7 +9,7 @@ File 发布资产（skills zip）**不**包含本目录代码；MCP 通道的发
 ## 运行形态
 
 - **主消费形态（R4）**：**Docker 镜像** `ghcr.io/magicvr/goal-governance-mcp-server:<版本>`
-  （与 GitHub Release 同 tag 同版本，如 tag `v0.13.0` → 镜像 `:0.13.0`；另有 `latest`）。
+  （与 GitHub Release 同 tag 同版本，如 tag `v0.13.1` → 镜像 `:0.13.1`；另有 `latest`）。
   固定入口：`python server.py --repo-root /workspace`（MCP client 零参数，见下）。
 - **本地 stdio 进程形态仍合法**（VP-004：不强制 Docker-only）：
   `python mcp/server.py [--repo-root PATH]`。
@@ -19,10 +19,10 @@ File 发布资产（skills zip）**不**包含本目录代码；MCP 通道的发
 
 ```bash
 # 拉取（版本与 GitHub Release tag vX.Y.Z 对应；latest 指向最新发布）
-docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.0
+docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.1
 
 # 手动验证（stdio 直连；将 <仓库根> 换为消费仓路径）
-docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.0
+docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.1
 ```
 
 **MCP client 配置**（mcpServers，stdio 直连容器，零参数；固定入口自动使用
@@ -32,7 +32,7 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 {
   "goal-governance": {
     "command": "docker",
-    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.0"]
+    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.1"]
   }
 }
 ```
@@ -40,8 +40,8 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 镜像内亦可调用其他 CLI（覆盖 CMD），如 lifecycle：
 
 ```bash
-docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.0 \
-  lifecycle.py install --root /workspace --version 0.13.0 --channel mcp --confirm
+docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.1 \
+  lifecycle.py install --root /workspace --version 0.13.1 --channel mcp --confirm
 ```
 
 镜像构建（发布由 `skills-pack-release.yml` tag 流程自动完成）：`docker build -t <tag> mcp/`。
