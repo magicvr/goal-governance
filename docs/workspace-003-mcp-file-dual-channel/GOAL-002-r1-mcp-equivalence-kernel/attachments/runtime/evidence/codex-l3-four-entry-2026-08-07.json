@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T12:00:06.642920Z",
+  "capturedAt": "2026-08-07T13:41:47.212083Z",
   "unit": {
     "consumer": "codex-cli",
     "entrypoint": "govern",
@@ -38,11 +38,11 @@
     },
     {
       "path": "skills/mcp/kernel.py",
-      "sha256": "ad7dd871d1813957cec8f7546ffcebac508cb1b879535b278853c44036675b22"
+      "sha256": "b0168b2ea8dcd8577e4e5d6214409c9139daa97da240a05b4468ff0337aa4ff6"
     },
     {
       "path": "skills/mcp/server.py",
-      "sha256": "02ae49de4cbd86709e15b8fcd96b002a94d322c3bc4ed3296a058005d640736e"
+      "sha256": "6c9df5e8eed77302f805a61527aa5e3af9bac6ae770ff83c881c783c5f4f540a"
     }
   ],
   "invocation": {
@@ -54,7 +54,7 @@
       "codex exec --sandbox read-only --skip-git-repo-check --ephemeral --json -C ."
     ],
     "cwd": ".",
-    "timeoutSeconds": 120,
+    "timeoutSeconds": 420,
     "inputSha256": "107ebc4b14e36927517508bb490b357df9c3b61241cdf146ed6d8f636a974f4e",
     "inputSummary": "Read-only /govern dispatch probe requiring marker CODEX_L3_FOUR_ENTRY_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
   },
@@ -127,11 +127,11 @@
         "observed": true
       }
     ],
-    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-l3-four-entry-2026-08-07.d/stdout.txt",
-    "stdoutSha256": "ba638c2aa9c2b13626a4e645cc5d17267b2be6b946fff0b71f5479a98451ec8e",
+    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-cli-l3-four-entry-2026-08-07.d/stdout.txt",
+    "stdoutSha256": "f886f81ca38c199fec9d9797198d7b85c79e45844f07d17d4d4f6dc3e167397d",
     "stdoutMode": "raw",
-    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-l3-four-entry-2026-08-07.d/stderr.txt",
-    "stderrSha256": "21ea6b50107692f9da4575a91039e4478ac120c34616453bdcd853edeca2132e",
+    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-cli-l3-four-entry-2026-08-07.d/stderr.txt",
+    "stderrSha256": "e923ea6305905c357415cf0c024761aabfbb904e48366a20fbfd417df12d9de6",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."

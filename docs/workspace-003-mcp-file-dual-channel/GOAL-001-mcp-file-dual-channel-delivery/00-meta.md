@@ -1,14 +1,14 @@
 ---
 id: GOAL-001-mcp-file-dual-channel-delivery
 title: 消费交付双通道（MCP + File）与可配置治理根
-status: active
+status: done
 parent: null
 plan_refs: VP-004-mcp-file-dual-channel-delivery
 primary_plan: VP-004-mcp-file-dual-channel-delivery
 serves_summary: delivery Root；服务 VP-004 / vision-goal-governance@0.2.0；File+MCP 双通道、四承诺宿主、最小测试内核与可配置 governance_root
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.5.0
+version: 0.6.0
 progress: 100%
 ---
 
@@ -20,15 +20,14 @@ progress: 100%
 
 本 Root 是 [workspace-003-mcp-file-dual-channel](../workspace.md) 的唯一 `parent: null` 总目标。**不**以本仓 Web / VP-003 驱动；协议内容反馈演进主波次仍在 [workspace-002](../../workspace-002-methodology-skills-feedback/) / VP-002。
 
-## 成功标准（Root 方向级 · 暂定 · 对齐 VP-004 退出）
+## 成功标准（Root 方向级 · 对齐 VP-004 退出）
 
-- [ ] 双通道一等：File 与 MCP 均可按发布约定取得；推荐 MCP 不废除 File
+- [x] 双通道一等：File 与 MCP 均可按发布约定取得；推荐 MCP 不废除 File（bootstrap `-Channel files|mcp` + 合同 `deliveryChannels` + 推荐声明同屏，GOAL-003）
 - [x] R1：MCP 无 File 大包可达四治理入口等价检查点；L2 共享 + 分通道 L1 + 抽稀 L3 可读（GOAL-002 done）
 - [x] R2：薄壳 lifecycle、gitignore 默认、AGENTS managed、生产仓 File 自举有证据（GOAL-003 done）
 - [x] R3：`governance_root` 可配置 + 越界 fail closed + canonical 权威修订（GOAL-004 done）
-- [ ] R3：`governance_root` 可配置 + 越界 fail closed + canonical 权威修订（或 residual）
-- [ ] 宿主：P0（Claude / Grok / Codex）达约定级验证；P1 Copilot 至少 L1（缺 L3 须 residual）
-- [ ] **不**要求关闭 VP-002/VP-003 或 Charter 可完成
+- [x] 宿主：P0（Claude / Grok / Codex）达约定级验证；P1 Copilot 至少 L1（L3 已捕获 pass，无需 residual）——见「宿主适配状态」表
+- [x] **不**要求关闭 VP-002/VP-003 或 Charter 可完成（边界声明，见 VP-004 退出判据 #7）
 
 ## 纲领路线图（P-001 · 对齐 VP-004 R1–R3）
 
@@ -50,7 +49,7 @@ progress: 100%
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | MCP 通道最小运行时形态（进程/stdio 或 Docker 推荐路径）与薄 Skills/宿主入口如何映射四治理入口 | R1 方案冻结 | R1 方案 | 对照现有 skills 入口 + MCP 合同草案 | **closed** | — | GOAL-002 D-002 + `skills/mcp/` 实现 + L1 测试全绿 |
 | I-002 | required | 共享测试内核 L2 fixture 范围与「等价」检查点落地位置（docs/tests vs skills） | R1 实施 | R1 实施 | 对照 VP-004 十条检查点设计套件 | **closed** | — | GOAL-002 D-003 + `kernel.py` + L2/L1 测试全绿 |
-| I-003 | required | `governance_root` 项目配置 schema 与权威面改写清单（alignment 等） | R3 方案冻结 | R3 方案 | 按 VP-004 R3 车辆列 diff 清单 | open | R3 方案前复核 | 不阻断 R1 启动 |
+| I-003 | required | `governance_root` 项目配置 schema 与权威面改写清单（alignment 等） | R3 方案冻结 | R3 方案 | 按 VP-004 R3 车辆列 diff 清单 | **closed** | — | GOAL-004 D-001/D-002 + `config.py` + canonical 修订 + stage `--check` |
 | I-004 | non-blocking | P0 宿主 L3 探针环境是否本机/CI 可用 | R1 宿主退出 | R1 验收 | 各宿主只读 dispatch 探针 | **closed** | — | 四宿主 L3 探针全 pass（GOAL-002 attachments/runtime/evidence/） |
 
 ## 愿景对齐
@@ -70,6 +69,19 @@ progress: 100%
 | [GOAL-002-r1-mcp-equivalence-kernel](../GOAL-002-r1-mcp-equivalence-kernel/00-meta.md) | R1：MCP/File 等价验证内核 | done |
 | [GOAL-003-r2-dual-channel-productization](../GOAL-003-r2-dual-channel-productization/00-meta.md) | R2：双通道产品化 | done |
 | [GOAL-004-r3-configurable-governance-root](../GOAL-004-r3-configurable-governance-root/00-meta.md) | R3：可配置 governance_root 与消费面收敛 | done |
+
+## 宿主适配状态（VP-004 承诺面）
+
+| 宿主 | 波次 | L1（通道分列） | L3 抽稀探针 | 状态 | 证据 |
+|------|------|----------------|-------------|------|------|
+| Claude Code CLI 2.1.223 | **P0** | ✅（File 通道 L1 测试 + 合同 files 分列） | ✅ `pass`（四入口 dispatch/角色边界） | 达标 | GOAL-002 `attachments/runtime/evidence/claude-l3-four-entry-2026-08-07.json` |
+| Grok Build CLI（grok-4.5） | **P0** | ✅ | ✅ `pass` | 达标 | `…/grok-l3-four-entry-2026-08-07.json` |
+| OpenAI Codex CLI 0.146.1 | **P0** | ✅ | ✅ `pass`（npm shim 经 cmd.exe 包装） | 达标 | `…/codex-l3-four-entry-2026-08-07.json` |
+| GitHub Copilot CLI 1.0.75 | **P1** | ✅ | ✅ `pass`（优于最低 L1 地板；无需 residual） | 达标 | `…/copilot-l3-four-entry-2026-08-07.json` |
+
+- 探针面边界（宿主入口面 vs MCP 进程面）见 GOAL-002 `attachments/runtime/README.md`。
+- L3 证据经 `runtime-evidence.schema.json` 校验（capture 脚本内建），behaviorSources 哈希与当前树一致。
+- 非目标宿主（Antigravity / Open Code）不入矩阵（VP-004 明确）。
 
 ## 备注
 

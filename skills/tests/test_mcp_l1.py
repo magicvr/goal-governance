@@ -108,10 +108,15 @@ class McpL1Tests(unittest.TestCase):
     def test_tools_list_exposes_four_governance_tools_with_boundaries(self) -> None:
         tools = self._tools_list()
         by_name = {tool["name"]: tool for tool in tools}
-        self.assertEqual(
-            set(by_name),
-            {"vision", "vision-audit", "govern", "audit"},
-            msg="commit must NOT be exposed; exactly four governance tools",
+        governance_names = {"vision", "vision-audit", "govern", "audit"}
+        self.assertTrue(
+            governance_names.issubset(set(by_name)),
+            msg="four governance tools must be exposed",
+        )
+        self.assertNotIn(
+            "commit",
+            by_name,
+            msg="commit must NOT be exposed (convenience, orthogonal to governance)",
         )
         for name, required in REQUIRED_PARAMS.items():
             schema = by_name[name]["inputSchema"]
@@ -124,6 +129,13 @@ class McpL1Tests(unittest.TestCase):
                 self.assertIn(param, schema["properties"], msg=f"{name} missing {param}")
             # Unknown parameters are refused by the recorded boundary.
             self.assertFalse(schema.get("additionalProperties", False))
+
+    def test_tools_list_exposes_r2_lifecycle_tools(self) -> None:
+        tools = self._tools_list()
+        by_name = {tool["name"]: tool for tool in tools}
+        for name in ("install", "upgrade", "uninstall", "doctor"):
+            self.assertIn(name, by_name, msg=f"missing lifecycle tool {name}")
+            self.assertIn("inputSchema", by_name[name])
 
     def test_dispatch_roles_match_recorded_boundaries(self) -> None:
         """Read-only tools/call per entry: layer + role + readonly flags."""

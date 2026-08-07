@@ -2,12 +2,12 @@
 doc_type: vision-plan
 id: VP-004-mcp-file-dual-channel-delivery
 title: 消费交付双通道（MCP + File）与可配置治理根
-status: active
+status: closed
 vision_ref: vision-goal-governance@0.2.0
 lead_workspace: workspace-003-mcp-file-dual-channel
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.2.0
+version: 0.3.0
 ---
 
 # VP-004 · 消费交付双通道（MCP + File）与可配置治理根
@@ -190,15 +190,13 @@ R3 是**交付能力**，但落地会触及 alignment 等权威路径的 **`docs
 
 | workspace_id | root_goal | role | joined | notes |
 |--------------|-----------|------|--------|-------|
-| workspace-003-mcp-file-dual-channel | GOAL-001-mcp-file-dual-channel-delivery | delivery / **lead** | 2026-08-07 | 用户 `/govern` 确认新区 slug；Root R1–R3 纲领；尚无子目标 |
+| workspace-003-mcp-file-dual-channel | GOAL-001-mcp-file-dual-channel-delivery | delivery / **lead** | 2026-08-07 | 用户 `/govern` 确认新区 slug；Root R1–R3 纲领；R1/R2/R3 子目标全部 `done`（GOAL-002/003/004），Root 关门中 |
 
 ## 关门记录
 
-（当前 `active`，无关门记录。）
-
 | date | outcome | summary | evidence_links | residuals |
 |------|---------|---------|----------------|-----------|
-| — | — | — | — | — |
+| 2026-08-07 | **closed**（工作区完整关门） | File+MCP 双通道一等交付（R1 四入口等价内核 + 合同 `deliveryChannel` 分列；R2 bootstrap 双入口 + 薄壳 lifecycle + AGENTS managed；R3 可配置 `governance_root` + canonical 权威面相对化）；P0×3 + P1×1 宿主达标（L1 + 抽稀 L3 探针全 pass）；非目标未偷渡；不要求 VP-002/VP-003 或 Charter 完成。 | 退出判据 1–7 证据链见 Root `03-audit/A-007-independent-close-out.md` 与 A-008 响应；R1/R2/R3 检查点 commits `1a89575` / `ae614db` / `560669e`（+ 关门 commit）；子目标 GOAL-002/003/004 五件套与 A 序列；`goal-tree.md`（全 done/100%）。 | 无（recommended 已响应；L3 探针为宿主入口面，MCP 进程面由 L1/L2 覆盖——边界记录于 GOAL-002 `attachments/runtime/README.md`）。 |
 
 ## 规划修订短史
 
@@ -207,3 +205,4 @@ R3 是**交付能力**，但落地会触及 alignment 等权威路径的 **`docs
 | 2026-08-07 | **初创草案** `planned`：双通道（File+MCP）、四承诺宿主、四治理入口 + 可选 `commit`；R1 含最小共享测试内核；R2 产品化；R3 仅 `governance_root`；明确排除 Antigravity/Open Code 与 DB 波次。用户 `/vision` 讨论后确认落盘。 |
 | 2026-08-07 | **VRev-007 响应**（v0.1.1）：R3 协议面变更车辆（V-F-013 A）；P0/P1 与约定级验证地板（V-F-014）；Charter 叙事选择不改 Charter（V-F-015）；R1 入口等价检查点（V-F-016）；退出判据 #4/#5 同步可判定表述。 |
 | 2026-08-07 | **激活 + 挂区**（v0.2.0）：`status: active`；lead = `workspace-003-mcp-file-dual-channel`；Root `GOAL-001-mcp-file-dual-channel-delivery`；空转结束。 |
+| 2026-08-07 | **关门**（v0.3.0）：`status: closed`；工作区完整关门（退出判据 1–7 证据链见 Root 03-audit A-007/A-008）；关门记录表填写。 |

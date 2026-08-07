@@ -1,11 +1,11 @@
 ---
 id: GOAL-001-mcp-file-dual-channel-delivery
 doc: execution
-status: active
+status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 执行记录 · GOAL-001
@@ -16,7 +16,8 @@ version: 0.2.0
 |------|------|------|------|------|
 | E-001 | 2026-08-07 | 开区 scaffold 与 VP-004 激活落盘 | recorded | `02-execution/E-001-open-workspace-scaffold.md` |
 | E-002 | 2026-08-07 | R1 子目标立项与父子索引同步 | recorded | `02-execution/E-002-create-r1-equivalence-kernel.md` |
+| E-003 | 2026-08-07 | R1–R3 阶段推进、审计闭环与关门事实 | recorded | `02-execution/E-003-r1-r3-progress-and-close.md` |
 
 ## 事实边界
 
-> 只写已经发生且有证据的事实。计划、未知和建议分别留在决策或审计记录。
+> 只写已经发生且有证据的事实。R1/R2/R3 实施细节与审计证据在各子目标五件套内；本索引登记 Root 层推进事实。
