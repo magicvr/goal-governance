@@ -255,6 +255,29 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         pack_block = workflow.split("publish:")[0]
         self.assertNotIn("environment: release", pack_block)
 
+    def test_publish_job_pins_r4_docker_release_steps(self) -> None:
+        """VP-004 R4 (GOAL-005 F-002): the tag publish flow must keep the GHCR
+        docker release steps pinned, so a regression cannot silently drop the
+        MCP image from releases while tests stay green."""
+        workflow = (REPO_ROOT / ".github/workflows/skills-pack-release.yml").read_text(
+            encoding="utf-8"
+        )
+        # Job definition line ("  publish:") is unique; header comments also
+        # mention publish:/gh release create and must not pollute the block.
+        publish_block = workflow.split("\n  publish:")[1]
+        self.assertIn("packages: write", publish_block)
+        self.assertIn("docker/login-action@v3", publish_block)
+        self.assertIn("registry: ghcr.io", publish_block)
+        self.assertIn("docker/build-push-action@v6", publish_block)
+        self.assertIn("context: mcp/", publish_block)
+        self.assertIn("ghcr.io/magicvr/goal-governance-mcp-server:", publish_block)
+        self.assertIn("needs.pack.outputs.version", publish_block)
+        # Image push must stay after the hard evidence gate (fail-closed order).
+        self.assertLess(
+            publish_block.index("docker/build-push-action@v6"),
+            publish_block.index("gh release create"),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

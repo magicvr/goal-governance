@@ -4,7 +4,7 @@ status: active
 created: 2026-08-07
 updated: 2026-08-07
 parent: null
-version: 0.7.0
+version: 0.8.0
 ---
 
 # Goal Tree
@@ -32,6 +32,10 @@ version: 0.7.0
 
 用户指令核查发布资产面（A-009 关门复审后）发现三项缺口：① File zip 混入 `skills/mcp/` 实现源码（通道资产未分离）；② MCP server 无可分发 Docker 发布资产（无 Dockerfile / 无 GHCR 发布步骤 / README 无安装指南）；③ `skills/mcp/README.md`「Dockerfile 可选」文案与事实不符。用户书面确认「全套方案」：**Root 回退 `done → active`**（progress 100% → 75%，纲领 3/4）；VP-004 与 workspace.md 回退 active；新开 **GOAL-005-r4-mcp-docker-release**（R4：MCP Docker 资产发布与通道资产分离，progress 0%）。
 
+## 2026-08-07 · R4c 合并响应与关门
+
+`/govern`（用户指令「合并响应 GOAL-005 的 A-001 和 A-002」）：A-001（self pass）+ A-002（independent pass）无 required、无冲突；**A-003** 合并响应登记（F-002 fixed——workflow 契约测试增补 R4 Docker 步骤断言并验证 7 passed；R-003/F-004/F-005 accepted；R-001/R-002/F-001/F-003 deferred 含触发）。**C3 闭合 → GOAL-005 `done`（100%）**；I-007 open（non-blocking）于首次真实 GHCR 发布验收时关闭。Root/VP-004 复关待下一轮（连带 F-003：VP-004 #8 路径字面 `skills/mcp/` → `mcp/`）。
+
 ## 树
 
 ```text
@@ -39,17 +43,17 @@ GOAL-001-mcp-file-dual-channel-delivery  [active]  progress 75%
 ├─ GOAL-002-r1-mcp-equivalence-kernel  [done]  progress 100%
 ├─ GOAL-003-r2-dual-channel-productization  [done]  progress 100%
 ├─ GOAL-004-r3-configurable-governance-root  [done]  progress 100%
-└─ GOAL-005-r4-mcp-docker-release  [active]  progress 67%
+└─ GOAL-005-r4-mcp-docker-release  [done]  progress 100%
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | notes |
 |----|-------|--------|--------|----------|-------|
-| GOAL-001-mcp-file-dual-channel-delivery | 消费交付双通道（MCP + File）与可配置治理根 | null | active | 75% | Root；primary_plan=VP-004；R1–R3 完成关门，**R4 发布缺口 reopen**（GOAL-005 进行中，VP-004 回退 active） |
+| GOAL-001-mcp-file-dual-channel-delivery | 消费交付双通道（MCP + File）与可配置治理根 | null | active | 75% | Root；primary_plan=VP-004；R1–R3 完成关门，R4（GOAL-005）**已完成**，**Root/VP-004 复关待下一轮**（VP-004 active；F-003：退出判据 #8 路径字面改 `mcp/`） |
 | GOAL-002-r1-mcp-equivalence-kernel | R1：MCP/File 等价验证内核 | GOAL-001-mcp-file-dual-channel-delivery | done | 100% | C1–C4 闭合；A-001/A-002/A-003 全 pass |
 | GOAL-003-r2-dual-channel-productization | R2：双通道产品化 | GOAL-001-mcp-file-dual-channel-delivery | done | 100% | C1–C6 闭合；F-001 fixed 后全 pass |
 | GOAL-004-r3-configurable-governance-root | R3：可配置 governance_root 与消费面收敛 | GOAL-001-mcp-file-dual-channel-delivery | done | 100% | C1–C5 闭合；A-001/A-002/A-003 全 pass |
-| GOAL-005-r4-mcp-docker-release | R4：MCP Docker 资产发布与通道资产分离 | GOAL-001-mcp-file-dual-channel-delivery | active | 67% | R4a 冻结（D-001）+ R4b 实施完成（搬迁 mcp/、Dockerfile、workflow GHCR、薄装重定义）；R4c cross 审计待跑 |
+| GOAL-005-r4-mcp-docker-release | R4：MCP Docker 资产发布与通道资产分离 | GOAL-001-mcp-file-dual-channel-delivery | done | 100% | R4a/R4b/R4c 全部完成；A-001/A-002 pass + A-003 合并响应（F-002 fixed）；I-007 发布验收时关闭 |
 
 下一编号：**GOAL-006**。

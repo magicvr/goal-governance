@@ -1,11 +1,11 @@
 ---
 id: GOAL-005-r4-mcp-docker-release
 doc: decision
-status: active
+status: done
 parent: GOAL-001-mcp-file-dual-channel-delivery
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 决策 · GOAL-005
