@@ -7,8 +7,8 @@ plan_refs: VP-004-mcp-file-dual-channel-delivery
 primary_plan: VP-004-mcp-file-dual-channel-delivery
 serves_summary: delivery Root；服务 VP-004 / vision-goal-governance@0.2.0；File+MCP 双通道、四承诺宿主、最小测试内核与可配置 governance_root
 created: 2026-08-07
-updated: 2026-08-07
-version: 0.8.0
+updated: 2026-08-08
+version: 0.8.1
 progress: 100%
 ---
 
@@ -92,4 +92,5 @@ progress: 100%
 - 宿主 P0/P1、入口等价检查点、R3 协议车辆以 VP-004 v0.1.1+ 正文为准。
 - R1 实施已按 D-002/D-003/D-004 冻结完成；cross 审计 provider = grok build（grok-4.5 / thinking-high）已指定并落盘（GOAL-002 D-004）。
 - **R4 reopen（2026-08-07）**：A-009 关门复审通过后，发布面核查（用户指令）发现三项缺口——File zip 混入 `skills/mcp/` 源码、MCP 无可分发 Docker 发布资产、`skills/mcp/README.md`「Dockerfile 可选」文案与事实不符。用户书面确认「全套方案」：Root 回退 `done → active`（progress 100% → 75%，纲领 3/4），新开 **GOAL-005-r4-mcp-docker-release**（R4）；VP-004 与 workspace.md 同步回退 active（留痕见各自文件与 goal-tree）。
-- **R4 复关（2026-08-07）**：GOAL-005 `done`（cross 审计 A-001/A-002 pass + A-003 合并响应）→ **Root 复关 `done`**（progress 75% → 100%，纲领 4/4；A-011）；VP-004 `closed`（退出判据 1–8 证据链完整；F-003 #8 路径字面修正）；workspace.md `closed`。I-007（non-blocking）于首次真实 GHCR 发布验收时关闭。
+- **R4 复关（2026-08-07）**：GOAL-005 `done`（cross 审计 A-001/A-002 pass + A-003 合并响应）→ **Root 复关 `done`**（progress 75% → 100%，纲领 4/4；A-011）；VP-004 `closed`（退出判据 1–8 证据链完整；F-003 #8 路径字面修正）；workspace.md `closed`。
+- **I-007 / F-008 关闭（2026-08-08）**：v0.13.1 正式 Release + GHCR 本机 pull 验收（A-021 / GOAL-005 A-004）；digest `sha256:e17ff08c…`；Root 保持 `done`。

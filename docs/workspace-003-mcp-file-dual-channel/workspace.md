@@ -9,8 +9,8 @@ vision_role: delivery
 plan_refs: VP-004-mcp-file-dual-channel-delivery
 primary_plan: VP-004-mcp-file-dual-channel-delivery
 created: 2026-08-07
-updated: 2026-08-07
-version: 0.4.0
+updated: 2026-08-08
+version: 0.4.1
 ---
 
 # 工作区上下文 · 消费交付双通道（MCP + File）
@@ -58,4 +58,5 @@ version: 0.4.0
 - VP-004 自本区 scaffold 起结束「0 区」；`lead_workspace` 指向本区。
 - **关门（2026-08-07）**：R1/R2/R3 全部完成（GOAL-002/003/004 `done`）；Root `GOAL-001-mcp-file-dual-channel-delivery` `done`（关门审计 A-007/A-008）；VP-004 `status: closed`（关门记录已填）。
 - **R4 reopen（2026-08-07）**：关门后发布面核查（用户指令）发现三项缺口——① File zip 混入 `skills/mcp/` 实现源码（`pack_skills_release.py` 无排除规则，90 成员含 10 个 MCP 成员）；② MCP server 无可分发发布资产（无 Dockerfile / `skills-pack-release.yml` 无 docker 步骤 / 根 README 无安装指南）；③ `skills/mcp/README.md`「`Dockerfile` 仅作便捷（可选）」文案与事实不符（仓库无 Dockerfile）。用户书面确认「全套方案」：**本区 / Root / VP-004 回退 `active`**（冻结解除），新开 **GOAL-005-r4-mcp-docker-release**（R4：MCP Docker 资产发布与通道资产分离）；VP-004 退出判据 #8 增补；R4 完成后复关。
-- **复关（2026-08-07）**：R4（GOAL-005）完成——cross 审计 A-001（self）pass + A-002（independent，grok build）pass + A-003 合并响应，无 required、无冲突；Root 复关 `done`（progress 75% → 100%，纲领 R1–R4 4/4；A-011）；VP-004 `closed`（退出判据 1–8 证据链完整，关门记录含 R4 复关行；F-003 #8 路径字面修正）；**本工作区 `closed`**。I-007（non-blocking）于首次真实 GHCR 发布验收时关闭。
+- **复关（2026-08-07）**：R4（GOAL-005）完成——cross 审计 A-001（self）pass + A-002（independent，grok build）pass + A-003 合并响应，无 required、无冲突；Root 复关 `done`（progress 75% → 100%，纲领 R1–R4 4/4；A-011）；VP-004 `closed`（退出判据 1–8 证据链完整，关门记录含 R4 复关行；F-003 #8 路径字面修正）；**本工作区 `closed`**。
+- **I-007 / F-008 关闭（2026-08-08）**：v0.13.1 正式 Release + GHCR 本机 pull 验收（Root A-021 / GOAL-005 A-004）；digest `sha256:e17ff08c6434ab99c8d3f5fd390f1542f28e73f6e3acb03d18f927a807e97205`；工作区保持 `closed`。

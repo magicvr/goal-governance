@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-08-08
-version: 0.11.0
+version: 0.11.1
 progress: 67%
 ---
 
@@ -24,7 +24,7 @@ progress: 67%
 
 - [x] 至少完成 **一轮** 有界「反馈 → 协议/Skills 修正 → 可核对验证」闭环（子目标证据链完整）
 - [x] 修正后的协议/Skills 仍满足完整安装与发布门禁（GOAL-003 `v0.12.0` formal Release；A-004 F-001 fixed）
-- [ ] 无阻断本波次退出的 required 协议缺口；未关闭项显式 residual（F-006 消费面路径收敛 + R-001 裸路径扫尾为显式未关闭 recommended 项，已并入 VP-002 消费面承接路线图；随 R3 收束或协议面修订执行，关门时 residual 留痕）
+- [ ] 无阻断本波次退出的 required 协议缺口；未关闭项显式 residual（**D-008 退出挂起**；F-006 / R-001 已由 [GOAL-006](../GOAL-006-consumer-surface-convergence/) 于 2026-08-08 关闭；后续 deferred 见 02-execution「后续波次候选」——Codex 矩阵 I-003、matrix candidateRevision R-001、Web writer F-003 等，关门时 residual 留痕）
 - [ ] **不**要求「永远修到完美」或关闭 Web 终态
 
 ## 纲领路线图（P-001）
@@ -66,7 +66,7 @@ progress: 67%
 | [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/00-meta.md) | 修复消费仓门禁与长流程治理摩擦 | done |
 | [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/00-meta.md) | 移除冻结 Web 资产并挂起 VP-003 | done |
 | [GOAL-005-vision-review-ledger-scaling](../GOAL-005-vision-review-ledger-scaling/00-meta.md) | 愿景审视台账分片与正式发布 | done |
-| [GOAL-006-consumer-surface-convergence](../GOAL-006-consumer-surface-convergence/00-meta.md) | 消费面路径收敛（F-006 承接 + R-001 扫尾） | active |
+| [GOAL-006-consumer-surface-convergence](../GOAL-006-consumer-surface-convergence/00-meta.md) | 消费面路径收敛（F-006 承接 + R-001 扫尾） | done |
 
 ## 备注
 

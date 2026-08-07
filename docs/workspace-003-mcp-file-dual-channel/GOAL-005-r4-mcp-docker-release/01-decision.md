@@ -4,8 +4,8 @@ doc: decision
 status: done
 parent: GOAL-001-mcp-file-dual-channel-delivery
 created: 2026-08-07
-updated: 2026-08-07
-version: 0.2.0
+updated: 2026-08-08
+version: 0.2.1
 ---
 
 # 决策 · GOAL-005
@@ -24,4 +24,4 @@ version: 0.2.0
 
 ## 信息需求登记
 
-见 `00-meta.md` 信息表：I-005（GHCR 命名/tag 策略，required，R4a）→ **closed**（用户确认，D-001）；I-006（容器运行形态，required，R4a）→ **closed**（用户确认固定入口，D-001）；I-007（GHCR 权限可达性，non-blocking，R4c）open。
+见 `00-meta.md` 信息表：I-005（GHCR 命名/tag 策略，required，R4a）→ **closed**（用户确认，D-001）；I-006（容器运行形态，required，R4a）→ **closed**（用户确认固定入口，D-001）；I-007（GHCR 权限可达性，non-blocking）→ **closed**（2026-08-08，v0.13.1 正式 Release + GHCR 本机 pull；A-004）。

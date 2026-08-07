@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-08
-version: 0.17.0
+version: 0.18.0
 ---
 
 # 审计 · GOAL-001
@@ -44,6 +44,7 @@ version: 0.17.0
 | A-018 | 2026-08-08 | self | 响应 M-001：capture `--check` 一致性校验落地（check_evidence_file/run_evidence_check + 10 测试；workspace-003 证据 4 文件 ok；234 测试绿；A-016 建议 3 闭环） | pass | 0 | `03-audit/A-018-response-m001-executed-self.md` |
 | A-019 | 2026-08-08 | independent | 独立审计 v0.13.1 发布准备物（grok build / grok-4.5 / thinking high；亲自验证 243 测试/stage/require-ready/rehearsal/M-001/契约测试/本地 pack） | conditional | 0（F-001 required：安装 pin 未同步 v0.13.1；F-002/F-003 recommended） | `03-audit/A-019-independent-v0131-release-prep.md` |
 | A-020 | 2026-08-08 | self | 响应 A-019：F-001 fixed（三入口 + mcp/docs README pin 同步 v0.13.1）、F-002 fixed（evidenceScope）、F-003 fixed（书面复用策略）；门禁复跑全绿；发布准备就绪 | pass | 0 | `03-audit/A-020-response-v0131-prep-self.md` |
+| A-021 | 2026-08-08 | self | 关闭 A-012 F-008 + GOAL-005 I-007（v0.13.1 正式 Release + GHCR 本机 pull 验收；不回退关门） | pass | 0 | `03-audit/A-021-close-i007-f008-ghcr-acceptance-self.md` |
 
 ## 结论状态
 
@@ -69,4 +70,6 @@ Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-0
 
 **2026-08-08 F-006 跨区移交（E-012）**：用户指令将 **F-006**（消费面路径收敛：`skills/AGENTS.template.md` 与四治理 prompts 硬编码 `docs/…` 相对化）**正式移交 workspace-002 / VP-002 消费面波次承接**——接收登记已落 [workspace-002 Root 02-execution](../../workspace-002-methodology-skills-feedback/GOAL-001-methodology-skills-feedback-evolution/02-execution.md)（时间线 + 待办 4，与 A-009 R-001 扫尾合并跟踪，触发 = VP-002 推进或下一次协议面修订）；未改动 workspace-002 任何 status/progress/审计序列。**本区对 F-006 的跟踪关闭**（ownership 转移，非 fixed）。本区仍开放项仅剩：**F-008 / I-007**（首次真实 `v*` GHCR 发布验收时关闭）。状态与 goal-tree **无变化**。
 
-**2026-08-08 F-006 实现关闭（GOAL-006 done）**：workspace-002 [GOAL-006-consumer-surface-convergence](../../workspace-002-methodology-skills-feedback/GOAL-006-consumer-surface-convergence/00-meta.md) 经 cross 审计（A-001 self + A-002 independent grok-4.5，均 pass；A-003 合并响应）**`done` / 100%**——消费面路径相对化落地（prompts/模板/薄壳/安装形态/canonical 约 390 处引用；防再犯测试固化；矩阵证据 08-08 刷新；239 测试绿）。F-006 自本区移交（E-012）至实现关闭（Q2 指回 GOAL-006）闭环；VP-002 消费面承接路线图同步更新。本区仍开放项：**F-008 / I-007**（首次真实 `v*` GHCR 发布验收时关闭）。状态与 goal-tree **无变化**。
+**2026-08-08 F-006 实现关闭（GOAL-006 done）**：workspace-002 [GOAL-006-consumer-surface-convergence](../../workspace-002-methodology-skills-feedback/GOAL-006-consumer-surface-convergence/00-meta.md) 经 cross 审计（A-001 self + A-002 independent grok-4.5，均 pass；A-003 合并响应）**`done` / 100%**——消费面路径相对化落地（prompts/模板/薄壳/安装形态/canonical 约 390 处引用；防再犯测试固化；矩阵证据 08-08 刷新；239 测试绿）。F-006 自本区移交（E-012）至实现关闭（Q2 指回 GOAL-006）闭环；VP-002 消费面承接路线图同步更新。本区仍开放项曾为：**F-008 / I-007**（首次真实 `v*` GHCR 发布验收）。状态与 goal-tree **无变化**。
+
+**2026-08-08 I-007 / F-008 关闭（A-021，self）**：正式 **`v0.13.1`** annotated tag + GitHub Release（9 资产）+ `skills-pack-release` run `31212196389` success（含 GHCR push）；本机 `docker pull` `ghcr.io/magicvr/goal-governance-mcp-server:0.13.1` 与 `:latest` 成功，**同 digest** `sha256:e17ff08c6434ab99c8d3f5fd390f1542f28e73f6e3acb03d18f927a807e97205`，ENV `GOAL_GOVERNANCE_MCP_VERSION=0.13.1`。**F-008 fixed**；GOAL-005 **I-007 closed**（子目标 A-004 + E-003；证据附件）。本区 A-012 登记的 recommended 开放项已全部闭合或移交；**无**开放 required。Root/子目标/VP-004/workspace 状态与 goal-tree **无变化**（保持 done/closed）。

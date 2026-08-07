@@ -7,8 +7,8 @@ plan_refs: VP-004-mcp-file-dual-channel-delivery
 primary_plan: VP-004-mcp-file-dual-channel-delivery
 serves_summary: 服务 VP-004 R4（reopen 增补）：File 资产排除 MCP 实现源码、MCP server 以 Docker 镜像随同 tag 发布、仓库与 README 安装指南
 created: 2026-08-07
-updated: 2026-08-07
-version: 0.3.0
+updated: 2026-08-08
+version: 0.3.1
 progress: 100%
 ---
 
@@ -51,7 +51,7 @@ R1–R3 关门后，2026-08-07 发布面核查（用户指令）发现三项发�
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-005 | required | GHCR 镜像命名与 tag 策略：镜像名（如 `ghcr.io/magicvr/goal-governance-mcp-server`）、tag 与 File 资产同版本的具体形态（去 `v` 前缀？） | R4a 方案冻结 | R4a | 用户确认 + 对照 GitHub Release tag 惯例（`v*`）与 Docker tag 惯例 | **closed** | — | 用户 2026-08-07 确认：`ghcr.io/magicvr/goal-governance-mcp-server`，tag = 去 v SemVer（如 `0.13.0`）+ `latest`，与 Release tag `v0.13.0` 同源同发布（D-001） |
 | I-006 | required | MCP server 容器运行形态：stdio 容器入口、`--repo-root` 挂载卷 vs 内置默认；MCP client 连接方式（`docker run -i`） | R4a 方案冻结 | R4a | 对照 `mcp/server.py` CLI 与 MCP stdio 传输 | **closed** | — | 用户 2026-08-07 确认固定入口：`ENTRYPOINT python server.py` + `CMD --repo-root /workspace`；挂载卷映射仓库根（D-001） |
-| I-007 | non-blocking | 仓库/环境对 GHCR `packages: write` 的可用性与镜像命名空间可达性 | R4c 发布验收 | R4c | workflow 实测（或本地 `docker login ghcr.io` 检查） | open | 首次真实 tag 发布验收时关闭（A-001 R-002 / A-002 F-001；A-003 响应） | 不阻断 R4c 关门；发布后回填 digest/URL 证据至 attachments |
+| I-007 | non-blocking | 仓库/环境对 GHCR `packages: write` 的可用性与镜像命名空间可达性 | R4c 发布验收 | R4c | workflow 实测（或本地 `docker login ghcr.io` 检查） | **closed**（2026-08-08） | — | v0.13.1 正式 Release + GHCR push（run 31212196389）+ 本机 pull digest `sha256:e17ff08c…`；证据 [attachments/i-007-…](attachments/i-007-v0.13.1-ghcr-acceptance-2026-08-08.md)；A-004 |
 
 ## 审计模式
 
@@ -69,4 +69,5 @@ R1–R3 关门后，2026-08-07 发布面核查（用户指令）发现三项发�
 
 - 立项背景：2026-08-07 用户指令核查发布资产面 → 三缺口确认 → 用户书面确认「全套方案」：新开本目标 + 回退 Root / VP-004 / workspace.md 关门状态（留痕见 Root 03-audit 与 goal-tree）。
 - 与 VP-004 的关系：本目标为 VP-004 reopen 后的 R4 增补交付；VP-004 退出判据 #8（发布资产面）随本目标验收（**F-003**：复关时把 #8 路径字面 `skills/mcp/` → `mcp/`，不改语义）。
-- 关门：2026-08-07 用户 `/govern`「合并响应」→ A-003 落盘（响应 A-001/A-002 全部 recommended；F-002 fixed、R-003/F-004/F-005 accepted、R-001/R-002/F-001/F-003 deferred）→ C3 闭合 → `done`（100%）。I-007 首次真实 GHCR 发布验收时关闭。
+- 关门：2026-08-07 用户 `/govern`「合并响应」→ A-003 落盘（响应 A-001/A-002 全部 recommended；F-002 fixed、R-003/F-004/F-005 accepted、R-001/R-002/F-001/F-003 deferred）→ C3 闭合 → `done`（100%）。
+- **I-007 关闭（2026-08-08）**：v0.13.1 正式 tag/Release + GHCR 本机 pull 验收完成（E-003 / A-004）；目标保持 `done`，不重开。

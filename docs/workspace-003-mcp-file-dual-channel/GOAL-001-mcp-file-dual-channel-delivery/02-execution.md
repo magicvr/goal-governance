@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-08
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 执行记录 · GOAL-001
@@ -26,6 +26,7 @@ version: 0.8.0
 | E-010 | 2026-08-08 | 立项登记维护项 M-001（A-016 防再犯建议：capture 证据哈希一致性检查；registered，待执行；状态不变） | recorded | `02-execution/E-010-register-maintenance-item-m001.md` |
 | E-011 | 2026-08-08 | 执行维护项 M-001：capture `--check` 一致性校验 + 10 条测试（workspace-003 证据 4 文件 ok；全量 234 测试绿；状态不变） | recorded | `02-execution/E-011-execute-m001-check.md` |
 | E-012 | 2026-08-08 | F-006 跨区移交 workspace-002 / VP-002 消费面波次（接收登记已落 workspace-002 Root 02-execution 待办；本区跟踪关闭；状态不变） | recorded | `02-execution/E-012-handoff-f006-to-workspace-002.md` |
+| E-013 | 2026-08-08 | I-007 / F-008 关闭：v0.13.1 正式 Release + GHCR 本机 pull 验收（状态不变） | recorded | `02-execution/E-013-i007-v0131-ghcr-acceptance.md` |
 
 ## 事实边界
 
