@@ -41,7 +41,7 @@ version: 0.1.0
 
 ## Checkpoint
 
-- 提交 hash 见本轮 commit 记录；owned paths = 四个 L3 JSON + 四个 `.d/` 证据目录、GOAL-002 runtime README、GOAL-001 03-audit A-017 + 索引 + `02-execution.md` 索引 + 本执行记录。未用 `git add -A`。
+- 提交 hash：**`db1981e`**（2026-08-07）；owned paths = 四个 L3 JSON + 对应 `.d/` 证据、GOAL-002 runtime README、GOAL-001 03-audit A-016/A-017 + 索引、`02-execution.md` 索引 + 本执行记录。未用 `git add -A`。
 
 ## 下一步（待用户）
 
