@@ -29,7 +29,7 @@ version: 0.2.0
 | 共享资料目录 | `docs/shared-materials/` | 工作区外的共同资料根；不保存目标状态。 |
 | 愿景角色 | `delivery` | monorepo primary 仍为 workspace-001。 |
 | 规划对齐 | `VP-004-mcp-file-dual-channel-delivery` | `primary_plan`；`vision_ref` 须匹配 Charter `vision-goal-governance@0.2.0`。 |
-| 工作区 status | `active` | 2026-08-07 scaffold + Root 立项。 |
+| 工作区 status | `closed` | 2026-08-07 scaffold + Root 立项；当日 R1–R3 全完成并关门冻结（Root `done` / VP-004 `closed`，见「备注」）。 |
 
 ## 愿景对齐
 

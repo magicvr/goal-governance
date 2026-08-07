@@ -56,4 +56,4 @@ R1 方案已冻结（D-002/D-003/D-004）且实现已落盘（`skills/mcp/` + �
 
 ## 实施前治理门禁
 
-已按用户 2026-08-07 确认采用 `cross` 审计模式：需要本目标 self 审视与至少一个指定 provider 的 independent 审视。provider 尚未指定，因此当前只完成子目标立项与边界记录，未进入实施放行。
+已按用户 2026-08-07 确认采用 `cross` 审计模式：需要本目标 self 审视与至少一个指定 provider 的 independent 审视。provider 于立项当日由用户书面指定为 Grok Build（grok-4.5 / thinking-high，见 [01-decision/D-004-r1-provider-assignment.md](01-decision/D-004-r1-provider-assignment.md)），随后进入方案冻结与实施放行（D-002/D-003/D-004）。

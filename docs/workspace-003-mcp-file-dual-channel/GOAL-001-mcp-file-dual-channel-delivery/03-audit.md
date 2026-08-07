@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.6.0
+version: 0.8.0
 ---
 
 # 审计 · GOAL-001
@@ -17,7 +17,7 @@ version: 0.6.0
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
 | 影响本 scope 的 I-00N | I-001～I-004 全部 closed | 见 00-meta 信息表（与 01-decision 同源） |
-| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1/R2/R3 纲领关门（A-003/A-005/A-006）+ 最终关门（A-007/A-008） |
+| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1/R2/R3 纲领关门（A-003/A-005/A-006）+ 最终关门（A-007/A-008）+ 关门复审 A-009 |
 | 资料引用（若有）是否固定且用户确认 | 无 | 表空 |
 
 ## 意见台账索引
@@ -32,7 +32,9 @@ version: 0.6.0
 | A-006 | 2026-08-07 | self | R3 纲领阶段关门审计 | pass | 0 | `03-audit/A-006-r3-phase-close-self.md` |
 | A-007 | 2026-08-07 | independent | workspace-003 关门准备 + VP-004 退出判据 1–7（grok build / grok-4.5 / high） | conditional → pass（F-001～F-004 fixed） | 0 | `03-audit/A-007-independent-close-out.md` |
 | A-008 | 2026-08-07 | self | 关门响应与 Root done | pass | 0 | `03-audit/A-008-close-response-and-root-done-self.md` |
+| A-009 | 2026-08-07 | independent | 关门复审 + 核心方法论/MCP 对照 VP-004 意图（grok build / grok-4.5 / high） | pass | 0（R-001～R-005 recommended） | `03-audit/A-009-independent-close-and-vp004-intent.md` |
+| A-010 | 2026-08-07 | self | 响应 A-009 recommended R-001～R-005（编排器） | pass | 0 | `03-audit/A-010-response-a009-recommended-self.md` |
 
 ## 结论状态
 
-Root **`done`**：R1/R2/R3 纲领阶段 + 最终关门审计（self A-001/A-003/A-005/A-006/A-008 + independent A-002/A-004/A-007，provider=grok build / grok-4.5 / thinking-high）全部 pass，无未合法闭合的 required findings。VP-004 `status: closed`（关门记录已填）。
+Root **`done`**：R1/R2/R3 纲领阶段 + 最终关门审计（self A-001/A-003/A-005/A-006/A-008 + independent A-002/A-004/A-007）通过；关门后独立复审 **A-009 pass**（无 required；recommended 不阻断）。**未**因 A-009 回退关门状态。A-009 的 recommended R-001～R-005 已由 **A-010** 响应（R-001 最小修正 / R-002/R-004/R-005 fixed / R-003 延后留痕）；仍开放项均有明确触发条件，不阻断关门。VP-004 `status: closed`（关门记录已填）。

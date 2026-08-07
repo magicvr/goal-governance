@@ -1,0 +1,89 @@
+﻿=== 1. pack skills zip ===
+version: 0.0.0-testpack
+archive_root: goal-governance-skills-v0.0.0-testpack
+zip: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\pack\goal-governance-skills-v0.0.0-testpack.zip
+sha256_file: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\pack\goal-governance-skills-v0.0.0-testpack.zip.sha256
+sha256: b3c95183dc447ddc6f72c6b91e0c06ec18c4a1060da2386ba12ba6ee28d09c57
+members: 87
+=== 2. File 通道 bootstrap（files，完整安装） ===
+Offline mode: using local zip C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\pack\goal-governance-skills-v0.0.0-testpack.zip
+SHA-256 OK: goal-governance-skills-v0.0.0-testpack.zip
+Materialized skills package: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills
+Running package install: install.ps1 -All -NonInteractive -Force
+Project root:  C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer
+Skills dir:    C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills
+Package root:  C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills
+
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\AGENTS.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.claude\skills\govern\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.claude\skills\audit\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.claude\skills\vision\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.claude\skills\vision-audit\SKILL.md
+Claude skills: /govern + /audit + /vision + /vision-audit
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.grok\skills\govern\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.grok\skills\audit\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.grok\skills\vision\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.grok\skills\vision-audit\SKILL.md
+Grok skills: /govern + /audit + /vision + /vision-audit
+Already present: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\AGENTS.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.agents\skills\govern\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.agents\skills\audit\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.agents\skills\vision\SKILL.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.agents\skills\vision-audit\SKILL.md
+Codex skills: $govern + $audit + $vision + $vision-audit under .agents/skills/
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.github\copilot-instructions.md
+Copilot slash surface: /govern + /audit + /vision + /vision-audit (pass -WithPrimitives for form-fill ops)
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.github\prompts\govern.prompt.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.github\prompts\audit.prompt.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.github\prompts\vision.prompt.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\.github\prompts\vision-audit.prompt.md
+Already present: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\prompts\  (from prompts)
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\templates\  (from templates)
+Already present: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\contracts\skills-consumer-contract.json
+Already present: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\contracts\skills-consumer-contract.schema.json
+Consumer contract profile: contract + schema only; producer runtime evidence remains release-owned.
+Installing core methodology -> .\docs\ (architecture + templates + vision rules + README)
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\docs\README.md
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\docs\architecture\  (from core architecture)
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\docs\templates\  (from core templates)
+Installed: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\docs\vision\  (from core vision rules)
+
+Done.
+
+Next steps:
+  1. Review installed rule file(s) and docs\architecture (core methodology; required).
+  2. Create workspace skeleton (pick one):
+     - /govern S0 (AI asks for slugs), or
+     - re-run install with -InitWorkspace -WorkspaceSlug S -RootSlug S
+    3. DEFAULT user path: /govern (impl) + /audit (Goal cross-audit) + /vision (decision) + /vision-audit (independent Vision Review)
+     - Methodology: .\docs\architecture\principles.md
+     - Orchestrator: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\prompts\00-govern-orchestrator.md
+     - Cross-audit: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\prompts\05-independent-audit.md
+     - Vision: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\prompts\06-vision-orchestrator.md
+    - Independent Vision Review: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\prompts\07-independent-vision-review.md
+     - Contract: C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills\contracts\skills-consumer-contract.json
+    - Claude: /govern + /audit + /vision + /vision-audit under .\.claude\skills\
+    - Grok:   /govern + /audit + /vision + /vision-audit under .\.grok\skills\
+    - Codex:  $govern + $audit + $vision + $vision-audit under .\.agents\skills\
+    - Copilot: govern + audit + vision + vision-audit prompts
+  4. Advanced Copilot form-filling slashes only if you used -WithPrimitives.
+  5. Cold start: /vision (Charter->VP) then /govern (workspace+Root).
+
+Project root:  C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer
+Skills dir:    C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills
+Package root:  C:\Users\magicvr\AppData\Local\Temp\gg-file-bootstrap-1200631309\consumer\skills
+Bootstrap complete.
+=== 3. 消费目录核验 ===
+docs/architecture/principles.md : True
+docs/vision/alignment.md : True
+skills/prompts/00-govern-orchestrator.md : True
+skills/install/grok/skills/govern/SKILL.md : True
+AGENTS.md : True
+=== 4. 生产仓 File 自举只读核验（stage --check + L1 File 测试） ===
+mode: check
+checked_pairs: 36
+copied: 0
+removed_legacy_template_files: 0
+ok: skills mirrors match docs/
+7 passed in 0.02s
+=== done ===

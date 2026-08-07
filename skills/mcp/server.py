@@ -256,7 +256,7 @@ class MCPServer:
 
         guidance = (
             f"{spec.role} 本入口由 {prompt_path} 承载方法论正文"
-            + ("（仓内已存在，可核对 sha256）" if prompt_sha256 else "（仓内无 File 大包，用内置摘要）")
+            + ("（仓内已存在，可核对 sha256）" if prompt_sha256 else "（仓内无 File 大包，用内置角色/台账边界 guidance）")
         )
         structured = {
             "entrypoint": spec.name,
