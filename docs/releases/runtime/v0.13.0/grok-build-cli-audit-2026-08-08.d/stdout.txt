@@ -1,0 +1,13 @@
+I'll run a read-only dispatch probe: load the audit skill sources, locate the independent-audit prompt, and inspect GOAL-008 for required semantics and an evidence gap.## GROK_AUDIT_DISPATCH_OK
+
+Read-only dispatch probe complete (no files modified, no audit appended, no subagents, no questions).
+
+| Item | Value |
+|------|--------|
+| **1. Marker** | `GROK_AUDIT_DISPATCH_OK` |
+| **2. Loaded skill** | **Title:** `audit · 独立交叉审计（Grok Build skill）` · **Path:** `.grok/skills/audit/SKILL.md` |
+| **3. Independent-audit prompt** | Skill names `<SKILLS_PKG>/prompts/05-independent-audit.md` → resolved **`skills/prompts/05-independent-audit.md`** |
+| **4a. Required `source` / status semantics** | Prompt hard rule: **`source` must be `independent`**. Opinion only → write `03-audit` ledger; **do not** change goal `status` / checkpoints / derived `progress` / plan body / goal-tree state. **Verdict:** `pass` \| `conditional` \| `fail`. Findings: **`required` \| `recommended`**. P-005 info items use **`required` / `non-blocking`** with states such as **`collecting` / `verified` / `deferred`**; open **required** findings/info items block related gates until closed via fixed / accepted-residual / user-overruled (response via `/govern`). |
+| **4b. One current required evidence gap** | **GOAL-008** is `done` with I-001–I-003 **verified** for the historical `v0.7.0` close-out (A-016). **Current gap (A-017 / 00-meta):** post–GOAL-010 behavior-source changes left the **unreleased** candidate with six host `/govern`+`/audit` cells at **`pending-runtime-validation`** — **fresh authorized host runtime replays** are still required before that candidate may be claimed runtime-verified or release-ready. |
+
+**Target scoped:** `docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency`

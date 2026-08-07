@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-08
 updated: 2026-08-08
-version: 0.2.0
-progress: 33%
+version: 0.3.0
+progress: 67%
 ---
 
 # GOAL-006 · 消费面路径收敛（F-006 承接 + R-001 扫尾）
@@ -30,14 +30,14 @@ progress: 33%
 | 阶段 | 名称 | 状态 | 说明 |
 |------|------|------|------|
 | **S1** | 盘点与方案冻结 | **完成**（2026-08-08） | E-002 影响面清单（14 文件约 240 处 `docs/`）；D-001 冻结 **A+C 混合**（prompts/薄壳/canonical 字面 `{governance_root}`；模板路径并入 `{{GOVERNANCE_ROOT}}` 占位）；I-001 closed |
-| **S2** | 实施 | 未开始 | 模板与 prompts 相对化（或 pin 展开）；测试补强（`governance_root≠docs` 场景） |
+| **S2** | 实施 | **完成**（2026-08-08） | E-004：prompts/模板/薄壳/安装形态/canonical 相对化（≈390 处引用）；防再犯测试 5 条；12 宿主矩阵证据重捕获 + matrix cells 刷新；239 测试绿 + stage 0 漂移 |
 | **S3** | 回归与审计 | 未开始 | 全量测试 + stage `--check`；self/independent 关门审计；F-006/R-001 关闭留痕 |
 
 同一阶段内可并行；阶段间通常串行。
 
 ## 派生进度展示
 
-`progress: 33%` = 路线图检查点 S1～S3 已完成 **1 / 3**（等权；S1 完成）。progress **仅展示**，不放行阶段、不关闭 finding、不推导 `done`。
+`progress: 67%` = 路线图检查点 S1～S3 已完成 **2 / 3**（等权；S1/S2 完成）。progress **仅展示**，不放行阶段、不关闭 finding、不推导 `done`。
 
 ## 信息就绪与未知项
 

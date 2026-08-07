@@ -666,7 +666,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # Claude + Grok + Copilot: all four entrypoints runtime-verified 2026-08-06.
+        # Claude + Grok + Copilot: all four entrypoints runtime-verified (2026-08-08 refresh).
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -685,21 +685,21 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 self.assertTrue(entrypoints[name]["evidence"])
                 for path in entrypoints[name]["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                    self.assertIn("2026-08-06", path)
+                    self.assertIn("-2026-08-", path)
             vision = entrypoints["vision"]
             self.assertEqual(vision["status"], "runtime-verified")
             self.assertTrue(vision["evidence"])
             for path in vision["evidence"]:
                 self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                 self.assertIn("vision", path)
-                self.assertIn("2026-08-06", path)
+                self.assertIn("-2026-08-", path)
             vision_audit = entrypoints["vision-audit"]
             self.assertEqual(vision_audit["status"], "runtime-verified")
             self.assertTrue(vision_audit["evidence"])
             for path in vision_audit["evidence"]:
                 self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                 self.assertIn("vision-audit", path)
-                self.assertIn("2026-08-06", path)
+                self.assertIn("-2026-08-", path)
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""
         if not (CORE_PRINCIPLES.is_file() and CORE_AGENTS.is_file()):
@@ -1148,9 +1148,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         ))
         for path in core_prompts:
             text = path.read_text(encoding="utf-8")
-            self.assertIn(
-                "docs/workspace-<NNN>-<slug>/workspace.md",
+            self.assertRegex(
                 text,
+                r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspace-<NNN>-<slug>/workspace\.md",
                 msg=f"missing workspace scan: {path}",
             )
             self.assertRegex(
@@ -1177,9 +1177,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         )
         for path in rule_surfaces:
             text = path.read_text(encoding="utf-8")
-            self.assertIn(
-                "docs/workspace-<NNN>-<slug>/workspace.md",
+            self.assertRegex(
                 text,
+                r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspace-<NNN>-<slug>/workspace\.md",
                 msg=f"missing workspace rule: {path}",
             )
             self.assertRegex(
@@ -1248,9 +1248,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
         # Architecture is required for complete install — not optional product framing
         self.assertRegex(template, r"同级必备|必备")
-        self.assertIn("docs/architecture/principles.md", template)
+        self.assertIn("{{GOVERNANCE_ROOT}}/architecture/principles.md", template)
         self.assertRegex(orch, r"不完整安装|同级必备")
-        self.assertIn("docs/architecture/principles.md", orch)
+        self.assertIn("{governance_root}/architecture/principles.md", orch)
         self.assertRegex(govern, r"不完整安装|同级必备|principles")
         # S0 scaffold + user-confirmed slug (phase B)
         self.assertRegex(orch, r"scaffold|工作区骨架")
@@ -1398,7 +1398,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertTrue(path.is_file(), f"missing independent Vision Review core: {path}")
         text = path.read_text(encoding="utf-8")
         self.assertIn("source: independent", text)
-        self.assertIn("docs/vision/reviews.md", text)
+        self.assertIn("{governance_root}/vision/reviews.md", text)
         self.assertIn("VRev-00N", text)
         self.assertIn("Goal `03-audit.md`", text)
         self.assertIn("/vision", text)

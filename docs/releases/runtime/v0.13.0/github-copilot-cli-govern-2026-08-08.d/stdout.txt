@@ -1,0 +1,208 @@
+I'll start by exploring the repository structure and locating the governance sources.
+
+● List directory .
+  └ 21 files found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/*"
+  └ 2 files found
+
+/ Search (glob)
+  │ "**/GOAL-008*/**"
+  └ 8 files found
+
+Let me read the core governance sources in parallel.
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+● List directory docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consis…
+  └ 5 files found
+
+The goal-tree is large. Let me read it in sections, plus the GOAL-008 records.
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ 103 lines read
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L1:150 (149 lines read)
+
+Let me continue reading the goal-tree and the GOAL-008 audit records, plus the orchestrator prompt.
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ 1 line read
+
+/ Search (grep)
+  │ "GOAL-008"
+  └ 2 lines found
+
+Let me read the goal-tree sections around GOAL-008, the AGENTS.md, orchestrator prompt, and copilot
+instructions.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ 1 line read
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L490:545 (56 lines read)
+
+Let me read the GOAL-008 audit file, focusing on the latest close-out entry and any open findings.
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:120 (120 lines read)
+
+/ Search (grep)
+  │ "^#{1,4} |verdict|required|必改|finding|finding|F-\d+|A-\d+"
+  └ 7 lines found
+
+Let me read the orchestrator prompt's scan semantics and the AGENTS.md relevant sections.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:80 (80 lines read)
+
+/ Search (grep)
+  │ "^#|^##|扫描|scan|信息就绪|required|意见台账|P-004|关门|closure"
+  └ 91 lines found
+
+Let me read the orchestrator scan section and check GOAL-008's ledger structure and
+decision/execution records.
+
+✗ Read 03-audit
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  └ Path does not exist
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L112:175 (64 lines read)
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/02-exec
+  │ ution/*"
+  └ No matches found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/01-deci
+  │ sion/*"
+  └ No matches found
+
+GOAL-008 uses legacy inline ledgers. Let me check the decision/execution files and verify the
+runtime evidence attachments exist.
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:80 (80 lines read)
+
+● List directory docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consis…
+  └ 10 files found
+
+/ Search (glob)
+  │ "docs/vision/charter.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "docs/architecture/principles.md"
+  └ 1 file found
+
+Let me verify the runtime evidence files exist and check the decision file for key gates.
+
+● List directory docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consis…
+  └ 119 files found
+
+/ Search (grep)
+  │ "^status:|^version:|^vision_id:"
+  └ 3 lines found
+
+/ Search (grep)
+  │ "^#|^##|^###|residual|required|deferred|D-\d+ ·"
+  └ 30 lines found
+
+Let me verify the upstream F-005 closure in GOAL-001 and check for any open VRev required items.
+
+/ Search (grep)
+  │ "F-005"
+  └ 50 lines found
+
+/ Search (grep)
+  │ "required|status|VRev|open"
+  └ 14 lines found
+
+I have all the governance sources needed. Here is the /govern scan replay for GOAL-008.
+
+-----------------------------------------------------------------------------------------------
+
+治理扫描 · GOAL-008（只读重放，GitHub Copilot CLI）
+
+环境与完整性检查
+
+ - 愿景完整性：docs/vision/charter.md 存在且 status: active（vision-goal-governance @ 0.2.0）；VRev
+台账 open required = 0，无阻断。
+ - 核心方法论：docs/architecture/principles.md 存在（完整安装）。
+ - 工作区：workspace-001-goal-governance status: archived；Root GOAL-001-main-vision done；VP-001
+closed；primary_plan 有效。本区封存只读，不再分配新编号。
+ - 聚焦目标：GOAL-008 位于 canonical 工作区根，parent: GOAL-001-main-vision 校验一致。
+
+状态 / Progress
+
+ - 00-meta.md：done / 100%（候选身份 annotated v0.7.0 @ 8a33ecd…）。
+ - goal-tree.md 树 + 状态表：done / 100%，两处一致。
+ - 2026-07-20 D-011/A-017 证据新鲜度边界：当前候选 unreleased、六宿主入口
+pending-runtime-validation——仅约束未来候选发版，不重开 GOAL-008、不作废 v0.7.0 历史关门。
+
+意见台账（03-audit.md）
+
+┌───────┬─────────────┬─────────────┬──────────────────────────────────────────────────────────┐
+│ 条目  │ source      │ verdict     │ 状态                                                     │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-014 │ independent │ conditional │ 开放项（Web CI、I-002/I-003、release 身份）随后由 A-016  │
+│       │             │             │ 全部闭合                                                 │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-015 │ self        │ conditional │ 历史响应                                                 │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-016 │ self        │ pass        │ 关门审计：I-001/002/003 verified；无开放 required；无    │
+│       │             │             │ residual                                                 │
+├───────┼─────────────┼─────────────┼──────────────────────────────────────────────────────────┤
+│ A-017 │ self        │ pass        │ 证据新鲜度复核，确认不重开                               │
+└───────┴─────────────┴─────────────┴──────────────────────────────────────────────────────────┘
+
+开放 required findings：0。 无冲突。上游 GOAL-001 F-005 已由 A-013 关闭（run 29700051047、v0.7.0）。
+
+信息就绪台账（P-005）
+
+ - I-001 required → verified（schema/manifest + 正反 fixtures + 29 契约测试 + 3 standalone 测试）。
+ - I-002 required → verified（六 CLI 单元 + Web CI 重放，含 Copilot CLI 1.0.71 /govern+/audit
+证据）。
+ - I-003 required → verified（v0.7.0 annotated tag + release-candidate 证据）。
+ - 开放 required 信息项：0。
+
+关门判定
+
+✅ 允许关门，且关门已合法完成。 GOAL-008 已按 P-002/P-003 走完 close-out（A-016 self
+pass），三路径闭合充分（fixed 证据可核对），无开放 required finding，无未处理 required 信息项，无
+P-004 冲突待裁决，不涉及 strategic 宽阻断。
+
+S1 分类：本工作区所有目标（002–023）均已 done，无未关门目标；GOAL-008
+无需推进。只读重放不触发任何写入或裁决。
+
+-----------------------------------------------------------------------------------------------
+
+COPILOT_CLI_GOVERN_DISPATCH_OK
+

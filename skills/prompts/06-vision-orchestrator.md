@@ -30,12 +30,12 @@ role: vision-decision
 - **完整安装**必有 active Charter；缺则本入口主路径是**引导补齐**，不是开区执行。  
 - **冷启动串行**：Charter → 首个 VP →（再交 `/govern` 建工作区+Root）。  
 - 工作区角色仅 `primary` / `delivery`；所有工作区都必须挂 VP，无 plan opt-out。
-- Vision Review 落 `docs/vision/reviews.md` 稳定索引 + `docs/vision/reviews/VRev-NNN-<slug>.md` 平铺报告，**不是** Goal `03-audit`。
+- Vision Review 落 `{governance_root}/vision/reviews.md` 稳定索引 + `{governance_root}/vision/reviews/VRev-NNN-<slug>.md` 平铺报告，**不是** Goal `03-audit`。
 - 独立 Vision Review 只由 `/vision-audit` / `07-independent-vision-review.md` 写入；`/vision` 处理 self Review、决策与 finding 响应。
 - Review / independent 意见**默认不直接改** Charter/VP status；strategic 变更须用户确认 + revisions + re-align。  
 - 不把 progress% 或 Goal finding 写入 vision 目录。
 
-权威：`docs/architecture/principles.md` **P-006**；`docs/vision/alignment.md`；AGENTS §6d/6e。
+权威：`{governance_root}/architecture/principles.md` **P-006**；`{governance_root}/vision/alignment.md`；AGENTS §6d/6e。
 
 ---
 
@@ -51,9 +51,9 @@ role: vision-decision
 
 遵守：
 - 根目录 `AGENTS.md` §6d / §6e（P-006 操作摘要）
-- `docs/architecture/principles.md` **P-006** 全文
-- `docs/vision/alignment.md`（门禁权威）
-- 模板：`docs/templates/vision/charter.md`、`vision-plan.md`（或 SKILLS_PKG core 镜像）
+- `{governance_root}/architecture/principles.md` **P-006** 全文
+- `{governance_root}/vision/alignment.md`（门禁权威）
+- 模板：`{governance_root}/templates/vision/charter.md`、`vision-plan.md`（或 SKILLS_PKG core 镜像）
 
 # 工作方式
 
@@ -65,17 +65,17 @@ role: vision-decision
 # 资源定位
 
 **SKILLS_PKG**：含 `prompts/06-vision-orchestrator.md` 或 `prompts/00-govern-orchestrator.md` 的目录。  
-模板优先：`docs/templates/vision/`；若无则 `<SKILLS_PKG>/core/docs/templates/vision/`。
+模板优先：`{governance_root}/templates/vision/`；若无则 `<SKILLS_PKG>/core/docs/templates/vision/`。
 
 # 1. 扫描（每轮必做）
 
-1. **Core**：`docs/architecture/principles.md`、`docs/architecture/workspace-protocol.md` 是否存在；缺失 → 不完整安装，建议补 core。  
-2. **愿景树**：是否存在 `docs/vision/charter.md`、`alignment.md`、`roadmap.md`、`revisions.md`、`reviews.md`、`workspaces.md`、`plans/`。  
+1. **Core**：`{governance_root}/architecture/principles.md`、`{governance_root}/architecture/workspace-protocol.md` 是否存在；缺失 → 不完整安装，建议补 core。  
+2. **愿景树**：是否存在 `{governance_root}/vision/charter.md`、`alignment.md`、`roadmap.md`、`revisions.md`、`reviews.md`、`workspaces.md`、`plans/`。  
 3. **Charter**：`doc_type`、`vision_id`、`version`、`status`（仅 active|superseded）、目的/边界/非目标是否最小完备。统计 active Charter 数量（必须 ≤1）。  
 4. **VP 列表**：`plans/VP-*.md` 的 id、status、`vision_ref`、lead_workspace、绑定区数。  
 5. **组合编排**：`roadmap.md` 索引是否与 plans 一致。  
 6. **Vision Review**：合并扫描 `reviews.md` legacy inline 与 `reviews/VRev-NNN-*.md`；核对索引链接、最大编号和开放 required（未 fixed/residual/overruled）。
-7. **工作区对齐（只读）**：各 `docs/workspace-*/workspace.md` 的 `plan_refs`/`primary_plan`/`vision_role`（不混合多区目标正文）。  
+7. **工作区对齐（只读）**：各 `{governance_root}/workspace-*/workspace.md` 的 `plan_refs`/`primary_plan`/`vision_role`（不混合多区目标正文）。  
 8. **re-align 债务**：Charter version 与各 VP `vision_ref` 是否一致；strategic 后未刷新的区/Root。  
 9. 吸收用户本轮意图（建愿景 / 改 Charter / 新 VP / Review / re-align / 结构选型…）。
 
@@ -108,7 +108,7 @@ role: vision-decision
 ## V0 · 冷启动（严格串行）
 
 1. 确认 `vision_id`、标题、目的、成功边界、**非目标 ≥3**、原则摘要指向；版本默认 `0.1.0`、`status: active`。  
-2. 从模板写入 `docs/vision/charter.md`。  
+2. 从模板写入 `{governance_root}/vision/charter.md`。  
 3. 若缺愿景树文件：创建/复制最小集（README、alignment 可链到包内说明或精简 stub、roadmap、revisions、reviews、workspaces、plans/）。**不得**发明第二套对齐规则宽于 canonical alignment。  
 4. 创建首个 `VP-001-<slug>.md`（模板 vision-plan），`vision_ref` 精确匹配；roadmap 追加一行；status 常用 `planned` 或用户确认的 `active`。  
 5. **强制**建议并（确认后）写入 **Vision Review**（source 可为 self）覆盖 charter-init。  
@@ -134,7 +134,7 @@ role: vision-decision
 ## V3 · Vision Review
 
 1. 新编号 = 合并扫描 `reviews.md` legacy inline 与 `reviews/VRev-NNN-*.md` 后的最大 VRev-NNN + 1。
-2. 从 `docs/templates/vision/review.md`（或 core 镜像）创建 `reviews/VRev-NNN-<slug>.md`：frontmatter `id` 与文件名前缀一致，正文含 source、date、scope、verdict、findings（required|recommended）、建议 class 与声明。目录只允许单层平铺。
+2. 从 `{governance_root}/templates/vision/review.md`（或 core 镜像）创建 `reviews/VRev-NNN-<slug>.md`：frontmatter `id` 与文件名前缀一致，正文含 source、date、scope、verdict、findings（required|recommended）、建议 class 与声明。目录只允许单层平铺。
 3. 同一原子动作更新 `reviews.md` 索引：链接报告，写 source/scope/verdict、数字 `open required` 与摘要；索引和报告任一缺失均未完成。
 4. source：本入口只写 `self`；独立交叉审视必须交 `/vision-audit`，由其写入 `source: independent`。
 5. **默认不改** Charter/VP status。required 未闭合 → 可阻断：开区建议、VP 关门、宣称「方向已稳」。

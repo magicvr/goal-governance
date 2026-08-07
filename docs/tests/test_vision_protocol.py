@@ -311,7 +311,7 @@ class VisionProtocolTests(unittest.TestCase):
             self.assertIn("primary_plan", text)
         self.assertIn("愿景", protocol)
         self.assertIn("docs/vision", agents)
-        self.assertIn("docs/vision", orchestrator)
+        self.assertIn("{governance_root}/vision", orchestrator)
         alignment = (VISION_DIR / "alignment.md").read_text(encoding="utf-8")
         self.assertIn("fail closed", alignment)
         self.assertIn("progress", alignment.lower())

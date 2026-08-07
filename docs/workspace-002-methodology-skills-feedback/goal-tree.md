@@ -100,7 +100,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-003-consumer-governance-ergonomics     [done]    修复消费仓门禁与长流程治理摩擦  progress 100%
 ├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
-└── GOAL-006-consumer-surface-convergence       [active]  消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 0%
+└── GOAL-006-consumer-surface-convergence       [active]  消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 67%
 ```
 
 ## 状态表
@@ -112,7 +112,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
-| GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | active | 0% | 2026-08-08 |
+| GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | active | 67% | 2026-08-08 |
 
 ## 编号
 

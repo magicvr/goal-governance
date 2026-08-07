@@ -45,26 +45,26 @@ version: 0.9.0
              └──────────────────────────┘
 ```
 
-`workspace.md` 绑定 Root Goal、canonical 范围、共享资料目录指针与**必填** `plan_refs`/`primary_plan`；**不**保存目标生命周期状态。愿景目录 `docs/vision/` 为**单愿景**对齐链（Charter→VP→区），**不是** progress 或 Goal 审计台账；Vision Review 使用 `reviews.md` 稳定索引 + `reviews/VRev-NNN-*.md` 平铺报告。
+`workspace.md` 绑定 Root Goal、canonical 范围、共享资料目录指针与**必填** `plan_refs`/`primary_plan`；**不**保存目标生命周期状态。愿景目录 `{governance_root}/vision/` 为**单愿景**对齐链（Charter→VP→区），**不是** progress 或 Goal 审计台账；Vision Review 使用 `reviews.md` 稳定索引 + `reviews/VRev-NNN-*.md` 平铺报告。
 
 ## 仓库布局
 
 | 路径 | 职责 |
 |------|------|
-| `docs/workspace-<NNN>-<slug>/` | 当前工作区的目标与过程记录（扁平） |
-| `docs/workspace-<NNN>-<slug>/workspace.md` | 显式工作区绑定与共享资料固定引用；不保存目标状态 |
-| `docs/vision/` | Charter、VP、对齐契约；非 goal-tree |
-| `docs/shared-materials/` | 工作区外的共享资料候选库存；不保存目标状态 |
-| `docs/templates/` | 核心 canonical 文档模板 |
-| `docs/contracts/` | 消费适配器的 canonical 机读版本与兼容声明 |
-| `docs/architecture/` | 技术与架构约定、[治理原则](principles.md)、[工作区协议](workspace-protocol.md) |
-| `docs/_index/` | 预留索引/术语 |
+| `{governance_root}/workspace-<NNN>-<slug>/` | 当前工作区的目标与过程记录（扁平） |
+| `{governance_root}/workspace-<NNN>-<slug>/workspace.md` | 显式工作区绑定与共享资料固定引用；不保存目标状态 |
+| `{governance_root}/vision/` | Charter、VP、对齐契约；非 goal-tree |
+| `{governance_root}/shared-materials/` | 工作区外的共享资料候选库存；不保存目标状态 |
+| `{governance_root}/templates/` | 核心 canonical 文档模板 |
+| `{governance_root}/contracts/` | 消费适配器的 canonical 机读版本与兼容声明 |
+| `{governance_root}/architecture/` | 技术与架构约定、[治理原则](principles.md)、[工作区协议](workspace-protocol.md) |
+| `{governance_root}/_index/` | 预留索引/术语 |
 | `skills/` | AI/Agent 消费适配器、安装包与模板/契约分发镜像 |
 | `AGENTS.md` | AI 强制规则 |
 
 ## 当前阶段（现时）
 
-- **真相源**：显式工作区 `docs/workspace-001-goal-governance/`（GOAL-011 已完成自 `docs/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
+- **真相源**：显式工作区 `{governance_root}/workspace-001-goal-governance/`（GOAL-011 已完成自 `{governance_root}/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
 - **原则**：[principles.md](principles.md) P-001～**P-006**（含 finding 三路径闭合、P-004.1～4.4、单愿景级联）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
 - **愿景**：[charter.md](../vision/charter.md) **`vision-goal-governance@0.2.0`**。组合编排：VP-001 **closed**（奠基）· VP-002 **active**（反馈演进，workspace-002）· VP-003 **planned + 正式挂起**（人类 UI）。
 - **Skills**：现行主消费适配器；演进挂 **VP-002**（真实项目反馈）。

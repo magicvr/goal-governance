@@ -90,10 +90,10 @@ def managed_section(version: str) -> str:
         "<!-- goal-governance 薄壳 managed 段 · 更新/卸载只改本段 -->\n"
         f"- version: {version}\n"
         f"- layout: {MANAGED_LAYOUT_VERSION}\n"
-        "- 治理记录树：`{governance_root}`（默认 `docs/`，可配置）\n"
+        "- 治理记录树：`{governance_root}`（默认 `{governance_root}/`，可配置）\n"
         "- 实例真相在仓库内治理记录；MCP 不是权威状态库\n"
         "- 四治理入口：`vision` / `vision-audit` / `govern` / `audit`（`commit` 便利可选）\n"
-        "- 规则全文：AGENTS.md §6/6b/6d/6e；`docs/architecture/principles.md`（必备）\n"
+        "- 规则全文：AGENTS.md §6/6b/6d/6e；`{governance_root}/architecture/principles.md`（必备）\n"
         f"{MANAGED_END}"
     )
 
