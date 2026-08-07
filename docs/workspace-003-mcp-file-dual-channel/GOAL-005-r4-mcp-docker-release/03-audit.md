@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-mcp-file-dual-channel-delivery
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 审计 · GOAL-005
@@ -24,4 +24,8 @@ version: 0.1.0
 
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
-| （尚无） | | | | | | |
+| A-001 | 2026-08-07 | self | R4 关门自审计（R4c 前半） | pass | 0（R-001～R-003 recommended；I-007 发布验收前关闭） | `03-audit/A-001-r4-close-self.md` |
+
+## 结论状态
+
+GOAL-005 **active（67%）**：R4a/R4b 完成；A-001（self）pass，无 required；**independent 审计待 `/audit`（grok build）**；I-007 发布验收前关闭。全部条件满足后 Root 复关。
