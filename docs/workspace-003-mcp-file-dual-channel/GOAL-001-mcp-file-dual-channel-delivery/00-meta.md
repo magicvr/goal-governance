@@ -8,7 +8,7 @@ primary_plan: VP-004-mcp-file-dual-channel-delivery
 serves_summary: delivery Root；服务 VP-004 / vision-goal-governance@0.2.0；File+MCP 双通道、四承诺宿主、最小测试内核与可配置 governance_root
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.1.0
+version: 0.2.0
 progress: 0%
 ---
 
@@ -33,11 +33,11 @@ progress: 0%
 
 | 阶段 | 名称 | 状态 | 说明 |
 |------|------|------|------|
-| **R1** | MCP 通道并行达标 + 最小共享测试内核 | **未开始** | 四入口等价检查点；L2 共享 + L1 分列 + 抽稀 L3；合同 `deliveryChannel` 分列 |
+| **R1** | MCP 通道并行达标 + 最小共享测试内核 | **进行中（子目标已立项，方案未冻结）** | 四入口等价检查点；L2 共享 + L1 分列 + 抽稀 L3；合同 `deliveryChannel` 分列 |
 | **R2** | 双通道产品化 | **未开始** | bootstrap 双入口；薄壳 lifecycle；gitignore；AGENTS managed；File-classic |
 | **R3** | 可配置 `governance_root` 与消费面收敛 | **未开始** | 配置 pin；仓外 fail closed；alignment/AGENTS/templates 权威路径补丁（V-F-013 车辆） |
 
-同一纲领阶段内可并行多个子目标；阶段间通常串行。子目标按阶段再立，本回合只 scaffold Root。
+同一纲领阶段内可并行多个子目标；阶段间通常串行。R1 已建立首个子目标，但方案与实施门禁尚未冻结。
 
 ## 派生进度展示
 
@@ -47,8 +47,8 @@ progress: 0%
 
 | ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
-| I-001 | required | MCP 通道最小运行时形态（进程/stdio 或 Docker 推荐路径）与薄 Skills/宿主入口如何映射四治理入口 | R1 方案冻结 | R1 方案 | 对照现有 skills 入口 + MCP 合同草案 | open | — | 待 R1 首子目标澄清 |
-| I-002 | required | 共享测试内核 L2 fixture 范围与「等价」检查点落地位置（docs/tests vs skills） | R1 实施 | R1 实施 | 对照 VP-004 十条检查点设计套件 | open | — | 待方案 |
+| I-001 | required | MCP 通道最小运行时形态（进程/stdio 或 Docker 推荐路径）与薄 Skills/宿主入口如何映射四治理入口 | R1 方案冻结 | R1 方案 | 对照现有 skills 入口 + MCP 合同草案 | open | — | 由 GOAL-002-r1-mcp-equivalence-kernel/I-001 澄清 |
+| I-002 | required | 共享测试内核 L2 fixture 范围与「等价」检查点落地位置（docs/tests vs skills） | R1 实施 | R1 实施 | 对照 VP-004 十条检查点设计套件 | open | — | 由 GOAL-002-r1-mcp-equivalence-kernel/I-002 澄清 |
 | I-003 | required | `governance_root` 项目配置 schema 与权威面改写清单（alignment 等） | R3 方案冻结 | R3 方案 | 按 VP-004 R3 车辆列 diff 清单 | open | — | 不阻断 R1 启动 |
 | I-004 | non-blocking | P0 宿主 L3 探针环境是否本机/CI 可用 | R1 宿主退出 | R1 验收 | 各宿主只读 dispatch 探针 | open | 不可用则 residual | — |
 
@@ -66,10 +66,11 @@ progress: 0%
 
 | id | title | status |
 |----|-------|--------|
-| — | （尚未创建；R1 首子目标下一拍 `/govern` 再立） | — |
+| [GOAL-002-r1-mcp-equivalence-kernel](../GOAL-002-r1-mcp-equivalence-kernel/00-meta.md) | R1：MCP/File 等价验证内核 | active |
 
 ## 备注
 
 - 开区决策见 [01-decision/D-001-open-workspace-003.md](01-decision/D-001-open-workspace-003.md)。
 - 编号自 GOAL-001 起；**不**延续其他工作区编号。
 - 宿主 P0/P1、入口等价检查点、R3 协议车辆以 VP-004 v0.1.1+ 正文为准。
+- R1 首个子目标已按用户确认建立；其 cross 审计 provider 仍待指定，未指定前不得进入实施验证。
