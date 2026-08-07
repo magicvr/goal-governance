@@ -9,8 +9,8 @@ vision_role: delivery
 plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 created: 2026-07-31
-updated: 2026-08-04
-version: 0.2.0
+updated: 2026-08-08
+version: 0.3.0
 ---
 
 # 工作区上下文 · 方法论与 Skills 反馈演进
@@ -55,3 +55,4 @@ version: 0.2.0
 
 - 开区：用户 2026-07-31 `/govern` 确认 slug、Root、首子目标（Codex Skills 入口）与 `delivery` 角色。
 - VP-002 原「0 区空转」自本区 scaffold 起结束；`lead_workspace` 指向本区。
+- **长期持续治理（2026-08-08，D-008）**：用户确认本区与 VP-002 为长期持续治理项目，暂不关门——Root/VP-002 保持 `active`；R3 转为「持续闭环与长期演进」；退出判据挂起（核对结论留档于 Root 01-decision D-008）；新工作按反馈随时立项（GOAL-002～006 已 done，下一编号 GOAL-007）。

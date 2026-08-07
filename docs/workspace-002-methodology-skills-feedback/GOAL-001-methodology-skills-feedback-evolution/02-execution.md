@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-07-31
 updated: 2026-08-08
-version: 1.3.0
+version: 1.4.0
 ---
 
 # 执行记录 · GOAL-001
@@ -115,12 +115,28 @@ version: 1.3.0
 - Root `00-meta`：R3 行说明补承接记录；成功标准第 3 条注明显式未关闭项（F-006 + R-001 扫尾，关门时 residual 留痕）；子目标表 GOAL-005 过期显示 `active` 修正为 `done`（与 goal-tree 及 GOAL-005 00-meta 一致，显示修正非状态变更）。
 - 未改动任何 status/progress/检查点；goal-tree 无变化（无状态变更）。
 
+### 2026-08-08 · 长期持续治理决策（D-008，退出挂起）
+
+- 用户书面确认：workspace-002 与 VP-002 为**长期持续治理项目**，暂不关门。
+- **D-008**：R3 重定义为「持续闭环与长期演进」；退出判据挂起（本轮核对结论留档：退出条件当前全部满足，证据链完整）；Root/VP-002 保持 `active`；Root progress 保持 67%（长期化不虚增）。
+- 02-execution 待办更新（退出核对完成、F-006 完成）+「后续波次候选」表登记（F-003 e2e、新反馈 GOAL-007、Codex 矩阵 I-003、matrix candidateRevision R-001、Web writer F-003 复审）。
+
 ## 待办
 
 1. ~~完成 GOAL-005 的 S2～S5、cross close-out 与正式发布~~（已闭门，2026-08-06）。
-2. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
-3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
-4. **承接 F-006（消费面路径收敛）**：`skills/AGENTS.template.md` 与四治理 prompts 硬编码 `docs/…` → 相对化 `{governance_root}` 或安装时按 pin 展开。**已并入 VP-002 消费面承接路线图**（2026-08-08，与 R-001 裸路径扫尾合并跟踪；见 `docs/vision/plans/VP-002-…md`）。执行触发 = VP-002 推进或下一次协议面修订。
+2. ~~单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口~~（2026-08-08 核对：全部满足；**D-008 长期持续治理，退出挂起**——不执行关门）。
+3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门（D-008 后为长期挂起，非临时）。
+4. ~~承接 F-006（消费面路径收敛）~~（已并入 VP-002 消费面承接路线图；GOAL-006 2026-08-08 done，实现关闭）。
+
+## 后续波次候选（长期持续，D-008）
+
+| 项 | 来源 | 触发 |
+|----|------|------|
+| `governance_root≠docs` 消费场景 e2e | GOAL-006 F-003 / A-001 R-002 | VP-002 推进（用户选拍） |
+| 新反馈波次 → GOAL-007 | VP-002 意图（真实项目/消费方反馈） | 用户提交新问题 |
+| Codex 矩阵 committed | GOAL-002 I-003 | 发版宣称前另决 |
+| matrix candidateRevision 刷新 | GOAL-006 R-001 | 下一次 release 轮 |
+| Web legacy writer 复审 | GOAL-003 F-003 | 触发条件（子目标 03-audit） |
 
 ## 进度评估
 
