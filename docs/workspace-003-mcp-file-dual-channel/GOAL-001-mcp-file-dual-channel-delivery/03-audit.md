@@ -34,7 +34,10 @@ version: 0.9.0
 | A-008 | 2026-08-07 | self | 关门响应与 Root done | pass | 0 | `03-audit/A-008-close-response-and-root-done-self.md` |
 | A-009 | 2026-08-07 | independent | 关门复审 + 核心方法论/MCP 对照 VP-004 意图（grok build / grok-4.5 / high） | pass | 0（R-001～R-005 recommended） | `03-audit/A-009-independent-close-and-vp004-intent.md` |
 | A-010 | 2026-08-07 | self | 响应 A-009 recommended R-001～R-005（编排器） | pass | 0 | `03-audit/A-010-response-a009-recommended-self.md` |
+| A-011 | 2026-08-07 | self | R4 复关响应与 Root 再关门（GOAL-005 done；F-003 fixed；VP-004 #8 核验） | pass | 0 | `03-audit/A-011-r4-reclose-self.md` |
 
 ## 结论状态
 
 Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-001/A-003/A-005/A-006/A-008 + independent A-002/A-004/A-007；关门后独立复审 **A-009 pass**；A-010 响应 recommended R-001～R-005）。**2026-08-07 发布面核查（用户指令）发现关门范围外的新缺口**：File zip 混入 `skills/mcp/` 实现源码（通道资产未分离）、MCP server 无可分发 Docker 发布资产（无 Dockerfile / 无 GHCR 发布步骤 / README 无安装指南）、`skills/mcp/README.md`「Dockerfile 可选」文案与事实不符。用户书面确认「全套方案」→ **Root 回退 `done → active`**（progress 100% → 75%，纲领 3/4），新开 **GOAL-005-r4-mcp-docker-release**（R4）；VP-004 与 workspace.md 同步回退 active。A-008/A-009 关门结论在当时证据下成立，不因回退而改写；R4 缺口与修复由 GOAL-005 五件套 + 审计承载。
+
+**2026-08-07 复关（R4 完成）**：GOAL-005 `done`（cross 审计 A-001/A-002 pass + A-003 合并响应，无 required、无冲突）；VP-004 退出判据 #8 满足（通道资产分离、Docker 同 tag 发布管线 + 契约断言、README 一致；F-003 路径字面已修正）；**Root 复关 `done`**（progress 75% → 100%，纲领 R1–R4 4/4）；VP-004 `closed`；workspace.md `closed`；goal-tree 同步（全 done/100%）。I-007 open（non-blocking）于首次真实 GHCR 发布验收时关闭。

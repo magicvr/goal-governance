@@ -18,6 +18,7 @@ version: 0.4.0
 | E-002 | 2026-08-07 | R1 子目标立项与父子索引同步 | recorded | `02-execution/E-002-create-r1-equivalence-kernel.md` |
 | E-003 | 2026-08-07 | R1–R3 阶段推进、审计闭环与关门事实 | recorded | `02-execution/E-003-r1-r3-progress-and-close.md` |
 | E-004 | 2026-08-07 | A-009 响应（R-001～R-005）+ 证据跟踪补正（R-006）checkpoint | recorded | `02-execution/E-004-a009-response-and-checkpoint.md` |
+| E-005 | 2026-08-07 | R4 复关与 Root 再关门（GOAL-005 done → Root done / VP-004 closed / workspace closed；F-003） | recorded | `02-execution/E-005-r4-reclose-and-root-close.md` |
 
 ## 事实边界
 
