@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.9.0
+version: 0.10.0
 ---
 
 # 审计 · GOAL-001
@@ -17,7 +17,7 @@ version: 0.9.0
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
 | 影响本 scope 的 I-00N | I-001～I-004 全部 closed | 见 00-meta 信息表（与 01-decision 同源） |
-| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1/R2/R3 纲领关门（A-003/A-005/A-006）+ 最终关门（A-007/A-008）+ 关门复审 A-009 |
+| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1/R2/R3 纲领关门（A-003/A-005/A-006）+ 最终关门（A-007/A-008）+ 关门复审 A-009 + R4 复关 A-011 + 关门后独立复审 A-012 + 响应登记 A-013 |
 | 资料引用（若有）是否固定且用户确认 | 无 | 表空 |
 
 ## 意见台账索引
@@ -35,9 +35,15 @@ version: 0.9.0
 | A-009 | 2026-08-07 | independent | 关门复审 + 核心方法论/MCP 对照 VP-004 意图（grok build / grok-4.5 / high） | pass | 0（R-001～R-005 recommended） | `03-audit/A-009-independent-close-and-vp004-intent.md` |
 | A-010 | 2026-08-07 | self | 响应 A-009 recommended R-001～R-005（编排器） | pass | 0 | `03-audit/A-010-response-a009-recommended-self.md` |
 | A-011 | 2026-08-07 | self | R4 复关响应与 Root 再关门（GOAL-005 done；F-003 fixed；VP-004 #8 核验） | pass | 0 | `03-audit/A-011-r4-reclose-self.md` |
+| A-012 | 2026-08-07 | independent | 关门后独立审计：方法论/Skills 完整性 + MCP server 体系（未加载 skill） | pass | 0（F-001～F-008 recommended） | `03-audit/A-012-independent-post-close-methodology-mcp.md` |
+| A-013 | 2026-08-07 | self | 响应 A-012（independent pass）· 登记 F-001～F-008（编排器；无 required、无冲突；不回退关门） | pass | 0 | `03-audit/A-013-response-a012-register-findings-self.md` |
 
 ## 结论状态
 
 Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-001/A-003/A-005/A-006/A-008 + independent A-002/A-004/A-007；关门后独立复审 **A-009 pass**；A-010 响应 recommended R-001～R-005）。**2026-08-07 发布面核查（用户指令）发现关门范围外的新缺口**：File zip 混入 `skills/mcp/` 实现源码（通道资产未分离）、MCP server 无可分发 Docker 发布资产（无 Dockerfile / 无 GHCR 发布步骤 / README 无安装指南）、`skills/mcp/README.md`「Dockerfile 可选」文案与事实不符。用户书面确认「全套方案」→ **Root 回退 `done → active`**（progress 100% → 75%，纲领 3/4），新开 **GOAL-005-r4-mcp-docker-release**（R4）；VP-004 与 workspace.md 同步回退 active。A-008/A-009 关门结论在当时证据下成立，不因回退而改写；R4 缺口与修复由 GOAL-005 五件套 + 审计承载。
 
 **2026-08-07 复关（R4 完成）**：GOAL-005 `done`（cross 审计 A-001/A-002 pass + A-003 合并响应，无 required、无冲突）；VP-004 退出判据 #8 满足（通道资产分离、Docker 同 tag 发布管线 + 契约断言、README 一致；F-003 路径字面已修正）；**Root 复关 `done`**（progress 75% → 100%，纲领 R1–R4 4/4）；VP-004 `closed`；workspace.md `closed`；goal-tree 同步（全 done/100%）。I-007 open（non-blocking）于首次真实 GHCR 发布验收时关闭。
+
+**2026-08-07 关门后独立复审（A-012）**：方法论/Skills **未遭破坏**（stage 无漂移；全量 198 绿；L2 10/10；File zip 80/0 MCP 实现）；MCP 体系能力与 VP-004 意图一致。**无 required**；recommended F-001～F-008（L3 behaviorSources 路径过期、`mcp.__version__` 与发布 tag 脱节、File 包内 MCP 测试隔离失败等）。**不回退** Root/VP/workspace 关门状态。
+
+**2026-08-07 响应登记（A-013，self）**：A-012 无 required、无冲突 → 不触发 P-004、不阻断任何门禁；F-001～F-008 全部**登记**为 open 非必改项（拟处置 + 触发条件留痕；不宣布闭合）。F-001（选项 A 重捕获 L3 / 选项 B 历史路径注解）待用户选择；F-002/F-003/F-004/F-005/F-007 归维护轮；F-006 移交 VP-002 消费面；F-008 并入 I-007（首次真实 GHCR 发布验收关闭）。Root/子目标/VP-004/workspace 状态与 goal-tree **无变化**。
