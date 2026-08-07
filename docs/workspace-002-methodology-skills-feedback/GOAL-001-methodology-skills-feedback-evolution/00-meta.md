@@ -66,6 +66,7 @@ progress: 67%
 | [GOAL-003-consumer-governance-ergonomics](../GOAL-003-consumer-governance-ergonomics/00-meta.md) | 修复消费仓门禁与长流程治理摩擦 | done |
 | [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/00-meta.md) | 移除冻结 Web 资产并挂起 VP-003 | done |
 | [GOAL-005-vision-review-ledger-scaling](../GOAL-005-vision-review-ledger-scaling/00-meta.md) | 愿景审视台账分片与正式发布 | done |
+| [GOAL-006-consumer-surface-convergence](../GOAL-006-consumer-surface-convergence/00-meta.md) | 消费面路径收敛（F-006 承接 + R-001 扫尾） | active |
 
 ## 备注
 
