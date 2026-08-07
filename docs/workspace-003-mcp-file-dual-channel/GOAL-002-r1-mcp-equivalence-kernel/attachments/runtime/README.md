@@ -15,6 +15,18 @@ dispatch 与角色边界（`vision` / `vision-audit` / `govern` / `audit`），�
   覆盖。宿主 × MCP 通道的全链路长剧不在 R1 范围（VP-004：「不要求完整治理长剧 +
   真模型全链路」）。
 
+## 捕获点与重捕获（A-012 F-001 选项 A）
+
+- **R1 捕获（2026-08-07 13:40–13:42 UTC）**：behaviorSources 绑定 R1 时点路径
+  `skills/mcp/{entries,kernel,server}.py`（当时存在）。
+- **R4 迁路径（2026-08-07）**：MCP 实现迁至仓库根 `mcp/`（通道资产分离，
+  GOAL-005）；`skills/mcp/` 路径不复存在。R4 后 `entries.py`/`kernel.py` 内容
+  未变（remap 后哈希一致），`server.py` 经 R2/R4 合法演进（哈希变化）。
+- **重捕获（2026-08-07，同日，F-001 选项 A）**：四宿主以**同一探针 prompt**（prompt
+  哈希未变）与同一宿主 CLI 版本重跑，behaviorSources 更新为当前树
+  `mcp/{entries,kernel,server}.py` 当前哈希；四条证据 `capturedAt` 为重捕获时点，
+  verdict 全部 `pass`。R1 时点 verdict 仍有效（重捕获不使其作废）。
+
 ## 复跑
 
 ```powershell
@@ -22,7 +34,10 @@ python scripts/capture_runtime_evidence.py --consumer <host> --entrypoint govern
   --protocol-version 0.1.0 --product "<product>" --product-version <ver> `
   --prompt-file <prompts>/<host>-l3-four-entry.txt --marker <MARKER> `
   --require-assert vision --require-assert vision-audit --require-assert audit `
-  --behavior-source ... --output <evidence>/<host>-l3-four-entry-2026-08-07.json `
+  --behavior-source <prompts>/claude-l3-four-entry.txt --behavior-source <prompts>/grok-l3-four-entry.txt `
+  --behavior-source <prompts>/codex-l3-four-entry.txt --behavior-source <prompts>/copilot-l3-four-entry.txt `
+  --behavior-source mcp/entries.py --behavior-source mcp/kernel.py --behavior-source mcp/server.py `
+  --output <evidence>/<host>-l3-four-entry-2026-08-07.json `
   -- <host CLI command>
 ```
 

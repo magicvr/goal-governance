@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T13:42:40.132028Z",
+  "capturedAt": "2026-08-07T15:37:48.921903Z",
   "unit": {
     "consumer": "github-copilot-cli",
     "entrypoint": "govern",
@@ -11,7 +11,7 @@
   "environment": {
     "product": "GitHub Copilot CLI",
     "version": "1.0.75",
-    "platform": "Windows-10-10.0.26200-SP0",
+    "platform": "Windows-11-10.0.26200-SP0",
     "provider": null,
     "model": null
   },
@@ -33,16 +33,16 @@
       "sha256": "fe57e7b7242073d090826385e1fc55217eb60678796f5eaa9cebf524500f4720"
     },
     {
-      "path": "skills/mcp/entries.py",
+      "path": "mcp/entries.py",
       "sha256": "ab183e159afdb0eec39a3c3837881d88334cfb18e3c8fd0efd5e3a62342961ed"
     },
     {
-      "path": "skills/mcp/kernel.py",
+      "path": "mcp/kernel.py",
       "sha256": "b0168b2ea8dcd8577e4e5d6214409c9139daa97da240a05b4468ff0337aa4ff6"
     },
     {
-      "path": "skills/mcp/server.py",
-      "sha256": "6c9df5e8eed77302f805a61527aa5e3af9bac6ae770ff83c881c783c5f4f540a"
+      "path": "mcp/server.py",
+      "sha256": "c0af461ece0b4e5f4b8a3421daed91538869d7f3f97bb0a61838ccd86c2ecc46"
     }
   ],
   "invocation": {
@@ -127,11 +127,11 @@
         "observed": true
       }
     ],
-    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/github-copilot-cli-l3-four-entry-2026-08-07.d/stdout.txt",
-    "stdoutSha256": "57cdd752cfea582735fc5258304baebfc248580b08577867976a379f5dabcc28",
+    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/copilot-l3-four-entry-2026-08-07.d/stdout.txt",
+    "stdoutSha256": "c813757a78226e494431ac40000428731da47f9203097aee5241f24702d92426",
     "stdoutMode": "raw",
-    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/github-copilot-cli-l3-four-entry-2026-08-07.d/stderr.txt",
-    "stderrSha256": "0569b8c8b571d383ad511617bf2ed7780fb535e0bbd7c2bd61c9aa4c417a0976",
+    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/copilot-l3-four-entry-2026-08-07.d/stderr.txt",
+    "stderrSha256": "76e26e627ed53b70c027d7b434569478e6951b20b1494a911edf9575257f4a71",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."

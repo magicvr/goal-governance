@@ -14,6 +14,7 @@ docs/tests/test_dual_channel_l2.py.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import unittest
@@ -41,13 +42,14 @@ REQUIRED_PARAMS = {
 class McpServerProcess:
     """Thin wrapper over the real MCP server subprocess (stdio transport)."""
 
-    def __init__(self, repo_root: Path) -> None:
+    def __init__(self, repo_root: Path, env: dict[str, str] | None = None) -> None:
         self.proc = subprocess.Popen(
             [sys.executable, str(SERVER_PY), "--repo-root", str(repo_root)],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             cwd=str(repo_root),
+            env=env,
             text=True,
             encoding="utf-8",
             errors="replace",
@@ -218,6 +220,54 @@ class McpL1Tests(unittest.TestCase):
         first = transcript()
         second = transcript()
         self.assertEqual(first, second)
+
+
+class McpVersionPinTests(unittest.TestCase):
+    """F-002 (A-012): effective server version is pinned to the release at
+    build/publish time via GOAL_GOVERNANCE_MCP_VERSION; source checkouts fall
+    back to the internal layout version. serverInfo.version must reflect the
+    pin so it cannot drift from the GHCR tag."""
+
+    def test_module_version_uses_env_pin_when_set(self) -> None:
+        code = "import mcp; print(mcp.__version__)"
+        env = dict(os.environ, GOAL_GOVERNANCE_MCP_VERSION="0.13.0")
+        out = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        self.assertEqual(out.returncode, 0, msg=out.stderr)
+        self.assertEqual(out.stdout.strip(), "0.13.0")
+
+    def test_module_version_falls_back_to_layout_version(self) -> None:
+        code = "import mcp; print(mcp.__version__); print(mcp.MCP_LAYOUT_VERSION)"
+        env = dict(os.environ)
+        env.pop("GOAL_GOVERNANCE_MCP_VERSION", None)
+        out = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        self.assertEqual(out.returncode, 0, msg=out.stderr)
+        lines = out.stdout.strip().splitlines()
+        self.assertEqual(lines[0], "0.1.0")
+        self.assertEqual(lines[1], "0.1.0")
+
+    def test_server_info_version_reflects_env_pin(self) -> None:
+        env = dict(os.environ, GOAL_GOVERNANCE_MCP_VERSION="0.13.0")
+        server = McpServerProcess(REPO_ROOT, env=env)
+        self.addCleanup(server.close)
+        init = server.request("initialize", {"protocolVersion": "2025-03-26"}, request_id=1)
+        self.assertNotIn("error", init)
+        self.assertEqual(init["result"]["serverInfo"]["version"], "0.13.0")
 
 
 if __name__ == "__main__":

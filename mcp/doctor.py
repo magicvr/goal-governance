@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 try:  # package context
+    from . import MCP_LAYOUT_VERSION, __version__ as server_version
     from .config import GovernanceRootError, resolve_governance_root
     from .lifecycle import (
         INSTALL_JSON,
@@ -17,6 +18,10 @@ try:  # package context
         read_install_state,
     )
 except ImportError:  # plain script / top-level module context
+    from __init__ import (  # type: ignore[no-redef]
+        MCP_LAYOUT_VERSION,
+        __version__ as server_version,
+    )
     from config import (  # type: ignore[no-redef]
         GovernanceRootError,
         resolve_governance_root,
@@ -96,6 +101,13 @@ def doctor(root: Path, *, governance_root: str | None = None) -> dict[str, Any]:
 
     return {
         "ok": not issues,
+        # F-002 (A-012): report the effective server version separately from
+        # the internal layout version, so the two semantics cannot be confused
+        # when diagnosing drift between the image tag and in-process version.
+        "server": {
+            "version": server_version,
+            "layoutVersion": MCP_LAYOUT_VERSION,
+        },
         "governanceRoot": governance_root,
         "governanceRootError": root_error,
         "managedSection": {

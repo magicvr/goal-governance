@@ -148,6 +148,17 @@ class GovernanceRootConfigTests(unittest.TestCase):
         self.assertTrue(report["contract"]["present"])
         self.assertIn("governance", report["contract"]["path"][0])
 
+    def test_doctor_reports_server_version_blocks(self) -> None:
+        """F-002 (A-012): doctor separates effective server version from the
+        internal layout version so tag/version drift is diagnosable."""
+        import mcp.doctor as doctor  # noqa: E402
+
+        report = doctor.doctor(self.repo)
+        self.assertIn("server", report)
+        self.assertIn("version", report["server"])
+        self.assertIn("layoutVersion", report["server"])
+        self.assertEqual(report["server"]["layoutVersion"], "0.1.0")
+
 
 if __name__ == "__main__":
     unittest.main()

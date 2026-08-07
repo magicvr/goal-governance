@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T13:40:27.796322Z",
+  "capturedAt": "2026-08-07T15:35:10.950036Z",
   "unit": {
     "consumer": "grok-build-cli",
     "entrypoint": "govern",
@@ -11,7 +11,7 @@
   "environment": {
     "product": "Grok Build CLI",
     "version": "1.0.0",
-    "platform": "Windows-10-10.0.26200-SP0",
+    "platform": "Windows-11-10.0.26200-SP0",
     "provider": null,
     "model": null
   },
@@ -33,16 +33,16 @@
       "sha256": "fe57e7b7242073d090826385e1fc55217eb60678796f5eaa9cebf524500f4720"
     },
     {
-      "path": "skills/mcp/entries.py",
+      "path": "mcp/entries.py",
       "sha256": "ab183e159afdb0eec39a3c3837881d88334cfb18e3c8fd0efd5e3a62342961ed"
     },
     {
-      "path": "skills/mcp/kernel.py",
+      "path": "mcp/kernel.py",
       "sha256": "b0168b2ea8dcd8577e4e5d6214409c9139daa97da240a05b4468ff0337aa4ff6"
     },
     {
-      "path": "skills/mcp/server.py",
-      "sha256": "6c9df5e8eed77302f805a61527aa5e3af9bac6ae770ff83c881c783c5f4f540a"
+      "path": "mcp/server.py",
+      "sha256": "c0af461ece0b4e5f4b8a3421daed91538869d7f3f97bb0a61838ccd86c2ecc46"
     }
   ],
   "invocation": {
@@ -138,10 +138,10 @@
         "observed": true
       }
     ],
-    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-build-cli-l3-four-entry-2026-08-07.d/stdout.txt",
-    "stdoutSha256": "d09726b27d89e1acc813a890511cbd2f2dbf005e29f8af48872581ffc721c1ba",
+    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-l3-four-entry-2026-08-07.d/stdout.txt",
+    "stdoutSha256": "20ebbd0f445cffb289a020c1cb0eefe4c4024aa660bae2ee0852ce0761646d41",
     "stdoutMode": "raw",
-    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-build-cli-l3-four-entry-2026-08-07.d/stderr.txt",
+    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-l3-four-entry-2026-08-07.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "stderrMode": "request-url-redacted",
     "warnings": [],

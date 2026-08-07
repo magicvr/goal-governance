@@ -99,6 +99,16 @@ class PackSkillsReleaseTests(unittest.TestCase):
         )
         self.assertFalse(pack.should_exclude(Path("prompts") / "00-govern-orchestrator.md"))
 
+    def test_should_exclude_mcp_integration_tests(self) -> None:
+        """A-012 F-003: skills/tests/test_mcp_*.py import the repo-root mcp/
+        package and must not ship in the File zip (they fail in a pure
+        File-channel unpack). Other skills tests stay."""
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_l1.py"))
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_config.py"))
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_lifecycle.py"))
+        self.assertFalse(pack.should_exclude(Path("tests") / "test_skills_orchestrator.py"))
+        self.assertFalse(pack.should_exclude(Path("tests") / "test_install_ps1_isolated.ps1"))
+
     def test_pack_skills_on_temp_tree_excludes_caches(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
@@ -227,6 +237,8 @@ class PackSkillsReleaseTests(unittest.TestCase):
                 # asset separation); the File zip must never contain it.
                 f"{root}/mcp/",
                 "/mcp/server.py",
+                # A-012 F-003: MCP integration tests must not ship either.
+                "/tests/test_mcp_",
             ):
                 self.assertFalse(
                     any(bad in n for n in names),
@@ -272,6 +284,14 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         self.assertIn("context: mcp/", publish_block)
         self.assertIn("ghcr.io/magicvr/goal-governance-mcp-server:", publish_block)
         self.assertIn("needs.pack.outputs.version", publish_block)
+        # F-002 (A-012): the image build must pin the effective server version
+        # to the pack/tag version so serverInfo.version and lifecycle writes
+        # cannot drift from the GHCR tag.
+        self.assertIn("build-args:", publish_block)
+        self.assertIn(
+            "GOAL_GOVERNANCE_MCP_VERSION=${{ needs.pack.outputs.version }}",
+            publish_block,
+        )
         # Image push must stay after the hard evidence gate (fail-closed order).
         self.assertLess(
             publish_block.index("docker/build-push-action@v6"),

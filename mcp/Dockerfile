@@ -9,6 +9,12 @@
 #   docker run --rm -v <仓库根>:/workspace <镜像> lifecycle.py install --root /workspace ...
 FROM python:3.11-slim
 
+# F-002 (A-012): pin the effective server version to the release at build
+# time (workflow passes the pack/tag version); unset falls back to the
+# internal layout version in mcp/__init__.py.
+ARG GOAL_GOVERNANCE_MCP_VERSION=
+ENV GOAL_GOVERNANCE_MCP_VERSION=${GOAL_GOVERNANCE_MCP_VERSION}
+
 WORKDIR /app
 
 COPY . /app

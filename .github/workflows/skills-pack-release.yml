@@ -203,6 +203,11 @@ jobs:
         with:
           context: mcp/
           push: true
+          # F-002 (A-012): pin the effective in-image server version to the
+          # pack/tag version so serverInfo.version and lifecycle writes never
+          # drift from the GHCR tag.
+          build-args: |
+            GOAL_GOVERNANCE_MCP_VERSION=${{ needs.pack.outputs.version }}
           tags: |
             ghcr.io/magicvr/goal-governance-mcp-server:${{ needs.pack.outputs.version }}
             ghcr.io/magicvr/goal-governance-mcp-server:latest

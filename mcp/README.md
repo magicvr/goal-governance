@@ -46,6 +46,17 @@ docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-
 
 镜像构建（发布由 `skills-pack-release.yml` tag 流程自动完成）：`docker build -t <tag> mcp/`。
 
+## 版本语义（F-002 · A-012）
+
+- **有效 server 版本**（`initialize.serverInfo.version`、lifecycle `install`/`upgrade` 写入的版本、
+  `version` 命令）＝发布钉：发布流水线经 Docker build arg
+  `GOAL_GOVERNANCE_MCP_VERSION=<pack/tag 版本>` 写入镜像，镜像内自报版本与
+  GHCR tag / GitHub Release **同源**，不会漂移。
+- **内部布局版本**（`MCP_LAYOUT_VERSION = "0.1.0"`）＝通道协议/布局代际，**不等于**产品
+  release 版本；本地源码 checkout（stdio 进程）未设 `GOAL_GOVERNANCE_MCP_VERSION` 时
+  有效版本回退为该值。`doctor` 报告分列 `server.version`（有效）与
+  `server.layoutVersion`（布局），两者语义不可混用。
+
 ## 四治理入口（工具）
 
 | 工具 | 关键参数 | 层级 | 角色边界 |

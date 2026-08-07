@@ -1,38 +1,55 @@
 / Search (glob)
-  │ "**/prompts/0*.md"
-  └ 8 files found
+  │ "**/skills/**/*.md"
+  └ 67 files found
 
 / Search (glob)
-  │ "skills/**"
-  └ 95 files found
+  │ "**/prompts/*.md"
+  └ 22 files found
 
-● Read 00-govern-orchestrator.md
-  │ skills\prompts\00-govern-orchestrator.md
-  └ L1:60 (60 lines read)
+● Read vision.prompt.md
+  │ .github\prompts\vision.prompt.md
+  └ 45 lines read
+
+● Read audit.prompt.md
+  │ .github\prompts\audit.prompt.md
+  └ 42 lines read
+
+● Read govern.prompt.md
+  │ .github\prompts\govern.prompt.md
+  └ 47 lines read
+
+● Read vision-audit.prompt.md
+  │ .github\prompts\vision-audit.prompt.md
+  └ 28 lines read
 
 ● Read 05-independent-audit.md
   │ skills\prompts\05-independent-audit.md
   └ L1:60 (60 lines read)
 
-● Read 06-vision-orchestrator.md
-  │ skills\prompts\06-vision-orchestrator.md
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
   └ L1:60 (60 lines read)
 
 ● Read 07-independent-vision-review.md
   │ skills\prompts\07-independent-vision-review.md
   └ L1:60 (60 lines read)
 
-核实完成（基于 skills/prompts/ 的四个入口 prompt 与 SKILL 描述，只读）：
+● Read 06-vision-orchestrator.md
+  │ skills\prompts\06-vision-orchestrator.md
+  └ L1:60 (60 lines read)
 
- 1. vision — 决策层入口（P-006）：建修唯一 Charter、VP（组合编排）、Vision Review、strategic
-re-align、结构选型；冷启动优先（Charter→VP 后再交 govern 开区）。不做子目标执行、不改 goal-tree
-进度。
- 2. vision-audit — 愿景交叉审入口：只写独立意见到 docs/vision/reviews.md 索引 +
-reviews/VRev-NNN-*.md 报告；禁止改 Charter / VP / Goal 状态、goal-tree.md、Goal 03-audit。
- 3. govern — 实现层单一主入口：扫描工作区与审计台账 → 意见分类 → P-004 用户裁决 → 提议下一步 →
-确认后调用原语 01–04 写入目标五件套；响应全部审计意见、负责放行/关门。
- 4. audit — Goal 交叉审计入口：只以 source: independent 追加意见到被审目标 03-audit/A-NNN-*.md
-并更新索引；禁止改 status / 检查点 / progress / 方案正文 / goal-tree 状态列。
+L3 抽稀探针完成（只读核对 .github/prompts/*.prompt.md 与 skills/prompts/0X-*.md，未改动任何文件）。
+
+ 1. vision — 决策层：建/修 Charter、VP（组合编排）、Vision
+Review、re-align、结构选型；冷启动优先引导补齐 Charter→VP，再交 /govern 开区。
+ 2. vision-audit — 独立 Vision Review：只写 docs/vision/reviews/VRev-NNN-*.md + reviews.md
+索引（source: independent）；不改 Charter / VP / Goal 状态，不写 Goal 03-audit。
+ 3. govern — 实现编排（主入口）：扫 goal-tree/工作区 + 意见台账 → 分类 → P-004 裁决 → 提议 → 确认 →
+调原语 01–04 写入五件套；不冒充 source: independent。
+ 4. audit — Goal 交叉审计：只写被审目标 03-audit.md 索引 + 03-audit/A-NNN-*.md（source:
+independent）；不改 status/progress/方案正文；不写 vision 台账；响应归 /govern。
+
+Dispatch 与角色边界均与各 prompt frontmatter、role 字段及核心编排文件一致。
 
 COPILOT_L3_FOUR_ENTRY_OK
 

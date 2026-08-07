@@ -1,6 +1,6 @@
 
 
 Changes    +0 -0
-Duration   30s
-Tokens     ↑ 106.1k (68.0k cached) • ↓ 2.1k (1.4k reasoning)
-Resume     copilot --resume=3910db7c-ce09-4474-bc9a-26371516709e
+Duration   45s
+Tokens     ↑ 144.8k (104.4k cached) • ↓ 2.1k (1.1k reasoning)
+Resume     copilot --resume=b6eda1d9-123f-4d8f-9b85-fa66909005fe

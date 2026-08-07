@@ -1,19 +1,13 @@
 Reading prompt from stdin...
-2026-08-07T11:59:30.080945Z ERROR codex_core::tools::router: error=Exit code: 1
-Wall time: 3.6 seconds
+2026-08-07T15:35:29.893503Z ERROR codex_core::tools::router: error=Exit code: 1
+Wall time: 0.7 seconds
 Output:
-rg : 无法将“rg”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。
-所在位置 行:2 字符: 9
-+ $pkg = (rg --files -g '00-govern-orchestrator.md' -g '!node_modules'  ...
-+         ~~
-    + CategoryInfo          : ObjectNotFound: (rg:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
- 
-SKILLS_PKG prompt not found
-所在位置 行:2 字符: 114
-+ ... irst 1); if (-not $pkg) { throw 'SKILLS_PKG prompt not found' }; Writ ...
-+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : OperationStopped: (SKILLS_PKG prompt not found:String) [], RuntimeException
-    + FullyQualifiedErrorId : SKILLS_PKG prompt not found
+Get-Content : 找不到路径“C:\Users\magicvr\.codex\skills\vision-audit\SKILL.md”，因为该路径不存在。
+所在位置 行:2 字符: 1
++ Get-Content -LiteralPath 'C:\Users\magicvr\.codex\skills\vision-audit ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\magicv...-audit\SKILL.md:String) [Get-Content], ItemNotFoundEx 
+   ception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
  
 
