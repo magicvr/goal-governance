@@ -12,7 +12,7 @@ updated: YYYY-MM-DD
 
 # Charter · <项目名>
 
-> 复制为 `docs/vision/charter.md` 后改写。每项目**有且仅有一个**现行 active Charter（单愿景制）。  
+> 复制为 `{governance_root}/vision/charter.md`（默认 `docs/vision/charter.md`）后改写。每项目**有且仅有一个**现行 active Charter（单愿景制）。  
 > 最小完备见 P-006 / alignment。不可使用 Goal 的 `done`。
 
 ## 目的陈述
@@ -48,7 +48,7 @@ updated: YYYY-MM-DD
 ## 与工作区 / VP 的关系
 
 - 本 Charter 是对齐链**源头**；不可 Goal-`done`。
-- 意图落盘为 `docs/vision/plans/VP-*.md`，经 `vision_ref` 对齐本文件版本。
+- 意图落盘为 `{governance_root}/vision/plans/VP-*.md`，经 `vision_ref` 对齐本文件版本。
 - 工作区/Root 挂 `plan_refs` / `primary_plan`；不在此维护 progress%。
 
 ## 现行版本

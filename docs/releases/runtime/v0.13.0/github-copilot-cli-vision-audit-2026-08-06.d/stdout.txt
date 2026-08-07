@@ -1,45 +1,105 @@
-● skill(vision-audit)
-
-I am loading the specified governance sources and the independent-review wrapper/core prompt without
- modifying the worktree.
+I'll perform the read-only Vision Review dispatch discovery. Let me load the governance sources in
+parallel.
 
 ● Read copilot-instructions.md
   │ .github\copilot-instructions.md
-  └ L1:end (299 lines read)
+  └ 1 line read
 
-● Read 07-independent-vision-review.md
-  │ skills\prompts\07-independent-vision-review.md
-  └ L1:end (100 lines read)
-
-● Read reviews.md
-  │ docs\vision\reviews.md
-  └ L1:end (37 lines read)
+● Read AGENTS.md
+  └ 1 line read
 
 ● Read vision-audit.prompt.md
   │ .github\prompts\vision-audit.prompt.md
-  └ L1:end (28 lines read)
+  └ 28 lines read
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ 100 lines read
+
+Now let me read the vision governance files and workspace context.
 
 ● Read charter.md
   │ docs\vision\charter.md
-  └ L1:end (85 lines read)
-
-● Read alignment.md
-  │ docs\vision\alignment.md
-  └ L1:end (250 lines read)
+  └ 85 lines read
 
 ● Read workspace.md
   │ docs\workspace-001-goal-governance\workspace.md
-  └ L1:end (46 lines read)
+  └ 46 lines read
 
-● Read AGENTS.md
-  └ L1:end (269 lines read)
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ 38 lines read
 
-Loaded wrapper: .github/prompts/vision-audit.prompt.md v0.2.0.
-Loaded core prompt: skills/prompts/07-independent-vision-review.md v0.2.0.
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ 252 lines read
 
-Current Charter: vision-goal-governance@0.2.0 (active).
-Workspace workspace-001-goal-governance primary plan: VP-001-governance-platform-delivery (closed).
-Open required Vision findings: 0.
+Now let me read the remaining governance sources (AGENTS.md and copilot-instructions.md key
+sections) and verify the VRev reports directory.
+
+/ Search (grep)
+  │ "vision|VRev|6d|6e|P-006"
+  └ 11 lines found
+
+/ Search (grep)
+  │ "vision|VRev|6d|6e|P-006|vision-audit"
+  └ 26 lines found
+
+/ Search (glob)
+  │ "docs/vision/reviews/*.md"
+  └ 7 files found
+
+Let me verify the open-required finding count by checking the two conditional-verdict VRev reports
+(VRev-002, VRev-007) and confirm the workspace primary_plan chain.
+
+● Read VRev-002-vision-governance-audit-routing.md
+  │ docs\vision\reviews\VRev-002-vision-governance-audit-routing.md
+  └ 73 lines read
+
+● Read VRev-007-vp-004-mcp-file-dual-channel-review.md
+  │ docs\vision\reviews\VRev-007-vp-004-mcp-file-dual-channel-review.md
+  └ 197 lines read
+
+/ Search (grep)
+  │ "required|V-F-|open required"
+  └ 82 lines found
+
+Read-only /vision-audit dispatch complete. All sources loaded from the repository governance root
+(governance_root = docs); no files were written, no VRev appended, no commits/tags created.
+
+Dispatch report
+
+Wrapper prompt (loaded)
+
+ - .github/prompts/vision-audit.prompt.md — role: independent-vision-review, slash /vision-audit,
+v0.2.0 (updated 2026-08-06). Directs loading of the core prompt via SKILLS_PKG and restricts output
+to the Vision Review ledger only.
+
+Core prompt (loaded)
+
+ - skills/prompts/07-independent-vision-review.md — v0.2.0, role: independent-vision-review.
+Confirms source: independent mandate, VRev-only ledger (reviews.md index + reviews/VRev-NNN-*.md),
+prohibition on modifying Charter/VP/Goal status or goal-tree.md, and that required-finding response
+routes to /vision.
+
+Charter version
+
+ - vision-goal-governance@0.2.0 — status: active, effective 2026-07-31 (updated 2026-08-07). Single
+active Charter; no conflicting vision_id.
+
+Workspace primary_plan (workspace-001-goal-governance)
+
+ - vision_role: primary; plan_refs: VP-001-governance-platform-delivery; primary_plan:
+VP-001-governance-platform-delivery. Workspace is archived (foundation sealed; Root done; VP-001
+closed). Per Charter, current active plans are VP-002 (lead workspace-002 · delivery) and VP-004
+(lead workspace-003-mcp-file-dual-channel · delivery).
+
+Open required Vision findings: 0
+
+ - Index shows open required = 0 across VRev-001…007. Required findings V-F-001 (VRev-002) and
+V-F-013 (VRev-007) are legally closed via fixed with in-report responses; all other V-F-002…016 are
+recommended (V-F-010 recommended open, non-blocking). No gate is blocked by open required Vision
+findings.
 
 COPILOT_CLI_VISION_AUDIT_DISPATCH_OK
 

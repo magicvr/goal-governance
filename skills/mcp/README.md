@@ -43,10 +43,14 @@ MCP 客户端配置指向 `python <skills>/mcp/server.py`（stdio）。`tools/li
 
 | 文件 | 内容 |
 |------|------|
-| `server.py` | MCP stdio server（JSON-RPC 2.0 over stdio） |
+| `server.py` | MCP stdio server（JSON-RPC 2.0 over stdio；四治理工具 + install/upgrade/uninstall/doctor） |
 | `entries.py` | 四入口映射纯数据（名称/参数边界/层级/角色边界单一真相源） |
 | `kernel.py` | L2 共享等价内核（10 条检查点 + 两通道描述 + 同断言校验） |
-| `lifecycle.py` / `doctor.py` / `config.py` | **R2/R3 计划落点**（本 R1 版本尚未交付）：install/upgrade/uninstall、doctor、`governance_root` |
+| `lifecycle.py` | 薄壳 lifecycle：managed 标记、allowlist、默认确认写盘、CLI（R2 交付） |
+| `doctor.py` | 只读安装状态报告（含 `governance_root` 解析与错误面）（R2/R3 交付） |
+| `config.py` | `governance_root` 解析：默认 `docs`、`.goal-governance.json` pin、仓外 fail closed（R3 交付） |
+| `governance-root.schema.json` | 项目配置 schema（随包分发） |
+| `gitignore-fragment.txt` | 官方 ignore 片段（薄壳默认 gitignore） |
 
 ## 证据分级与 L3 边界
 

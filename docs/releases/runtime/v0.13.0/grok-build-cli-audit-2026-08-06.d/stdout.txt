@@ -1,20 +1,24 @@
-I'll load the installed audit skill and read the minimum repository sources needed for this read-only dispatch probe—no writes, no subagents, no questions.Next I'll read the independent-audit prompt and GOAL-008's minimum sources for source/status semantics and any required evidence gap.**GROK_AUDIT_DISPATCH_OK**
+I'll load the audit skill and the minimum repository sources needed for this read-only dispatch probe.## Audit dispatch probe (read-only)
 
-### Dispatch probe report
+**GROK_AUDIT_DISPATCH_OK**
 
 | Item | Value |
 |------|--------|
-| **1. Marker** | `GROK_AUDIT_DISPATCH_OK` |
-| **2. Loaded skill** | **Title:** `audit · 独立交叉审计（Grok Build skill）` (`name: audit`) · **Path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md` |
-| **3. Independent-audit prompt** | Named by skill as `<SKILLS_PKG>/prompts/05-independent-audit.md` → resolved **`skills/prompts/05-independent-audit.md`** (prompt title: `提示词 · 独立交叉审计`) |
-| **4. Source / status semantics** | Audit `source` **must** be `independent`. Default is write-only opinion to `03-audit` ledger; **must not** change goal `status` / checkpoints / derived `progress` / plan body / goal-tree state. Verdict scale: `pass` \| `conditional` \| `fail`. Findings use `required` \| `recommended`. |
+| **Loaded skill title** | `audit · 独立交叉审计（Grok Build skill）` (`name: audit`) |
+| **Actual source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md` |
+| **Independent-audit prompt path** | `skills/prompts/05-independent-audit.md` (skill step 2: `<SKILLS_PKG>/prompts/05-independent-audit.md`) |
+
+### Required source / status semantics
+
+From the loaded skill and `05-independent-audit.md`:
+
+- **`source`**: must be `independent` (not orchestrator / self).
+- **Status posture**: write audit opinion only to the target audit ledger; **do not** change goal `status`, checkpoints, derived `progress`, plan body, or goal-tree status columns (unless the user explicitly authorizes “边审边改” in-session; default refuse).
+- **Finding severity levels**: findings use `required` \| `recommended`; open **required** items block the corresponding gate / close-out until legally closed.
 
 ### One current required evidence gap (GOAL-008)
 
-GOAL-008 is closed historically as `done / 100%` for annotated **`v0.7.0`** (I-001–I-003 verified in the close-out ledger).
+Historical close-out for `v0.7.0` is `done / 100%` (A-016). After GOAL-010 behavior-source changes, the **current unreleased candidate** still has a required runtime gap:
 
-**Current gap (post-close, unreleased candidate):** after GOAL-010 behavior-source changes, the current matrix is `candidateRevision: unreleased` with six host cells (`Claude` / `Grok` / `Copilot` × `/govern` + `/audit`) in **`pending-runtime-validation`**. Fresh authorized host runtime replays (and release-bound evidence) are still required before any later candidate may be claimed runtime-verified or release-ready; `v0.7.0` JSON must not be reused for the changed sources.
-
----
-
-*Probe mode: read-only only. No audit append, no file writes, no subagents, no user questions.*
+- Compatibility matrix cells for Claude / Grok / Copilot `/govern` and `/audit` are **`pending-runtime-validation`** (`candidateRevision: unreleased`).
+- Fresh authorized host runtime evidence is required before that candidate may be claimed runtime-verified or release-ready (stated in `00-meta.md` “当前未发布候选的复核边界” and A-017).

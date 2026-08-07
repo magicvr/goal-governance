@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-08-06
+updated: 2026-08-07
 parent: null
-version: 0.12.0
+version: 0.13.0
 ---
 
 # AGENTS.md
@@ -17,16 +17,18 @@ version: 0.12.0
 
 ## 1. 文档真相来源
 
+> **治理根（`governance_root`，默认 `docs`）**：本表与正文中 `docs/…` 路径叙述均相对治理根；消费仓可通过可提交项目配置 `.goal-governance.json` 的 `governance_root` 改为其他仓库内相对根，根下内部相对布局不可改、仓外 fail closed（细则见 `docs/architecture/workspace-protocol.md` 与 `docs/vision/alignment.md`）。本 monorepo 生产仓固定 `governance_root = docs`。
+
 | 内容 | 路径 | 要求 |
 |------|------|------|
 | 目标与过程记录 | `<workspace-root>/` | 唯一长期存储 |
 | 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
-| 仓库愿景体系 | `docs/vision/` | **完整安装必备**；**单愿景** Charter→VP→工作区；**不是** goal-tree / progress 权威 |
-| 架构约定 | `docs/architecture/` | **与 Skills 同级必备**（消费方 install 默认安装） |
-| 治理原则 | `docs/architecture/principles.md` | **必备**；P-001～P-006 全文；AGENTS §6/6b/6d/6e 为操作摘要 |
-| 文档使用规范 | `docs/README.md` | **必备**（消费方为精简入口） |
-| 核心方法论与模板 | `docs/templates/` | **必备**（消费方 install 默认安装）；canonical 模板优先 |
-| 工作区与共享资料协议 | `docs/workspace-<NNN>-<slug>/workspace.md`、`docs/architecture/workspace-protocol.md` | workspace 存在时必读；protocol **必备**；目标状态仍以 `<workspace-root>/` 为准 |
+| 仓库愿景体系 | `{governance_root}/vision/` | **完整安装必备**；**单愿景** Charter→VP→工作区；**不是** goal-tree / progress 权威 |
+| 架构约定 | `{governance_root}/architecture/` | **与 Skills 同级必备**（消费方 install 默认安装） |
+| 治理原则 | `{governance_root}/architecture/principles.md` | **必备**；P-001～P-006 全文；AGENTS §6/6b/6d/6e 为操作摘要 |
+| 文档使用规范 | `{governance_root}/README.md` | **必备**（消费方为精简入口） |
+| 核心方法论与模板 | `{governance_root}/templates/` | **必备**（消费方 install 默认安装）；canonical 模板优先 |
+| 工作区与共享资料协议 | `{governance_root}/workspace-<NNN>-<slug>/workspace.md`、`{governance_root}/architecture/workspace-protocol.md` | workspace 存在时必读；protocol **必备**；目标状态仍以 `<workspace-root>/` 为准 |
 
 冲突时以 `<workspace-root>/` 与本文件为准。目标状态**永不**以 `docs/vision/` 为准。
 
@@ -195,16 +197,16 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 ## 6d. 愿景体系（单愿景 · Charter → VP → Workspace）
 
-**完整安装必有**现行 `docs/vision/charter.md`（`status: active`）。缺省 = **不完整安装**：仅允许引导补齐；拒绝非引导开区/推进/放行/关门。
+**完整安装必有**现行 `{governance_root}/vision/charter.md`（`status: active`）。缺省 = **不完整安装**：仅允许引导补齐；拒绝非引导开区/推进/放行/关门。
 
 1. **单愿景制**：每项目有且仅有一个现行 Charter；禁止多愿景。换代用 `superseded`，不是第二北极星。
 2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 plan）→ 区内纲领路线图/子目标。
-3. **先读** Charter 与 `docs/vision/alignment.md`（或 consumer-checklist），再定位工作区与推进目标。
+3. **先读** Charter 与 `{governance_root}/vision/alignment.md`（或 consumer-checklist），再定位工作区与推进目标。
 4. **对齐递归**：子目标→父目标→Root→VP→Charter（源头）。机读字段链 + 语义不与上一级边界/非目标明显冲突。
 5. **所有工作区**必须 `plan_refs` + `primary_plan`；当前规范角色仅 `primary` / `delivery`，不存在 plan opt-out。
 6. 缺 plan、VP 缺失、或 `vision_ref` 与 charter 版本不一致 → **fail closed**。
-7. `docs/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 由 `docs/vision/reviews.md` 稳定索引与 `docs/vision/reviews/VRev-NNN-<slug>.md` 平铺报告共同构成。legacy inline 继续可读；新条目写报告并更新索引。
-8. 细则：`docs/vision/alignment.md`；原则全文 **P-006**；协议摘要：`docs/architecture/workspace-protocol.md` §4b。
+7. `{governance_root}/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 由 `{governance_root}/vision/reviews.md` 稳定索引与 `{governance_root}/vision/reviews/VRev-NNN-<slug>.md` 平铺报告共同构成。legacy inline 继续可读；新条目写报告并更新索引。
+8. 细则：`{governance_root}/vision/alignment.md`；原则全文 **P-006**；协议摘要：`docs/architecture/workspace-protocol.md` §4b。
 
 ## 6e. 级联流程、结构选型与分层审视（P-006 操作摘要）
 
@@ -406,6 +408,6 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 - 目标树：`<workspace-root>/goal-tree.md`
 - Root Goal：`<workspace-root>/GOAL-001-<your-slug>/00-meta.md`
-- 治理原则：AGENTS 第 6 / 6b / 6d / 6e 节；`docs/architecture/principles.md`（必备，P-001～P-006 全文）
-- 愿景对齐：`docs/vision/alignment.md`；审视台账：`docs/vision/reviews.md`
+- 治理原则：AGENTS 第 6 / 6b / 6d / 6e 节；`{governance_root}/architecture/principles.md`（必备，P-001～P-006 全文）
+- 愿景对齐：`{governance_root}/vision/alignment.md`；审视台账：`{governance_root}/vision/reviews.md`
 - Skills 镜像 stage（本仓）：`scripts/stage_skills_mirrors.py`；说明见 §8c 与 `docs/README.md`

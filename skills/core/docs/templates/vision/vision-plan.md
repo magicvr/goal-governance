@@ -12,7 +12,7 @@ version: 0.1.0
 
 # VP-001 · <意图标题>
 
-> 复制为 `docs/vision/plans/VP-NNN-slug.md`（文件名 = `id`）。  
+> 复制为 `{governance_root}/vision/plans/VP-NNN-slug.md`（默认 `docs/vision/plans/…`；文件名 = `id`）。  
 > **意图**的权威落盘；工作区 `primary_plan` 只能引用已存在的本类文件。
 
 ## 意图

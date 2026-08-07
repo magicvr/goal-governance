@@ -15,9 +15,11 @@ parent: null
 
 ## 0. 不变量与完整安装
 
+> **治理根（`governance_root`）**：本文件及权威面（AGENTS/architecture/templates）中所有 `docs/…` 路径叙述**均相对治理根**，默认 **`docs`**。消费仓可通过可提交项目配置 **`.goal-governance.json`** 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspace-*`、`goal-tree.md`、目标五件套形状、`contracts/` 等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
+
 ### 0.1 单愿景制
 
-1. **每一个项目**（一次完整治理安装）**有且仅有一个**现行愿景：`docs/vision/charter.md` 且 `status: active`。
+1. **每一个项目**（一次完整治理安装）**有且仅有一个**现行愿景：`{governance_root}/vision/charter.md` 且 `status: active`。
 2. **禁止多愿景**（并行多个 active 北极星或多个争用的 `vision_id`）。
 3. 不同项目可以有不同愿景——那是**独立治理实例**，不是本项目内多愿景。
 4. **换代**：旧 Charter 仅 `superseded`；现行对齐只认唯一 active；历史 `vision_ref` 可只读。
@@ -38,25 +40,25 @@ parent: null
 | 层级 | 路径 / 条件 | 级别 | 说明 |
 |------|-------------|------|------|
 | 规则入口 | 根 `AGENTS.md`（或项目声明的等价 AI 规则） | **MUST** | 操作摘要；全文原则仍以 architecture 为准 |
-| 文档入口 | `docs/README.md` | **MUST** | 核心文档索引 |
-| 方法论 | `docs/architecture/principles.md` | **MUST** | P-001～P-006 全文 |
-| 方法论 | `docs/architecture/workspace-protocol.md` | **MUST** | 工作区/资料协议 |
-| 模板 | `docs/templates/goal-folder/`（五件套 + `attachments/`） | **MUST** | canonical 目标模板 |
-| 模板 | `docs/templates/workspace-context.md` | **MUST** | 工作区页模板 |
-| 模板 | `docs/templates/vision/charter.md`、`vision-plan.md`、`reviews-index.md`、`review.md` | **MUST** | 冷启动与 Vision Review 复制源 |
-| 契约（若分发消费适配器） | `docs/contracts/` 消费契约文件 | **MUST**（有 Skills/Web 分发时） | 纯文档-only 仓可无，但不得假装已装适配器契约 |
-| 愿景规则 | `docs/vision/alignment.md` | **MUST** | 本文件；规则权威 |
-| 愿景入口 | `docs/vision/README.md` | **MUST** | 目录地图与硬边界 |
-| 愿景实例 | `docs/vision/charter.md`（`status: active`） | **MUST** | 单愿景；缺 = 不完整 |
-| 愿景树 | `docs/vision/roadmap.md` | **MUST** | 组合编排索引（可极简，但文件必须存在） |
-| 愿景树 | `docs/vision/revisions.md` | **MUST** | Charter 修订台账（可极简） |
-| 愿景树 | `docs/vision/reviews.md` | **MUST** | Vision Review 稳定索引；报告在 `reviews/VRev-NNN-*.md`（有条目时创建目录） |
-| 愿景树 | `docs/vision/workspaces.md` | **MUST** | 工作区贡献图（可极简） |
-| 愿景树 | `docs/vision/consumer-checklist.md` | **MUST** | 与本表一致的操作勾选 |
-| 意图 | 至少一个 `docs/vision/plans/VP-*.md` | **MUST**（开区前） | `vision_ref` 精确匹配 Charter |
-| 工作区 | 显式 `docs/workspace-<NNN>-<slug>/workspace.md` | **MUST**（开区后） | 含必填 `plan_refs` / `primary_plan` |
+| 文档入口 | `{governance_root}/README.md` | **MUST** | 核心文档索引 |
+| 方法论 | `{governance_root}/architecture/principles.md` | **MUST** | P-001～P-006 全文 |
+| 方法论 | `{governance_root}/architecture/workspace-protocol.md` | **MUST** | 工作区/资料协议 |
+| 模板 | `{governance_root}/templates/goal-folder/`（五件套 + `attachments/`） | **MUST** | canonical 目标模板 |
+| 模板 | `{governance_root}/templates/workspace-context.md` | **MUST** | 工作区页模板 |
+| 模板 | `{governance_root}/templates/vision/charter.md`、`vision-plan.md`、`reviews-index.md`、`review.md` | **MUST** | 冷启动与 Vision Review 复制源 |
+| 契约（若分发消费适配器） | `{governance_root}/contracts/` 消费契约文件 | **MUST**（有 Skills/Web 分发时） | 纯文档-only 仓可无，但不得假装已装适配器契约 |
+| 愿景规则 | `{governance_root}/vision/alignment.md` | **MUST** | 本文件；规则权威 |
+| 愿景入口 | `{governance_root}/vision/README.md` | **MUST** | 目录地图与硬边界 |
+| 愿景实例 | `{governance_root}/vision/charter.md`（`status: active`） | **MUST** | 单愿景；缺 = 不完整 |
+| 愿景树 | `{governance_root}/vision/roadmap.md` | **MUST** | 组合编排索引（可极简，但文件必须存在） |
+| 愿景树 | `{governance_root}/vision/revisions.md` | **MUST** | Charter 修订台账（可极简） |
+| 愿景树 | `{governance_root}/vision/reviews.md` | **MUST** | Vision Review 稳定索引；报告在 `reviews/VRev-NNN-*.md`（有条目时创建目录） |
+| 愿景树 | `{governance_root}/vision/workspaces.md` | **MUST** | 工作区贡献图（可极简） |
+| 愿景树 | `{governance_root}/vision/consumer-checklist.md` | **MUST** | 与本表一致的操作勾选 |
+| 意图 | 至少一个 `{governance_root}/vision/plans/VP-*.md` | **MUST**（开区前） | `vision_ref` 精确匹配 Charter |
+| 工作区 | 显式 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` | **MUST**（开区后） | 含必填 `plan_refs` / `primary_plan` |
 | 目标 | 工作区根 `goal-tree.md` + Root 五件套 | **MUST**（开区后） | Root `parent: null` |
-| 方法论（可选扩展） | `docs/architecture/overview.md`、`directory-layout.md` 等 | Recommended | 增强可读性，不替代 MUST |
+| 方法论（可选扩展） | `{governance_root}/architecture/overview.md`、`directory-layout.md` 等 | Recommended | 增强可读性，不替代 MUST |
 | 实例 dogfood | 他仓过程树、本仓历史 GOAL 附件 | 勿复制 | 不是完整安装条件 |
 
 **半安装**：仅有 architecture/templates、无 Charter 或无上表愿景树 MUST 文件 → 只可读原则，**不得**记为完整独立启用通过，也不得非引导推进/放行/关门。
@@ -79,7 +81,7 @@ parent: null
 | Vision Plan (`doc_type: vision-plan`) | `planned` \| `active` \| `closed` \| `abandoned` | Goal 的 `done` 作 VP status；完整五件套；progress% 权威 |
 | 工作区目标 | 既有 Goal status | 把 vision/VP 目录当目标父节点；跨区 `parent` |
 
-Charter **没有 canonical `draft` 状态**：尚不满足最小完备或尚未获用户确认的草案只能留在会话/提案中，不得占用现行 `docs/vision/charter.md`。`active` Charter 可以显式登记战略假设/未知；若某项影响“方向已稳”，在 verified 或合规 residual 前不得作该宣称（见 P-006 §6.5）。
+Charter **没有 canonical `draft` 状态**：尚不满足最小完备或尚未获用户确认的草案只能留在会话/提案中，不得占用现行 `{governance_root}/vision/charter.md`。`active` Charter 可以显式登记战略假设/未知；若某项影响“方向已稳”，在 verified 或合规 residual 前不得作该宣称（见 P-006 §6.5）。
 
 愿景体系**不是**第二套目标状态源；不汇总各区 progress，不关闭 Goal finding。
 
@@ -116,7 +118,7 @@ Workspace + Root Goal
 |------|------|
 | `vision_role` | `primary` \| `delivery` |
 | `plan_refs` | **必填**，至少一个 VP id；多个用逗号分隔 |
-| `primary_plan` | **必填**，且必须 ∈ `plan_refs`；对应 `docs/vision/plans/<id>.md` |
+| `primary_plan` | **必填**，且必须 ∈ `plan_refs`；对应 `{governance_root}/vision/plans/<id>.md` |
 
 - **无 plan opt-out**：任何工作区都不得省略 `plan_refs` / `primary_plan`；`vision_role` 仅允许 `primary` / `delivery`。
 - 至多一个工作区 `vision_role: primary`（与 [workspaces.md](workspaces.md) 一致）。
@@ -137,7 +139,7 @@ Primary 可能出现在三处：`workspace.md` 的 `vision_role: primary`、[wor
 ## 4. Root Goal 声明
 
 Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，以及简短 `serves_summary`（frontmatter 或「愿景对齐」节）。  
-`primary_plan` 必须能解析为 `docs/vision/plans/<id>.md`（id 与文件名一致）。
+`primary_plan` 必须能解析为 `{governance_root}/vision/plans/<id>.md`（id 与文件名一致）。
 
 ## 5. VP 与工作区绑定
 
@@ -217,7 +219,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 3. 索引与报告共同构成唯一正式台账；写入必须同时创建报告和更新索引。编号扫描合并 legacy inline 与目录报告后取最大值 +1。
 4. finding 响应由 `/vision` 追加在原 VRev 报告中，保留原 verdict 与 finding 原文；索引 `open required` 随合法闭合证据更新。
 5. legacy inline VRev 继续有效。兼容 reader 合并读取；达到 32 KiB、800 行、12 条记录任一阈值后，下一条必须写入目录。迁移不得重编号、改变历史语义或丢失响应。
-6. 全新安装从第一条 VRev 起使用目录报告；模板见 `docs/templates/vision/reviews-index.md` 与 `review.md`。
+6. 全新安装从第一条 VRev 起使用目录报告；模板见 `{governance_root}/templates/vision/reviews-index.md` 与 `review.md`。
 
 ### 9.2 工具入口（与 Goal 台账分界）
 
@@ -225,7 +227,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 |------|--------|----------|
 | **`/vision`** | self Vision Review → VRev 报告 + 索引；在原报告追加 finding 响应；Charter / VP / 组合编排 / re-align 决策 | Goal `03-audit`；不推进子目标执行；不改写原审计结论 |
 | **`/vision-audit`** | independent Vision Review → VRev 报告 + `reviews.md` 索引（`source: independent`） | 不改 Charter / VP / Goal status；不自行闭合 finding |
-| **`/audit`** | Goal `03-audit` independent | **禁止**写入 `docs/vision/reviews.md` |
+| **`/audit`** | Goal `03-audit` independent | **禁止**写入 `{governance_root}/vision/reviews.md` |
 | **`/govern`** | 实现层推进与 Goal finding 响应 | 无 Charter 时不得假装完整推进 |
 
 独立愿景审视**必须**走 `/vision-audit`；Goal 交叉审计走 `/audit`。两台账不得混写。
@@ -237,7 +239,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 ## 11. 引用格式
 
 - 愿景：`{vision_id}@{version}`，例 `vision-goal-governance@0.1.0`
-- 规划：`VP-NNN-slug`，路径 `docs/vision/plans/VP-NNN-slug.md`
+- 规划：`VP-NNN-slug`，路径 `{governance_root}/vision/plans/VP-NNN-slug.md`
 - Review：`VRev-00N`
 
 ## 12. 非目标（本契约 v1）

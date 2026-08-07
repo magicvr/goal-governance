@@ -18,7 +18,7 @@ progress: 100%
 
 在 `workspace-003-mcp-file-dual-channel` 的 Root `GOAL-001-mcp-file-dual-channel-delivery` 下，推进 VP-004 的 R1 阶段。目标是先把 MCP 通道的最小运行形态与四治理入口映射讲清，再建立 `deliveryChannel: files | mcp` 的合同分列、File/MCP 分通道 L1 证据与共享 L2 fixture/断言内核。
 
-R1 方案已冻结（D-002/D-003/D-004）且实现已落盘（`skills/mcp/` + 合同分列 + L2/L1 测试）；C1–C3 完成，C4（self + independent 审计闭合）进行中。
+R1 方案已冻结（D-002/D-003/D-004）且实现已落盘（`skills/mcp/` + 合同分列 + L2/L1 测试）；C1–C4 全部闭合，本目标 `done`（100%）。
 
 ## 成功标准（R1 子目标检查点）
 

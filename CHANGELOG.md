@@ -4,7 +4,14 @@
 
 ## Unreleased
 
-暂无。
+（workspace-003 / VP-004：双通道交付与可配置治理根。正式发布身份仍以 annotated tag + release evidence 为准。）
+
+### 消费交付双通道（MCP + File）与可配置治理根
+
+- **R1 等价内核**：`skills/mcp/` MCP stdio server（四治理入口工具 `vision`/`vision-audit`/`govern`/`audit`，`commit` 不入集）+ L2 共享等价内核（VP-004 十条检查点）；合同 `deliveryChannel: files | mcp` 分列（`contractFormatVersion` 0.4.0）；L1 分列测试 + 四宿主 L3 抽稀探针。
+- **R2 产品化**：bootstrap 双入口（`-Channel files|mcp`，推荐 MCP 同屏声明 File 仍一等）；薄壳 lifecycle（managed 标记、allowlist、默认确认写盘）；`doctor` + 官方 gitignore 片段。
+- **R3 可配置治理根**：`governance_root` 解析（默认 `docs`，`.goal-governance.json` pin，仓外 fail closed，内部布局冻结）；canonical 权威面（alignment / workspace-protocol / 根 AGENTS / templates / consumer-checklist / standalone-bootstrap）路径叙述相对化；AGENTS.md 版本 0.12.0 → 0.13.0（独立于发布版本演进）。
+- v0.13.0 runtime evidence 因 AGENTS.md 行为源变更于 2026-08-07 整批刷新（12 单元仍全 `runtime-verified`）。
 
 最新正式版本为 **0.13.0** / `v0.13.0`。
 

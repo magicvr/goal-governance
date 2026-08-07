@@ -5,7 +5,7 @@ status: active
 parent: null
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 审计 · GOAL-001
@@ -16,8 +16,8 @@ version: 0.3.0
 
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
-| 影响本 scope 的 I-00N | I-001/I-002/I-004 closed；I-003 open（R3 用，不阻断 R1） | 见 00-meta 信息表 |
-| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1 纲领阶段已关门（A-003） |
+| 影响本 scope 的 I-00N | I-001/I-002/I-004 closed；I-003 open（R3 用，不阻断） | 见 00-meta 信息表 |
+| 到期 required 是否已 verified / residual | 无到期未关闭 required | R1/R2 纲领阶段已关门（A-003/A-005） |
 | 资料引用（若有）是否固定且用户确认 | 无 | 表空 |
 
 ## 意见台账索引
@@ -27,7 +27,9 @@ version: 0.3.0
 | A-001 | 2026-08-07 | self | R1 阶段门禁（Root 视角） | pass | 0 | `03-audit/A-001-r1-gate-self.md` |
 | A-002 | 2026-08-07 | independent | R1 门禁独立核验（grok build / grok-4.5 / high） | pass | 0 | `03-audit/A-002-independent-r1.md` |
 | A-003 | 2026-08-07 | self | R1 纲领阶段关门审计 | pass | 0 | `03-audit/A-003-r1-phase-close-self.md` |
+| A-004 | 2026-08-07 | independent | R2 门禁独立核验（grok build / grok-4.5 / high） | pass | 0 | `03-audit/A-004-independent-r2-gate.md` |
+| A-005 | 2026-08-07 | self | R2 纲领阶段关门审计与响应 | pass | 0 | `03-audit/A-005-r2-phase-close-self.md` |
 
 ## 结论状态
 
-R1 纲领阶段关门审计通过（无 required findings）；R2/R3 阶段门禁在对应子目标立项后审计。独立意见不直接改 `status` / `progress`。
+R1/R2 纲领阶段关门审计通过（无 required findings）；R3（GOAL-004）推进中，宿主退出与最终关门审计在其后执行。独立意见不直接改 `status` / `progress`。

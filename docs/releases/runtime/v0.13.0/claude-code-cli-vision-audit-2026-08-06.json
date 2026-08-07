@@ -1,114 +1,110 @@
 {
-    "schemaId":  "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
-    "format":  "goal-governance.host-runtime-evidence",
-    "formatVersion":  "1.0.0",
-    "capturedAt":  "2026-08-06T02:57:14.695514Z",
-    "unit":  {
-                 "consumer":  "claude-code-cli",
-                 "entrypoint":  "vision-audit",
-                 "protocolVersion":  "0.1.0"
-             },
-    "environment":  {
-                        "product":  "Claude Code CLI",
-                        "version":  "2.1.223",
-                        "platform":  "Windows-10-10.0.26200-SP0",
-                        "provider":  null,
-                        "model":  null
-                    },
-    "behaviorSources":  [
-                            {
-                                "path":  ".claude/skills/vision-audit/SKILL.md",
-                                "sha256":  "3da43f9c3963e5922a8b4b5dd0f403a11a2f96180da68938ff698084aad34ad2"
-                            },
-                            {
-                                "path":  "skills/install/claude/skills/vision-audit/SKILL.md",
-                                "sha256":  "3da43f9c3963e5922a8b4b5dd0f403a11a2f96180da68938ff698084aad34ad2"
-                            },
-                            {
-                                "path":  "skills/prompts/07-independent-vision-review.md",
-                                "sha256":  "1f08232d9b03d38c909827d96d0f25757401ce0911edfe08a7959a9f5314f5ca"
-                            },
-                            {
-                                "path":  "AGENTS.md",
-                                "sha256":  "f6e2982be48672dddad96c3fc88b15515b8110493aadfd3d961ef76fc8c1e177"
-                            }
-                        ],
-    "invocation":  {
-                       "command":  [
-                                       "cmd.exe",
-                                       "/d",
-                                       "/s",
-                                       "/c",
-                                       "claude -p --no-session-persistence --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 12"
-                                   ],
-                       "cwd":  ".",
-                       "timeoutSeconds":  240.0,
-                       "inputSha256":  "ac930cbb046e3e2eadc55fe6dd819e08da086aea741b979d127a2f8737c6be93",
-                       "inputSummary":  "Read-only /vision-audit dispatch probe requiring marker CLAUDE_VISION_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
-                   },
-    "result":  {
-                   "exitCode":  0,
-                   "verdict":  "pass",
-                   "marker":  "CLAUDE_VISION_AUDIT_DISPATCH_OK",
-                   "markerObserved":  true,
-                   "assertionPolicy":  "marker+entrypoint+nontrivial-stdout@1",
-                   "assertions":  [
-                                      {
-                                          "id":  "dispatch-marker",
-                                          "kind":  "substring",
-                                          "pattern":  "CLAUDE_VISION_AUDIT_DISPATCH_OK",
-                                          "bound":  {
-                                                        "entrypoint":  "vision-audit",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      },
-                                      {
-                                          "id":  "entrypoint-token",
-                                          "kind":  "substring",
-                                          "pattern":  "vision-audit",
-                                          "bound":  {
-                                                        "entrypoint":  "vision-audit",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      },
-                                      {
-                                          "id":  "nontrivial-stdout",
-                                          "kind":  "min-extra-bytes",
-                                          "pattern":  "CLAUDE_VISION_AUDIT_DISPATCH_OK",
-                                          "minExtraBytes":  16,
-                                          "bound":  {
-                                                        "entrypoint":  "vision-audit",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      },
-                                      {
-                                          "id":  "extra-assert-1",
-                                          "kind":  "substring",
-                                          "pattern":  "vision-audit",
-                                          "bound":  {
-                                                        "entrypoint":  "vision-audit",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      }
-                                  ],
-                   "stdoutPath":  "docs/releases/runtime/v0.13.0/claude-code-cli-vision-audit-2026-08-06.d/stdout.txt",
-                   "stdoutSha256":  "bf2913b5d8653f590bbd5d75f4bcff25270ea94252aef13efa8e35e08b6b7c98",
-                   "stdoutMode":  "claude-stream-json-sanitized",
-                   "stderrPath":  "docs/releases/runtime/v0.13.0/claude-code-cli-vision-audit-2026-08-06.d/stderr.txt",
-                   "stderrSha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-                   "stderrMode":  "raw",
-                   "warnings":  [
-
-                                ],
-                   "reason":  "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
-               },
-    "artifacts":  {
-                      "screenshots":  [
-
-                                      ]
-                  }
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-07T12:53:54.771802Z",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "vision-audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.223",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": ".claude/skills/vision-audit/SKILL.md",
+      "sha256": "3da43f9c3963e5922a8b4b5dd0f403a11a2f96180da68938ff698084aad34ad2"
+    },
+    {
+      "path": "skills/install/claude/skills/vision-audit/SKILL.md",
+      "sha256": "3da43f9c3963e5922a8b4b5dd0f403a11a2f96180da68938ff698084aad34ad2"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "1f08232d9b03d38c909827d96d0f25757401ce0911edfe08a7959a9f5314f5ca"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "449cd56696fe09a1a63bcbf40feddde74e106866ca79ef1230d9d6599023a7eb"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "cmd.exe",
+      "/d",
+      "/s",
+      "/c",
+      "claude -p --no-session-persistence --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 12"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240,
+    "inputSha256": "ac930cbb046e3e2eadc55fe6dd819e08da086aea741b979d127a2f8737c6be93",
+    "inputSummary": "Read-only /vision-audit dispatch probe requiring marker CLAUDE_VISION_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "CLAUDE_VISION_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "CLAUDE_VISION_AUDIT_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "CLAUDE_VISION_AUDIT_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.0/claude-code-cli-vision-audit-2026-08-06.d/stdout.txt",
+    "stdoutSha256": "1c2413291f1540ba5f3a45dcc9f4869a87f7866d3ba065a840fc0dd801eaf4eb",
+    "stdoutMode": "claude-stream-json-sanitized",
+    "stderrPath": "docs/releases/runtime/v0.13.0/claude-code-cli-vision-audit-2026-08-06.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
 }

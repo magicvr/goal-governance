@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 try:  # package context
+    from .config import GovernanceRootError, resolve_governance_root
     from .lifecycle import (
         INSTALL_JSON,
         MANAGED_BEGIN,
@@ -16,6 +17,10 @@ try:  # package context
         read_install_state,
     )
 except ImportError:  # plain script / top-level module context
+    from config import (  # type: ignore[no-redef]
+        GovernanceRootError,
+        resolve_governance_root,
+    )
     from lifecycle import (  # type: ignore[no-redef]
         INSTALL_JSON,
         MANAGED_BEGIN,
@@ -26,15 +31,23 @@ except ImportError:  # plain script / top-level module context
     )
 
 
-def doctor(root: Path, *, governance_root: str = "docs") -> dict[str, Any]:
+def doctor(root: Path, *, governance_root: str | None = None) -> dict[str, Any]:
     """Return a structured installation status for a consumer repository.
 
-    Never writes. Reports: managed section presence/version, thin-shell state
-    consistency, gitignore coverage of the thin shell, governance root, and
-    contract presence. ``ok`` is True only when the managed section and thin
-    shell agree on the installed version.
+    Never writes. Reports: governance root (resolved from project config,
+    fail-closed), managed section presence/version, thin-shell state
+    consistency, gitignore coverage of the thin shell, and contract presence.
+    ``ok`` is True only when the managed section and thin shell agree on the
+    installed version.
     """
     root = root.resolve()
+    root_error: str | None = None
+    if governance_root is None:
+        try:
+            governance_root = resolve_governance_root(root)
+        except GovernanceRootError as error:
+            root_error = str(error)
+            governance_root = "docs"
     agents_path = root / "AGENTS.md"
     agents_text = agents_path.read_text(encoding="utf-8") if agents_path.is_file() else ""
     has_begin = MANAGED_BEGIN in agents_text
@@ -68,6 +81,8 @@ def doctor(root: Path, *, governance_root: str = "docs") -> dict[str, Any]:
         )
 
     issues: list[str] = []
+    if root_error:
+        issues.append(f"governance_root resolution failed: {root_error}")
     if not has_begin or not has_end:
         issues.append("AGENTS.md managed section missing or malformed")
     if state_error:
@@ -82,6 +97,7 @@ def doctor(root: Path, *, governance_root: str = "docs") -> dict[str, Any]:
     return {
         "ok": not issues,
         "governanceRoot": governance_root,
+        "governanceRootError": root_error,
         "managedSection": {
             "present": has_begin and has_end,
             "version": managed_version,
