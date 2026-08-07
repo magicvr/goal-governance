@@ -78,6 +78,9 @@ jobs:
           python scripts/stage_skills_mirrors.py
           python scripts/stage_skills_mirrors.py --check
 
+      - name: Install check dependencies
+        run: python -m pip install -r scripts/requirements.txt
+
       # M-001 (A-016): the L3 host-evidence ledger must match the current tree
       # before anything ships; a stale behavior source fails the pack job.
       - name: Evidence consistency gate (M-001)
