@@ -132,7 +132,7 @@ version: 1.4.0
 
 | 项 | 来源 | 触发 |
 |----|------|------|
-| `governance_root≠docs` 消费场景 e2e | GOAL-006 F-003 / A-001 R-002 | VP-002 推进（用户选拍） |
+| ~~`governance_root≠docs` 消费场景 e2e~~ | GOAL-006 F-003 / A-001 R-002 | **已执行**（2026-08-08，E-006/A-004：`ConsumerSurfaceE2ETests` 3 条，242 测试绿） |
 | 新反馈波次 → GOAL-007 | VP-002 意图（真实项目/消费方反馈） | 用户提交新问题 |
 | Codex 矩阵 committed | GOAL-002 I-003 | 发版宣称前另决 |
 | matrix candidateRevision 刷新 | GOAL-006 R-001 | 下一次 release 轮 |

@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import pathlib
 import re
+import tempfile
 import unittest
+from pathlib import Path
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 SKILLS = REPO_ROOT / "skills"
@@ -155,6 +157,100 @@ class ConsumerSurfaceRelativeizationTests(unittest.TestCase):
                         pattern.search(text),
                         f"protocol-semantic prefix must stay relativeized (R-001): {prefix}",
                     )
+
+
+class ConsumerSurfaceE2ETests(unittest.TestCase):
+    """F-003: governance_root != docs consumer-scenario e2e.
+
+    Materializes a simulated consumer repo whose governance root is a non-docs
+    directory, installs the distributed surface (AGENTS template pinned at
+    install time, SKILL.md shells), and asserts every rule path reference
+    reads under the configured root with no docs/ leakage.
+    """
+
+    NON_DOCS_ROOT = "governance"  # non-default governance root for the scenario
+
+    @staticmethod
+    def _materialize_consumer(tmp: Path) -> Path:
+        consumer = tmp / "consumer"
+        (consumer / "governance").mkdir(parents=True)
+        # Governance root config (R3 machinery): non-docs root.
+        (consumer / ".goal-governance.json").write_text(
+            '{"governance_root": "governance"}\n', encoding="utf-8"
+        )
+        # AGENTS.md: template copy with {{GOVERNANCE_ROOT}} pinned to the
+        # consumer's actual root at install time (D-001 A+C).
+        template = (SKILLS / "AGENTS.template.md").read_text(encoding="utf-8")
+        agents = template.replace("{{GOVERNANCE_ROOT}}", ConsumerSurfaceE2ETests.NON_DOCS_ROOT)
+        (consumer / "AGENTS.md").write_text(agents, encoding="utf-8")
+        # Installed shells: prompts condensation with the literal placeholder.
+        for name in ("govern", "audit", "vision", "vision-audit"):
+            shell = (
+                SKILLS / "install" / "claude" / "skills" / name / "SKILL.md"
+            ).read_text(encoding="utf-8")
+            dest = consumer / "governance" / "skills" / name / "SKILL.md"
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_text(shell, encoding="utf-8")
+        return consumer
+
+    @staticmethod
+    def _path_references(text: str) -> list[str]:
+        """Extract backticked path-like references (relative root paths)."""
+        return [
+            token.strip("`").strip()
+            for token in re.findall(r"`([^`]+)`", text)
+            if re.match(r"^(?:governance|\{governance_root\})/", token)
+        ]
+
+    def test_pinned_agents_reads_paths_under_non_docs_root(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-e2e-agents-") as tmp:
+            consumer = self._materialize_consumer(Path(tmp))
+            agents = (consumer / "AGENTS.md").read_text(encoding="utf-8")
+            # No bare docs/ anywhere in the installed rule file.
+            self.assertEqual(BARE_DOCS.findall(agents), [])
+            # Key protocol paths now read under the non-docs root.
+            for fragment in (
+                "governance/architecture/principles.md",
+                "governance/workspace-<NNN>-<slug>/",
+                "governance/vision/",
+                "governance/templates/",
+                "governance/goals/",
+                "governance/README.md",
+            ):
+                self.assertIn(fragment, agents, msg=f"missing {fragment}")
+
+    def test_installed_shells_read_paths_under_governance_root(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-e2e-shells-") as tmp:
+            consumer = self._materialize_consumer(Path(tmp))
+            for name in ("govern", "audit", "vision", "vision-audit"):
+                shell = (consumer / "governance" / "skills" / name / "SKILL.md").read_text(
+                    encoding="utf-8"
+                )
+                with self.subTest(shell=name):
+                    self.assertEqual(BARE_DOCS.findall(shell), [])
+                    self.assertIn("{governance_root}/", shell)
+
+    def test_all_path_references_resolve_under_configured_root(self) -> None:
+        """Every rule path reference must resolve under the non-docs root."""
+        with tempfile.TemporaryDirectory(prefix="gg-e2e-paths-") as tmp:
+            consumer = self._materialize_consumer(Path(tmp))
+            surfaces = [consumer / "AGENTS.md"]
+            surfaces += sorted((consumer / "governance" / "skills").rglob("SKILL.md"))
+            for path in surfaces:
+                text = path.read_text(encoding="utf-8")
+                refs = self._path_references(text)
+                with self.subTest(path=str(path.relative_to(consumer))):
+                    self.assertTrue(refs, "expected at least one path reference")
+                    for ref in refs:
+                        self.assertFalse(
+                            ref.startswith("docs/"),
+                            f"path reference must not leak docs/: {ref}",
+                        )
+                        self.assertTrue(
+                            ref.startswith(self.NON_DOCS_ROOT)
+                            or ref.startswith("{governance_root}"),
+                            f"path reference must read under the configured root: {ref}",
+                        )
 
 
 if __name__ == "__main__":
