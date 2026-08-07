@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T15:34:55.586642Z",
+  "capturedAt": "2026-08-07T16:00:51.670678Z",
   "unit": {
     "consumer": "claude-code-cli",
     "entrypoint": "govern",
@@ -42,7 +42,7 @@
     },
     {
       "path": "mcp/server.py",
-      "sha256": "c0af461ece0b4e5f4b8a3421daed91538869d7f3f97bb0a61838ccd86c2ecc46"
+      "sha256": "cd31cbdebe10e15cc6d6b2f47e6ba365874cd1c9ffb87cf847f75b3d1bdedb82"
     }
   ],
   "invocation": {
@@ -51,10 +51,23 @@
       "/d",
       "/s",
       "/c",
-      "claude -p --no-session-persistence --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 12"
+      "claude",
+      "-p",
+      "--no-session-persistence",
+      "--tools",
+      "Read,Glob,Grep",
+      "--permission-mode",
+      "plan",
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--effort",
+      "low",
+      "--max-turns",
+      "12"
     ],
     "cwd": ".",
-    "timeoutSeconds": 420,
+    "timeoutSeconds": 420.0,
     "inputSha256": "a423385d4a74fdc3abbbe6d9436e3bb1bfd1c179ec2d70b625601c5a948e9190",
     "inputSummary": "Read-only /govern dispatch probe requiring marker CLAUDE_L3_FOUR_ENTRY_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
   },
@@ -128,7 +141,7 @@
       }
     ],
     "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/claude-l3-four-entry-2026-08-07.d/stdout.txt",
-    "stdoutSha256": "04551696dfc2361326d15c78e0d3a992c362c24d2456d44b2d6d0e9acb94fd60",
+    "stdoutSha256": "4667f735c0f23bcb42aa34ac0f124fdf191f5c71311733dc0afea35258c20058",
     "stdoutMode": "claude-stream-json-sanitized",
     "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/claude-l3-four-entry-2026-08-07.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

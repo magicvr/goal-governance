@@ -26,6 +26,15 @@ dispatch 与角色边界（`vision` / `vision-audit` / `govern` / `audit`），�
   哈希未变）与同一宿主 CLI 版本重跑，behaviorSources 更新为当前树
   `mcp/{entries,kernel,server}.py` 当前哈希；四条证据 `capturedAt` 为重捕获时点，
   verdict 全部 `pass`。R1 时点 verdict 仍有效（重捕获不使其作废）。
+- **F-004/F-005 修复后（2026-08-07，A-015）**：`mcp/server.py` 增 initialize
+  握手门禁与 lifecycle root 边界（-32002 / -32602），server 哈希演进
+  `c0af461e… → cd31cbde…`；A-016（independent）复核发现 L3 证据 server 哈希
+  过期。
+- **重捕获 #2（2026-08-07，同日，A-016 F-001r 响应）**：四宿主以**同一探针
+  prompt**（prompt 哈希未变）与同一宿主 CLI 版本重跑，behaviorSources 重新绑定
+  当前树（server `cd31cbde…`）；四条证据 `capturedAt` 2026-08-07T15:59–16:01Z，
+  verdict 全部 `pass`（E-009）。此后修改 `mcp/` 实现（尤其 `server.py`）须同步
+  刷新本组证据或按本节约记哈希演进。
 
 ## 复跑
 

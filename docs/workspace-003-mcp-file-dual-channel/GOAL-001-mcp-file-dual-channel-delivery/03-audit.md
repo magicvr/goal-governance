@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.10.0
+version: 0.12.0
 ---
 
 # 审计 · GOAL-001
@@ -39,6 +39,8 @@ version: 0.10.0
 | A-013 | 2026-08-07 | self | 响应 A-012（independent pass）· 登记 F-001～F-008（编排器；无 required、无冲突；不回退关门） | pass | 0 | `03-audit/A-013-response-a012-register-findings-self.md` |
 | A-014 | 2026-08-07 | self | 维护轮响应：F-001 选项 A 重捕获 L3 + F-002/F-003 fixed（203 测试绿；不回退状态） | pass | 0 | `03-audit/A-014-maintenance-f001-a-f002-f003-fixed-self.md` |
 | A-015 | 2026-08-07 | self | 维护轮响应：F-004/F-005/F-007 fixed（initialize 门禁 + lifecycle root 边界 + directory-layout mcp/；210 测试绿；不回退状态） | pass | 0 | `03-audit/A-015-maintenance-f004-f005-f007-fixed-self.md` |
+| A-016 | 2026-08-07 | independent | 独立复审 F-001～F-005、F-007 关闭证据（A-014/A-015；亲自核验 210 测试 / stage / 实包 / 哈希 / git 时序） | conditional | 0（F-001r recommended：F-001 关闭证据在 A-015 改 server.py 后再次过期） | `03-audit/A-016-independent-f001-f007-closure-review.md` |
+| A-017 | 2026-08-07 | self | 响应 A-016：F-001r fixed（四宿主 L3 重捕获绑定当前树 server `cd31cbde…`；全 pass）；F-002/F-003/F-004/F-005/F-007 维持 fixed | pass | 0 | `03-audit/A-017-response-a016-l3-recapture-self.md` |
 
 ## 结论状态
 
@@ -53,3 +55,7 @@ Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-0
 **2026-08-07 维护轮响应（A-014，self）**：用户确认「F-001 选 A，修 F-002/F-003」。**F-001 fixed**——四宿主 L3 以同 prompt/同版本重捕获，`behaviorSources` 绑定当前树 `mcp/*` 哈希（全 pass；entries/kernel 哈希与 R1 一致，server 为合法演进后当前哈希）；runtime README 增捕获点与重捕获节；Root 00-meta 宿主表备注恢复字面成立。**F-002 fixed**——`GOAL_GOVERNANCE_MCP_VERSION` 发布钉（`__init__.py` 环境钉 + Dockerfile ARG/ENV + workflow build-args 同源），`MCP_LAYOUT_VERSION` 独立，doctor 分列报告。**F-003 fixed**——pack 排除 `skills/tests/test_mcp_*.py`（实测 77 成员 0 混入）。全量 203 测试绿 + stage 36 对 0 漂移。F-004/F-005/F-007 仍 open 归后续维护轮；F-006 归 VP-002；F-008/I-007 于首次真实 GHCR 发布验收关闭。Root/子目标/VP-004/workspace 状态与 goal-tree **无变化**。
 
 **2026-08-07 维护轮响应（A-015，self）**：用户确认「修 F-004/F-005/F-007」，三条全部 **fixed**。**F-004**——MCP server 强制握手门禁：`initialize` 之外的方法在握手完成前返回 `-32002`。**F-005**——lifecycle `root` 必须 ⊆ server `--repo-root`，越界 `-32602` fail closed；README 增信任模型节。**F-007**——`directory-layout.md`（v0.6.5）增 `mcp/` 布局与通道资产分离约束；§8c stage 镜像刷新（1 复制，`--check` 0 漂移）。全量 **210 测试绿**（+7 新增）。A-012 登记项至此 **F-001～F-005、F-007 全部 fixed**；剩余 F-006（归 VP-002）与 F-008/I-007（首次真实 GHCR 发布验收）。Root/子目标/VP-004/workspace 状态与 goal-tree **无变化**。
+
+**2026-08-07 独立复审（A-016，independent，conditional）**：经 `/audit` 复核 A-014/A-015 关闭证据——亲自执行全量测试 **210 passed**、stage `--check` 36 对 0 漂移、真实打包 **77 成员 / 0 `test_mcp_*` / 0 `mcp/` 实现**、当前树哈希 vs L3 JSON 比对、git 时序核验。**F-002/F-003/F-004/F-005/F-007 关闭证据充分，维持 fixed**；**F-001 关闭证据在 A-015 修改 `mcp/server.py` 后再次过期**（四条 L3 JSON `behaviorSources[server.py]` = `c0af461e…`，当前树 `cd31cbde…`；00-meta「behaviorSources 哈希与当前树一致」备注再次字面不成立）。无 required；F-001r（recommended · med）——建议按选项 B 同构注解 runtime README + 00-meta 备注，并评估在 capture/CI 增加 L3 证据哈希一致性检查。状态与 goal-tree **无变化**；响应归 `/govern`。
+
+**2026-08-07 响应（A-017，self，pass）**：用户指令「重新捕获检查」→ 执行 **F-001 选项 A 重捕获**：四宿主（claude/grok/codex/copilot，同 prompt 哈希、同 CLI 版本）并行重跑，`behaviorSources` 重新绑定当前树（`server.py = cd31cbde…` = 当前树；entries/kernel 哈希不变），四条证据 capturedAt 2026-08-07T15:59–16:01Z、verdict 全 `pass`；runtime README 补记第三次捕获点与维护钩子；00-meta 备注恢复字面成立。**F-001r fixed**；F-001～F-005、F-007 全部维持 fixed。剩余 F-006（VP-002）、F-008/I-007（首次真实 GHCR 发布验收）不变；A-016 防再犯建议（capture 一致性检查）待用户决定。状态与 goal-tree **无变化**。

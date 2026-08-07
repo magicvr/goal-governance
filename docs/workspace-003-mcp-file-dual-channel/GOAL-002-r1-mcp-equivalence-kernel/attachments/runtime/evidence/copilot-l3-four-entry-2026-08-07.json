@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T15:37:48.921903Z",
+  "capturedAt": "2026-08-07T16:00:37.993890Z",
   "unit": {
     "consumer": "github-copilot-cli",
     "entrypoint": "govern",
@@ -42,7 +42,7 @@
     },
     {
       "path": "mcp/server.py",
-      "sha256": "c0af461ece0b4e5f4b8a3421daed91538869d7f3f97bb0a61838ccd86c2ecc46"
+      "sha256": "cd31cbdebe10e15cc6d6b2f47e6ba365874cd1c9ffb87cf847f75b3d1bdedb82"
     }
   ],
   "invocation": {
@@ -54,7 +54,7 @@
       "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\docs\\workspace-003-mcp-file-dual-channel\\GOAL-002-r1-mcp-equivalence-kernel\\attachments\\runtime\\prompts\\copilot-l3-replay.ps1"
     ],
     "cwd": ".",
-    "timeoutSeconds": 420,
+    "timeoutSeconds": 420.0,
     "inputSha256": "fe57e7b7242073d090826385e1fc55217eb60678796f5eaa9cebf524500f4720",
     "inputSummary": "Read-only /govern dispatch probe requiring marker COPILOT_L3_FOUR_ENTRY_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
   },
@@ -128,10 +128,10 @@
       }
     ],
     "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/copilot-l3-four-entry-2026-08-07.d/stdout.txt",
-    "stdoutSha256": "c813757a78226e494431ac40000428731da47f9203097aee5241f24702d92426",
+    "stdoutSha256": "64d4039ec096ad505ff0be6dc164bdd9957e7635af0d4004bb8059a872d61992",
     "stdoutMode": "raw",
     "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/copilot-l3-four-entry-2026-08-07.d/stderr.txt",
-    "stderrSha256": "76e26e627ed53b70c027d7b434569478e6951b20b1494a911edf9575257f4a71",
+    "stderrSha256": "6fd4abcf1c292cb8ccc42943dec377ec2c8989b9018c16a96a9f2d4c32d6139e",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."

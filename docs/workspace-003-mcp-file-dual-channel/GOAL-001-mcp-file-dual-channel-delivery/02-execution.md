@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 执行记录 · GOAL-001
@@ -22,6 +22,7 @@ version: 0.4.0
 | E-006 | 2026-08-07 | 响应 A-012（independent pass）· 登记 F-001～F-008（无 required、无冲突；不回退关门状态） | recorded | `02-execution/E-006-a012-response-register-findings.md` |
 | E-007 | 2026-08-07 | 维护轮：F-001 选项 A 重捕获 L3（四宿主全 pass）+ F-002/F-003 fixed（203 测试绿；状态不变） | recorded | `02-execution/E-007-maintenance-f001-a-f002-f003-fixed.md` |
 | E-008 | 2026-08-07 | 维护轮：F-004/F-005/F-007 fixed（initialize 门禁 + lifecycle root 边界 + directory-layout mcp/ 含 stage；210 测试绿；状态不变） | recorded | `02-execution/E-008-maintenance-f004-f005-f007-fixed.md` |
+| E-009 | 2026-08-07 | 响应 A-016：F-001 关闭证据重捕获（四宿主 L3 全 pass；behaviorSources 绑定当前树 server `cd31cbde…`；状态不变） | recorded | `02-execution/E-009-a016-response-l3-recapture.md` |
 
 ## 事实边界
 

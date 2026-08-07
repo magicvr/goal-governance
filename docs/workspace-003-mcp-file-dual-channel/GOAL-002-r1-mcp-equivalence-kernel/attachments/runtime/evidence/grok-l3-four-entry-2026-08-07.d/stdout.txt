@@ -1,8 +1,8 @@
-按只读探针要求，先核对四个治理入口 skill 的 dispatch 与角色边界，不改文件、不启子代理、不问用户。四入口 dispatch 与角色边界核对完成：
+核对四入口 dispatch 与角色边界。先只读相关 skill 定义以确认，不改文件、不起子代理、不提问。**四入口 dispatch 与角色边界（已核对 skill 定义）**
 
-1. **vision** — 决策层：建修 Charter、VP（组合编排）、Vision Review、re-align；冷启动优先；不推进 Goal 执行（交 `/govern`）。
-2. **vision-audit** — 独立 Vision Review：只写意见到 vision reviews 台账；不改 Charter / VP / Goal 状态。
-3. **govern** — 实现编排：扫描工作区与审计台账、P-004 用户裁决、提议下一步、确认后写入目标五件套。
-4. **audit** — Goal 交叉审计：只出意见到被审目标 `03-audit`；不直接改 status / progress。
+1. **vision** — 决策层：建修 Charter、VP（组合编排）、Vision Review（self）、re-align、结构选型；冷启动优先（Charter→VP）；不推进目标执行，不关 Goal finding。  
+2. **vision-audit** — 独立 Vision Review：只写独立意见到 `docs/vision/reviews` 台账；不改 Charter / VP / Goal 状态、progress、`goal-tree`。  
+3. **govern** — 实现编排主入口：扫描工作区与审计台账、P-004 用户裁决、提议下一步、确认后写入目标五件套；交叉审计交 `/audit`，愿景决策交 `/vision`。  
+4. **audit** — Goal 交叉审计：只出独立意见到被审目标 `03-audit`；不直接改 status / progress；响应归 `/govern`。
 
 GROK_L3_FOUR_ENTRY_OK

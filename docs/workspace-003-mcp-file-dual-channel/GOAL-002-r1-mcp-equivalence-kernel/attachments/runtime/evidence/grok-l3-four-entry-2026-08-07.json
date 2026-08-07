@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T15:35:10.950036Z",
+  "capturedAt": "2026-08-07T15:59:54.278852Z",
   "unit": {
     "consumer": "grok-build-cli",
     "entrypoint": "govern",
@@ -42,7 +42,7 @@
     },
     {
       "path": "mcp/server.py",
-      "sha256": "c0af461ece0b4e5f4b8a3421daed91538869d7f3f97bb0a61838ccd86c2ecc46"
+      "sha256": "cd31cbdebe10e15cc6d6b2f47e6ba365874cd1c9ffb87cf847f75b3d1bdedb82"
     }
   ],
   "invocation": {
@@ -65,7 +65,7 @@
       "--disable-web-search"
     ],
     "cwd": ".",
-    "timeoutSeconds": 420,
+    "timeoutSeconds": 420.0,
     "inputSha256": "5d98a018e6b82a689334161176ff42eef526c1f0b0f251ac73145c043d853d78",
     "inputSummary": "Read-only /govern dispatch probe requiring marker GROK_L3_FOUR_ENTRY_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
   },
@@ -139,7 +139,7 @@
       }
     ],
     "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-l3-four-entry-2026-08-07.d/stdout.txt",
-    "stdoutSha256": "20ebbd0f445cffb289a020c1cb0eefe4c4024aa660bae2ee0852ce0761646d41",
+    "stdoutSha256": "7757c3addde2f9627f1c58b759c681c00ee97755f9f7ce9ddc8ad3ecd92e185d",
     "stdoutMode": "raw",
     "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-l3-four-entry-2026-08-07.d/stderr.txt",
     "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T15:36:57.399938Z",
+  "capturedAt": "2026-08-07T16:01:10.390327Z",
   "unit": {
     "consumer": "codex-cli",
     "entrypoint": "govern",
@@ -42,7 +42,7 @@
     },
     {
       "path": "mcp/server.py",
-      "sha256": "c0af461ece0b4e5f4b8a3421daed91538869d7f3f97bb0a61838ccd86c2ecc46"
+      "sha256": "cd31cbdebe10e15cc6d6b2f47e6ba365874cd1c9ffb87cf847f75b3d1bdedb82"
     }
   ],
   "invocation": {
@@ -51,10 +51,18 @@
       "/d",
       "/s",
       "/c",
-      "codex exec --sandbox read-only --skip-git-repo-check --ephemeral --json -C ."
+      "codex",
+      "exec",
+      "--sandbox",
+      "read-only",
+      "--skip-git-repo-check",
+      "--ephemeral",
+      "--json",
+      "-C",
+      "."
     ],
     "cwd": ".",
-    "timeoutSeconds": 420,
+    "timeoutSeconds": 420.0,
     "inputSha256": "107ebc4b14e36927517508bb490b357df9c3b61241cdf146ed6d8f636a974f4e",
     "inputSummary": "Read-only /govern dispatch probe requiring marker CODEX_L3_FOUR_ENTRY_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
   },
@@ -128,10 +136,10 @@
       }
     ],
     "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-l3-four-entry-2026-08-07.d/stdout.txt",
-    "stdoutSha256": "87746457bc098a0a2c6fd99159912928ed2c8947561ad6b1d61364fee4555610",
+    "stdoutSha256": "bf183e7a3e0be7148d3be41c3afb6716965225720f4ae72dbe9399bb6de9c6e2",
     "stdoutMode": "raw",
     "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/codex-l3-four-entry-2026-08-07.d/stderr.txt",
-    "stderrSha256": "cb44acaf5103489579e69587b4b68418b90b17da92102508036d90f38b753249",
+    "stderrSha256": "b88fefa0fb9db04d7c5d061144107b9bc7b287c97f59da9a1fa579e3571ba7d1",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
