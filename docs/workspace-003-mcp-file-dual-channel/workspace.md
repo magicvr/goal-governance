@@ -1,7 +1,7 @@
 ---
 id: workspace-003-mcp-file-dual-channel
 title: 消费交付双通道（MCP + File）工作区
-status: active
+status: closed
 root_goal: GOAL-001-mcp-file-dual-channel-delivery
 canonical_scope: docs/workspace-003-mcp-file-dual-channel/
 shared_materials_catalog: docs/shared-materials/
@@ -10,7 +10,7 @@ plan_refs: VP-004-mcp-file-dual-channel-delivery
 primary_plan: VP-004-mcp-file-dual-channel-delivery
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 工作区上下文 · 消费交付双通道（MCP + File）
@@ -56,3 +56,4 @@ version: 0.1.0
 
 - 开区：用户 2026-08-07 `/govern` 确认新区 slug、Root slug、`delivery` 角色与「激活 VP-004 + scaffold + Root」。
 - VP-004 自本区 scaffold 起结束「0 区」；`lead_workspace` 指向本区。
+- **关门（2026-08-07）**：R1/R2/R3 全部完成（GOAL-002/003/004 `done`）；Root `GOAL-001-mcp-file-dual-channel-delivery` `done`（关门审计 A-007/A-008）；VP-004 `status: closed`（关门记录已填）。本区冻结，不再新开子目标。
