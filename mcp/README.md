@@ -1,13 +1,50 @@
-# goal-governance MCP channel（VP-004 R1）
+# goal-governance MCP channel（VP-004 R1/R4）
 
 MCP 通道是目标治理的**一等交付通道**（与 File 通道并列；File 不被废除）。本目录为 MCP
 通道实现：最小 stdio MCP server + 四治理入口映射 + L2 共享等价内核。
+R4（2026-08-07）起本目录位于仓库根 `mcp/`（与 `skills/` 并列，通道资产分离）：
+File 发布资产（skills zip）**不**包含本目录代码；MCP 通道的发布资产为 **GHCR Docker 镜像**
+（与 File 资产同 tag 同版本发布）。
 
 ## 运行形态
 
-- **最小运行形态**：Python 3 stdio 进程（换行分隔 JSON-RPC 2.0），零第三方运行时依赖。
-- **不强制 Docker**：`Dockerfile` 仅作便捷（可选）；本地 stdio 进程形态合法（VP-004）。
-- 启动：`python skills/mcp/server.py [--repo-root PATH]`。
+- **主消费形态（R4）**：**Docker 镜像** `ghcr.io/magicvr/goal-governance-mcp-server:<版本>`
+  （与 GitHub Release 同 tag 同版本，如 tag `v0.13.0` → 镜像 `:0.13.0`；另有 `latest`）。
+  固定入口：`python server.py --repo-root /workspace`（MCP client 零参数，见下）。
+- **本地 stdio 进程形态仍合法**（VP-004：不强制 Docker-only）：
+  `python mcp/server.py [--repo-root PATH]`。
+- 零第三方运行时依赖（Python 标准库），stdio 传输（换行分隔 JSON-RPC 2.0）。
+
+## Docker 使用（推荐）
+
+```bash
+# 拉取（版本与 GitHub Release tag vX.Y.Z 对应；latest 指向最新发布）
+docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.0
+
+# 手动验证（stdio 直连；将 <仓库根> 换为消费仓路径）
+docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.0
+```
+
+**MCP client 配置**（mcpServers，stdio 直连容器，零参数；固定入口自动使用
+`--repo-root /workspace`）：
+
+```json
+{
+  "goal-governance": {
+    "command": "docker",
+    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.0"]
+  }
+}
+```
+
+镜像内亦可调用其他 CLI（覆盖 CMD），如 lifecycle：
+
+```bash
+docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.0 \
+  lifecycle.py install --root /workspace --version 0.13.0 --channel mcp --confirm
+```
+
+镜像构建（发布由 `skills-pack-release.yml` tag 流程自动完成）：`docker build -t <tag> mcp/`。
 
 ## 四治理入口（工具）
 
@@ -22,9 +59,10 @@ MCP 通道是目标治理的**一等交付通道**（与 File 通道并列；Fil
 
 ## 消费方式（宿主示例）
 
-MCP 客户端配置指向 `python <skills>/mcp/server.py`（stdio）。`tools/list` 发现四工具；
-`tools/call` 返回结构化元数据（entrypoint/layer/role/readonly/prompt_path/guidance），
-宿主据此 dispatch 到对应方法论正文（仓内 `skills/prompts/` 存在时可按 sha256 核对）。
+MCP 客户端配置指向容器（stdio 直连，见上）或本地 `python mcp/server.py`（stdio）。
+`tools/list` 发现四工具；`tools/call` 返回结构化元数据
+（entrypoint/layer/role/readonly/prompt_path/guidance），宿主据此 dispatch 到对应
+方法论正文（仓内 `skills/prompts/` 存在时可按 sha256 核对）。
 
 ## 实例真相
 
@@ -38,6 +76,9 @@ MCP 客户端配置指向 `python <skills>/mcp/server.py`（stdio）。`tools/li
 - L2 共享：`docs/tests/test_dual_channel_l2.py`（`kernel.check_equivalence` 两通道同断言）。
 - 合同：`scripts/tests/test_contract_delivery_channels.py`（`deliveryChannel: files | mcp` 分列）。
 - L3：承诺宿主抽稀真探针（`docs/releases/runtime/` 既有模式）。
+- 发布面（R4）：`scripts/tests/test_bootstrap_install_online.py`（薄装经镜像内 lifecycle）、
+  `scripts/tests/test_pack_skills_release.py`（File zip 不含 `mcp/` 防御断言）、
+  `skills-pack-release.yml` 契约测试（同 tag GHCR 发布）。
 
 ## 目录
 
@@ -49,8 +90,9 @@ MCP 客户端配置指向 `python <skills>/mcp/server.py`（stdio）。`tools/li
 | `lifecycle.py` | 薄壳 lifecycle：managed 标记、allowlist、默认确认写盘、CLI（R2 交付） |
 | `doctor.py` | 只读安装状态报告（含 `governance_root` 解析与错误面）（R2/R3 交付） |
 | `config.py` | `governance_root` 解析：默认 `docs`、`.goal-governance.json` pin、仓外 fail closed（R3 交付） |
-| `governance-root.schema.json` | 项目配置 schema（随包分发） |
+| `governance-root.schema.json` | 项目配置 schema |
 | `gitignore-fragment.txt` | 官方 ignore 片段（薄壳默认 gitignore） |
+| `Dockerfile` / `.dockerignore` | R4 发布形态：GHCR 镜像构建（固定入口 `python server.py --repo-root /workspace`） |
 
 ## 证据分级与 L3 边界
 

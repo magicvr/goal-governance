@@ -223,6 +223,10 @@ class PackSkillsReleaseTests(unittest.TestCase):
                 "/web/",
                 "artifacts/",
                 "tech-stack.md",
+                # VP-004 R4: MCP implementation lives at repo root mcp/ (channel
+                # asset separation); the File zip must never contain it.
+                f"{root}/mcp/",
+                "/mcp/server.py",
             ):
                 self.assertFalse(
                     any(bad in n for n in names),

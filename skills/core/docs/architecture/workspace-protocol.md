@@ -13,7 +13,7 @@ version: 0.9.0
 
 仓库级愿景体系见 [../vision/](../vision/) 与 [principles.md](principles.md) **P-006**：**单愿景**；冷启动 **Charter → VP → 工作区/Root**；所有工作区必须挂 `plan_refs`/`primary_plan`。愿景**不是**第二套 goal-tree 或 progress 权威。规则细节以 [../vision/alignment.md](../vision/alignment.md) 为准。
 
-> **治理根（`governance_root`，默认 `docs`）**：本协议与权威面中的路径叙述均相对治理根。消费仓可通过可提交项目配置 `.goal-governance.json` 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspace-*`、`goal-tree.md`、五件套形状等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**（解析规则见 `skills/mcp/config.py`）。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
+> **治理根（`governance_root`，默认 `docs`）**：本协议与权威面中的路径叙述均相对治理根。消费仓可通过可提交项目配置 `.goal-governance.json` 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspace-*`、`goal-tree.md`、五件套形状等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**（解析规则见 `mcp/config.py`）。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
 
 ## 1. 范围与术语
 

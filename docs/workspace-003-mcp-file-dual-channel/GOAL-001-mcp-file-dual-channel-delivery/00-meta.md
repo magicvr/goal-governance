@@ -1,15 +1,15 @@
 ---
 id: GOAL-001-mcp-file-dual-channel-delivery
 title: 消费交付双通道（MCP + File）与可配置治理根
-status: done
+status: active
 parent: null
 plan_refs: VP-004-mcp-file-dual-channel-delivery
 primary_plan: VP-004-mcp-file-dual-channel-delivery
 serves_summary: delivery Root；服务 VP-004 / vision-goal-governance@0.2.0；File+MCP 双通道、四承诺宿主、最小测试内核与可配置 governance_root
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.6.0
-progress: 100%
+version: 0.7.0
+progress: 75%
 ---
 
 # GOAL-001 · 消费交付双通道（MCP + File）与可配置治理根
@@ -36,12 +36,13 @@ progress: 100%
 | **R1** | MCP 通道并行达标 + 最小共享测试内核 | **完成（GOAL-002 done）** | 四入口等价检查点；L2 共享 + L1 分列 + 抽稀 L3；合同 `deliveryChannel` 分列 |
 | **R2** | 双通道产品化 | **完成（GOAL-003 done）** | bootstrap 双入口；薄壳 lifecycle；gitignore；AGENTS managed；File-classic |
 | **R3** | 可配置 `governance_root` 与消费面收敛 | **完成（GOAL-004 done）** | 配置 pin；仓外 fail closed；alignment/AGENTS/templates 权威路径补丁（V-F-013 车辆） |
+| **R4** | MCP Docker 资产发布与通道资产分离（reopen 增补） | **进行中（GOAL-005 active）** | 发布面核查缺口：File zip 混入 `skills/mcp/` 源码；MCP 无 Docker 发布资产；README 无安装指南 → Dockerfile + GHCR 同 tag 发布 + pack 排除 + 指南 |
 
-同一纲领阶段内可并行多个子目标；阶段间通常串行。R1/R2/R3 全部完成并关门（GOAL-002/003/004 `done`）。
+同一纲领阶段内可并行多个子目标；阶段间通常串行。R1/R2/R3 已完成并关门（GOAL-002/003/004 `done`）；**R4 因发布资产面缺口于 2026-08-07 回退关门后新开**（GOAL-005 active）。
 
 ## 派生进度展示
 
-`progress: 100%` = 纲领阶段 R1～R3 中已完成 **3 / 3**（等权；全部于 2026-08-07 关门）。progress **仅展示**，不放行关门、不关闭 finding；Root `done` 由关门审计（self + independent）与 VP-004 退出判据证据链决定。
+`progress: 75%` = 纲领阶段 R1～R4 中已完成 **3 / 4**（等权；R1/R2/R3 于 2026-08-07 关门，R4 于 2026-08-07 回退后立项进行中）。progress **仅展示**，不放行关门、不关闭 finding；Root 状态由审计与 VP-004 退出判据证据链决定。
 
 ## 信息就绪与未知项
 
@@ -69,6 +70,7 @@ progress: 100%
 | [GOAL-002-r1-mcp-equivalence-kernel](../GOAL-002-r1-mcp-equivalence-kernel/00-meta.md) | R1：MCP/File 等价验证内核 | done |
 | [GOAL-003-r2-dual-channel-productization](../GOAL-003-r2-dual-channel-productization/00-meta.md) | R2：双通道产品化 | done |
 | [GOAL-004-r3-configurable-governance-root](../GOAL-004-r3-configurable-governance-root/00-meta.md) | R3：可配置 governance_root 与消费面收敛 | done |
+| [GOAL-005-r4-mcp-docker-release](../GOAL-005-r4-mcp-docker-release/00-meta.md) | R4：MCP Docker 资产发布与通道资产分离 | active |
 
 ## 宿主适配状态（VP-004 承诺面）
 
@@ -89,3 +91,4 @@ progress: 100%
 - 编号自 GOAL-001 起；**不**延续其他工作区编号。
 - 宿主 P0/P1、入口等价检查点、R3 协议车辆以 VP-004 v0.1.1+ 正文为准。
 - R1 实施已按 D-002/D-003/D-004 冻结完成；cross 审计 provider = grok build（grok-4.5 / thinking-high）已指定并落盘（GOAL-002 D-004）。
+- **R4 reopen（2026-08-07）**：A-009 关门复审通过后，发布面核查（用户指令）发现三项缺口——File zip 混入 `skills/mcp/` 源码、MCP 无可分发 Docker 发布资产、`skills/mcp/README.md`「Dockerfile 可选」文案与事实不符。用户书面确认「全套方案」：Root 回退 `done → active`（progress 100% → 75%，纲领 3/4），新开 **GOAL-005-r4-mcp-docker-release**（R4）；VP-004 与 workspace.md 同步回退 active（留痕见各自文件与 goal-tree）。

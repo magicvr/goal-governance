@@ -49,6 +49,23 @@ def _powershell_exe() -> str | None:
     return None
 
 
+MCP_IMAGE_TEST = "ghcr.io/magicvr/goal-governance-mcp-server:0.0.0-testpack"
+
+
+def _build_mcp_test_image() -> bool:
+    """Build the local MCP image used by thin-shell bootstrap tests (R4: GHCR image is the MCP asset)."""
+    if not shutil.which("docker"):
+        return False
+    proc = subprocess.run(
+        ["docker", "build", "-t", MCP_IMAGE_TEST, str(REPO_ROOT / "mcp")],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    return proc.returncode == 0
+
+
 def _powershell(
     *args: str, cwd: Path | None = None
 ) -> subprocess.CompletedProcess[str]:
@@ -210,7 +227,9 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
                 )
 
     def test_mcp_channel_bootstrap_installs_thin_shell_only_and_preserves_user_agents(self) -> None:
-        """VP-004 R2 dual entry: -Channel mcp = thin shell, no File 大包."""
+        """VP-004 R2/R4 dual entry: -Channel mcp = thin shell via GHCR image; no File 大包, no mcp code."""
+        if not _build_mcp_test_image():
+            self.skipTest("docker not available for MCP image build")
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             pack_out = base / "pack"
@@ -232,6 +251,8 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
                 str(result.zip_path),
                 "-Sha256Path",
                 str(result.sha256_path),
+                "-McpImage",
+                MCP_IMAGE_TEST,
                 "-Force",
             )
             self.assertEqual(
@@ -239,11 +260,8 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
                 0,
                 msg=f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}",
             )
-            # Thin MCP surface present.
-            self.assertTrue((target / "skills" / "mcp" / "server.py").is_file())
-            self.assertTrue(
-                (target / "skills" / "mcp" / "lifecycle.py").is_file()
-            )
+            # R4: channel assets separated — no MCP code materialized into the consumer repo.
+            self.assertFalse((target / "skills" / "mcp").exists())
             self.assertTrue(
                 (target / "skills" / "contracts" / "skills-consumer-contract.json").is_file()
             )
@@ -263,6 +281,8 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
             )
             self.assertEqual(state["channel"], "mcp")
             self.assertEqual(state["version"], result.version)
+            # MCP client config guidance names the GHCR image (R4 asset).
+            self.assertIn(MCP_IMAGE_TEST, proc.stdout)
             # 推荐 MCP 叙述同屏声明 File 仍一等（ps1 输出为英文，跨控制台代码页稳定）。
             self.assertIn("File channel remains a first-class release path", proc.stdout)
             self.assertIn("NOT sunset", proc.stdout)
@@ -414,10 +434,12 @@ class BootstrapShStructuralTests(unittest.TestCase):
             )
 
     def test_bash_mcp_channel_when_available(self) -> None:
-        """VP-004 R2: bash --channel mcp installs the thin shell (PS 对等 e2e)."""
+        """VP-004 R2/R4: bash --channel mcp installs the thin shell via GHCR image (PS 对等 e2e)."""
         bash = shutil.which("bash")
         if not bash:
             self.skipTest("bash not on PATH")
+        if not _build_mcp_test_image():
+            self.skipTest("docker not available for MCP image build")
         probe = subprocess.run(
             [bash, "-c", "echo ok"],
             capture_output=True,
@@ -457,6 +479,8 @@ class BootstrapShStructuralTests(unittest.TestCase):
                     zip_arg,
                     "--sha256-path",
                     sha_arg,
+                    "--mcp-image",
+                    MCP_IMAGE_TEST,
                     "--force",
                 ],
                 cwd=str(REPO_ROOT),
@@ -469,15 +493,19 @@ class BootstrapShStructuralTests(unittest.TestCase):
             )
             if proc.returncode != 0 and (
                 "Need unzip" in (proc.stderr + proc.stdout)
-                or "MCP channel requires python" in (proc.stderr + proc.stdout)
+                or "MCP channel requires docker" in (proc.stderr + proc.stdout)
             ):
-                self.skipTest("unzip or python unavailable in bash environment")
+                self.skipTest("unzip or docker unavailable in bash environment")
             self.assertEqual(
                 proc.returncode,
                 0,
                 msg=f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}",
             )
-            self.assertTrue((target / "skills" / "mcp" / "server.py").is_file())
+            # R4: no MCP code materialized; contracts + lifecycle state come from the image.
+            self.assertFalse((target / "skills" / "mcp").exists())
+            self.assertTrue(
+                (target / "skills" / "contracts" / "skills-consumer-contract.json").is_file()
+            )
             self.assertFalse((target / "docs" / "architecture").exists())
             agents = (target / "AGENTS.md").read_text(encoding="utf-8")
             self.assertIn("<!-- goal-governance:begin managed -->", agents)
@@ -485,6 +513,7 @@ class BootstrapShStructuralTests(unittest.TestCase):
                 (target / ".goal-governance" / "install.json").read_text(encoding="utf-8")
             )
             self.assertEqual(state["channel"], "mcp")
+            self.assertIn(MCP_IMAGE_TEST, proc.stdout)
             self.assertIn("File 通道仍为一等", proc.stdout)
     def test_workflow_packs_core_and_bootstrap(self) -> None:
         workflow = (

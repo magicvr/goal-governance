@@ -57,6 +57,29 @@ bash ./install-online.sh --version 0.13.0 --zip-path ./goal-governance-skills-v0
 
 说明见 [scripts/bootstrap/README.md](scripts/bootstrap/README.md)。默认**不**推荐 `curl | bash` / `irm | iex` 管道直跑（先落盘再执行，便于审阅）。
 
+## 在其他项目中安装 MCP Server（Docker 通道）
+
+MCP 通道（[VP-004](docs/vision/plans/VP-004-mcp-file-dual-channel-delivery.md)）与 File 通道同为**一等发布通道**；发布资产为 **GHCR Docker 镜像**，与 File 资产**同 tag 同版本**发布（GitHub Release tag `vX.Y.Z` → 镜像 tag `X.Y.Z`；另有 `latest` 便利 tag）。实现源码在仓库根 [`mcp/`](mcp/README.md)（与 `skills/` 并列，File zip **不含** MCP 代码）。
+
+```bash
+# 拉取并验证（stdio 直连；将 <仓库根> 换为消费仓绝对路径）
+docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.0
+docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.0
+```
+
+**MCP client 配置**（mcpServers；固定入口 `python server.py --repo-root /workspace`，客户端零参数）：
+
+```json
+{
+  "goal-governance": {
+    "command": "docker",
+    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.0"]
+  }
+}
+```
+
+> 当前示例 pin 最新正式 tag `v0.13.0`（发新版时同步改本节）；本地 stdio 进程形态仍合法（不强制 Docker-only）：`python mcp/server.py [--repo-root PATH]`。完整说明见 [`mcp/README.md`](mcp/README.md)。
+
 ### 入口 2 · 包内 install（解压后离线）
 
 ```powershell

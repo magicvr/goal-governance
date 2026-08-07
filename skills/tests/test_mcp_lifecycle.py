@@ -23,8 +23,8 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SERVER_PY = REPO_ROOT / "skills" / "mcp" / "server.py"
-FRAGMENT = REPO_ROOT / "skills" / "mcp" / "gitignore-fragment.txt"
+SERVER_PY = REPO_ROOT / "mcp" / "server.py"
+FRAGMENT = REPO_ROOT / "mcp" / "gitignore-fragment.txt"
 
 MANAGED_BEGIN = "<!-- goal-governance:begin managed -->"
 MANAGED_END = "<!-- goal-governance:end managed -->"
@@ -204,7 +204,7 @@ class McpLifecycleTests(unittest.TestCase):
         with self.assertRaises(lifecycle.LifecycleError):
             lifecycle._validate_allowlist(self.consumer, ["docs/architecture/principles.md"])
         with self.assertRaises(lifecycle.LifecycleError):
-            lifecycle._validate_allowlist(self.consumer, ["skills/mcp/server.py"])
+            lifecycle._validate_allowlist(self.consumer, ["mcp/server.py"])
         # Candidate escaping the repo root fails closed.
         with self.assertRaises(lifecycle.LifecycleError):
             lifecycle._ensure_inside_repo(self.consumer, "../outside.md")

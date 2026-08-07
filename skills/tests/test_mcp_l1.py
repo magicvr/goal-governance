@@ -7,7 +7,7 @@ launched as a real subprocess speaking the MCP stdio transport
 (newline-delimited JSON-RPC 2.0).
 
 These tests are the MCP-channel half of the L2 shared kernel consumer; the
-shared assertions themselves live in skills/mcp/kernel.py and are exercised by
+shared assertions themselves live in mcp/kernel.py and are exercised by
 docs/tests/test_dual_channel_l2.py.
 """
 
@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SERVER_PY = REPO_ROOT / "skills" / "mcp" / "server.py"
+SERVER_PY = REPO_ROOT / "mcp" / "server.py"
 
 ENTRY_LAYERS = {
     "vision": "decision",

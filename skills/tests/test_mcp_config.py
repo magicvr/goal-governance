@@ -1,6 +1,6 @@
 """governance_root resolution tests (VP-004 R3).
 
-Drives the REAL resolver (skills/mcp/config.py) against temp repositories:
+Drives the REAL resolver (mcp/config.py) against temp repositories:
 default ``docs``, project-config override, fail-closed on absolute paths and
 ``..`` escapes, invalid JSON, and frozen internal layout.
 """
@@ -111,7 +111,7 @@ class GovernanceRootConfigTests(unittest.TestCase):
         from jsonschema import Draft202012Validator, FormatChecker
 
         schema = json.loads(
-            (REPO_ROOT / "skills" / "mcp" / "governance-root.schema.json").read_text(
+            (REPO_ROOT / "mcp" / "governance-root.schema.json").read_text(
                 encoding="utf-8"
             )
         )

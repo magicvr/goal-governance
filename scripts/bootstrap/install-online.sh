@@ -30,7 +30,7 @@ Goal Governance bootstrap installer (GOAL-023 / VP-004 R2 dual entry)
 Downloads or uses a local skills zip (core embedded), verifies SHA-256,
 then installs via one of the two first-class channels:
 
-  --channel mcp   (推荐 MCP 通道): 薄通道——仅安装 skills/mcp + consumer
+  --channel mcp   (推荐 MCP 通道): 薄通道——contract + AGENTS managed + 状态（经 GHCR Docker 镜像内 lifecycle 写入），不落 mcp 代码
                   contract + AGENTS.md managed 段 + .goal-governance 状态。
                   **File 通道仍为一等发布路径、未被废除、非日落**；
                   File-classic（无 Docker / 无 MCP）始终可用。
@@ -44,7 +44,7 @@ Usage:
 
 Options:
   --version V         SemVer (optional leading v)
-  --channel C         files (默认完整 File 通道) | mcp (薄 MCP 通道；需 python)
+  --channel C         files (默认完整 File 通道) | mcp (薄 MCP 通道；需 docker)
   --target-dir DIR    Project root (default: cwd)
   --skills-dir-name N Directory under target (default: skills)
   --zip-path PATH     Local skills zip (skip download)
@@ -150,6 +150,7 @@ while [[ $# -gt 0 ]]; do
     --zip-path) ZIP_PATH="${2:-}"; shift 2 ;;
     --sha256-path) SHA256_PATH="${2:-}"; shift 2 ;;
     --channel) CHANNEL="${2:-}"; shift 2 ;;
+    --mcp-image) MCP_IMAGE="${2:-}"; shift 2 ;;
     --repo) REPO="${2:-}"; shift 2 ;;
     --release-tag) RELEASE_TAG="${2:-}"; shift 2 ;;
     --skip-install) SKIP_INSTALL=1; shift ;;
@@ -249,14 +250,9 @@ if [[ -e "$DEST_SKILLS" ]]; then
 fi
 
 if [[ "$CHANNEL" == "mcp" ]]; then
-  # 薄 MCP 通道：仅 materialize skills/mcp + consumer contract，然后由
-  # lifecycle CLI（单一真相源）写 AGENTS.md managed 段与薄壳状态。
-  # 注：zip 归档根即 skills 包内容（mcp/、contracts/ 直接位于归档根）。
-  if [[ ! -f "${PACKAGE_SRC}/mcp/server.py" ]]; then
-    die "Package missing mcp/server.py (MCP channel unavailable)"
-  fi
-  mkdir -p "${DEST_SKILLS}/mcp"
-  cp -a "${PACKAGE_SRC}/mcp/." "${DEST_SKILLS}/mcp/"
+  # 薄 MCP 通道（R4 重定义，D-001 决策点②）：不再 materialize mcp 代码；写
+  # consumer contract，并经 GHCR 镜像内 lifecycle CLI（单一真相源）写 AGENTS.md
+  # managed 段与 .goal-governance/ 状态；输出 MCP client 配置指引（docker run 固定入口）。
   mkdir -p "${DEST_SKILLS}/contracts"
   for name in skills-consumer-contract.json skills-consumer-contract.schema.json; do
     if [[ ! -f "${PACKAGE_SRC}/contracts/${name}" ]]; then
@@ -264,16 +260,17 @@ if [[ "$CHANNEL" == "mcp" ]]; then
     fi
     cp -a "${PACKAGE_SRC}/contracts/${name}" "${DEST_SKILLS}/contracts/${name}"
   done
-  if ! command -v python >/dev/null 2>&1 && ! command -v python3 >/dev/null 2>&1; then
-    die "MCP channel requires python on PATH (stdio runtime); use --channel files for File-classic"
+  MCP_IMAGE="${MCP_IMAGE:-ghcr.io/magicvr/goal-governance-mcp-server:${NORM}}"
+  if ! command -v docker >/dev/null 2>&1; then
+    die "MCP channel requires docker (runtime is the GHCR image ${MCP_IMAGE}); use --channel files for File-classic"
   fi
-  PYTHON_BIN="python"
-  command -v python >/dev/null 2>&1 || PYTHON_BIN="python3"
-  "$PYTHON_BIN" "${DEST_SKILLS}/mcp/lifecycle.py" install \
-    --root "$TARGET_DIR" --version "$NORM" --channel mcp --confirm \
-    || die "Thin-shell lifecycle install failed"
+  docker run --rm -v "$TARGET_DIR:/workspace" "$MCP_IMAGE" lifecycle.py install \
+    --root /workspace --version "$NORM" --channel mcp --confirm \
+    || die "Thin-shell lifecycle install failed (docker run ${MCP_IMAGE})"
   echo "MCP channel bootstrap complete."
-  echo "推荐提示：File 通道仍为一等发布路径、未被废除（--channel files 完整安装；File-classic 无需 Docker/MCP）。"
+  echo "MCP client 配置（mcpServers，stdio 直连容器，零参数）："
+  echo "  { \"command\": \"docker\", \"args\": [\"run\", \"-i\", \"--rm\", \"-v\", \"<仓库根>:/workspace\", \"${MCP_IMAGE}\"] }"
+  echo "File 通道仍为一等发布路径、未被废除（--channel files 完整安装；File-classic 无需 Docker/MCP）。"
   exit 0
 fi
 

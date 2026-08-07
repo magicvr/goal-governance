@@ -13,7 +13,7 @@ version: 0.3.0
 
 | 通道 | 说明 |
 |------|------|
-| **`-Channel mcp`（推荐 MCP）** | 薄通道：仅安装 `skills/mcp`（MCP stdio server + lifecycle）+ consumer contract + `AGENTS.md` managed 段 + `.goal-governance/` 状态。运行时为 stdio 进程，**不要求 Docker**；需要 python（MCP 运行时本身即 python）。**File 通道仍为一等发布路径、未被废除、非日落**。 |
+| **`-Channel mcp`（推荐 MCP）** | 薄通道（R4 重定义）：不落 MCP 代码；写 `skills/contracts/` + 经 **GHCR 镜像内 lifecycle** 写 `AGENTS.md` managed 段与 `.goal-governance/` 状态，并输出 MCP client 配置指引（`docker run` 固定入口，零参数）。运行时为 **Docker 镜像** `ghcr.io/magicvr/goal-governance-mcp-server:<版本>`（与 File 资产同 tag 同版本发布）；需要 docker。本地 stdio 进程形态仍合法（源码 `mcp/`）。**File 通道仍为一等发布路径、未被废除、非日落**。 |
 | **`-Channel files`（默认）** | 完整 File 通道：materialize 整包 + 包内 install `-All`（docs/architecture + skills + 宿主面）。**File-classic**（无 Docker、无 MCP）始终可用。 |
 
 > **推荐叙述声明**：本安装器**推荐**新装走 MCP 薄通道以降低 footprint 与升级噪音；这不废除 File 通道——File zip 安装、File-classic 路径与生产仓 File 自举继续一等支持（VP-004 Charter 叙事选择 V-F-015）。
@@ -72,7 +72,7 @@ bash scripts/bootstrap/install-online.sh \
   --force
 ```
 
-结果：`skills/mcp/`（server + lifecycle + kernel）+ `skills/contracts/skills-consumer-contract.{json,schema.json}` + `AGENTS.md` managed 段（`<!-- goal-governance:begin managed -->` … `end managed`）+ `.goal-governance/install.json`。**不**安装 File 大包（docs/architecture、prompts 全量等）。File 通道仍为一等，未被废除。
+结果：`skills/contracts/skills-consumer-contract.{json,schema.json}` + `AGENTS.md` managed 段（`<!-- goal-governance:begin managed -->` … `end managed`）+ `.goal-governance/install.json`（`channel=mcp`）+ MCP client 配置指引（`docker run -i --rm -v <仓库根>:/workspace ghcr.io/magicvr/goal-governance-mcp-server:<版本>`）。**不**安装 File 大包（docs/architecture、prompts 全量等），**不**落 MCP 代码（R4：MCP 通道资产 = GHCR Docker 镜像，与 File zip 同 tag 发布）。File 通道仍为一等，未被废除。
 
 ## Online (Release)
 

@@ -17,7 +17,7 @@ prompt path, guidance) and never mutates repository state. Lifecycle tools
 write ONLY to the managed paths allowlist (AGENTS.md managed section and
 .goal-governance/) and require explicit ``confirm=true`` (default refuse).
 
-Usage:  python skills/mcp/server.py [--repo-root PATH] [--version]
+Usage:  python mcp/server.py [--repo-root PATH] [--version]
 """
 
 from __future__ import annotations
@@ -33,7 +33,7 @@ try:  # package context (python -m / import)
     from .doctor import doctor as doctor_report
     from .entries import LEDGER_TARGETS, entrypoint_specs, tool_definitions
     from .lifecycle import LifecycleError, install, uninstall, upgrade
-except ImportError:  # plain script context (python skills/mcp/server.py)
+except ImportError:  # plain script context (python mcp/server.py)
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from __init__ import __version__  # type: ignore[no-redef]
     from doctor import doctor as doctor_report  # type: ignore[no-redef]

@@ -1,6 +1,6 @@
 """L2 shared equivalence kernel tests (VP-004 R1).
 
-The SAME assertion set (skills/mcp/kernel.py::check_equivalence, backed by the
+The SAME assertion set (mcp/kernel.py::check_equivalence, backed by the
 ten V-F-016 checkpoints) runs over BOTH channel descriptions:
   - File channel: derived from the REAL repository File assets.
   - MCP channel: derived from the REAL MCP server process tools/list payload.
@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-MCP_PKG = REPO_ROOT / "skills" / "mcp"
+MCP_PKG = REPO_ROOT / "mcp"
 FIXTURE = Path(__file__).resolve().parent / "fixtures" / "dual-channel"
 
 sys.path.insert(0, str(MCP_PKG.parent))  # make `import mcp.kernel` resolve
@@ -31,7 +31,7 @@ import mcp.kernel as kernel  # noqa: E402
 
 def _mcp_tools_payload(repo_root: Path) -> list[dict[str, Any]]:
     """Launch the REAL MCP server and return its tools/list payload."""
-    server_py = repo_root / "skills" / "mcp" / "server.py"
+    server_py = repo_root / "mcp" / "server.py"
     proc = subprocess.Popen(
         [sys.executable, str(server_py), "--repo-root", str(repo_root)],
         stdin=subprocess.PIPE,

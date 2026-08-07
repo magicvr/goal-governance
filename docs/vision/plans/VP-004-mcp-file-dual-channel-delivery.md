@@ -2,12 +2,12 @@
 doc_type: vision-plan
 id: VP-004-mcp-file-dual-channel-delivery
 title: 消费交付双通道（MCP + File）与可配置治理根
-status: closed
+status: active
 vision_ref: vision-goal-governance@0.2.0
 lead_workspace: workspace-003-mcp-file-dual-channel
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.3.0
+version: 0.4.0
 ---
 
 # VP-004 · 消费交付双通道（MCP + File）与可配置治理根
@@ -159,6 +159,7 @@ R3 是**交付能力**，但落地会触及 alignment 等权威路径的 **`docs
 5. **宿主**：四承诺宿主均有明确适配状态；**P0** 达到上表约定级验证地板；**P1** 至少 L1，缺 L3 须用户书面 residual。
 6. **非目标未偷渡**：无 Antigravity/Open Code 假承诺；无 DB/多 backend 必达；`commit` 未绑架治理完整安装。
 7. **不**要求关闭 VP-002/VP-003，**不**要求 Charter 可完成。
+8. **R4 发布资产面（2026-08-07 reopen 增补）**：File 发布资产**不**包含 MCP 实现源码（通道资产分离，`skills/mcp/` 不进 skills zip）；MCP server 以 **Docker 镜像**发布到本仓 GHCR，与 File 资产**同 tag 同时发布同版本**（随 `skills-pack-release.yml` tag 流程）；仓库与 README（根 README + `skills/mcp/README.md`）提供安装 MCP server 的命令与指南，且文档与实现一致（无「Dockerfile 可选」类空头文案）。
 
 ## 明确非目标（本 VP）
 
@@ -190,13 +191,14 @@ R3 是**交付能力**，但落地会触及 alignment 等权威路径的 **`docs
 
 | workspace_id | root_goal | role | joined | notes |
 |--------------|-----------|------|--------|-------|
-| workspace-003-mcp-file-dual-channel | GOAL-001-mcp-file-dual-channel-delivery | delivery / **lead** | 2026-08-07 | 用户 `/govern` 确认新区 slug；Root R1–R3 纲领；R1/R2/R3 子目标全部 `done`（GOAL-002/003/004），Root 关门中 |
+| workspace-003-mcp-file-dual-channel | GOAL-001-mcp-file-dual-channel-delivery | delivery / **lead** | 2026-08-07 | 用户 `/govern` 确认新区 slug；Root R1–R3 纲领；R1/R2/R3 子目标全部 `done`（GOAL-002/003/004）；**R4 reopen**：GOAL-005-r4-mcp-docker-release active（发布资产面缺口，2026-08-07 回退） |
 
 ## 关门记录
 
 | date | outcome | summary | evidence_links | residuals |
 |------|---------|---------|----------------|-----------|
 | 2026-08-07 | **closed**（工作区完整关门） | File+MCP 双通道一等交付（R1 四入口等价内核 + 合同 `deliveryChannel` 分列；R2 bootstrap 双入口 + 薄壳 lifecycle + AGENTS managed；R3 可配置 `governance_root` + canonical 权威面相对化）；P0×3 + P1×1 宿主达标（L1 + 抽稀 L3 探针全 pass）；非目标未偷渡；不要求 VP-002/VP-003 或 Charter 完成。 | 退出判据 1–7 证据链见 Root `03-audit/A-007-independent-close-out.md` 与 A-008 响应；R1/R2/R3 检查点 commits `1a89575` / `ae614db` / `560669e`（+ 关门 commit）；子目标 GOAL-002/003/004 五件套与 A 序列；`goal-tree.md`（全 done/100%）。 | 无（recommended 已响应；L3 探针为宿主入口面，MCP 进程面由 L1/L2 覆盖——边界记录于 GOAL-002 `attachments/runtime/README.md`）。 |
+| 2026-08-07 | **reopened → active**（发布资产面缺口） | A-009 关门复审后，发布面核查（用户指令）发现关门范围外缺口：File zip 混入 `skills/mcp/` 源码（通道资产未分离）；MCP server 无 Docker 发布资产（无 Dockerfile / 无 GHCR 步骤 / README 无安装指南）；`skills/mcp/README.md` 空头文案。用户书面确认「全套方案」：VP 回退 active，Root 回退 active，新开 **GOAL-005-r4-mcp-docker-release**（R4），退出判据 #8 增补。 | 缺口核查与回退留痕：Root `03-audit/A-010`（响应）+ 03-audit 结论状态段；Root `00-meta` 备注；workspace.md；goal-tree.md（Root active 75% + GOAL-005）。 | 无（R4 完成后按退出判据 1–8 复关）。 |
 
 ## 规划修订短史
 
@@ -206,3 +208,4 @@ R3 是**交付能力**，但落地会触及 alignment 等权威路径的 **`docs
 | 2026-08-07 | **VRev-007 响应**（v0.1.1）：R3 协议面变更车辆（V-F-013 A）；P0/P1 与约定级验证地板（V-F-014）；Charter 叙事选择不改 Charter（V-F-015）；R1 入口等价检查点（V-F-016）；退出判据 #4/#5 同步可判定表述。 |
 | 2026-08-07 | **激活 + 挂区**（v0.2.0）：`status: active`；lead = `workspace-003-mcp-file-dual-channel`；Root `GOAL-001-mcp-file-dual-channel-delivery`；空转结束。 |
 | 2026-08-07 | **关门**（v0.3.0）：`status: closed`；工作区完整关门（退出判据 1–7 证据链见 Root 03-audit A-007/A-008）；关门记录表填写。 |
+| 2026-08-07 | **reopen → active**（v0.4.0）：发布面核查（用户指令）发现关闭范围外缺口——File zip 混入 `skills/mcp/` 源码、MCP 无 Docker 发布资产、README 无安装指南 + 空头文案；用户书面确认「全套方案」：VP/workspace/Root 回退 active，新开 GOAL-005-r4-mcp-docker-release（R4），退出判据 #8 增补。 |

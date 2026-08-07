@@ -67,7 +67,7 @@ class GovernanceRootCanonicalTests(unittest.TestCase):
         self.assertIn("{governance_root}/vision/plans/VP-NNN-slug.md", plan)
 
     def test_mcp_config_schema_ships_with_package(self) -> None:
-        schema = REPO_ROOT / "skills" / "mcp" / "governance-root.schema.json"
+        schema = REPO_ROOT / "mcp" / "governance-root.schema.json"
         self.assertTrue(schema.is_file())
         text = schema.read_text(encoding="utf-8")
         self.assertIn("governance_root", text)

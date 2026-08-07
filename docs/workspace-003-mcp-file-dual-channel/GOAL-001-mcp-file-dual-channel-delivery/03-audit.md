@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 审计 · GOAL-001
@@ -37,4 +37,4 @@ version: 0.8.0
 
 ## 结论状态
 
-Root **`done`**：R1/R2/R3 纲领阶段 + 最终关门审计（self A-001/A-003/A-005/A-006/A-008 + independent A-002/A-004/A-007）通过；关门后独立复审 **A-009 pass**（无 required；recommended 不阻断）。**未**因 A-009 回退关门状态。A-009 的 recommended R-001～R-005 已由 **A-010** 响应（R-001 最小修正 / R-002/R-004/R-005 fixed / R-003 延后留痕）；仍开放项均有明确触发条件，不阻断关门。VP-004 `status: closed`（关门记录已填）。
+Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-001/A-003/A-005/A-006/A-008 + independent A-002/A-004/A-007；关门后独立复审 **A-009 pass**；A-010 响应 recommended R-001～R-005）。**2026-08-07 发布面核查（用户指令）发现关门范围外的新缺口**：File zip 混入 `skills/mcp/` 实现源码（通道资产未分离）、MCP server 无可分发 Docker 发布资产（无 Dockerfile / 无 GHCR 发布步骤 / README 无安装指南）、`skills/mcp/README.md`「Dockerfile 可选」文案与事实不符。用户书面确认「全套方案」→ **Root 回退 `done → active`**（progress 100% → 75%，纲领 3/4），新开 **GOAL-005-r4-mcp-docker-release**（R4）；VP-004 与 workspace.md 同步回退 active。A-008/A-009 关门结论在当时证据下成立，不因回退而改写；R4 缺口与修复由 GOAL-005 五件套 + 审计承载。

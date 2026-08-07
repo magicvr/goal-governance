@@ -111,7 +111,7 @@ def doctor(root: Path, *, governance_root: str | None = None) -> dict[str, Any]:
         },
         "gitignore": {
             "thinShellIgnored": thin_dir_ignored,
-            "fragment": "skills/mcp/gitignore-fragment.txt",
+            "fragment": "mcp/gitignore-fragment.txt",
         },
         "contract": {
             "present": contract_present,

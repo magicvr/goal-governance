@@ -30,6 +30,8 @@ param(
 
     [string]$ReleaseTag = '',
 
+    [string]$McpImage = '',
+
     [switch]$SkipInstall,
 
     [switch]$Force,
@@ -46,7 +48,7 @@ Goal Governance bootstrap installer (GOAL-023 / VP-004 R2 dual entry)
 Downloads or uses a local skills zip (core embedded), verifies SHA-256,
 then installs via one of the two first-class channels:
 
-  -Channel mcp   (推荐 MCP 通道): 薄通道——仅安装 skills/mcp + consumer
+  -Channel mcp   (推荐 MCP 通道): 薄通道——contract + AGENTS managed + 状态（经 GHCR Docker 镜像内 lifecycle 写入），不落 mcp 代码
                  contract + AGENTS.md managed 段 + .goal-governance 状态。
                  **File 通道仍为一等发布路径、未被废除、非日落**；
                  File-classic（无 Docker / 无 MCP）始终可用。
@@ -60,7 +62,7 @@ Usage:
 
 Options:
   -Version        SemVer (optional leading v); archive name uses stripped form
-  -Channel        files (默认完整 File 通道) | mcp (薄 MCP 通道；需 python)
+  -Channel        files (默认完整 File 通道) | mcp (薄 MCP 通道；需 docker)
   -TargetDir      Project root (default: current directory)
   -SkillsDirName  Directory name under TargetDir (default: skills)
   -ZipPath        Local skills zip (skip download when set)
@@ -244,15 +246,9 @@ try {
     }
 
     if ($Channel -eq 'mcp') {
-        # 薄 MCP 通道：仅 materialize skills/mcp + consumer contract，然后由
-        # lifecycle CLI（单一真相源）写 AGENTS.md managed 段与薄壳状态。
-        # 注：zip 归档根即 skills 包内容（mcp/、contracts/ 直接位于归档根）。
-        $mcpSrc = Join-Path $packageSrc 'mcp'
-        if (-not (Test-Path -LiteralPath (Join-Path $mcpSrc 'server.py') -PathType Leaf)) {
-            Write-Err "Package missing mcp/server.py (MCP channel unavailable)"
-        }
-        Copy-Item -LiteralPath $mcpSrc -Destination (Join-Path $destSkills 'mcp') -Recurse -Force
-
+        # 薄 MCP 通道（R4 重定义，D-001 决策点②）：不再 materialize mcp 代码；写
+        # consumer contract，并经 GHCR 镜像内 lifecycle CLI（单一真相源）写 AGENTS.md
+        # managed 段与 .goal-governance/ 状态；输出 MCP client 配置指引（docker run 固定入口）。
         $contractsSrc = Join-Path $packageSrc 'contracts'
         $contractsDest = Join-Path $destSkills 'contracts'
         New-Item -ItemType Directory -Path $contractsDest -Force | Out-Null
@@ -263,22 +259,22 @@ try {
             }
             Copy-Item -LiteralPath $src -Destination (Join-Path $contractsDest $name) -Force
         }
-
-        # 复用 lifecycle 模块写 managed 段与状态（与 MCP server 同一真相源）。
-        $lifecycleCli = Join-Path $destSkills 'mcp\lifecycle.py'
-        $python = Get-Command python -ErrorAction SilentlyContinue
-        if (-not $python) {
-            Write-Err "MCP channel requires python on PATH (stdio runtime); use -Channel files for File-classic"
+        if (-not $McpImage) {
+            $McpImage = "ghcr.io/magicvr/goal-governance-mcp-server:$norm"
         }
-        $lifecycleArgs = @(
-            (Join-Path $destSkills 'mcp\lifecycle.py'), 'install',
-            '--root', $TargetDir, '--version', $norm, '--channel', 'mcp', '--confirm'
-        )
-        & python @lifecycleArgs
+        $docker = Get-Command docker -ErrorAction SilentlyContinue
+        if (-not $docker) {
+            Write-Err "MCP channel requires docker (runtime is the GHCR image $McpImage); use -Channel files for File-classic"
+        }
+        $mount = "$($TargetDir.Replace('\','/')):/workspace"
+        & docker run --rm -v $mount $McpImage lifecycle.py install `
+            --root /workspace --version $norm --channel mcp --confirm
         if ($LASTEXITCODE -ne 0 -and $null -ne $LASTEXITCODE) {
-            Write-Err "Thin-shell lifecycle install failed (exit $LASTEXITCODE)"
+            Write-Err "Thin-shell lifecycle install failed (docker run $McpImage; exit $LASTEXITCODE)"
         }
+        $cfg = '{"command": "docker", "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "' + $McpImage + '"]}'
         Write-Host 'MCP channel bootstrap complete.'
+        Write-Host "MCP client 配置（mcpServers，stdio 直连容器，零参数）: $cfg"
         Write-Host 'Note: the File channel remains a first-class release path and is NOT sunset; use -Channel files for the full File install (File-classic needs no Docker/MCP).'
         exit 0
     }
