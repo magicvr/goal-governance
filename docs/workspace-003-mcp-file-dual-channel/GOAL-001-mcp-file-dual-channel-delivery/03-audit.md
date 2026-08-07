@@ -5,7 +5,7 @@ status: done
 parent: null
 created: 2026-08-07
 updated: 2026-08-08
-version: 0.13.0
+version: 0.14.0
 ---
 
 # 审计 · GOAL-001
@@ -41,6 +41,7 @@ version: 0.13.0
 | A-015 | 2026-08-07 | self | 维护轮响应：F-004/F-005/F-007 fixed（initialize 门禁 + lifecycle root 边界 + directory-layout mcp/；210 测试绿；不回退状态） | pass | 0 | `03-audit/A-015-maintenance-f004-f005-f007-fixed-self.md` |
 | A-016 | 2026-08-07 | independent | 独立复审 F-001～F-005、F-007 关闭证据（A-014/A-015；亲自核验 210 测试 / stage / 实包 / 哈希 / git 时序） | conditional | 0（F-001r recommended：F-001 关闭证据在 A-015 改 server.py 后再次过期） | `03-audit/A-016-independent-f001-f007-closure-review.md` |
 | A-017 | 2026-08-07 | self | 响应 A-016：F-001r fixed（四宿主 L3 重捕获绑定当前树 server `cd31cbde…`；全 pass）；F-002/F-003/F-004/F-005/F-007 维持 fixed | pass | 0 | `03-audit/A-017-response-a016-l3-recapture-self.md` |
+| A-018 | 2026-08-08 | self | 响应 M-001：capture `--check` 一致性校验落地（check_evidence_file/run_evidence_check + 10 测试；workspace-003 证据 4 文件 ok；234 测试绿；A-016 建议 3 闭环） | pass | 0 | `03-audit/A-018-response-m001-executed-self.md` |
 
 ## 结论状态
 
@@ -61,3 +62,5 @@ Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-0
 **2026-08-07 响应（A-017，self，pass）**：用户指令「重新捕获检查」→ 执行 **F-001 选项 A 重捕获**：四宿主（claude/grok/codex/copilot，同 prompt 哈希、同 CLI 版本）并行重跑，`behaviorSources` 重新绑定当前树（`server.py = cd31cbde…` = 当前树；entries/kernel 哈希不变），四条证据 capturedAt 2026-08-07T15:59–16:01Z、verdict 全 `pass`；runtime README 补记第三次捕获点与维护钩子；00-meta 备注恢复字面成立。**F-001r fixed**；F-001～F-005、F-007 全部维持 fixed。剩余 F-006（VP-002）、F-008/I-007（首次真实 GHCR 发布验收）不变；A-016 防再犯建议（capture 一致性检查）待用户决定。状态与 goal-tree **无变化**。
 
 **2026-08-08 维护项立项（E-010）**：用户指令将 **A-016 防再犯建议**（为 `scripts/capture_runtime_evidence.py` 或 CI 增加「L3 证据 `behaviorSources` 与当前树哈希」一致性检查）**立项为维护项 M-001**（registered，未执行）：范围/验收标准（实现变更后检查红、重捕获后绿、基线 210 测试绿）/触发（下一维护轮或下次改 `mcp/` 前）/归属（workspace-003 工具链维护，不 reopening）均留痕于 `02-execution/E-010-register-maintenance-item-m001.md`。其余仍开放项不变：F-006（VP-002）、F-008 / I-007（首次真实 GHCR 发布验收）。状态与 goal-tree **无变化**。
+
+**2026-08-08 M-001 执行完成（A-018，self，pass）**：`capture_runtime_evidence.py` 新增 **`--check`** 一致性校验（`check_evidence_file` / `run_evidence_check`：枚举 `behaviorSources` 比对当前树，复用 `_repo_file` 防穿越与 `_sha256_repo_text` 哈希语义；非证据 JSON 跳过；`--evidence-dir` 可重复且 check 模式必填——**历史时点证据绑定捕获时点树，不隐式全仓扫描**）；10 条新测试（一致绿/stale 红/缺失红/穿越拒/非证据跳过/计数/CLI exit 码/缺目录/多目录）；端到端 workspace-003 L3 证据 **ok（4 文件）**、历史发布证据目录显式检查正确红；全量 **234 passed** 无回归；维护钩子文档入 GOAL-002 runtime README。**M-001 done**；A-016 建议 3（防再犯）闭环，F-001 复发根因有测试层兜底。仍开放：F-006（VP-002）、F-008 / I-007（首次真实 GHCR 发布验收）。状态与 goal-tree **无变化**。

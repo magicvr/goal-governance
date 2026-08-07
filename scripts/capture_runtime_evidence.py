@@ -315,6 +315,83 @@ def _validate(payload: dict[str, Any], root: Path) -> None:
         raise CaptureError(f"runtime evidence schema failed at {location}: {error.message}")
 
 
+def check_evidence_file(path: Path, root: Path = REPO_ROOT) -> list[str] | None:
+    """Verify one evidence payload against the current tree (M-001 / A-016).
+
+    Returns a list of consistency problems, or ``None`` when the file is not
+    runtime evidence (no ``behaviorSources`` member) and should be skipped.
+    A problem is reported when a recorded ``behaviorSources`` entry no longer
+    matches the current tree (missing file, schema failure, or sha256 drift) —
+    e.g. after ``mcp/`` implementation changes made without a recapture.
+    """
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or "behaviorSources" not in payload:
+        return None
+    errors: list[str] = []
+    try:
+        _validate(payload, root)
+    except CaptureError as error:
+        errors.append(str(error))
+    for entry in payload["behaviorSources"]:
+        if not isinstance(entry, dict) or "path" not in entry or "sha256" not in entry:
+            errors.append(f"behaviorSources entry missing path/sha256: {entry!r}")
+            continue
+        value = str(entry["path"])
+        try:
+            resolved = _repo_file(root, value, "behavior source")
+        except CaptureError as error:
+            errors.append(str(error))
+            continue
+        current = _sha256_repo_text(resolved)
+        if current != str(entry["sha256"]):
+            errors.append(
+                f"behavior source is stale: {value} "
+                f"(recorded {str(entry['sha256'])[:12]}…, current {current[:12]}…)"
+            )
+    return errors
+
+
+def _display_path(path: Path, root: Path) -> str:
+    try:
+        return path.relative_to(root).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def run_evidence_check(
+    directories: list[Path] | Path,
+    root: Path = REPO_ROOT,
+) -> tuple[list[str], int]:
+    """Scan ``directories`` recursively for evidence JSON and check it (M-001).
+
+    Returns ``(problems, checked_count)``. Only payloads carrying a
+    ``behaviorSources`` member are treated as runtime evidence; other JSON
+    files are skipped so the check is safe over a whole tree. Callers pass
+    explicit directories: historical captures (e.g. ``docs/releases/runtime/``)
+    are bound to their capture-time tree and are only checked when named.
+    """
+    root = root.resolve()
+    if isinstance(directories, Path):
+        directories = [directories]
+    problems: list[str] = []
+    checked = 0
+    for directory in directories:
+        if not directory.is_dir():
+            raise CaptureError(f"evidence directory not found: {directory}")
+        for path in sorted(directory.rglob("*.json")):
+            try:
+                errors = check_evidence_file(path, root)
+            except (OSError, json.JSONDecodeError) as error:
+                problems.append(f"{_display_path(path, root)}: unreadable evidence JSON: {error}")
+                continue
+            if errors is None:
+                continue
+            checked += 1
+            for error in errors:
+                problems.append(f"{_display_path(path, root)}: {error}")
+    return problems, checked
+
+
 def capture(
     *,
     consumer: str,
@@ -480,28 +557,46 @@ def capture(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--consumer", required=True)
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help=(
+            "verify recorded runtime evidence behaviorSources against the "
+            "current tree (no probe run); exit 1 on any stale/missing source"
+        ),
+    )
+    parser.add_argument(
+        "--evidence-dir",
+        action="append",
+        type=Path,
+        default=None,
+        help=(
+            "directory scanned recursively for evidence JSON (check mode; "
+            "repeatable). Required in --check mode: historical captures are "
+            "bound to their capture-time tree and must be checked explicitly."
+        ),
+    )
+    parser.add_argument("--consumer")
     parser.add_argument(
         "--entrypoint",
         choices=("govern", "audit", "vision", "vision-audit"),
-        required=True,
     )
-    parser.add_argument("--protocol-version", required=True)
-    parser.add_argument("--product", required=True)
-    parser.add_argument("--product-version", required=True)
+    parser.add_argument("--protocol-version")
+    parser.add_argument("--product")
+    parser.add_argument("--product-version")
     parser.add_argument("--provider")
     parser.add_argument("--model")
-    parser.add_argument("--prompt-file", type=Path, required=True)
-    parser.add_argument("--marker", required=True)
+    parser.add_argument("--prompt-file", type=Path)
+    parser.add_argument("--marker")
     parser.add_argument(
         "--require-assert",
         action="append",
         default=[],
         help="Extra substring that must appear in stdout for pass (repeatable).",
     )
-    parser.add_argument("--behavior-source", action="append", default=[], required=True)
+    parser.add_argument("--behavior-source", action="append", default=[])
     parser.add_argument("--screenshot", action="append", default=[])
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--output", type=Path)
     parser.add_argument("--timeout-seconds", type=float, default=120)
     parser.add_argument(
         "--stdout-mode",
@@ -516,6 +611,41 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", type=Path, default=REPO_ROOT, help=argparse.SUPPRESS)
     parser.add_argument("command", nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
+    if args.check:
+        if not args.evidence_dir:
+            parser.error("--evidence-dir is required in --check mode")
+        try:
+            problems, checked = run_evidence_check(args.evidence_dir, root=args.root)
+        except CaptureError as error:
+            print(f"evidence consistency check failed: {error}", file=sys.stderr)
+            return 1
+        if problems:
+            for problem in problems:
+                print(f"evidence consistency FAILED: {problem}", file=sys.stderr)
+            print(
+                f"checked {checked} evidence file(s); {len(problems)} problem(s)",
+                file=sys.stderr,
+            )
+            return 1
+        print(f"evidence consistency ok ({checked} evidence file(s))")
+        return 0
+    missing = [
+        flag
+        for flag, value in (
+            ("--consumer", args.consumer),
+            ("--entrypoint", args.entrypoint),
+            ("--protocol-version", args.protocol_version),
+            ("--product", args.product),
+            ("--product-version", args.product_version),
+            ("--prompt-file", args.prompt_file),
+            ("--marker", args.marker),
+            ("--behavior-source", args.behavior_source),
+            ("--output", args.output),
+        )
+        if value is None or (isinstance(value, list) and not value)
+    ]
+    if missing:
+        parser.error(f"the following arguments are required: {', '.join(missing)}")
     command = args.command[1:] if args.command and args.command[0] == "--" else args.command
     try:
         prompt = args.prompt_file.read_text(encoding="utf-8")

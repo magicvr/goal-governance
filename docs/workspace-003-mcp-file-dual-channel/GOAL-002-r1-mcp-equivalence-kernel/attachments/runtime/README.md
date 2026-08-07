@@ -36,6 +36,21 @@ dispatch 与角色边界（`vision` / `vision-audit` / `govern` / `audit`），�
   verdict 全部 `pass`（E-009）。此后修改 `mcp/` 实现（尤其 `server.py`）须同步
   刷新本组证据或按本节约记哈希演进。
 
+## 一致性检查（M-001 · A-016）
+
+`scripts/capture_runtime_evidence.py --check --evidence-dir <dir>` 递归扫描指定
+目录中的证据 JSON，将每条 `behaviorSources` 记录的 sha256 与**当前树**逐一比对；
+任一缺失/穿越/哈希漂移即报 `evidence consistency FAILED` 并以 exit 1 失败。
+只处理含 `behaviorSources` 的证据文件，其他 JSON 跳过；**历史时点证据**
+（如 `docs/releases/runtime/`、早期工作区捕获）绑定捕获时点树，必须显式指定
+目录才检查，不隐式全仓扫描。
+
+```powershell
+# 维护钩子（改 mcp/ 实现后跑；应为 ok / 4 evidence file(s)）
+python scripts/capture_runtime_evidence.py --check --evidence-dir `
+  docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence
+```
+
 ## 复跑
 
 ```powershell
