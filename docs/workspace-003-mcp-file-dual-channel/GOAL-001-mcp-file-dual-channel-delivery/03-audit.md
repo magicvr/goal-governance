@@ -4,8 +4,8 @@ doc: audit
 status: done
 parent: null
 created: 2026-08-07
-updated: 2026-08-07
-version: 0.12.0
+updated: 2026-08-08
+version: 0.13.0
 ---
 
 # 审计 · GOAL-001
@@ -59,3 +59,5 @@ Root 于 2026-08-07 关门（R1/R2/R3 纲领阶段 + 最终关门审计 self A-0
 **2026-08-07 独立复审（A-016，independent，conditional）**：经 `/audit` 复核 A-014/A-015 关闭证据——亲自执行全量测试 **210 passed**、stage `--check` 36 对 0 漂移、真实打包 **77 成员 / 0 `test_mcp_*` / 0 `mcp/` 实现**、当前树哈希 vs L3 JSON 比对、git 时序核验。**F-002/F-003/F-004/F-005/F-007 关闭证据充分，维持 fixed**；**F-001 关闭证据在 A-015 修改 `mcp/server.py` 后再次过期**（四条 L3 JSON `behaviorSources[server.py]` = `c0af461e…`，当前树 `cd31cbde…`；00-meta「behaviorSources 哈希与当前树一致」备注再次字面不成立）。无 required；F-001r（recommended · med）——建议按选项 B 同构注解 runtime README + 00-meta 备注，并评估在 capture/CI 增加 L3 证据哈希一致性检查。状态与 goal-tree **无变化**；响应归 `/govern`。
 
 **2026-08-07 响应（A-017，self，pass）**：用户指令「重新捕获检查」→ 执行 **F-001 选项 A 重捕获**：四宿主（claude/grok/codex/copilot，同 prompt 哈希、同 CLI 版本）并行重跑，`behaviorSources` 重新绑定当前树（`server.py = cd31cbde…` = 当前树；entries/kernel 哈希不变），四条证据 capturedAt 2026-08-07T15:59–16:01Z、verdict 全 `pass`；runtime README 补记第三次捕获点与维护钩子；00-meta 备注恢复字面成立。**F-001r fixed**；F-001～F-005、F-007 全部维持 fixed。剩余 F-006（VP-002）、F-008/I-007（首次真实 GHCR 发布验收）不变；A-016 防再犯建议（capture 一致性检查）待用户决定。状态与 goal-tree **无变化**。
+
+**2026-08-08 维护项立项（E-010）**：用户指令将 **A-016 防再犯建议**（为 `scripts/capture_runtime_evidence.py` 或 CI 增加「L3 证据 `behaviorSources` 与当前树哈希」一致性检查）**立项为维护项 M-001**（registered，未执行）：范围/验收标准（实现变更后检查红、重捕获后绿、基线 210 测试绿）/触发（下一维护轮或下次改 `mcp/` 前）/归属（workspace-003 工具链维护，不 reopening）均留痕于 `02-execution/E-010-register-maintenance-item-m001.md`。其余仍开放项不变：F-006（VP-002）、F-008 / I-007（首次真实 GHCR 发布验收）。状态与 goal-tree **无变化**。
