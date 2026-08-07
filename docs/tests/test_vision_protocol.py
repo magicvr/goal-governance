@@ -242,9 +242,11 @@ class VisionProtocolTests(unittest.TestCase):
         self.assertEqual(charter["vision_id"], "vision-goal-governance")
         self.assertEqual(charter["status"], "active")
         self.assertNotEqual(charter["status"], "done")
+        ledger_ids = validate_vision_review_ledger(VISION_DIR)
+        # 断言编号从 VRev-001 连续递增（动态上限，避免台账增长时测试过期）。
         self.assertEqual(
-            validate_vision_review_ledger(VISION_DIR),
-            {f"VRev-{number:03d}" for number in range(1, 7)},
+            ledger_ids,
+            {f"VRev-{number:03d}" for number in range(1, len(ledger_ids) + 1)},
         )
 
     def test_vision_review_reports_have_unique_ids_and_index_links(self) -> None:
