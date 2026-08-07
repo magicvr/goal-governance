@@ -15,7 +15,7 @@ version: 0.6.0
 |--------------|------|-----------|--------------|-----------|------------|--------|
 | workspace-001-goal-governance | primary | VP-001-governance-platform-delivery | VP-001-governance-platform-delivery | GOAL-001-main-vision | **archived** | 奠基 dogfood 封存；Root **done**；服务已关 VP-001；**不**挂 VP-002/VP-004 |
 | workspace-002-methodology-skills-feedback | delivery | VP-002-methodology-skills-feedback-evolution | VP-002-methodology-skills-feedback-evolution | GOAL-001-methodology-skills-feedback-evolution | **active** | VP-002 lead；真实项目反馈演进 |
-| workspace-003-mcp-file-dual-channel | delivery | VP-004-mcp-file-dual-channel-delivery | VP-004-mcp-file-dual-channel-delivery | GOAL-001-mcp-file-dual-channel-delivery | **active** | VP-004 lead；File+MCP 双通道与 governance_root |
+| workspace-003-mcp-file-dual-channel | delivery | VP-004-mcp-file-dual-channel-delivery | VP-004-mcp-file-dual-channel-delivery | GOAL-001-mcp-file-dual-channel-delivery | **closed** | VP-004 lead；File+MCP 双通道与 governance_root 交付完成（2026-08-07 复关） |
 
 ## 规则摘要
 
