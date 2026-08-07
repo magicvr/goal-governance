@@ -8,8 +8,8 @@ primary_plan: VP-004-mcp-file-dual-channel-delivery
 serves_summary: delivery Root；服务 VP-004 / vision-goal-governance@0.2.0；File+MCP 双通道、四承诺宿主、最小测试内核与可配置 governance_root
 created: 2026-08-07
 updated: 2026-08-07
-version: 0.3.0
-progress: 33%
+version: 0.4.0
+progress: 67%
 ---
 
 # GOAL-001 · 消费交付双通道（MCP + File）与可配置治理根
@@ -24,7 +24,7 @@ progress: 33%
 
 - [ ] 双通道一等：File 与 MCP 均可按发布约定取得；推荐 MCP 不废除 File
 - [x] R1：MCP 无 File 大包可达四治理入口等价检查点；L2 共享 + 分通道 L1 + 抽稀 L3 可读（GOAL-002 done）
-- [ ] R2：薄壳 lifecycle、gitignore 默认、AGENTS managed、生产仓 File 自举有证据
+- [x] R2：薄壳 lifecycle、gitignore 默认、AGENTS managed、生产仓 File 自举有证据（GOAL-003 done）
 - [ ] R3：`governance_root` 可配置 + 越界 fail closed + canonical 权威修订（或 residual）
 - [ ] 宿主：P0（Claude / Grok / Codex）达约定级验证；P1 Copilot 至少 L1（缺 L3 须 residual）
 - [ ] **不**要求关闭 VP-002/VP-003 或 Charter 可完成
@@ -34,14 +34,14 @@ progress: 33%
 | 阶段 | 名称 | 状态 | 说明 |
 |------|------|------|------|
 | **R1** | MCP 通道并行达标 + 最小共享测试内核 | **完成（GOAL-002 done）** | 四入口等价检查点；L2 共享 + L1 分列 + 抽稀 L3；合同 `deliveryChannel` 分列 |
-| **R2** | 双通道产品化 | **未开始** | bootstrap 双入口；薄壳 lifecycle；gitignore；AGENTS managed；File-classic |
+| **R2** | 双通道产品化 | **完成（GOAL-003 done）** | bootstrap 双入口；薄壳 lifecycle；gitignore；AGENTS managed；File-classic |
 | **R3** | 可配置 `governance_root` 与消费面收敛 | **未开始** | 配置 pin；仓外 fail closed；alignment/AGENTS/templates 权威路径补丁（V-F-013 车辆） |
 
-同一纲领阶段内可并行多个子目标；阶段间通常串行。R1 已完成并关门（GOAL-002 `done`，审计见其 03-audit）。
+同一纲领阶段内可并行多个子目标；阶段间通常串行。R1/R2 已完成并关门（GOAL-002/GOAL-003 `done`）。
 
 ## 派生进度展示
 
-`progress: 33%` = 纲领阶段 R1～R3 中已完成 **1 / 3**（等权；R1 于 2026-08-07 关门）。progress **仅展示**，不放行阶段、不关闭 finding、不推导 Root `done`。
+`progress: 67%` = 纲领阶段 R1～R3 中已完成 **2 / 3**（等权；R1/R2 于 2026-08-07 关门）。progress **仅展示**，不放行阶段、不关闭 finding、不推导 Root `done`。
 
 ## 信息就绪与未知项
 
@@ -67,6 +67,7 @@ progress: 33%
 | id | title | status |
 |----|-------|--------|
 | [GOAL-002-r1-mcp-equivalence-kernel](../GOAL-002-r1-mcp-equivalence-kernel/00-meta.md) | R1：MCP/File 等价验证内核 | done |
+| [GOAL-003-r2-dual-channel-productization](../GOAL-003-r2-dual-channel-productization/00-meta.md) | R2：双通道产品化 | done |
 
 ## 备注
 

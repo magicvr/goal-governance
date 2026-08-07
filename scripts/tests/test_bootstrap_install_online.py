@@ -8,6 +8,7 @@ a structural residual check documents the shipped script.
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 import shutil
 import subprocess
@@ -208,6 +209,123 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
                     and (target / "docs" / "architecture" / "principles.md").is_file()
                 )
 
+    def test_mcp_channel_bootstrap_installs_thin_shell_only_and_preserves_user_agents(self) -> None:
+        """VP-004 R2 dual entry: -Channel mcp = thin shell, no File 大包."""
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            pack_out = base / "pack"
+            target = base / "consumer"
+            target.mkdir()
+            user_preamble = "# 用户自有规则\n- 中文提交\n"
+            (target / "AGENTS.md").write_text(user_preamble, encoding="utf-8")
+            result = self._pack_skills(pack_out)
+            proc = _powershell(
+                "-File",
+                str(BOOTSTRAP_PS1),
+                "-Version",
+                result.version,
+                "-Channel",
+                "mcp",
+                "-TargetDir",
+                str(target),
+                "-ZipPath",
+                str(result.zip_path),
+                "-Sha256Path",
+                str(result.sha256_path),
+                "-Force",
+            )
+            self.assertEqual(
+                proc.returncode,
+                0,
+                msg=f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}",
+            )
+            # Thin MCP surface present.
+            self.assertTrue((target / "skills" / "mcp" / "server.py").is_file())
+            self.assertTrue(
+                (target / "skills" / "mcp" / "lifecycle.py").is_file()
+            )
+            self.assertTrue(
+                (target / "skills" / "contracts" / "skills-consumer-contract.json").is_file()
+            )
+            # File 大包 NOT installed.
+            self.assertFalse((target / "docs" / "architecture").exists())
+            self.assertFalse((target / "skills" / "prompts").exists())
+            self.assertFalse((target / "skills" / "install.ps1").exists())
+            # Managed AGENTS section with version; user preamble preserved.
+            agents = (target / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertTrue(agents.startswith(user_preamble))
+            self.assertIn("<!-- goal-governance:begin managed -->", agents)
+            self.assertIn("<!-- goal-governance:end managed -->", agents)
+            self.assertIn(f"- version: {result.version}", agents)
+            # Thin-shell state.
+            state = json.loads(
+                (target / ".goal-governance" / "install.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(state["channel"], "mcp")
+            self.assertEqual(state["version"], result.version)
+            # 推荐 MCP 叙述同屏声明 File 仍一等（ps1 输出为英文，跨控制台代码页稳定）。
+            self.assertIn("File channel remains a first-class release path", proc.stdout)
+            self.assertIn("NOT sunset", proc.stdout)
+
+    def test_files_channel_explicit_is_full_install(self) -> None:
+        """VP-004 R2: -Channel files (explicit) keeps the full File install."""
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            pack_out = base / "pack"
+            target = base / "consumer"
+            target.mkdir()
+            result = self._pack_skills(pack_out)
+            proc = _powershell(
+                "-File",
+                str(BOOTSTRAP_PS1),
+                "-Version",
+                result.version,
+                "-Channel",
+                "files",
+                "-TargetDir",
+                str(target),
+                "-ZipPath",
+                str(result.zip_path),
+                "-Sha256Path",
+                str(result.sha256_path),
+                "-Force",
+            )
+            self.assertEqual(
+                proc.returncode,
+                0,
+                msg=f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}",
+            )
+            self.assertTrue(
+                (target / "docs" / "architecture" / "principles.md").is_file()
+            )
+            self.assertTrue((target / "skills" / "install.ps1").is_file())
+
+    def test_mcp_channel_rejects_unknown_channel_value(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            pack_out = base / "pack"
+            target = base / "consumer"
+            target.mkdir()
+            result = self._pack_skills(pack_out)
+            proc = _powershell(
+                "-File",
+                str(BOOTSTRAP_PS1),
+                "-Version",
+                result.version,
+                "-Channel",
+                "bogus",
+                "-TargetDir",
+                str(target),
+                "-ZipPath",
+                str(result.zip_path),
+                "-Sha256Path",
+                str(result.sha256_path),
+                "-Force",
+            )
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertIn("Channel must be 'files' or 'mcp'", proc.stdout + proc.stderr)
+
+
 
 class BootstrapShStructuralTests(unittest.TestCase):
     """bash bootstrap: full offline run when bash exists; else structural checks."""
@@ -219,6 +337,13 @@ class BootstrapShStructuralTests(unittest.TestCase):
         self.assertIn("assert_digest_match", text)
         self.assertIn("--all", text)
         self.assertIn("goal-governance-skills-v", text)
+        # VP-004 R2 dual entry: bash bootstrap declares --channel files|mcp.
+        self.assertIn("--channel", text)
+        self.assertIn("Channel must be 'files' or 'mcp'", text)
+        self.assertIn("File 通道仍为一等", text)
+        # File-classic: default path must not require Docker or MCP runtime.
+        self.assertNotIn("--docker", text.split("Usage:")[0])
+        self.assertNotIn("docker run", text.split("Usage:")[0])
         # Must not require a separate core download for default path.
         self.assertNotIn("goal-governance-core-v", text.split("Usage:")[0])
 
@@ -288,8 +413,79 @@ class BootstrapShStructuralTests(unittest.TestCase):
                 msg=proc.stdout,
             )
 
-
-class BootstrapWorkflowAndDocsContractTests(unittest.TestCase):
+    def test_bash_mcp_channel_when_available(self) -> None:
+        """VP-004 R2: bash --channel mcp installs the thin shell (PS 对等 e2e)."""
+        bash = shutil.which("bash")
+        if not bash:
+            self.skipTest("bash not on PATH")
+        probe = subprocess.run(
+            [bash, "-c", "echo ok"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        if probe.returncode != 0 or "ok" not in (probe.stdout or ""):
+            self.skipTest(f"bash on PATH is not usable: {probe.stderr!r}")
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            pack_out = base / "pack"
+            target = base / "consumer"
+            target.mkdir()
+            result = pack.pack_skills(
+                version="0.0.0-testpack",
+                output_dir=pack_out,
+                skills_root=REAL_SKILLS,
+                skip_stage=True,
+            )
+            zip_arg = str(result.zip_path).replace("\\", "/")
+            sha_arg = str(result.sha256_path).replace("\\", "/")
+            target_arg = str(target).replace("\\", "/")
+            script_arg = str(BOOTSTRAP_SH).replace("\\", "/")
+            proc = subprocess.run(
+                [
+                    bash,
+                    script_arg,
+                    "--version",
+                    result.version,
+                    "--channel",
+                    "mcp",
+                    "--target-dir",
+                    target_arg,
+                    "--zip-path",
+                    zip_arg,
+                    "--sha256-path",
+                    sha_arg,
+                    "--force",
+                ],
+                cwd=str(REPO_ROOT),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+                env={**os.environ, "MSYS_NO_PATHCONV": "1"},
+            )
+            if proc.returncode != 0 and (
+                "Need unzip" in (proc.stderr + proc.stdout)
+                or "MCP channel requires python" in (proc.stderr + proc.stdout)
+            ):
+                self.skipTest("unzip or python unavailable in bash environment")
+            self.assertEqual(
+                proc.returncode,
+                0,
+                msg=f"stdout:\n{proc.stdout}\nstderr:\n{proc.stderr}",
+            )
+            self.assertTrue((target / "skills" / "mcp" / "server.py").is_file())
+            self.assertFalse((target / "docs" / "architecture").exists())
+            agents = (target / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertIn("<!-- goal-governance:begin managed -->", agents)
+            state = json.loads(
+                (target / ".goal-governance" / "install.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(state["channel"], "mcp")
+            self.assertIn("File 通道仍为一等", proc.stdout)
     def test_workflow_packs_core_and_bootstrap(self) -> None:
         workflow = (
             REPO_ROOT / ".github/workflows/skills-pack-release.yml"
@@ -299,6 +495,21 @@ class BootstrapWorkflowAndDocsContractTests(unittest.TestCase):
         self.assertIn("install-online.ps1", workflow)
         self.assertIn("install-online.sh", workflow)
         self.assertIn("pack_skills_release.py", workflow)
+
+    def test_bootstrap_docs_declare_dual_entry_and_file_first_class(self) -> None:
+        """VP-004 R2: bootstrap README recommends MCP with File-first-class disclaimer."""
+        readme = (REPO_ROOT / "scripts" / "bootstrap" / "README.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("-Channel mcp", readme)
+        self.assertIn("-Channel files", readme)
+        self.assertIn("推荐", readme)
+        self.assertIn("File 通道仍为一等", readme)
+        self.assertIn("未被废除", readme)
+        # ps1 declares the dual entry and the same-screen File disclaimer.
+        ps1_text = BOOTSTRAP_PS1.read_text(encoding="utf-8-sig")
+        self.assertIn("[string]$Channel = 'files'", ps1_text)
+        self.assertIn("File channel remains a first-class release path", ps1_text)
 
     def test_root_readme_mentions_dual_entry_and_embedded_core(self) -> None:
         text = (REPO_ROOT / "README.md").read_text(encoding="utf-8")

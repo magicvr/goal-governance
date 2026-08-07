@@ -4,7 +4,7 @@ status: active
 created: 2026-08-07
 updated: 2026-08-07
 parent: null
-version: 0.4.0
+version: 0.5.0
 ---
 
 # Goal Tree
@@ -24,22 +24,24 @@ version: 0.4.0
 
 `/govern`（本推进轮）：GOAL-002 方案冻结（D-002/D-003/D-004 关闭 I-001/I-002/I-003）；`skills/mcp/` 双通道实现落盘；合同 `deliveryChannel` 分列（contractFormatVersion 0.4.0）；L2 共享内核 + File/MCP 分列 L1 测试（25 条新增）全绿；四宿主 L3 抽稀探针全 pass。GOAL-002 进度 0% → 75%（C1–C3 完成，C4 审计待闭合）。
 
-## 2026-08-07 · R1 关门
+## 2026-08-07 · R2 关门
 
-`/govern`（本推进轮）：A-001（self）+ A-002（independent，grok build / grok-4.5 / thinking-high）全 pass、无 required；recommended R-001～R-004 响应闭合（A-003）。GOAL-002 **done**（100%）；Root 纲领 R1 完成、进度 0% → 33%。R1 检查点 git commit 就绪。
+`/govern`（本推进轮）：GOAL-003 审计闭合（A-001 self pass；A-002 independent conditional → F-001 fixed；A-003 响应无开放 required）。GOAL-003 **done**（100%）；Root 纲领 R2 完成、进度 33% → 67%。R2 检查点 git commit 就绪。
 
 ## 树
 
 ```text
-GOAL-001-mcp-file-dual-channel-delivery  [active]  progress 33%
-└─ GOAL-002-r1-mcp-equivalence-kernel  [done]  progress 100%
+GOAL-001-mcp-file-dual-channel-delivery  [active]  progress 67%
+├─ GOAL-002-r1-mcp-equivalence-kernel  [done]  progress 100%
+└─ GOAL-003-r2-dual-channel-productization  [done]  progress 100%
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | notes |
 |----|-------|--------|--------|----------|-------|
-| GOAL-001-mcp-file-dual-channel-delivery | 消费交付双通道（MCP + File）与可配置治理根 | null | active | 33% | Root；primary_plan=VP-004；R1 完成，R2/R3 未开始 |
+| GOAL-001-mcp-file-dual-channel-delivery | 消费交付双通道（MCP + File）与可配置治理根 | null | active | 67% | Root；primary_plan=VP-004；R1/R2 完成，R3 未开始 |
 | GOAL-002-r1-mcp-equivalence-kernel | R1：MCP/File 等价验证内核 | GOAL-001-mcp-file-dual-channel-delivery | done | 100% | C1–C4 闭合；A-001/A-002/A-003 全 pass |
+| GOAL-003-r2-dual-channel-productization | R2：双通道产品化 | GOAL-001-mcp-file-dual-channel-delivery | done | 100% | C1–C6 闭合；F-001 fixed 后全 pass |
 
-下一编号：**GOAL-003**。
+下一编号：**GOAL-004**。

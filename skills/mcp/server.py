@@ -8,13 +8,14 @@ the full File skills package (VP-004 R1: thin MCP channel).
 
 Tools exposed (governance-mandatory set, VP-004 entry surface):
     vision / vision-audit / govern / audit
+plus R2 lifecycle tools: install / upgrade / uninstall / doctor.
 ``commit`` is intentionally NOT exposed (convenience, orthogonal to governance).
 
-Read-only dispatch contract: ``tools/call`` returns structured metadata
-(entrypoint, layer, role boundary, readonly flag, prompt path, guidance) and
-never mutates repository state for the four entries. Role boundaries are
-enforced by the caller (host) reading the guidance; the server itself performs
-no filesystem writes on any governance tool call.
+Read-only dispatch contract: ``tools/call`` on the four governance entries
+returns structured metadata (entrypoint, layer, role boundary, readonly flag,
+prompt path, guidance) and never mutates repository state. Lifecycle tools
+write ONLY to the managed paths allowlist (AGENTS.md managed section and
+.goal-governance/) and require explicit ``confirm=true`` (default refuse).
 
 Usage:  python skills/mcp/server.py [--repo-root PATH] [--version]
 """
@@ -29,18 +30,87 @@ from typing import Any
 
 try:  # package context (python -m / import)
     from . import __version__
+    from .doctor import doctor as doctor_report
     from .entries import LEDGER_TARGETS, entrypoint_specs, tool_definitions
+    from .lifecycle import LifecycleError, install, uninstall, upgrade
 except ImportError:  # plain script context (python skills/mcp/server.py)
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from __init__ import __version__  # type: ignore[no-redef]
+    from doctor import doctor as doctor_report  # type: ignore[no-redef]
     from entries import (  # type: ignore[no-redef]
         LEDGER_TARGETS,
         entrypoint_specs,
         tool_definitions,
     )
+    from lifecycle import (  # type: ignore[no-redef]
+        LifecycleError,
+        install,
+        uninstall,
+        upgrade,
+    )
 
 PROTOCOL_VERSION = "2025-03-26"
 SERVER_NAME = "goal-governance-mcp"
+
+# Lifecycle tools (VP-004 R2): thin-shell install/upgrade/uninstall + doctor.
+LIFECYCLE_TOOLS: list[dict[str, Any]] = [
+    {
+        "name": "install",
+        "description": (
+            "安装 MCP 薄壳（VP-004 R2）：写 AGENTS.md managed 段 + .goal-governance/install.json；"
+            "managed paths allowlist；默认确认写盘（confirm=true 才写）。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+                "confirm": {"type": "boolean", "description": "确认写盘；默认 false 拒绝写入"},
+                "channel": {"type": "string", "description": "安装通道标识（默认 mcp）"},
+            },
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "upgrade",
+        "description": (
+            "升级 MCP 薄壳 managed 段与 install.json 到当前 server 版本；只改标记内内容。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+                "confirm": {"type": "boolean", "description": "确认写盘；默认 false 拒绝写入"},
+            },
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "uninstall",
+        "description": (
+            "卸载 MCP 薄壳：只移除 AGENTS.md managed 段与 .goal-governance/ 状态；"
+            "标记外用户内容不动。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+                "confirm": {"type": "boolean", "description": "确认写盘；默认 false 拒绝写入"},
+            },
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "doctor",
+        "description": "只读安装状态报告（managed 段、薄壳状态、gitignore、governance_root）。",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "root": {"type": "string", "description": "仓库根路径（默认 server --repo-root）"},
+            },
+            "additionalProperties": False,
+        },
+    },
+]
 
 
 class MCPError(Exception):
@@ -97,7 +167,56 @@ class MCPServer:
         }
 
     def handle_tools_list(self) -> dict[str, Any]:
-        return {"tools": tool_definitions()}
+        return {"tools": tool_definitions() + LIFECYCLE_TOOLS}
+
+    def _handle_lifecycle_call(
+        self, name: str, arguments: dict[str, Any]
+    ) -> dict[str, Any]:
+        root_value = arguments.get("root")
+        root = Path(root_value).resolve() if root_value else self.repo_root
+        confirm = bool(arguments.get("confirm", False))
+        if name in ("install", "upgrade", "uninstall"):
+            try:
+                if name == "install":
+                    result = install(
+                        root,
+                        confirm=confirm,
+                        version=__version__,
+                        channel=str(arguments.get("channel") or "mcp"),
+                    )
+                elif name == "upgrade":
+                    result = upgrade(root, confirm=confirm, version=__version__)
+                else:
+                    result = uninstall(root, confirm=confirm)
+            except LifecycleError as error:
+                return {
+                    "content": [{"type": "text", "text": str(error)}],
+                    "structuredContent": {
+                        "tool": name,
+                        "status": "error",
+                        "message": str(error),
+                    },
+                    "isError": True,
+                }
+            structured = {
+                "tool": name,
+                "status": "ok",
+                "wrote": result.wrote,
+                "version": result.version,
+                "channel": result.channel,
+            }
+            return {
+                "content": [{"type": "text", "text": f"{name} ok: {', '.join(result.wrote)}"}],
+                "structuredContent": structured,
+                "isError": False,
+            }
+        # doctor: read-only
+        report = doctor_report(root)
+        return {
+            "content": [{"type": "text", "text": json.dumps(report, ensure_ascii=False)}],
+            "structuredContent": {"tool": "doctor", "status": "ok", **report},
+            "isError": False,
+        }
 
     def handle_tools_call(self, params: dict[str, Any]) -> dict[str, Any]:
         name = str(params.get("name", ""))
@@ -105,8 +224,16 @@ class MCPServer:
         if not isinstance(arguments, dict):
             raise MCPError(-32602, "Invalid params: arguments must be an object")
         specs = entrypoint_specs()
-        if name not in specs:
-            raise MCPError(-32602, f"Unknown tool: {name}")
+        if name in specs:
+            return self._handle_governance_call(name, arguments)
+        if name in {tool["name"] for tool in LIFECYCLE_TOOLS}:
+            return self._handle_lifecycle_call(name, arguments)
+        raise MCPError(-32602, f"Unknown tool: {name}")
+
+    def _handle_governance_call(
+        self, name: str, arguments: dict[str, Any]
+    ) -> dict[str, Any]:
+        specs = entrypoint_specs()
         spec = specs[name]
 
         # Validate required parameters against the recorded boundary.
