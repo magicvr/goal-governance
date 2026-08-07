@@ -15,7 +15,9 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
+from typing import Iterator
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -50,6 +52,23 @@ def _powershell_exe() -> str | None:
 
 
 MCP_IMAGE_TEST = "ghcr.io/magicvr/goal-governance-mcp-server:0.0.0-testpack"
+
+
+@contextmanager
+def _ephemeral_tempdir(prefix: str = "gg-mcp-e2e-") -> Iterator[str]:
+    """Temp dir whose cleanup never fails the test.
+
+    MCP channel e2e runs a docker container that writes the consumer tree as
+    root. Prefer mkdtemp + shutil.rmtree(ignore_errors=True): silent onerror,
+    no chmod/_resetperms path that re-raises PermissionError/EPERM on
+    docker-owned files (CI flake class on Actions Python 3.11). Leftover
+    root-owned files under system /tmp are harmless.
+    """
+    path = tempfile.mkdtemp(prefix=prefix)
+    try:
+        yield path
+    finally:
+        shutil.rmtree(path, ignore_errors=True)
 
 
 def _build_mcp_test_image() -> bool:
@@ -87,6 +106,39 @@ def _powershell(
         errors="replace",
         check=False,
     )
+
+
+class EphemeralTempdirCleanupTests(unittest.TestCase):
+    """Regression: docker-root EPERM must not fail tests on cleanup (CI flake class)."""
+
+    def test_ephemeral_tempdir_cleanup_never_raises_on_permission_denied_tree(self) -> None:
+        """Drive the real helper: a non-writable nested tree must not raise on exit.
+
+        Mirrors the CI failure shape (root-owned install.json under
+        consumer/.goal-governance) without requiring docker: on POSIX, drop
+        write bits so unlink fails; shutil.rmtree(ignore_errors=True) must
+        still exit cleanly.
+        """
+        held: list[str] = []
+        with _ephemeral_tempdir(prefix="gg-eperm-sim-") as tmp:
+            held.append(tmp)
+            nested = Path(tmp) / "consumer" / ".goal-governance"
+            nested.mkdir(parents=True)
+            install_json = nested / "install.json"
+            install_json.write_text('{"channel":"mcp"}', encoding="utf-8")
+            if os.name == "posix":
+                os.chmod(install_json, 0o444)
+                os.chmod(nested, 0o555)
+                # Parent consumer dir also non-writable so rmtree cannot fix up.
+                os.chmod(nested.parent, 0o555)
+        # Context exit must not raise (this is the assertion: we got here).
+        self.assertTrue(held)
+        # Source pin: both MCP channel e2e bodies open via the helper; helper
+        # teardown is shutil.rmtree(..., ignore_errors=True) after mkdtemp.
+        source = Path(__file__).read_text(encoding="utf-8")
+        self.assertGreaterEqual(source.count("with _ephemeral_tempdir()"), 2)
+        self.assertIn("shutil.rmtree(path, ignore_errors=True)", source)
+        self.assertIn("tempfile.mkdtemp", source)
 
 
 class BootstrapOfflinePs1Tests(unittest.TestCase):
@@ -230,11 +282,8 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
         """VP-004 R2/R4 dual entry: -Channel mcp = thin shell via GHCR image; no File 大包, no mcp code."""
         if not _build_mcp_test_image():
             self.skipTest("docker not available for MCP image build")
-        # The MCP channel runs a docker container that writes the consumer dir
-        # as root; tempfile cleanup may hit EPERM on those files (CI flake
-        # class), so tolerate cleanup errors — leftover files live in system
-        # /tmp and are harmless.
-        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
+        # Docker writes consumer tree as root; use cleanup that never fails the test.
+        with _ephemeral_tempdir() as tmp:
             base = Path(tmp)
             pack_out = base / "pack"
             target = base / "consumer"
@@ -454,8 +503,8 @@ class BootstrapShStructuralTests(unittest.TestCase):
         )
         if probe.returncode != 0 or "ok" not in (probe.stdout or ""):
             self.skipTest(f"bash on PATH is not usable: {probe.stderr!r}")
-        # Same docker-root cleanup tolerance as the PS mcp-channel e2e above.
-        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
+        # Same docker-root-safe cleanup as the PS mcp-channel e2e above.
+        with _ephemeral_tempdir() as tmp:
             base = Path(tmp)
             pack_out = base / "pack"
             target = base / "consumer"
@@ -520,6 +569,7 @@ class BootstrapShStructuralTests(unittest.TestCase):
             self.assertEqual(state["channel"], "mcp")
             self.assertIn(MCP_IMAGE_TEST, proc.stdout)
             self.assertIn("File 通道仍为一等", proc.stdout)
+
     def test_workflow_packs_core_and_bootstrap(self) -> None:
         workflow = (
             REPO_ROOT / ".github/workflows/skills-pack-release.yml"
