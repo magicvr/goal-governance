@@ -1,0 +1,231 @@
+I'll perform a read-only governance scan for GOAL-008. Let me start by reading the required
+governance sources.
+
+/ Search (glob)
+  │ ".github/copilot-instructions.md"
+  └ 1 file found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/**"
+  └ 11 files found
+
+/ Search (glob)
+  │ "**/GOAL-008*/**"
+  └ 9 files found
+
+Let me read the core governance sources in parallel.
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ 1 line read
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ 1 line read
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ 103 lines read
+
+The meta shows a nuanced close-out with a post-close review note. Let me read the orchestrator
+semantics, instructions, goal-tree, and the audit ledger.
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ 1 line read
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+/ Search (grep)
+  │ "GOAL-008"
+  └ 2 lines found
+
+Let me read the orchestrator prompt and copilot-instructions in sections, plus the goal-tree
+context.
+
+● Read goal-tree.md
+  │ docs\workspace-001-goal-governance\goal-tree.md
+  └ L480:545 (66 lines read)
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:200 (199 lines read)
+
+Let me read the rest of the orchestrator prompt and the copilot-instructions.
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L200:400 (167 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:150 (150 lines read)
+
+Now let me examine the GOAL-008 audit ledger, decision, and execution records. These are large
+files, so I'll scan them strategically.
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/*/*.md"
+  └ 4 files found
+
+/ Search (grep)
+  │ "^#|^## |^### |verdict|required|必改|close|close-out|F-005|I-002|I-003"
+  └ 7 lines found
+
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L1:120 (120 lines read)
+
+Let me check the attachments/runtime evidence files and the rest of the audit ledger to confirm
+closure evidence exists.
+
+/ Search (grep)
+  │ "^## A-0|^## A-1|verdict"
+  └ 41 lines found
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachm
+  │ ents/**"
+  └ 8 files found
+
+Let me verify the runtime evidence artifacts referenced in the close-out exist and check the
+attachments listing.
+
+● List GOAL-008 attachments with sizes (shell)
+  │ Get-ChildItem -Recurse "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-
+  │ governance\GOAL-008-skills-consumer-adapter-release-consistency\attachments" | Select-Object
+  │ FullName, Length | Format-Table -AutoSize
+  └ 11 lines…
+
+● List GOAL-008 attachment paths and sizes (shell)
+  │ Get-ChildItem -Recurse -File "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001
+  │ -goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachments" |
+  │ ForEach-Object { "{0}`t{1}" -f $_.FullName.Substring($_.FullName.IndexOf('GOAL-008')), $_.Length
+  │ }
+  └ 10 lines…
+
+● List relative attachment paths (shell)
+  │ Get-ChildItem -Recurse -File "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001
+  │ -goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachments" |
+  │ ForEach-Object { $_.FullName.Substring($_.FullName.IndexOf('attachments')) }
+  └ 199 lines…
+
+Let me examine the key evidence JSON files referenced in the close-out.
+
+● Read Copilot CLI govern evidence JSON (shell)
+  │ $f = "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-00
+  │ 8-skills-consumer-adapter-release-consistency\attachments\runtime\copilot-cli-govern-2026-07-20.
+  │ json"; Get-Content $f -Raw | ConvertFrom-Json | ConvertTo-Json -Depth 6
+  └ 75 lines…
+
+● Read release-candidate evidence JSON (shell)
+  │ $f = "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-00
+  │ 8-skills-consumer-adapter-release-consistency\attachments\runtime\release-candidate-v0.7.0-2026-
+  │ 07-20.json"; Get-Content $f -Raw | ConvertFrom-Json | ConvertTo-Json -Depth 6
+  └ 31 lines…
+
+Evidence files confirm the close-out. Let me verify workspace.md binding, the goal folder structure,
+ and the decision/execution records.
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+● List GOAL-008 folder structure (shell)
+  │ Get-ChildItem "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governanc
+  │ e\GOAL-008-skills-consumer-adapter-release-consistency" -Directory | ForEach-Object { $_.Name };
+  │ "---FILES---"; Get-ChildItem "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001
+  │ -goal-governance\GOAL-008-skills-consumer-adapter-release-consistency" -File | ForEach-Object {
+  │ $_.Name }
+  └ 7 lines…
+
+The workspace is archived; GOAL-008 is done. Let me verify the decision and execution ledgers for
+GOAL-008 to confirm the close-out facts and the "unreleased candidate" note.
+
+/ Search (grep)
+  │ "^#|^## E-|^## |unreleased|v0.7.0|8a33ecd|done|100%"
+  └ 36 lines found
+
+/ Search (grep)
+  │ "^#|^## D-|^## |unreleased|v0.7.0|8a33ecd|D-010|D-005|D-008"
+  └ 33 lines found
+
+Let me verify the execution file top (2026-07-28 entries), the D-011 decision, and confirm the git
+tag exists (read-only).
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:60 (59 lines read)
+
+● Verify v0.7.0 tag and commit exist (shell)
+  │ git -C "C:\Users\magicvr\Documents\Code\goal-governance" --no-pager tag -l "v0.7.0"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" --no-pager log -1 --format="%H %D"
+  │ 8a33ecd21d9183a680c9c0d63e471469f5e515a8 2>$null; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" --no-pager show-ref --tags v0.7.0
+  └ 2 lines…
+
+Let me verify the v0.7.0 tag existence separately (read-only).
+
+● Check for v0.7.x tags and commit existence (shell)
+  │ git -C "C:\Users\magicvr\Documents\Code\goal-governance" --no-pager tag --list "v0.7*";
+  │ "exit=$LASTEXITCODE"; git -C "C:\Users\magicvr\Documents\Code\goal-governance" --no-pager
+  │ cat-file -t 8a33ecd21d9183a680c9c0d63e471469f5e515a8 2>&1; "exit2=$LASTEXITCODE"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" --no-pager show-ref 2>$null | Select-String
+  │ "v0.7.0"
+  └ 4 lines…
+
+Let me read the D-009/D-010/D-011 decisions fully to confirm the closure and the current-candidate
+handling.
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ L1:50 (50 lines read)
+
+Let me confirm there are no "open required" findings after the A-017 review in the audit ledger.
+
+/ Search (grep)
+  │ "open required|Open required|not eligible|not reopen|does not reopen|不重开|不可关门|不得关门"
+  └ 3 lines found
+
+治理扫描 · [workspace-001] GOAL-008
+
+工作区页眉：workspace_id: workspace-001-goal-governance（显式，archived）；canonical:
+docs/workspace-001-goal-governance/；Root GOAL-001-main-vision；焦点 GOAL-008（区内短 id）。VP-001
+closed，本区封存不演进。
+
+状态/进度：done / 100%（00-meta frontmatter 与 goal-tree 树+表一致）。Close-out 候选身份 = annotated
+ v0.7.0 @ commit 8a33ecd…（tag 对象 bf7fc860…，证据 JSON 在库内；本地仓库无 v0.7.0
+ref，属观察信号，不影响历史关门）。
+
+意见台账（相关 A-00N）：
+
+ - A-014（independent，conditional）：Copilot CLI 1.0.71 /govern、/audit runtime-verified；当时
+Web/发布项 open required。
+ - A-015（self，conditional）：响应 A-014。
+ - A-016（self close-out，pass）：I-002/I-003 verified；无 open required、无 accepted residual；转为
+ done/100%。
+ - A-017（self，pass）：GOAL-010 变更行为源 → 当前候选 unreleased、六宿主入口
+pending-runtime-validation；明确不重开 GOAL-008。
+ - 开放 required：0；冲突：无。
+
+信息台账（I-00N）：I-001 verified；I-002 verified；I-003 verified（最终台账 + D-010
+证据链）。到期开放 required：0。
+
+关门判定：允许。 关门审计 A-016 已闭合全部 required；D-011/A-017 界定的「unreleased
+当前候选」仅是下一候选发布触发，不构成对历史 v0.7.0 关门结论的重开。无 P-004 未决裁决。
+
+COPILOT_CLI_GOVERN_DISPATCH_OK
+

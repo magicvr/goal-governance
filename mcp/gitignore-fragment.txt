@@ -1,0 +1,2 @@
+# goal-governance thin shell — 默认建议 gitignore（团队可选锁进 git；锁定时删除本段）
+.goal-governance/

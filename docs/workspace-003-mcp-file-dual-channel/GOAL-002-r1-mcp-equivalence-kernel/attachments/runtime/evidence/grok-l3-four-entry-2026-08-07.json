@@ -1,0 +1,153 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-07T15:59:54.278852Z",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "1.0.0",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/claude-l3-four-entry.txt",
+      "sha256": "a423385d4a74fdc3abbbe6d9436e3bb1bfd1c179ec2d70b625601c5a948e9190"
+    },
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/grok-l3-four-entry.txt",
+      "sha256": "5d98a018e6b82a689334161176ff42eef526c1f0b0f251ac73145c043d853d78"
+    },
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/codex-l3-four-entry.txt",
+      "sha256": "107ebc4b14e36927517508bb490b357df9c3b61241cdf146ed6d8f636a974f4e"
+    },
+    {
+      "path": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/prompts/copilot-l3-four-entry.txt",
+      "sha256": "fe57e7b7242073d090826385e1fc55217eb60678796f5eaa9cebf524500f4720"
+    },
+    {
+      "path": "mcp/entries.py",
+      "sha256": "ab183e159afdb0eec39a3c3837881d88334cfb18e3c8fd0efd5e3a62342961ed"
+    },
+    {
+      "path": "mcp/kernel.py",
+      "sha256": "b0168b2ea8dcd8577e4e5d6214409c9139daa97da240a05b4468ff0337aa4ff6"
+    },
+    {
+      "path": "mcp/server.py",
+      "sha256": "cd31cbdebe10e15cc6d6b2f47e6ba365874cd1c9ffb87cf847f75b3d1bdedb82"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "grok",
+      "--prompt-file",
+      "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\docs\\workspace-003-mcp-file-dual-channel\\GOAL-002-r1-mcp-equivalence-kernel\\attachments\\runtime\\prompts\\grok-l3-four-entry.txt",
+      "--model",
+      "grok-4.5",
+      "--output-format",
+      "plain",
+      "--permission-mode",
+      "dontAsk",
+      "--disallowed-tools",
+      "Edit,Write,NotebookEdit",
+      "--max-turns",
+      "10",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 420.0,
+    "inputSha256": "5d98a018e6b82a689334161176ff42eef526c1f0b0f251ac73145c043d853d78",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker GROK_L3_FOUR_ENTRY_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "GROK_L3_FOUR_ENTRY_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "GROK_L3_FOUR_ENTRY_OK",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "GROK_L3_FOUR_ENTRY_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-2",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-3",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-l3-four-entry-2026-08-07.d/stdout.txt",
+    "stdoutSha256": "7757c3addde2f9627f1c58b759c681c00ee97755f9f7ce9ddc8ad3ecd92e185d",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence/grok-l3-four-entry-2026-08-07.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrMode": "request-url-redacted",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

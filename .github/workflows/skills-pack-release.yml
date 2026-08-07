@@ -78,6 +78,13 @@ jobs:
           python scripts/stage_skills_mirrors.py
           python scripts/stage_skills_mirrors.py --check
 
+      # M-001 (A-016): the L3 host-evidence ledger must match the current tree
+      # before anything ships; a stale behavior source fails the pack job.
+      - name: Evidence consistency gate (M-001)
+        run: |
+          python scripts/capture_runtime_evidence.py --check \
+            --evidence-dir docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence
+
       - name: Run pack unit tests
         run: |
           python -m unittest discover -s scripts/tests -p 'test_pack_skills_release.py' -v
@@ -122,6 +129,7 @@ jobs:
     environment: release
     permissions:
       contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -186,6 +194,30 @@ jobs:
         with:
           name: ${{ needs.pack.outputs.artifact_name }}
           path: ${{ env.ASSET_DIR }}/pack-out
+
+      # VP-004 R4: MCP server ships as a GHCR Docker image on the SAME tag and
+      # version as the File assets (same workflow run, after the hard evidence
+      # gate). Fixed entry: python server.py --repo-root /workspace (D-001).
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push MCP server Docker image (GHCR)
+        uses: docker/build-push-action@v6
+        with:
+          context: mcp/
+          push: true
+          # F-002 (A-012): pin the effective in-image server version to the
+          # pack/tag version so serverInfo.version and lifecycle writes never
+          # drift from the GHCR tag.
+          build-args: |
+            GOAL_GOVERNANCE_MCP_VERSION=${{ needs.pack.outputs.version }}
+          tags: |
+            ghcr.io/magicvr/goal-governance-mcp-server:${{ needs.pack.outputs.version }}
+            ghcr.io/magicvr/goal-governance-mcp-server:latest
 
       - name: Create GitHub Release if missing
         env:

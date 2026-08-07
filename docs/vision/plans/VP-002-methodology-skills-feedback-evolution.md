@@ -6,8 +6,8 @@ status: active
 vision_ref: vision-goal-governance@0.2.0
 lead_workspace: workspace-002-methodology-skills-feedback
 created: 2026-07-31
-updated: 2026-07-31
-version: 0.2.0
+updated: 2026-08-08
+version: 0.4.0
 ---
 
 # VP-002 · 真实项目反馈驱动的协议与 Skills 演进
@@ -49,6 +49,15 @@ version: 0.2.0
 |--------------|-----------|------|--------|-------|
 | workspace-002-methodology-skills-feedback | GOAL-001-methodology-skills-feedback-evolution | delivery / **lead** | 2026-07-31 | 用户 `/govern` 确认 slug；首子目标 GOAL-002-codex-skills-entry |
 
+## 消费面承接路线图（2026-08-08 起）
+
+跨区移交与本波次范围内登记的消费面协议缺口，随 R3 收束或下一次协议面修订执行；均为 recommended（非 required），不阻断波次退出，但须在 VP 关门记录中显式 residual。
+
+| 项 | 来源 | 内容 | 触发 | 状态 |
+|----|------|------|------|------|
+| **F-006 消费面路径收敛** | [workspace-003 Root A-012 F-006](../../workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-012-independent-post-close-methodology-mcp.md)（A-013 登记；2026-08-08 跨区移交） | `skills/AGENTS.template.md` 与四治理 prompts（00/05/06/07）仍硬编码 `docs/…`；`governance_root≠docs` 的 File 消费仓依赖 AI 自觉读 alignment 定义句，易误读。拟处置：模板与 prompts 改为 `{governance_root}` 或安装时按 pin 展开 | — | **已执行/关闭**（2026-08-08）——[GOAL-006-consumer-surface-convergence](../../workspace-002-methodology-skills-feedback/GOAL-006-consumer-surface-convergence/00-meta.md) `done`（D-001 A+C 混合；cross 审计 A-001/A-002 pass + A-003 合并响应）；[workspace-003] 台账留痕见其 Root 03-audit |
+| **R-001 裸路径扫尾** | [workspace-003 Root A-009 R-001](../../workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-009-independent-close-and-vp004-intent.md)（A-010 留痕归本波次） | `overview/directory-layout/docs-README` 的裸 `docs/…` 路径扫尾（与 F-006 同类相对化） | — | **已执行/关闭**（2026-08-08）——随 GOAL-006 S2 完成（协议语义前缀相对化；目录树/物理路径保留）；防再犯测试固化 |
+
 ## 关门记录
 
 （当前 `active`，无关门记录。）
@@ -63,3 +72,5 @@ version: 0.2.0
 |------|--------|
 | 2026-07-31 | 初创 `active`；承接 VP-001 residual 中的演进焦点（H-EVOL-01）；用户接受零区空转至 2026-08-14 或首开 workspace-002。 |
 | 2026-07-31 | **挂区**：`workspace-002-methodology-skills-feedback` 为 lead；空转结束；Root + GOAL-002（Codex Skills 入口）立项。 |
+| 2026-08-08 | **承接跨区移交 F-006**（workspace-003 消费面路径收敛）并入「消费面承接路线图」，与 R-001 裸路径扫尾合并跟踪；recommended 级，不阻断波次退出，关门时显式 residual。 |
+| 2026-08-08 | **F-006 / R-001 已执行关闭**：GOAL-006-consumer-surface-convergence `done`（cross 审计 pass；消费面相对化落地 + 防再犯测试 + 矩阵证据刷新）。 |

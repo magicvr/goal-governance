@@ -23,16 +23,18 @@ version: 0.8.0
 
 ## 适用边界
 
+> **治理根（`governance_root`，默认 `docs`）**：下文 `docs/…` 路径默认落盘到治理根 `docs/`；消费仓若通过 `.goal-governance.json` 配置其他相对根（如 `governance/`），将目标侧 `docs/` 替换为 `{governance_root}/` 即可，根下内部相对布局不可改（VP-004 R3）。
+
 复制来源：
 
 | 来源 | 复制到目标仓库 | 用途 |
 |------|----------------|------|
 | `AGENTS.md` | 根目录 `AGENTS.md` | AI 与协作者的强制规则 |
-| `docs/README.md` | `docs/README.md` | 核心文档入口与协议索引 |
-| `docs/architecture/` | `docs/architecture/` | 架构约定与 **P-001～P-006** |
-| `docs/templates/` | `docs/templates/` | 五件套、workspace 上下文、**vision/** 模板 |
-| `docs/contracts/` | `docs/contracts/` | 消费适配器机读契约 |
-| `docs/vision/alignment.md` | `docs/vision/alignment.md` | 愿景对齐**规则权威**（P-006 门禁细则） |
+| `docs/README.md` | `{governance_root}/README.md` | 核心文档入口与协议索引 |
+| `docs/architecture/` | `{governance_root}/architecture/` | 架构约定与 **P-001～P-006** |
+| `docs/templates/` | `{governance_root}/templates/` | 五件套、workspace 上下文、**vision/** 模板 |
+| `docs/contracts/` | `{governance_root}/contracts/` | 消费适配器机读契约 |
+| `docs/vision/alignment.md` | `{governance_root}/vision/alignment.md` | 愿景对齐**规则权威**（P-006 门禁细则） |
 
 `skills/` 与 `web/` 不是本场景前置条件。dogfood 过程树、本仓 `charter.md` 实例、`plans/VP-001-…` 等**不要**整树复制；Charter/VP 从 `docs/templates/vision/` 在目标仓新建。
 
@@ -50,6 +52,7 @@ git -C $target init
 
 New-Item -ItemType Directory -Path (Join-Path $target 'docs') | Out-Null
 New-Item -ItemType Directory -Path (Join-Path $target 'docs\vision') | Out-Null
+# 以下命令示例以默认 governance_root = docs 落盘；配置其他根时替换目标侧 docs/。
 Copy-Item (Join-Path $source 'AGENTS.md') (Join-Path $target 'AGENTS.md')
 Copy-Item (Join-Path $source 'docs/README.md') (Join-Path $target 'docs/README.md')
 Copy-Item -Recurse (Join-Path $source 'docs/architecture') (Join-Path $target 'docs/architecture')

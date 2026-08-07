@@ -1,0 +1,121 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-07T17:23:11.829696Z",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "vision-audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "0.2.118",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": ".grok/skills/vision-audit/SKILL.md",
+      "sha256": "28611626796c3f42a20b4dbbecd940695e924e63d2a7db4a023f3e57f9a2e64d"
+    },
+    {
+      "path": "skills/install/grok/skills/vision-audit/SKILL.md",
+      "sha256": "28611626796c3f42a20b4dbbecd940695e924e63d2a7db4a023f3e57f9a2e64d"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "aed59910e506f2153a1f477997c4d3630085220baaa7fa5f8d2d654b0d65b474"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "449cd56696fe09a1a63bcbf40feddde74e106866ca79ef1230d9d6599023a7eb"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "grok",
+      "--prompt-file",
+      "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\docs\\workspace-001-goal-governance\\GOAL-008-skills-consumer-adapter-release-consistency\\attachments\\runtime\\prompts\\grok-vision-audit.txt",
+      "--model",
+      "grok-4.5",
+      "--output-format",
+      "plain",
+      "--permission-mode",
+      "dontAsk",
+      "--disallowed-tools",
+      "Edit,Write,NotebookEdit",
+      "--max-turns",
+      "10",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240.0,
+    "inputSha256": "5fd25855deac2fe3de68857ec669ebb1991257a6200bb0b8ed1e207f9f380e27",
+    "inputSummary": "Read-only /vision-audit dispatch probe requiring marker GROK_VISION_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "GROK_VISION_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "GROK_VISION_AUDIT_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "GROK_VISION_AUDIT_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.0/grok-build-cli-vision-audit-2026-08-08.d/stdout.txt",
+    "stdoutSha256": "55baa867bcf6990dbebd76f421bbf05bc12e33d3b28da3a87d56faef923e17ab",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/releases/runtime/v0.13.0/grok-build-cli-vision-audit-2026-08-08.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrMode": "request-url-redacted",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

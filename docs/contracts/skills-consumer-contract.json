@@ -1,7 +1,7 @@
 {
   "contractSchemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-contract/v1",
   "contractFormat": "goal-governance.skills-consumer-contract",
-  "contractFormatVersion": "0.3.0",
+  "contractFormatVersion": "0.4.0",
   "canonical": {
     "owner": "docs/contracts",
     "manifestPath": "docs/contracts/skills-consumer-contract.json",
@@ -53,6 +53,24 @@
     "firstSupportedProtocol": "0.1.0",
     "previousSupportedProtocol": null
   },
+  "deliveryChannels": [
+    {
+      "channel": "files",
+      "status": "first-class",
+      "evidenceLevels": ["L1", "L2", "L3"],
+      "entrypoints": ["vision", "vision-audit", "govern", "audit"],
+      "runtime": "skills zip + install 脚本；File-classic（无 Docker / 无 MCP）可用",
+      "notes": "生产仓自举权威；L1 证据直接驱动 File 资产，禁止 MCP mock 顶替"
+    },
+    {
+      "channel": "mcp",
+      "status": "first-class",
+      "evidenceLevels": ["L1", "L2", "L3"],
+      "entrypoints": ["vision", "vision-audit", "govern", "audit"],
+      "runtime": "MCP stdio 进程（Python 3，零第三方运行时依赖；Docker 可选）",
+      "notes": "四治理入口工具等价；不替代仓内实例真相；commit 不入工具集；L3 证据为宿主入口面（MCP 进程面由 L1/L2 确定性覆盖）"
+    }
+  ],
   "templateSet": {
     "version": "0.1.1",
     "implementsProtocol": {

@@ -19,7 +19,7 @@ progress: 50%
 
 - [x] README 含：项目简介、快速开始、目录结构、相关文档链接
 - [x] 快速开始步骤在干净环境可复现（已自测一遍）
-- [ ] 与 `docs/README.md` 交叉链接一致，无过期路径
+- [ ] 与 `{governance_root}/README.md`（默认 `docs/README.md`）交叉链接一致，无过期路径
 - [ ] 由一名协作者按 README 完成首次启动并口头确认
 
 ## 派生进度展示（可选）

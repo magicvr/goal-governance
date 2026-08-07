@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-08-06
-version: 1.1.0
+updated: 2026-08-08
+version: 1.4.0
 ---
 
 # 执行记录 · GOAL-001
@@ -102,11 +102,41 @@ version: 1.1.0
 - PR #11 以 merge commit `33934efc` 合入 main；annotated `v0.13.0` tag（tag object `29d5b28c`）指向 merged main，经 `skills-pack-release` run `31073547050`（Environment `release` 审批）发布 9 项 Release 资产；本地重下载 sha256 逐项一致，release-mode evidence 全过，隔离消费方（包边界 + 安装 + dry-run + real update）版本 `0.13.0`。
 - GOAL-005 E-004 / D-003 / A-005 落盘，目标 **`done / 100%`（5/5）**；Root R3 保持进行中、Root progress 保持 2/3 = 67%。
 
+### 2026-08-08 · 接收跨区移交项 F-006（VP-002 消费面波次）
+
+- workspace-003 编排器（用户 `/govern` 指令）正式移交 **F-006** 至本区 VP-002 消费面波次承接；本记录为接收登记，不改变任何 status/progress/审计序列。
+- F-006 内容（源自 [workspace-003 Root A-012](../../workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-012-independent-post-close-methodology-mcp.md) F-006，A-013 登记）：**消费面路径收敛未完成**——`skills/AGENTS.template.md` 与四治理 prompts（00/05/06/07）仍硬编码 `docs/…`；monorepo 默认 `docs` 可用，但 `governance_root≠docs` 的 File 消费仓依赖 AI 自觉读 alignment 定义句，易误读。拟处置：模板与 prompts 改为 `{governance_root}` 或安装时按 pin 展开。
+- 与 A-009 R-001 扫尾同类（workspace-003 Root A-010 已留痕「overview/directory-layout/docs-README 裸路径扫尾归 VP-002 协议面波次，触发 = VP-002 推进或下一次协议面修订」）；F-006 与本区该扫尾合并跟踪。
+
+### 2026-08-08 · F-006 并入 VP-002 消费面承接路线图
+
+- 用户 `/govern` 指令：在 workspace-002 承接 F-006，**并入 VP-002 消费面路线图**。
+- `docs/vision/plans/VP-002-methodology-skills-feedback-evolution.md` 新增「消费面承接路线图」节：F-006（跨区移交）与 R-001 裸路径扫尾（A-010 留痕归本波次）两项，均为 recommended、registered、触发 = VP-002 推进或下一次协议面修订；规划修订短史加 2026-08-08 行。
+- Root `00-meta`：R3 行说明补承接记录；成功标准第 3 条注明显式未关闭项（F-006 + R-001 扫尾，关门时 residual 留痕）；子目标表 GOAL-005 过期显示 `active` 修正为 `done`（与 goal-tree 及 GOAL-005 00-meta 一致，显示修正非状态变更）。
+- 未改动任何 status/progress/检查点；goal-tree 无变化（无状态变更）。
+
+### 2026-08-08 · 长期持续治理决策（D-008，退出挂起）
+
+- 用户书面确认：workspace-002 与 VP-002 为**长期持续治理项目**，暂不关门。
+- **D-008**：R3 重定义为「持续闭环与长期演进」；退出判据挂起（本轮核对结论留档：退出条件当前全部满足，证据链完整）；Root/VP-002 保持 `active`；Root progress 保持 67%（长期化不虚增）。
+- 02-execution 待办更新（退出核对完成、F-006 完成）+「后续波次候选」表登记（F-003 e2e、新反馈 GOAL-007、Codex 矩阵 I-003、matrix candidateRevision R-001、Web writer F-003 复审）。
+
 ## 待办
 
 1. ~~完成 GOAL-005 的 S2～S5、cross close-out 与正式发布~~（已闭门，2026-08-06）。
-2. 单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口。
-3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门。
+2. ~~单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口~~（2026-08-08 核对：全部满足；**D-008 长期持续治理，退出挂起**——不执行关门）。
+3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门（D-008 后为长期挂起，非临时）。
+4. ~~承接 F-006（消费面路径收敛）~~（已并入 VP-002 消费面承接路线图；GOAL-006 2026-08-08 done，实现关闭）。
+
+## 后续波次候选（长期持续，D-008）
+
+| 项 | 来源 | 触发 |
+|----|------|------|
+| ~~`governance_root≠docs` 消费场景 e2e~~ | GOAL-006 F-003 / A-001 R-002 | **已执行**（2026-08-08，E-006/A-004：`ConsumerSurfaceE2ETests` 3 条，242 测试绿） |
+| 新反馈波次 → GOAL-007 | VP-002 意图（真实项目/消费方反馈） | 用户提交新问题 |
+| Codex 矩阵 committed | GOAL-002 I-003 | 发版宣称前另决 |
+| matrix candidateRevision 刷新 | GOAL-006 R-001 | 下一次 release 轮 |
+| Web legacy writer 复审 | GOAL-003 F-003 | 触发条件（子目标 03-audit） |
 
 ## 进度评估
 

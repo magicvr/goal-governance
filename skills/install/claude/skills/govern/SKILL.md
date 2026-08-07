@@ -21,7 +21,7 @@ metadata:
 你是本项目的**目标治理编排助手**（**实现层**主入口）。  
 生命周期含信息就绪、质量意识与审计意见响应；交叉审计用 **`/audit`**；愿景/组合决策用 **`/vision`**。本 skill 负责实现推进与意见闭环。
 
-遵守仓库根 `AGENTS.md`。P-001～P-006 以 AGENTS / `docs/architecture/principles.md` 为准（与 Skills 同级必备）。
+遵守仓库根 `AGENTS.md`。P-001～P-006 以 AGENTS / `{governance_root}/architecture/principles.md` 为准（与 Skills 同级必备）。
 
 ## 执行
 
@@ -39,10 +39,10 @@ metadata:
 
 - 默认实现路径是本 skill；原语由编排器选用。
 - 交叉审查用 `/audit`（05）；愿景决策用 `/vision`（06）。
-- 缺 `docs/architecture/principles.md` 时报告不完整安装，不得称 architecture 可选。
+- 缺 `{governance_root}/architecture/principles.md` 时报告不完整安装，不得称 architecture 可选。
 - S0：slug **必须用户确认**；冷启动顺序 Charter→VP→工作区→Root。
 - 所有工作区必须挂 VP；`vision_role` 仅允许 `primary` / `delivery`。
-- 有显式工作区时校验 `docs/workspace-<NNN>-<slug>/workspace.md` 的 Root Goal/canonical；仅 legacy `docs/goals/` 时走隐式单工作区。
+- 有显式工作区时校验 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` 的 Root Goal/canonical；仅 legacy `{governance_root}/goals/` 时走隐式单工作区。
 - 进度与结论只写已发生事实。
 
 ## 完成

@@ -1,4 +1,4 @@
-# Goal Governance · online / offline bootstrap installer (GOAL-023)
+﻿# Goal Governance · online / offline bootstrap installer (GOAL-023)
 #
 # Entry point 1 (bootstrap): obtain skills zip (embedded core) → verify SHA-256
 # → materialize ./skills → invoke package-local install.ps1 (default -All).
@@ -24,9 +24,13 @@ param(
 
     [string]$Sha256Path = '',
 
+    [string]$Channel = 'files',
+
     [string]$Repo = 'magicvr/goal-governance',
 
     [string]$ReleaseTag = '',
+
+    [string]$McpImage = '',
 
     [switch]$SkipInstall,
 
@@ -39,18 +43,26 @@ $ErrorActionPreference = 'Stop'
 
 function Show-Usage {
     @"
-Goal Governance bootstrap installer (GOAL-023)
+Goal Governance bootstrap installer (GOAL-023 / VP-004 R2 dual entry)
 
 Downloads or uses a local skills zip (core embedded), verifies SHA-256,
-extracts to <TargetDir>\<SkillsDirName>, then runs package install -All.
+then installs via one of the two first-class channels:
+
+  -Channel mcp   (推荐 MCP 通道): 薄通道——contract + AGENTS managed + 状态（经 GHCR Docker 镜像内 lifecycle 写入），不落 mcp 代码
+                 contract + AGENTS.md managed 段 + .goal-governance 状态。
+                 **File 通道仍为一等发布路径、未被废除、非日落**；
+                 File-classic（无 Docker / 无 MCP）始终可用。
+  -Channel files (默认): 完整 File 通道——materialize 整包并运行包内
+                 install -All（docs/architecture + skills + 宿主面）。
 
 Usage:
-  .\install-online.ps1 -Version X.Y.Z [-TargetDir DIR] [-ZipPath PATH] [-Sha256Path PATH]
+  .\install-online.ps1 -Version X.Y.Z [-Channel files|mcp] [-TargetDir DIR] [-ZipPath PATH] [-Sha256Path PATH]
   .\install-online.ps1 -Version X.Y.Z -ZipPath .\goal-governance-skills-vX.Y.Z.zip   # offline
   .\install-online.ps1 -Version X.Y.Z                                               # online Release
 
 Options:
   -Version        SemVer (optional leading v); archive name uses stripped form
+  -Channel        files (默认完整 File 通道) | mcp (薄 MCP 通道；需 docker)
   -TargetDir      Project root (default: current directory)
   -SkillsDirName  Directory name under TargetDir (default: skills)
   -ZipPath        Local skills zip (skip download when set)
@@ -145,6 +157,9 @@ function Resolve-FullPath([string]$Path, [string]$Base) {
 }
 
 $norm = Normalize-Version $Version
+if ($Channel -notin @('files', 'mcp')) {
+    Write-Err "Channel must be 'files' or 'mcp' (got $Channel)"
+}
 $archiveRoot = "goal-governance-skills-v$norm"
 $zipName = "$archiveRoot.zip"
 $shaName = "$zipName.sha256"
@@ -229,6 +244,41 @@ try {
         }
         Remove-Item -LiteralPath $destSkills -Recurse -Force
     }
+
+    if ($Channel -eq 'mcp') {
+        # 薄 MCP 通道（R4 重定义，D-001 决策点②）：不再 materialize mcp 代码；写
+        # consumer contract，并经 GHCR 镜像内 lifecycle CLI（单一真相源）写 AGENTS.md
+        # managed 段与 .goal-governance/ 状态；输出 MCP client 配置指引（docker run 固定入口）。
+        $contractsSrc = Join-Path $packageSrc 'contracts'
+        $contractsDest = Join-Path $destSkills 'contracts'
+        New-Item -ItemType Directory -Path $contractsDest -Force | Out-Null
+        foreach ($name in @('skills-consumer-contract.json', 'skills-consumer-contract.schema.json')) {
+            $src = Join-Path $contractsSrc $name
+            if (-not (Test-Path -LiteralPath $src -PathType Leaf)) {
+                Write-Err "Package missing $name (consumer contract required)"
+            }
+            Copy-Item -LiteralPath $src -Destination (Join-Path $contractsDest $name) -Force
+        }
+        if (-not $McpImage) {
+            $McpImage = "ghcr.io/magicvr/goal-governance-mcp-server:$norm"
+        }
+        $docker = Get-Command docker -ErrorAction SilentlyContinue
+        if (-not $docker) {
+            Write-Err "MCP channel requires docker (runtime is the GHCR image $McpImage); use -Channel files for File-classic"
+        }
+        $mount = "$($TargetDir.Replace('\','/')):/workspace"
+        & docker run --rm -v $mount $McpImage lifecycle.py install `
+            --root /workspace --version $norm --channel mcp --confirm
+        if ($LASTEXITCODE -ne 0 -and $null -ne $LASTEXITCODE) {
+            Write-Err "Thin-shell lifecycle install failed (docker run $McpImage; exit $LASTEXITCODE)"
+        }
+        $cfg = '{"command": "docker", "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "' + $McpImage + '"]}'
+        Write-Host 'MCP channel bootstrap complete.'
+        Write-Host "MCP client 配置（mcpServers，stdio 直连容器，零参数）: $cfg"
+        Write-Host 'Note: the File channel remains a first-class release path and is NOT sunset; use -Channel files for the full File install (File-classic needs no Docker/MCP).'
+        exit 0
+    }
+
     # Copy package into place (preserve install scripts at package root)
     Copy-Item -LiteralPath $packageSrc -Destination $destSkills -Recurse -Force
     Write-Host "Materialized skills package: $destSkills"

@@ -1,7 +1,7 @@
 {
   "contractSchemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-contract/v1",
   "contractFormat": "goal-governance.skills-consumer-contract",
-  "contractFormatVersion": "0.3.0",
+  "contractFormatVersion": "0.4.0",
   "canonical": {
     "owner": "docs/contracts",
     "manifestPath": "docs/contracts/skills-consumer-contract.json",
@@ -53,6 +53,24 @@
     "firstSupportedProtocol": "0.1.0",
     "previousSupportedProtocol": null
   },
+  "deliveryChannels": [
+    {
+      "channel": "files",
+      "status": "first-class",
+      "evidenceLevels": ["L1", "L2", "L3"],
+      "entrypoints": ["vision", "vision-audit", "govern", "audit"],
+      "runtime": "skills zip + install 脚本",
+      "notes": "fixture 同步 contract 0.4.0 deliveryChannels 分列"
+    },
+    {
+      "channel": "mcp",
+      "status": "first-class",
+      "evidenceLevels": ["L1", "L2", "L3"],
+      "entrypoints": ["vision", "vision-audit", "govern", "audit"],
+      "runtime": "MCP stdio 进程",
+      "notes": "fixture 同步 contract 0.4.0 deliveryChannels 分列"
+    }
+  ],
   "templateSet": {
     "version": "0.1.0",
     "implementsProtocol": {

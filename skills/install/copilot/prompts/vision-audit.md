@@ -28,7 +28,7 @@ role: independent-vision-review
 
 ## 行为要点
 
-- 只创建 `docs/vision/reviews/VRev-NNN-<slug>.md` 独立报告并更新 `reviews.md` 索引。
+- 只创建 `{governance_root}/vision/reviews/VRev-NNN-<slug>.md` 独立报告并更新 `reviews.md` 索引。
 - 不写 Goal `03-audit.md`，不修改 Charter / VP / Goal status 或 progress。  
 - required Vision finding 的响应交 **`/vision`**；实施交 **`/govern`**。
 

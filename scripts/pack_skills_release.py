@@ -109,6 +109,11 @@ def should_exclude(relative: Path) -> bool:
         "artifacts/"
     ):
         return True
+    # A-012 F-003: MCP integration tests (skills/tests/test_mcp_*.py) import
+    # the repo-root mcp/ package (channel asset separation); they only pass
+    # inside the monorepo and would fail in a pure File-channel unpack.
+    if joined.startswith("tests/test_mcp_"):
+        return True
     return False
 
 

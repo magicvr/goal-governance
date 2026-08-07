@@ -34,7 +34,7 @@ role: vision-decision
 ## 行为要点
 
 - 单愿景；冷启动 Charter → VP，再交 `/govern` 开区。  
-- Review 落 `docs/vision/reviews/VRev-NNN-<slug>.md` 报告 + `reviews.md` 索引。
+- Review 落 `{governance_root}/vision/reviews/VRev-NNN-<slug>.md` 报告 + `reviews.md` 索引。
 - 独立 Vision Review 用 `/vision-audit`；`/vision` 负责 self Review、决策与 finding 响应。
 - `vision_role` 仅允许 `primary` / `delivery`；所有工作区 plan 必填；不写 progress% 进 vision。
 

@@ -17,6 +17,7 @@ TARGET_DIR=""
 SKILLS_DIR_NAME="skills"
 ZIP_PATH=""
 SHA256_PATH=""
+CHANNEL="files"
 REPO="magicvr/goal-governance"
 RELEASE_TAG=""
 SKIP_INSTALL=0
@@ -24,15 +25,26 @@ FORCE=0
 
 usage() {
   cat <<'EOF'
-Goal Governance bootstrap installer (GOAL-023)
+Goal Governance bootstrap installer (GOAL-023 / VP-004 R2 dual entry)
+
+Downloads or uses a local skills zip (core embedded), verifies SHA-256,
+then installs via one of the two first-class channels:
+
+  --channel mcp   (推荐 MCP 通道): 薄通道——contract + AGENTS managed + 状态（经 GHCR Docker 镜像内 lifecycle 写入），不落 mcp 代码
+                  contract + AGENTS.md managed 段 + .goal-governance 状态。
+                  **File 通道仍为一等发布路径、未被废除、非日落**；
+                  File-classic（无 Docker / 无 MCP）始终可用。
+  --channel files (默认): 完整 File 通道——materialize 整包并运行包内
+                  install.sh --all（docs/architecture + skills + 宿主面）。
 
 Usage:
-  install-online.sh --version X.Y.Z [--target-dir DIR] [--zip-path PATH] [--sha256-path PATH]
+  install-online.sh --version X.Y.Z [--channel files|mcp] [--target-dir DIR] [--zip-path PATH] [--sha256-path PATH]
   install-online.sh --version X.Y.Z --zip-path ./goal-governance-skills-vX.Y.Z.zip   # offline
   install-online.sh --version X.Y.Z                                                 # online Release
 
 Options:
   --version V         SemVer (optional leading v)
+  --channel C         files (默认完整 File 通道) | mcp (薄 MCP 通道；需 docker)
   --target-dir DIR    Project root (default: cwd)
   --skills-dir-name N Directory under target (default: skills)
   --zip-path PATH     Local skills zip (skip download)
@@ -137,6 +149,8 @@ while [[ $# -gt 0 ]]; do
     --skills-dir-name) SKILLS_DIR_NAME="${2:-}"; shift 2 ;;
     --zip-path) ZIP_PATH="${2:-}"; shift 2 ;;
     --sha256-path) SHA256_PATH="${2:-}"; shift 2 ;;
+    --channel) CHANNEL="${2:-}"; shift 2 ;;
+    --mcp-image) MCP_IMAGE="${2:-}"; shift 2 ;;
     --repo) REPO="${2:-}"; shift 2 ;;
     --release-tag) RELEASE_TAG="${2:-}"; shift 2 ;;
     --skip-install) SKIP_INSTALL=1; shift ;;
@@ -147,6 +161,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -n "$VERSION" ]] || die "Missing --version"
+case "$CHANNEL" in
+  files|mcp) ;;
+  *) die "Channel must be 'files' or 'mcp' (got $CHANNEL)" ;;
+esac
 NORM="$(normalize_version "$VERSION")"
 ARCHIVE_ROOT="goal-governance-skills-v${NORM}"
 ZIP_NAME="${ARCHIVE_ROOT}.zip"
@@ -230,6 +248,32 @@ if [[ -e "$DEST_SKILLS" ]]; then
   fi
   rm -rf "$DEST_SKILLS"
 fi
+
+if [[ "$CHANNEL" == "mcp" ]]; then
+  # 薄 MCP 通道（R4 重定义，D-001 决策点②）：不再 materialize mcp 代码；写
+  # consumer contract，并经 GHCR 镜像内 lifecycle CLI（单一真相源）写 AGENTS.md
+  # managed 段与 .goal-governance/ 状态；输出 MCP client 配置指引（docker run 固定入口）。
+  mkdir -p "${DEST_SKILLS}/contracts"
+  for name in skills-consumer-contract.json skills-consumer-contract.schema.json; do
+    if [[ ! -f "${PACKAGE_SRC}/contracts/${name}" ]]; then
+      die "Package missing ${name} (consumer contract required)"
+    fi
+    cp -a "${PACKAGE_SRC}/contracts/${name}" "${DEST_SKILLS}/contracts/${name}"
+  done
+  MCP_IMAGE="${MCP_IMAGE:-ghcr.io/magicvr/goal-governance-mcp-server:${NORM}}"
+  if ! command -v docker >/dev/null 2>&1; then
+    die "MCP channel requires docker (runtime is the GHCR image ${MCP_IMAGE}); use --channel files for File-classic"
+  fi
+  docker run --rm -v "$TARGET_DIR:/workspace" "$MCP_IMAGE" lifecycle.py install \
+    --root /workspace --version "$NORM" --channel mcp --confirm \
+    || die "Thin-shell lifecycle install failed (docker run ${MCP_IMAGE})"
+  echo "MCP channel bootstrap complete."
+  echo "MCP client 配置（mcpServers，stdio 直连容器，零参数）："
+  echo "  { \"command\": \"docker\", \"args\": [\"run\", \"-i\", \"--rm\", \"-v\", \"<仓库根>:/workspace\", \"${MCP_IMAGE}\"] }"
+  echo "File 通道仍为一等发布路径、未被废除（--channel files 完整安装；File-classic 无需 Docker/MCP）。"
+  exit 0
+fi
+
 cp -a "$PACKAGE_SRC" "$DEST_SKILLS"
 echo "Materialized skills package: $DEST_SKILLS"
 

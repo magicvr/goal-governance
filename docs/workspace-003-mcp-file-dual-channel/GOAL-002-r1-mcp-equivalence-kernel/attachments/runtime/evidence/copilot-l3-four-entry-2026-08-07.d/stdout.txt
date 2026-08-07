@@ -1,0 +1,76 @@
+/ Search (glob)
+  │ "**/skills/**/*.md"
+  └ 67 files found
+
+/ Search (glob)
+  │ "skills/**/SKILL.md"
+  └ 12 files found
+
+/ Search (glob)
+  │ "**/prompts/*.md"
+  └ 22 files found
+
+The probe targets the four governance entries. Let me verify dispatch definitions and role
+boundaries from the actual prompt files.
+
+● Read vision.prompt.md
+  │ .github\prompts\vision.prompt.md
+  └ 45 lines read
+
+● Read govern.prompt.md
+  │ .github\prompts\govern.prompt.md
+  └ 47 lines read
+
+● Read vision-audit.prompt.md
+  │ .github\prompts\vision-audit.prompt.md
+  └ 28 lines read
+
+● Read audit.prompt.md
+  │ .github\prompts\audit.prompt.md
+  └ 42 lines read
+
+Dispatch wrappers verified. Now the core orchestrator prompts (the source of truth for role
+boundaries):
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ 1 line read
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ 100 lines read
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ 108 lines read
+
+● Read 06-vision-orchestrator.md
+  │ skills\prompts\06-vision-orchestrator.md
+  └ 203 lines read
+
+All four dispatch wrappers and three core orchestrators verified. Let me confirm the govern core's
+role boundary too:
+
+/ Search (grep)
+  │ "不是|独立|交叉|03-audit|reviews\.md|status|progress|source"
+  └ 37 lines found
+
+核对完成（只读：未改文件、未起子代理、未提问）。依据 .github/prompts/*.prompt.md（dispatch）与
+skills/prompts/00/05/06/07-*.md（核心）逐条核验：
+
+ 1. vision（→ 06-vision-orchestrator.md，role: vision-decision）— 决策层：建修
+Charter、VP（组合编排）、Vision Review、re-align；冷启动优先（Charter→VP 后交
+/govern）；不推进子目标、不改 goal-tree progress、不关 Goal finding。
+ 2. vision-audit（→ 07-independent-vision-review.md，role: independent-vision-review）— 独立 Vision
+Review：只写 docs/vision/reviews/VRev-NNN-*.md + reviews.md 索引（source: independent）；不改
+Charter / VP / Goal 状态，不响应 finding。
+ 3. govern（→ 00-govern-orchestrator.md，role: primary）— 实现编排：扫描工作区与 03-audit
+意见台账、P-004 用户裁决、提议下一步，确认后调原语 01–04 写入目标五件套；响应审计意见；不冒充
+independent。
+ 4. audit（→ 05-independent-audit.md，role: independent-audit）— Goal 交叉审计：只写被审目标
+03-audit/A-NNN-*.md + 索引（source: independent），不改 status/progress；响应归 /govern。
+
+四入口 dispatch 与角色边界与声明一致，无越界。
+
+COPILOT_L3_FOUR_ENTRY_OK
+

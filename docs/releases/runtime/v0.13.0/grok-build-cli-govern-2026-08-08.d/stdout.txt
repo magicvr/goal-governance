@@ -1,0 +1,38 @@
+I'll run a read-only `/govern` scan for GOAL-008: load the skill, open the orchestrator prompt, then read only the minimum workspace sources needed for classification and open gates.Skill and orchestrator located. Next I'll read the orchestrator scan phase and GOAL-008 sources.Reading GOAL-008 and the minimum workspace/vision sources for the scan classification.## GROK_GOVERN_DISPATCH_OK
+
+Read-only scan complete (no writes, no subagents, no questions).
+
+### 1. Marker
+**GROK_GOVERN_DISPATCH_OK**
+
+### 2. Loaded skill
+| Field | Value |
+|--------|--------|
+| **Title** | `govern · 目标治理编排（Grok Build skill）` |
+| **Frontmatter name** | `govern` |
+| **Source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\govern\SKILL.md` |
+
+### 3. Orchestrator prompt (named by skill)
+| Field | Value |
+|--------|--------|
+| **Named path** | `<SKILLS_PKG>/prompts/00-govern-orchestrator.md` |
+| **Resolved SKILLS_PKG** | `skills/` |
+| **Actual path** | `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\00-govern-orchestrator.md` |
+
+### 4. GOAL-008 scan result
+
+| Field | Value |
+|--------|--------|
+| **Focus** | `[workspace-001-goal-governance] GOAL-008-skills-consumer-adapter-release-consistency` |
+| **Workspace** | `workspace-001-goal-governance` (explicit, `archived`; Root `GOAL-001-main-vision` **done**; `primary_plan` VP-001 closed) |
+| **Vision** | active Charter `vision-goal-governance` v0.2.0; core architecture present |
+| **goal-tree / meta status** | **`done` / `100%`** |
+| **Classification** | **Not S2/S4 for this focus** — goal is already closed. Workspace-level posture is **S1-like** (archived foundation: no unclosed Root/purpose on this workspace). Focus is historical close-out review, not open advancement. |
+| **Open required gates** | **None** on GOAL-008 |
+
+**Gates detail (authoritative close-out):**
+- **I-001 / I-002 / I-003**: all **verified** (final ledger in `00-meta` + A-016)
+- **Audit findings**: A-016 close-out **pass** — no open required findings; no accepted residual
+- **A-017**: post-close freshness review only; does **not** reopen GOAL-008
+
+Historical `collecting` rows lower in `03-audit.md` are superseded by A-016/A-017 and the top final ledger.

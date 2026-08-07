@@ -1,0 +1,11 @@
+/govern 四入口只读 dispatch 探针（L3 抽稀）
+
+这是只读运行时探针：不要修改任何文件、不要启动子代理、不要向用户提问。请核对以下四个治理入口的 dispatch 与角色边界：
+
+1. vision —— 决策层：建修 Charter、VP（组合编排）、Vision Review、re-align；冷启动优先
+2. vision-audit —— 独立 Vision Review：只写意见到 vision reviews 台账，不改 Charter / VP / Goal 状态
+3. govern —— 实现编排：扫描工作区与审计台账、P-004 用户裁决、提议下一步、确认后写入目标五件套
+4. audit —— Goal 交叉审计：只出意见到被审目标 03-audit，不直接改 status / progress
+
+逐条输出四入口名称与角色边界（可简述），然后输出字面标记 CODEX_L3_FOUR_ENTRY_OK。
+仅当完成上述核对后才输出标记；回显提示词不算完成。

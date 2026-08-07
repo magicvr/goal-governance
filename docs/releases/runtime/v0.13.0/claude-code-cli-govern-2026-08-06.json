@@ -1,114 +1,110 @@
 {
-    "schemaId":  "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
-    "format":  "goal-governance.host-runtime-evidence",
-    "formatVersion":  "1.0.0",
-    "capturedAt":  "2026-08-06T02:53:36.317717Z",
-    "unit":  {
-                 "consumer":  "claude-code-cli",
-                 "entrypoint":  "govern",
-                 "protocolVersion":  "0.1.0"
-             },
-    "environment":  {
-                        "product":  "Claude Code CLI",
-                        "version":  "2.1.223",
-                        "platform":  "Windows-10-10.0.26200-SP0",
-                        "provider":  null,
-                        "model":  null
-                    },
-    "behaviorSources":  [
-                            {
-                                "path":  ".claude/skills/govern/SKILL.md",
-                                "sha256":  "d4acc96b61c1d878f9703560927992f22e57ad0c497bc6547b599a968a509bb5"
-                            },
-                            {
-                                "path":  "skills/install/claude/skills/govern/SKILL.md",
-                                "sha256":  "d4acc96b61c1d878f9703560927992f22e57ad0c497bc6547b599a968a509bb5"
-                            },
-                            {
-                                "path":  "skills/prompts/00-govern-orchestrator.md",
-                                "sha256":  "17d903ff8547aa07d642e2d0f9d0ed4aa0925a7a5512c6aa8dfe6a1175a9013f"
-                            },
-                            {
-                                "path":  "AGENTS.md",
-                                "sha256":  "f6e2982be48672dddad96c3fc88b15515b8110493aadfd3d961ef76fc8c1e177"
-                            }
-                        ],
-    "invocation":  {
-                       "command":  [
-                                       "cmd.exe",
-                                       "/d",
-                                       "/s",
-                                       "/c",
-                                       "claude -p --no-session-persistence --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 12"
-                                   ],
-                       "cwd":  ".",
-                       "timeoutSeconds":  240.0,
-                       "inputSha256":  "d1b9d242732098a2dd0412eb20cc402eb37ecb3719d82d6ab854a4a49d9e396f",
-                       "inputSummary":  "Read-only /govern dispatch probe requiring marker CLAUDE_GOVERN_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
-                   },
-    "result":  {
-                   "exitCode":  0,
-                   "verdict":  "pass",
-                   "marker":  "CLAUDE_GOVERN_DISPATCH_OK",
-                   "markerObserved":  true,
-                   "assertionPolicy":  "marker+entrypoint+nontrivial-stdout@1",
-                   "assertions":  [
-                                      {
-                                          "id":  "dispatch-marker",
-                                          "kind":  "substring",
-                                          "pattern":  "CLAUDE_GOVERN_DISPATCH_OK",
-                                          "bound":  {
-                                                        "entrypoint":  "govern",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      },
-                                      {
-                                          "id":  "entrypoint-token",
-                                          "kind":  "substring",
-                                          "pattern":  "govern",
-                                          "bound":  {
-                                                        "entrypoint":  "govern",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      },
-                                      {
-                                          "id":  "nontrivial-stdout",
-                                          "kind":  "min-extra-bytes",
-                                          "pattern":  "CLAUDE_GOVERN_DISPATCH_OK",
-                                          "minExtraBytes":  16,
-                                          "bound":  {
-                                                        "entrypoint":  "govern",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      },
-                                      {
-                                          "id":  "extra-assert-1",
-                                          "kind":  "substring",
-                                          "pattern":  "govern",
-                                          "bound":  {
-                                                        "entrypoint":  "govern",
-                                                        "protocolVersion":  "0.1.0"
-                                                    },
-                                          "observed":  true
-                                      }
-                                  ],
-                   "stdoutPath":  "docs/releases/runtime/v0.13.0/claude-code-cli-govern-2026-08-06.d/stdout.txt",
-                   "stdoutSha256":  "f68cd77383092ca5b420388a6db4433ebc5c18fe8d4c4eeb2646d323aad6d270",
-                   "stdoutMode":  "claude-stream-json-sanitized",
-                   "stderrPath":  "docs/releases/runtime/v0.13.0/claude-code-cli-govern-2026-08-06.d/stderr.txt",
-                   "stderrSha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-                   "stderrMode":  "raw",
-                   "warnings":  [
-
-                                ],
-                   "reason":  "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
-               },
-    "artifacts":  {
-                      "screenshots":  [
-
-                                      ]
-                  }
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-07T12:52:26.238477Z",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.223",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": ".claude/skills/govern/SKILL.md",
+      "sha256": "d4acc96b61c1d878f9703560927992f22e57ad0c497bc6547b599a968a509bb5"
+    },
+    {
+      "path": "skills/install/claude/skills/govern/SKILL.md",
+      "sha256": "d4acc96b61c1d878f9703560927992f22e57ad0c497bc6547b599a968a509bb5"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "17d903ff8547aa07d642e2d0f9d0ed4aa0925a7a5512c6aa8dfe6a1175a9013f"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "449cd56696fe09a1a63bcbf40feddde74e106866ca79ef1230d9d6599023a7eb"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "cmd.exe",
+      "/d",
+      "/s",
+      "/c",
+      "claude -p --no-session-persistence --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 12"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240,
+    "inputSha256": "d1b9d242732098a2dd0412eb20cc402eb37ecb3719d82d6ab854a4a49d9e396f",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker CLAUDE_GOVERN_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "CLAUDE_GOVERN_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "CLAUDE_GOVERN_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "CLAUDE_GOVERN_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.0/claude-code-cli-govern-2026-08-06.d/stdout.txt",
+    "stdoutSha256": "9bbfff3e0cc79de7c1a7017849c3c5f1ebafb101a963098c2af6b0d686c8d3eb",
+    "stdoutMode": "claude-stream-json-sanitized",
+    "stderrPath": "docs/releases/runtime/v0.13.0/claude-code-cli-govern-2026-08-06.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
 }

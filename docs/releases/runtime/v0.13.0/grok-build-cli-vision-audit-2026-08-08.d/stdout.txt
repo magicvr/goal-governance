@@ -1,0 +1,12 @@
+I'll load the vision-audit skill and its core prompt, then read only the minimum vision records for this read-only dispatch probe.Next I’ll read the core prompt and the minimum vision records: Charter, workspace-001, and reviews.**GROK_VISION_AUDIT_DISPATCH_OK**
+
+| Item | Value |
+|------|--------|
+| **Skill title** | vision-audit · 独立 Vision Review（Grok Build skill） |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision-audit\SKILL.md` |
+| **Core prompt (named by skill)** | `skills/prompts/07-independent-vision-review.md` (`07-independent-vision-review`) |
+| **Active Charter** | `vision-goal-governance@0.2.0` (`status: active`) |
+| **workspace-001 `primary_plan`** | `VP-001-governance-platform-delivery` |
+| **`reviews.md` open required findings** | **No** — all indexed VRev entries report `open required = 0` (VRev-001…007) |
+
+Read-only probe only: no VRev appended, no Goal records modified.

@@ -99,6 +99,16 @@ class PackSkillsReleaseTests(unittest.TestCase):
         )
         self.assertFalse(pack.should_exclude(Path("prompts") / "00-govern-orchestrator.md"))
 
+    def test_should_exclude_mcp_integration_tests(self) -> None:
+        """A-012 F-003: skills/tests/test_mcp_*.py import the repo-root mcp/
+        package and must not ship in the File zip (they fail in a pure
+        File-channel unpack). Other skills tests stay."""
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_l1.py"))
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_config.py"))
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_lifecycle.py"))
+        self.assertFalse(pack.should_exclude(Path("tests") / "test_skills_orchestrator.py"))
+        self.assertFalse(pack.should_exclude(Path("tests") / "test_install_ps1_isolated.ps1"))
+
     def test_pack_skills_on_temp_tree_excludes_caches(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
@@ -223,6 +233,12 @@ class PackSkillsReleaseTests(unittest.TestCase):
                 "/web/",
                 "artifacts/",
                 "tech-stack.md",
+                # VP-004 R4: MCP implementation lives at repo root mcp/ (channel
+                # asset separation); the File zip must never contain it.
+                f"{root}/mcp/",
+                "/mcp/server.py",
+                # A-012 F-003: MCP integration tests must not ship either.
+                "/tests/test_mcp_",
             ):
                 self.assertFalse(
                     any(bad in n for n in names),
@@ -250,6 +266,61 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         # Pack job must not require Environment approval.
         pack_block = workflow.split("publish:")[0]
         self.assertNotIn("environment: release", pack_block)
+
+    def test_publish_job_pins_r4_docker_release_steps(self) -> None:
+        """VP-004 R4 (GOAL-005 F-002): the tag publish flow must keep the GHCR
+        docker release steps pinned, so a regression cannot silently drop the
+        MCP image from releases while tests stay green."""
+        workflow = (REPO_ROOT / ".github/workflows/skills-pack-release.yml").read_text(
+            encoding="utf-8"
+        )
+        # Job definition line ("  publish:") is unique; header comments also
+        # mention publish:/gh release create and must not pollute the block.
+        publish_block = workflow.split("\n  publish:")[1]
+        self.assertIn("packages: write", publish_block)
+        self.assertIn("docker/login-action@v3", publish_block)
+        self.assertIn("registry: ghcr.io", publish_block)
+        self.assertIn("docker/build-push-action@v6", publish_block)
+        self.assertIn("context: mcp/", publish_block)
+        self.assertIn("ghcr.io/magicvr/goal-governance-mcp-server:", publish_block)
+        self.assertIn("needs.pack.outputs.version", publish_block)
+        # F-002 (A-012): the image build must pin the effective server version
+        # to the pack/tag version so serverInfo.version and lifecycle writes
+        # cannot drift from the GHCR tag.
+        self.assertIn("build-args:", publish_block)
+        self.assertIn(
+            "GOAL_GOVERNANCE_MCP_VERSION=${{ needs.pack.outputs.version }}",
+            publish_block,
+        )
+        # Image push must stay after the hard evidence gate (fail-closed order).
+        self.assertLess(
+            publish_block.index("docker/build-push-action@v6"),
+            publish_block.index("gh release create"),
+        )
+
+    def test_pack_job_pins_evidence_consistency_gate(self) -> None:
+        """M-001 (A-016): the pack job must run the L3 evidence consistency
+        check before tests/pack, so a stale behavior source fails the build."""
+        workflow = (REPO_ROOT / ".github/workflows/skills-pack-release.yml").read_text(
+            encoding="utf-8"
+        )
+        pack_block = workflow.split("\n  publish:")[0]
+        self.assertIn("Evidence consistency gate (M-001)", pack_block)
+        self.assertIn("capture_runtime_evidence.py --check", pack_block)
+        self.assertIn(
+            "--evidence-dir docs/workspace-003-mcp-file-dual-channel/"
+            "GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence",
+            pack_block,
+        )
+        # The gate must run before the pack unit tests and before packing.
+        self.assertLess(
+            pack_block.index("capture_runtime_evidence.py --check"),
+            pack_block.index("Run pack unit tests"),
+        )
+        self.assertLess(
+            pack_block.index("capture_runtime_evidence.py --check"),
+            pack_block.index("Pack skills + core zips"),
+        )
 
 
 if __name__ == "__main__":

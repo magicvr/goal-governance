@@ -17,17 +17,17 @@ version: 0.5.0
 ### A0. Minimal Complete Install（对照权威 MUST 表）
 
 - [ ] 根 `AGENTS.md`（或等价 AI 规则）
-- [ ] `docs/README.md`
-- [ ] `docs/architecture/principles.md`、`workspace-protocol.md`
-- [ ] `docs/templates/goal-folder/`、`workspace-context.md`、`templates/vision/charter.md` + `vision-plan.md` + `reviews-index.md` + `review.md`
-- [ ] `docs/vision/alignment.md`、`README.md`
+- [ ] `{governance_root}/README.md`
+- [ ] `{governance_root}/architecture/principles.md`、`workspace-protocol.md`
+- [ ] `{governance_root}/templates/goal-folder/`、`workspace-context.md`、`templates/vision/charter.md` + `vision-plan.md` + `reviews-index.md` + `review.md`
+- [ ] `{governance_root}/vision/alignment.md`、`README.md`
 - [ ] 愿景树 **MUST** 文件均存在（**不是**建议）：`roadmap.md`、`revisions.md`、`reviews.md`、`workspaces.md`、`consumer-checklist.md`
-- [ ] 分发 Skills/Web 时：`docs/contracts/` 消费契约存在
+- [ ] 分发 Skills/Web 时：`{governance_root}/contracts/` 消费契约存在
 
 ### A1. 愿景实例与单愿景
 
-- [ ] 存在 `docs/vision/charter.md`（现行）
-- [ ] 至少存在一个 `docs/vision/plans/VP-*.md`（冷启动在开区前必须落盘首个 VP）
+- [ ] 存在 `{governance_root}/vision/charter.md`（现行）
+- [ ] 至少存在一个 `{governance_root}/vision/plans/VP-*.md`（冷启动在开区前必须落盘首个 VP）
 - [ ] Charter：`doc_type: vision-charter`，`vision_id`、`version` 有值，`status` ∈ {`active`,`superseded`}（**不是** `done`）
 - [ ] **至多一个** `status: active` 的 Charter（单愿景）
 - [ ] 缺任一 A0/A1 MUST → 报告**不完整安装**；仅引导补齐，不非引导开区/推进/放行/关门
@@ -37,7 +37,7 @@ version: 0.5.0
 - [ ] 已定位焦点 `workspace.md`（多区未指定则 fail closed）
 - [ ] 存在 `vision_role`（仅 `primary` / `delivery`）、**必填** `plan_refs`、**必填** `primary_plan`（无 opt-out）
 - [ ] `primary_plan` ∈ `plan_refs`（逗号分隔列表）
-- [ ] `primary_plan` 对应文件 `docs/vision/plans/<primary_plan>.md` 存在
+- [ ] `primary_plan` 对应文件 `{governance_root}/vision/plans/<primary_plan>.md` 存在
 - [ ] Root `00-meta` 的 plan 字段与 workspace 一致（或可解释的同步中状态）
 
 ## C. VP 链

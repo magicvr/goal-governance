@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/magicvr/goal-governance/schema/governance-root-config/v1",
+  "title": "Goal Governance project config (VP-004 R3)",
+  "description": "Committable project pin for the configurable governance root. Only the root prefix is configurable; the internal layout under the root is frozen.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "governance_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Repo-relative governance root (default: docs). Absolute paths and '..' escapes fail closed; internal layout (vision/, workspace-*, goal-tree, five-piece shape) is not configurable.",
+      "pattern": "^(?!.*(?:^|/)\\.\\.(?:/|$))[^/\\\\][^\\\\]*$"
+    }
+  }
+}

@@ -31,31 +31,54 @@
 ### 入口 1 · 在线 / 本地 bootstrap（推荐）
 
 从 **GitHub Release 固定 tag** 拉取 bootstrap 脚本（无需浏览器另存），脚本再下载**已内嵌 core 的 skills zip**、校验 SHA-256，并调用包内 install（等价 `-All`）。  
-**当前示例 pin 最新正式 tag `v0.13.0`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
+**当前示例 pin 最新正式 tag `v0.13.1`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
 
 ```powershell
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.0/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.1/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.0 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.1 -Force
 
 # 离线：已有 skills zip + .sha256 时（脚本同样可从同 tag Release 拉取）
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.13.0 -ZipPath .\goal-governance-skills-v0.13.0.zip -Force
+  -Version 0.13.1 -ZipPath .\goal-governance-skills-v0.13.1.zip -Force
 ```
 
 ```bash
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.13.0/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.13.1/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.13.0 --force
+bash ./install-online.sh --version 0.13.1 --force
 
 # 离线：
-bash ./install-online.sh --version 0.13.0 --zip-path ./goal-governance-skills-v0.13.0.zip --force
+bash ./install-online.sh --version 0.13.1 --zip-path ./goal-governance-skills-v0.13.1.zip --force
 ```
 
 说明见 [scripts/bootstrap/README.md](scripts/bootstrap/README.md)。默认**不**推荐 `curl | bash` / `irm | iex` 管道直跑（先落盘再执行，便于审阅）。
+
+## 在其他项目中安装 MCP Server（Docker 通道）
+
+MCP 通道（[VP-004](docs/vision/plans/VP-004-mcp-file-dual-channel-delivery.md)）与 File 通道同为**一等发布通道**；发布资产为 **GHCR Docker 镜像**，与 File 资产**同 tag 同版本**发布（GitHub Release tag `vX.Y.Z` → 镜像 tag `X.Y.Z`；另有 `latest` 便利 tag）。实现源码在仓库根 [`mcp/`](mcp/README.md)（与 `skills/` 并列，File zip **不含** MCP 代码）。
+
+```bash
+# 拉取并验证（stdio 直连；将 <仓库根> 换为消费仓绝对路径）
+docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.1
+docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.1
+```
+
+**MCP client 配置**（mcpServers；固定入口 `python server.py --repo-root /workspace`，客户端零参数）：
+
+```json
+{
+  "goal-governance": {
+    "command": "docker",
+    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.1"]
+  }
+}
+```
+
+> 当前示例 pin 最新正式 tag `v0.13.1`（发新版时同步改本节）；本地 stdio 进程形态仍合法（不强制 Docker-only）：`python mcp/server.py [--repo-root PATH]`。完整说明见 [`mcp/README.md`](mcp/README.md)。
 
 ### 入口 2 · 包内 install（解压后离线）
 

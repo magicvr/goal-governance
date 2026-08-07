@@ -12,6 +12,7 @@
     "evidenceBoundary",
     "protocol",
     "supportBaseline",
+    "deliveryChannels",
     "templateSet",
     "adapterCompatibilityStatus",
     "adapters"
@@ -148,6 +149,14 @@
         }
       }
     },
+    "deliveryChannels": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/deliveryChannel"
+      }
+    },
     "templateSet": {
       "type": "object",
       "additionalProperties": false,
@@ -243,6 +252,41 @@
     "semver": {
       "type": "string",
       "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "deliveryChannel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "status", "evidenceLevels", "entrypoints"],
+      "properties": {
+        "channel": {
+          "enum": ["files", "mcp"]
+        },
+        "status": {
+          "const": "first-class"
+        },
+        "evidenceLevels": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "enum": ["L1", "L2", "L3"]
+          }
+        },
+        "entrypoints": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 4,
+          "items": {
+            "type": "string"
+          }
+        },
+        "runtime": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
     },
     "semverRange": {
       "type": "object",

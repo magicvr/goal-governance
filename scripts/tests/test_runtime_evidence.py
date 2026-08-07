@@ -527,5 +527,154 @@ class RuntimeEvidenceTests(unittest.TestCase):
                 compatibility_report.validate_inputs(contract, deepcopy(matrix), root)
 
 
+class EvidenceConsistencyCheckTests(RuntimeEvidenceTests):
+    """M-001 (A-016): --check verifies recorded behaviorSources against the current tree."""
+
+    def test_check_file_ok_when_sources_match(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-ok-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output, _ = self._capture(root)
+            problems = capture_runtime_evidence.check_evidence_file(output, root)
+            self.assertEqual(problems, [])
+
+    def test_check_file_reports_stale_source(self) -> None:
+        """A stale behavior source (e.g. mcp/ change without recapture) must be flagged."""
+        with tempfile.TemporaryDirectory(prefix="gg-check-stale-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output, _ = self._capture(root)
+            (root / "behavior.md").write_text("changed behavior\n", encoding="utf-8")
+            problems = capture_runtime_evidence.check_evidence_file(output, root)
+            self.assertEqual(len(problems), 1)
+            self.assertIn("behavior source is stale", problems[0])
+            self.assertIn("behavior.md", problems[0])
+
+    def test_check_file_reports_missing_source(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-missing-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output, _ = self._capture(root)
+            (root / "behavior.md").unlink()
+            problems = capture_runtime_evidence.check_evidence_file(output, root)
+            self.assertEqual(len(problems), 1)
+            self.assertIn("missing", problems[0])
+
+    def test_check_file_rejects_path_escape(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-escape-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output, payload = self._capture(root)
+            payload["behaviorSources"] = [{"path": "../evil.md", "sha256": "0" * 64}]
+            output.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            problems = capture_runtime_evidence.check_evidence_file(output, root)
+            self.assertEqual(len(problems), 1)
+            self.assertIn("stay inside the repository", problems[0])
+
+    def test_check_file_skips_non_evidence_json(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-skip-") as tmp:
+            root = Path(tmp)
+            non_evidence = root / "plain.json"
+            non_evidence.write_text(json.dumps({"note": "not evidence"}) + "\n", encoding="utf-8")
+            self.assertIsNone(
+                capture_runtime_evidence.check_evidence_file(non_evidence, root)
+            )
+
+    def test_run_check_counts_evidence_and_skips_others(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-run-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            for name in ("a.json", "b.json"):
+                self._capture(root, output_name=name)
+            (root / "c.json").write_text(
+                json.dumps({"format": "something-else"}) + "\n", encoding="utf-8"
+            )
+            problems, checked = capture_runtime_evidence.run_evidence_check(root, root)
+            self.assertEqual(checked, 2)
+            self.assertEqual(problems, [])
+
+    def test_check_cli_exit_codes(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-cli-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output, _ = self._capture(root)
+            self.assertEqual(
+                capture_runtime_evidence.main(
+                    ["--check", "--evidence-dir", str(root), "--root", str(root)]
+                ),
+                0,
+            )
+            (root / "behavior.md").write_text("changed behavior\n", encoding="utf-8")
+            self.assertEqual(
+                capture_runtime_evidence.main(
+                    ["--check", "--evidence-dir", str(root), "--root", str(root)]
+                ),
+                1,
+            )
+
+    def test_check_cli_missing_dir_fails(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-nodir-") as tmp:
+            missing = Path(tmp) / "nope"
+            self.assertEqual(
+                capture_runtime_evidence.main(
+                    ["--check", "--evidence-dir", str(missing)]
+                ),
+                1,
+            )
+
+    def test_check_cli_requires_evidence_dir(self) -> None:
+        """--check without --evidence-dir must not silently scan the whole repo:
+        historical captures are bound to their capture-time tree (M-001)."""
+        with self.assertRaises(SystemExit) as ctx:
+            capture_runtime_evidence.main(["--check"])
+        self.assertEqual(ctx.exception.code, 2)
+
+    def test_check_cli_accepts_multiple_evidence_dirs(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="gg-check-multi-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            dir_a = root / "a"
+            dir_b = root / "b"
+            dir_a.mkdir()
+            dir_b.mkdir()
+            for sub in (dir_a, dir_b):
+                output = sub / "evidence.json"
+                capture_runtime_evidence.capture(
+                    consumer="test-host",
+                    entrypoint="govern",
+                    protocol_version="0.1.0",
+                    product="Test Host",
+                    product_version="1.0.0",
+                    provider=None,
+                    model=None,
+                    prompt="/govern test\n",
+                    marker="RUNTIME_MARKER",
+                    behavior_sources=["behavior.md"],
+                    command=[
+                        sys.executable,
+                        "-c",
+                        "import sys; sys.stdin.read(); "
+                        "print('govern'); print('host skill path loaded'); "
+                        "print('RUNTIME_MARKER')",
+                    ],
+                    output=output,
+                    root=root,
+                )
+            self.assertEqual(
+                capture_runtime_evidence.main(
+                    [
+                        "--check",
+                        "--evidence-dir",
+                        str(dir_a),
+                        "--evidence-dir",
+                        str(dir_b),
+                        "--root",
+                        str(root),
+                    ]
+                ),
+                0,
+            )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,14 @@
+I'll load the vision skill, run only its scan phase, and read the minimum repo sources needed for the dispatch probe report.Verifying that workspace-001's `primary_plan` file exists.## Vision scan (dispatch probe only)
+
+**GROK_VISION_DISPATCH_OK**
+
+| Item | Value |
+|------|--------|
+| **Loaded skill title** | `vision · 愿景与组合治理（Grok Build skill）` |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **Orchestrator prompt (06-vision-orchestrator)** | `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\06-vision-orchestrator.md` |
+| **Active Charter** | `vision-goal-governance@0.2.0` (`status: active`) |
+| **workspace-001 `primary_plan`** | **Resolves** → `VP-001-governance-platform-delivery` → `docs/vision/plans/VP-001-governance-platform-delivery.md` (file exists; VP `status: closed`; `vision_ref: vision-goal-governance@0.2.0`) |
+
+**SKILLS_PKG:** `skills/` (contains `prompts/06-vision-orchestrator.md`).  
+**Scan phase only:** no writes, no subagents, no questions.

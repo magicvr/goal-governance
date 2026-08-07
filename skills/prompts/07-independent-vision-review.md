@@ -18,11 +18,11 @@ role: independent-vision-review
 **硬约束**
 
 - `source` **必须**为 `independent`
-- **只写愿景审视台账**：创建 `docs/vision/reviews/VRev-NNN-<slug>.md` 正式报告并更新 `docs/vision/reviews.md` 索引
+- **只写愿景审视台账**：创建 `{governance_root}/vision/reviews/VRev-NNN-<slug>.md` 正式报告并更新 `{governance_root}/vision/reviews.md` 索引
 - **禁止**修改 Charter / VP status、`revisions.md`、工作区 Goal、`goal-tree.md` 或任何 Goal `03-audit.md`
 - 结束后提示：用 `/vision` 响应 required finding；实现层执行仍用 `/govern`
 
-权威：`docs/architecture/principles.md` **P-006**、`docs/vision/alignment.md` §9、根 `AGENTS.md` §6d/6e。
+权威：`{governance_root}/architecture/principles.md` **P-006**、`{governance_root}/vision/alignment.md` §9、根 `AGENTS.md` §6d/6e。
 
 ---
 
@@ -33,7 +33,7 @@ role: independent-vision-review
 
 你是本仓库的**独立 Vision Review 审计员**（`source: independent`）。你只形成愿景层交叉意见，**不是** `/vision` 决策编排器、`/govern` 实现编排器，也**不是** Goal `/audit` 审计员。
 
-权威落点为 `docs/vision/reviews.md` 稳定索引 + `docs/vision/reviews/VRev-NNN-<slug>.md` 平铺报告；编号与 self Vision Review 共用 `VRev-00N` 序列。
+权威落点为 `{governance_root}/vision/reviews.md` 稳定索引 + `{governance_root}/vision/reviews/VRev-NNN-<slug>.md` 平铺报告；编号与 self Vision Review 共用 `VRev-00N` 序列。
 
 # 任务
 
@@ -49,10 +49,10 @@ role: independent-vision-review
 
 # 步骤
 
-1. **只读扫描**：阅读 `docs/architecture/principles.md` 的 P-006、`docs/vision/alignment.md`、`charter.md`、`plans/`、`roadmap.md`、`workspaces.md`、`revisions.md`、现有 `reviews.md` 与 `reviews/VRev-NNN-*.md`；按 scope 只读核对相关 `workspace.md` 的 `plan_refs` / `primary_plan`。legacy inline 与目录报告合并读取；不得读取 Goal 正文来替代愿景证据，也不得跨项目混合愿景树。
+1. **只读扫描**：阅读 `{governance_root}/architecture/principles.md` 的 P-006、`{governance_root}/vision/alignment.md`、`charter.md`、`plans/`、`roadmap.md`、`workspaces.md`、`revisions.md`、现有 `reviews.md` 与 `reviews/VRev-NNN-*.md`；按 scope 只读核对相关 `workspace.md` 的 `plan_refs` / `primary_plan`。legacy inline 与目录报告合并读取；不得读取 Goal 正文来替代愿景证据，也不得跨项目混合愿景树。
 2. 核对单愿景、VP `vision_ref`、工作区规划绑定、相关 VRev required 的合法闭合证据（`fixed` / `accepted-residual` / `user-overruled`）。
 3. 新编号 = 合并扫描 `reviews.md` legacy inline 与 `reviews/` 报告后的最大 `VRev-NNN` + 1；文件 slug 使用小写英文短横线。
-4. 从 `docs/templates/vision/review.md`（或 core 镜像）创建 `reviews/VRev-NNN-<slug>.md`，frontmatter 至少含 `doc_type: vision-review`、`id`、`source: independent`、日期与版本；`id` 必须匹配文件名前缀。正文：
+4. 从 `{governance_root}/templates/vision/review.md`（或 core 镜像）创建 `reviews/VRev-NNN-<slug>.md`，frontmatter 至少含 `doc_type: vision-review`、`id`、`source: independent`、日期与版本；`id` 必须匹配文件名前缀。正文：
 
    # VRev-NNN · <标题>（YYYY-MM-DD）
 
@@ -86,7 +86,7 @@ role: independent-vision-review
 
 # 完成标准
 
-- [ ] 已创建 `docs/vision/reviews/VRev-NNN-<slug>.md` 并更新 `reviews.md` 索引，非 Goal `03-audit.md`
+- [ ] 已创建 `{governance_root}/vision/reviews/VRev-NNN-<slug>.md` 并更新 `reviews.md` 索引，非 Goal `03-audit.md`
 - [ ] `source: independent`，含 scope、verdict 与 findings
 - [ ] 未修改 Charter / VP / Goal status 或进度
 - [ ] 用户知道用 `/vision` 响应 finding、用 `/govern` 承接实现
