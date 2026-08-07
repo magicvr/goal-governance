@@ -421,6 +421,7 @@ def generate_evidence(
         if not checks:
             raise ReleaseEvidenceError("release-candidate mode requires executed checks")
         if not all(check["passed"] for check in checks):
+            _print_failed_checks(checks)
             raise ReleaseEvidenceError("release-candidate mode requires every check to pass")
     else:
         checks = _run_required_checks(root) if run_checks else []
@@ -467,6 +468,21 @@ def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def _print_failed_checks(checks: list[dict[str, Any]]) -> None:
+    """Print per-check failure details to stderr (missing before: release mode
+    raised without diagnostics, so CI failures were unactionable)."""
+    for check in checks:
+        if check.get("passed") is False:
+            print(f"failed check: {check['name']}", file=sys.stderr)
+            print(f"  command: {' '.join(check.get('command', []))}", file=sys.stderr)
+            print(f"  exitCode: {check.get('exitCode')}", file=sys.stderr)
+            tail = (check.get("outputTail") or "").strip()
+            if tail:
+                print("  output tail:", file=sys.stderr)
+                for line in tail.splitlines()[-40:]:
+                    print(f"    {line}", file=sys.stderr)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=("rehearsal", "release"), default="rehearsal")
@@ -508,16 +524,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"checks passed: {evidence['checksPassed']}")
     if args.run_checks and not evidence["checksPassed"]:
         print("release evidence failed: one or more checks failed", file=sys.stderr)
-        for check in evidence.get("checks", []):
-            if check.get("passed") is False:
-                print(f"failed check: {check['name']}", file=sys.stderr)
-                print(f"  command: {' '.join(check.get('command', []))}", file=sys.stderr)
-                print(f"  exitCode: {check.get('exitCode')}", file=sys.stderr)
-                tail = (check.get("outputTail") or "").strip()
-                if tail:
-                    print("  output tail:", file=sys.stderr)
-                    for line in tail.splitlines()[-40:]:
-                        print(f"    {line}", file=sys.stderr)
+        _print_failed_checks(evidence.get("checks", []))
         return 1
     return 0
 

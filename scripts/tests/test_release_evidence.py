@@ -515,6 +515,74 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self.assertIn("exitCode: 1", captured.getvalue())
         self.assertIn("forced failure", captured.getvalue())
 
+    def test_release_cli_prints_failed_check_details_before_raising(self) -> None:
+        """Release mode must surface which check failed (diagnostics regression:
+        previously it raised 'requires every check to pass' with no detail)."""
+        report = self._ready_compatibility(
+            compatibility_report.generate_report(REPO_ROOT)
+        )
+        with tempfile.TemporaryDirectory(prefix="gg-release-cli-diag-") as tmp:
+            root = Path(tmp)
+            self._copy_contract_surfaces(root)
+            schema_dir = root / "docs/releases"
+            schema_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(
+                REPO_ROOT / "docs/releases/release-evidence.schema.json",
+                schema_dir / "release-evidence.schema.json",
+            )
+            self._init_release_repo(root)
+            report = self._bind_report_to_root(report, root)
+            output = root.parent / "evidence.json"
+            failed = {
+                "name": "skills-contract-tests",
+                "command": [sys.executable, "-c", "raise SystemExit(1)"],
+                "cwd": ".",
+                "exitCode": 1,
+                "passed": False,
+                "outputSha256": __import__("hashlib").sha256(
+                    b"boom detail line"
+                ).hexdigest(),
+                "output": "boom detail line",
+                "outputTail": "boom detail line",
+            }
+            passing = {
+                "name": "diff-whitespace",
+                "command": ["git", "diff", "--check"],
+                "cwd": ".",
+                "exitCode": 0,
+                "passed": True,
+                "outputSha256": __import__("hashlib").sha256(b"").hexdigest(),
+                "output": "",
+                "outputTail": "",
+            }
+            with mock.patch.object(
+                release_evidence.compatibility_report,
+                "generate_report",
+                return_value=report,
+            ), mock.patch.object(
+                release_evidence,
+                "_run_required_checks",
+                return_value=[failed, passing],
+            ), contextlib.redirect_stderr(io.StringIO()) as captured:
+                result = release_evidence.main(
+                    [
+                        "--mode",
+                        "release",
+                        "--tag",
+                        "v1.2.3",
+                        "--run-checks",
+                        "--root",
+                        str(root),
+                        "--output",
+                        str(output),
+                    ]
+                )
+        self.assertEqual(result, 1)
+        self.assertIn("failed check: skills-contract-tests", captured.getvalue())
+        self.assertIn("boom detail line", captured.getvalue())
+        self.assertIn("exitCode: 1", captured.getvalue())
+        self.assertNotIn("failed check: diff-whitespace", captured.getvalue())
+
     def test_malformed_compatibility_report_fails_cleanly(self) -> None:
         with tempfile.TemporaryDirectory(prefix="gg-release-malformed-") as tmp:
             path = Path(tmp) / "bad.json"
