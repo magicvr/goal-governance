@@ -90,6 +90,8 @@ DOGFOOD = [
     ".github/prompts/govern.prompt.md",
     ".github/prompts/vision-audit.prompt.md",
     ".github/prompts/vision.prompt.md",
+    # Copilot rule surface (independent audit F-001): unconfigured template copy.
+    ".github/copilot-instructions.md",
 ]
 
 # R-001 sweep files: protocol-semantic prefixes forbidden; layout trees kept.

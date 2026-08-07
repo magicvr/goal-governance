@@ -92,6 +92,10 @@ A-004 把正式消费 Release 纳入 GOAL-003 成功边界，确认 `v0.11.0` �
 
 `/govern`：用户确认参数包（slug `consumer-surface-convergence`）——R3 内创建 **GOAL-006-consumer-surface-convergence**（消费面路径收敛：模板与四治理 prompts 硬编码 `docs/…` 相对化 `{governance_root}` 或按 pin 展开；承接 [workspace-003] A-012 F-006 跨区移交 + R-001 扫尾合并跟踪）。目标 `active`、progress 0%（S1–S3 0/3）；I-001（required，S1 方案冻结门禁）与 I-002（non-blocking）登记 open。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-007**。
 
+## 2026-08-08 · GOAL-006 关门（cross 审计 + 合并响应）
+
+`/govern`（用户指令：S3 self 关门审计 → grok build（grok-4.5 / thinking high）独立审计 → 合并处理）：A-001 self `pass`；A-002 independent（grok-4.5，亲自验证 239 测试 / stage / 全表面扫描 / 12 证据哈希）`pass`、无 required；A-003 合并响应——F-001 fixed（`.github/copilot-instructions.md` 相对化 + 防再犯覆盖 + copilot 4 证据重捕获）、F-002 fixed（prompts README）、F-004 fixed（VP-002 路线图 + workspace-003 留痕）、F-003 deferred（VP-002 消费场景 e2e）、R-001 deferred（release 轮）。**GOAL-006 `done` / 100%**（3/3）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-007**。
+
 ## 树
 
 ```text
@@ -100,7 +104,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-003-consumer-governance-ergonomics     [done]    修复消费仓门禁与长流程治理摩擦  progress 100%
 ├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
-└── GOAL-006-consumer-surface-convergence       [active]  消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 67%
+└── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ```
 
 ## 状态表
@@ -112,7 +116,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
-| GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | active | 67% | 2026-08-08 |
+| GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 
 ## 编号
 

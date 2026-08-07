@@ -1,55 +1,60 @@
-I'll perform a read-only independent cross-audit of GOAL-008. Let me start by locating the required
-governance sources.
-
 / Search (glob)
-  │ ".github/copilot-instructions.md"
-  └ 1 file found
-
-/ Search (glob)
-  │ "AGENTS.md"
-  └ 2 files found
-
-/ Search (glob)
-  │ "skills/prompts/05-independent-audit.md"
-  └ 1 file found
-
-/ Search (glob)
-  │ "docs/workspace-001-goal-governance/**/*"
+  │ "docs/workspace-001-goal-governance/**"
   └ 11 files found
 
-Let me read the core governance sources and locate GOAL-008 records.
-
-● Read copilot-instructions.md
-  │ .github\copilot-instructions.md
-  └ 1 line read
+● List repository root contents (shell)
+  │ Get-ChildItem -Path "C:\Users\magicvr\Documents\Code\goal-governance" -Force | Select-Object
+  │ Mode, Name
+  └ 24 lines…
 
 ● Read goal-tree.md
   │ docs\workspace-001-goal-governance\goal-tree.md
   └ 1 line read
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+/ Search (glob)
+  │ "docs/workspace-001-goal-governance/GOAL-008*"
+  └ No matches found
+
+/ Search (glob)
+  │ "**/GOAL-008*/**"
+  └ 9 files found
+
+/ Search (grep)
+  │ "GOAL-008"
+  └ 11 files found
 
 ● Read 05-independent-audit.md
   │ skills\prompts\05-independent-audit.md
   └ 108 lines read
 
 / Search (glob)
-  │ "docs/workspace-001-goal-governance/GOAL-008*/*"
-  └ 4 files found
+  │ "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/**"
+  └ 9 files found
 
-Let me read GOAL-008 records and check for ledger directories.
+● List GOAL-008 folder contents recursively (shell)
+  │ Get-ChildItem -Path "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-gov
+  │ ernance\GOAL-008-skills-consumer-adapter-release-consistency" -Recurse | Select-Object FullName
+  └ 11 lines…
 
-● Read 02-execution.md
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
-  │ tion.md
-  └ 1 line read
+● List GOAL-008 files with short relative paths (shell)
+  │ Get-ChildItem -Path "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-gov
+  │ ernance\GOAL-008-skills-consumer-adapter-release-consistency" -Recurse -File | ForEach-Object {
+  │ $_.FullName.Replace("C:\Users\magicvr\Documents\Code\goal-governance\","") }
+  └ 10 lines…
+
+● List GOAL-008 file names compactly (shell)
+  │ $root = "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL
+  │ -008-skills-consumer-adapter-release-consistency"; Get-ChildItem -Path $root -Recurse -File |
+  │ ForEach-Object { $_.FullName.Substring($root.Length + 1) } | Sort-Object
+  └ 203 lines…
 
 ● Read 03-audit.md
   │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
   │ .md
-  └ 1 line read
-
-● Read 01-decision.md
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
-  │ ion.md
   └ 1 line read
 
 ● Read 00-meta.md
@@ -57,179 +62,327 @@ Let me read GOAL-008 records and check for ledger directories.
   │ md
   └ 103 lines read
 
-/ Search (glob)
-  │ "docs/workspace-001-goal-governance/GOAL-008*/*/*"
-  └ 9 files found
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
 
-Let me check the GOAL-008 folder structure and read the large files in sections.
+● Read copilot-cli-replay.ps1
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\prompts\copilot-cli-replay.ps1
+  └ 36 lines read
 
-● Read workspace.md
-  │ docs\workspace-001-goal-governance\workspace.md
-  └ 46 lines read
+/ Search (grep)
+  │ "GOAL-008"
+  └ 15 lines found
 
-● List directory docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consis…
-  └ 5 files found
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ 1 line read
 
-GOAL-008 uses legacy inline records. Let me read the full decision, execution, and audit records in
-sections, plus the repo AGENTS.md and copilot-instructions.
+● List v0.13.0 runtime release files (shell)
+  │ Get-ChildItem -Path
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\releases\runtime\v0.13.0" -File |
+  │ Select-Object Name, Length | Format-Table -AutoSize
+  └ 27 lines…
+
+● Read github-copilot-cli-audit-2026-08-08.json
+  │ docs\releases\runtime\v0.13.0\github-copilot-cli-audit-2026-08-08.json
+  └ 118 lines read
+
+● List v0.13.0 runtime dirs and audit transcript files (shell)
+  │ Get-ChildItem -Path
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\releases\runtime\v0.13.0" -Directory |
+  │ Select-Object Name | Format-Table -AutoSize; Get-ChildItem -Path "C:\Users\magicvr\Documents\Cod
+  │ e\goal-governance\docs\releases\runtime\v0.13.0\github-copilot-cli-audit-2026-08-08.d" -File |
+  │ Select-Object Name, Length | Format-Table -AutoSize
+  └ 34 lines…
+
+● Read stdout.txt
+  │ docs\releases\runtime\v0.13.0\github-copilot-cli-audit-2026-08-08.d\stdout.txt
+  └ 275 lines read
+
+● Read copilot-cli-audit.txt
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\prompts\copilot-cli-audit.txt
+  └ 3 lines read
+
+I'm conducting the read-only independent audit for GOAL-008. Let me read the governance sources.
+
+● Read 01-decision.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
+  │ ion.md
+  └ 1 line read
 
 ● Read AGENTS.md
-  └ 1 line read
+  └ L1:80 (79 lines read)
 
 ● Read copilot-instructions.md
   │ .github\copilot-instructions.md
   └ L1:200 (199 lines read)
 
-● Read copilot-instructions.md
-  │ .github\copilot-instructions.md
-  └ L200:400 (134 lines read)
+Let me read the GOAL-008 records in full.
 
 ● Read 01-decision.md
   │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
   │ ion.md
-  └ L1:200 (185 lines read)
+  └ L1:185 (185 lines read)
+
+● Read 02-execution.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
+  │ tion.md
+  └ L1:150 (144 lines read)
 
 ● Read 01-decision.md
   │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decis
   │ ion.md
-  └ L187:320 (76 lines read)
+  └ L185:320 (78 lines read)
 
 ● Read 02-execution.md
   │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
   │ tion.md
-  └ L1:200 (144 lines read)
+  └ L145:194 (49 lines read)
 
-● Read 03-audit.md
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
-  │ .md
-  └ L1:200 (200 lines read)
-
-● Read 02-execution.md
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\02-execu
-  │ tion.md
-  └ L145:220 (49 lines read)
-
-Let me continue reading the audit record and check the goal-tree entries for GOAL-008.
-
-● Read 03-audit.md
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
-  │ .md
-  └ L200:400 (201 lines read)
+Now let me read the GOAL-008 audit record in full.
 
 / Search (grep)
-  │ "GOAL-008"
-  └ 19 lines found
+  │ "^## A-"
+  └ 17 lines found
 
-Let me read the rest of the audit file to see all findings (F-00N) and closure evidence.
-
-● Read 03-audit.md
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
-  │ .md
-  └ L400:600 (201 lines read)
+● Count lines in 03-audit.md (shell)
+  │ $f = "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-00
+  │ 8-skills-consumer-adapter-release-consistency\03-audit.md"; (Get-Content $f).Count
+  └ 2 lines…
 
 ● Read 03-audit.md
   │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
   │ .md
-  └ L600:800 (117 lines read)
+  └ L1:120 (120 lines read)
 
-Let me verify the runtime evidence files referenced in the audit records exist.
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L120:320 (200 lines read)
 
-● Read goal-tree.md
-  │ docs\workspace-001-goal-governance\goal-tree.md
-  └ L1:80 (79 lines read)
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L320:491 (172 lines read)
 
-/ Search (glob)
-  │ "docs/workspace-001-goal-governance/GOAL-008*/attachments/runtime/*"
-  └ 60 files found
+The audit file extends beyond line 491. Let me read the remaining sections (A-010 through A-013).
 
-Let me examine the key evidence files referenced in the close-out records.
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L491:720 (213 lines read)
 
-● Read copilot-cli-govern-2026-07-20.json
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
-  │ nts\runtime\copilot-cli-govern-2026-07-20.json
-  └ 70 lines read
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L704:800 (13 lines read)
 
-● Read copilot-cli-audit-2026-07-20.json
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
-  │ nts\runtime\copilot-cli-audit-2026-07-20.json
-  └ 70 lines read
-
-Let me verify the freshness of the recorded behavior-source digests against the current repository
-files (read-only hash computation).
-
-● Read web-parser-ci-replay-2026-07-20.json
-  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
-  │ nts\runtime\web-parser-ci-replay-2026-07-20.json
-  └ 39 lines read
-
-● Compute current SHA-256 of behavior-source files (shell)
-  │ Get-FileHash "AGENTS.md" -Algorithm SHA256; Get-FileHash ".github\copilot-instructions.md"
-  │ -Algorithm SHA256; Get-FileHash "skills\prompts\00-govern-orchestrator.md" -Algorithm SHA256;
-  │ Get-FileHash "skills\prompts\05-independent-audit.md" -Algorithm SHA256
-  └ 7 lines…
-
-The behavior-source digests have drifted from the v0.7.0 evidence — consistent with the documented
-unreleased candidate state. Let me verify the release-candidate evidence and the current
-compatibility matrix state.
+Let me verify the evidence files referenced in the close-out and the current matrix/goal-tree state.
 
 ● Read release-candidate-v0.7.0-2026-07-20.json
   │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
   │ nts\runtime\release-candidate-v0.7.0-2026-07-20.json
   └ 28 lines read
 
-/ Search (glob)
-  │ "docs/contracts/skills-consumer-compatibility-matrix*.json"
-  └ 2 files found
+● Read copilot-cli-audit-2026-07-20.json
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\copilot-cli-audit-2026-07-20.json
+  └ 70 lines read
 
-Let me verify the current compatibility matrix state and the goal-tree's GOAL-008 record more
-closely.
+● Check GOAL-008 for ledger directories (shell)
+  │ $root = "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL
+  │ -008-skills-consumer-adapter-release-consistency"; Get-ChildItem -Path $root -Directory |
+  │ Select-Object Name; Write-Host "---ledger dirs---"; Get-ChildItem -Path $root -Recurse
+  │ -Directory -Filter "0*-*" | ForEach-Object { $_.FullName.Substring($root.Length+1) }
+  └ 5 lines…
+
+● Compute SHA-256 of current behavior-source files (shell)
+  │ Get-FileHash "AGENTS.md" -Algorithm SHA256; Get-FileHash ".github\copilot-instructions.md"
+  │ -Algorithm SHA256; Get-FileHash "skills\prompts\05-independent-audit.md" -Algorithm SHA256;
+  │ Get-FileHash "docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-cons
+  │ istency\attachments\runtime\prompts\copilot-cli-replay.ps1" -Algorithm SHA256; Get-FileHash
+  │ "docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attac…
+  └ 9 lines…
+
+● Check git tags, recent commits, and worktree status (shell)
+  │ git -C "C:\Users\magicvr\Documents\Code\goal-governance" tag --list; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" log --oneline -3; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" status --porcelain | Select-Object -First 5
+  └ 14 lines…
+
+The current tag list does not include v0.7.0. Let me verify the historical tag binding and current
+matrix state.
+
+● Check for v0.7.0 tag in git (shell)
+  │ git -C "C:\Users\magicvr\Documents\Code\goal-governance" tag -l "v0.7.0"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" tag -l "v0.*" | Sort-Object; Write-Host
+  │ "---show v0.7.0---"; git -C "C:\Users\magicvr\Documents\Code\goal-governance" show-ref --tags |
+  │ Select-String "v0.7.0"
+  └ 7 lines…
+
+● Read current compatibility matrix state (shell)
+  │ $m = Get-Content "C:\Users\magicvr\Documents\Code\goal-governance\docs\contracts\skills-consumer
+  │ -compatibility-matrix.json" -Raw | ConvertFrom-Json; $m | ConvertTo-Json -Depth 4 |
+  │ Select-Object -First 1; Write-Host "candidateRevision:" $m.candidateRevision; Write-Host
+  │ "coverage:" ($m.coverage | ConvertTo-Json -Compress); foreach ($u in $m.units) { Write-Host
+  │ ($u.consumer + " / " + $u.entrypoint + " -> " + $u.status) }
+  └ 221 lines…
+
+The current matrix shows candidateRevision v0.13.0 with fresh runtime-verified cells. Let me verify
+the historical v0.7.0 tag binding and evidence artifacts.
+
+● List releases directory tree (shell)
+  │ Write-Host "--- release dirs ---"; Get-ChildItem -Path
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\releases" -Directory -Recurse -Depth 2 |
+  │ ForEach-Object {
+  │ $_.FullName.Substring("C:\Users\magicvr\Documents\Code\goal-governance\".Length) }
+  └ 54 lines…
+
+● Verify v0.7.0 tag and release evidence artifacts (shell)
+  │ Write-Host "--- all refs ---"; git -C "C:\Users\magicvr\Documents\Code\goal-governance"
+  │ for-each-ref --format="%(refname) %(objectname)" | Select-String "0.7.0"; Write-Host "---
+  │ commit 8a33ecd ---"; git -C "C:\Users\magicvr\Documents\Code\goal-governance" cat-file -t
+  │ 8a33ecd21d9183a680c9c0d63e471469f5e515a8 2>&1; Write-Host "--- v0.7.0 dirs in releases ---";
+  │ Get-ChildItem -Path "C:\Users\magicvr\Documents\Code\goal-governance\docs\releases" -Directory…
+  └ 10 lines…
+
+● Verify v0.7.0 tag object and commit ancestry (shell)
+  │ Write-Host "--- tag object lookup (try known tag objects in pack) ---"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" rev-parse "v0.7.0" 2>&1; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" cat-file -t "v0.7.0" 2>&1; Write-Host "---
+  │ does 8a33ecd appear in main history? ---"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" merge-base --is-ancestor …
+  └ 226 lines…
+
+The v0.7.0 tag ref is now absent from git refs while commit 8a33ecd remains an ancestor of HEAD. Let
+ me verify the release evidence files and goal-tree state.
+
+● Read release candidate evidence JSON (shell)
+  │ Get-Content "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\
+  │ GOAL-008-skills-consumer-adapter-release-consistency\attachments\runtime\release-candidate-v0.7.
+  │ 0-2026-07-20.json" -Raw
+  └ 29 lines…
+
+● Read Copilot CLI and Web CI audit evidence (shell)
+  │ Get-Content
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\GOAL-008-ski
+  │ lls-consumer-adapter-release-consistency\attachments\runtime\copilot-cli-audit-2026-07-20.json"
+  │ -Raw; Write-Host "--- web ci ---"; Get-Content "C:\Users\magicvr\Documents\Code\goal-governance\
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachme
+  │ nts\runtime\web-parser-ci-replay-2026-07-20.json" -Raw
+  └ 112 lines…
+
+Let me read the prior v0.13.0 replay evidence (this same probe's prior execution) and confirm the
+current goal-tree state.
+
+● Read prior v0.13.0 Copilot CLI audit JSON (shell)
+  │ Get-Content "C:\Users\magicvr\Documents\Code\goal-governance\docs\releases\runtime\v0.13.0\githu
+  │ b-copilot-cli-audit-2026-08-08.json" -Raw
+  └ 119 lines…
+
+● Read goal-tree lines 495-545 (shell)
+  │ $t = Get-Content "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-govern
+  │ ance\goal-tree.md"; $t[495..545]
+  └ 1 line…
+
+/ Search (grep)
+  │ "GOAL-008"
+  └ 2 lines found
+
+● Count lines in goal-tree.md (shell)
+  │ Get-Content "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspace-001-goal-governance\
+  │ goal-tree.md" | Measure-Object -Line
+  └ 4 lines…
 
 ● Read goal-tree.md
   │ docs\workspace-001-goal-governance\goal-tree.md
-  └ L520:560 (41 lines read)
+  └ L498:540 (43 lines read)
 
-/ Search (grep)
-  │ "candidateRevision|pending-runtime-validation|automated-verified|unreleased|"coverage"|github-co
-  │ pilot-cli"
-  └ 6 lines found
+Let me verify the current GOAL-008 records and the workspace boundary state.
 
-Let me check the remainder of the audit file and the tail of the execution file to ensure I've read
-all records.
+● Read 00-meta.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\00-meta.
+  │ md
+  └ L1:60 (59 lines read)
 
 ● Read 03-audit.md
   │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
   │ .md
-  └ L716:800 (1 line read)
+  └ L1:80 (79 lines read)
 
-● Count lines in GOAL-008 records (shell)
-  │ (Get-Content "docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consis
-  │ tency\02-execution.md").Count; (Get-Content "docs\workspace-001-goal-governance\GOAL-008-skills-
-  │ consumer-adapter-release-consistency\03-audit.md").Count; (Get-Content "docs\workspace-001-goal-
-  │ governance\GOAL-008-skills-consumer-adapter-release-consistency\01-decision.md").Count
+● Read stdout.txt
+  │ docs\releases\runtime\v0.13.0\github-copilot-cli-audit-2026-08-08.d\stdout.txt
+  └ 275 lines read
+
+Let me verify the workspace boundary and the D-009/D-010/D-011 decision records.
+
+● Read workspace.md
+  │ docs\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+/ Search (grep)
+  │ "## D-009|## D-010|## D-011"
+  └ 37 lines found
+
+/ Search (grep)
+  │ "^## A-0|verdict|F-00[1-5]|fixed|closed"
+  └ 60 lines found
+
+● Check if v0.7.0 tag object still exists (shell)
+  │ Write-Host "--- tag object bf7fc860 ---"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" cat-file -t
+  │ bf7fc860b274b65a9fc594ed4fa903902cbc8be2 2>&1; Write-Host "--- dangling refs ---"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" reflog show --all 2>&1 | Select-String
+  │ "v0.7.0" | Select-Object -First 3
   └ 4 lines…
 
-Let me confirm the tail of the execution file since line counts differ.
+● Read 03-audit.md
+  │ docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency\03-audit
+  │ .md
+  └ L493:717 (216 lines read)
 
-● Show line count and last lines of execution record (shell)
-  │ $c = Get-Content "docs\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-co
-  │ nsistency\02-execution.md"; "Total lines: $($c.Count)"; "Last 6 lines:"; $c | Select-Object
-  │ -Last 6
-  └ 9 lines…
+Let me verify the CHANGELOG evidence for v0.7.0 and confirm current behavior-source digests vs.
+recorded evidence.
 
-I now have the complete governance record. Let me verify one more consistency point — that the
-current compatibility matrix and goal-tree reflect the documented post-close-out state without
-reopening GOAL-008.
+● Check CHANGELOG for v0.7.0 entry (shell)
+  │ Select-String -Path "C:\Users\magicvr\Documents\Code\goal-governance\CHANGELOG.md" -Pattern
+  │ "v0.7.0" | Select-Object -First 3
+  └ 2 lines…
 
-● Read skills-consumer-compatibility-matrix.json
-  │ docs\contracts\skills-consumer-compatibility-matrix.json
-  └ L1:40 (40 lines read)
+● Compute current behavior-source hashes (shell)
+  │ $paths = @("AGENTS.md", ".github\copilot-instructions.md",
+  │ "skills\prompts\05-independent-audit.md", "skills\prompts\00-govern-orchestrator.md"); foreach
+  │ ($p in $paths) { $h = (Get-FileHash $p -Algorithm SHA256).Hash.ToLower(); Write-Host "$p -> $h"
+  │ }
+  └ 5 lines…
+
+● Inspect v0.7.0 annotated tag object (shell)
+  │ git -C "C:\Users\magicvr\Documents\Code\goal-governance" cat-file -p
+  │ bf7fc860b274b65a9fc594ed4fa903902cbc8be2 2>&1
+  └ 7 lines…
+
+● Confirm commit and tags containing 8a33ecd (shell)
+  │ git -C "C:\Users\magicvr\Documents\Code\goal-governance" log --oneline --all | Select-String
+  │ "8a33ecd" ; Write-Host "--- tags pointing at 8a33ecd ---"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" tag --contains
+  │ 8a33ecd21d9183a680c9c0d63e471469f5e515a8 2>&1 | Select-Object -First 10
+  └ 8 lines…
+
+I have completed the read-only independent cross-audit replay for GOAL-008. All governance sources
+and evidence were verified without any writes.
+
+-----------------------------------------------------------------------------------------------
 
 GOAL-008 独立交叉审计意见（read-only replay · GitHub Copilot CLI）
 
-审计编号：A-018（未落盘 — 本任务为只读 replay，按约束不写
-03-audit/A-018-*.md、不改索引；若需正式台账，应由 /govern 代贴为 source: independent 并改走 ledger
-目录，见 R-OBS-3）
-source: independent ｜ 审计工具: GitHub Copilot CLI 1.0.71（read-only）｜ 日期: 2026-08-08
+审计编号：A-019（建议编号，未落盘 — 本任务为只读 replay，不写
+03-audit/A-019-*.md、不改索引；如需正式台账，应由 /govern 代贴为 source: independent 并按 R-OBS-3
+改走 ledger 目录）
+source: independent ｜ 审计工具: GitHub Copilot CLI 1.0.75（read-only）｜ 日期: 2026-08-08
 audit_type: 关门前复核 / finding-closure ｜ scope: GOAL-008 整体（I-001/I-002/I-003
 关闭证据、A-014→A-015→A-016 响应链、v0.7.0 发行身份、当前状态表示、goal-tree 一致性）
 
@@ -237,39 +390,47 @@ Verdict: pass
 
 证据确认（可核对）
 
- - I-001：contract + schema + mirrors + fixtures + 契约测试（29→32 passed），以 docs/contracts/
-落盘，可核对。
- - I-002：六个 host 单元（Claude、Grok、Copilot CLI govern/audit）+ Web parser CI replay run
-29700051047，headSha 8a33ecd…，两平台 ready-for-release-evidence；附件
-JSON（copilot-cli-govern/audit-2026-07-20.json）均 verdict: pass、exit 0、marker 观测到、product
-v1.0.71、行为源 digests 已记录。
- - I-003：annotated tag v0.7.0 绑定 8a33ecd…；release-candidate-v0.7.0-2026-07-20.json 显示
-releaseStatus: release-candidate、coverage ready、uncovered []。
+ - I-001：contract + schema + mirrors + fixtures + 契约测试，以 docs/contracts/ 落盘，可核对。
+ - I-002：六个 host 单元（Claude、Grok、Copilot CLI 的 govern/audit）+ Web parser CI replay run
+29700051047、headSha 8a33ecd…、两平台 ready-for-release-evidence。附件
+copilot-cli-govern/audit-2026-07-20.json 均 verdict: pass、exit 0、marker 观测到、product
+1.0.71、行为源 digests 已记录；web-parser-ci-replay-2026-07-20.json 与 CI 归档哈希绑定一致。
+ - I-003：annotated tag object bf7fc860… 现存于对象库且绑定 v0.7.0 → 8a33ecd…（cat-file -p
+确认），与 release-candidate-v0.7.0-2026-07-20.json 的 tagObject/commit 一致；该 JSON 显示
+releaseStatus: release-candidate、coverage ready、uncovered []。8a33ecd 仍为 HEAD 祖先。
  - 审计链：A-014（independent, conditional）的开放必改项由 A-015 响应 + A-016 关闭证据闭合；A-016
-verdict pass 明确「无开放必改、无 residual」；A-017 确认后续源漂移不重开 GOAL-008。
- - goal-tree（505/534 行）与 00-meta 一致：done / 100%；workspace 已归档、Root GOAL-001 done。
+pass 明确「无开放必改、无 residual」；A-017 pass 确认后续行为源漂移不重开 GOAL-008。A-010
+F-001/F-004/F-005 由 A-011 闭合，F-002 由 A-013 + A-014/A-016 闭合，F-003 由 A-016 闭合。
+ - goal-tree（505/534 行）与 00-meta 一致：done / 100%；workspace-001 archived、Root GOAL-001
+done、VP-001 closed；当前矩阵 candidateRevision: v0.13.0 且有 2026-08-08 新 runtime evidence
+覆盖，不属本目标责任。
 
 开放必改 findings：无
 
 历史 A-010 F-001～F-005 全部闭合；A-014 的 open required（Web CI / I-002 / I-003 / 上游 F-005）已由
-A-016 提供可核对证据关闭。未见未合法闭合的 required 项，无需用户裁决。
+A-016 提供可核对证据关闭。未见未合法闭合的 required 项，无意见冲突，无需 P-004 用户裁决。
 
 建议观察（recommended, non-blocking）
 
- - R-OBS-1：当前行为源（AGENTS.md 449CD566…、copilot-instructions E52E60DA…、prompts
-E3506724…/E4C092DB…）与 v0.7.0 证据 digests 漂移 — 已在 D-011/A-017 如实记录，且后续
-v0.10.0/v0.11.0/v0.13.0（当前矩阵 candidateRevision）各有新 runtime evidence
-覆盖；未来候选必须重新采集，不属本目标责任。
- - R-OBS-2：02-execution.md 在关门后仍追加 07-22…07-28 事实条目（明示「不重开本目标；不发版」）—
+ - R-OBS-1：当前行为源（AGENTS.md 449cd566…、copilot-instructions 3c001748…、prompts
+e3506724…/e4c092db…）与 v0.7.0 证据 digests 漂移 — 已在 D-011/A-017 如实记录；后续 v0.10.0…v0.13.0
+各有新 runtime evidence，未来候选必须重新采集。
+ - R-OBS-2：02-execution.md 关门后仍追加 07-22…07-28 事实条目（明示「不重开、不发版」）—
 可接受，建议标注「归档事实，不影响 status」。
- - R-OBS-3：03-audit.md 现 57.4 KB > 32 KiB 阈值，任何新 A 条目须改走 03-audit/A-018-*.md +
+ - R-OBS-3：03-audit.md 约 57 KB > 32 KiB 阈值，任何新 A 条目须改走 03-audit/A-NNN-*.md +
 索引更新，勿再 inline。
  - R-OBS-4：00-meta updated(07-20) 滞后于 02-execution updated(07-28) — 关门目标下无害。
+ - R-OBS-5（本次新增）：git ref refs/tags/v0.7.0 已不在当前 refs（现存 tags 仅 v0.10.0+），但
+annotated tag object bf7fc860… 仍存于对象库且与 JSON 记录一致 — 历史发行身份仍可通过该 JSON
+与对象库核对；建议保留该 JSON 作为权威绑定，勿依赖已被移除的轻量 ref。
+ - R-OBS-6（本次新增）：工作树存在未提交改动（.github/copilot-instructions.md、v0.13.0 govern
+evidence、workspace-002 GOAL-006 audit 等），与进行中的 workspace-002 GOAL-006 S2 一致；本 replay
+未触碰。
 
 声明
 
-本意见仅独立审计、不改动 status/progress/方案正文；无文件写入、无 commit/tag、未使用 VS Code/IDE
-插件，与 D-009 绑定一致。后续响应归 /govern；如需正式落盘，请由编排器代贴并保留 source:
+本意见仅独立审计，未改动 status/progress/方案正文/goal-tree；无文件写入、无 commit/tag、未使用 VS
+Code/IDE 插件，与 D-009 绑定一致。后续响应归 /govern；如需正式落盘，请由编排器代贴并保留 source:
 independent。
 
 COPILOT_CLI_AUDIT_DISPATCH_OK

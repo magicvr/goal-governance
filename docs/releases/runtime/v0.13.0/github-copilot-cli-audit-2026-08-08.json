@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T17:26:23.804249Z",
+  "capturedAt": "2026-08-07T17:51:28.604066Z",
   "unit": {
     "consumer": "github-copilot-cli",
     "entrypoint": "audit",
@@ -22,7 +22,7 @@
     },
     {
       "path": ".github/copilot-instructions.md",
-      "sha256": "e52e60dad08c6a4faef546bd0feaa3c3ca5783d314b46d801fffe64d033b8018"
+      "sha256": "29fc78a92c6cf409526113604521ce32733bdd592e0f7af4a8a3b41869e6c32c"
     },
     {
       "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
@@ -50,7 +50,7 @@
       "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\docs\\workspace-001-goal-governance\\GOAL-008-skills-consumer-adapter-release-consistency\\attachments\\runtime\\prompts\\copilot-cli-replay.ps1"
     ],
     "cwd": ".",
-    "timeoutSeconds": 600.0,
+    "timeoutSeconds": 420.0,
     "inputSha256": "64b43ab10c2266fb753d3d98c02164969e91188c9b97bb66c28a102b724eed92",
     "inputSummary": "Read-only /audit dispatch probe requiring marker COPILOT_CLI_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
   },
@@ -104,10 +104,10 @@
       }
     ],
     "stdoutPath": "docs/releases/runtime/v0.13.0/github-copilot-cli-audit-2026-08-08.d/stdout.txt",
-    "stdoutSha256": "b0cc2582ca605dca49d5dd23de38e6d158fe6fd590adb8851a0ae0f141dd8c54",
+    "stdoutSha256": "a019a493ad587fbc90ad200b5cc5a630db49d9a0484f61d7a4dc41c0e92713d9",
     "stdoutMode": "raw",
     "stderrPath": "docs/releases/runtime/v0.13.0/github-copilot-cli-audit-2026-08-08.d/stderr.txt",
-    "stderrSha256": "ce936f61a6df0a3ea6f27bd81f51762fc1ec1887b97d2b1ca9f13cc4de02ab2a",
+    "stderrSha256": "aafb21f5128d7196232ac176a6065272b85ef825e582654cd62fb1bace0f6478",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."

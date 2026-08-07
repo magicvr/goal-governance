@@ -1,12 +1,12 @@
 ---
 id: GOAL-006-consumer-surface-convergence
 title: 消费面路径收敛（F-006 承接 + R-001 扫尾）
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-08
 updated: 2026-08-08
-version: 0.3.0
-progress: 67%
+version: 0.4.0
+progress: 100%
 ---
 
 # GOAL-006 · 消费面路径收敛（F-006 承接 + R-001 扫尾）
@@ -31,20 +31,20 @@ progress: 67%
 |------|------|------|------|
 | **S1** | 盘点与方案冻结 | **完成**（2026-08-08） | E-002 影响面清单（14 文件约 240 处 `docs/`）；D-001 冻结 **A+C 混合**（prompts/薄壳/canonical 字面 `{governance_root}`；模板路径并入 `{{GOVERNANCE_ROOT}}` 占位）；I-001 closed |
 | **S2** | 实施 | **完成**（2026-08-08） | E-004：prompts/模板/薄壳/安装形态/canonical 相对化（≈390 处引用）；防再犯测试 5 条；12 宿主矩阵证据重捕获 + matrix cells 刷新；239 测试绿 + stage 0 漂移 |
-| **S3** | 回归与审计 | 未开始 | 全量测试 + stage `--check`；self/independent 关门审计；F-006/R-001 关闭留痕 |
+| **S3** | 回归与审计 | **完成**（2026-08-08） | A-001 self pass + A-002 independent（grok build / grok-4.5）pass；A-003 合并响应（F-001/F-002/F-004 fixed、F-003 deferred）；I-002 closed；F-006/R-001 关闭留痕；**GOAL-006 done** |
 
 同一阶段内可并行；阶段间通常串行。
 
 ## 派生进度展示
 
-`progress: 67%` = 路线图检查点 S1～S3 已完成 **2 / 3**（等权；S1/S2 完成）。progress **仅展示**，不放行阶段、不关闭 finding、不推导 `done`。
+`progress: 100%` = 路线图检查点 S1～S3 已完成 **3 / 3**（等权）。progress **仅展示**，不放行阶段、不关闭 finding、不推导 `done`（关门依据为 A-001/A-002/A-003 证据链）。
 
 ## 信息就绪与未知项
 
 | ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | `{governance_root}` 占位符在安装展开链路中的处理方式：纯文档语义（消费方 AI 解释）vs 安装时按 pin 替换 | S1 方案冻结 | S1 方案 | 盘点 install 脚本/薄壳/消费仓展开逻辑 + 对照 alignment 定义句 | **closed**（2026-08-08） | — | E-002 盘点 + D-001（A+C 混合；无机器展开） |
-| I-002 | non-blocking | 相对化对已发布 zip / 已安装消费仓的兼容面影响（不回滚、不破坏） | S3 验收 | S3 | 对照已发布资产清单与消费方样例 | open | — | 待确认 |
+| I-002 | non-blocking | 相对化对已发布 zip / 已安装消费仓的兼容面影响（不回滚、不破坏） | S3 验收 | S3 | 对照已发布资产清单与消费方样例 | **closed**（2026-08-08） | — | A-001/A-002 验收：无 zip 重打包、install 物理路径保留、`{governance_root}` 默认 docs 语义等价 |
 
 ## 父目标
 

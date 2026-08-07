@@ -2,7 +2,7 @@
   "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
   "format": "goal-governance.host-runtime-evidence",
   "formatVersion": "1.0.0",
-  "capturedAt": "2026-08-07T17:23:21.993610Z",
+  "capturedAt": "2026-08-07T17:52:42.736998Z",
   "unit": {
     "consumer": "github-copilot-cli",
     "entrypoint": "vision",
@@ -22,7 +22,7 @@
     },
     {
       "path": ".github/copilot-instructions.md",
-      "sha256": "e52e60dad08c6a4faef546bd0feaa3c3ca5783d314b46d801fffe64d033b8018"
+      "sha256": "29fc78a92c6cf409526113604521ce32733bdd592e0f7af4a8a3b41869e6c32c"
     },
     {
       "path": "docs/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
@@ -50,7 +50,7 @@
       "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\docs\\workspace-001-goal-governance\\GOAL-008-skills-consumer-adapter-release-consistency\\attachments\\runtime\\prompts\\copilot-cli-replay.ps1"
     ],
     "cwd": ".",
-    "timeoutSeconds": 240.0,
+    "timeoutSeconds": 420.0,
     "inputSha256": "3f7068e3eabb5f6a8ef46f72530bfb84422fafc2ada31ded483fcdab051b5d71",
     "inputSummary": "Read-only /vision dispatch probe requiring marker COPILOT_CLI_VISION_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
   },
@@ -104,10 +104,10 @@
       }
     ],
     "stdoutPath": "docs/releases/runtime/v0.13.0/github-copilot-cli-vision-2026-08-08.d/stdout.txt",
-    "stdoutSha256": "245433dbeb2bcb24773b8bafe4b89ed471b44f9cbcb99ebcd49c89516a748c21",
+    "stdoutSha256": "63c75ec0ba4d46a85da102b70400f55e43210cb73807cb80d13e1e4b4a528cff",
     "stdoutMode": "raw",
     "stderrPath": "docs/releases/runtime/v0.13.0/github-copilot-cli-vision-2026-08-08.d/stderr.txt",
-    "stderrSha256": "6045345d5082e22a39b871a02be391e41b987f5bc765d4f58d7f93c7bb3f7b3e",
+    "stderrSha256": "8d552849721620f926a7547f722179790094e976236204a2a4884ae0ebaebcb5",
     "stderrMode": "raw",
     "warnings": [],
     "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."

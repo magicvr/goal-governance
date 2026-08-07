@@ -1,34 +1,15 @@
-I'll start by locating and reading the governance source files.
+I'll perform a read-only vision decision-layer dispatch. Let me read the governance sources first.
 
-/ Search (glob)
-  │ ".github/copilot-instructions.md"
-  └ 1 file found
-
-/ Search (glob)
-  │ "docs/workspace-001-goal-governance/**"
-  └ 11 files found
-
-/ Search (glob)
-  │ "skills/prompts/06-vision-orchestrator.md"
-  └ 1 file found
-
-/ Search (glob)
-  │ "docs/vision/**/*.md"
-  └ 19 files found
-
-/ Search (glob)
-  │ "**/AGENTS.md"
-  └ 2 files found
-
-Now reading all the governance sources in parallel.
-
-● Read copilot-instructions.md
-  │ .github\copilot-instructions.md
+● Read AGENTS.md
   └ 1 line read
 
 ● Read charter.md
   │ docs\vision\charter.md
   └ 85 lines read
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ 252 lines read
 
 ● Read 06-vision-orchestrator.md
   │ skills\prompts\06-vision-orchestrator.md
@@ -38,82 +19,112 @@ Now reading all the governance sources in parallel.
   │ docs\workspace-001-goal-governance\workspace.md
   └ 46 lines read
 
-Now reading the remaining governance sources: alignment.md, reviews.md, and the large
-copilot-instructions.md in ranges.
+/ Search (glob)
+  │ ".github/copilot-instructions.md"
+  └ 1 file found
+
+Let me read the remaining governance sources: copilot-instructions, AGENTS.md key sections, and the
+Vision Review ledger.
 
 ● Read copilot-instructions.md
   │ .github\copilot-instructions.md
-  └ L1:120 (120 lines read)
-
-● Read alignment.md
-  │ docs\vision\alignment.md
-  └ 252 lines read
+  └ 1 line read
 
 ● Read reviews.md
   │ docs\vision\reviews.md
   └ 38 lines read
 
-Let me verify the remaining scan items: single-active-charter confirmation, VP vision_ref alignment,
- roadmap, and workspaces role declarations.
+● Read workspaces.md
+  │ docs\vision\workspaces.md
+  └ 26 lines read
 
 ● Read roadmap.md
   │ docs\vision\roadmap.md
   └ 36 lines read
 
-● Read workspaces.md
-  │ docs\vision\workspaces.md
-  └ 26 lines read
+/ Search (glob)
+  │ "docs/vision/plans/VP-*.md"
+  └ 4 files found
+
+/ Search (glob)
+  │ "docs/vision/reviews/**"
+  └ 7 files found
+
+Now let me verify the Vision Review reports for any open required findings, confirm single-charter
+status, and read the key AGENTS.md / copilot-instructions sections.
 
 / Search (grep)
-  │ "vision"
+  │ "required|required_finding|open required" (docs\vision\reviews)
+  └ 28 lines found
+
+/ Search (grep)
+  │ "6d|6e|vision|Vision" (.github\copilot-instructions.md)
+  └ 12 lines found
+
+/ Search (grep)
+  │ "doc_type: vision-charter|status: active|vision_id:" in *.md (docs\vision)
+  └ 30 lines found
+
+Let me verify the AGENTS.md vision sections to complete the scan sources.
+
+● Read VP-002-methodology-skills-feedback-evolution.md
+  │ docs\vision\plans\VP-002-methodology-skills-feedback-evolution.md
+  └ L1:40 (39 lines read)
+
+● Read VP-004-mcp-file-dual-channel-delivery.md
+  │ docs\vision\plans\VP-004-mcp-file-dual-channel-delivery.md
+  └ L1:40 (39 lines read)
+
+/ Search (grep)
+  │ "^## 6d|^## 6e|^## 6b|^# 6|charter.md|active Charter|vision_role|plan_refs"
   └ 8 lines found
 
-/ Search (grep)
-  │ "vision_ref"
-  └ 5 lines found
+Let me verify the VP-004 status discrepancy noted between the file frontmatter and the
+roadmap/charter.
+
+● Read VP-004-mcp-file-dual-channel-delivery.md
+  │ docs\vision\plans\VP-004-mcp-file-dual-channel-delivery.md
+  └ L195:240 (19 lines read)
 
 / Search (grep)
-  │ "doc_type: vision-charter"
-  └ 8 lines found
+  │ "closed|关门|closure|supersed|abandoned"
+  └ 16 lines found
 
-Let me confirm the single-active-charter invariant within the real governance tree (excluding
-templates/mirrors).
+/vision 决策层扫描（只读 · GitHub Copilot CLI）
 
-/ Search (grep)
-  │ "open required|required.*open|V-F-"
-  └ 65 lines found
+治理源校验：AGENTS.md §6d/6e、.github/copilot-instructions.md、06-vision-orchestrator.md、charter.md
+、alignment.md、workspace-001/workspace.md 均已读取；未做任何写入。
 
-/ Search (grep)
-  │ "^doc_type: vision-charter"
-  └ 5 lines found
+1. 单愿景状态：PASS
 
-愿景扫描（/vision · read-only dispatch）
+ - 唯一 active Charter：vision-goal-governance@0.2.0（docs/vision/charter.md，status:
+active）。无并行第二 active Charter（VRev-001～007 单愿景检查一致通过）。
+ - 愿景树齐全：charter / alignment / roadmap / revisions / reviews / workspaces / plans 均在位。
 
-完整安装：通过。AGENTS.md（根 + .github/copilot-instructions.md 版本 0.11.0）、skills/prompts/06-vis
-ion-orchestrator.md（v0.3.0）、charter、alignment（v0.7.0）均已读取；愿景树文件齐全。
+2. Charter 版本
 
-单愿景状态：1 个 active Charter（单愿景不变量成立）。
+ - version: 0.2.0，vision_id: vision-goal-governance，生效日 2026-07-31，updated 2026-08-07。所有 VP
+ 的 vision_ref 均精确匹配 @0.2.0，无 re-align 漂移。
 
- - docs/vision/charter.md — doc_type: vision-charter，status: active，vision_id:
-vision-goal-governance
- - 无并行第二 active Charter（其余 doc_type: vision-charter 匹配均为模板/测试夹具/bootstrap
-示例，非现行实例）
+3. primary_plan
 
-Charter 版本：0.2.0（vision-goal-governance@0.2.0，生效 2026-07-31，updated 2026-08-07）
+ - 工作区 workspace-001-goal-governance（vision_role: primary）：plan_refs / primary_plan =
+VP-001-governance-platform-delivery（closed，区 archived）。
+ - 现行 delivery 区：workspace-002 → primary_plan: VP-002（active）；workspace-003 → primary_plan:
+VP-004。
 
-primary_plan：
+4. 开放 Vision Review required 计数
 
- - 扫描目标工作区 docs/workspace-001-goal-governance/workspace.md（status: archived，vision_role:
-primary）→ primary_plan: VP-001-governance-platform-delivery（VP-001 closed，Root 有界 done）
- - 现行 active VP 均已完成 re-align 且挂 delivery 区：VP-002（lead workspace-002 ·
-active）、VP-004（lead workspace-003 · active）、VP-003（planned · 0 区，合规）
+ - 0。索引与 7 份 VRev 报告投影全部 open required = 0；VRev-007 的 required V-F-013 已 fixed。
 
-开放 Vision Review required：0（reviews.md 索引 VRev-001～007 全部 open required: 0；VRev-007 的
-V-F-013 required 已 fixed；VRev-005 的 V-F-010 为 recommended open，不属 required）
+扫描观察（不改变以上计数）
 
-对齐债务：无。全部 VP vision_ref = vision-goal-governance@0.2.0，与现行 Charter 一致；无 strategic
-宽阻断；primary 三处声明一致（workspace.md / workspaces.md / Charter）。情境 V3/V6
-皆净；建议下一步：延续 /vision 或交 /govern。
+ - 对齐债务待确认：VP-004 文件 frontmatter 已为 status: closed（v0.5.0，R4 复关），但 roadmap.md 与
+charter.md（均 updated 2026-08-07）仍列 VP-004 为 active——组合编排索引与意图文件不一致，属 V4
+re-align 类漂移，需用户确认后刷新。
+ - VP-004 留有 I-007（GHCR 权限可达性）non-blocking residual，非 Vision Review required。
+
+建议下一步：确认 VP-004 状态分歧后，经 /vision 同步 roadmap/charter（V4），随后可交 /govern 推进。
 
 COPILOT_CLI_VISION_DISPATCH_OK
 
