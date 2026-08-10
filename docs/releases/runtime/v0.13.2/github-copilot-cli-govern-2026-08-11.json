@@ -104,7 +104,7 @@
       }
     ],
     "stdoutPath": "docs/releases/runtime/v0.13.2/github-copilot-cli-govern-2026-08-11.d/stdout.txt",
-    "stdoutSha256": "44ebbf26ab8311083a24c2e9033f21eef3201823ebeb2d086d594f8cff337c50",
+    "stdoutSha256": "cea1b1a46bc98ca92160fc6b86fca99e0f10a7b564fdc6e99ba6662bd5460878",
     "stdoutMode": "raw",
     "stderrPath": "docs/releases/runtime/v0.13.2/github-copilot-cli-govern-2026-08-11.d/stderr.txt",
     "stderrSha256": "c105cf662813e34fd25bf552bf315b8f91037e1d42f8f6d9c762ff156dc32c02",

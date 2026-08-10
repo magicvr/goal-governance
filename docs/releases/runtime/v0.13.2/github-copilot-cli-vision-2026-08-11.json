@@ -104,7 +104,7 @@
       }
     ],
     "stdoutPath": "docs/releases/runtime/v0.13.2/github-copilot-cli-vision-2026-08-11.d/stdout.txt",
-    "stdoutSha256": "2cba54e42c41d712affa1744360f4f150349e971d134b28ea819aa8e33937d7b",
+    "stdoutSha256": "bb26eafbf73f1746df0b63e0ed106ae921507cdc735519e8107e67c0b837c330",
     "stdoutMode": "raw",
     "stderrPath": "docs/releases/runtime/v0.13.2/github-copilot-cli-vision-2026-08-11.d/stderr.txt",
     "stderrSha256": "11adca9e4f6a50094e595998093662f0cdb718050d63052d800897d9324df06e",
