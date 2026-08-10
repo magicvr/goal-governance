@@ -108,11 +108,11 @@ version: 0.1.0
 ## 可复制包版本与变更范围
 
 - **文档入口版本**（本文件 frontmatter）：`0.14.0` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
-- **可复制核心包版本**（本轮发布候选身份）：`0.13.2`（工作区目录收敛 + MCP/安装/打包路径同步 + 证据刷新）。入口文修订号与发布身份刻意分离。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / **`v0.13.0`**（annotated tag `29d5b28c` 绑定 merge commit `33934efc`，gated run `31073547050` 经 Environment `release` 发布 9 项资产，digest 与隔离消费验证完成）/ **`v0.13.1`**（2026-08-08 发布；digest/run 发布后回填）。
+- **可复制核心包版本**：`0.13.2`（工作区目录收敛 + MCP/安装/打包路径同步 + 证据刷新）。入口文修订号与发布身份刻意分离。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / **`v0.13.2`**（annotated tag `7cd2613` 绑定 main merge commit `f37d67c`；gated run `31416803940` 经 Environment `release` 发布 9 项 Release 资产与 GHCR 镜像，skills/core ZIP 下载摘要与 sidecar 一致）。
 - **快照日期**：2026-08-11。
-- **快照身份**：`v0.13.2` 发布候选；正式身份仍等待 main 合并、annotated tag 与 gated release evidence。Codex 仍仅是 install surface（非矩阵）。
-- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.226`、Grok Build `1.0.0 (3cd0d0cbce)` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`；证据日期 2026-08-11。**不**预填 Actions run、Release digest、Root 终态或 Codex 矩阵 verified。
+- **快照身份**：`v0.13.2` 正式发布。Codex 仍仅是 install surface（非矩阵）。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.226`、Grok Build `1.0.0 (3cd0d0cbce)` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`；证据日期 2026-08-11。Root R3 终态与 Codex 矩阵 verified 仍未声明。
 
 ### canonical → Skills 镜像（GOAL-022）
 

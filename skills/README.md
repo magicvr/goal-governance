@@ -111,7 +111,7 @@ skills/
 
 ### 入口 1 · Bootstrap（推荐 · 其他项目）
 
-**当前发布候选 pin `v0.13.2`**（发布后即为最新正式 tag；每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
+**当前正式发布 pin `v0.13.2`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
 
 在目标项目根执行（先落盘 bootstrap，再跑；默认**不**管道直跑）：
 

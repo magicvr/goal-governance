@@ -1,12 +1,12 @@
 ---
 id: GOAL-007-workspaces-directory-consolidation
 title: 工作区目录统一收敛与正式发布
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-10
 updated: 2026-08-11
-version: 0.5.0
-progress: 80%
+version: 0.6.0
+progress: 100%
 ---
 
 # GOAL-007 · 工作区目录统一收敛与正式发布
@@ -33,13 +33,13 @@ progress: 80%
 | **S2** | 核心方法论与实现面修订 | **完成**（2026-08-11） | 只改 canonical 后 stage 镜像；同步 prompts、install、MCP、packaging 与测试 |
 | **S3** | 本仓工作区迁移与全量验证 | **完成**（2026-08-11） | 迁移三个显式工作区，修正 canonical scope/Q2/愿景投影；运行全量回归与路径/whitespace 核验 |
 | **S4** | cross 审计与 finding 闭环 | **完成**（2026-08-11） | A-001 self pass；A-002 Grok conditional；A-003 将 F-001 fixed，开放 required = 0 |
-| **S5** | PR、main、tag 与 Release 资产 | 未开始 | PR CI 全绿后合并；annotated tag；正式资产发布、下载后 digest/evidence 验收；关门审计 |
+| **S5** | PR、main、tag 与 Release 资产 | **完成**（2026-08-11） | PR #18/#19 双平台 CI 全绿后合并；annotated `v0.13.2` 指向 `f37d67c`；run `31416803940` 发布并完成资产 digest/evidence 验收；A-004 关门 `pass` |
 
 阶段间串行；S2 内可并行修改独立消费面，S4 未通过不得进入 S5。
 
 ## 派生进度展示
 
-`progress: 80%` = 路线图检查点 S1～S5 已完成 **4 / 5**（等权）。progress 仅展示，不放行阶段、不关闭 finding、不覆盖信息门禁，也不自动推导 `done`。
+`progress: 100%` = 路线图检查点 S1～S5 已完成 **5 / 5**（等权）。progress 仅展示；`done` 由 A-004 关门审计、开放 required = 0 与 S5 远端证据共同支持，不由百分比自动推导。
 
 ## 信息就绪与未知项
 

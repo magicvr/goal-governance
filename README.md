@@ -31,7 +31,7 @@
 ### 入口 1 · 在线 / 本地 bootstrap（推荐）
 
 从 **GitHub Release 固定 tag** 拉取 bootstrap 脚本（无需浏览器另存），脚本再下载**已内嵌 core 的 skills zip**、校验 SHA-256，并调用包内 install（等价 `-All`）。  
-**当前发布候选 pin `v0.13.2`**（发布后即为最新正式 tag；发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
+**当前正式发布 pin `v0.13.2`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
 
 ```powershell
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
@@ -78,7 +78,7 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 }
 ```
 
-> 当前发布候选 pin `v0.13.2`（发布后即为最新正式 tag；发新版时同步改本节）；本地 stdio 进程形态仍合法（不强制 Docker-only）：`python mcp/server.py [--repo-root PATH]`。完整说明见 [`mcp/README.md`](mcp/README.md)。
+> 当前正式发布 pin `v0.13.2`（发新版时同步改本节）；本地 stdio 进程形态仍合法（不强制 Docker-only）：`python mcp/server.py [--repo-root PATH]`。完整说明见 [`mcp/README.md`](mcp/README.md)。
 
 ### 入口 2 · 包内 install（解压后离线）
 
