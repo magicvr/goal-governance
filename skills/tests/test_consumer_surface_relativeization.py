@@ -22,6 +22,7 @@ BARE_DOCS = re.compile(r"(?<!core/)docs/")
 # Protocol-semantic prefixes that must stay relativeized in canonical files.
 # The core/ lookbehind keeps package-internal mirror paths (skills/core/docs/*).
 PROTOCOL_PREFIXES = (
+    "docs/workspaces/workspace-",
     "docs/workspace-",
     "docs/shared-materials/",
     "docs/architecture/",
@@ -211,7 +212,7 @@ class ConsumerSurfaceE2ETests(unittest.TestCase):
             # Key protocol paths now read under the non-docs root.
             for fragment in (
                 "governance/architecture/principles.md",
-                "governance/workspace-<NNN>-<slug>/",
+                "governance/workspaces/workspace-<NNN>-<slug>/",
                 "governance/vision/",
                 "governance/templates/",
                 "governance/goals/",

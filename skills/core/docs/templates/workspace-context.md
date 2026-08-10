@@ -3,20 +3,20 @@ id: workspace-001-example
 title: 示例工作区
 status: active
 root_goal: GOAL-001-example-root
-canonical_scope: {governance_root}/workspace-001-example/
+canonical_scope: {governance_root}/workspaces/workspace-001-example/
 shared_materials_catalog: {governance_root}/shared-materials/
 vision_role: delivery
 plan_refs: VP-001-example-plan
 primary_plan: VP-001-example-plan
 created: 2026-07-20
-updated: 2026-08-07
-version: 0.6.0
+updated: 2026-08-10
+version: 0.7.0
 ---
 
 # 工作区上下文 · 示例工作区
 
 > **治理根（`governance_root`，默认 `docs`）**：本模板中 `{governance_root}/…` 占位在消费仓展开为实际治理根（默认 `docs/…`）；根下内部相对布局不可改，仓外路径 fail closed。
-> 复制本模板为 `{governance_root}/workspace-001-example/workspace.md`，再替换示例字段。工作区根直接保存 `goal-tree.md` 与平铺的 `GOAL-*` 五件套；它不替代这些文件的状态真相。
+> 复制本模板为 `{governance_root}/workspaces/workspace-001-example/workspace.md`，再替换示例字段。`workspaces/` 只作统一父容器；工作区根直接保存 `goal-tree.md` 与平铺的 `GOAL-*` 五件套，它不替代这些文件的状态真相。旧直属 `{governance_root}/workspace-*/` 不得继续作为新写入位置。
 
 ## 绑定
 
@@ -24,7 +24,7 @@ version: 0.6.0
 |------|--------|------|
 | 工作区 ID | `workspace-001-example` | 与所有共享资料引用的 `workspace_id` 一致。 |
 | Root Goal | `GOAL-001-example-root` | 必须存在，且其 `parent: null`。 |
-| canonical 范围 | `{governance_root}/workspace-001-example/` | 当前工作区唯一的目标状态范围。 |
+| canonical 范围 | `{governance_root}/workspaces/workspace-001-example/` | 当前工作区唯一的目标状态范围。 |
 | 共享资料目录 | `{governance_root}/shared-materials/` | 固定路径/URI，或 `none`；不在此文档保存资料内容。 |
 | 愿景角色 | `delivery` | `primary` \| `delivery`。 |
 | 规划对齐 | `plan_refs` / `primary_plan` | 指向 `{governance_root}/vision/plans/VP-*.md`；**必填**（无 opt-out）。 |

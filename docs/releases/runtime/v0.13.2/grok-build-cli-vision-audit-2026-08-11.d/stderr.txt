@@ -1,0 +1,5 @@
+[2m2026-08-10T16:21:15.274042Z[0m [33m WARN[0m auto worktree gc failed [3merror[0m[2m=[0mneither $GROK_HOME nor $HOME is set
+[2m2026-08-10T16:21:15.416396Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mEdit
+[2m2026-08-10T16:21:15.416426Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mWrite
+[2m2026-08-10T16:21:15.416430Z[0m [33m WARN[0m disallowedTools entry matched nothing [3magent[0m[2m=[0mgrok-build-plan [3mtool[0m[2m=[0mNotebookEdit
+[2m2026-08-10T16:21:39.022102Z[0m [33m WARN[0m Resident session actor exited unexpectedly; reaping as DeadFailed [3msession_id[0m[2m=[0m019fec7a-71b4-7e52-83dc-31f1a2f8e96e

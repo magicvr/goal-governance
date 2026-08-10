@@ -1,0 +1,6 @@
+
+
+Changes    +0 -0
+Duration   1m 4s
+Tokens     ↑ 273.2k (243.5k cached) • ↓ 3.1k (1.3k reasoning)
+Resume     copilot --resume=a18f881c-5c2e-4873-a958-699d7dc5dc90

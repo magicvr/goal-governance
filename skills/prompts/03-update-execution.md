@@ -2,9 +2,9 @@
 title: 提示词 · 更新执行进度
 status: active
 created: 2026-07-18
-updated: 2026-08-04
+updated: 2026-08-10
 parent: null
-version: 0.6.0
+version: 0.7.0
 role: primitive
 ---
 
@@ -30,7 +30,7 @@ role: primitive
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：
-- 工作区上下文（若存在）：【当前 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；只有 legacy `{governance_root}/goals/` 时才写“隐式单工作区”】
+- 工作区上下文（若存在）：【当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；只有 legacy `{governance_root}/goals/` 时才写“隐式单工作区”】
 - 今日日期：【YYYY-MM-DD】
 - 本次实际完成（具体条目，含路径/产物更佳）：
   1. …
@@ -42,7 +42,7 @@ role: primitive
 - status：【保持 / draft|active|blocked|done|cancelled】
 
 # 步骤
-1. 读当前 `{governance_root}/workspace-<NNN>-<slug>/workspace.md`、`00-meta.md`（含信息需求）、decision/execution 索引与 ledger 目录、`goal-tree.md`。若 workspace Root Goal/canonical 范围与目标不匹配，停止受影响写入；没有显式工作区根时只处理 legacy 隐式单工作区。
+1. 读当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md`、`00-meta.md`（含信息需求）、decision/execution 索引与 ledger 目录、`goal-tree.md`。若 Root/canonical 不匹配，或检测到旧直属显式布局 / 新旧混合布局，停止受影响写入并引导迁移；两类显式布局都不存在时才处理 legacy 隐式单工作区。
 2. 扫描索引、目录与 legacy inline 的已有编号，创建下一条 `02-execution/E-NNN-<slug>.md`，并把链接写入索引。条目正文至少含：
 
    ### YYYY-MM-DD · <短标题>

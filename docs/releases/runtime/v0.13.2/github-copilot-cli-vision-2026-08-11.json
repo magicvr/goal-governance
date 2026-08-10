@@ -1,0 +1,118 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-10T16:43:04.300482Z",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "vision",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "95c5611a6a6ab7c1b9e981c2d7f5e5bbdefad9b2ff4741afa9da472383ae2178"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "921a262542c2c3e2a8402a9dd7cb0b82e605e194ef357f5450af64953707ce15"
+    },
+    {
+      "path": "docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1",
+      "sha256": "eec363bf8ba6ccf8b8db86078643736e4d2767be99feabfef68ec1a14919d807"
+    },
+    {
+      "path": "skills/prompts/06-vision-orchestrator.md",
+      "sha256": "35e9642970800b1c915608d3c73a601b9c244c7343b7de38cd2596c6ad20bb40"
+    },
+    {
+      "path": ".github/prompts/vision.prompt.md",
+      "sha256": "3ffabab4abb4df8d26452b92b54881842c59fa88c2b86b0a8b17c26674d5d081"
+    },
+    {
+      "path": "docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-vision.txt",
+      "sha256": "4dd04bd50cd1fa9f741a79e9d34e802247c406ab93b0ca7346fa64cc209055a7"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/copilot-cli-replay.ps1"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 420.0,
+    "inputSha256": "4dd04bd50cd1fa9f741a79e9d34e802247c406ab93b0ca7346fa64cc209055a7",
+    "inputSummary": "Read-only /vision dispatch probe requiring marker COPILOT_CLI_VISION_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "COPILOT_CLI_VISION_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "COPILOT_CLI_VISION_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "COPILOT_CLI_VISION_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.2/github-copilot-cli-vision-2026-08-11.d/stdout.txt",
+    "stdoutSha256": "2cba54e42c41d712affa1744360f4f150349e971d134b28ea819aa8e33937d7b",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/releases/runtime/v0.13.2/github-copilot-cli-vision-2026-08-11.d/stderr.txt",
+    "stderrSha256": "11adca9e4f6a50094e595998093662f0cdb718050d63052d800897d9324df06e",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

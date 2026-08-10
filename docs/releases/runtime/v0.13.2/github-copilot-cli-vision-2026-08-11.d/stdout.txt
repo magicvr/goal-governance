@@ -1,0 +1,101 @@
+I'll perform a read-only vision decision-layer scan. Let me read all the required governance
+sources.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+● Read AGENTS.md
+  └ 1 line read
+
+● Read 06-vision-orchestrator.md
+  │ skills\prompts\06-vision-orchestrator.md
+  └ 203 lines read
+
+● Read workspace.md
+  │ docs\workspaces\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ 252 lines read
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ 85 lines read
+
+I have the vision orchestration sources. Let me read the remaining governance sources (AGENTS.md and
+ copilot-instructions.md, which are large) and the vision tree needed for the scan report.
+
+● Read AGENTS.md
+  └ L1:60 (59 lines read)
+
+/ Search (glob)
+  │ "docs/vision/**"
+  └ 19 files found
+
+/ Search (glob)
+  │ ".github/copilot-instructions.md"
+  └ 1 file found
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ 38 lines read
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:80 (80 lines read)
+
+● Read workspaces.md
+  │ docs\vision\workspaces.md
+  └ 26 lines read
+
+● Read roadmap.md
+  │ docs\vision\roadmap.md
+  └ 36 lines read
+
+Let me verify the latest Vision Review reports to confirm the open required count, since the index
+is the projection but the reports are authoritative.
+
+● Read VP-002-methodology-skills-feedback-evolution.md
+  │ docs\vision\plans\VP-002-methodology-skills-feedback-evolution.md
+  └ L1:40 (39 lines read)
+
+● Read VRev-005-charter-0-2-0-strategic-review.md
+  │ docs\vision\reviews\VRev-005-charter-0-2-0-strategic-review.md
+  └ 65 lines read
+
+● Read VRev-007-vp-004-mcp-file-dual-channel-review.md
+  │ docs\vision\reviews\VRev-007-vp-004-mcp-file-dual-channel-review.md
+  └ 197 lines read
+
+/vision 扫描报告（只读重放）
+
+数据来源（仅下列治理源）：AGENTS.md（v0.14.0）、.github/copilot-instructions.md（v0.11.0
+模板）、skills/prompts/06-vision-orchestrator.md（v0.4.0）、docs/vision/charter.md、docs/vision/alig
+nment.md（v0.8.0）、docs/workspaces/workspace-001-goal-governance/workspace.md。
+
+愿景扫描
+
+ - 完整安装：✅ 单 status: active Charter 存在（无第二 active，单愿景不变量未破坏）
+ - Charter：vision-goal-governance@0.2.0（生效 2026-07-31；updated 2026-08-07；primary_workspace:
+workspace-001-goal-governance）
+
+组合与对齐
+
+ - primary_plan（workspace-001）：VP-001-governance-platform-delivery（closed；区 archived、Root
+GOAL-001-main-vision done）
+ - 全部 VP vision_ref = vision-goal-governance@0.2.0，与现行 Charter 精确一致 → 无 re-align 债务 /
+无宽阻断
+ - 组合编排一致：VP-001 closed · VP-002 active（lead=workspace-002）· VP-003 planned · VP-004
+closed；workspace 角色 primary/delivery 合法
+
+Vision Review 台账
+
+ - 开放 required：0（VRev-001～007 索引投影全 0；VRev-007 唯一 required V-F-013 已于 2026-08-07
+按路径 A fixed 闭合并留痕，报告内闭合投影与索引一致）
+
+情境判定：非 V0/V1/V4；vision 层稳定，无开放 required 门禁，无待裁决点。建议下一步：无需 /vision
+动作；实现层推进走 /govern。
+
+COPILOT_CLI_VISION_DISPATCH_OK

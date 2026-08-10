@@ -40,8 +40,12 @@ ROLE_BOUNDARIES: dict[str, str] = {
 LEDGER_TARGETS: dict[str, list[str]] = {
     "vision": ["vision/"],
     "vision-audit": ["vision/reviews.md", "vision/reviews/VRev-*"],
-    "govern": ["goal-tree.md", "workspace-*/", "workspace-*/GOAL-*/"],
-    "audit": ["workspace-*/GOAL-*/03-audit/"],
+    "govern": [
+        "workspaces/workspace-*/",
+        "workspaces/workspace-*/goal-tree.md",
+        "workspaces/workspace-*/GOAL-*/",
+    ],
+    "audit": ["workspaces/workspace-*/GOAL-*/03-audit/"],
 }
 
 # Independent-review entries: their dispatch must never change goal/plan status.
@@ -59,7 +63,7 @@ PROMPT_PATHS: dict[str, str] = {
 TOOL_PARAMETERS: dict[str, dict[str, tuple[str, bool, str]]] = {
     "vision": {
         "task": ("string", True, "决策层请求：建修 Charter / VP / Vision Review / re-align 意图。"),
-        "workspace": ("string", False, "工作区 id 路径（如 docs/workspace-003-...），缺省由上下文定位。"),
+        "workspace": ("string", False, "工作区 id 路径（如 docs/workspaces/workspace-003-...），缺省由上下文定位。"),
     },
     "vision-audit": {
         "task": ("string", True, "独立 Vision Review 请求：被审对象与关注点。"),

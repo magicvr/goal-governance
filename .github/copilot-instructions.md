@@ -18,7 +18,7 @@ version: 0.11.0
 
 | 内容 | 路径 | 要求 |
 |------|------|------|
-| 目标与过程记录 | `{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/` | 当前工作区内的唯一长期存储 |
+| 目标与过程记录 | `{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/` | 当前工作区内的唯一长期存储 |
 | 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
 | 核心方法论（architecture） | `{{GOVERNANCE_ROOT}}/architecture/` | **与 Skills 同级必备**（install 默认安装）；含 principles、workspace-protocol 等 |
 | 治理原则全文 | `{{GOVERNANCE_ROOT}}/architecture/principles.md` | **必备**；P-001～**P-006** 权威长文；AGENTS §6/6b/6d/6e 为操作摘要 |
@@ -31,7 +31,7 @@ version: 0.11.0
 
 ## 2. 目标存储与编号
 
-1. **工作区内扁平存储**：所有目标文件夹平铺在 `{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/` 根，**禁止**用子文件夹表达父子关系。
+1. **工作区内扁平存储**：所有目标文件夹平铺在 `{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/` 根，**禁止**用子文件夹表达父子关系。
 2. **Root**：每个工作区的 `GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
 3. **编号**：先读当前工作区 `goal-tree.md`（或扫描其 canonical root），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。编号在工作区内单调不复用；跨区 id 可重复，**禁止**把工作区编号嵌进 goal id。跨区引用见 workspace-protocol §2.6：文档默认 **Q2** 路径，对话默认 **Q3** 标签；裸 `GOAL-*` 仅限已绑定当前工作区。
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
@@ -44,7 +44,7 @@ version: 0.11.0
 ## 3. 目标五件套（创建时一次建齐）
 
 ```text
-{{GOVERNANCE_ROOT}}/workspace-001-example/GOAL-NNN-short-slug/
+{{GOVERNANCE_ROOT}}/workspaces/workspace-001-example/GOAL-NNN-short-slug/
 ├── 00-meta.md
 ├── 01-decision.md
 ├── 02-execution.md
@@ -178,7 +178,7 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 
 ## 6c. 工作区与共享资料边界
 
-先定位当前 `{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/workspace.md`，再按 `{{GOVERNANCE_ROOT}}/architecture/workspace-protocol.md`（完整安装必备）校验其 `root_goal`、`canonical_scope` 和共享资料引用。多个工作区而用户未指定焦点时必须 fail closed：
+先定位当前 `{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/workspace.md`，再按 `{{GOVERNANCE_ROOT}}/architecture/workspace-protocol.md`（完整安装必备）校验其 `root_goal`、`canonical_scope` 和共享资料引用。多个工作区而用户未指定焦点时必须 fail closed：
 
 1. 工作区绑定一个 `parent: null` 的 Root Goal 与其 canonical 目标范围；它不是 `parent` 层级、审计 scope 或第二套状态。
 2. 同一项目的 MVP、二阶段、三阶段等通常更新 Root Goal 路线图并建立串行子目标；只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
@@ -237,7 +237,7 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 
 默认：**文档驱动的目标治理**；代码与可视化应用按项目实际叠加。
 
-1. **文档体系（本包约定）**：`{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/` + 工作区内 `goal-tree.md`
+1. **文档体系（本包约定）**：`{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/` + 工作区内 `goal-tree.md`
 2. **产品/代码（常见）**：仓库根或项目实际目录
 3. **独立可视化应用（可选）**：有则按项目路径
 4. **Skills 包（可选）**：`{{SKILLS_DIR}}`
@@ -278,7 +278,7 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 - 代码布局与 Root slug：默认见第 8 节；以用户/项目约定为准（`web/` 等为可选约定示例）。
 - Skills 包：按内容定位 SKILLS_PKG。
 - P-001：本文件第 6 节；P-002～P-005：第 6b 节；architecture 原则全文**必备**（与 Skills 同级）。
-- 空仓 S0：先 scaffold `{{GOVERNANCE_ROOT}}/workspace-001-<用户确认 slug>/`（workspace.md + goal-tree），再创建 Root；禁止静默默认 slug。
+- 空仓 S0：先 scaffold `{{GOVERNANCE_ROOT}}/workspaces/workspace-001-<用户确认 slug>/`（workspace.md + goal-tree），再创建 Root；禁止静默默认 slug。
 - 目标可带未知立项，但信息项、阶段门禁、证据与残余风险接受必须可追踪；按工作量而非固定“两子目标”拆分。
 - 交叉审计意见由编排器统一响应；冲突与「是否自审」问用户并给建议。
 

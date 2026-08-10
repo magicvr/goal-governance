@@ -2,9 +2,9 @@
 title: AGENTS 模板 · 目标治理 AI 规则
 status: active
 created: 2026-07-18
-updated: 2026-08-06
+updated: 2026-08-10
 parent: null
-version: 0.12.0
+version: 0.13.0
 ---
 
 # AGENTS.md
@@ -19,7 +19,7 @@ version: 0.12.0
 
 | 内容 | 路径 | 要求 |
 |------|------|------|
-| 目标与过程记录 | `{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/` | 当前工作区内的唯一长期存储 |
+| 目标与过程记录 | `{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/` | 当前工作区内的唯一长期存储 |
 | 目标树与状态 | `<workspace-root>/goal-tree.md` | **必读、必更新** |
 | 核心方法论（architecture） | `{{GOVERNANCE_ROOT}}/architecture/` | **与 Skills 同级必备**（install 默认安装）；含 principles、workspace-protocol 等 |
 | 治理原则全文 | `{{GOVERNANCE_ROOT}}/architecture/principles.md` | **必备**；P-001～**P-006** 权威长文；AGENTS §6/6b/6d/6e 为操作摘要 |
@@ -32,7 +32,7 @@ version: 0.12.0
 
 ## 2. 目标存储与编号
 
-1. **工作区内扁平存储**：所有目标文件夹平铺在 `{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/` 根，**禁止**用子文件夹表达父子关系。
+1. **工作区内扁平存储**：所有目标文件夹平铺在 `{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/` 根，**禁止**用子文件夹表达父子关系。
 2. **Root**：每个工作区的 `GOAL-001` 固定为总目标，其 `parent` 必须为 `null`；禁止改号。
 3. **编号**：先读当前工作区 `goal-tree.md`（或扫描其 canonical root），新编号 = 当前最大编号 + 1，三位数字（如 `004`）。编号在工作区内**单调不复用**（含 `cancelled`）；历史空洞可保留；**禁止**把已取消编号赋予新含义。跨工作区 id **可重复**；**禁止**把工作区编号嵌进 goal id。跨区引用见 `{{GOVERNANCE_ROOT}}/architecture/workspace-protocol.md` §2.6：文档默认 **Q2** 路径，对话默认 **Q3** 标签；裸 `GOAL-*` 仅限已绑定当前工作区。
 4. **文件夹名**：`GOAL-NNN-short-slug`（`NNN` 三位；slug 小写英文、短横线）。
@@ -45,7 +45,7 @@ version: 0.12.0
 ## 3. 目标五件套（创建时一次建齐）
 
 ```text
-{{GOVERNANCE_ROOT}}/workspace-001-example/GOAL-NNN-short-slug/
+{{GOVERNANCE_ROOT}}/workspaces/workspace-001-example/GOAL-NNN-short-slug/
 ├── 00-meta.md
 ├── 01-decision.md
 ├── 02-execution.md
@@ -184,11 +184,11 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 
 ## 6c. 工作区与共享资料边界
 
-先定位当前 `{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/workspace.md`，再按 `{{GOVERNANCE_ROOT}}/architecture/workspace-protocol.md`（完整安装必备）校验其 `root_goal`、`canonical_scope` 和共享资料引用。多个工作区而用户未指定焦点时必须 fail closed：
+先定位当前 `{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/workspace.md`，再按 `{{GOVERNANCE_ROOT}}/architecture/workspace-protocol.md`（完整安装必备）校验其 `root_goal`、`canonical_scope` 和共享资料引用。多个工作区而用户未指定焦点时必须 fail closed：
 
 1. 工作区绑定一个 `parent: null` 的 Root Goal 与其 canonical 目标范围；它不是 `parent` 层级、审计 scope 或第二套状态。
 2. Root 路线图的**纲领阶段**通常串行；**同一纲领阶段内**允许并行子目标。只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
-3. **隐式工作区唯一路径**：没有显式工作区根时，**仅当**存在 `{{GOVERNANCE_ROOT}}/goals/` 才可作为 legacy 隐式单工作区；否则不得猜测工作区根（应空治理 scaffold）。禁止自动发现、读取、混合或写入其他工作区上下文。
+3. **发现与迁移门禁**：canonical 只扫描 `{{GOVERNANCE_ROOT}}/workspaces/workspace-*/workspace.md`。旧直属 `{{GOVERNANCE_ROOT}}/workspace-*/workspace.md` 只触发迁移阻断，不得继续写入；新旧显式布局并存时 fail closed，禁止双读或任选。仅当两类显式布局都不存在且存在 `{{GOVERNANCE_ROOT}}/goals/` 时，才可作为 legacy 隐式单工作区；否则不得猜测工作区根（应空治理 scaffold）。
 4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
 5. 跨工作区提及目标须用限定引用（§2.6）：文档 **Q2**、对话 **Q3**、机器 **Q1**；`GOAL-*` 仅工作区内唯一，形状不嵌工作区号。区内 `parent` 仍用短 id。
 6. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
@@ -251,7 +251,7 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 
 默认：**文档驱动的目标治理**；代码与可视化应用按项目实际叠加。
 
-1. **文档体系（本包约定）**：`{{GOVERNANCE_ROOT}}/workspace-<NNN>-<slug>/` + 工作区内 `goal-tree.md`
+1. **文档体系（本包约定）**：`{{GOVERNANCE_ROOT}}/workspaces/workspace-<NNN>-<slug>/` + 工作区内 `goal-tree.md`
 2. **产品/代码（常见）**：仓库根或项目实际目录
 3. **独立可视化应用（可选）**：有则按项目路径
 4. **Skills 包（可选）**：`{{SKILLS_DIR}}`
@@ -307,7 +307,7 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 - 不得以“以后再说”绕过 required 信息门禁；残余风险只有用户书面接受并留痕后才可解除其明确范围内的门禁。
 - 正式审计意见必须落在被审目标 `03-audit/A-NNN-*.md` 并更新 `03-audit.md` 索引；未落盘意见不作为放行依据。
 - 未合法闭合的 required/必改 findings 存在时，禁止推进对应门禁或 `status: done`（闭合仅限 fixed / accepted-residual / user-overruled）。
-- 无显式工作区时禁止把任意路径当作隐式工作区根；仅 legacy `{{GOVERNANCE_ROOT}}/goals/` 或空治理 scaffold。
+- 旧直属 `{{GOVERNANCE_ROOT}}/workspace-*/` 只用于迁移检测；新旧显式布局并存必须 fail closed。无任何显式工作区时禁止把任意路径当作隐式工作区根；仅 legacy `{{GOVERNANCE_ROOT}}/goals/` 或空治理 scaffold。
 - **完整安装必有唯一 active Charter + alignment**；缺则仅引导补齐。
 - **所有工作区必须挂 VP**；角色仅 `primary` / `delivery`；禁止跨区 `parent`；禁止多愿景。
 
@@ -317,7 +317,7 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 - [ ] `parent` 为完整父 id 或 `null`
 - [ ] 五件套 + 三个 ledger 目录齐全（若新建）
 - [ ] 大目标路线图已写/更新（若适用）
-- [ ] 工作区：显式已校验，或 legacy `{{GOVERNANCE_ROOT}}/goals/`，或已识别为空治理；共享资料引用未被当成跨工作区状态或未确认事实
+- [ ] 工作区：新 canonical 显式布局已校验；或旧直属布局已阻断并引导迁移；或 legacy `{{GOVERNANCE_ROOT}}/goals/` / 空治理已识别；无新旧混合布局
 - [ ] 已识别的未知项已登记；本次要推进的阶段没有开放 required 信息门禁，或残余风险已获用户书面接受
 - [ ] `goal-tree.md` 已同步
 - [ ] `updated` / `progress` / `status` 与事实一致

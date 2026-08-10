@@ -2,9 +2,9 @@
 title: 工作区与共享资料区协议
 status: active
 created: 2026-07-20
-updated: 2026-08-06
+updated: 2026-08-10
 parent: null
-version: 0.9.0
+version: 1.0.0
 ---
 
 # 工作区与共享资料区协议
@@ -13,15 +13,16 @@ version: 0.9.0
 
 仓库级愿景体系见 [../vision/](../vision/) 与 [principles.md](principles.md) **P-006**：**单愿景**；冷启动 **Charter → VP → 工作区/Root**；所有工作区必须挂 `plan_refs`/`primary_plan`。愿景**不是**第二套 goal-tree 或 progress 权威。规则细节以 [../vision/alignment.md](../vision/alignment.md) 为准。
 
-> **治理根（`governance_root`，默认 `docs`）**：本协议与权威面中的路径叙述均相对治理根。消费仓可通过可提交项目配置 `.goal-governance.json` 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspace-*`、`goal-tree.md`、五件套形状等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**（解析规则见 `mcp/config.py`）。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
+> **治理根（`governance_root`，默认 `docs`）**：本协议与权威面中的路径叙述均相对治理根。消费仓可通过可提交项目配置 `.goal-governance.json` 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspaces/workspace-*`、`goal-tree.md`、五件套形状等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**（解析规则见 `mcp/config.py`）。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
 
 ## 1. 范围与术语
 
 | 术语 | 含义 | 不是 |
 |------|------|------|
-| **工作区根** | `{governance_root}/workspace-<NNN>-<slug>/`，其中包含 `workspace.md`、`goal-tree.md` 与平铺的 `GOAL-*`。 | `parent` 层级、页面缓存、审计 `scope` 或第二套目标状态。 |
+| **工作区根** | `{governance_root}/workspaces/workspace-<NNN>-<slug>/`，其中包含 `workspace.md`、`goal-tree.md` 与平铺的 `GOAL-*`。 | `parent` 层级、页面缓存、审计 `scope` 或第二套目标状态。 |
 | **工作区上下文文档** | 工作区根内的 `workspace.md`，从 [workspace-context.md](../templates/workspace-context.md) 复制。 | 每个目标重复保存的元数据，或全局工作区注册表。 |
 | **legacy 隐式单工作区** | 外部旧仓库没有显式工作区根、但保留 `{governance_root}/goals/` 与唯一 Root Goal 时的兼容模式。 | 多工作区发现、共享资料访问或跨目录自动搜索许可。 |
+| **legacy 直属显式布局** | 升级前位于 `{governance_root}/workspace-<NNN>-<slug>/` 的旧显式工作区；只用于检测和迁移引导。 | 可继续推进的 canonical 工作区、双读来源或第二套状态。 |
 | **共享资料目录** | 位于工作区根之外的资料集合；当前项目为 `{governance_root}/shared-materials/`。 | 目标树、目标状态库或任一工作区可写的隐式公共区。 |
 | **共享资料候选库存** | 重建脚本生成的路径、大小和 SHA-256 清单。 | 固定资料引用、canonical 事实、证据或用户确认。 |
 | **共享资料引用** | 工作区内指向资料 ID、来源、版本和哈希的可追溯记录。 | 已确认事实、可执行指令或其他工作区的上下文通道。 |
@@ -33,7 +34,7 @@ version: 0.9.0
 ## 2. 工作区不变量
 
 1. 一个工作区恰好绑定一个 `parent: null` 的 Root Goal；`workspace.md` 的 `root_goal` 必须与该 Root Goal 完整 ID 一致。
-2. `canonical_scope` 必须等于包含该 `workspace.md` 的工作区根，例如 `{governance_root}/workspace-001-goal-governance/`。该目录直接平铺 `GOAL-*` 与 `goal-tree.md`；层级只由 `parent` 字段表达。
+2. `canonical_scope` 必须等于包含该 `workspace.md` 的工作区根，例如 `{governance_root}/workspaces/workspace-001-goal-governance/`。该目录直接平铺 `GOAL-*` 与 `goal-tree.md`；层级只由 `parent` 字段表达。
 3. 工作区之间不得混合目标、候选、草稿、审计意见、写入请求或 AI 上下文。多个工作区而没有明确焦点时，Skills 和消费适配器必须 fail closed，而非猜测默认工作区。
 4. 平台或宿主可以提供导航，但导航缓存不能成为 canonical 目标状态；跨工作区导航字段、运行时授权和用户操作仍属于消费适配器/产品门禁。
 5. 工作区上下文改变 Root Goal 绑定、canonical 范围或共享资料目录指针时，属于治理变更：必须有可追溯决定，并在受影响目标的执行记录中留下事实。
@@ -49,7 +50,7 @@ version: 0.9.0
   | 形式 | 写法 | 默认场景 |
   |------|------|----------|
   | **Q1** 双字段 | `workspace_id` + `goal_id` | 机器/API 载荷 |
-  | **Q2** canonical 路径 | `{governance_root}/workspace-<NNN>-<slug>/GOAL-NNN-slug/` | **文档落盘默认** |
+  | **Q2** canonical 路径 | `{governance_root}/workspaces/workspace-<NNN>-<slug>/GOAL-NNN-slug/` | **文档落盘默认** |
   | **Q3** 行内标签 | `[workspace-id] GOAL-NNN-slug` | **对话/编排回显默认** |
 
 - **区内 `parent` 与同区相对链接**继续用短 id，不改五件套形状。
@@ -68,13 +69,13 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 
 ## 4. 工作区上下文文档
 
-新建显式工作区时，从 `{governance_root}/templates/workspace-context.md` 复制为 `{governance_root}/workspace-<NNN>-<slug>/workspace.md`。frontmatter 的最小字段为：
+新建显式工作区时，从 `{governance_root}/templates/workspace-context.md` 复制为 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md`。frontmatter 的最小字段为：
 
 | 字段 | 要求 |
 |------|------|
 | `id` | 工作区稳定标识；资料引用的 `workspace_id` 必须相同。 |
 | `root_goal` | 当前工作区 Root Goal 的完整 ID，且该目标 `parent: null`。 |
-| `canonical_scope` | 当前工作区根；格式为 `{governance_root}/workspace-<NNN>-<slug>/`。 |
+| `canonical_scope` | 当前工作区根；格式为 `{governance_root}/workspaces/workspace-<NNN>-<slug>/`。 |
 | `shared_materials_catalog` | 共享资料目录的固定路径/URI，或 `none`。它只标识资料来源，不保存资料内容。 |
 | `status`、`created`、`updated`、`version` | 与其他 core Markdown 一致的可追溯元信息。 |
 | `vision_role` | `primary` \| `delivery`（完整治理下必填）。 |
@@ -85,15 +86,17 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 
 完整治理下仓库**必有**现行 Charter；新建显式工作区前须已完成冷启动上环（Charter → 可挂接 VP）。缺 Charter 时仅允许引导补齐，不得非引导开区（见 alignment §0、P-006）。
 
-### 隐式 / legacy 工作区（唯一兼容路径）
+### 工作区发现、旧布局迁移与 legacy 隐式兼容
 
 | 条件 | 行为 |
 |------|------|
-| 存在至少一个 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` | 必须使用显式工作区；多区无焦点 → fail closed |
-| **无**显式工作区根，**且**存在 `{governance_root}/goals/` 与唯一 Root Goal | 仅允许将该 `{governance_root}/goals/` 作为 **legacy 隐式单工作区** |
+| 只存在至少一个 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` | 使用新 canonical 显式工作区；多区无焦点 → fail closed |
+| 只存在旧 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` | **迁移阻断**：只读报告旧布局并引导迁移；不得新建、推进、放行、关门或把旧路径继续当 canonical |
+| 新旧显式布局同时存在 | **混合布局冲突**：fail closed；不得双读、合并、自动任选或把同 id 两侧视为同一工作区 |
+| 无任何显式工作区，且存在 `{governance_root}/goals/` 与唯一 Root Goal | 仅允许将该 `{governance_root}/goals/` 作为 **legacy 隐式单工作区** |
 | 既无显式工作区，也无 `{governance_root}/goals/` | **不是**隐式工作区；按空治理 scaffold（见 Skills S0），禁止猜测仓库根或其他路径为 `<workspace-root>` |
 
-不得把 legacy `{governance_root}/goals/` 路径复制到已迁移仓库中；已有显式工作区后禁止回退为「随便一个 `<workspace-root>`」。
+迁移必须保持工作区目录整体、`workspace_id`、Root/Goal id、历史 ledger 与附件不变，只更新物理父目录、`canonical_scope` 和受影响的 canonical/Q2 链接。installer、updater 与 lifecycle **不得静默移动用户工作区**；它们只可创建新布局或报告迁移门禁。不得把 legacy `{governance_root}/goals/` 路径复制到已迁移仓库中；已有显式工作区后禁止回退为「随便一个 `<workspace-root>`」。
 
 ### 4b. 愿景对齐（三层链）
 
@@ -137,7 +140,7 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 1. **先判定愿景完整性**：缺 `{governance_root}/vision/charter.md`（或现行非 active）→ 报告不完整安装；**仅允许引导补齐** Charter→VP，不得非引导开区/推进/放行/关门。完整时读取 Charter 版本与 [alignment](../vision/alignment.md) 要点，再定位工作区。
 2. 定位用户指定或已配置的工作区 `workspace.md`，校验 Root Goal、canonical scope、共享资料引用，以及**必填**的 `plan_refs` / `primary_plan` 与对应 VP 文件后，再扫描该工作区 `goal-tree.md` 与目标记录。
 3. 若仓库只有一个显式工作区，消费适配器可以使用它作为当前 scope；多个工作区而未指定焦点时必须拒绝受影响读取、写入和放行。
-4. 没有显式工作区根时，**仅当**存在 `{governance_root}/goals/` 才可作为 legacy 单工作区（且仍须按不完整/引导规则处理缺 vision）；否则 fail closed / 走空治理 scaffold（顺序：Charter → VP → 工作区）。不得自动发现、合并或把仓库根等猜测路径当作工作区。
+4. 发现顺序固定为 `{governance_root}/workspaces/workspace-*/workspace.md`；旧直属 `{governance_root}/workspace-*/workspace.md` 只触发迁移阻断，新旧并存触发混合布局冲突。仅在两类显式布局都不存在且存在 `{governance_root}/goals/` 时，才可按 legacy 单工作区处理（缺 vision 仍走不完整/引导）；否则 fail closed / 空治理 scaffold（Charter → VP → 工作区）。不得自动合并或把仓库根等猜测路径当作工作区。
 5. 任何创建、决策、执行、审计或提案都必须在已验证的当前工作区内。资料候选库存只补充可核对的文件摘要，不替代固定引用或事实确认。愿景目录不保存目标进度权威；Vision Review 落在 [../vision/reviews.md](../vision/reviews.md) 索引与 `../vision/reviews/VRev-NNN-*.md` 报告。
 6. `/audit` 只在当前工作区目标台账追加 `source: independent` 意见；它不得凭资料目录、愿景规划或索引改变状态或关闭 finding（finding 闭合见 principles P-003 三路径，由 `/govern` 响应）。愿景层：**self Review / finding 响应**走 `/vision`；**independent Vision Review** 走 `/vision-audit`（写 VRev 报告并更新 `reviews.md` 索引）；**禁止** Goal `/audit` 写入愿景审视台账或与 Vision Review 混用台账。
 7. 跨工作区目标引用必须使用 §2.6 限定形式（文档默认 **Q2** 路径；对话默认 **Q3** 标签；机器载荷可用 **Q1**）。不得仅凭裸 `GOAL-*` 跨区寻址；**禁止**跨区 `parent`。

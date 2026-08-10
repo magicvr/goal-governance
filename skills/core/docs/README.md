@@ -9,11 +9,11 @@ version: 0.13.0
 
 # docs/ · 文档体系（消费方）
 
-本目录是 **Goal Governance** 在目标仓库中的核心规范入口：方法论、文档协议与模板。  
-目标实例的状态真相只存在于各自 `docs/workspace-<NNN>-<slug>/` 根。  
+本目录是 **Goal Governance** 在目标仓库中的核心规范入口：方法论、文档协议与模板。
+目标实例的状态真相只存在于各自 `docs/workspaces/workspace-<NNN>-<slug>/` 根。
 仓库级愿景规则见 `docs/vision/alignment.md`（**不是**第二套目标状态）。
 
-> **完整安装**：`docs/architecture/` 与 Skills **同级必备**。缺 architecture = 不完整安装。  
+> **完整安装**：`docs/architecture/` 与 Skills **同级必备**。缺 architecture = 不完整安装。
 > monorepo 维护者长文与 dogfood 过程树**不**随本精简入口分发。
 
 ## 最小目录
@@ -60,16 +60,16 @@ docs/
 
 ## 冷启动
 
-1. 确认 `docs/architecture/principles.md` 存在。  
-2. **`/vision`**：Charter → 首个 VP（+ Vision Review）。  
-3. 建立工作区（`/govern` 或 install `--init-workspace`，slug **显式**）。  
-4. **`/govern`** 创建 Root 五件套并推进。  
+1. 确认 `docs/architecture/principles.md` 存在。
+2. **`/vision`**：Charter → 首个 VP（+ Vision Review）。
+3. 建立工作区（`/govern` 或 install `--init-workspace`，slug **显式**）。
+4. **`/govern`** 创建 Root 五件套并推进。
 5. Goal 交叉审计用 **`/audit`**；独立 Vision Review 用 **`/vision-audit`**。
 
 ## 推荐阅读
 
-1. [architecture/principles.md](architecture/principles.md)  
-2. [architecture/workspace-protocol.md](architecture/workspace-protocol.md)  
-3. [vision/alignment.md](vision/alignment.md)  
-4. [templates/README.md](templates/README.md)  
+1. [architecture/principles.md](architecture/principles.md)
+2. [architecture/workspace-protocol.md](architecture/workspace-protocol.md)
+3. [vision/alignment.md](vision/alignment.md)
+4. [templates/README.md](templates/README.md)
 5. 仓库根 `AGENTS.md`（install 安装）

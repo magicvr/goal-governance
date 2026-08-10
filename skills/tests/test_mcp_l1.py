@@ -93,6 +93,20 @@ class McpL1Tests(unittest.TestCase):
         self.assertNotIn("error", init)
         self.assertEqual(init["result"]["serverInfo"]["name"], "goal-governance-mcp")
 
+    def test_stdio_transport_is_utf8_independent_of_host_locale(self) -> None:
+        env = dict(os.environ)
+        env.pop("PYTHONIOENCODING", None)
+        server = McpServerProcess(REPO_ROOT, env=env)
+        self.addCleanup(server.close)
+        self.assertNotIn("error", server.request("initialize", request_id=1))
+        payload = server.request("tools/list", request_id=2)
+        descriptions = {
+            item["name"]: item["description"]
+            for item in payload["result"]["tools"]
+        }
+        self.assertIn("决策层", descriptions["vision"])
+        self.assertIn("交叉审计", descriptions["audit"])
+
     def _tools_list(self) -> list[dict[str, Any]]:
         response = self.server.request("tools/list", request_id=2)
         self.assertNotIn("error", response)
@@ -230,7 +244,7 @@ class McpVersionPinTests(unittest.TestCase):
 
     def test_module_version_uses_env_pin_when_set(self) -> None:
         code = "import mcp; print(mcp.__version__)"
-        env = dict(os.environ, GOAL_GOVERNANCE_MCP_VERSION="0.13.0")
+        env = dict(os.environ, GOAL_GOVERNANCE_MCP_VERSION="0.13.2")
         out = subprocess.run(
             [sys.executable, "-c", code],
             cwd=str(REPO_ROOT),
@@ -241,7 +255,7 @@ class McpVersionPinTests(unittest.TestCase):
             errors="replace",
         )
         self.assertEqual(out.returncode, 0, msg=out.stderr)
-        self.assertEqual(out.stdout.strip(), "0.13.0")
+        self.assertEqual(out.stdout.strip(), "0.13.2")
 
     def test_module_version_falls_back_to_layout_version(self) -> None:
         code = "import mcp; print(mcp.__version__); print(mcp.MCP_LAYOUT_VERSION)"
@@ -258,16 +272,16 @@ class McpVersionPinTests(unittest.TestCase):
         )
         self.assertEqual(out.returncode, 0, msg=out.stderr)
         lines = out.stdout.strip().splitlines()
-        self.assertEqual(lines[0], "0.1.0")
-        self.assertEqual(lines[1], "0.1.0")
+        self.assertEqual(lines[0], "0.2.0")
+        self.assertEqual(lines[1], "0.2.0")
 
     def test_server_info_version_reflects_env_pin(self) -> None:
-        env = dict(os.environ, GOAL_GOVERNANCE_MCP_VERSION="0.13.0")
+        env = dict(os.environ, GOAL_GOVERNANCE_MCP_VERSION="0.13.2")
         server = McpServerProcess(REPO_ROOT, env=env)
         self.addCleanup(server.close)
         init = server.request("initialize", {"protocolVersion": "2025-03-26"}, request_id=1)
         self.assertNotIn("error", init)
-        self.assertEqual(init["result"]["serverInfo"]["version"], "0.13.0")
+        self.assertEqual(init["result"]["serverInfo"]["version"], "0.13.2")
 
 
 class McpInitializeGateTests(unittest.TestCase):

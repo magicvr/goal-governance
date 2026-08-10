@@ -1,0 +1,18 @@
+I'll load the vision skill and run only its scan phase—read-only, no file changes, no subagents.Reading Charter and workspace-001 to complete the scan-phase fields for the probe.## Vision scan (read-only probe)
+
+**GROK_VISION_DISPATCH_OK**
+
+| Item | Value |
+|------|--------|
+| **Loaded skill title** | `vision · 愿景与组合治理（Grok Build skill）` |
+| **Skill source path** | `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **Orchestrator prompt (06)** | `skills/prompts/06-vision-orchestrator.md` (`SKILLS_PKG` = `skills/`) |
+| **Active Charter** | `vision-goal-governance@0.2.0` (`status: active`, `doc_type: vision-charter`) |
+| **workspace-001 `primary_plan`** | **Resolves** — `primary_plan` / `plan_refs` = `VP-001-governance-platform-delivery` → file `docs/vision/plans/VP-001-governance-platform-delivery.md` exists; plan `id` matches; `vision_ref: vision-goal-governance@0.2.0` matches active Charter |
+
+### Scan notes (phase only; no writes)
+
+- Core present: `docs/architecture/principles.md`, `workspace-protocol.md`
+- Vision tree present: `charter.md`, `alignment.md`, `roadmap.md`, `revisions.md`, `reviews.md`, `workspaces.md`, `plans/`
+- Single active Charter (≤1)
+- workspace-001: `vision_role: primary`, status `archived`; plan file status `closed` (still a valid resolution of the declared `primary_plan`)

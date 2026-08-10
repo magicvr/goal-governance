@@ -1,0 +1,40 @@
+You are the independent auditor for GOAL-007-workspaces-directory-consolidation. This is read-only. Do not edit files, append ledgers, change status/progress, commit/tag/push, install/update a consumer, ask questions, or launch subagents.
+
+Load AGENTS.md, .grok/skills/audit/SKILL.md, and skills/prompts/05-independent-audit.md, then audit the frozen S2/S3 candidate. Use targeted reads and commands; do not recursively read historical goal ledgers.
+
+Required sources:
+- docs/architecture/workspace-protocol.md and directory-layout.md
+- docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-007-workspaces-directory-consolidation/{00-meta.md,01-decision/D-002-layout-migration-compatibility.md,02-execution/E-006-s2-s3-verification.md,03-audit/A-001-s2-s3-self.md}
+- the three docs/workspaces/workspace-*/workspace.md files and three goal-tree.md files (only frontmatter/tree/table lines needed to check ids, roots, current status, and references)
+- mcp/config.py, mcp/doctor.py, mcp/entries.py, mcp/governance-root.schema.json
+- relevant workspace-path blocks in skills/install.ps1, skills/install.sh, scripts/pack_skills_release.py and their tests
+- docs/contracts/skills-consumer-compatibility-matrix.json plus representative v0.13.2 runtime evidence; use the shipped consistency/report commands for the whole set
+- current git status/diff summary and CHANGELOG v0.13.2 section
+
+Execute or inspect these bounded checks as useful:
+- python scripts/stage_skills_mirrors.py --check
+- python scripts/capture_runtime_evidence.py --check --evidence-dir docs/releases/runtime/v0.13.2
+- python scripts/compatibility_report.py --require-ready
+- python -m unittest skills.tests.test_mcp_config docs.tests.test_workspace_protocol scripts.tests.test_pack_skills_release
+- git diff --check
+- verify docs has zero direct workspace-* directories and docs/workspaces has exactly workspace-001/002/003
+
+Audit questions:
+1. Is {governance_root}/workspaces/workspace-* the only canonical explicit layout, with old-direct migration-only and mixed fail-closed?
+2. Are all three repo workspaces at the new parent with preserved ids/root ids/goal-tree parent semantics and matching canonical_scope?
+3. Do methodology, installed surfaces, MCP, installers, packaging, mirrors, tests, compatibility matrix and runtime evidence agree?
+4. Is there any required finding blocking S4 completion or entry to S5? Keep remote PR CI/main/tag/Release explicitly unproven.
+
+Return only the final independent opinion, exactly:
+VERDICT: pass | conditional | fail
+SCOPE: ...
+SUMMARY: ...
+REQUIRED_FINDINGS:
+- [none] or findings labeled required with file/path evidence and closure action
+RECOMMENDED_FINDINGS:
+- [none] or recommendations
+EVIDENCE:
+- concise file:line and command/result evidence
+RELEASE_BOUNDARY: precisely what remains for PR CI/main/tag/Release
+
+Do not spend turns narrating progress. Fail closed on missing required evidence; do not infer pass merely from quiet searches.

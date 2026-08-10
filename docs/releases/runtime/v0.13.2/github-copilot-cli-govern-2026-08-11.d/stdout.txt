@@ -1,0 +1,211 @@
+● Read AGENTS.md
+  └ 1 line read
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+/ Search (glob)
+  │ "docs/workspaces/workspace-001-goal-governance/**"
+  └ 10 files found
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● List GOAL-008 folder and all goal folders (shell)
+  │ Get-ChildItem -Path
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspaces\workspace-001-goal-governance"
+  │ -Directory | Where-Object { $_.Name -like "GOAL-008*" } | Select-Object Name; Get-ChildItem
+  │ -Path
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspaces\workspace-001-goal-governance"
+  │ -Directory | ForEach-Object { $_.Name }
+  └ 27 lines…
+
+● List GOAL-008 folder contents recursively (shell)
+  │ Get-ChildItem -Path "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspaces\workspace-0
+  │ 01-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency" -Recurse |
+  │ Select-Object FullName
+  └ 11 lines…
+
+● List GOAL-008 files with full names (shell)
+  │ Get-ChildItem -Path "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspaces\workspace-0
+  │ 01-goal-governance\GOAL-008-skills-consumer-adapter-release-consistency" -Recurse |
+  │ Select-Object -ExpandProperty FullName
+  └ 9 lines…
+
+● List directory docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-rel…
+  └ 5 files found
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\00-meta.md
+  └ 103 lines read
+
+/ Search (grep)
+  │ "GOAL-008"
+  └ 27 lines found
+
+/ Search (grep)
+  │ "A-00|verdict|source:|required|必改|finding|findings|F-005"
+  └ 6 lines found
+
+/ Search (grep)
+  │ "^#|^##|^###|A-\d+|^verdict|^source|^scope"
+  └ 7 lines found
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L1:220 (220 lines read)
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L220:440 (220 lines read)
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ L1:80 (79 lines read)
+
+● Read workspace.md
+  │ docs\workspaces\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+/ Search (grep)
+  │ "扫描|scan|状态|status|意见|audit|门禁|gate|闭合|close|done"
+  └ 80 lines found
+
+● Count lines in orchestrator prompt and copilot-instructions (shell)
+  │ (Get-Content
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\00-govern-orchestrator.md" |
+  │ Measure-Object -Line).Lines; (Get-Content
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\.github\copilot-instructions.md" |
+  │ Measure-Object -Line).Lines
+  └ 3 lines…
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L92:170 (78 lines read)
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L209:338 (130 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:130 (129 lines read)
+
+/ Search (grep)
+  │ "^#|^##|^###|D-\d+"
+  └ 36 lines found
+
+● Check charter status and open vision review requirements (shell)
+  │ Get-Content "C:\Users\magicvr\Documents\Code\goal-governance\docs\vision\charter.md" -TotalCount
+  │ 12; Write-Output "----REVIEWS----"; Select-String -Path
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\vision\reviews.md" -Pattern
+  │ "required|open|fail" | Select-Object -First 10
+  └ 25 lines…
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ L1:60 (60 lines read)
+
+● Verify GOAL-008 attachments, v0.7.0 tag, git status (shell)
+  │ Get-ChildItem "C:\Users\magicvr\Documents\Code\goal-governance\docs\workspaces\workspace-001-g
+  │ oal-governance\GOAL-008-skills-consumer-adapter-release-consistency\attachments" -Recurse
+  │ -File | Select-Object -ExpandProperty Name; Write-Output "----TAG----"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" tag --list "v0.7.0"; Write-Output
+  │ "----STATUS----"; git -C "C:\Users\magicvr\Documents\Code\goal-governance" status --short | …
+  └ 207 lines…
+
+● List all git tags, count dirty files, check GOAL-008 dirtiness (shell)
+  │ git -C "C:\Users\magicvr\Documents\Code\goal-governance" tag --list; Write-Output "----"; git -C
+  │ "C:\Users\magicvr\Documents\Code\goal-governance" status --short | Measure-Object -Line;
+  │ Write-Output "----DOCS WS DIRTY?----"; git -C "C:\Users\magicvr\Documents\Code\goal-governance"
+  │ status --short -- docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter
+  │ -release-consistency/
+  └ 17 lines…
+
+● Check HEAD, candidate commit, v0.7.0 refs, tracked files (shell)
+  │ cd "C:\Users\magicvr\Documents\Code\goal-governance"; Write-Output "HEAD:"; git rev-parse
+  │ --short HEAD; Write-Output "candidate commit 8a33ecd present:"; git cat-file -t
+  │ 8a33ecd21d9183a680c9c0d63e471469f5e515a8 2>&1; Write-Output "v0.7.0 any-ref:"; git show-ref |
+  │ Select-String "v0.7.0"; Write-Output "GOAL-008 in HEAD?"; git ls-files -- docs/workspaces/work
+  │ space-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/00-meta.md; …
+  └ 12 lines…
+
+● Check git history for GOAL-008 records (shell)
+  │ cd "C:\Users\magicvr\Documents\Code\goal-governance"; Write-Output "last commit touching
+  │ GOAL-008:"; git log --oneline -2 -- docs/workspaces/workspace-001-goal-governance/GOAL-008-ski
+  │ lls-consumer-adapter-release-consistency/00-meta.md; Write-Output "file in HEAD tree:"; git
+  │ cat-file -e HEAD:docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapte
+  │ r-release-consistency/00-meta.md 2>&1; Write-Output "staged adds under workspace-001 …
+  └ 19 lines…
+
+Read-only /govern scan complete. Only governance sources listed in the task were used; no files were
+ written, no commits/tags created, no IDE plugin used.
+
+/govern 扫描汇报 · GOAL-008（只读重放）
+
+治理扫描：完整安装（docs/architecture/principles.md、workspace-protocol.md、templates/goal-folder/
+均在）；愿景、工作区、目标树已校验。
+
+愿景对齐：Charter vision-goal-governance@0.2.0 active；reviews.md 无开放 required（VRev open
+required = 0）；workspace-001 vision_role: primary，plan_refs/primary_plan =
+VP-001-governance-platform-delivery（closed）。无 fail-closed 触发。
+
+工作区页眉：workspace_id: workspace-001-goal-governance；显式 canonical
+布局（仅新布局，无旧直属并存）；canonical 范围校验通过；Root Goal = GOAL-001-main-vision（parent:
+null，done，区已 archived）；焦点目标区内短 id GOAL-008；共享资料引用表为空（不涉及）。
+
+情境：S1（无未关门总目的）——焦点目标已 done，本扫描只汇报、不提议推进。
+
+树摘要：Root=GOAL-001 done；未关门=0；已关门=GOAL-001～023 全部 done。goal-tree 树与状态表均记
+GOAL-008 为 done / 100%，与 00-meta.md frontmatter 一致，无维护缺口。
+
+意见台账（相关 A-00N）
+
+ - 权威最新：A-016（self close-out，2026-07-20，verdict pass）——I-001/I-002/I-003 全 verified，A-014
+ Web 缺口与 A-015 发行身份缺口已闭合，GOAL-001 F-005 移交 Root 响应（GOAL-001 A-013）；明确无开放
+required、无残余风险。
+ - A-017（self，2026-07-20，verdict pass）——历史证据新鲜度响应：有界限于下一候选发布；不使历史
+v0.7.0 失效、不重新打开 GOAL-008；当前候选矩阵为 candidateRevision: unreleased，六个宿主单元
+pending-runtime-validation（属未来候选门禁，非本目标门禁）。
+ - 历史条目：A-014（independent，conditional，当时 Web/发行缺口）→ A-015（self，conditional，响应）→
+ 已由 A-016 闭合；A-001～A-013 为实施期阶段/自审（当时有 conditional，已随 close-out 更新）。
+ - 开放 required：0；冲突：无。
+
+信息台账（I-00N）
+
+ - I-001 verified（schema/manifest/镜像/契约测试，D-002/A-002）；I-002 verified（六 CLI 单元 + Web
+CI replay，run 29700051047）；I-003 verified（candidate commit 8a33ecd…、annotated
+v0.7.0、release-candidate 证据，D-010/A-016）。
+ - 到期开放 required：0。残余风险接受：无。
+
+关门判定
+
+允许关门，且已合法关门。A-016 close-out pass、全部 required finding 按三路径 fixed
+闭合、I-001～I-003 在阶段 5 门禁前 verified、成功标准五条全部勾选、goal-tree 已同步。当前 done /
+100% 成立，无需重开。
+
+仓库观察（仅观察，非门禁事实）
+
+ - 本工作区目标树在 HEAD 之外（338 文件为 staged new，53 文件另有未暂存改动），工作树整体脏——与
+D-011「changed worktree → unreleased」叙述一致。
+ - 本地 refs 无 v0.7.0（现有 v0.10.0～v0.13.1）；候选 commit 8a33ecd… 对象仍存在。该 tag
+为历史归档证据，其本地缺位不改变文档记录状态，但建议下次发布核对远端 tag 与证据绑定。
+ - .github/copilot-instructions.md（0.11.0）与根 AGENTS.md（0.14.0）行为源漂移——正是当前候选
+pending-runtime-validation 的成因，下一发布前需重新同步宿主安装面并取得新 runtime evidence。
+
+COPILOT_CLI_GOVERN_DISPATCH_OK

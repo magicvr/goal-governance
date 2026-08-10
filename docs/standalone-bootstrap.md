@@ -126,7 +126,7 @@ New-Item -ItemType Directory -Path (Join-Path $vision 'reviews') -Force | Out-Nu
 ```powershell
 $rootId = 'GOAL-001-main-vision'
 $vpId = 'VP-001-example-intent'
-$workspace = Join-Path $target 'docs\workspace-001-main-vision'
+$workspace = Join-Path $target 'docs\workspaces\workspace-001-main-vision'
 $root = Join-Path $workspace $rootId
 $template = Join-Path $target 'docs\templates\goal-folder'
 
@@ -146,7 +146,7 @@ Copy-Item (Join-Path $target 'docs\templates\workspace-context.md') (Join-Path $
 |------|------|
 | `id` | 工作区稳定 id |
 | `root_goal` | = Root 完整 id，且 Root `parent: null` |
-| `canonical_scope` | 如 `docs/workspace-001-main-vision/` |
+| `canonical_scope` | 如 `docs/workspaces/workspace-001-main-vision/` |
 | `shared_materials_catalog` | 路径或 `none` |
 | `vision_role` | `primary` \| `delivery` |
 | `plan_refs` | **必填**；至少一个 VP id |

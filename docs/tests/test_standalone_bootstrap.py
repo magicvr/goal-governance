@@ -16,7 +16,7 @@ VP_ID = "VP-001-example-intent"
 VISION_ID = "vision-example-project"
 VISION_VERSION = "0.1.0"
 WORKSPACE_ID = "standalone-workspace"
-CANONICAL_SCOPE = "docs/workspace-001-main-vision/"
+CANONICAL_SCOPE = "docs/workspaces/workspace-001-main-vision/"
 
 
 class StandaloneBootstrapTests(unittest.TestCase):
@@ -39,7 +39,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
             "P-005",
             "P-006",
             "信息需求表",
-            "docs/workspace-001-main-vision",
+            "docs/workspaces/workspace-001-main-vision",
             "workspace-context.md",
             "plan_refs",
             "primary_plan",
@@ -237,7 +237,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
 
     @classmethod
     def _materialize_root(cls, target: Path) -> None:
-        workspace = target / "docs" / "workspace-001-main-vision"
+        workspace = target / "docs" / "workspaces" / "workspace-001-main-vision"
         root = workspace / ROOT_ID
         workspace.mkdir(parents=True, exist_ok=True)
         root.mkdir()
@@ -323,7 +323,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
 
     @classmethod
     def _materialize_workspace(cls, target: Path) -> None:
-        workspace = target / "docs" / "workspace-001-main-vision"
+        workspace = target / "docs" / "workspaces" / "workspace-001-main-vision"
         (workspace / "workspace.md").write_text(
             cls._frontmatter(
                 {
@@ -374,7 +374,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         self.assertEqual(vp["vision_ref"], f"{VISION_ID}@{VISION_VERSION}")
 
     def _assert_root_shape(self, target: Path) -> None:
-        workspace = target / "docs" / "workspace-001-main-vision"
+        workspace = target / "docs" / "workspaces" / "workspace-001-main-vision"
         root = workspace / ROOT_ID
         required = ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md")
         self.assertTrue(root.is_dir())
@@ -411,7 +411,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         self.assertIn("| active | — |", tree)
 
     def _assert_workspace_shape(self, target: Path) -> None:
-        workspace = target / "docs" / "workspace-001-main-vision"
+        workspace = target / "docs" / "workspaces" / "workspace-001-main-vision"
         context = workspace / "workspace.md"
         self.assertTrue(context.is_file())
         fields = self._parse_frontmatter(context)

@@ -10,7 +10,7 @@ import os
 # Internal layout version of the MCP channel package. Stable across releases:
 # it identifies the channel protocol/layout generation, NOT the product
 # release version (A-012 F-002). Effective server version below.
-MCP_LAYOUT_VERSION = "0.1.0"
+MCP_LAYOUT_VERSION = "0.2.0"
 
 # Release pin env var: the publish workflow (skills-pack-release.yml) passes
 # the pack/tag version to the Docker build as GOAL_GOVERNANCE_MCP_VERSION, so

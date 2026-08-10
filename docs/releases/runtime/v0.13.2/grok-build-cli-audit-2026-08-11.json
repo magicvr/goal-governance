@@ -1,0 +1,121 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-08-10T16:20:32.906054Z",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "1.0.0 (3cd0d0cbce)",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": ".grok/skills/audit/SKILL.md",
+      "sha256": "6aae06a6d105391b815ee2223fae548a4df90cf1ac0902dd97debf852e46e415"
+    },
+    {
+      "path": "skills/install/grok/skills/audit/SKILL.md",
+      "sha256": "e9e19461799788f19873fec81a962f4c5146ca016d8fc3a3cfdbdc212794d529"
+    },
+    {
+      "path": "skills/prompts/05-independent-audit.md",
+      "sha256": "7ae328dbcf3c7a06b28481d6470bc7f331277cf0c8eca93d971a09beb8e89f40"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "95c5611a6a6ab7c1b9e981c2d7f5e5bbdefad9b2ff4741afa9da472383ae2178"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "grok",
+      "--prompt-file",
+      "docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency/attachments/runtime/prompts/grok-audit.txt",
+      "--model",
+      "grok-4.5",
+      "--output-format",
+      "plain",
+      "--permission-mode",
+      "dontAsk",
+      "--disallowed-tools",
+      "Edit,Write,NotebookEdit",
+      "--max-turns",
+      "10",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 240.0,
+    "inputSha256": "67fe850d1babad056be374ed4c9890b6bc1813405cbbc0430773b5f9298ab158",
+    "inputSummary": "Read-only /audit dispatch probe requiring marker GROK_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "GROK_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "GROK_AUDIT_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "GROK_AUDIT_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.2/grok-build-cli-audit-2026-08-11.d/stdout.txt",
+    "stdoutSha256": "cac6a4a034bc64fdc4035dc2c7944537ba55cedfe199aa0f9bb08dace8429d0d",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/releases/runtime/v0.13.2/grok-build-cli-audit-2026-08-11.d/stderr.txt",
+    "stderrSha256": "16abab8dfda6fec81ff6ae31d140b55e5770ee8f6f23a3208e7b0e5340b55a0d",
+    "stderrMode": "request-url-redacted",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

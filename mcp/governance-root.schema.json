@@ -9,7 +9,7 @@
     "governance_root": {
       "type": "string",
       "minLength": 1,
-      "description": "Repo-relative governance root (default: docs). Absolute paths and '..' escapes fail closed; internal layout (vision/, workspace-*, goal-tree, five-piece shape) is not configurable.",
+      "description": "Repo-relative governance root (default: docs). Absolute paths and '..' escapes fail closed; internal layout (vision/, workspaces/workspace-*, goal-tree, five-piece shape) is not configurable.",
       "pattern": "^(?!.*(?:^|/)\\.\\.(?:/|$))[^/\\\\][^\\\\]*$"
     }
   }

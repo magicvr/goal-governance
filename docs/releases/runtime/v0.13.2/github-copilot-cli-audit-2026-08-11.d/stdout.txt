@@ -1,0 +1,327 @@
+I'll perform a read-only independent cross-audit of GOAL-008. Let me first locate and read the
+governance sources.
+
+● Read AGENTS.md
+  └ 1 line read
+
+/ Search (glob)
+  │ "**/*.md" in docs/workspaces/workspace-001-goal-governance
+  └ 129 files found
+
+/ Search (glob)
+  │ "**/GOAL-008*/**"
+  └ 8 files found
+
+Now let me read the GOAL-008 records and the governance sources in parallel.
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ 1 line read
+
+● Read 02-execution.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\02-execution.md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\00-meta.md
+  └ 103 lines read
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ 1 line read
+
+Let me read the GOAL-008 records in chunks and the other governance sources.
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ 1 line read
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ 108 lines read
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ L1:120 (120 lines read)
+
+Now let me read the goal-tree, copilot instructions, and the remaining GOAL-008 records in chunks.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ L1:150 (149 lines read)
+
+● Read 02-execution.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\02-execution.md
+  └ L1:130 (130 lines read)
+
+Let me continue reading the GOAL-008 records and other sources.
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L1:200 (200 lines read)
+
+● Read 02-execution.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\02-execution.md
+  └ L130:300 (64 lines read)
+
+Let me read the rest of the audit file, the workspace.md, and the copilot instructions.
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L200:400 (201 lines read)
+
+● Read workspace.md
+  │ docs\workspaces\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+Let me continue reading the audit file, the decision file, and check goal-tree entries for GOAL-008.
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L400:700 (243 lines read)
+
+/ Search (grep)
+  │ "GOAL-008"
+  └ 2 lines found
+
+Let me read the remaining audit entries, check the runtime evidence attachments, and the copilot
+instructions.
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L643:717 (74 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:60 (60 lines read)
+
+● List directory docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-rel…
+  └ 10 files found
+
+Let me check the runtime evidence directory and current contract/matrix state to verify the
+"unreleased candidate" claim.
+
+● List directory docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-rel…
+  └ 119 files found
+
+/ Search (grep)
+  │ "candidateRevision|pending-runtime-validation|runtime-verified|automated-verified|unreleased|git
+  │ hub-copilot-cli"
+  └ 28 lines found
+
+Let me read the compatibility matrix, the v0.7.0 release-candidate evidence, and the full copilot
+instructions.
+
+● Read skills-consumer-compatibility-matrix.json
+  │ docs\contracts\skills-consumer-compatibility-matrix.json
+  └ 212 lines read
+
+● Read release-candidate-v0.7.0-2026-07-20.json
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\attachments\runtime\release-candidate-v0.7.0-2026-07-20.json
+  └ 28 lines read
+
+Let me read the remaining decision entries, execution file tail, and the goal-tree context around
+GOAL-008.
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ L120:260 (141 lines read)
+
+● Read 02-execution.md
+  └ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+    cy\02-execution.md
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ L495:540 (46 lines read)
+
+Let me verify the root AGENTS.md and confirm the key evidence files exist.
+
+/ Search (glob)
+  │ "AGENTS.md"
+  └ 2 files found
+
+/ Search (glob)
+  │ "docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consiste
+  │ ncy/attachments/runtime/{copilot-cli-govern-2026-07-20,copilot-cli-audit-2026-07-20,web-parser-c
+  │ i-replay-2026-07-20}.json"
+  └ 3 files found
+
+Let me verify the root AGENTS.md version and read the Copilot CLI audit evidence to confirm the
+replay binding.
+
+● Read AGENTS.md
+  └ L1:40 (40 lines read)
+
+● Read copilot-cli-audit-2026-07-20.json
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\attachments\runtime\copilot-cli-audit-2026-07-20.json
+  └ 70 lines read
+
+Let me verify the remaining evidence files and the annotated tag via read-only checks.
+
+● Read web-parser-ci-replay-2026-07-20.json
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\attachments\runtime\web-parser-ci-replay-2026-07-20.json
+  └ 39 lines read
+
+● Verify annotated tag v0.7.0 read-only (shell)
+  │ git --no-pager tag -n1 v0.7.0; git --no-pager rev-parse v0.7.0^{} ; git --no-pager rev-parse
+  │ 8a33ecd21d9183a680c9c0d63e471469f5e515a8 2>$null; git --no-pager for-each-ref refs/tags/v0.7.0
+  │ --format='%(objecttype) %(objectname) %(contents:subject)'
+  └ 6 lines…
+
+The v0.7.0 tag isn't present in the current local checkout. Let me check which tags exist.
+
+● List tags and HEAD state read-only (shell)
+  │ git --no-pager tag --list | Select-Object -Last 20; Write-Output '---HEAD---'; git --no-pager
+  │ log --oneline -3; Write-Output '---tag objects---'; git --no-pager for-each-ref refs/tags/
+  │ --format='%(refname:short) %(objecttype)' | Select-Object -Last 15
+  └ 18 lines…
+
+Let me check whether the v0.7.0 candidate commit is present in the repo history.
+
+● Check v0.7.0 candidate commit presence read-only (shell)
+  │ git --no-pager cat-file -t 8a33ecd21d9183a680c9c0d63e471469f5e515a8 2>&1; git --no-pager
+  │ merge-base --is-ancestor 8a33ecd21d9183a680c9c0d63e471469f5e515a8 HEAD 2>&1; Write-Output
+  │ "ancestor-exit=$LASTEXITCODE"; git --no-pager log --all --oneline --decorate | Select-String
+  │ 'v0.7.0' | Select-Object -First 5
+  └ 3 lines…
+
+Let me verify the v0.7.0 tag on the remote (read-only) and confirm the max A-NNN entry.
+
+/ Search (grep)
+  │ "^## A-0"
+  └ 17 lines found
+
+● Check remote tags for v0.7.0 read-only (shell)
+  │ git --no-pager ls-remote --tags origin 2>&1 | Select-String 'v0.7.0|v0.6' | Select-Object -First
+  │ 5; Write-Output "---local count---"; (git --no-pager tag --list 'v0.7*').Count
+  └ 3 lines…
+
+Let me confirm the full remote tag list to check the v0.7.0 binding claim.
+
+● List all remote tags read-only (shell)
+  │ git --no-pager ls-remote --tags origin 2>&1 | Select-Object -Last 25
+  └ 13 lines…
+
+Let me view the close-out sections of 00-meta and 03-audit (A-016/A-017) precisely for the audit
+report.
+
+● Read 00-meta.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\00-meta.md
+  └ 103 lines read
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L1:120 (120 lines read)
+
+Let me do a final read-only verification of the key runtime evidence fields before delivering the
+verdict.
+
+● Verify release candidate JSON fields read-only (shell)
+  │ $root = "docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-releas
+  │ e-consistency\attachments\runtime"; $f = "$root\release-candidate-v0.7.0-2026-07-20.json"; $j
+  │ = Get-Content $f -Raw | ConvertFrom-Json; Write-Output ("tagObject={0}" -f $j.tagObject);
+  │ Write-Output ("commit={0}" -f $j.commit); Write-Output ("coverageStatus={0}" -f
+  │ $j.coverageStatus); Write-Output ("uncoveredCount={0}" -f $j.uncovered.Count); Write-Output …
+  └ 8 lines…
+
+● Verify CLI evidence JSON key fields read-only (shell)
+  │ $root = "docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-releas
+  │ e-consistency\attachments\runtime"; Get-ChildItem $root -Filter *.json | ForEach-Object { $j =
+  │ Get-Content $_.FullName -Raw | ConvertFrom-Json; Write-Output ("=== {0} ===" -f $_.Name);
+  │ Write-Output ("  cliVersion={0} exit={1} verdict={2} marker={3} cwdClean={4}" -f
+  │ $j.cliVersion, $j.exitCode, $j.verdict, ($j.stdout -match 'COPILOT_CLI_AUDIT_DISPATCH_OK'), …
+  └ 122 lines…
+
+My field names were wrong. Let me inspect the actual structure of the two Copilot CLI JSON files and
+ the web CI replay JSON.
+
+● Dump top-level keys of CLI and CI JSON evidence (shell)
+  │ $root = "docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-releas
+  │ e-consistency\attachments\runtime"; foreach ($n in @('copilot-cli-audit-2026-07-20.json','copi
+  │ lot-cli-govern-2026-07-20.json','web-parser-ci-replay-2026-07-20.json')) { Write-Output ("===
+  │ {0} ===" -f $n); $j = Get-Content "$root\$n" -Raw | ConvertFrom-Json; $j | Get-Member
+  │ -MemberType NoteProperty | ForEach-Object { $v = $j.($_.Name); if ($v -is [string] -and …
+  └ 41 lines…
+
+Independent Cross-Audit Replay · GOAL-008 (GitHub Copilot CLI 1.0.71)
+
+Source: independent — replay via GitHub Copilot CLI (environment 1.0.71, Windows, model=not
+recorded; behavior sources bound via SHA-256).
+Scope: GOAL-008 close-out at done / 100% (workspace-001-goal-governance, archived). Judgment
+strictly on GOAL-008's own records per the dispatch constraint.
+Verdict: pass — no open required findings; closure on own records confirmed.
+
+Evidence identified (verifiable in-repo)
+
+┌─────────────┬─────────────────────────────────────────────────────────────┬──────────────────┐
+│ Gate        │ Evidence                                                    │ Check            │
+├─────────────┼─────────────────────────────────────────────────────────────┼──────────────────┤
+│ I-001       │ docs/contracts/, skills/contracts/; contract tests 29+3     │ ✅ verified      │
+│             │ passed (D-002)                                              │                  │
+├─────────────┼─────────────────────────────────────────────────────────────┼──────────────────┤
+│ I-002       │ attachments/runtime/copilot-cli-audit-2026-07-20.json +     │ ✅               │
+│ Copilot     │ copilot-cli-govern-2026-07-20.json: exit 0, verdict: pass,  │ runtime-verified │
+│ cells       │ markers COPILOT_CLI_AUDIT_DISPATCH_OK / _GOVERN_ observed,  │                  │
+│             │ no VS Code, no screenshots                                  │                  │
+├─────────────┼─────────────────────────────────────────────────────────────┼──────────────────┤
+│ I-002 Web   │ web-parser-ci-replay-2026-07-20.json: runId 29700051047,    │ ✅ verified      │
+│ cell        │ status: pass, headSha = candidate commit, both artifacts    │                  │
+│             │ ready, candidateRevision: v0.7.0                            │                  │
+├─────────────┼─────────────────────────────────────────────────────────────┼──────────────────┤
+│ I-003       │ release-candidate-v0.7.0-2026-07-20.json: tagObject         │ ✅ verified      │
+│             │ bf7fc860…, commit 8a33ecd2…, uncovered 0, 5/5 checks True   │                  │
+├─────────────┼─────────────────────────────────────────────────────────────┼──────────────────┤
+│ Commit      │ git cat-file -t 8a33ecd… → commit; ancestor of HEAD         │ ✅ verifiable    │
+│ identity    │                                                             │                  │
+├─────────────┼─────────────────────────────────────────────────────────────┼──────────────────┤
+│ F-005       │ GOAL-001 A-013 response; A-016 records "ready for root      │ ✅ responded     │
+│             │ response"                                                   │                  │
+├─────────────┼─────────────────────────────────────────────────────────────┼──────────────────┤
+│ Ledger      │ goal-tree (done/100%), 00-meta final ledger, A-016          │ ✅ consistent    │
+│ consistency │ close-out pass — mutually consistent; A-014 conditional     │                  │
+│             │ (independent) later closed by A-016                         │                  │
+└─────────────┴─────────────────────────────────────────────────────────────┴──────────────────┘
+
+Open required findings: 0. No accepted residual risk recorded; nothing blocks the historical
+close-out.
+
+Recommended / informational observations (non-blocking)
+
+ - R-1 — Tag refs/tags/v0.7.0 is not present in the current local checkout nor on origin (remote
+only exposes v0.10.0+). Only the tagObject SHA is preserved in the evidence JSON. Commit identity
+remains verifiable; if the v0.7.0 tag needs future re-verification, provenance should be retained.
+Historical candidate/rehearsal — not a blocker.
+ - R-2 — Current matrix (candidateRevision: v0.13.1) and root AGENTS.md (v0.14.0) are later-era
+state; GOAL-008 records explicitly mark v0.7.0 as historical (D-011, A-017). Expected, no conflict
+within scope.
+ - R-3 — behaviorSources reference pre-migration docs/goals/GOAL-008-… paths (capture-time layout);
+self-consistent schema record.
+
+Closure verdict
+
+GOAL-008 is closed at done / 100% on its own records. All required findings (I-001/I-002/I-003,
+A-014 Web gap, A-015 release-identity gap, upstream F-005) are closed by evidence. Verdict: pass.
+
+COPILOT_CLI_AUDIT_DISPATCH_OK

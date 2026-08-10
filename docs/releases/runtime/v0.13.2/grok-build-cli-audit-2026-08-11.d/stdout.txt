@@ -1,0 +1,13 @@
+I'll load the installed audit skill and read the minimum repo sources for this read-only dispatch probe—no file writes, no subagents, no questions.## GROK_AUDIT_DISPATCH_OK
+
+Read-only dispatch probe complete. No files modified, no audit appended, no subagents, no questions.
+
+| # | Item | Value |
+|---|------|--------|
+| 1 | Marker | `GROK_AUDIT_DISPATCH_OK` |
+| 2 | Loaded skill | **title:** `audit · 独立交叉审计（Grok Build skill）` · **path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md` |
+| 3 | Independent-audit prompt | Named by skill as `<SKILLS_PKG>/prompts/05-independent-audit.md` · resolved: `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\05-independent-audit.md` |
+| 4a | Source / status semantics | **`source` must be `independent`**. Default: write audit opinion only (`03-audit` index + `03-audit/A-NNN-*.md`). **Do not** change goal `status` / checkpoints / derived `progress` / plan body / goal-tree status. Findings use severity classes **`required` \| `recommended`**; verdict is **`pass` \| `conditional` \| `fail`**. |
+| 4b | One current required evidence gap (GOAL-008) | Historical close-out is `done` on `v0.7.0`, but post–GOAL-010 the **current** candidate is `candidateRevision: unreleased`: Claude / Grok / Copilot **`/govern` + `/audit` (six cells) are `pending-runtime-validation`** with prior runtime evidence cleared. **Fresh per-entrypoint host runtime evidence** (after re-sync of installed host surfaces) is still required before that unreleased candidate may be treated as runtime-verified or release-ready. |
+
+**Reads performed:** `.grok/skills/audit/SKILL.md`, `skills/prompts/05-independent-audit.md`, `GOAL-008-…/00-meta.md` (plus path discovery for the goal folder / prompt).

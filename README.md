@@ -12,7 +12,7 @@
 
 | 想了解… | 去读 |
 |---------|------|
-| 当前工作区目标与进展 | [docs/workspace-001-goal-governance/goal-tree.md](docs/workspace-001-goal-governance/goal-tree.md) |
+| 当前工作区目标与进展 | [docs/workspaces/workspace-001-goal-governance/goal-tree.md](docs/workspaces/workspace-001-goal-governance/goal-tree.md) |
 | 仓库愿景 / 投资面 | [docs/vision/charter.md](docs/vision/charter.md) |
 | 文档怎么写、规则是什么 | [docs/README.md](docs/README.md) |
 | 核心模板怎么用 | [docs/templates/README.md](docs/templates/README.md) |
@@ -20,7 +20,7 @@
 | Skills 如何安装 / 升级 | [skills/README.md](skills/README.md)（**双入口**：在线 bootstrap 或包内 `install.*`；安装后用 `update.*`；skills zip **内嵌** core） |
 | Skills 如何打包 / 发布附件 | [docs/releases/README.md](docs/releases/README.md)、`scripts/pack_skills_release.py`、`scripts/pack_core_release.py` |
 | 技术栈与架构 | [docs/architecture/overview.md](docs/architecture/overview.md) |
-| 冻结 Web 退役决策与执行 | [workspace-002 GOAL-004](docs/workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/00-meta.md) |
+| 冻结 Web 退役决策与执行 | [workspace-002 GOAL-004](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-004-frozen-web-asset-retirement/00-meta.md) |
 
 ## 在其他项目中安装 Skills（双入口）
 
@@ -31,28 +31,28 @@
 ### 入口 1 · 在线 / 本地 bootstrap（推荐）
 
 从 **GitHub Release 固定 tag** 拉取 bootstrap 脚本（无需浏览器另存），脚本再下载**已内嵌 core 的 skills zip**、校验 SHA-256，并调用包内 install（等价 `-All`）。  
-**当前示例 pin 最新正式 tag `v0.13.1`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
+**当前发布候选 pin `v0.13.2`**（发布后即为最新正式 tag；发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
 
 ```powershell
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.1/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.2/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.1 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.2 -Force
 
 # 离线：已有 skills zip + .sha256 时（脚本同样可从同 tag Release 拉取）
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.13.1 -ZipPath .\goal-governance-skills-v0.13.1.zip -Force
+  -Version 0.13.2 -ZipPath .\goal-governance-skills-v0.13.2.zip -Force
 ```
 
 ```bash
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.13.1/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.13.2/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.13.1 --force
+bash ./install-online.sh --version 0.13.2 --force
 
 # 离线：
-bash ./install-online.sh --version 0.13.1 --zip-path ./goal-governance-skills-v0.13.1.zip --force
+bash ./install-online.sh --version 0.13.2 --zip-path ./goal-governance-skills-v0.13.2.zip --force
 ```
 
 说明见 [scripts/bootstrap/README.md](scripts/bootstrap/README.md)。默认**不**推荐 `curl | bash` / `irm | iex` 管道直跑（先落盘再执行，便于审阅）。
@@ -63,8 +63,8 @@ MCP 通道（[VP-004](docs/vision/plans/VP-004-mcp-file-dual-channel-delivery.md
 
 ```bash
 # 拉取并验证（stdio 直连；将 <仓库根> 换为消费仓绝对路径）
-docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.1
-docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.1
+docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.2
+docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.2
 ```
 
 **MCP client 配置**（mcpServers；固定入口 `python server.py --repo-root /workspace`，客户端零参数）：
@@ -73,12 +73,12 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 {
   "goal-governance": {
     "command": "docker",
-    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.1"]
+    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.2"]
   }
 }
 ```
 
-> 当前示例 pin 最新正式 tag `v0.13.1`（发新版时同步改本节）；本地 stdio 进程形态仍合法（不强制 Docker-only）：`python mcp/server.py [--repo-root PATH]`。完整说明见 [`mcp/README.md`](mcp/README.md)。
+> 当前发布候选 pin `v0.13.2`（发布后即为最新正式 tag；发新版时同步改本节）；本地 stdio 进程形态仍合法（不强制 Docker-only）：`python mcp/server.py [--repo-root PATH]`。完整说明见 [`mcp/README.md`](mcp/README.md)。
 
 ### 入口 2 · 包内 install（解压后离线）
 
@@ -141,14 +141,14 @@ goal-governance/
 └── .gitignore
 ```
 
-- **核心文档层**：`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 定义方法论、协议、模板和消费适配器兼容契约；每个 `docs/workspace-<NNN>-<slug>/` 保存自身目标实例。
+- **核心文档层**：`docs/README.md`、`docs/architecture/`、`docs/templates/` 与 `docs/contracts/` 定义方法论、协议、模板和消费适配器兼容契约；每个 `docs/workspaces/workspace-<NNN>-<slug>/` 保存自身目标实例。
 - **`skills/`**：**现行主消费适配器**——AI/Agent 编排、审计、愿景入口、宿主安装与离线分发。
-- **Web**：冻结参考实现已由 workspace-002 GOAL-004 物理退役；历史目标与审计证据仍保留在 `docs/workspace-001-goal-governance/`，未来 UI 不从旧资产自动恢复。
+- **Web**：冻结参考实现已由 workspace-002 GOAL-004 物理退役；历史目标与审计证据仍保留在 `docs/workspaces/workspace-001-goal-governance/`，未来 UI 不从旧资产自动恢复。
 - **一个真相源**：Skills（及任何未来 UI）消费同一工作区文档协议，不建立独立状态。
 
 ## 目标模型（摘要）
 
-1. 目标全部平铺在各自 `docs/workspace-<NNN>-<slug>/` 根，不用嵌套文件夹表示层级。
+1. 目标全部平铺在各自 `docs/workspaces/workspace-<NNN>-<slug>/` 根，不用嵌套文件夹表示层级。
 2. 每个工作区的 `GOAL-001` 为总目标（Root Goal）；其后在工作区内顺序编号。
 3. 层级写在每个目标 `00-meta.md` 的 `parent` 字段。
 4. 树状与状态总览维护在当前工作区的 `goal-tree.md`。

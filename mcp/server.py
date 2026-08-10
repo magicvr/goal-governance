@@ -380,6 +380,13 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # MCP stdio is a UTF-8 JSON-RPC transport regardless of the host locale.
+    # Windows otherwise inherits a legacy console code page for redirected
+    # pipes, corrupting non-ASCII tool descriptions before clients decode them.
+    if hasattr(sys.stdin, "reconfigure"):
+        sys.stdin.reconfigure(encoding="utf-8", errors="strict")
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="strict")
     args = build_parser().parse_args(argv)
     return MCPServer(repo_root=args.repo_root).serve()
 

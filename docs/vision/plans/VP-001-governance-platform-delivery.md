@@ -33,7 +33,7 @@ version: 0.3.0
 
 | date | outcome | summary | evidence_links | residuals |
 |------|---------|---------|----------------|-----------|
-| 2026-07-31 | **closed · bounded** | 意图 1 奠基有界完成：协议 + Skills 可用；Web 冻结参考；workspace-001 Root 有界 done。演进 → VP-002；人类 UI 产品波 → VP-003。 | [GOAL-001 D-028 / A-021](../../workspace-001-goal-governance/GOAL-001-main-vision/01-decision.md)；goal-tree 全子目标 done；Charter 0.2.0；D-027 Web 冻结；VRev-005/006 | **R-009-X** → VP-003；**F-006** recommended → VP-002；H-WEB-01 / H-EVOL-01 仍为 Charter 假设；可选 V-F-009/010 |
+| 2026-07-31 | **closed · bounded** | 意图 1 奠基有界完成：协议 + Skills 可用；Web 冻结参考；workspace-001 Root 有界 done。演进 → VP-002；人类 UI 产品波 → VP-003。 | [GOAL-001 D-028 / A-021](../../workspaces/workspace-001-goal-governance/GOAL-001-main-vision/01-decision.md)；goal-tree 全子目标 done；Charter 0.2.0；D-027 Web 冻结；VRev-005/006 | **R-009-X** → VP-003；**F-006** recommended → VP-002；H-WEB-01 / H-EVOL-01 仍为 Charter 假设；可选 V-F-009/010 |
 
 ## 规划修订短史
 

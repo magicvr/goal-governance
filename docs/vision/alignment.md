@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-08-06
-version: 0.7.0
+updated: 2026-08-10
+version: 0.8.0
 parent: null
 ---
 
@@ -15,7 +15,7 @@ parent: null
 
 ## 0. 不变量与完整安装
 
-> **治理根（`governance_root`）**：本文件及权威面（AGENTS/architecture/templates）中所有 `docs/…` 路径叙述**均相对治理根**，默认 **`docs`**。消费仓可通过可提交项目配置 **`.goal-governance.json`** 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspace-*`、`goal-tree.md`、目标五件套形状、`contracts/` 等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
+> **治理根（`governance_root`）**：本文件及权威面（AGENTS/architecture/templates）中所有 `docs/…` 路径叙述**均相对治理根**，默认 **`docs`**。消费仓可通过可提交项目配置 **`.goal-governance.json`** 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspaces/workspace-*`、`goal-tree.md`、目标五件套形状、`contracts/` 等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**。旧直属 `{governance_root}/workspace-*/` 只触发迁移阻断；新旧并存 fail closed。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
 
 ### 0.1 单愿景制
 
@@ -56,7 +56,7 @@ parent: null
 | 愿景树 | `{governance_root}/vision/workspaces.md` | **MUST** | 工作区贡献图（可极简） |
 | 愿景树 | `{governance_root}/vision/consumer-checklist.md` | **MUST** | 与本表一致的操作勾选 |
 | 意图 | 至少一个 `{governance_root}/vision/plans/VP-*.md` | **MUST**（开区前） | `vision_ref` 精确匹配 Charter |
-| 工作区 | 显式 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` | **MUST**（开区后） | 含必填 `plan_refs` / `primary_plan` |
+| 工作区 | 显式 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` | **MUST**（开区后） | 含必填 `plan_refs` / `primary_plan` |
 | 目标 | 工作区根 `goal-tree.md` + Root 五件套 | **MUST**（开区后） | Root `parent: null` |
 | 方法论（可选扩展） | `{governance_root}/architecture/overview.md`、`directory-layout.md` 等 | Recommended | 增强可读性，不替代 MUST |
 | 实例 dogfood | 他仓过程树、本仓历史 GOAL 附件 | 勿复制 | 不是完整安装条件 |

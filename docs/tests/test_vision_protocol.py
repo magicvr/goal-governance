@@ -265,12 +265,14 @@ class VisionProtocolTests(unittest.TestCase):
         workspace = (
             REPO_ROOT
             / "docs"
+            / "workspaces"
             / "workspace-001-goal-governance"
             / "workspace.md"
         )
         root_meta = (
             REPO_ROOT
             / "docs"
+            / "workspaces"
             / "workspace-001-goal-governance"
             / "GOAL-001-main-vision"
             / "00-meta.md"

@@ -2,9 +2,9 @@
 title: 提示词 · 独立交叉审计
 status: active
 created: 2026-07-18
-updated: 2026-08-04
+updated: 2026-08-10
 parent: null
-version: 0.5.0
+version: 0.6.0
 role: independent-audit
 ---
 
@@ -46,7 +46,7 @@ role: independent-audit
 # 用户输入（缺项先问清）
 
 - 目标 ID / 路径：
-- 工作区上下文（若存在）：【当前 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；只有 legacy `{governance_root}/goals/` 时才写“隐式单工作区”】
+- 工作区上下文（若存在）：【当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 的 id / root_goal；只有 legacy `{governance_root}/goals/` 时才写“隐式单工作区”】
 - scope：【如：阶段 A；目标定义；F-008/F-010 关闭复审；方案与计划】
 - audit_type：goal-definition | design-plan | execution-facts | close-out | ad-hoc | finding-closure
 - 关注的成功标准或 finding（可选）：
@@ -57,7 +57,7 @@ role: independent-audit
 
 # 步骤
 
-1. **只读**扫描：先读当前 `{governance_root}/workspace-<NNN>-<slug>/workspace.md` 与 `goal-tree.md`，核对 workspace Root Goal/canonical 范围；再定位目标并通读其 meta、三个索引 + ledger 目录与 legacy inline；按 scope 打开 principles / AGENTS / workspace protocol / 代码或附件等**相关**文件。没有显式工作区根时只审 legacy 隐式单工作区；不得读取或比较其他工作区内容。
+1. **只读**扫描：先读当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 与 `goal-tree.md`，核对 Root Goal/canonical 范围；同时检测旧直属显式布局与新旧混合布局并作为阻断缺口。再定位目标并通读 meta、三个索引 + ledger 目录与 legacy inline；按 scope 打开相关 principles / AGENTS / workspace protocol / 代码或附件。两类显式布局都不存在时才审 legacy 隐式单工作区；不得读取或比较其他工作区内容。
 2. 新编号 = `03-audit.md` 索引、`03-audit/A-*` 与 legacy inline 中最大 A-NNN + 1。
 3. 按 scope 逐项核对；若涉及 P-005，核对 I-00N 的 `required`/`non-blocking`、最晚需要阶段、状态、延期复核、证据、残余风险接受与受影响门禁；若涉及共享资料，核对 `workspace_id`、`material_id`、`source`、`version` 和有效 `sha256`。工作区绑定或资料引用不合格时，作为可证实的范围缺口；每条 finding 必须有证据路径。
 4. 创建 `03-audit/A-NNN-<slug>.md`，并在 `03-audit.md` 索引新增链接：

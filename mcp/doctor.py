@@ -8,7 +8,12 @@ from typing import Any
 
 try:  # package context
     from . import MCP_LAYOUT_VERSION, __version__ as server_version
-    from .config import GovernanceRootError, resolve_governance_root
+    from .config import (
+        GovernanceRootError,
+        governance_root_dir,
+        resolve_governance_root,
+        workspace_layout_report,
+    )
     from .lifecycle import (
         INSTALL_JSON,
         MANAGED_BEGIN,
@@ -24,7 +29,9 @@ except ImportError:  # plain script / top-level module context
     )
     from config import (  # type: ignore[no-redef]
         GovernanceRootError,
+        governance_root_dir,
         resolve_governance_root,
+        workspace_layout_report,
     )
     from lifecycle import (  # type: ignore[no-redef]
         INSTALL_JSON,
@@ -99,6 +106,20 @@ def doctor(root: Path, *, governance_root: str | None = None) -> dict[str, Any]:
     if managed_version is None and state_version is None:
         issues.append("not installed (no managed section and no thin-shell state)")
 
+    layout = workspace_layout_report(
+        governance_root_dir(root, {"governance_root": governance_root})
+    )
+    if layout["state"] == "legacy":
+        issues.append(
+            "legacy workspace layout detected; migrate to "
+            f"{governance_root}/workspaces/workspace-* before governance writes"
+        )
+    elif layout["state"] == "mixed":
+        issues.append(
+            "mixed workspace layouts detected; canonical and legacy roots "
+            "must not be read together"
+        )
+
     return {
         "ok": not issues,
         # F-002 (A-012): report the effective server version separately from
@@ -110,6 +131,7 @@ def doctor(root: Path, *, governance_root: str | None = None) -> dict[str, Any]:
         },
         "governanceRoot": governance_root,
         "governanceRootError": root_error,
+        "workspaceLayout": layout,
         "managedSection": {
             "present": has_begin and has_end,
             "version": managed_version,
