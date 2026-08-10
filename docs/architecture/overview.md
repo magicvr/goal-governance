@@ -2,9 +2,9 @@
 title: 架构概览
 status: active
 created: 2026-07-18
-updated: 2026-08-06
+updated: 2026-08-10
 parent: null
-version: 0.9.0
+version: 0.10.0
 ---
 
 # 架构概览
@@ -39,9 +39,9 @@ version: 0.9.0
              └────────────┬─────────────┘
                           ▼
              ┌──────────────────────────┐
-             │ workspace-<NNN>-slug/     │  ← 运行时目标真相源
-             │ workspace.md + goal-tree │
-             │ + 平铺 GOAL-* 五件套      │
+             │ workspaces/               │  ← 工作区统一父容器
+             │ └─ workspace-<NNN>-slug/  │  ← 运行时目标真相源
+             │    workspace.md + goal-tree + 平铺 GOAL-* │
              └──────────────────────────┘
 ```
 
@@ -51,8 +51,8 @@ version: 0.9.0
 
 | 路径 | 职责 |
 |------|------|
-| `{governance_root}/workspace-<NNN>-<slug>/` | 当前工作区的目标与过程记录（扁平） |
-| `{governance_root}/workspace-<NNN>-<slug>/workspace.md` | 显式工作区绑定与共享资料固定引用；不保存目标状态 |
+| `{governance_root}/workspaces/workspace-<NNN>-<slug>/` | 当前工作区的目标与过程记录（扁平） |
+| `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` | 显式工作区绑定与共享资料固定引用；不保存目标状态 |
 | `{governance_root}/vision/` | Charter、VP、对齐契约；非 goal-tree |
 | `{governance_root}/shared-materials/` | 工作区外的共享资料候选库存；不保存目标状态 |
 | `{governance_root}/templates/` | 核心 canonical 文档模板 |
@@ -64,7 +64,8 @@ version: 0.9.0
 
 ## 当前阶段（现时）
 
-- **真相源**：显式工作区 `{governance_root}/workspace-001-goal-governance/`（GOAL-011 已完成自 `{governance_root}/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
+- **真相源**：显式工作区 `{governance_root}/workspaces/workspace-001-goal-governance/`（GOAL-011 已完成自 `{governance_root}/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
+- **迁移边界**：旧直属 `{governance_root}/workspace-*/` 只用于检测与迁移引导；新旧显式布局并存时 fail closed，不双读。
 - **原则**：[principles.md](principles.md) P-001～**P-006**（含 finding 三路径闭合、P-004.1～4.4、单愿景级联）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
 - **愿景**：[charter.md](../vision/charter.md) **`vision-goal-governance@0.2.0`**。组合编排：VP-001 **closed**（奠基）· VP-002 **active**（反馈演进，workspace-002）· VP-003 **planned + 正式挂起**（人类 UI）。
 - **Skills**：现行主消费适配器；演进挂 **VP-002**（真实项目反馈）。

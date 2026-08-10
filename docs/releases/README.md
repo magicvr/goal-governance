@@ -26,7 +26,7 @@
 | Bootstrap 说明 | `bootstrap-README.md` | 与 `scripts/bootstrap/README.md` 同源摘要 |
 | 证据 | `release-evidence.json`（及可选 `compatibility-report.json`） | 与该 tag 绑定的发行证据 |
 
-**排除**：`docs/workspace-*` 过程树、`web/`、`artifacts/`、`__pycache__` / `*.pyc` 等缓存、`tech-stack.md`。
+**排除**：`docs/workspaces/workspace-*` 过程树、`web/`、`artifacts/`、`__pycache__` / `*.pyc` 等缓存、`tech-stack.md`。
 
 **双安装入口**（消费方）：
 
@@ -35,7 +35,7 @@
 
 默认 skills 路径**不**要求联网拉取 core；core-only 与 skills 内嵌 core 在同 version 下应字节一致（pack 单测）。
 
-**文档 pin 规则（GOAL-023 D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例**必须**使用**当前最新正式 annotated tag**（现为 `v0.13.1`）。每次正式发版后同步改写示例中的 tag/version；**禁止**以 `main`/branch raw 或无版本 pin 的 always-latest 作权威安装入口。
+**文档 pin 规则（GOAL-023 D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例**必须**使用**当前发布候选 annotated tag**（本轮为 `v0.13.2`，发布后即为最新正式 tag）。每次正式发版同步改写示例中的 tag/version；**禁止**以 `main`/branch raw 或无版本 pin 的 always-latest 作权威安装入口。
 
 ### 本地打包（维护者 / 调试）
 

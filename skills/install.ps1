@@ -71,7 +71,7 @@ Options:
                            Also install advanced Copilot form-fill slash wrappers. Opt-in only.
   -All / --all             Install Claude + Grok + Copilot + Codex + prompts/templates/contracts under -SkillsDir
   -InitWorkspace / --init-workspace
-                           GOAL-019: create docs\workspace-NNN-SLUG\ with workspace.md + goal-tree.md
+                           Create docs\workspaces\workspace-NNN-SLUG\ with workspace.md + goal-tree.md
                            (does NOT create GOAL-* five-pack; use /govern for Root)
   -WorkspaceSlug / --workspace-slug S
                            Required with -InitWorkspace (lowercase hyphen slug)
@@ -254,7 +254,7 @@ function Show-NextSteps {
         [string]$PackageRoot
     )
     $step2 = if ($script:InitWorkspaceDone) {
-        "  2. Workspace skeleton ready: docs\workspace-$($script:InitWorkspaceNnn)-$($script:InitWorkspaceSlug)\`n" +
+        "  2. Workspace skeleton ready: docs\workspaces\workspace-$($script:InitWorkspaceNnn)-$($script:InitWorkspaceSlug)\`n" +
         "     Run /govern to create Root GOAL-001-$($script:InitRootSlug) (five-pack)."
     } else {
         "  2. Create workspace skeleton (pick one):`n" +
@@ -356,11 +356,27 @@ function Initialize-WorkspaceSkeleton {
     $today = Get-Date -Format 'yyyy-MM-dd'
     $wsId = "workspace-$WorkspaceNnn-$WorkspaceSlug"
     $rootId = "GOAL-001-$RootSlug"
-    $scope = "docs/$wsId/"
-    $wsDir = Join-Path (Join-Path $TargetDir 'docs') $wsId
+    $scope = "docs/workspaces/$wsId/"
+    $docsRoot = Join-Path $TargetDir 'docs'
+    $workspacesRoot = Join-Path $docsRoot 'workspaces'
+    $wsDir = Join-Path $workspacesRoot $wsId
     $wsFile = Join-Path $wsDir 'workspace.md'
     $treeFile = Join-Path $wsDir 'goal-tree.md'
 
+    $legacyContexts = @(
+        Get-ChildItem -LiteralPath $docsRoot -Directory -Filter 'workspace-*' -ErrorAction SilentlyContinue |
+            Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'workspace.md') -PathType Leaf }
+    )
+    if ($legacyContexts.Count -gt 0) {
+        $canonicalContexts = @(
+            Get-ChildItem -LiteralPath $workspacesRoot -Directory -Filter 'workspace-*' -ErrorAction SilentlyContinue |
+                Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'workspace.md') -PathType Leaf }
+        )
+        if ($canonicalContexts.Count -gt 0) {
+            Write-Err 'Mixed workspace layouts detected; migrate/remove docs/workspace-* before scaffold'
+        }
+        Write-Err 'Legacy workspace layout detected at docs/workspace-*; migrate to docs/workspaces/ before scaffold'
+    }
     if (Test-Path -LiteralPath $wsDir) {
         Write-Err "Workspace path already exists (refuse overwrite): $wsDir"
     }

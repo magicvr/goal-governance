@@ -1,0 +1,110 @@
+I'll perform the read-only Vision Review dispatch replay. Let me load all governance sources in
+parallel.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+● Read AGENTS.md
+  └ 1 line read
+
+● Read 07-independent-vision-review.md
+  │ skills\prompts\07-independent-vision-review.md
+  └ 100 lines read
+
+● Read reviews.md
+  │ docs\vision\reviews.md
+  └ 38 lines read
+
+● Read workspace.md
+  │ docs\workspaces\workspace-001-goal-governance\workspace.md
+  └ 46 lines read
+
+● Read alignment.md
+  │ docs\vision\alignment.md
+  └ 252 lines read
+
+● Read vision-audit.prompt.md
+  │ .github\prompts\vision-audit.prompt.md
+  └ 28 lines read
+
+● Read charter.md
+  │ docs\vision\charter.md
+  └ 85 lines read
+
+Let me load the remaining governance sources (AGENTS.md and copilot-instructions.md are large; I'll
+read key sections) plus the reviews directory and current VP.
+
+/ Search (grep)
+  │ "vision-audit|VRev|open required|Charter"
+  └ 6 lines found
+
+/ Search (glob)
+  │ "docs/vision/reviews/*.md"
+  └ 7 files found
+
+/ Search (glob)
+  │ "docs/vision/plans/*.md"
+  └ 4 files found
+
+/ Search (grep)
+  │ "vision-audit|VRev|open required|primary_plan|Charter"
+  └ 19 lines found
+
+Now let me verify the open-required finding status across the VRev reports.
+
+/ Search (grep)
+  │ "V-F-\d+|required|verdict|open required|source:"
+  └ 8 lines found
+
+● Read full grep output of VRev findings (shell)
+  │ Get-Content "C:\Users\magicvr\AppData\Local\Temp\copilot-tool-output-1786380238709-185d09e2.txt"
+  └ 8 lines…
+
+● Extract findings/verdict lines from VRev reports (shell)
+  │ $files = Get-ChildItem
+  │ "C:\Users\magicvr\Documents\Code\goal-governance\docs\vision\reviews\*.md"; foreach ($f in
+  │ $files) { Write-Output "===== $($f.Name) ====="; Select-String -Path $f.FullName -Pattern
+  │ 'V-F-\d+|open required|verdict \||source \||required finding|fixed|residual|overruled' |
+  │ ForEach-Object { $_.Line } }
+  └ 131 lines…
+
+All governance sources loaded and verified read-only. Replay summary follows.
+
+-----------------------------------------------------------------------------------------------
+
+/vision-audit · Read-only dispatch replay
+
+1. Loaded wrapper & core prompt
+
+ - Wrapper (loaded): .github/prompts/vision-audit.prompt.md v0.2.0 — role independent-vision-review;
+ writes only docs/vision/reviews/VRev-NNN-<slug>.md + reviews.md index; never touches
+Charter/VP/Goal status.
+ - Core prompt (loaded): skills/prompts/07-independent-vision-review.md v0.2.0 — hard constraints:
+source: independent, only the Vision Review ledger, no Goal 03-audit.md / goal-tree.md writes,
+findings closed only via fixed / accepted-residual / user-overruled (responded by /vision).
+
+2. Current Charter
+
+ - vision-goal-governance@0.2.0 (status active, effective 2026-07-31, updated 2026-08-07). Active VP
+ per Charter: VP-002 (lead = workspace-002 · delivery); VP-001 closed; VP-004 closed (re-closed
+2026-08-07).
+
+3. Workspace primary_plan
+
+ - workspace-001-goal-governance (status archived, vision_role primary): plan_refs / primary_plan =
+VP-001-governance-platform-delivery (closed) — historical binding, correctly not re-pointed to
+VP-002 (alignment §5 / workspace.md).
+
+4. Open required Vision findings
+
+ - 0 open required. Index open required = 0 for all seven entries (VRev-001–007). Verified closure
+evidence: - V-F-001–V-F-007 → fixed
+ - V-F-008 → fixed · V-F-009 → user-overruled (recorded 2026-08-04)
+ - V-F-010–V-F-012 → recommended only (not required, no gate)
+ - V-F-013–V-F-016 (VRev-007, verdict conditional historical) → all fixed (2026-08-07)
+
+No files were modified; no VRev appended; no commits/tags created; no IDE/VS Code used. Responding
+to required findings belongs to /vision; implementation to /govern.
+
+COPILOT_CLI_VISION_AUDIT_DISPATCH_OK

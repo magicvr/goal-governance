@@ -36,7 +36,7 @@ class GovernanceRootCanonicalTests(unittest.TestCase):
             "| 文档入口 | `{governance_root}/README.md`",
             "| 愿景实例 | `{governance_root}/vision/charter.md`",
             "| 意图 | 至少一个 `{governance_root}/vision/plans/VP-*.md`",
-            "| 工作区 | 显式 `{governance_root}/workspace-<NNN>-<slug>/workspace.md`",
+            "| 工作区 | 显式 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md`",
         ):
             self.assertIn(cell, text, msg=f"alignment MCI row not relativized: {cell}")
         # 关键行不再以裸 docs/ 硬编码（MCI 权威表路径列）。
@@ -46,7 +46,7 @@ class GovernanceRootCanonicalTests(unittest.TestCase):
     def test_workspace_protocol_defines_governance_root(self) -> None:
         text = self._read("docs", "architecture", "workspace-protocol.md")
         self.assertIn("治理根（`governance_root`", text)
-        self.assertIn("{governance_root}/workspace-<NNN>-<slug>/", text)
+        self.assertIn("{governance_root}/workspaces/workspace-<NNN>-<slug>/", text)
         self.assertIn("{governance_root}/vision/plans/VP-*.md", text)
         self.assertIn("fail closed", text)
 
@@ -59,8 +59,11 @@ class GovernanceRootCanonicalTests(unittest.TestCase):
 
     def test_templates_are_governance_root_relative(self) -> None:
         context = self._read("docs", "templates", "workspace-context.md")
-        self.assertIn("{governance_root}/workspace-001-example/", context)
-        self.assertIn("复制本模板为 `{governance_root}/workspace-001-example/workspace.md`", context)
+        self.assertIn("{governance_root}/workspaces/workspace-001-example/", context)
+        self.assertIn(
+            "复制本模板为 `{governance_root}/workspaces/workspace-001-example/workspace.md`",
+            context,
+        )
         charter = self._read("docs", "templates", "vision", "charter.md")
         self.assertIn("{governance_root}/vision/charter.md", charter)
         plan = self._read("docs", "templates", "vision", "vision-plan.md")

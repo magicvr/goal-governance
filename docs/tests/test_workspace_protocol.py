@@ -31,7 +31,9 @@ REFERENCE_FIELDS = (
     "status",
 )
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
-WORKSPACE_SCOPE_RE = re.compile(r"^docs/workspace-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*/$")
+WORKSPACE_SCOPE_RE = re.compile(
+    r"^docs/workspaces/workspace-\d{3}-[a-z0-9]+(?:-[a-z0-9]+)*/$"
+)
 
 
 def parse_frontmatter(path: Path) -> dict[str, str]:
@@ -120,16 +122,31 @@ def validate_workspace_context(
 
 
 class WorkspaceProtocolTests(unittest.TestCase):
-    def test_current_project_uses_one_explicit_workspace_root(self) -> None:
-        workspace = REPO_ROOT / "docs" / "workspace-001-goal-governance"
+    def test_current_project_uses_canonical_workspace_parent(self) -> None:
+        workspace = REPO_ROOT / "docs" / "workspaces" / "workspace-001-goal-governance"
         context = workspace / "workspace.md"
 
         self.assertTrue(workspace.is_dir())
         self.assertFalse((REPO_ROOT / "docs" / "goals").exists())
+        self.assertEqual(
+            sorted(path.parent.name for path in (REPO_ROOT / "docs" / "workspaces").glob("workspace-*/workspace.md")),
+            [
+                "workspace-001-goal-governance",
+                "workspace-002-methodology-skills-feedback",
+                "workspace-003-mcp-file-dual-channel",
+            ],
+        )
+        self.assertEqual(
+            list((REPO_ROOT / "docs").glob("workspace-*/workspace.md")),
+            [],
+        )
         validate_workspace_context(context, require_root_on_disk=True)
         fields = parse_frontmatter(context)
         self.assertEqual(fields["root_goal"], "GOAL-001-main-vision")
-        self.assertEqual(fields["canonical_scope"], "docs/workspace-001-goal-governance/")
+        self.assertEqual(
+            fields["canonical_scope"],
+            "docs/workspaces/workspace-001-goal-governance/",
+        )
         self.assertTrue((workspace / "goal-tree.md").is_file())
         self.assertTrue((workspace / fields["root_goal"]).is_dir())
 
@@ -179,7 +196,7 @@ class WorkspaceProtocolTests(unittest.TestCase):
             text = (FIXTURES / "valid-workspace.md").read_text(encoding="utf-8")
             path.write_text(
                 text.replace(
-                    "canonical_scope: docs/workspace-001-alpha/",
+                    "canonical_scope: docs/workspaces/workspace-001-alpha/",
                     "canonical_scope: docs/goals/",
                 ),
                 encoding="utf-8",

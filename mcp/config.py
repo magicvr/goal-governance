@@ -5,8 +5,10 @@ repo-relative directory via the committable project config
 ``.goal-governance.json``. Resolution is fail-closed: absolute paths,
 ``..`` escapes, and paths resolving outside the repository root are rejected
 with explicit errors. The internal layout under the root (``vision/``,
-``workspace-*``, ``goal-tree.md``, the goal five-piece shape) is frozen — only
-the root prefix is configurable.
+``workspaces/workspace-*``, ``goal-tree.md``, the goal five-piece shape)
+is frozen — only the root prefix is configurable. Direct child
+``workspace-*`` folders are legacy migration inputs and never canonical
+write targets.
 """
 
 from __future__ import annotations
@@ -17,6 +19,8 @@ from typing import Any
 
 DEFAULT_GOVERNANCE_ROOT = "docs"
 CONFIG_FILENAME = ".goal-governance.json"
+WORKSPACES_DIRNAME = "workspaces"
+WORKSPACE_GLOB = "workspace-*"
 
 
 class GovernanceRootError(ValueError):
@@ -89,3 +93,33 @@ def governance_root_dir(repo_root: Path, config: dict[str, Any] | None = None) -
     """Return the resolved root directory for the validated governance root."""
     name = resolve_governance_root(repo_root, config=config)
     return (repo_root / name).resolve()
+
+
+def workspace_layout_report(governance_root: Path) -> dict[str, Any]:
+    """Describe canonical and legacy explicit workspace layouts without writes."""
+    root = governance_root.resolve()
+    canonical_parent = root / WORKSPACES_DIRNAME
+    canonical = sorted(
+        path.parent.name
+        for path in canonical_parent.glob(f"{WORKSPACE_GLOB}/workspace.md")
+        if path.is_file()
+    )
+    legacy = sorted(
+        path.parent.name
+        for path in root.glob(f"{WORKSPACE_GLOB}/workspace.md")
+        if path.is_file()
+    )
+    if canonical and legacy:
+        state = "mixed"
+    elif legacy:
+        state = "legacy"
+    elif canonical:
+        state = "canonical"
+    else:
+        state = "empty"
+    return {
+        "state": state,
+        "canonicalRoot": WORKSPACES_DIRNAME,
+        "canonical": canonical,
+        "legacy": legacy,
+    }

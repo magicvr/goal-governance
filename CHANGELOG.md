@@ -4,7 +4,26 @@
 
 ## Unreleased
 
-（空；2026-08-08 发布 v0.13.1。）
+`0.13.2` 节已冻结；其正式身份仅在 annotated `v0.13.2` tag 与 strict release evidence 存在时成立，tag 前的最新正式版本为 `v0.13.1`。
+
+## 0.13.2 - 2026-08-11
+
+工作区目录协议 patch：显式工作区从治理根直属的 `workspace-*` 收敛到 `{governance_root}/workspaces/workspace-*`，先修订核心方法论、发现逻辑与安装面，再迁移本仓三个工作区。协议（`protocol 0.1.0`）与消费契约（`contractFormatVersion 0.4.0`）不变；MCP 内部布局版本升至 `0.2.0`。
+
+### 工作区目录收敛
+
+- canonical 协议、目录布局、愿景对齐、模板、AGENTS、四治理入口与宿主安装面统一使用 `{governance_root}/workspaces/workspace-<NNN>-<slug>/`；目标仍在单个工作区内平铺，层级与编号规则不变。
+- 发现策略 fail closed：新布局是唯一写入目标；旧的 `{governance_root}/workspace-*` 只作为迁移诊断信号；新旧混合或同 id 冲突均阻断，不做静默双读或自动搬移。
+- 本仓 `workspace-001`、`workspace-002`、`workspace-003` 通过可追踪 `git mv` 迁入 `docs/workspaces/`，同步 `canonical_scope`、相对链接、愿景引用、fixture 与历史附件中的有效路径引用，目标 id、parent、状态和审计序列保持不变。
+- `install.ps1` / `install.sh` 的新工作区 scaffold 改写到 `workspaces/`，MCP doctor/ledger allowlist 与 schema 同步新布局；Windows MCP stdio 显式固定 UTF-8，避免本地代码页破坏 JSON-RPC。
+- Skills/Core 打包结构性排除新旧两种实例工作区路径，防止治理运行记录进入发布包；canonical → Skills 镜像已重新 stage。
+
+### 候选与运行时证据
+
+- 矩阵 `candidateRevision` 固定为 `v0.13.2`；Claude Code `2.1.226`、Grok Build `1.0.0 (3cd0d0cbce)`、GitHub Copilot CLI `1.0.75`（BYOK）四入口共 12 个只读探针于 2026-08-11 全部 `pass`，证据位于 `docs/releases/runtime/v0.13.2/`。
+- 根 README、Skills README、bootstrap README 与 MCP Docker 示例统一 pin `v0.13.2` / `0.13.2`；正式身份仍由 main 合并 ancestry、annotated tag、strict release evidence 与 Release 资产共同建立。
+
+本节版本为 **0.13.2** / `v0.13.2`；正式身份以同名 annotated tag 与 release evidence 为准，二者不存在时最新正式版本仍为 **0.13.1** / `v0.13.1`。
 
 ## 0.13.1 - 2026-08-08
 

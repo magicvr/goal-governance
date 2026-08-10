@@ -1,0 +1,24 @@
+You are the independent auditor for GOAL-007-workspaces-directory-consolidation in this repository.
+
+This is a read-only independent cross-audit. Do not edit files, append audit records, change status or progress, create commits/tags/PRs, run install/update against a target repository, or ask questions. Do not launch subagents. Read the repository's AGENTS.md, the canonical workspace protocol and principles, GOAL-007's five-pack and ledger, all three migrated workspace.md files and goal trees, the relevant MCP/config/installer/packaging implementation, the compatibility matrix and v0.13.2 runtime evidence, and the referenced test/verification records.
+
+Audit objective:
+1. Verify that the requested canonical layout is docs/workspaces/workspace-* (governance-root relative), that old direct workspace-* paths are migration-only and mixed layouts fail closed.
+2. Verify that all three repository workspaces were migrated without changing workspace/goal ids, parent relationships, ledger shape, or canonical_scope/Q2 references.
+3. Verify that methodology, templates, installed entrypoints, MCP discovery/doctor/ledger allowlists, installers, packaging exclusions, staged mirrors, tests, compatibility report, and runtime evidence agree with the new layout.
+4. Verify the local evidence is sufficient to enter S4/S5, and identify any missing or stale required gate. Treat local CI as distinct from remote PR CI; do not claim PR/main/tag/Release facts unless the repository contains them.
+
+Use the governance rules in skills/prompts/05-independent-audit.md. Preserve the audit-only boundary. Return a concise but evidence-based independent opinion with this exact structure:
+
+VERDICT: pass | conditional | fail
+SCOPE: ...
+SUMMARY: ...
+REQUIRED_FINDINGS:
+- [none] or one item per finding, each labeled required and describing file/path evidence and closure needed
+RECOMMENDED_FINDINGS:
+- [none] or one item per recommendation
+EVIDENCE:
+- file:line or command/result references for each material conclusion
+RELEASE_BOUNDARY: state precisely what is and is not proven before a PR/remote CI/main/tag/Release.
+
+Do not infer a pass merely because a search is quiet. Check exact files and behavior. Keep any uncertainty explicit and fail closed for missing required evidence.

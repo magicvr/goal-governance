@@ -105,8 +105,11 @@ def should_exclude(relative: Path) -> bool:
     joined = relative.as_posix()
     if joined in PRODUCER_ONLY_CONTRACTS:
         return True
-    if "docs/workspace-" in joined or joined.startswith("web/") or joined.startswith(
-        "artifacts/"
+    if (
+        "docs/workspaces/workspace-" in joined
+        or "docs/workspace-" in joined
+        or joined.startswith("web/")
+        or joined.startswith("artifacts/")
     ):
         return True
     # A-012 F-003: MCP integration tests (skills/tests/test_mcp_*.py) import

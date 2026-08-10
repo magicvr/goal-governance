@@ -86,7 +86,7 @@ jobs:
       - name: Evidence consistency gate (M-001)
         run: |
           python scripts/capture_runtime_evidence.py --check \
-            --evidence-dir docs/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence
+            --evidence-dir docs/workspaces/workspace-003-mcp-file-dual-channel/GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence
 
       - name: Run pack unit tests
         run: |

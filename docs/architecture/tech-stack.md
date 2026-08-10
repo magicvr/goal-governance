@@ -17,8 +17,9 @@ version: 0.6.0
 | 愿景规则 | `docs/vision/alignment.md` | 单愿景对齐门禁（非 goal-tree） |
 | 文档规范 | `docs/README.md` | 目标实例、五件套和同步规则 |
 | 模板 | `docs/templates/goal-folder/` | canonical 五件套模板；不保存运行状态 |
-| 工作区上下文 | `docs/workspace-<NNN>-<slug>/workspace.md` | 绑定 Root Goal、工作区根范围、plan 字段和共享资料固定引用；不保存目标状态 |
-| 实例真相源 | `docs/workspace-<NNN>-<slug>/` | 目标、决策、执行、审计和附件 |
+| 工作区父容器 | `docs/workspaces/` | 只收敛显式工作区目录；不保存聚合状态、不表达 Goal 层级 |
+| 工作区上下文 | `docs/workspaces/workspace-<NNN>-<slug>/workspace.md` | 绑定 Root Goal、工作区根范围、plan 字段和共享资料固定引用；不保存目标状态 |
+| 实例真相源 | `docs/workspaces/workspace-<NNN>-<slug>/` | 目标、决策、执行、审计和附件 |
 
 `skills/core/docs/templates/` 是上述 canonical 模板的分发镜像（由 `scripts/stage_skills_mirrors.py` 生成），用于离线安装；不构成第二套规范。工作区和共享资料细节见 [workspace-protocol.md](workspace-protocol.md)。
 

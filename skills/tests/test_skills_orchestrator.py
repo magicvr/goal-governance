@@ -627,7 +627,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.13.1")
+        self.assertEqual(matrix["candidateRevision"], "v0.13.2")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -661,12 +661,12 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "github-copilot-cli",
             },
         )
-        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.223")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "0.2.118")
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.226")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.0")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # Claude + Grok + Copilot: all four entrypoints runtime-verified (2026-08-08 refresh).
+        # Claude + Grok + Copilot: all four entrypoints runtime-verified (2026-08-11 refresh).
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -912,7 +912,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 f"core goal-folder hash drift: {name}",
             )
         templates_readme = (core / "templates" / "README.md").read_text(encoding="utf-8")
-        self.assertIn("version: 0.8.0", templates_readme)
+        self.assertIn("version: 0.9.0", templates_readme)
         self.assertIn("progress", templates_readme)
         self.assertIn("不放行阶段", templates_readme)
         self.assertIn("同一阶段内", templates_readme)
@@ -1007,7 +1007,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 0,
                 msg=f"first init failed:\n{first.stdout}\n{first.stderr}",
             )
-            ws = target / "docs" / "workspace-001-refuse-demo" / "workspace.md"
+            ws = target / "docs" / "workspaces" / "workspace-001-refuse-demo" / "workspace.md"
             self.assertTrue(ws.is_file(), msg="first init did not create workspace.md")
             second = subprocess.run(
                 cmd_base,
@@ -1150,7 +1150,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             self.assertRegex(
                 text,
-                r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspace-<NNN>-<slug>/workspace\.md",
+                r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspaces/workspace-<NNN>-<slug>/workspace\.md",
                 msg=f"missing workspace scan: {path}",
             )
             self.assertRegex(
@@ -1179,7 +1179,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             self.assertRegex(
                 text,
-                r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspace-<NNN>-<slug>/workspace\.md",
+                r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspaces/workspace-<NNN>-<slug>/workspace\.md",
                 msg=f"missing workspace rule: {path}",
             )
             self.assertRegex(

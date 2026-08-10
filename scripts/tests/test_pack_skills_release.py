@@ -90,6 +90,11 @@ class PackSkillsReleaseTests(unittest.TestCase):
         self.assertTrue(pack.should_exclude(Path("__pycache__") / "a.pyc"))
         self.assertTrue(pack.should_exclude(Path("tests") / "x.pyc"))
         self.assertTrue(pack.should_exclude(Path("docs") / "workspace-001-x" / "a.md"))
+        self.assertTrue(
+            pack.should_exclude(
+                Path("docs") / "workspaces" / "workspace-001-x" / "a.md"
+            )
+        )
         self.assertTrue(pack.should_exclude(Path("contracts") / "runtime-evidence.schema.json"))
         self.assertTrue(
             pack.should_exclude(Path("contracts") / "skills-consumer-compatibility-matrix.json")
@@ -308,7 +313,7 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         self.assertIn("Evidence consistency gate (M-001)", pack_block)
         self.assertIn("capture_runtime_evidence.py --check", pack_block)
         self.assertIn(
-            "--evidence-dir docs/workspace-003-mcp-file-dual-channel/"
+            "--evidence-dir docs/workspaces/workspace-003-mcp-file-dual-channel/"
             "GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence",
             pack_block,
         )

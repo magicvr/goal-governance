@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-08-07
+updated: 2026-08-10
 parent: null
-version: 0.13.0
+version: 0.14.0
 ---
 
 # AGENTS.md
@@ -28,7 +28,7 @@ version: 0.13.0
 | 治理原则 | `{governance_root}/architecture/principles.md` | **必备**；P-001～P-006 全文；AGENTS §6/6b/6d/6e 为操作摘要 |
 | 文档使用规范 | `{governance_root}/README.md` | **必备**（消费方为精简入口） |
 | 核心方法论与模板 | `{governance_root}/templates/` | **必备**（消费方 install 默认安装）；canonical 模板优先 |
-| 工作区与共享资料协议 | `{governance_root}/workspace-<NNN>-<slug>/workspace.md`、`{governance_root}/architecture/workspace-protocol.md` | workspace 存在时必读；protocol **必备**；目标状态仍以 `<workspace-root>/` 为准 |
+| 工作区与共享资料协议 | `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md`、`{governance_root}/architecture/workspace-protocol.md` | workspace 存在时必读；protocol **必备**；目标状态仍以 `<workspace-root>/` 为准 |
 
 冲突时以 `<workspace-root>/` 与本文件为准。目标状态**永不**以 `docs/vision/` 为准。
 
@@ -190,7 +190,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 1. 工作区绑定一个 `parent: null` 的 Root Goal 与其 canonical 目标范围；它不是 `parent` 层级、审计 scope 或第二套状态。
 2. Root 路线图的**纲领阶段**通常串行；**同一纲领阶段内**允许并行子目标。只有长期目的、成功边界或战略方向实际变化时，才记录决策后改写 Root Goal 定义。
-3. **隐式工作区唯一路径**：没有显式 `docs/workspace-<NNN>-<slug>/workspace.md` 时，**仅当**存在 `docs/goals/` 才可作为 legacy 隐式单工作区；否则不得猜测 `<workspace-root>`（应空治理 scaffold）。禁止自动发现、读取、混合或写入其他工作区上下文。
+3. **发现与迁移门禁**：canonical 只扫描 `docs/workspaces/workspace-<NNN>-<slug>/workspace.md`。旧直属 `docs/workspace-<NNN>-<slug>/workspace.md` 只触发迁移阻断，不得继续写入；新旧显式布局并存时 fail closed，禁止双读或任选。仅当两类显式布局都不存在且存在 `docs/goals/` 时，才可作为 legacy 隐式单工作区；否则不得猜测 `<workspace-root>`（应空治理 scaffold）。
 4. 共享资料只能以匹配当前 `workspace_id` 的 `material_id`、`source`、`version` 和有效 `sha256` 固定引用。引用缺失/不匹配、资料目录为 `none` 或来源不可固定时，必须 fail closed；资料内容仍须经用户确认才可成为事实、证据或 finding 关闭依据。
 5. 跨工作区提及目标须用限定引用（§2.6）：文档 **Q2**、对话 **Q3**、机器 **Q1**；`GOAL-*` 仅工作区内唯一，形状不嵌工作区号。区内 `parent` 仍用短 id。
 6. 本协议不自动放行共享资料物理存储、用户 CRUD、AI 读取执行、跨工作区导航、Web 写入或访问安全模型；这些留给对应目标的信息门禁与验证。
@@ -312,7 +312,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 ```text
 1. 判定愿景完整性：缺 Charter → 仅引导补齐（Charter→VP），停止非引导推进
-2. 读 Charter 版本与 alignment；再读 `docs/workspace-<NNN>-<slug>/workspace.md`（若有）→ 校验 Root/canonical/资料/`plan_refs`+`primary_plan`；再读 goal-tree → 编号、parent、未关门目标
+2. 读 Charter 版本与 alignment；再读 `docs/workspaces/workspace-<NNN>-<slug>/workspace.md`（若有）→ 校验 Root/canonical/资料/`plan_refs`+`primary_plan`；再读 goal-tree → 编号、parent、未关门目标
 3. 未指定原子操作时 → 实现层优先 `/govern`；愿景/开区结构决策走 P-006 / **`/vision`**
 4. 尚不可直接执行 → 先纲领路线图（P-001）；存在影响门禁的未知 → 先登记信息需求（P-005）
 5. 推进时检查审计意见、信息门禁、愿景对齐、Vision Review required、strategic 宽阻断；P-004 先问用户
@@ -351,7 +351,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - 不得以“以后再说”绕过 required 信息门禁；残余风险只有用户书面接受并留痕后才可解除其明确范围内的门禁。
 - 正式审计意见必须落在被审目标 `03-audit/A-NNN-*.md` 并更新 `03-audit.md` 索引；未落盘意见不作为放行依据。
 - 未合法闭合的 required/必改 findings 存在时，禁止推进对应门禁或 `status: done`（闭合仅限 fixed / accepted-residual / user-overruled）。
-- 无显式工作区时禁止把任意路径当作隐式 `<workspace-root>`；仅 legacy `docs/goals/` 或空治理 scaffold。
+- 旧直属 `docs/workspace-*/` 只用于迁移检测；新旧显式布局并存必须 fail closed。无任何显式工作区时禁止把任意路径当作隐式 `<workspace-root>`；仅 legacy `docs/goals/` 或空治理 scaffold。
 - **完整安装必有唯一 active Charter**；缺则仅引导补齐。
 - **所有工作区必须挂 VP**；角色仅 `primary` / `delivery`；禁止跨区 `parent`；禁止多愿景。
 - Vision Review required 未闭合、或 strategic 未 re-align（宽阻断）时，不得开区/放行/关门/宣称方向已稳。
@@ -364,7 +364,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - [ ] 五件套 + 三个 ledger 目录齐全（若新建）
 - [ ] 大目标纲领路线图已写/更新（若适用）
 - [ ] **愿景**：现行 Charter 存在且唯一 active；工作区 `plan_refs`/`primary_plan` 有效；无待 re-align 宽阻断
-- [ ] 工作区：显式已校验，或 legacy `docs/goals/`，或已识别为空治理/引导补齐；共享资料引用未被当成跨工作区状态或未确认事实
+- [ ] 工作区：新 canonical 显式布局已校验；或旧直属布局已阻断并引导迁移；或 legacy `docs/goals/` / 空治理已识别；无新旧混合布局
 - [ ] 已识别的未知项已登记；本次要推进的阶段没有开放 required 信息门禁，或残余风险已获用户书面接受
 - [ ] `goal-tree.md` 已同步
 - [ ] `updated` / `progress` / `status` 与事实一致

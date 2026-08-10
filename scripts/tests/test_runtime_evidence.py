@@ -180,6 +180,27 @@ class RuntimeEvidenceTests(unittest.TestCase):
                 format_checker=FormatChecker(),
             ).validate(payload)
 
+    def test_capture_normalizes_text_output_digests_for_windows_checkouts(self) -> None:
+        """CRLF working trees must validate evidence captured with LF output."""
+        with tempfile.TemporaryDirectory(prefix="gg-runtime-crlf-") as tmp:
+            root = Path(tmp)
+            self._prepare_capture_root(root)
+            output, payload = self._capture(root)
+            result = payload["result"]
+            for label in ("stdout", "stderr"):
+                path = root / result[f"{label}Path"]
+                path.write_bytes(path.read_bytes().replace(b"\n", b"\r\n"))
+                normalized = sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+                self.assertEqual(result[f"{label}Sha256"], normalized)
+            compatibility_report._validate_runtime_evidence(
+                root,
+                output,
+                self._runtime_schema(root),
+                "test-host",
+                "govern",
+                "0.1.0",
+            )
+
     def test_cli_accepts_vision_audit_entrypoint_choice(self) -> None:
         """Shipped capture CLI must accept the independent vision-audit entrypoint."""
         # Drive the real argparse path: the accepted choice then fails only on the missing input.

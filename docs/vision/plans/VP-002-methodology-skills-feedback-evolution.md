@@ -55,8 +55,8 @@ version: 0.4.0
 
 | 项 | 来源 | 内容 | 触发 | 状态 |
 |----|------|------|------|------|
-| **F-006 消费面路径收敛** | [workspace-003 Root A-012 F-006](../../workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-012-independent-post-close-methodology-mcp.md)（A-013 登记；2026-08-08 跨区移交） | `skills/AGENTS.template.md` 与四治理 prompts（00/05/06/07）仍硬编码 `docs/…`；`governance_root≠docs` 的 File 消费仓依赖 AI 自觉读 alignment 定义句，易误读。拟处置：模板与 prompts 改为 `{governance_root}` 或安装时按 pin 展开 | — | **已执行/关闭**（2026-08-08）——[GOAL-006-consumer-surface-convergence](../../workspace-002-methodology-skills-feedback/GOAL-006-consumer-surface-convergence/00-meta.md) `done`（D-001 A+C 混合；cross 审计 A-001/A-002 pass + A-003 合并响应）；[workspace-003] 台账留痕见其 Root 03-audit |
-| **R-001 裸路径扫尾** | [workspace-003 Root A-009 R-001](../../workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-009-independent-close-and-vp004-intent.md)（A-010 留痕归本波次） | `overview/directory-layout/docs-README` 的裸 `docs/…` 路径扫尾（与 F-006 同类相对化） | — | **已执行/关闭**（2026-08-08）——随 GOAL-006 S2 完成（协议语义前缀相对化；目录树/物理路径保留）；防再犯测试固化 |
+| **F-006 消费面路径收敛** | [workspace-003 Root A-012 F-006](../../workspaces/workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-012-independent-post-close-methodology-mcp.md)（A-013 登记；2026-08-08 跨区移交） | `skills/AGENTS.template.md` 与四治理 prompts（00/05/06/07）仍硬编码 `docs/…`；`governance_root≠docs` 的 File 消费仓依赖 AI 自觉读 alignment 定义句，易误读。拟处置：模板与 prompts 改为 `{governance_root}` 或安装时按 pin 展开 | — | **已执行/关闭**（2026-08-08）——[GOAL-006-consumer-surface-convergence](../../workspaces/workspace-002-methodology-skills-feedback/GOAL-006-consumer-surface-convergence/00-meta.md) `done`（D-001 A+C 混合；cross 审计 A-001/A-002 pass + A-003 合并响应）；[workspace-003] 台账留痕见其 Root 03-audit |
+| **R-001 裸路径扫尾** | [workspace-003 Root A-009 R-001](../../workspaces/workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/03-audit/A-009-independent-close-and-vp004-intent.md)（A-010 留痕归本波次） | `overview/directory-layout/docs-README` 的裸 `docs/…` 路径扫尾（与 F-006 同类相对化） | — | **已执行/关闭**（2026-08-08）——随 GOAL-006 S2 完成（协议语义前缀相对化；目录树/物理路径保留）；防再犯测试固化 |
 
 ## 关门记录
 

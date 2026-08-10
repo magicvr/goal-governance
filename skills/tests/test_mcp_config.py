@@ -51,9 +51,11 @@ class GovernanceRootConfigTests(unittest.TestCase):
         self._write_config({"governance_root": "governance"})
         root_dir = config.governance_root_dir(self.repo)
         (root_dir / "vision").mkdir(parents=True)
-        (root_dir / "workspace-001-demo").mkdir()
-        (root_dir / "goal-tree.md").write_text("# goal-tree\n", encoding="utf-8")
-        goal_dir = root_dir / "workspace-001-demo" / "GOAL-001-demo-root"
+        workspace = root_dir / "workspaces" / "workspace-001-demo"
+        workspace.mkdir(parents=True)
+        (workspace / "workspace.md").write_text("# workspace\n", encoding="utf-8")
+        (workspace / "goal-tree.md").write_text("# goal-tree\n", encoding="utf-8")
+        goal_dir = workspace / "GOAL-001-demo-root"
         goal_dir.mkdir()
         for name in ("00-meta.md", "01-decision.md", "02-execution.md", "03-audit.md"):
             (goal_dir / name).write_text(f"# {name}\n", encoding="utf-8")
@@ -61,11 +63,32 @@ class GovernanceRootConfigTests(unittest.TestCase):
             (goal_dir / ledger).mkdir()
         # The resolved root carries the frozen layout.
         self.assertTrue((root_dir / "vision").is_dir())
-        self.assertTrue((root_dir / "goal-tree.md").is_file())
-        self.assertTrue((root_dir / "workspace-001-demo").is_dir())
+        self.assertTrue((workspace / "goal-tree.md").is_file())
+        self.assertTrue(workspace.is_dir())
         self.assertTrue(
             all((goal_dir / f"{n}.md").is_file() for n in ("00-meta", "01-decision", "02-execution", "03-audit"))
         )
+
+    def test_workspace_layout_report_fails_closed_on_legacy_and_mixed(self) -> None:
+        root_dir = self.repo / "docs"
+        self.assertEqual(config.workspace_layout_report(root_dir)["state"], "empty")
+
+        canonical = root_dir / "workspaces" / "workspace-001-canonical"
+        canonical.mkdir(parents=True)
+        (canonical / "workspace.md").write_text("# canonical\n", encoding="utf-8")
+        report = config.workspace_layout_report(root_dir)
+        self.assertEqual(report["state"], "canonical")
+        self.assertEqual(report["canonical"], ["workspace-001-canonical"])
+
+        legacy = root_dir / "workspace-002-legacy"
+        legacy.mkdir()
+        (legacy / "workspace.md").write_text("# legacy\n", encoding="utf-8")
+        report = config.workspace_layout_report(root_dir)
+        self.assertEqual(report["state"], "mixed")
+        self.assertEqual(report["legacy"], ["workspace-002-legacy"])
+
+        (canonical / "workspace.md").unlink()
+        self.assertEqual(config.workspace_layout_report(root_dir)["state"], "legacy")
 
     def test_configured_root_has_no_docs_fallback(self) -> None:
         """Negative: with a configured root, the resolver must NOT fall back to
@@ -157,7 +180,24 @@ class GovernanceRootConfigTests(unittest.TestCase):
         self.assertIn("server", report)
         self.assertIn("version", report["server"])
         self.assertIn("layoutVersion", report["server"])
-        self.assertEqual(report["server"]["layoutVersion"], "0.1.0")
+        self.assertEqual(report["server"]["layoutVersion"], "0.2.0")
+
+    def test_doctor_reports_legacy_and_mixed_workspace_layouts(self) -> None:
+        import mcp.doctor as doctor  # noqa: E402
+
+        legacy = self.repo / "docs" / "workspace-001-legacy"
+        legacy.mkdir(parents=True)
+        (legacy / "workspace.md").write_text("# legacy\n", encoding="utf-8")
+        report = doctor.doctor(self.repo)
+        self.assertEqual(report["workspaceLayout"]["state"], "legacy")
+        self.assertTrue(any("legacy workspace layout" in item for item in report["issues"]))
+
+        canonical = self.repo / "docs" / "workspaces" / "workspace-002-canonical"
+        canonical.mkdir(parents=True)
+        (canonical / "workspace.md").write_text("# canonical\n", encoding="utf-8")
+        report = doctor.doctor(self.repo)
+        self.assertEqual(report["workspaceLayout"]["state"], "mixed")
+        self.assertTrue(any("mixed workspace layouts" in item for item in report["issues"]))
 
 
 if __name__ == "__main__":
