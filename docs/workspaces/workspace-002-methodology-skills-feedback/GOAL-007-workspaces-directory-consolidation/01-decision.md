@@ -1,11 +1,11 @@
 ---
 id: GOAL-007-workspaces-directory-consolidation
 doc: decision
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-08-10
-updated: 2026-08-10
-version: 0.3.0
+updated: 2026-08-11
+version: 0.4.0
 ---
 
 # 决策记录 · GOAL-007

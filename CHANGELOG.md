@@ -4,7 +4,7 @@
 
 ## Unreleased
 
-`0.13.2` 节已冻结；其正式身份仅在 annotated `v0.13.2` tag 与 strict release evidence 存在时成立，tag 前的最新正式版本为 `v0.13.1`。
+（空；2026-08-11 发布 v0.13.2。）
 
 ## 0.13.2 - 2026-08-11
 
@@ -23,7 +23,7 @@
 - 矩阵 `candidateRevision` 固定为 `v0.13.2`；Claude Code `2.1.226`、Grok Build `1.0.0 (3cd0d0cbce)`、GitHub Copilot CLI `1.0.75`（BYOK）四入口共 12 个只读探针于 2026-08-11 全部 `pass`，证据位于 `docs/releases/runtime/v0.13.2/`。
 - 根 README、Skills README、bootstrap README 与 MCP Docker 示例统一 pin `v0.13.2` / `0.13.2`；正式身份仍由 main 合并 ancestry、annotated tag、strict release evidence 与 Release 资产共同建立。
 
-本节版本为 **0.13.2** / `v0.13.2`；正式身份以同名 annotated tag 与 release evidence 为准，二者不存在时最新正式版本仍为 **0.13.1** / `v0.13.1`。
+本节版本为 **0.13.2** / `v0.13.2`；annotated tag `7cd2613` 指向 main merge commit `f37d67c`，gated run `31416803940` 发布 9 项 Release 资产与 GHCR 镜像，下载后的 skills/core ZIP 摘要与 sidecar 一致。
 
 ## 0.13.1 - 2026-08-08
 

@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-08-11
 parent: null
-version: 0.13.0
+version: 0.14.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-08-11 · GOAL-007 S5 正式发布与关门
+
+PR #18 完成工作区收敛并经 Ubuntu/Windows CI 全绿后合入 `main`；首次 tag workflow `31416348175` 暴露历史 L3 证据旧路径，PR #19 修复并再次双平台全绿合入。annotated `v0.13.2` 最终指向 main merge `f37d67c`；run `31416803940` 的 pack、strict release evidence、GHCR 与 Release 发布全绿，9 项资产上传完成，skills/core ZIP 下载摘要与 sidecar 一致。A-004 关门 `pass`，开放 required = 0；GOAL-007 标为 **`done / 100%`**（S1～S5 5/5）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-008**。
 
 ## 2026-08-11 · GOAL-007 S4 cross 审计完成
 
@@ -117,7 +121,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
-└── GOAL-007-workspaces-directory-consolidation [active]  工作区目录统一收敛与正式发布  progress 80%
+└── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
 ```
 
 ## 状态表
@@ -130,7 +134,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
-| GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-08-11 |
+| GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 
 ## 编号
 

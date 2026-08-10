@@ -76,12 +76,12 @@ bash scripts/bootstrap/install-online.sh \
 
 ## Online (Release)
 
-**Docs pin the current release candidate** (currently **`v0.13.2`**, becoming the latest published tag after release). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
+**Docs pin the current formal release** (currently **`v0.13.2`**). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
 
 Fetch bootstrap from the Release, then run (save to disk first; avoid `curl | bash` / `irm | iex` as the default path):
 
 ```powershell
-# Current release candidate tag: v0.13.2
+# Current formal release tag: v0.13.2
 Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.2/install-online.ps1" `
   -OutFile .\install-online.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.2 -Force
