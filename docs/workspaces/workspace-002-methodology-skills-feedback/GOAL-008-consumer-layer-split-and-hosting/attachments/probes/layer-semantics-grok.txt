@@ -1,0 +1,54 @@
+﻿我按只读探针约束，只读你列出的规则与模板位置，先把层级判定条文对齐后再逐条给 CE1–CE10 的唯一判定。规则主干已对齐。接着读愿景与目标模板，核对「总路线图 / VP 阶段 / 五件套」各自该写在哪一层。```json
+{
+  "host": "Grok Build",
+  "cases": [
+    {"id": "CE1", "verdict": "misplaced", "action": "拒绝把 VP 方向级阶段当可执行工作推进；应推进该区 Root 的纲领路线图（/govern），1 Root 1 VP 不能混层", "evidence": "docs/architecture/principles.md §6.4 谓词#7 与「判定对象是职责与权威，不是节点数量」; AGENTS.md §6e"},
+    {"id": "CE2", "verdict": "legal", "action": "唯一落点 docs/vision/roadmap.md（组合编排索引）；只刷新 VP 波次/投影，不改任何目标纲领路线图", "evidence": "docs/architecture/principles.md §6.4 术语映射「总路线图」; docs/vision/alignment.md §0.3"},
+    {"id": "CE3", "verdict": "ambiguous", "action": "先澄清：VP 只可补方向级阶段结构；「阶段计划」只能写在目标 01-decision，不得写入 VP", "evidence": "docs/architecture/principles.md §6.4 命名表「VP 内阶段结构」vs「阶段计划」; docs/templates/vision/vision-plan.md"},
+    {"id": "CE4", "verdict": "legal", "action": "允许同名 R1–R3 分属两层并存：VP 只写方向，Root 写可执行纲领并标明对齐", "evidence": "docs/templates/vision/vision-plan.md 方向级阶段结构同名说明; VP-004 §方向级路线图; Root 00-meta §纲领路线图"},
+    {"id": "CE5", "verdict": "misplaced", "action": "拒绝为 VP 建 GOAL-* 五件套或把 VP 当 parent；VP 只存在于 vision/plans/*.md", "evidence": "docs/architecture/principles.md §6.4 谓词#6、§6.7; docs/vision/alignment.md §1/§7.5"},
+    {"id": "CE6", "verdict": "misplaced", "action": "拒绝把 roadmap.md 的 VP 跟踪表搬进目标 00-meta.md；组合编排与纲领路线图不得互代", "evidence": "docs/architecture/principles.md §6.4 术语映射末句; docs/vision/alignment.md §0.3 层级错位#8"},
+    {"id": "CE7", "verdict": "legal", "action": "允许一区绑多个 VP；plan_refs 含全部且 primary_plan ∈ plan_refs", "evidence": "docs/vision/alignment.md §5; docs/architecture/principles.md §6.4「多 VP 绑同一区…合法」"},
+    {"id": "CE8", "verdict": "legal", "action": "允许 active VP 绑 0 区；须告警并遵守空转 14 日宽限，宽限内不得当交付证据", "evidence": "docs/architecture/principles.md §6.4「0 区 active VP 均合法」; docs/vision/alignment.md §5.1"},
+    {"id": "CE9", "verdict": "legal", "action": "允许把某阶段实施方案写入目标 01-decision/D-00N-*.md（非树节点）", "evidence": "docs/architecture/principles.md §6.4 谓词#4 与「把实施方案写进 01-decision」; docs/templates/goal-folder/01-decision.md"},
+    {"id": "CE10", "verdict": "misplaced", "action": "拒绝把 VP status: closed 读成该目标已完成；Goal 完成只认工作区五件套/goal-tree 的 status", "evidence": "docs/architecture/principles.md §6.4 谓词#6; docs/vision/alignment.md §1 愿景不是 Goal 状态源"}
+  ],
+  "marker": "LAYER_SEMANTICS_PROBE_OK"
+}
+```
+
+## 逐条依据
+
+**CE1 · misplaced**  
+「推进」是实现层动作；VP 内只有方向级阶段结构，不是可执行纲领路线图。一区一 Root 一 VP 是合法结构，但不把 VP 阶段变成可推进的 Goal 阶段（职责/权威，不是节点数量）。应推进 Root `00-meta.md`/`01-decision.md` 的纲领路线图。
+
+**CE2 · legal**  
+口语「愿景总路线图」唯一解析为 `{governance_root}/vision/roadmap.md`，本仓即 `docs/vision/roadmap.md`。它是组合编排索引，不是任何 Root 的纲领路线图。
+
+**CE3 · ambiguous**  
+「方向级路线图」可写在 VP（方向级阶段结构）。「阶段计划」在命名表里是目标内方案/实施安排，落 `01-decision`。斜杠把两层术语绑在同一写入请求上，不能唯一落盘。
+
+**CE4 · legal**  
+同名 R1–R3 合法，因为两层职责不同，不是第二套状态。  
+- **VP 侧**（如 VP-004「方向级路线图」）：波次内方向、先后与退出方向；不得写可执行纲领、完成标记、子目标编号、Goal status、progress%。  
+- **Root 侧**（如该区 GOAL-001 `00-meta.md`「纲领路线图」）：本目标可执行纲领阶段、先后与完成标记；progress 仅派生展示；不得复写第二套愿景边界。模板要求同名时写明：VP 只给方向，Root 给可执行阶段。
+
+**CE5 · misplaced**  
+谓词#6：把 VP 当目标节点/`parent`/Goal 状态源。P-006 §6.7 与 alignment §1/§7 明确禁止为 VP 建 Goal 五件套。
+
+**CE6 · misplaced**  
+组合编排表与目标纲领路线图不得互相替代，也不得把组合编排表写进目标文件。这是目标层复写愿景层索引。
+
+**CE7 · legal**  
+一工作区 : 1..N 规划；须标 `primary_plan` 焦点。节点数量不构成层级错位。
+
+**CE8 · legal**  
+`active` 且 0 区是合法空转结构，不是错位。须告警、14 日宽限；宽限内可扫描/规划，不得当作已在推进的交付证据。
+
+**CE9 · legal**  
+谓词#4：某阶段内方案与实施顺序 = 阶段计划（非树节点）。模板把该类记录放在 `01-decision/D-NNN-*.md`。
+
+**CE10 · misplaced**  
+VP `closed` 的权威在该 VP frontmatter，证据链在工作区，但不是 Goal `status: done`。愿景体系不是第二套目标状态源；不得把 VP 当 Goal 状态源。
+
+LAYER_SEMANTICS_PROBE_OK

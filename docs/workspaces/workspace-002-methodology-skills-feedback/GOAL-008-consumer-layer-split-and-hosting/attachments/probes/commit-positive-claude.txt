@@ -1,0 +1,3 @@
+﻿COMMIT_ID: 6d357ac  
+STAGED: a.txt  
+TOUCHED_B: no

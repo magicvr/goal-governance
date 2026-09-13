@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.9.0
+version: 0.10.0
 ---
 
 # 审计 · GOAL-008
@@ -18,7 +18,7 @@ version: 0.9.0
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
 | 影响本 scope 的 I-00N | I-001 / I-002 / I-004 **verified**；I-005 **closed**（provider = grok build / grok-4.6 / effort high）；**I-003 `partially-verified`**（选型待用户裁决，S4 方案冻结前阻断）；I-006 **open**（S6 前冻结） | 不阻断立项与 S2/S3；I-003 未决即阻断 S4 方案冻结 |
-| 到期 required 是否已 verified / residual | A-001 F-001～F-004 全 `fixed`，**F-005 open**（I-006，S6 前）；**A-004 F-001（I-003 选型）已由用户裁决 D-009 闭合**；**A-005 F-001/F-002 open**（宿主行为证据、runtime evidence 锚点过期）；**A-006 / A-008 F-001 open**（隔离仓冷启动与真实升级实测）；A-007 无 required（2 recommended 已 fixed） | 开放 required = **4**；均不阻断 S5，S6 前必须闭合 |
+| 到期 required 是否已 verified / residual | A-001 F-001～F-004 全 `fixed`，**F-005 open**（发布产出未产生）；A-004 F-001 由 D-009 闭合；**A-005 F-001 / A-013 F-001 已 fixed**（两宿主 CE1–CE10 探针，残余已具名）；**A-005 F-002 fixed**（12 份 v0.13.3 证据）；**A-006/A-008 F-001 fixed**（冷启动/升级/legacy）；**A-009 F-001 fixed**（`/commit` 宿主正例+负例）；A-007 无 required | 开放 required = **1**（A-001 F-005） |
 | 资料引用（若有）是否固定且用户确认 | 无 | 表空 |
 
 ## 意见台账索引
@@ -36,6 +36,7 @@ version: 0.9.0
 | A-009 | 2026-09-13 | self | stage · S5 默认 `/commit` 便利入口 | conditional | 2（宿主实测、runtime 证据） | [A-009-s5-stage-self.md](03-audit/A-009-s5-stage-self.md) |
 | A-013 | 2026-09-13 | independent | S6 关门与发布准备（grok build / grok-4.6 / high） | conditional | 3（层语义宿主 probe、台账发布身份、台账入库）+1 recommended | [A-013-independent-s6-close-review.md](03-audit/A-013-independent-s6-close-review.md) |
 | A-014 | 2026-09-13 | self | 响应 A-013 全部 findings | conditional | 4（F-002/F-003/F-004 fixed；层语义 probe 保持 open） | [A-014-response-a013.md](03-audit/A-014-response-a013.md) |
+| A-015 | 2026-09-13 | self | stage · S6 自审（回归/证据/发布准备）+ 四项 finding 闭合 | conditional | **1**（A-001 F-005 发布产出） | [A-015-s6-stage-self.md](03-audit/A-015-s6-stage-self.md) |
 
 ## 结论状态
 

@@ -1,0 +1,41 @@
+你是被审计的**只读探针**。任务：仅凭本仓库的规则文本，对下面 10 个场景各给出「合法 / 层级错位」的唯一判定，并给出依据。
+
+## 硬性要求
+- **只读**：不得创建、修改、删除任何文件；不得运行 git 写操作；不得调用治理入口（/govern 等）。
+- 只允许读取下列位置来支撑判断：`AGENTS.md`、`docs/architecture/principles.md`、`docs/vision/alignment.md`、`docs/templates/vision/*`、`docs/templates/goal-folder/*`、`docs/vision/roadmap.md`、`docs/vision/plans/VP-004-mcp-file-dual-channel-delivery.md`、`docs/workspaces/workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/00-meta.md`。
+- 不要读 `.git/`，不要递归搜索全仓，不要读其它目标目录。
+
+## 10 个场景（逐条判定）
+
+CE1：某工作区只有 1 个 Root、1 个 VP，用户要求「推进 VP 的阶段」。
+CE2：用户说「更新愿景总路线图」。
+CE3：用户说「给某个 VP 补一个方向级路线图 / 阶段计划」。
+CE4：某 VP 正文里有 R1–R3，同一工作区 Root 的 `00-meta.md` 里也有同名 R1–R3。
+CE5：为某个 VP 建立目标五件套（`GOAL-*` 文件夹），并把它挂在 `parent` 上。
+CE6：把 `{governance_root}/vision/roadmap.md` 的 VP 跟踪表整体搬进某个目标 `00-meta.md`。
+CE7：3 个 VP 绑定同一个工作区。
+CE8：一个 `status: active` 的 VP 绑定 0 个工作区。
+CE9：把某阶段的实施方案写在目标 `01-decision/D-00N-*.md` 里。
+CE10：把 VP 的 `status: closed` 读成「该目标已完成」。
+
+## 输出格式（严格照此，不要多余散文）
+
+先输出一个 JSON 代码块，再输出逐条依据：
+
+```json
+{
+  "host": "<你自称的宿主名>",
+  "cases": [
+    {"id": "CE1", "verdict": "legal" | "misplaced" | "ambiguous", "action": "<一句话：应做什么 / 拒绝什么>", "evidence": "<文件:行 或 文件§节>"},
+    ... CE1..CE10 全部 10 条 ...
+  ],
+  "marker": "LAYER_SEMANTICS_PROBE_OK"
+}
+```
+
+规则约束（务必遵守）：
+- 判定对象是**职责与权威**，不是节点数量。
+- 对 CE4 请分别说明 VP 侧与 Root 侧两条路线图各自的合法内容。
+- 对 CE7 / CE8 / CE9 这类**合法**结构，`verdict` 必须是 `legal`，不要因为「少见」判成 misplaced。
+- 对 CE2 请给出唯一解析目标（写到具体文件），不得含糊。
+- 结尾必须原样输出 `LAYER_SEMANTICS_PROBE_OK` 这一行（在 JSON 的 marker 字段里出现即可）。
