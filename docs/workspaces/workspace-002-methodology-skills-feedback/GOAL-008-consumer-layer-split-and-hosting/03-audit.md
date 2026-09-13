@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.10.0
+version: 0.11.0
 ---
 
 # 审计 · GOAL-008
@@ -36,7 +36,9 @@ version: 0.10.0
 | A-009 | 2026-09-13 | self | stage · S5 默认 `/commit` 便利入口 | conditional | 2（宿主实测、runtime 证据） | [A-009-s5-stage-self.md](03-audit/A-009-s5-stage-self.md) |
 | A-013 | 2026-09-13 | independent | S6 关门与发布准备（grok build / grok-4.6 / high） | conditional | 3（层语义宿主 probe、台账发布身份、台账入库）+1 recommended | [A-013-independent-s6-close-review.md](03-audit/A-013-independent-s6-close-review.md) |
 | A-014 | 2026-09-13 | self | 响应 A-013 全部 findings | conditional | 4（F-002/F-003/F-004 fixed；层语义 probe 保持 open） | [A-014-response-a013.md](03-audit/A-014-response-a013.md) |
-| A-015 | 2026-09-13 | self | stage · S6 自审（回归/证据/发布准备）+ 四项 finding 闭合 | conditional | **1**（A-001 F-005 发布产出） | [A-015-s6-stage-self.md](03-audit/A-015-s6-stage-self.md) |
+| A-015 | 2026-09-13 | self | stage · S6 自审（回归/证据/发布准备）+ 四项 finding 闭合 | conditional | 1（A-001 F-005 发布产出） | [A-015-s6-stage-self.md](03-audit/A-015-s6-stage-self.md) |
+| A-016 | 2026-09-13 | self | v0.13.3 正式发布验收 · A-001 F-005 闭合 | **pass** | 0 | [A-016-v0.13.3-release-acceptance.md](03-audit/A-016-v0.13.3-release-acceptance.md) |
+| A-017 | 2026-09-13 | self | GOAL-008 关门审计（成功标准 5/5、开放 required 0） | **pass** | 0 | [A-017-goal-close-out.md](03-audit/A-017-goal-close-out.md) |
 
 ## 结论状态
 

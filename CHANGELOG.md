@@ -4,7 +4,7 @@
 
 ## Unreleased
 
-（未发布；`0.13.3` 为发布候选，须经 merge 进 `main`、annotated tag 指向 merge commit 与 tag workflow 上传后才构成发布声明。）
+（空；2026-09-13 发布 v0.13.3。）
 
 ## 0.13.3 - 2026-09-13
 

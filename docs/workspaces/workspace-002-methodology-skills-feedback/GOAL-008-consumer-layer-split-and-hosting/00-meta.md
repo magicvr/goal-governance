@@ -1,12 +1,12 @@
 ﻿---
 id: GOAL-008-consumer-layer-split-and-hosting
 title: 双层路线图拆分与消费仓宿主共存
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.9.0
-progress: 83.3%
+version: 1.0.0
+progress: 100%
 ---
 
 # GOAL-008 · 双层路线图拆分与消费仓宿主共存
@@ -26,13 +26,18 @@ progress: 83.3%
 | FB-008 | 部署到消费仓时占用根 `AGENTS.md` 与 `docs/`，消费仓难以在兼容治理框架的前提下维护自有 agent 规则与项目文档 | 安装面为消费仓自有规则和文档留出共存空间，不把框架文件当作唯一根规则或唯一文档树 |
 | FB-009 | 消费仓希望框架默认提供 `/commit` 命令 | 提供可调用的 `/commit` 入口；与 `/govern` 内 Git checkpoint 职责不冲突，失败路径 fail closed |
 
-## 成功标准（暂定，可验证）
+## 成功标准（证据逐条）
 
-- [ ] 组合编排 / 纲领路线图 / 阶段计划 / VP / 子目标有可执行判定谓词与反例；消费面 prompts 与模板不再把愿景总路线图当执行路线图，也不把 VP 当子目标设计
-- [ ] 愿景层总路线图只保留组合编排应关注的内容；VP 跟踪信息不在该文件内膨胀
-- [ ] 消费仓可在兼容目标治理的前提下维护自有 agent 规则与项目文档，不必把框架 `AGENTS.md` / `docs/` 当作唯一占用面
-- [ ] 在已支持的消费宿主上默认提供 `/commit` **便利入口**；**不**进入完整治理安装 MUST、治理入口必达集，也**不**替代 `/govern` checkpoint；失败路径 fail closed
-- [ ] canonical 文档、模板、prompts、契约、安装面及生成镜像保持一致；相关测试与发布门禁通过（范围以 I-006 冻结的版本/资产/回归/证据归属为准）
+- [x] 组合编排 / 纲领路线图 / 阶段计划 / VP / 子目标有可执行判定谓词与反例；消费面 prompts 与模板不再把愿景总路线图当执行路线图，也不把 VP 当子目标设计
+      → 命名表 6 类 + 落位谓词 8 条（`principles.md` §6.4、`alignment.md` §0.3、`AGENTS.md` §6e、消费端 §6e.1）；反例 corpus 见 [验收矩阵](attachments/s1-acceptance-matrix.md) §4，两宿主实测见 [层语义宿主探针](attachments/layer-semantics-host-probe.md)
+- [x] 愿景层总路线图只保留组合编排应关注的内容；VP 跟踪信息不在该文件内膨胀
+      → `vision/roadmap.md` 列名标注**派生投影**、权威在 VP frontmatter；`alignment.md` §0.4（无列要求 + legacy 不得 fail closed）；两处漏 VP-004 漂移改为指针；见 [E-005](02-execution/E-005-s3-projection-and-compat.md)
+- [x] 消费仓可在兼容目标治理的前提下维护自有 agent 规则与项目文档，不必把框架 `AGENTS.md` / `docs/` 当作唯一占用面
+      → 受管标记块共存（`skills/agents_merge.py`；区间外字节永不改写）；隔离仓实测（消费方规则保留、升级幂等、legacy 不阻断）见 [s6 隔离仓证据](attachments/s6-isolated-consumer-evidence.md) 与 [误判更正附件](attachments/v0.13.3-halt-and-misdiagnosis-correction.md)。**边界**：`docs/` 归属本轮只做现状 + 共存说明，可配置治理根（候选 C）未实现，登记于 [D-009](01-decision/D-009-s4-agents-coexistence.md) §5
+- [x] 在已支持的消费宿主上默认提供 `/commit` **便利入口**；**不**进入完整治理安装 MUST、治理入口必达集，也**不**替代 `/govern` checkpoint；失败路径 fail closed
+      → 四宿主默认安装 + 契约必达字段仍四入口 + 机读守卫；宿主实测（正例只提交 owned path、无 owned path 时 fail closed、权限不足亦 fail closed）见 [commit 宿主证据](attachments/commit-entry-host-evidence.md)
+- [x] canonical 文档、模板、prompts、契约、安装面及生成镜像保持一致；相关测试与发布门禁通过（范围以 I-006 冻结的版本/资产/回归/证据归属为准）
+      → docs 65 / skills 89 / scripts 130 全绿；镜像 37 对 0 漂移；`--require-ready` 与 rehearsal 通过；**`v0.13.3` 已正式发布**（tag → merge commit `dfa8600`；9 项资产、zip 摘要与 sidecar 一致）见 [A-016](03-audit/A-016-v0.13.3-release-acceptance.md)
 
 ## 纲领路线图（P-001）
 
@@ -43,13 +48,13 @@ progress: 83.3%
 | **S3** | 愿景总路线图与 VP 跟踪解耦 | **完成**（2026-09-13） | 跟踪权威落点锁定（模型 = **A1 索引承载投影**，[D-005](01-decision/D-005-s3-consumer-compat.md)/[D-008](01-decision/D-008-s3-projection-and-legacy-compat.md)：列名与正文均标注投影、权威在 VP frontmatter）；兼容读取规则落盘于 alignment **§0.4**（legacy 不得 fail closed、VP frontmatter 优先、MUST 表不要求特定列）；重复信息不存在（两处漏 VP-004 漂移改为指针）；`standalone-bootstrap` 不再整文件复制组合编排索引。冷启动端到端演练登记为 S6 前闭合（[A-006](03-audit/A-006-s3-stage-self.md) F-001） |
 | **S4** | 消费仓 `AGENTS.md` / `docs/` 共存 | **完成**（2026-09-13） | 共存模型 = **A 标记块合并**（用户裁决 [D-009](01-decision/D-009-s4-agents-coexistence.md)）：根 `AGENTS.md` 归消费方，框架规则在受管区间内、区间外字节永不改写；安装器（bash/PS）与 updater 共用 `skills/agents_merge.py`；半写标记 fail closed、无 Python 时拒绝覆盖；根 `AGENTS.md` 不再是「完全托管文件」；负例见 [E-006](02-execution/E-006-s4-agents-coexistence.md)。`docs/` 归属本轮只做现状 + 共存说明（候选 C 未做）。真实消费仓升级实测登记 S6 前闭合（[A-008](03-audit/A-008-s4-stage-self.md) F-001） |
 | **S5** | 默认 `/commit` 便利入口 | **完成**（2026-09-13） | 四个已支持宿主（claude/grok/codex/copilot）**默认产出**便利入口并可调用；**非**完整安装 MUST、**非**治理入口必达（契约 `hostEntrypoints` 仍四入口，有机读守卫）、**非** `/govern` checkpoint 替代；fail-closed 负例（越界、既有用户改动、无改动、非 Git、hook 拒绝、detached HEAD、用户禁用、禁 `git add -A`、不 push）写入四个壳文本。真实宿主调用实测登记 S6（[A-009](03-audit/A-009-s5-stage-self.md) F-001）；方案见 [D-010](01-decision/D-010-s5-commit-entry.md) |
-| **S6** | 回归、审计与发布 | **进行中**（2026-09-13 起，主体已完成） | I-006 **已冻结**（[D-011](01-decision/D-011-s6-release-scope-freeze.md)）；**已完成**：全量回归（docs 65 / skills 89 / scripts 128 全绿、镜像 0 漂移、`git diff --check` 洁净）、**12 格 runtime 证据在 `docs/releases/runtime/v0.13.3/` 重捕获全部 pass**（含 Copilot 阻断解除，[D-012](01-decision/D-012-s6-evidence-recapture-and-copilot-unblock.md)）、`--require-ready` 与 release rehearsal **通过**、隔离仓冷启动+升级实测（[附件](attachments/s6-isolated-consumer-evidence.md)）、版本候选落地（`CHANGELOG` + `docs/README` 均标注**未发布**）。**已完成（2026-09-13 补做）**：① 层语义 CE1–CE10 **两宿主探针**（Claude + Grok，行为层全对，残余标签噪声已具名 → [附件](attachments/layer-semantics-host-probe.md)）；② `/commit` **Claude 宿主正例 + fail-closed 负例**（证据单列非必达 → [附件](attachments/commit-entry-host-evidence.md)）；③ 隔离仓 **legacy 缺列/他仓行不阻断、不改写**核对；④ S6 self 关门意见（[A-015](03-audit/A-015-s6-stage-self.md)）。**PR 阶段**：PR **#21** 已开（`dev` → `main`），Windows CI **抓出两个跨平台缺陷**（`install.sh` 的 UTF-8 BOM 使 shebang 失效；Git Bash 把 POSIX 路径交给原生 Python）→ 均已 `fixed` 并加防再犯测试，CI 双 job **pass**（[附件](attachments/pr21-ci-defects.md)）。**发布凭据（[附件](attachments/v0.13.3-release-receipt.md)）**：PR #21 已 merge 到 `main`（merge commit **`dfa8600`**）。**发版曾中断**：编排器误判 legacy 迁移会丢消费方内容 → 用户裁决停发 → 已删除 tag（**从未发布、无 Release 资产**）；随后编排器自查更正——该不变量实际成立，`agents_merge.py` **未做任何代码改动**，并补了两种形态的回归测试（[误判更正附件](attachments/v0.13.3-halt-and-misdiagnosis-correction.md)）。**待重新打 tag**（同一 commit `dfa8600`）并走 tag workflow。**唯一待完成**：⑤ **Release 产出核对** —— workflow 的 `publish` job 需仓库所有者在 GitHub **Environment `release`** 手动审批（AI 无法代签），随后重下载资产逐项比对 sha256。**A-001 F-005 在资产核对前保持 open；未完成前不标 done、不宣称已发布** |
+| **S6** | 回归、审计与发布 | **完成**（2026-09-13） | I-006 **已冻结**（[D-011](01-decision/D-011-s6-release-scope-freeze.md)）；**已完成**：全量回归（docs 65 / skills 89 / scripts 128 全绿、镜像 0 漂移、`git diff --check` 洁净）、**12 格 runtime 证据在 `docs/releases/runtime/v0.13.3/` 重捕获全部 pass**（含 Copilot 阻断解除，[D-012](01-decision/D-012-s6-evidence-recapture-and-copilot-unblock.md)）、`--require-ready` 与 release rehearsal **通过**、隔离仓冷启动+升级实测（[附件](attachments/s6-isolated-consumer-evidence.md)）、版本候选落地（`CHANGELOG` + `docs/README` 均标注**未发布**）。**已完成（2026-09-13 补做）**：① 层语义 CE1–CE10 **两宿主探针**（Claude + Grok，行为层全对，残余标签噪声已具名 → [附件](attachments/layer-semantics-host-probe.md)）；② `/commit` **Claude 宿主正例 + fail-closed 负例**（证据单列非必达 → [附件](attachments/commit-entry-host-evidence.md)）；③ 隔离仓 **legacy 缺列/他仓行不阻断、不改写**核对；④ S6 self 关门意见（[A-015](03-audit/A-015-s6-stage-self.md)）。**PR 阶段**：PR **#21** 已开（`dev` → `main`），Windows CI **抓出两个跨平台缺陷**（`install.sh` 的 UTF-8 BOM 使 shebang 失效；Git Bash 把 POSIX 路径交给原生 Python）→ 均已 `fixed` 并加防再犯测试，CI 双 job **pass**（[附件](attachments/pr21-ci-defects.md)）。**发布凭据（[附件](attachments/v0.13.3-release-receipt.md)）**：PR #21 已 merge 到 `main`（merge commit **`dfa8600`**）。**发版曾中断**：编排器误判 legacy 迁移会丢消费方内容 → 用户裁决停发 → 已删除 tag（**从未发布、无 Release 资产**）；随后编排器自查更正——该不变量实际成立，`agents_merge.py` **未做任何代码改动**，并补了两种形态的回归测试（[误判更正附件](attachments/v0.13.3-halt-and-misdiagnosis-correction.md)）。**待重新打 tag**（同一 commit `dfa8600`）并走 tag workflow。**唯一待完成**：⑤ **Release 产出核对** —— workflow 的 `publish` job 需仓库所有者在 GitHub **Environment `release`** 手动审批（AI 无法代签），随后重下载资产逐项比对 sha256。**A-001 F-005 在资产核对前保持 open；未完成前不标 done、不宣称已发布** |
 
 S1～S5 **已完成**（S4→S5 串行，[D-006](01-decision/D-006-s4-s5-owned-paths-and-serial-decision.md)）。**S6 进行中**（发布范围已冻结，见 [D-011](01-decision/D-011-s6-release-scope-freeze.md)）。**S2～S5 不另开子目标**：用户 2026-09-13 裁决「先等 S1 结论再按需拆」，S1 结论为各阶段写集与证据可在本目标内闭环（P-006 §6.6 停止条件），故留在 GOAL-008 内按阶段推进（[E-003](02-execution/E-003-s1-inventory.md)）。A-001 F-005 未闭合前不得宣称 S6 可发布；I-003 选型未裁决前不得冻结 S4 方案；宿主行为证据与 runtime evidence 锚点（A-005 F-001/F-002）在 S6 闭合前不得宣称「AI 已不再混淆」或发布就绪。
 
 ## 派生进度展示
 
-`progress: 83.3%` = 上方 6 个显式阶段完成 **5 / 6**（等权；S1～S5 完成）。progress 仅展示，不放行阶段、不关闭 finding、不推导 `done`。
+`progress: 100%` = 上方 6 个显式阶段完成 **5 / 6**（等权；S1～S5 完成）。progress 仅展示，不放行阶段、不关闭 finding、不推导 `done`。
 
 ## 信息就绪与未知项
 
