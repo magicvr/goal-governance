@@ -4,7 +4,7 @@ status: active
 created: 2026-07-31
 updated: 2026-09-13
 parent: null
-version: 0.20.0
+version: 0.21.0
 ---
 
 # Goal Tree
@@ -12,6 +12,9 @@ version: 0.20.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-09-13 · GOAL-008 S5 完成（默认 /commit 便利入口）
+
+S5「默认 `/commit` 便利入口」完成：四个已支持宿主（claude / grok / codex / copilot）安装面新增 `/commit`（`$commit`）壳并**默认产出**；安装输出显式区分 `governance-must` 与便利入口。**治理边界未被污染**——契约 `hostEntrypoints` / `files.entrypoints` 仍**只含四个治理入口**，`/commit` 不是完整安装 MUST、不是治理入口必达、不替代 `/govern` checkpoint；边界由 `docs/tests/test_file_l1.py` **三个机读守卫**固定，拒绝未来把 `commit` 混入必达集。fail-closed 负例（越界、既有用户改动、无改动、非 Git、hook 拒绝、detached HEAD、用户禁用、禁 `git add -A`、不 push）写入四个壳文本。回归：**docs 65 OK / skills 89 OK / PowerShell 隔离安装 PASS / 镜像 37 对一致 / `git diff --check` 洁净**；端到端隔离仓四路径均落盘。GOAL-008 推进为 **`active / 83%`**（S1～S6 5/6），**仅剩 S6**。开放 required 4 项全部属 S6 范围（A-001 F-005 发布基线、A-005 F-001/F-002 宿主行为与 runtime 证据、A-006/A-008 F-001 隔离仓实测、A-009 F-001 便利入口实测）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
 ## 2026-09-13 · GOAL-008 S4 完成 + A-007 独立交叉复审 pass
 
 **A-007（independent · grok build / grok-4.6 / reasoning-effort high）**：在基线快照 `b90b2d8` 上核对 S1 盘点主张——抽查 **12 条全部一致**，判定 I-001/I-002/I-003（S1 时点）**成立**、S3 修复**自洽且未新增「不完整安装」路径**，**verdict `pass`、无 required**；2 条 recommended 已 `fixed`。该意见闭合 A-004 F-002（S1 交叉验证待出具）。
@@ -147,7 +150,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
-└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 67% (S1–S4 完成；S5 未开始)
+└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 83% (S1–S5 完成；仅剩 S6)
 ```
 
 ## 状态表
@@ -161,7 +164,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
-| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 67% | 2026-09-13 |
+| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 83% | 2026-09-13 |
 
 ## 编号
 

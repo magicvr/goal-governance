@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 审计 · GOAL-008
@@ -33,6 +33,7 @@ version: 0.7.0
 | A-006 | 2026-09-13 | self | stage · S3 愿景总路线图与 VP 跟踪解耦 | conditional | 1（冷启动端到端演练） | [A-006-s3-stage-self.md](03-audit/A-006-s3-stage-self.md) |
 | A-007 | 2026-09-13 | independent | S1 盘点基线核验 + S2/S3 修复自洽（grok build / grok-4.6 / high） | pass | 0（2 recommended 已 fixed） | [A-007-independent-cross-review-s1-s3.md](03-audit/A-007-independent-cross-review-s1-s3.md) |
 | A-008 | 2026-09-13 | self | stage · S4 消费仓 AGENTS.md 共存 | conditional | 2（真实升级实测、runtime 证据） | [A-008-s4-stage-self.md](03-audit/A-008-s4-stage-self.md) |
+| A-009 | 2026-09-13 | self | stage · S5 默认 `/commit` 便利入口 | conditional | 2（宿主实测、runtime 证据） | [A-009-s5-stage-self.md](03-audit/A-009-s5-stage-self.md) |
 
 ## 结论状态
 

@@ -610,14 +610,17 @@ $ClaudeGovernSrc = Join-Path $PackageRoot 'install\claude\skills\govern\SKILL.md
 $ClaudeAuditSrc = Join-Path $PackageRoot 'install\claude\skills\audit\SKILL.md'
 $ClaudeVisionSrc = Join-Path $PackageRoot 'install\claude\skills\vision\SKILL.md'
 $ClaudeVisionAuditSrc = Join-Path $PackageRoot 'install\claude\skills\vision-audit\SKILL.md'
+$ClaudeCommitSrc = Join-Path $PackageRoot 'install\claude\skills\commit\SKILL.md'
 $GrokGovernSrc = Join-Path $PackageRoot 'install\grok\skills\govern\SKILL.md'
 $GrokAuditSrc = Join-Path $PackageRoot 'install\grok\skills\audit\SKILL.md'
 $GrokVisionSrc = Join-Path $PackageRoot 'install\grok\skills\vision\SKILL.md'
 $GrokVisionAuditSrc = Join-Path $PackageRoot 'install\grok\skills\vision-audit\SKILL.md'
+$GrokCommitSrc = Join-Path $PackageRoot 'install\grok\skills\commit\SKILL.md'
 $CodexGovernSrc = Join-Path $PackageRoot 'install\codex\skills\govern\SKILL.md'
 $CodexAuditSrc = Join-Path $PackageRoot 'install\codex\skills\audit\SKILL.md'
 $CodexVisionSrc = Join-Path $PackageRoot 'install\codex\skills\vision\SKILL.md'
 $CodexVisionAuditSrc = Join-Path $PackageRoot 'install\codex\skills\vision-audit\SKILL.md'
+$CodexCommitSrc = Join-Path $PackageRoot 'install\codex\skills\commit\SKILL.md'
 $CopilotSrc = Join-Path $PackageRoot 'install\copilot\copilot-instructions.md'
 $CopilotWrappersSrc = Join-Path $PackageRoot 'install\copilot\prompts'
 $PromptsSrc = Join-Path $PackageRoot 'prompts'
@@ -714,6 +717,7 @@ if ($Claude) {
     Copy-RuleFile -Source $ClaudeAuditSrc -Destination (Join-Path $TargetDir '.claude\skills\audit\SKILL.md')
     Copy-RuleFile -Source $ClaudeVisionSrc -Destination (Join-Path $TargetDir '.claude\skills\vision\SKILL.md')
     Copy-RuleFile -Source $ClaudeVisionAuditSrc -Destination (Join-Path $TargetDir '.claude\skills\vision-audit\SKILL.md')
+    Copy-RuleFile -Source $ClaudeCommitSrc -Destination (Join-Path $TargetDir '.claude\skills\commit\SKILL.md')
     Write-Host 'Claude skills: /govern + /audit + /vision + /vision-audit'
 }
 
@@ -722,6 +726,7 @@ if ($Grok) {
     Copy-RuleFile -Source $GrokAuditSrc -Destination (Join-Path $TargetDir '.grok\skills\audit\SKILL.md')
     Copy-RuleFile -Source $GrokVisionSrc -Destination (Join-Path $TargetDir '.grok\skills\vision\SKILL.md')
     Copy-RuleFile -Source $GrokVisionAuditSrc -Destination (Join-Path $TargetDir '.grok\skills\vision-audit\SKILL.md')
+    Copy-RuleFile -Source $GrokCommitSrc -Destination (Join-Path $TargetDir '.grok\skills\commit\SKILL.md')
     Write-Host 'Grok skills: /govern + /audit + /vision + /vision-audit'
     $agentsPath = Join-Path $TargetDir 'AGENTS.md'
     if (-not (Test-Path -LiteralPath $agentsPath -PathType Leaf) -and (Test-Path -LiteralPath $ClaudeAgentsSrc -PathType Leaf)) {
@@ -736,6 +741,7 @@ if ($Codex) {
     Copy-RuleFile -Source $CodexAuditSrc -Destination (Join-Path $TargetDir '.agents\skills\audit\SKILL.md')
     Copy-RuleFile -Source $CodexVisionSrc -Destination (Join-Path $TargetDir '.agents\skills\vision\SKILL.md')
     Copy-RuleFile -Source $CodexVisionAuditSrc -Destination (Join-Path $TargetDir '.agents\skills\vision-audit\SKILL.md')
+    Copy-RuleFile -Source $CodexCommitSrc -Destination (Join-Path $TargetDir '.agents\skills\commit\SKILL.md')
     Write-Host 'Codex skills: $govern + $audit + $vision + $vision-audit under .agents/skills/'
 }
 
@@ -751,13 +757,16 @@ if ($Copilot) {
         New-Item -ItemType Directory -Path $promptsDir -Force | Out-Null
     }
     $wrapperNames = @('govern', 'audit', 'vision', 'vision-audit')
+    # GOAL-008 S5: /commit is default-installed but is NOT a governance-must entrypoint.
+    $convenienceWrapperNames = @('commit')
     if ($WithPrimitives) {
         $wrapperNames += @('new-goal', 'log-decision', 'update-execution', 'write-audit')
         Write-Host 'Including advanced primitive slash wrappers (-WithPrimitives)'
     } else {
-        Write-Host 'Copilot slash surface: /govern + /audit + /vision + /vision-audit (pass -WithPrimitives for form-fill ops)'
+        Write-Host 'Copilot slash surface: /govern + /audit + /vision + /vision-audit (governance-must)'
+        Write-Host 'Convenience entry: /commit (default-installed; NOT a governance-must entrypoint)'
     }
-    foreach ($name in $wrapperNames) {
+    foreach ($name in ($wrapperNames + $convenienceWrapperNames)) {
         Copy-RuleFile `
             -Source (Join-Path $CopilotWrappersSrc "$name.md") `
             -Destination (Join-Path $promptsDir "$name.prompt.md")

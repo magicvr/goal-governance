@@ -49,6 +49,9 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 | Grok Build CLI `0.2.114` | `.grok/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
 | GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` · `/vision-audit` | 四个入口均 `runtime-verified` via BYOK（2026-07-30） |
 | OpenAI Codex | `.agents/skills/{govern,audit,vision,vision-audit}/` | `$govern` · `$audit` · `$vision` · `$vision-audit` | **install surface shipped**（GOAL-002）；runtime 探针见目标证据链（非矩阵 committed） |
+| 便利入口（非必达） | `.claude/skills/commit/`、`.grok/skills/commit/`、`.agents/skills/commit/`、`.github/prompts/commit.prompt.md` | `/commit` · `$commit` | **默认安装的便利入口**（GOAL-008 S5 / D-002 §4）：**不在**治理必达集、**不是**完整安装 MUST、**不替代** `/govern` checkpoint；缺它不影响完整安装判定 |
+
+> **`/commit` 的契约位置**：`docs/contracts/skills-consumer-contract.json` 的 `hostEntrypoints` / `requiredEntrypoints` 仍**只含四个治理入口**；`/commit` 由安装器默认写入宿主面，但**不进入**契约必达字段（机读守卫见 `docs/tests/test_file_l1.py` 的必达等式断言）。
 
 核心行为：
 

@@ -569,14 +569,17 @@ CLAUDE_GOVERN_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
 CLAUDE_AUDIT_SRC="$PACKAGE_ROOT/install/claude/skills/audit/SKILL.md"
 CLAUDE_VISION_SRC="$PACKAGE_ROOT/install/claude/skills/vision/SKILL.md"
 CLAUDE_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/claude/skills/vision-audit/SKILL.md"
+CLAUDE_COMMIT_SRC="$PACKAGE_ROOT/install/claude/skills/commit/SKILL.md"
 GROK_GOVERN_SRC="$PACKAGE_ROOT/install/grok/skills/govern/SKILL.md"
 GROK_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/audit/SKILL.md"
 GROK_VISION_SRC="$PACKAGE_ROOT/install/grok/skills/vision/SKILL.md"
 GROK_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/vision-audit/SKILL.md"
+GROK_COMMIT_SRC="$PACKAGE_ROOT/install/grok/skills/commit/SKILL.md"
 CODEX_GOVERN_SRC="$PACKAGE_ROOT/install/codex/skills/govern/SKILL.md"
 CODEX_AUDIT_SRC="$PACKAGE_ROOT/install/codex/skills/audit/SKILL.md"
 CODEX_VISION_SRC="$PACKAGE_ROOT/install/codex/skills/vision/SKILL.md"
 CODEX_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/codex/skills/vision-audit/SKILL.md"
+CODEX_COMMIT_SRC="$PACKAGE_ROOT/install/codex/skills/commit/SKILL.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
@@ -631,6 +634,7 @@ if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
   copy_file "$CLAUDE_AUDIT_SRC" "$TARGET_DIR/.claude/skills/audit/SKILL.md"
   copy_file "$CLAUDE_VISION_SRC" "$TARGET_DIR/.claude/skills/vision/SKILL.md"
   copy_file "$CLAUDE_VISION_AUDIT_SRC" "$TARGET_DIR/.claude/skills/vision-audit/SKILL.md"
+  copy_file "$CLAUDE_COMMIT_SRC" "$TARGET_DIR/.claude/skills/commit/SKILL.md"
   echo "Claude skills: /govern + /audit + /vision + /vision-audit"
 fi
 
@@ -639,6 +643,7 @@ if [[ "$INSTALL_GROK" -eq 1 ]]; then
   copy_file "$GROK_AUDIT_SRC" "$TARGET_DIR/.grok/skills/audit/SKILL.md"
   copy_file "$GROK_VISION_SRC" "$TARGET_DIR/.grok/skills/vision/SKILL.md"
   copy_file "$GROK_VISION_AUDIT_SRC" "$TARGET_DIR/.grok/skills/vision-audit/SKILL.md"
+  copy_file "$GROK_COMMIT_SRC" "$TARGET_DIR/.grok/skills/commit/SKILL.md"
   echo "Grok skills: /govern + /audit + /vision + /vision-audit"
   # Optional: also ensure AGENTS if missing (Grok reads AGENTS.md as project rules)
   if [[ ! -f "$TARGET_DIR/AGENTS.md" && -f "$CLAUDE_AGENTS_SRC" ]]; then
@@ -653,6 +658,7 @@ if [[ "$INSTALL_CODEX" -eq 1 ]]; then
   copy_file "$CODEX_AUDIT_SRC" "$TARGET_DIR/.agents/skills/audit/SKILL.md"
   copy_file "$CODEX_VISION_SRC" "$TARGET_DIR/.agents/skills/vision/SKILL.md"
   copy_file "$CODEX_VISION_AUDIT_SRC" "$TARGET_DIR/.agents/skills/vision-audit/SKILL.md"
+  copy_file "$CODEX_COMMIT_SRC" "$TARGET_DIR/.agents/skills/commit/SKILL.md"
   echo "Codex skills: \$govern + \$audit + \$vision + \$vision-audit under .agents/skills/"
 fi
 
@@ -663,13 +669,15 @@ if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   mkdir -p "$TARGET_DIR/.github/prompts"
   # Default product surface: impl + Goal audit + vision decision + independent Vision Review
   WRAPPER_NAMES=(govern audit vision vision-audit)
+CONVENIENCE_WRAPPER_NAMES=(commit)
   if [[ "$INSTALL_PRIMITIVE_WRAPPERS" -eq 1 ]]; then
     WRAPPER_NAMES+=(new-goal log-decision update-execution write-audit)
     echo "Including advanced primitive slash wrappers (--with-primitives)"
   else
-    echo "Copilot slash surface: /govern + /audit + /vision + /vision-audit (pass --with-primitives for form-fill ops)"
+    echo "Copilot slash surface: /govern + /audit + /vision + /vision-audit (governance-must)"
+  echo "Convenience entry: /commit (default-installed; NOT a governance-must entrypoint)"
   fi
-  for name in "${WRAPPER_NAMES[@]}"; do
+  for name in "${WRAPPER_NAMES[@]}" "${CONVENIENCE_WRAPPER_NAMES[@]}"; do
     copy_file \
       "$COPILOT_WRAPPERS_SRC/${name}.md" \
       "$TARGET_DIR/.github/prompts/${name}.prompt.md"

@@ -69,6 +69,58 @@ class FileChannelL1Tests(unittest.TestCase):
             path = SKILLS / "install" / "copilot" / "prompts" / f"{entry}.md"
             self.assertTrue(path.is_file(), msg=f"missing copilot {entry} prompt")
 
+    def test_convenience_commit_entry_never_joins_the_must_set(self) -> None:
+        """GOAL-008 S5: `/commit` is default-installed but must stay non-must.
+
+        D-002 §4 freezes the boundary: convenience entry, default-installable,
+        never a full-install MUST, never a governance-must entrypoint, never a
+        `/govern` checkpoint replacement. Adding it to ENTRYPOINT_NAMES or to the
+        contract's hostEntrypoints would silently break that boundary.
+        """
+        self.assertEqual(
+            set(kernel.ENTRYPOINT_NAMES),
+            {"govern", "audit", "vision", "vision-audit"},
+            msg="governance-must entrypoint set changed; /commit must stay outside it",
+        )
+        contract = json.loads(
+            (CONTRACTS / "skills-consumer-contract.json").read_text(encoding="utf-8")
+        )
+        host_entrypoints = contract["protocol"]["publicContract"]["hostEntrypoints"]
+        self.assertNotIn("commit", host_entrypoints)
+        channels = {item["channel"]: item for item in contract["deliveryChannels"]}
+        self.assertNotIn("commit", channels["files"]["entrypoints"])
+
+    def test_convenience_commit_surface_ships_for_every_host(self) -> None:
+        """The convenience entry is default-installed on each supported host."""
+        for host in HOST_SKILL_DIRS:
+            skill = SKILLS / "install" / host / "skills" / "commit" / "SKILL.md"
+            self.assertTrue(skill.is_file(), msg=f"missing {host} commit skill")
+        prompt = SKILLS / "install" / "copilot" / "prompts" / "commit.md"
+        self.assertTrue(prompt.is_file(), msg="missing copilot commit prompt")
+
+    def test_convenience_commit_contract_forbids_unsafe_staging(self) -> None:
+        """Every shipped /commit face must carry the fail-closed contract."""
+        faces = [
+            SKILLS / "install" / host / "skills" / "commit" / "SKILL.md"
+            for host in HOST_SKILL_DIRS
+        ] + [SKILLS / "install" / "copilot" / "prompts" / "commit.md"]
+        for path in faces:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("git add -A", text, msg=f"missing git add -A prohibition: {path}")
+            self.assertIn("owned path", text.lower(), msg=f"missing owned-path rule: {path}")
+            self.assertIn("fail closed", text, msg=f"missing fail-closed rule: {path}")
+            self.assertRegex(
+                text,
+                r"非治理必达|NOT a governance-must|不在\*\*治理必达集|不\*\*在\*\*四治理入口",
+                msg=f"missing convenience-boundary statement: {path}",
+            )
+            self.assertIn("checkpoint", text, msg=f"missing checkpoint boundary: {path}")
+            self.assertNotIn(
+                "git push",
+                text.replace("**不** `git push`", "").replace("不 push", "").replace("**不得** `git push`", "").replace("**不**得 `git push`", "").replace("**不得**产生远端副作用", ""),
+                msg=f"unexpected push behaviour advertised: {path}",
+            )
+
     def test_install_and_bootstrap_scripts_exist(self) -> None:
         for rel in (
             "skills/install.sh",
