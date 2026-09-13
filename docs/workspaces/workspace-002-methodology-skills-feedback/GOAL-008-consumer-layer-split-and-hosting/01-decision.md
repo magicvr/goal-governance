@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.4.0
+version: 0.5.0
 ---
 
 # 决策记录 · GOAL-008
@@ -37,3 +37,4 @@ I-001～I-006 不阻断目标设立；未经验证不得把候选机制写成已
 | D-005 | 2026-09-13 | S3 权威模型（A1）与消费仓兼容裁决 | accepted | `01-decision/D-005-s3-consumer-compat.md` |
 | D-006 | 2026-09-13 | S4/S5 owned paths 与串行调度判定 | accepted | `01-decision/D-006-s4-s5-owned-paths-and-serial-decision.md` |
 | D-007 | 2026-09-13 | S2 层级语义冻结：命名表补全为 6 类 + 落位谓词 8 条 | accepted | `01-decision/D-007-s2-layer-semantics-freeze.md` |
+| D-008 | 2026-09-13 | S3 落地：投影标注、legacy 兼容读取与骨架复制修正 | accepted | `01-decision/D-008-s3-projection-and-legacy-compat.md` |

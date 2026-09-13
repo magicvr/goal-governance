@@ -3,8 +3,8 @@ doc_type: vision-index
 title: 愿景体系入口
 status: active
 created: 2026-07-28
-updated: 2026-08-10
-version: 0.6.0
+updated: 2026-09-13
+version: 0.7.0
 ---
 
 # 愿景体系 · `docs/vision/`
@@ -27,8 +27,8 @@ version: 0.6.0
 | 文件 | 职责 |
 |------|------|
 | [charter.md](charter.md) | 现行愿景正文（目的、边界、非目标） |
-| [roadmap.md](roadmap.md) | **组合编排**索引（VP 波次，非 progress%） |
-| [plans/](plans/) | 单个 `VP-*.md` **意图**权威正文 |
+| [roadmap.md](roadmap.md) | **组合编排**索引（VP 波次，非 progress%）；其 `status` 列为**派生投影**，权威在各 `plans/VP-*.md` frontmatter |
+| [plans/](plans/) | 单个 `VP-*.md` **意图**权威正文；`status` / `vision_ref` / `lead_workspace` 的权威落点 |
 | [revisions.md](revisions.md) | Charter 修订时间线（`VR-`） |
 | [reviews.md](reviews.md) | **Vision Review** 稳定索引与当前 required 投影 |
 | [reviews/](reviews/) | 单条 `VRev-NNN-<slug>.md` 正式报告（self / independent 共用序列） |

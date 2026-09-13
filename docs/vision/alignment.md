@@ -50,7 +50,7 @@ parent: null
 | 愿景规则 | `{governance_root}/vision/alignment.md` | **MUST** | 本文件；规则权威 |
 | 愿景入口 | `{governance_root}/vision/README.md` | **MUST** | 目录地图与硬边界 |
 | 愿景实例 | `{governance_root}/vision/charter.md`（`status: active`） | **MUST** | 单愿景；缺 = 不完整 |
-| 愿景树 | `{governance_root}/vision/roadmap.md` | **MUST** | 组合编排索引（可极简，但文件必须存在） |
+| 愿景树 | `{governance_root}/vision/roadmap.md` | **MUST** | 组合编排索引（可极简，但文件必须存在；**不要求任何特定列**） |
 | 愿景树 | `{governance_root}/vision/revisions.md` | **MUST** | Charter 修订台账（可极简） |
 | 愿景树 | `{governance_root}/vision/reviews.md` | **MUST** | Vision Review 稳定索引；报告在 `reviews/VRev-NNN-*.md`（有条目时创建目录） |
 | 愿景树 | `{governance_root}/vision/workspaces.md` | **MUST** | 工作区贡献图（可极简） |
@@ -81,6 +81,16 @@ parent: null
 **层级错位（fail closed）**：把 VP / Charter / 愿景文件当作目标节点、`parent` 或 Goal 状态源；在愿景层写可执行纲领阶段、子目标编号、Goal status 或 progress%；在目标层复写第二套愿景边界（超出短 `serves_summary` + 链接）。**判定对象是职责与权威，不是节点数量**——一区一 Root 一 VP、多 VP 绑同区、0 区 `active` VP 均合法。
 
 **状态与跟踪权威**：VP 的 `status` / `vision_ref` / `lead_workspace` 权威在**该 VP 文件 frontmatter**。`roadmap.md` 保留 `status` 列时，该列**只是派生投影**：必须显式标注、不得用于任何门禁判定，也不构成第二权威（见 [principles.md §6.5](../architecture/principles.md)）。
+
+### 0.4 组合编排索引的投影与兼容读取（D-005）
+
+1. **投影**：`roadmap.md` 的 `status` 列（及其它可由 VP 派生的列）必须标注为**派生投影**；写入顺序恒为「先改 VP frontmatter → 再刷新投影」。投影不一致时**以 VP 文件为准**，且该不一致本身**不构成**门禁失败。
+2. **无列要求**：MUST 表只要求该文件存在；列集合（含 `workspace_count` 等自定义列）不是门禁条件，可增删。
+3. **legacy 兼容（不得 fail closed）**：其他版本写入的行/列、或由骨架复制而来的**他仓 VP 行**，一律只作 **legacy 提示**：
+   - 不得用于任何门禁判定、不得阻断新建区/推进/放行/关门；
+   - **不得**因残留行/列或缺列而判「不完整安装」；
+   - 兼容读取顺序 = **VP frontmatter 优先**；仅当该 VP 文件缺失时，投影值可作提示，且不得据此宣告 VP 状态。
+4. **骨架复制**：冷启动复制愿景树时，组合编排索引必须按**本地 VP 集合**重写，不得整文件照搬他仓实例行（[standalone-bootstrap.md §2.3](../standalone-bootstrap.md)）。
 
 ## 1. 类型与禁止
 

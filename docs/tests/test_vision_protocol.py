@@ -631,5 +631,81 @@ class LayerNamingTests(unittest.TestCase):
             self.assertIn("只属于**本目标**", text)
 
 
+class CompositionRoadmapAuthorityTests(unittest.TestCase):
+    """S3 (GOAL-008): roadmap status is a derived projection; legacy rows stay compatible.
+
+    D-005 model A1: VP frontmatter is the authority for status/vision_ref/
+    lead_workspace; the composition index keeps a labelled projection only.
+    Existing consumer repos bootstrapped by whole-file copy must not be treated
+    as incomplete installs because of legacy rows/columns.
+    """
+
+    ROADMAP = REPO_ROOT / "docs" / "vision" / "roadmap.md"
+    ALIGNMENT = REPO_ROOT / "docs" / "vision" / "alignment.md"
+    BOOTSTRAP = REPO_ROOT / "docs" / "standalone-bootstrap.md"
+
+    def test_production_roadmap_labels_status_column_as_projection(self) -> None:
+        text = self.ROADMAP.read_text(encoding="utf-8")
+        self.assertIn("派生投影", text)
+        self.assertIn("不得用于任何门禁判定", text)
+        # The table header must mark the column itself, not only the prose.
+        header = [line for line in text.splitlines() if line.startswith("| id |")]
+        self.assertEqual(len(header), 1, "expected exactly one composition index header")
+        self.assertIn("派生投影", header[0])
+        # Authority must be declared on the VP side.
+        self.assertIn("frontmatter", text)
+
+    def test_roadmap_write_order_puts_vp_frontmatter_first(self) -> None:
+        text = self.ROADMAP.read_text(encoding="utf-8")
+        self.assertIn("先在 VP 文件写关门摘要", text)
+        self.assertIn("本表不是状态源", text)
+
+    def test_alignment_defines_projection_and_legacy_compatibility(self) -> None:
+        text = self.ALIGNMENT.read_text(encoding="utf-8")
+        self.assertIn("### 0.4 组合编排索引的投影与兼容读取", text)
+        self.assertIn("不得用于任何门禁判定", text)
+        # Legacy rows must never be a gate or an incomplete-install trigger.
+        self.assertIn("legacy 提示", text)
+        self.assertIn("不得**因残留行/列或缺列而判「不完整安装」", text)
+        self.assertIn("VP frontmatter 优先", text)
+        # MUST row must not require a specific column set.
+        self.assertIn("**不要求任何特定列**", text)
+
+    def test_bootstrap_does_not_copy_composition_index_verbatim(self) -> None:
+        text = self.BOOTSTRAP.read_text(encoding="utf-8")
+        self.assertIn("不得整文件照搬", text)
+        self.assertIn("docs\\templates\\vision\\roadmap.md", text)
+        # The old verbatim-copy loop must not include roadmap.md any more.
+        loop_line = [
+            line
+            for line in text.splitlines()
+            if line.strip().startswith("foreach ($name in @(")
+        ]
+        self.assertTrue(loop_line, "expected the skeleton copy loop")
+        self.assertNotIn("'roadmap.md'", loop_line[0])
+
+    def test_vision_index_declares_projection_authority(self) -> None:
+        index = (REPO_ROOT / "docs" / "vision" / "README.md").read_text(encoding="utf-8")
+        self.assertIn("派生投影", index)
+        self.assertIn("权威落点", index)
+
+    def test_no_stale_portfolio_status_list_in_overview_or_root_meta(self) -> None:
+        """The two known drift sites (missing VP-004) must point at the authority."""
+        overview = (
+            REPO_ROOT / "docs" / "architecture" / "overview.md"
+        ).read_text(encoding="utf-8")
+        root_meta = (
+            REPO_ROOT
+            / "docs"
+            / "workspaces"
+            / "workspace-001-goal-governance"
+            / "GOAL-001-main-vision"
+            / "00-meta.md"
+        ).read_text(encoding="utf-8")
+        for text, name in ((overview, "overview.md"), (root_meta, "Root 00-meta.md")):
+            self.assertNotIn("VP-003 planned（正式挂起）", text, msg=name)
+            self.assertIn("../vision/roadmap.md", text, msg=name)
+
+
 if __name__ == "__main__":
     unittest.main()

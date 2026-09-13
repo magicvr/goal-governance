@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-13
 parent: null
-version: 0.18.0
+version: 0.19.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-13 · GOAL-008 S3 完成（投影与兼容解耦）
+
+S3「愿景总路线图与 VP 跟踪解耦」完成：按用户裁决 **A1 索引承载投影** 落地——`docs/vision/roadmap.md` 列名与正文均标注**派生投影**、权威指向各 VP frontmatter、写入顺序改为「先改 VP frontmatter 再刷新投影」；兼容读取规则写入规则权威 alignment **§0.4**（legacy 行/列只作提示、**不得**因残留而判「不完整安装」、VP frontmatter 优先、MUST 表**不要求任何特定列**）；`docs/standalone-bootstrap.md` 改为复制 `templates/vision/roadmap.md` 骨架并重写（不再整文件照搬他仓 VP 行）；两处漏 VP-004 的漂移（overview.md 与其镜像、workspace-001 Root 00-meta）改为指针；fixture 升为带投影标注的 6 列；新增 `CompositionRoadmapAuthorityTests`（6 项）。回归：docs **62 OK**、skills 43 OK、镜像 37 对、`git diff --check` 洁净；**未新增 MUST**。GOAL-008 推进为 **`active / 50%`**（S1～S6 3/6），S4 未开始（S4 方案冻结前须取得用户对共存模型的裁决）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
 
 ## 2026-09-13 · GOAL-008 S2 完成（层级语义拆分）
 
@@ -138,7 +142,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
-└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 33% (S1/S2 完成；S3 未开始)
+└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 50% (S1/S2/S3 完成；S4 未开始)
 ```
 
 ## 状态表
@@ -152,7 +156,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
-| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 33% | 2026-09-13 |
+| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-09-13 |
 
 ## 编号
 
