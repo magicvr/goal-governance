@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.11.0
+version: 0.12.0
 ---
 
 # 审计 · GOAL-008
@@ -39,6 +39,8 @@ version: 0.11.0
 | A-015 | 2026-09-13 | self | stage · S6 自审（回归/证据/发布准备）+ 四项 finding 闭合 | conditional | 1（A-001 F-005 发布产出） | [A-015-s6-stage-self.md](03-audit/A-015-s6-stage-self.md) |
 | A-016 | 2026-09-13 | self | v0.13.3 正式发布验收 · A-001 F-005 闭合 | **pass** | 0 | [A-016-v0.13.3-release-acceptance.md](03-audit/A-016-v0.13.3-release-acceptance.md) |
 | A-017 | 2026-09-13 | self | GOAL-008 关门审计（成功标准 5/5、开放 required 0） | **pass** | 0 | [A-017-goal-close-out.md](03-audit/A-017-goal-close-out.md) |
+| A-018 | 2026-09-13 | independent | 发布后独立核验（grok build / grok-4.6 / high；含 legacy 迁移实测） | conditional | 1（台账发布身份，中间态）+1 recommended | [A-018-independent-post-release-review.md](03-audit/A-018-independent-post-release-review.md) |
+| A-019 | 2026-09-13 | self | 响应 A-018 全部 findings 与建议 | **pass** | 0 | [A-019-response-a018.md](03-audit/A-019-response-a018.md) |
 
 ## 结论状态
 

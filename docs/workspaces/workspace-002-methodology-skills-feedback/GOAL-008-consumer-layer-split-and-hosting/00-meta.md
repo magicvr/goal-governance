@@ -1,11 +1,11 @@
----
+﻿---
 id: GOAL-008-consumer-layer-split-and-hosting
 title: 双层路线图拆分与消费仓宿主共存
 status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 1.0.0
+version: 1.0.1
 progress: 100%
 ---
 
@@ -13,7 +13,7 @@ progress: 100%
 
 > **状态：`done` / `progress: 100%`（S1～S6 6/6），2026-09-13 关门。**
 > 发布：`v0.13.3`（annotated tag → main merge commit `dfa8600`；tag workflow `34748891084` 经 Environment `release` 审批发布 **9 项**资产，zip 摘要与 sidecar 一致）。
-> 关门依据：[A-017](03-audit/A-017-goal-close-out.md)（成功标准 5/5、开放 required = 0、信息项全部 verified/closed）；发布验收：[A-016](03-audit/A-016-v0.13.3-release-acceptance.md)。
+> 关门依据：[A-017](03-audit/A-017-goal-close-out.md)（成功标准 5/5、开放 required = 0、信息项全部 verified/closed）；发布验收：[A-016](03-audit/A-016-v0.13.3-release-acceptance.md)；发布后独立核验 [A-018](03-audit/A-018-independent-post-release-review.md)（conditional，2 项 finding）已由 [A-019](03-audit/A-019-response-a018.md) 全部 ixed（sha256 复核、台账改写、注释与实现对齐、PR #21 关闭）。
 > 过程留痕：本轮曾因编排器误判 legacy 迁移会丢消费方内容而**停发一次**（tag 删除、**从未发布资产**），自查更正后在同一 commit 重新打 tag 发布——见[更正附件](attachments/v0.13.3-halt-and-misdiagnosis-correction.md)。
 > **未**随之关门：Root `GOAL-001-methodology-skills-feedback-evolution`（R3 长期持续治理）与 VP-002；A-017 登记的 5 项后续输入留在本目标台账。
 
