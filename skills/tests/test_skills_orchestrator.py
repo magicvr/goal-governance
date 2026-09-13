@@ -701,6 +701,30 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             vision_audit = entrypoints["vision-audit"]
             self.assertIn("vision-audit", vision_audit["evidence"][0])
 
+    def test_installers_ship_without_utf8_bom(self) -> None:
+        """GOAL-008 S6: a BOM breaks `install.sh`'s shebang when downloaded.
+
+        Windows PowerShell's `Set-Content -Encoding utf8` writes a UTF-8 BOM;
+        with it, the packaged `install.sh` starts with `\\ufeff#!/usr/bin/env`,
+        so bash reports `\\ufeff#!/usr/bin/env: No such file or directory` and
+        the bootstrap install fails on hosts that download the package (caught by
+        the Windows CI job). Keep both installers BOM-free and assert the shebang
+        and parseable header stay at byte 0.
+        """
+        for path, expected_prefix in (
+            (INSTALL_SH, b"#!/usr/bin/env bash"),
+            (INSTALL_PS1, b"# Goal Governance Skills installer"),
+        ):
+            head = path.read_bytes()[:4]
+            self.assertFalse(
+                head.startswith(b"\xef\xbb\xbf"),
+                msg=f"UTF-8 BOM at byte 0 of {path.name}; the shebang/download path breaks",
+            )
+            self.assertTrue(
+                path.read_bytes().startswith(expected_prefix),
+                msg=f"{path.name} must start with its expected header",
+            )
+
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""
         if not (CORE_PRINCIPLES.is_file() and CORE_AGENTS.is_file()):

@@ -1,4 +1,4 @@
-﻿# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot + Codex)
+# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot + Codex)
 # Run from the target project root. No network access required.
 #
 # Typical flow:
