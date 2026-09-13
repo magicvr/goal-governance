@@ -4,7 +4,7 @@ status: active
 created: 2026-07-31
 updated: 2026-09-13
 parent: null
-version: 0.22.0
+version: 0.23.0
 ---
 
 # Goal Tree
@@ -12,6 +12,9 @@ version: 0.22.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-09-13 · GOAL-008 关门（v0.13.3 正式发布）
+
+GOAL-008 全部六阶段完成并关门。**发布**：PR #21 合入 `main`（merge commit `dfa8600`），annotated tag **`v0.13.3`** 指向该 commit，tag workflow run `34748891084` 经 Environment `release` 审批后发布 **9 项** Release 资产，两个 zip 重下载 sha256 **与 sidecar 逐项一致**；包内确认含 `agents_merge.py`、四宿主 `/commit` 壳、`templates/vision/roadmap.md` 与**无 BOM** 的 `install.sh`。**审计**：A-016 发布验收 `pass`、A-017 关门审计 `pass`（成功标准 5/5、开放 required = **0**、信息项全部 verified/closed）。**过程留痕**：本轮曾因编排器误判 legacy 迁移会丢消费方内容而由用户裁决**停发**（tag 删除、从未发布资产），随后自查更正——该不变量成立、无代码改动、在同一 commit 重新打 tag 发布；同轮还由 Windows CI 抓出并修复两个跨平台缺陷（安装器 UTF-8 BOM、Git Bash POSIX 路径交给原生 Python）。GOAL-008 标为 **`done / 100%`**（S1～S6 6/6）；Root R3 与 VP-002 仍为长期持续治理，不随之关门。Root progress 保持 67%；下一编号 **GOAL-009**。
 ## 2026-09-13 · GOAL-008 S6 首轮（回归 + 证据重捕获 + 发布准备）
 
 S6 主体完成：**全量回归全绿**（docs 65 / skills 89 / scripts 128，镜像 37 对 0 漂移，`git diff --check` 洁净）；**12 格 runtime 证据在 `docs/releases/runtime/v0.13.3/` 重捕获全部 `pass`**（claude `2.1.270` / grok `1.0.30` / copilot `1.0.75`），`capture_runtime_evidence --check` 12/12 一致，`compatibility_report --require-ready` 通过（`ready-for-release-evidence`），release rehearsal 通过；隔离消费仓冷启动与升级重放实测通过；版本落地 `0.13.3`（CHANGELOG + docs 台账）。Copilot 首轮因本机 BYOK 模型失效（`deepseek-v4-flash` 已停用）四格 fail → 改为显式传 `--model gemini-3.8-flash-high` 后全部 pass，失败 JSON 保留为过程记录但未被矩阵引用（D-012）。
@@ -155,7 +158,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
-└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 83% (S1–S5 完成；仅剩 S6)
+└── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
 ```
 
 ## 状态表
@@ -169,7 +172,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
-| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 83% | 2026-09-13 |
+| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
 
 ## 编号
 

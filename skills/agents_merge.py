@@ -154,16 +154,26 @@ def _outer_frame(text: str) -> tuple[int, int] | None:
 
 
 def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
-    """Return ``(merged_text, changed)``. Never rewrites bytes outside markers.
+    """Return ``(merged_text, changed)``.
 
-    Nesting contract:
-      * ``source_text`` is the shipped rule face. When it wraps its whole content
-        in one marker pair, that outer pair is the managed block; a nested inner
-        pair (the rule-level markers) is preserved verbatim inside it.
-      * When the target already carries an *outer* frame, only that frame is
-        rewritten; every other byte is kept (consumer rules coexist).
-      * A target that is a pre-S4 whole-file install of these same rules is
-        migrated to the marked form instead of having the block appended twice.
+    Behaviour boundary (what this function actually guarantees):
+
+      * **Bytes outside the managed markers are never rewritten.** Consumer
+        rules placed before or after the block survive verbatim, in every shape
+        (fresh file, pre-S4 whole-file install, already-merged file). This is the
+        S4/S6 promise and it is covered by
+        ``test_all_pre_s4_shapes_keep_bytes_outside_the_markers``.
+      * **Text inside the managed markers is framework-managed and is replaced**
+        by the source face when it differs. A consumer edit made *inside* the
+        block is therefore not preserved — by design, not by accident.
+      * A target byte-identical to the shipped rule face (a pre-S4 whole-file
+        install) migrates to the marked form with no content change.
+      * Markers nest: the shipped rule face may contain its own rule-level pair
+        inside the outer managed pair; the outer pair is the managed block.
+
+    Callers that must not rewrite the block (for example a migration step that
+    only normalises markers) should compare :func:`block_payload` themselves
+    instead of assuming this function leaves an in-block edit alone.
     """
     target = _norm_newlines(target_text)
     source = _norm_newlines(source_text)
@@ -190,17 +200,10 @@ def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
             # Already converged: nothing to do.
             return target, False
         # A pre-S4 install of these same rules became "this frame, plus whatever
-        # the consumer owned". When the frame's payload is still what the
-        # package used to ship, migrating is loss-free: marked form plus the
-        # surrounding bytes unchanged.
-        if block_payload(target[begin:end]) == payload:
-            merged = f"{target[:begin]}{block}{target[end:]}"
-            if not merged.endswith("\n"):
-                merged += "\n"
-            return merged, True
-        # The frame was hand-edited or holds an older payload: replace only the
-        # block and keep every byte outside it.
-        merged = target[:begin] + block + target[end:]
+        # the consumer owned". Either way the block itself is framework-managed,
+        # so it is refreshed from the source; only bytes outside the frame are
+        # guaranteed to survive (see the behaviour boundary in the docstring).
+        merged = f"{target[:begin]}{block}{target[end:]}"
         if not merged.endswith("\n"):
             merged += "\n"
         return merged, True
