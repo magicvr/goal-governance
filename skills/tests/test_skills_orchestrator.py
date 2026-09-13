@@ -611,6 +611,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
         self.assertEqual(by_id["claude-code-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
+        # GOAL-008 S6: copilot was blocked during the first recapture attempt
+        # (stale BYOK model) and re-verified after the provider mapping was
+        # updated; the adapter is verified again against the v0.13.3 captures.
         self.assertEqual(by_id["github-copilot-cli"]["verificationStatus"], "verified")
         self.assertNotIn("web-readonly-parser", by_id)
 
@@ -630,7 +633,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.13.2")
+        self.assertEqual(matrix["candidateRevision"], "v0.13.3")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -664,12 +667,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "github-copilot-cli",
             },
         )
-        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.226")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.0")
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.270")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.30")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # Claude + Grok + Copilot: all four entrypoints runtime-verified (2026-08-11 refresh).
+        # GOAL-008 S6: Claude + Grok cells are runtime-verified against the
+        # v0.13.3 recapture; copilot's first attempt was blocked by a stale BYOK
+        # model and re-verified after the provider mapping was updated.
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -684,25 +689,18 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
             self.assertEqual(set(entrypoints), {"govern", "audit", "vision", "vision-audit"})
             for name in ("govern", "audit", "vision", "vision-audit"):
-                self.assertEqual(entrypoints[name]["status"], "runtime-verified")
-                self.assertTrue(entrypoints[name]["evidence"])
-                for path in entrypoints[name]["evidence"]:
+                entry = entrypoints[name]
+                self.assertEqual(entry["status"], "runtime-verified")
+                self.assertTrue(entry["evidence"])
+                for path in entry["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertRegex(path, EVIDENCE_DATED_RE)
+                    self.assertIn(f"v0.13.3/{consumer_id}-{name}-", path.replace("\\", "/"))
             vision = entrypoints["vision"]
-            self.assertEqual(vision["status"], "runtime-verified")
-            self.assertTrue(vision["evidence"])
-            for path in vision["evidence"]:
-                self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                self.assertIn("vision", path)
-                self.assertRegex(path, EVIDENCE_DATED_RE)
+            self.assertIn("vision", vision["evidence"][0])
             vision_audit = entrypoints["vision-audit"]
-            self.assertEqual(vision_audit["status"], "runtime-verified")
-            self.assertTrue(vision_audit["evidence"])
-            for path in vision_audit["evidence"]:
-                self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                self.assertIn("vision-audit", path)
-                self.assertRegex(path, EVIDENCE_DATED_RE)
+            self.assertIn("vision-audit", vision_audit["evidence"][0])
+
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""
         if not (CORE_PRINCIPLES.is_file() and CORE_AGENTS.is_file()):

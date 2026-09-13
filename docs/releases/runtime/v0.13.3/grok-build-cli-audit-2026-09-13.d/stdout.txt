@@ -1,0 +1,25 @@
+I'll load the installed audit skill and read only the repository sources needed for this dispatch probe—no file writes, no subagents, no questions.The skill is loaded. Next I’ll locate SKILLS_PKG, read the independent-audit prompt, and inspect GOAL-008 for source/status semantics and a current required evidence gap.There are two `GOAL-008` folders in different workspaces. I’ll read the active workspace-002 goal pack and the source/status rules from the audit prompt and principles.I’ll cite one open required finding from the GOAL-008 audit ledger so the evidence gap is grounded in the files, not the prompt.GROK_AUDIT_DISPATCH_OK
+
+This was a read-only dispatch probe. No files were modified, no audit entry was appended, and no subagents were launched.
+
+**Loaded skill**
+- Title: `audit · 独立交叉审计（Grok Build skill)` (`name: audit`)
+- Source path: `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md`
+
+**Independent-audit prompt named by that skill**
+- Skill step 2: fully read and execute `<SKILLS_PKG>/prompts/05-independent-audit.md`
+- SKILLS_PKG located as `skills/` (contains `prompts/05-independent-audit.md` and `prompts/00-govern-orchestrator.md`)
+- Actual prompt path: `skills/prompts/05-independent-audit.md`  
+  (`title: 提示词 · 独立交叉审计`, `role: independent-audit`)
+
+**Required `source` / `status` semantics**
+- `/audit` opinions must use `source: independent`. P-003 requires `source: self | independent` as a minimum header field on each `A-NNN` entry, together with date, scope, and `verdict` (`pass | conditional | fail`).
+- Independent audit writes opinions only. It must not change goal `status`, checkpoints, derived `progress`, scheme body, or goal-tree status columns. Response and any status change belong to `/govern`.
+- Finding closure is not a status rewrite: a **required** finding stays open until `fixed`, `accepted-residual`, or `user-overruled` is recorded. Open required findings block the corresponding gate and `status: done`. Chat-only claims do not count.
+
+**One current required evidence gap (workspace-002 `GOAL-008`)**
+Read `docs/workspaces/workspace-002-methodology-skills-feedback/` (active delivery workspace; Root `GOAL-001-methodology-skills-feedback-evolution`). That workspace’s `GOAL-008-consumer-layer-split-and-hosting` is `status: active`, `progress: 83.3%` (S1–S5 done, S6 in progress).
+
+**A-005 F-002** remains **required / open**: 12 producer runtime-evidence anchors under `docs/releases/runtime/v0.13.2/` are stale after root `AGENTS.md` changes (`capture_runtime_evidence.py --check` reported 12 problems). S6 still requires recapture on the frozen `0.13.3` revision under `docs/releases/runtime/v0.13.3/` before release. Index: `03-audit.md` (open required = 4, all S6-scoped); finding: `03-audit/A-005-s2-stage-self.md`.
+
+This probe did not write an `A-NNN` opinion. A full `/audit` would append `source: independent` to that goal’s `03-audit/` ledger.

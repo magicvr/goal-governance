@@ -1,0 +1,13 @@
+I'll load the vision-audit skill and the named core prompt, then read only the vision records needed for this dispatch probe. No files will be modified.Skill file is loaded. Next I’ll locate SKILLS_PKG and read the core prompt plus the minimum Charter, workspace, and reviews records.SKILLS_PKG is `skills/`. I’ll read the core prompt plus Charter, workspace-001, and reviews.md.GROK_VISION_AUDIT_DISPATCH_OK
+
+**Skill:** `vision-audit · 独立 Vision Review（Grok Build skill）`  
+**Source:** `.grok/skills/vision-audit/SKILL.md`
+
+**Core prompt:** `skills/prompts/07-independent-vision-review.md`  
+(SKILLS_PKG = `skills/`; prompt title `提示词 · 独立 Vision Review`, role `independent-vision-review`)
+
+**Charter:** `vision-goal-governance@0.2.0` (`status: active`)  
+**workspace-001 `primary_plan`:** `VP-001-governance-platform-delivery`  
+**`reviews.md` open required findings:** no (VRev-001–007 all `open required = 0`)
+
+No VRev was appended and no Goal record was modified.
