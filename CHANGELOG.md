@@ -4,7 +4,45 @@
 
 ## Unreleased
 
-（空；2026-08-11 发布 v0.13.2。）
+（空；2026-09-13 发布 v0.13.3。）
+
+## 0.13.3 - 2026-09-13
+
+消费仓双层语义与宿主共存 patch（GOAL-008）：把愿景层「组合编排」与实现层「纲领路线图」的命名与落位判定显式化，把组合编排索引的 VP 状态降为派生投影并定义 legacy 兼容读取，让消费仓拥有根 `AGENTS.md`（受管标记块），并默认提供 `/commit` 便利入口。协议（`protocol 0.1.0`）与消费契约数据结构不变；三个宿主 × 四个治理入口的 12 格 runtime 证据在 `docs/releases/runtime/v0.13.3/` 重捕获。
+
+### 层级命名与落位判定（S2）
+
+- 命名表由 4 类扩为 **6 类**：新增「**子目标**」与「**VP 内阶段结构**」两行，覆盖 `docs/architecture/principles.md` §6.4、`docs/vision/alignment.md` §0.3、根 `AGENTS.md` §6e 与消费端规则面 **§6e.1**（三个宿主规则文件同文）。
+- 新增**落位谓词 8 条**（最小充分条件）：内容授权或改变决策 → 愿景层；内容属已落盘 VP 的意图/退出判据/绑定/关门记录 → 愿景层（该 VP 正文）；内容划分某 Root 的纲领阶段 → 实现层（该目标 `00-meta`/`01-decision`）；内容为某阶段内方案 → 阶段计划（非树节点）；内容为可独立验收、需要 `parent` 与五件套的交付节点 → **子目标**；三条层级错位情形 fail closed。
+- 明确**判定对象是职责与权威，不是节点数量**：一区一 Root 一 VP、多 VP 绑同区、0 区 `active` VP 均合法。
+- 口语「**总路线图**」映射到愿景层组合编排索引 `{governance_root}/vision/roadmap.md`，与目标层纲领路线图区分。
+- VP **可**写方向级阶段结构，**不得**写可执行纲领阶段、子目标编号、Goal status 或 progress%。
+- 模板：新增 `docs/templates/vision/roadmap.md`；`templates/goal-folder/00-meta.md` 与 `01-decision.md` 新增纲领路线图/阶段计划槽位；`vision-plan.md` 新增受限期节。
+
+### 组合编排索引的投影与兼容（S3）
+
+- `docs/vision/roadmap.md` 的 `status` 列标注为**派生投影**（表头与正文同时标注），权威在各 `plans/VP-*.md` frontmatter；写入顺序改为「先改 VP frontmatter，再刷新投影」。
+- `alignment.md` 新增 §0.4：投影、无列要求、**legacy 行/列不得 fail closed**、兼容读取顺序（VP frontmatter 优先）、骨架复制要求；MUST 表 roadmap 行明确**不要求任何特定列**。
+- `standalone-bootstrap.md` 不再整文件复制生产仓组合编排索引，改为复制 `templates/vision/roadmap.md` 骨架后按本地 VP 重写（消除他仓 VP 行泄漏）。
+- 修正两处漏 VP-004 的组合编排漂移（`architecture/overview.md` 与其镜像、`workspace-001` Root `00-meta.md` 改为指针）。
+
+### 消费仓 `AGENTS.md` 共存（S4）
+
+- 根 `AGENTS.md` **归消费方**；框架规则位于受管区间 `<!-- goal-governance:begin managed -->` … `end managed` 内，**区间外字节永不被安装/更新改写**；标记块契约与 MCP 薄壳收敛为同一语义。
+- 新增共享合并实现 `skills/agents_merge.py`，由 `install.sh`、`install.ps1` 与 `update.py` 共用；半写标记 fail closed；无 Python 时拒绝覆盖消费方规则。
+- `update.py` 不再把根 `AGENTS.md` 当作完全托管文件，并支持把旧版整份安装迁移为标记形态；`--force-managed` 只替换受管区间。
+
+### 默认 `/commit` 便利入口（S5）
+
+- 四个已支持宿主（claude / grok / codex / copilot）默认安装 `/commit`（`$commit`）壳；安装输出区分 `governance-must` 与便利入口。
+- **边界未变**：`/commit` 不是完整安装 MUST、不在治理入口必达集（契约 `hostEntrypoints` 仍四入口）、不替代 `/govern` checkpoint；由测试守卫固定。
+- 壳文本含 fail-closed 负例：越界、既有用户改动、无改动、非 Git、hook 拒绝、detached HEAD、用户禁用；禁止 `git add -A`；不 push。
+
+### 验证
+
+- 全量回归：docs 65 / skills 89 / scripts 128 项测试通过；镜像 37 对 0 漂移；`git diff --check` 洁净；`compatibility_report.py --require-ready` 通过。
+- **12 格 runtime 证据在 `docs/releases/runtime/v0.13.3/` 重捕获**（claude `2.1.270`、grok `1.0.30`、copilot `1.0.75`，均 `verdict=pass`）；v0.13.2 快照保留为历史。
+- 隔离消费仓冷启动与升级重放实测：消费方自有规则保留、受管区间幂等、生产仓 VP 行不泄漏。
 
 ## 0.13.2 - 2026-08-11
 
