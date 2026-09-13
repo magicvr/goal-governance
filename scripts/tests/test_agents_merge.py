@@ -52,6 +52,60 @@ class AgentsMergeUnitTests(unittest.TestCase):
         self.assertFalse(changed_again)
         self.assertEqual(merged, merged_again)
 
+    def test_all_pre_s4_shapes_keep_bytes_outside_the_markers(self) -> None:
+        """GOAL-008 S6 (v0.13.3): the promise is about bytes *outside* the markers.
+
+        Enumerates the pre-S4 and marked shapes and asserts that whatever the
+        consumer owns outside the managed region survives verbatim. Text *inside*
+        the markers is framework-managed and is replaced by design.
+        """
+        begin, end = agents_merge.MANAGED_BEGIN, agents_merge.MANAGED_END
+        shipped = f"{begin}\n# AGENTS.md\n\n## 1. Rules\n\n- framework rules\n{end}\n"
+        before = "## Consumer rules (before)\n\n- keep me\n\n"
+        after = "\n## Consumer rules (after)\n\n- keep me too\n"
+        shapes = {
+            "whole-file legacy install (nothing outside)": shipped,
+            "legacy + own rules after the block": shipped + after,
+            "legacy + own rules before the block": before + shipped,
+            "legacy + own rules on both sides": before + shipped + after,
+        }
+        for label, target in shapes.items():
+            with self.subTest(shape=label):
+                merged, _changed = agents_merge.merge_agents_text(target, shipped)
+                self.assertEqual(
+                    merged.count(begin),
+                    merged.count(end),
+                    msg=f"unbalanced markers for {label}",
+                )
+                self.assertIn("## 1. Rules", merged, msg=f"framework rules lost for {label}")
+                self.assertIn("framework rules", merged, msg=f"framework rules lost for {label}")
+                if before.strip() in target:
+                    self.assertIn(
+                        "## Consumer rules (before)",
+                        merged,
+                        msg=f"consumer prefix lost for {label}",
+                    )
+                if after.strip() in target:
+                    self.assertIn(
+                        "## Consumer rules (after)",
+                        merged,
+                        msg=f"consumer suffix lost for {label}",
+                    )
+
+    def test_repeated_merge_never_touches_a_converged_file(self) -> None:
+        """A converged file must be byte-stable on every later merge."""
+        begin, end = agents_merge.MANAGED_BEGIN, agents_merge.MANAGED_END
+        shipped = f"{begin}\n# AGENTS.md\n\n- framework rules\n{end}\n"
+        target = "## Consumer rules\n\n- mine\n\n" + shipped
+        merged, changed = agents_merge.merge_agents_text(target, shipped)
+        self.assertFalse(changed, msg="already-converged file must not be rewritten")
+        self.assertEqual(merged, target)
+        # And the file the installer would write stays stable afterwards.
+        first, _ = agents_merge.merge_agents_text("", shipped)
+        second, changed_again = agents_merge.merge_agents_text(first, shipped)
+        self.assertFalse(changed_again)
+        self.assertEqual(first, second)
+
     def test_consumer_edits_inside_block_are_refreshed_but_outside_kept(self) -> None:
         consumer = "# My rules\n"
         first, _ = agents_merge.merge_agents_text(consumer, sample_source())
