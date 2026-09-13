@@ -89,6 +89,15 @@ class FileChannelL1Tests(unittest.TestCase):
         self.assertNotIn("commit", host_entrypoints)
         channels = {item["channel"]: item for item in contract["deliveryChannels"]}
         self.assertNotIn("commit", channels["files"]["entrypoints"])
+        # GOAL-008 S6 / A-013 F-004: the MCP channel list is a guard seam too —
+        # a convenience entry must never appear in ANY delivery channel's
+        # entrypoint list, not just the files channel.
+        for channel_name, channel in channels.items():
+            self.assertNotIn(
+                "commit",
+                channel["entrypoints"],
+                msg=f"convenience entry leaked into channel entrypoints: {channel_name}",
+            )
 
     def test_convenience_commit_surface_ships_for_every_host(self) -> None:
         """The convenience entry is default-installed on each supported host."""

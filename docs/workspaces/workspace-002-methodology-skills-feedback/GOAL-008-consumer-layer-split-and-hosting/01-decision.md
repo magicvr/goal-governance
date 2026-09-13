@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 决策记录 · GOAL-008
@@ -21,7 +21,7 @@ version: 0.8.0
 | I-003 | required | 消费仓 `AGENTS.md` / `docs/` 共存模型 | S1 / S4 方案冻结 | S4 前 | 盘点 install / updater / 完整安装 MUST | **partially-verified** | 选型待用户裁决；S4 方案冻结前未决即阻断 | D-004：写入面/冲突面/13 条负例已核实；候选 A～E 未选优；证据 §2.C |
 | I-004 | required | `/commit` 命令形状、宿主覆盖与 fail-closed 负例（治理边界已由 D-002 冻结） | S1 / S5 方案冻结 | S5 前 | 对照 checkpoint 契约、VP-004 入口面与现有 prompt | **verified** | — | D-004：现仅 monorepo 自用 prompt，安装面未实现；契约缺「默认安装不入必达」表达位；证据 §2.D |
 | I-005 | required | cross 审计 independent provider | S2 实施 | S2 实施前 | 用户书面指定；失败不降级 | **closed** | provider 失效时回到门禁 | 用户 2026-09-13 指定本地 grok build（`grok` 1.0.30 / grok-4.6 / `--reasoning-effort high`）；E-003 |
-| I-006 | required | 发布版本、tag/revision、资产清单、回归矩阵、cross 覆盖、consumer/producer 证据归属 | S6 发布 | S6 前 | 对齐当前版本源与远端基线 | open | 基线前移时重算 | F-005 绑定；待冻结 |
+| I-006 | required | 发布版本、tag/revision、资产清单、回归矩阵、cross 覆盖、consumer/producer 证据归属 | S6 发布 | S6 前 | 对齐当前版本源与远端基线 | **frozen** | 基线前移时重算 | D-011 冻结范围（`0.13.3` + tag→main merge + 资产集合）；发布产出未发生 → F-005 仍 open |
 
 I-001～I-006 不阻断目标设立；未经验证不得把候选机制写成已选方案。
 **2026-09-13 S1 结果**：I-001/I-002/I-004 `verified`、I-005 `closed`、I-003 `partially-verified`（选型待裁决）、I-006 仍 `open`（S6 前冻结）。

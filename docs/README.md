@@ -109,9 +109,9 @@ version: 0.1.0
 
 - **文档入口版本**（本文件 frontmatter）：`0.14.0` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
 - **可复制核心包版本**：`0.13.3`（GOAL-008：层级命名与落位判定、组合编排投影与 legacy 兼容、消费仓 `AGENTS.md` 受管标记块、默认 `/commit` 便利入口 + 证据重捕获）。入口文修订号与发布身份刻意分离。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / `v0.13.2` / **`v0.13.3`**（annotated tag 指向 main merge commit；发布资产与证据以 tag workflow 结果为准，不得事后补记）。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / **`v0.13.2`**（最近**已发布**基线；annotated tag `7cd2613` 绑定 main merge commit `f37d67c`）。**`v0.13.3` 尚未发布**：候选版本与变更见 `CHANGELOG.md`；发布须经 merge 进 `main` + annotated tag 指向 merge commit + tag workflow 上传，资产与证据以 workflow 结果为准，不得事后补记。
 - **快照日期**：2026-09-13。
-- **快照身份**：`v0.13.3` 发布候选。Codex 仍仅是 install surface（非矩阵）。
+- **快照身份**：`v0.13.3` **发布候选**（尚未打 tag）。Codex 仍仅是 install surface（非矩阵）。
 - **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.270`、Grok Build `1.0.30` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`；证据日期 2026-09-13，位于 `docs/releases/runtime/v0.13.3/`。`/commit` 为默认安装的**便利入口**，不属于矩阵必达格。Root R3 终态仍未声明。
 
 ### canonical → Skills 镜像（GOAL-022）

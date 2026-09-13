@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 执行记录 · GOAL-008

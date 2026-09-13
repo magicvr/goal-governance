@@ -4,7 +4,7 @@ status: active
 created: 2026-07-31
 updated: 2026-09-13
 parent: null
-version: 0.21.0
+version: 0.22.0
 ---
 
 # Goal Tree
@@ -12,6 +12,11 @@ version: 0.21.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-09-13 · GOAL-008 S6 首轮（回归 + 证据重捕获 + 发布准备）
+
+S6 主体完成：**全量回归全绿**（docs 65 / skills 89 / scripts 128，镜像 37 对 0 漂移，`git diff --check` 洁净）；**12 格 runtime 证据在 `docs/releases/runtime/v0.13.3/` 重捕获全部 `pass`**（claude `2.1.270` / grok `1.0.30` / copilot `1.0.75`），`capture_runtime_evidence --check` 12/12 一致，`compatibility_report --require-ready` 通过（`ready-for-release-evidence`），release rehearsal 通过；隔离消费仓冷启动与升级重放实测通过；版本落地 `0.13.3`（CHANGELOG + docs 台账）。Copilot 首轮因本机 BYOK 模型失效（`deepseek-v4-flash` 已停用）四格 fail → 改为显式传 `--model gemini-3.8-flash-high` 后全部 pass，失败 JSON 保留为过程记录但未被矩阵引用（D-012）。
+
+GOAL-008 仍为 **`active / 83%`**（S6 未完全关门）。**未完成**：S6 independent 关门审计结论落盘、PR/merge 到 `main`、annotated tag `v0.13.3` + tag workflow、Release 资产逐项核对、`/commit` 单列宿主证据。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
 ## 2026-09-13 · GOAL-008 S5 完成（默认 /commit 便利入口）
 
 S5「默认 `/commit` 便利入口」完成：四个已支持宿主（claude / grok / codex / copilot）安装面新增 `/commit`（`$commit`）壳并**默认产出**；安装输出显式区分 `governance-must` 与便利入口。**治理边界未被污染**——契约 `hostEntrypoints` / `files.entrypoints` 仍**只含四个治理入口**，`/commit` 不是完整安装 MUST、不是治理入口必达、不替代 `/govern` checkpoint；边界由 `docs/tests/test_file_l1.py` **三个机读守卫**固定，拒绝未来把 `commit` 混入必达集。fail-closed 负例（越界、既有用户改动、无改动、非 Git、hook 拒绝、detached HEAD、用户禁用、禁 `git add -A`、不 push）写入四个壳文本。回归：**docs 65 OK / skills 89 OK / PowerShell 隔离安装 PASS / 镜像 37 对一致 / `git diff --check` 洁净**；端到端隔离仓四路径均落盘。GOAL-008 推进为 **`active / 83%`**（S1～S6 5/6），**仅剩 S6**。开放 required 4 项全部属 S6 范围（A-001 F-005 发布基线、A-005 F-001/F-002 宿主行为与 runtime 证据、A-006/A-008 F-001 隔离仓实测、A-009 F-001 便利入口实测）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
