@@ -196,6 +196,22 @@ same_content() {
   [[ -n "$src_hash" && "$src_hash" == "$dest_hash" ]]
 }
 
+# GOAL-008 S6: under Git Bash / MSYS on Windows the shell speaks POSIX paths
+# (/tmp/..., /c/...) while a native Windows Python cannot open them. Convert
+# before handing paths to the interpreter; on POSIX hosts this is a no-op.
+native_path() {
+  local path="$1"
+  case "$(uname -s 2>/dev/null)" in
+    MINGW*|MSYS*|CYGWIN*)
+      if command -v cygpath >/dev/null 2>&1; then
+        cygpath -w "$path"
+        return 0
+      fi
+      ;;
+  esac
+  printf '%s\n' "$path"
+}
+
 # GOAL-008 S4 (model A): the consumer repo owns root AGENTS.md. The framework
 # rules live inside a delimited managed block; bytes outside the markers are
 # never touched. Consumer content is preserved on install and update.
@@ -208,7 +224,11 @@ merge_agents_file() {
     return 0
   fi
   if [[ -n "$PYTHON_BIN" ]]; then
-    "$PYTHON_BIN" "$SCRIPT_DIR/agents_merge.py" --source "$src" --target "$dest" \
+    local helper native_source native_target
+    helper="$(native_path "$SCRIPT_DIR/agents_merge.py")"
+    native_source="$(native_path "$src")"
+    native_target="$(native_path "$dest")"
+    "$PYTHON_BIN" "$helper" --source "$native_source" --target "$native_target" \
       || die "AGENTS.md managed-block merge failed (fail closed): $dest"
     return 0
   fi
