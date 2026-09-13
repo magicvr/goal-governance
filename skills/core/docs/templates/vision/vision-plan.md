@@ -26,6 +26,16 @@ version: 0.1.0
 1. <判据 1>
 2. <判据 2>
 
+## 方向级阶段结构（可选 · 受限）
+
+> 允许：波次内的**方向级**阶段（先后关系与退出方向）。
+> 禁止：可执行纲领阶段、细任务、子目标编号、Goal status、progress% —— 可执行纲领路线图只属于某个 Root/大目标，写在该目标的 `00-meta.md` / `01-decision.md`（判定谓词见 `{governance_root}/architecture/principles.md` §6.4）。
+> 若本节与某 Root 的纲领阶段同名（如都用 R1/R2/R3），必须写明两者关系：本 VP 只给方向，Root 给可执行阶段。
+
+| 阶段 | 方向（非交付承诺） |
+|------|--------------------|
+| R1 | <方向 1> |
+
 ## 工作区绑定
 
 | workspace_id | root_goal | role | joined | notes |

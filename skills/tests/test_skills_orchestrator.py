@@ -912,10 +912,22 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 f"core goal-folder hash drift: {name}",
             )
         templates_readme = (core / "templates" / "README.md").read_text(encoding="utf-8")
-        self.assertIn("version: 0.9.0", templates_readme)
+        self.assertIn("version: 0.10.0", templates_readme)
         self.assertIn("progress", templates_readme)
         self.assertIn("不放行阶段", templates_readme)
         self.assertIn("同一阶段内", templates_readme)
+        # GOAL-008 S2: the composition-roadmap template must ship with the package.
+        canonical_roadmap = (
+            SKILLS_ROOT.parent / "docs" / "templates" / "vision" / "roadmap.md"
+        )
+        mirror_roadmap = core / "templates" / "vision" / "roadmap.md"
+        self.assertTrue(canonical_roadmap.is_file(), "missing canonical vision/roadmap.md")
+        self.assertTrue(mirror_roadmap.is_file(), "missing mirrored vision/roadmap.md")
+        self.assertEqual(
+            normalized_sha256(canonical_roadmap),
+            normalized_sha256(mirror_roadmap),
+            "vision roadmap template mirror drift",
+        )
         layout = (core / "architecture" / "directory-layout.md").read_text(encoding="utf-8")
         self.assertIn("workspace-", layout)
         self.assertNotIn("goal-governance/web", layout.replace("\\", "/"))
@@ -1186,6 +1198,55 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 text,
                 r"隐式单工作区|fail closed|工作区上下文",
                 msg=f"missing fail-closed compatibility behavior: {path}",
+            )
+
+    def test_layer_naming_disambiguation_ships_to_rule_surfaces(self) -> None:
+        """S2 (GOAL-008): consumer rule faces must define the layer vocabulary.
+
+        The consumer-reported defect was that AI assistants read the vision
+        roadmap as an execution roadmap because the installed rule file only had
+        the P-006 flow diagram and never defined 组合编排 / 纲领路线图 /
+        阶段计划 / 意图 / 子目标. Guard the disambiguation table and the
+        decidable predicate so the fix cannot silently regress.
+        """
+        surfaces = (
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+        )
+        for path in surfaces:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(
+                "6e.1 层级命名与判定谓词",
+                text,
+                msg=f"missing layer-naming section: {path}",
+            )
+            for concept in (
+                "**组合编排**",
+                "**纲领路线图**",
+                "**阶段计划**",
+                "**意图（VP）**",
+                "**子目标**",
+                "**VP 内阶段结构**",
+            ):
+                self.assertIn(
+                    concept,
+                    text,
+                    msg=f"missing layer concept {concept}: {path}",
+                )
+            # The colloquial consumer term must be mapped, not left dangling.
+            self.assertIn("总路线图", text, msg=f"missing 总路线图 mapping: {path}")
+            # Decidable predicate: responsibilities/authority, not node counts.
+            self.assertIn(
+                "判定对象是职责与权威，不是节点数量",
+                text,
+                msg=f"missing node-count guard in predicate: {path}",
+            )
+            # VP must not be a goal node / parent.
+            self.assertRegex(
+                text,
+                r"把 VP / Charter / 愿景文件当目标节点",
+                msg=f"missing VP-is-not-a-goal-node guard: {path}",
             )
 
     def test_docs_readme_hash_ledger_matches_template_bytes(self) -> None:

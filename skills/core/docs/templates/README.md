@@ -2,9 +2,9 @@
 title: 核心目标文档模板
 status: active
 created: 2026-07-19
-updated: 2026-08-10
+updated: 2026-09-13
 parent: null
-version: 0.9.0
+version: 0.10.0
 ---
 
 # 核心目标文档模板
@@ -15,7 +15,7 @@ version: 0.9.0
 
 `goal-folder/` 包含一个目标的完整五件套：
 
-- `00-meta.md`：目标元信息、成功标准、父子关系与按需的信息就绪概览
+- `00-meta.md`：目标元信息、成功标准、父子关系、**纲领路线图槽位**（大目标适用）与按需的信息就绪概览
 - `01-decision.md` + `01-decision/D-NNN-<slug>.md`：稳定索引 + 平铺决策条目
 - `02-execution.md` + `02-execution/E-NNN-<slug>.md`：稳定索引 + 平铺事实条目
 - `03-audit.md` + `03-audit/A-NNN-<slug>.md`：稳定索引 + `self` / `independent` 审计意见
@@ -29,6 +29,7 @@ version: 0.9.0
 
 - `charter.md`：项目唯一 Charter 最小完备骨架  
 - `vision-plan.md`：意图 VP 骨架（复制为 `docs/vision/plans/VP-NNN-slug.md`）
+- `roadmap.md`：组合编排索引骨架（复制为 `docs/vision/roadmap.md`；**只写索引与波次**，VP 状态列必须标注为派生投影）
 - `reviews-index.md`：Vision Review 稳定索引（复制为 `docs/vision/reviews.md`）
 - `review.md`：单条 VRev 正式报告（复制为 `docs/vision/reviews/VRev-NNN-<slug>.md`）
 
@@ -37,6 +38,7 @@ version: 0.9.0
 - 新目标实例创建在当前工作区根 `docs/workspaces/workspace-<NNN>-<slug>/`，并遵守根目录 `AGENTS.md` 与该工作区 `goal-tree.md`。
 - 本目录只定义可复用的文档结构与写作起点，不是运行中的目标记录。
 - 工作区仍以一个 Root Goal 为长期锚点；MVP、后续阶段和扩展目标写入 Root Goal 路线图。纲领阶段通常串行，同一阶段内可由多个子目标并行承接；不要求在创建 Root Goal 时穷尽未来计划。
+- 层级命名与判定谓词见 `{governance_root}/architecture/principles.md` §6.4：**组合编排**（愿景 VP 索引/波次）、**纲领路线图**（某 Root/大目标的阶段）、**阶段计划**（目标内方案，非树节点）、**意图 VP**、**子目标**互不替代；口语「总路线图」指愿景层组合编排索引，不是目标层纲领路线图。VP 不是目标节点（不得作 `parent`、不建五件套）。
 - `progress`（若使用）必须由显式路线图/计划检查点确定性派生；默认等权，显式权重可覆盖。它只用于展示，不放行阶段、不关闭 finding、不覆盖信息门禁或 status。
 - 共享资料只在工作区上下文中以版本/哈希固定引用；资料内容不是 canonical 事实，也不得作为跨工作区目标状态或上下文混合通道。详见 [workspace protocol](../architecture/workspace-protocol.md)。
 - P-005 允许目标带未知项立项；模板中的信息需求表用于记录问题、`required`/`non-blocking` 级别、最晚阶段、延期复核、状态和证据，不要求在创建时已经知道一切。
