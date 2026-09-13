@@ -7,8 +7,8 @@ plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
-updated: 2026-08-10
-version: 0.12.0
+updated: 2026-09-13
+version: 0.13.0
 progress: 67%
 ---
 
@@ -33,7 +33,7 @@ progress: 67%
 |------|------|------|------|
 | **R1** | 消费宿主补齐与入口一致 | **完成**（2026-07-31） | claude / copilot / grok 既有；Codex 经 [GOAL-002](../GOAL-002-codex-skills-entry/) 补齐（install 面 + 主入口 runtime）；用户 `/govern` 确认收口（D-003） |
 | **R2** | 反馈驱动的协议 / Skills 修正 | **完成**（2026-08-04） | [GOAL-003](../GOAL-003-consumer-governance-ergonomics/) `v0.12.0` 正式 Release / consumer update / A-006 independent pass；F-001 fixed，开放 required = 0 |
-| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-006](../GOAL-006-consumer-surface-convergence/) 已 done；[GOAL-007](../GOAL-007-workspaces-directory-consolidation/) 正在修订工作区 canonical 布局并完成正式发布；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
+| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-007](../GOAL-007-workspaces-directory-consolidation/) 已 done；[GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 承接第二批消费仓痛点（双层路线图 / 宿主共存 / `/commit`），S1 尚未开始；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
 
 同一纲领阶段内可并行多个子目标；阶段间通常串行。
 
@@ -46,8 +46,9 @@ progress: 67%
 | ID | 级别 | 所需信息 / 问题 | 影响门禁 | 最晚需要阶段 | 验证 / 收集动作 | 状态 | 延期 / 复核 | 证据 / 结论 |
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | Codex CLI / 宿主如何发现并加载 project skills（路径、清单、与 AGENTS 关系） | GOAL-002 方案冻结 | R1 方案 | 读官方/宿主文档 + 对照现有 install 适配器 | **verified**（2026-07-31） | 官方路径变更时复核 | 子目标 [GOAL-002](../GOAL-002-codex-skills-entry/)：I-001/I-002 verified + D-002；证据 [i-001-i-002-…](../GOAL-002-codex-skills-entry/attachments/i-001-i-002-codex-skills-loading-2026-07-31.md)；关门 A-001/A-002 pass（A-002 F-004 触发本台账同步） |
-| I-002 | non-blocking | 下一轮真实项目反馈的首批问题清单 | R2 立项优先级 | R2 立项前 | dogfood / 用户提交 | **verified**（2026-08-03） | 新一批反馈出现时追加 | 用户本轮提交 FB-001～FB-005；见 [GOAL-003 D-001](../GOAL-003-consumer-governance-ergonomics/01-decision.md#d-001--将五项实战摩擦纳入同一-r2-大目标2026-08-03) |
+| I-002 | non-blocking | 下一轮真实项目反馈的首批问题清单 | R2 立项优先级 | R2 立项前 | dogfood / 用户提交 | **verified**（2026-08-03） | 新一批反馈出现时追加 | 用户提交 FB-001～FB-005；见 [GOAL-003 D-001](../GOAL-003-consumer-governance-ergonomics/01-decision.md#d-001--将五项实战摩擦纳入同一-r2-大目标2026-08-03) |
 | I-003 | non-blocking | 是否需要将 Charter `primary_workspace` 迁到本区 | 叙事一致性 | 用户要求时 | P-004 | open | 用户本轮确认：**001 仍 primary** | 2026-07-31 确认 |
+| I-004 | non-blocking | 第二批消费仓质量框架痛点清单 | R3 立项优先级 | 用户提交时 | dogfood / 用户提交 | **verified**（2026-09-13） | 再下一批反馈出现时追加 | 用户提交 FB-006～FB-009；见 [GOAL-008 D-001](../GOAL-008-consumer-layer-split-and-hosting/01-decision/D-001-scope-and-roadmap.md) |
 
 ## 愿景对齐
 
@@ -67,7 +68,8 @@ progress: 67%
 | [GOAL-004-frozen-web-asset-retirement](../GOAL-004-frozen-web-asset-retirement/00-meta.md) | 移除冻结 Web 资产并挂起 VP-003 | done |
 | [GOAL-005-vision-review-ledger-scaling](../GOAL-005-vision-review-ledger-scaling/00-meta.md) | 愿景审视台账分片与正式发布 | done |
 | [GOAL-006-consumer-surface-convergence](../GOAL-006-consumer-surface-convergence/00-meta.md) | 消费面路径收敛（F-006 承接 + R-001 扫尾） | done |
-| [GOAL-007-workspaces-directory-consolidation](../GOAL-007-workspaces-directory-consolidation/00-meta.md) | 工作区目录统一收敛与正式发布 | active |
+| [GOAL-007-workspaces-directory-consolidation](../GOAL-007-workspaces-directory-consolidation/00-meta.md) | 工作区目录统一收敛与正式发布 | done |
+| [GOAL-008-consumer-layer-split-and-hosting](../GOAL-008-consumer-layer-split-and-hosting/00-meta.md) | 双层路线图拆分与消费仓宿主共存 | active |
 
 ## 备注
 
@@ -76,4 +78,5 @@ progress: 67%
 - R1 收口 **不**等于 Root 成功标准全勾、**不**等于 VP-002 可关门；GOAL-002 I-003（矩阵 committed）仍 non-blocking residual，不阻断 R1。
 - **F-006 承接（2026-08-08）**：跨区移交的消费面路径收敛项（workspace-003 A-012 F-006）并入 VP-002 消费面承接路线图，与 R-001 裸路径扫尾合并跟踪；recommended 级，执行触发 = VP-002 推进或下一次协议面修订（登记见 `docs/vision/plans/VP-002-…md` 与 02-execution 待办 4）。GOAL-006 已于 2026-08-08 done，F-006/R-001 实现关闭。
 - **长期持续治理（2026-08-08，D-008）**：用户确认 workspace-002 与 VP-002 为长期持续治理项目，暂不关门——退出判据挂起（核对结论留档 D-008）；R3 转为「持续闭环与长期演进」；Root/VP 保持 active；新工作按反馈随时立项。
-- **工作区目录收敛（2026-08-10）**：用户反馈工作区直属 `docs/` 在多区后影响查阅，创建 GOAL-007，按“方法论 → 迁移 → cross 审计 → 正式发布”闭环推进；下一编号 GOAL-008。
+- **工作区目录收敛（2026-08-10）**：用户反馈工作区直属 `docs/` 在多区后影响查阅，创建 GOAL-007；2026-08-11 已 `done`。
+- **第二批消费仓痛点（2026-09-13，D-009）**：创建 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 承载 FB-006～FB-009；S1 完成前不改协议/安装/Skills；下一编号 **GOAL-009**。

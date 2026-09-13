@@ -2,15 +2,19 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-08-11
+updated: 2026-09-13
 parent: null
-version: 0.14.0
+version: 0.15.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-13 · GOAL-008 立项
+
+用户提交第二批消费仓质量框架痛点（双层路线图混淆、愿景总路线图被 VP 跟踪干扰、安装占用 `AGENTS.md`/`docs/`、缺少默认 `/commit`），要求在本区新建子目标承载治理上下文。创建 **GOAL-008-consumer-layer-split-and-hosting**（`active / 0%`，S1～S6 0/6）；D-001 冻结「同一大目标 + S1 先行、不立即改协议/安装/Skills」。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
 
 ## 2026-08-11 · GOAL-007 S5 正式发布与关门
 
@@ -121,27 +125,29 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
-└── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
+├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
+└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 0%
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-08-04 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-09-13 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
+| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 0% | 2026-09-13 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 007 |
-| 下一可用 | **GOAL-008** |
+| 最大编号 | 008 |
+| 下一可用 | **GOAL-009** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）
