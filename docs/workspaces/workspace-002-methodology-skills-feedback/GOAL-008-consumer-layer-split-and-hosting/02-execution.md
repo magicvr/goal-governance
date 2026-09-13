@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 执行记录 · GOAL-008
@@ -15,6 +15,7 @@ version: 0.1.0
 | E-ID | 日期 | 标题 | 状态 | 文件 |
 |------|------|------|------|------|
 | E-001 | 2026-09-13 | 立项：四项消费仓痛点纳入 R3 子目标（五件套 + goal-tree 同步） | recorded | `02-execution/E-001-goal-created.md` |
+| E-002 | 2026-09-13 | 响应 A-001：D-002 闸门唯一化 + A-002 留痕 | recorded | `02-execution/E-002-a001-response.md` |
 
 ## 事实边界
 

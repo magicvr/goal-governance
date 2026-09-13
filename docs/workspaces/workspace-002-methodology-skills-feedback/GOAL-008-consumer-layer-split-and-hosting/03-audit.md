@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 审计 · GOAL-008
@@ -17,16 +17,17 @@ version: 0.1.0
 
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
-| 影响本 scope 的 I-00N | I-001～I-006 **open** | 不阻断立项；分别阻断 S2～S6 |
-| 到期 required 是否已 verified / residual | 无到期（尚未进入 S2） | 未关闭项将阻断对应门禁 |
+| 影响本 scope 的 I-00N | I-001～I-006 **open**；I-004 治理边界已由 D-002 冻结、形状仍 open；I-005 最晚阶段 = S2 实施前 | 不阻断立项与 S1 只读盘点 |
+| 到期 required 是否已 verified / residual | 无到期（尚未进入 S2） | F-002/F-003/F-005 仍阻断对应后续门禁 |
 | 资料引用（若有）是否固定且用户确认 | 无 | 表空 |
 
 ## 意见台账索引
 
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
-| — | — | — | — | — | — | 尚无正式 A-00N |
+| A-001 | 2026-09-13 | independent | design-plan · S1-S6 纲领路线图 | conditional | 5（原文）；响应后开放 3 | [A-001-roadmap-design-plan.md](03-audit/A-001-roadmap-design-plan.md) |
+| A-002 | 2026-09-13 | self | 响应 A-001 F-001～F-005 | conditional | 3（F-002、F-003、F-005） | [A-002-govern-response-a001.md](03-audit/A-002-govern-response-a001.md) |
 
 ## 结论状态
 
-尚未到达审计节点。独立意见不直接改 `status` / `progress`；响应和状态变更走 `/govern` 与用户裁决。S2/S3 实施前须完成 `cross` 的 provider 指定（I-005）。
+A-001 已由 A-002 响应。F-001、F-004 **fixed**；F-002、F-003、F-005 **open**（分别阻断 S2–S4 冻结/并行与 S6 发布）。S1 只读盘点可继续。`status` / `progress` 未改。独立意见不直接改状态；本响应为编排器 self 侧记录。

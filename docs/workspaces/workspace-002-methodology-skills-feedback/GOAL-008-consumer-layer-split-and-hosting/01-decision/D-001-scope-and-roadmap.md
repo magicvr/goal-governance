@@ -4,12 +4,12 @@ goal: GOAL-008-consumer-layer-split-and-hosting
 status: accepted
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.1.0
+version: 0.2.0
 ---
 
 # D-001 · 将四项消费仓痛点纳入同一 R3 大目标（2026-09-13）
 
-**状态**：accepted
+**状态**：accepted（§4 无条件并行、§6 I-005 闸门措辞由 [D-002](D-002-a001-response.md) 唯一化；其余范围决定仍有效）
 
 **触发**：用户书面提交四项消费仓质量框架痛点，并要求在 workspace-002 新建子目标承载治理上下文。
 
