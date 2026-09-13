@@ -36,7 +36,7 @@ version: 0.1.0
 
 | S1 退出要求 | 本轮结果 | 证据 |
 |-------------|----------|------|
-| I-001～I-004 完成当前阶段收集 | 四项均 `verified` | [D-004](D-004-s1-inventory-acceptance.md) 逐项结论；[附件](../attachments/s1-acceptance-matrix.md) 证据列 |
+| I-001～I-004 完成当前阶段收集 | I-001/I-002/I-004 已 `verified`；**I-003 为 `partially-verified`**（写入面与选型候选已收集，共存模型选型待用户裁决） | [D-004](D-004-s1-inventory-acceptance.md) 逐项结论；[附件](../attachments/s1-acceptance-matrix.md) 证据列 |
 | 验收矩阵含可复现路径、责任边界证据、验收人/审视方式、各阶段证据路径 | 已落盘 | [附件 S1 验收矩阵](../attachments/s1-acceptance-matrix.md) |
 | 列出 S4/S5 owned paths 并决定并行或 S4→S5 | owned paths 已列；判定 **S4→S5 串行** | [D-006](D-006-s4-s5-owned-paths-and-serial-decision.md) |
 | **不**要求 I-005 provider 或 independent 输出 | 遵守；I-005 已由用户书面指定（本轮另记），其输出仍在 S6 | [D-002 §1](D-002-a001-response.md) |

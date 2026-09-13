@@ -1,10 +1,10 @@
----
+﻿---
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
 updated: 2026-09-13
 parent: null
-version: 0.19.0
+version: 0.20.0
 ---
 
 # Goal Tree
@@ -12,6 +12,11 @@ version: 0.19.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-09-13 · GOAL-008 S4 完成 + A-007 独立交叉复审 pass
+
+**A-007（independent · grok build / grok-4.6 / reasoning-effort high）**：在基线快照 `b90b2d8` 上核对 S1 盘点主张——抽查 **12 条全部一致**，判定 I-001/I-002/I-003（S1 时点）**成立**、S3 修复**自洽且未新增「不完整安装」路径**，**verdict `pass`、无 required**；2 条 recommended 已 `fixed`。该意见闭合 A-004 F-002（S1 交叉验证待出具）。
+
+**S4「消费仓 AGENTS.md / docs 共存」完成**：用户裁决 **A 模型（受管标记块）**——根 `AGENTS.md` 归消费方，框架规则位于受管区间内、**区间外字节永不改写**；安装器（bash/PowerShell）与 updater 共用新增的 `skills/agents_merge.py`；半写标记 fail closed、无 Python 时拒绝覆盖；根 `AGENTS.md` 不再是「完全托管文件」（updater managed 集移除），并支持 legacy 整份安装迁移。`docs/` 归属本轮只做现状 + 共存说明（可配置治理根候选 C 未做）。回归：**skills 89 OK / docs 62 OK / scripts 除既有 runtime 证据过期项外全绿 / PowerShell 隔离安装 PASS / `git diff --check` 洁净**；端到端隔离仓验证消费方自有规则保留。A-004 F-001（I-003 选型）由此**闭合**。GOAL-008 推进为 **`active / 67%`**（S1～S6 4/6），S5 未开始。仍未闭合（不阻断 S5）：A-001 F-005、A-005 F-001/F-002、A-006/A-008 F-001。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
 ## 2026-09-13 · GOAL-008 S3 完成（投影与兼容解耦）
 
 S3「愿景总路线图与 VP 跟踪解耦」完成：按用户裁决 **A1 索引承载投影** 落地——`docs/vision/roadmap.md` 列名与正文均标注**派生投影**、权威指向各 VP frontmatter、写入顺序改为「先改 VP frontmatter 再刷新投影」；兼容读取规则写入规则权威 alignment **§0.4**（legacy 行/列只作提示、**不得**因残留而判「不完整安装」、VP frontmatter 优先、MUST 表**不要求任何特定列**）；`docs/standalone-bootstrap.md` 改为复制 `templates/vision/roadmap.md` 骨架并重写（不再整文件照搬他仓 VP 行）；两处漏 VP-004 的漂移（overview.md 与其镜像、workspace-001 Root 00-meta）改为指针；fixture 升为带投影标注的 6 列；新增 `CompositionRoadmapAuthorityTests`（6 项）。回归：docs **62 OK**、skills 43 OK、镜像 37 对、`git diff --check` 洁净；**未新增 MUST**。GOAL-008 推进为 **`active / 50%`**（S1～S6 3/6），S4 未开始（S4 方案冻结前须取得用户对共存模型的裁决）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
@@ -142,7 +147,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
-└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 50% (S1/S2/S3 完成；S4 未开始)
+└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 67% (S1–S4 完成；S5 未开始)
 ```
 
 ## 状态表
@@ -156,7 +161,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
-| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-09-13 |
+| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 67% | 2026-09-13 |
 
 ## 编号
 

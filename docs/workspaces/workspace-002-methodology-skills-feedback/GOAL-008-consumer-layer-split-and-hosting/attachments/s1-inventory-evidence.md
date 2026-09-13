@@ -11,6 +11,11 @@ version: 0.1.0
 
 # 附件 · S1 盘点报告（I-001～I-004，2026-09-13）
 
+> **时点声明（对审计者重要）**：本附件是 **S1 时点（baseline `b90b2d8`）** 的盘点快照，**不是**当前工作树的描述。S2（[D-007](../01-decision/D-007-s2-layer-semantics-freeze.md)）与 S3（[D-008](../01-decision/D-008-s3-projection-and-legacy-compat.md)）已按本盘点的结论修改 canonical，因此**行号与「缺口存在与否」都会与当前树不同**：
+> - §2.A 缺口 5（命名表缺「子目标」「VP 内阶段结构」）、缺口 6（消费端规则面无消歧表）、术语映射 —— 已由 S2 修复；
+> - §2.B 的「`roadmap.md` 双写义务 / 权威未规定 / 无兼容规则」—— 已由 S3 修复（alignment §0.4、列名标注派生投影、写入顺序反转）。
+> **核对方法**：若要在当前树上复核本附件，请以 `git show b90b2d8:<path>` 取快照，或直接用 `git clone`/`git worktree add` 检出该提交；`docs/templates/vision/roadmap.md` 在 S1 时点**不存在**（S2 新增）。
+
 > 只读盘点的证据汇总，供独立审计逐条复核。所有主张均带 `file:line`；未运行实现、安装或发布验证。
 > 汇总与结论见 [D-004](../01-decision/D-004-s1-inventory-acceptance.md)；验收矩阵见 [s1-acceptance-matrix.md](s1-acceptance-matrix.md)。
 
@@ -60,7 +65,7 @@ version: 0.1.0
 | 判断 | 事实 |
 |------|------|
 | 属组合编排 | 标题与定位声明（`:12-13`）、`id`、`detail` 链接、波次先后（`:22-29`）、`lead_workspace`（`principles.md:440` 列入组合编排） |
-| 属 VP 跟踪（重复） | `status` / `vision_ref` / `title` / `workspace_count` 四列；波次括注中的状态与关门叙述；**`使用说明` 第 4 条「再更新本表 `status`」**（自带双写义务，`:36`） |
+| 属 VP 跟踪（重复） | `status` / `vision_ref` / `title` / `lead_workspace` 四列与各 VP frontmatter 重复；`workspace_count` 是 roadmap 自定义列（**VP frontmatter 没有该字段**，故它属「无定义的自定义列」而非「frontmatter 副本」）；波次括注中的状态与关门叙述；**`使用说明` 第 4 条「再更新本表 `status`」**（自带双写义务，`:36`） |
 | 一致性 | 4/4 逐字段与 VP frontmatter 一致 ⇒ **可无损收敛** |
 | 权威 | **canonical 未规定**；`roadmap.md:36` 要求维护本表 status，`skills/prompts/06-vision-orchestrator.md:193` 称「意图权威 = 已落盘 VP 文件」，无裁断句 |
 | 已有漂移 | `docs/architecture/overview.md:70`（+镜像）与 `GOAL-001-main-vision/00-meta.md:50` 的组合编排摘要**均漏 VP-004** |

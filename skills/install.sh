@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 # Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot + Codex)
 # Run from the target project root. No network access required.
 #
@@ -31,6 +31,20 @@ INIT_WORKSPACE_DONE=0
 FORCE=0
 NON_INTERACTIVE=0
 DRY_RUN=0
+
+# GOAL-008 S4: root AGENTS.md is merged through a managed block. Python is the
+# single shared merge implementation; without it we never overwrite consumer
+# rules (fail closed) and only write the file when it does not exist yet.
+PYTHON_BIN=""
+for _candidate in python3 python; do
+  if command -v "$_candidate" >/dev/null 2>&1; then
+    if "$_candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 1)' >/dev/null 2>&1; then
+      PYTHON_BIN="$_candidate"
+      break
+    fi
+  fi
+done
+unset _candidate
 
 usage() {
   cat <<'EOF'
@@ -155,28 +169,61 @@ copy_file() {
     return 0
   fi
   mkdir -p "$(dirname "$dest")"
-  # Same source content already at dest (e.g. Claude then Codex both install AGENTS.md) — skip prompt
-  if [[ -f "$dest" ]]; then
-    local src_hash dest_hash
-    if command -v sha256sum >/dev/null 2>&1; then
-      src_hash="$(sha256sum "$src" | awk '{print $1}')"
-      dest_hash="$(sha256sum "$dest" | awk '{print $1}')"
-    elif command -v shasum >/dev/null 2>&1; then
-      src_hash="$(shasum -a 256 "$src" | awk '{print $1}')"
-      dest_hash="$(shasum -a 256 "$dest" | awk '{print $1}')"
-    else
-      src_hash=""
-      dest_hash="diff"
-    fi
-    if [[ -n "$src_hash" && "$src_hash" == "$dest_hash" ]]; then
-      echo "Already present: $dest"
-      return 0
-    fi
+  if [[ -f "$dest" ]] && same_content "$src" "$dest"; then
+    echo "Already present: $dest"
+    return 0
   fi
   if confirm_overwrite "$dest"; then
     cp "$src" "$dest"
     echo "Installed: $dest"
   fi
+}
+
+same_content() {
+  local src="$1"
+  local dest="$2"
+  [[ -f "$src" && -f "$dest" ]] || return 1
+  local src_hash dest_hash
+  if command -v sha256sum >/dev/null 2>&1; then
+    src_hash="$(sha256sum "$src" | awk '{print $1}')"
+    dest_hash="$(sha256sum "$dest" | awk '{print $1}')"
+  elif command -v shasum >/dev/null 2>&1; then
+    src_hash="$(shasum -a 256 "$src" | awk '{print $1}')"
+    dest_hash="$(shasum -a 256 "$dest" | awk '{print $1}')"
+  else
+    return 1
+  fi
+  [[ -n "$src_hash" && "$src_hash" == "$dest_hash" ]]
+}
+
+# GOAL-008 S4 (model A): the consumer repo owns root AGENTS.md. The framework
+# rules live inside a delimited managed block; bytes outside the markers are
+# never touched. Consumer content is preserved on install and update.
+merge_agents_file() {
+  local src="$1"
+  local dest="$2"
+  [[ -f "$src" ]] || die "Source file not found: $src"
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    echo "Dry-run: would merge managed block into $dest"
+    return 0
+  fi
+  if [[ -n "$PYTHON_BIN" ]]; then
+    "$PYTHON_BIN" "$SCRIPT_DIR/agents_merge.py" --source "$src" --target "$dest" \
+      || die "AGENTS.md managed-block merge failed (fail closed): $dest"
+    return 0
+  fi
+  if [[ -f "$dest" ]]; then
+    # No Python: never overwrite consumer-owned rules; fail closed instead.
+    if same_content "$src" "$dest"; then
+      echo "Already present: $dest"
+    else
+      die "AGENTS.md already exists and python3 is unavailable to merge the managed block (fail closed): $dest"
+    fi
+    return 0
+  fi
+  mkdir -p "$(dirname "$dest")"
+  cp "$src" "$dest"
+  echo "Installed: $dest  (python3 unavailable: full file, no managed-block split)"
 }
 
 copy_dir_merge() {
@@ -579,7 +626,7 @@ echo "Package root:  $PACKAGE_ROOT"
 echo
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
-  copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  merge_agents_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
   copy_file "$CLAUDE_GOVERN_SRC" "$TARGET_DIR/.claude/skills/govern/SKILL.md"
   copy_file "$CLAUDE_AUDIT_SRC" "$TARGET_DIR/.claude/skills/audit/SKILL.md"
   copy_file "$CLAUDE_VISION_SRC" "$TARGET_DIR/.claude/skills/vision/SKILL.md"
@@ -601,7 +648,7 @@ fi
 
 if [[ "$INSTALL_CODEX" -eq 1 ]]; then
   # D-002: REPO skills under .agents/skills; AGENTS.md reuses Claude source (same protocol)
-  copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  merge_agents_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
   copy_file "$CODEX_GOVERN_SRC" "$TARGET_DIR/.agents/skills/govern/SKILL.md"
   copy_file "$CODEX_AUDIT_SRC" "$TARGET_DIR/.agents/skills/audit/SKILL.md"
   copy_file "$CODEX_VISION_SRC" "$TARGET_DIR/.agents/skills/vision/SKILL.md"

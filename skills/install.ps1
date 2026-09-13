@@ -1,4 +1,4 @@
-# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot + Codex)
+﻿# Goal Governance Skills installer (Claude Code + Grok Build + GitHub Copilot + Codex)
 # Run from the target project root. No network access required.
 #
 # Typical flow:
@@ -208,6 +208,53 @@ function Copy-RuleFile {
     }
 }
 
+# GOAL-008 S4 (model A): the consumer repo owns root AGENTS.md; framework rules
+# live in a delimited managed block and bytes outside the markers are never
+# touched. Python is the single shared merge implementation (agents_merge.py).
+$script:PythonBin = $null
+foreach ($candidate in @('python','python3')) {
+    $found = Get-Command $candidate -ErrorAction SilentlyContinue
+    if ($found) {
+        & $found.Source -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 1)' 2>$null
+        if ($LASTEXITCODE -eq 0) { $script:PythonBin = $found.Source; break }
+    }
+}
+
+function Merge-RuleAgentsFile {
+    param(
+        [string]$Source,
+        [string]$Destination
+    )
+    if (-not (Test-Path -LiteralPath $Source -PathType Leaf)) {
+        Write-Err "Source file not found: $Source"
+    }
+    if ($DryRun) {
+        Write-Host "Dry-run: would merge managed block into $Destination"
+        return
+    }
+    if ($script:PythonBin) {
+        & $script:PythonBin (Join-Path $PackageRoot 'agents_merge.py') --source $Source --target $Destination
+        if ($LASTEXITCODE -ne 0) {
+            Write-Err "AGENTS.md managed-block merge failed (fail closed): $Destination"
+        }
+        return
+    }
+    if (Test-Path -LiteralPath $Destination -PathType Leaf) {
+        # No Python: never overwrite consumer-owned rules; fail closed instead.
+        if ((Get-FileSha256Hex -Path $Source) -eq (Get-FileSha256Hex -Path $Destination)) {
+            Write-Host "Already present: $Destination"
+        } else {
+            Write-Err "AGENTS.md already exists and Python is unavailable to merge the managed block (fail closed): $Destination"
+        }
+        return
+    }
+    $destDir = Split-Path -Parent $Destination
+    if ($destDir -and -not (Test-Path -LiteralPath $destDir)) {
+        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+    }
+    Copy-Item -LiteralPath $Source -Destination $Destination -Force
+    Write-Host "Installed: $Destination  (Python unavailable: full file, no managed-block split)"
+}
 function Copy-DirMerge {
     param(
         [string]$Source,
@@ -662,7 +709,7 @@ Write-Host "Package root:  $PackageRoot"
 Write-Host ''
 
 if ($Claude) {
-    Copy-RuleFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
+    Merge-RuleAgentsFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
     Copy-RuleFile -Source $ClaudeGovernSrc -Destination (Join-Path $TargetDir '.claude\skills\govern\SKILL.md')
     Copy-RuleFile -Source $ClaudeAuditSrc -Destination (Join-Path $TargetDir '.claude\skills\audit\SKILL.md')
     Copy-RuleFile -Source $ClaudeVisionSrc -Destination (Join-Path $TargetDir '.claude\skills\vision\SKILL.md')
@@ -684,7 +731,7 @@ if ($Grok) {
 
 if ($Codex) {
     # D-002: REPO skills under .agents/skills; AGENTS.md reuses Claude source (same protocol)
-    Copy-RuleFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
+    Merge-RuleAgentsFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
     Copy-RuleFile -Source $CodexGovernSrc -Destination (Join-Path $TargetDir '.agents\skills\govern\SKILL.md')
     Copy-RuleFile -Source $CodexAuditSrc -Destination (Join-Path $TargetDir '.agents\skills\audit\SKILL.md')
     Copy-RuleFile -Source $CodexVisionSrc -Destination (Join-Path $TargetDir '.agents\skills\vision\SKILL.md')

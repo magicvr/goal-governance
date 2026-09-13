@@ -18,6 +18,20 @@ import tempfile
 from urllib.request import Request, urlopen
 import zipfile
 
+try:  # package-relative import (skills package) with script fallback
+    from skills.agents_merge import (
+        MergeError,
+        has_managed_block,
+        merge_agents_text,
+    )
+except ImportError:  # pragma: no cover - direct script execution
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from agents_merge import (  # type: ignore[no-redef]
+        MergeError,
+        has_managed_block,
+        merge_agents_text,
+    )
+
 
 SEMVER_RE = re.compile(
     r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
@@ -155,8 +169,10 @@ def download(url: str, destination: Path) -> None:
 
 def managed_file_pairs(package: Path, target: Path) -> list[tuple[Path, Path]]:
     pairs: list[tuple[Path, Path]] = []
+    # GOAL-008 S4: root AGENTS.md is deliberately NOT a fully-managed destination.
+    # It is merged through the managed block (see agents_modification / merge_agents_text)
+    # so consumer-owned rules in the same file survive updates.
     fixed = {
-        "install/claude/AGENTS.md": "AGENTS.md",
         "install/copilot/copilot-instructions.md": ".github/copilot-instructions.md",
         "core/docs/README.md": "docs/README.md",
     }
@@ -184,6 +200,58 @@ def managed_file_pairs(package: Path, target: Path) -> list[tuple[Path, Path]]:
     return pairs
 
 
+def agents_managed_conflict(
+    package: Path,
+    target: Path,
+    incoming_package: Path | None = None,
+) -> Path | None:
+    """Return root AGENTS.md when its content would need review before merging.
+
+    Managed-block semantics (GOAL-008 S4): the destination is *not* a conflict
+    just because the consumer wrote their own rules next to the block — those
+    bytes are preserved. It is a conflict only when the existing block was
+    hand-edited away from what either the current or the incoming package
+    declares (``--force-managed`` then replaces just the block).
+    """
+    destination = target / "AGENTS.md"
+    if not destination.is_file():
+        return None
+    text = destination.read_text(encoding="utf-8")
+    candidates = [
+        package / "install" / "claude" / "AGENTS.md",
+        (incoming_package / "install" / "claude" / "AGENTS.md")
+        if incoming_package is not None
+        else None,
+    ]
+    for source in candidates:
+        if source is None or not source.is_file():
+            continue
+        try:
+            _merged, changed = merge_agents_text(text, source.read_text(encoding="utf-8"))
+        except MergeError:
+            return destination
+        if not changed:
+            return None
+    return destination
+
+
+def merge_root_agents(package: Path, target: Path) -> str:
+    """Merge the package's managed block into the consumer root AGENTS.md."""
+    source = package / "install" / "claude" / "AGENTS.md"
+    destination = target / "AGENTS.md"
+    if not source.is_file():
+        return "skipped-no-source"
+    text = destination.read_text(encoding="utf-8") if destination.is_file() else ""
+    try:
+        merged, changed = merge_agents_text(text, source.read_text(encoding="utf-8"))
+    except MergeError as error:
+        raise UpdateError(f"AGENTS.md managed block is malformed: {error}") from error
+    if not changed:
+        return "unchanged"
+    destination.write_text(merged, encoding="utf-8", newline="\n")
+    return "merged"
+
+
 def modified_managed_files(
     package: Path,
     target: Path,
@@ -204,6 +272,9 @@ def modified_managed_files(
             continue
         if file_sha256(source) != file_sha256(destination):
             modified.append(destination)
+    agents_conflict = agents_managed_conflict(package, target, incoming_package)
+    if agents_conflict is not None:
+        modified.append(agents_conflict)
     return sorted(set(modified))
 
 
@@ -320,6 +391,23 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         if modified and not args.force_managed:
             shown = ", ".join(str(path.relative_to(target)) for path in modified[:8])
             raise UpdateError(f"managed files have local changes; review or pass --force-managed: {shown}")
+
+        # GOAL-008 S4: normalize a legacy whole-file AGENTS.md into the managed
+        # block before the package is swapped, then let the installer merge.
+        agents = target / "AGENTS.md"
+        if agents.is_file():
+            existing = agents.read_text(encoding="utf-8")
+            if not has_managed_block(existing):
+                legacy_source = skills / "install" / "claude" / "AGENTS.md"
+                if legacy_source.is_file():
+                    try:
+                        converted, changed = merge_agents_text(
+                            existing, legacy_source.read_text(encoding="utf-8")
+                        )
+                    except MergeError:
+                        changed = False
+                    if changed:
+                        agents.write_text(converted, encoding="utf-8", newline="\n")
 
         plan = {
             "version": version,

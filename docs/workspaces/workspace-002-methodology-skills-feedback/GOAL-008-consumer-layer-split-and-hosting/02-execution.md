@@ -1,11 +1,11 @@
----
+﻿---
 id: GOAL-008-consumer-layer-split-and-hosting
 doc: execution
 status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 执行记录 · GOAL-008
@@ -19,6 +19,7 @@ version: 0.5.0
 | E-003 | 2026-09-13 | S1 现状复现与契约冻结：四路只读盘点 + D-003～D-006 + 验收矩阵/probe corpus | recorded | `02-execution/E-003-s1-inventory.md` |
 | E-004 | 2026-09-13 | S2 双层路线图语义拆分：命名表 6 类 + 落位谓词 + 模板槽位 + 守卫测试 | recorded | `02-execution/E-004-s2-layer-semantics.md` |
 | E-005 | 2026-09-13 | S3 解耦：投影标注 + legacy 兼容规则 + 骨架复制修正 | recorded | `02-execution/E-005-s3-projection-and-compat.md` |
+| E-006 | 2026-09-13 | S4 共存：受管标记块合并 + 安装器/updater 落地 + 12 例负例 | recorded | `02-execution/E-006-s4-agents-coexistence.md` |
 
 ## 事实边界
 

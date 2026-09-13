@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.5.0
-progress: 50.0%
+version: 0.6.0
+progress: 66.7%
 ---
 
 # GOAL-008 · 双层路线图拆分与消费仓宿主共存
@@ -41,15 +41,15 @@ progress: 50.0%
 | **S1** | 现状复现与契约冻结 | **完成**（2026-09-13） | I-001～I-004 完成当前阶段收集（I-001/I-002/I-004 `verified`；**I-003 `partially-verified`**，共存模型选型待用户裁决）；验收矩阵含可复现路径、责任边界证据、验收人/审视方式、各阶段证据路径；S4/S5 owned paths 已列并判定 **S4→S5 串行**（[D-006](01-decision/D-006-s4-s5-owned-paths-and-serial-decision.md)）。本轮不要求 I-005 provider 或 independent 输出（independent 复审 A-005 待执行，未完成前不得宣称 S1 契约已获交叉验证） |
 | **S2** | 双层路线图语义拆分 | **完成**（2026-09-13） | I-005 provider 已书面指定（本地 grok build / grok-4.6 / effort high，2026-09-13）；判定谓词与 prompts/模板落地；固定 probe/corpus、正反例、通过阈值、覆盖的宿主/提示词面可核对（corpus 已登记于 [验收矩阵](attachments/s1-acceptance-matrix.md) §4，静态执行结果见 [E-004](02-execution/E-004-s2-layer-semantics.md)）。**未**跑真实宿主 probe，故不宣称「AI 已不再混淆」（[A-005](03-audit/A-005-s2-stage-self.md) F-001，S6 闭合） |
 | **S3** | 愿景总路线图与 VP 跟踪解耦 | **完成**（2026-09-13） | 跟踪权威落点锁定（模型 = **A1 索引承载投影**，[D-005](01-decision/D-005-s3-consumer-compat.md)/[D-008](01-decision/D-008-s3-projection-and-legacy-compat.md)：列名与正文均标注投影、权威在 VP frontmatter）；兼容读取规则落盘于 alignment **§0.4**（legacy 不得 fail closed、VP frontmatter 优先、MUST 表不要求特定列）；重复信息不存在（两处漏 VP-004 漂移改为指针）；`standalone-bootstrap` 不再整文件复制组合编排索引。冷启动端到端演练登记为 S6 前闭合（[A-006](03-audit/A-006-s3-stage-self.md) F-001） |
-| **S4** | 消费仓 `AGENTS.md` / `docs/` 共存 | 未开始 | 已选定共存模型（候选 A～E 见 [盘点 §2.C](attachments/s1-inventory-evidence.md)，**选型须用户裁决后才可冻结方案**）；安装面为消费仓自有规则与项目文档留出共存空间；完整安装 MUST 与保护既有规则/文档的负例测试通过 |
+| **S4** | 消费仓 `AGENTS.md` / `docs/` 共存 | **完成**（2026-09-13） | 共存模型 = **A 标记块合并**（用户裁决 [D-009](01-decision/D-009-s4-agents-coexistence.md)）：根 `AGENTS.md` 归消费方，框架规则在受管区间内、区间外字节永不改写；安装器（bash/PS）与 updater 共用 `skills/agents_merge.py`；半写标记 fail closed、无 Python 时拒绝覆盖；根 `AGENTS.md` 不再是「完全托管文件」；负例见 [E-006](02-execution/E-006-s4-agents-coexistence.md)。`docs/` 归属本轮只做现状 + 共存说明（候选 C 未做）。真实消费仓升级实测登记 S6 前闭合（[A-008](03-audit/A-008-s4-stage-self.md) F-001） |
 | **S5** | 默认 `/commit` 便利入口 | 未开始 | 已支持宿主可调用；非完整安装 MUST、非治理入口必达、非 checkpoint 替代；owned paths / 既有用户改动 / 无改动或非 Git / 验证失败 / 提交失败 / 用户禁用的负例 fail closed |
 | **S6** | 回归、审计与发布 | 未开始 | I-006 已冻结（版本、tag/revision、资产清单、回归矩阵、cross 覆盖、consumer vs producer 证据归属）；canonical/镜像无漂移；cross 无开放 required；正式发布证据可核对 |
 
-S1、S2、S3 **已完成**。S4 与 S5 经写集判定为 **S4→S5 串行**（[D-006](01-decision/D-006-s4-s5-owned-paths-and-serial-decision.md)：安装器/更新器/契约/机读守卫四处写集重叠且 S5 依赖 S4 的安装面决策）。S6 汇总验收。**S2～S5 不另开子目标**：用户 2026-09-13 裁决「先等 S1 结论再按需拆」，S1 结论为各阶段写集与证据可在本目标内闭环（P-006 §6.6 停止条件），故留在 GOAL-008 内按阶段推进（[E-003](02-execution/E-003-s1-inventory.md)）。A-001 F-005 未闭合前不得宣称 S6 可发布；I-003 选型未裁决前不得冻结 S4 方案；宿主行为证据与 runtime evidence 锚点（A-005 F-001/F-002）在 S6 闭合前不得宣称「AI 已不再混淆」或发布就绪。
+S1、S2、S3、S4 **已完成**（S4→S5 串行，[D-006](01-decision/D-006-s4-s5-owned-paths-and-serial-decision.md)）。S5 未开始。S6 汇总验收。**S2～S5 不另开子目标**：用户 2026-09-13 裁决「先等 S1 结论再按需拆」，S1 结论为各阶段写集与证据可在本目标内闭环（P-006 §6.6 停止条件），故留在 GOAL-008 内按阶段推进（[E-003](02-execution/E-003-s1-inventory.md)）。A-001 F-005 未闭合前不得宣称 S6 可发布；I-003 选型未裁决前不得冻结 S4 方案；宿主行为证据与 runtime evidence 锚点（A-005 F-001/F-002）在 S6 闭合前不得宣称「AI 已不再混淆」或发布就绪。
 
 ## 派生进度展示
 
-`progress: 50.0%` = 上方 6 个显式阶段完成 **3 / 6**（等权；S1、S2、S3 完成）。progress 仅展示，不放行阶段、不关闭 finding、不推导 `done`。
+`progress: 66.7%` = 上方 6 个显式阶段完成 **4 / 6**（等权；S1～S4 完成）。progress 仅展示，不放行阶段、不关闭 finding、不推导 `done`。
 
 ## 信息就绪与未知项
 
@@ -81,4 +81,6 @@ S1、S2、S3 **已完成**。S4 与 S5 经写集判定为 **S4→S5 串行**（[
 - **S1 结果（2026-09-13，D-003～D-006 / E-003 / A-004）**：四路只读盘点完成，验收矩阵与 probe corpus 落盘；**F-002、F-003 已 `fixed`**，A-003 F-006/F-007 亦已响应；开放 required 降为 **2**（A-001 F-005 + I-003 选型）。用户裁决 S3 权威模型 = **A1 索引承载投影**、消费仓**必须兼容不得 fail closed**，并指定 independent provider = 本地 grok build（grok-4.6 / effort high）。S4/S5 判定 **S4→S5 串行**。S1 关门；`progress` **16.7%（1/6）**。
 - **S2 结果（2026-09-13，D-007 / E-004 / A-005）**：命名表由 4 类扩为 **6 类**（补「子目标」「VP 内阶段结构」）并新增**落位谓词 8 条**与「职责/权威非节点数量」守卫；`总路线图` 口语映射四处落盘；消费端规则面新增 **§6e.1**（三宿主同文）；新增 `docs/templates/vision/roadmap.md` 与目标/愿景模板槽位；机器守卫测试 2 套新增。回归：skills 43 OK、docs 56 OK、consumer-surface+mcp 25 OK、镜像 37 对一致、`git diff --check` 洁净。`progress` **33.3%（2/6）**。副作用：根 `AGENTS.md` 变更使 12 份 runtime evidence 锚点过期 → **S6 重捕获**（A-005 F-002）。
 - **S3 结果（2026-09-13，D-008 / E-005 / A-006）**：`roadmap.md` 列名与正文均标注**派生投影**、权威指向 VP frontmatter；写入顺序改为「先改 VP frontmatter 再刷新投影」；兼容读取规则落盘为 alignment **§0.4**（legacy 不得 fail closed、VP frontmatter 优先、MUST 表不要求任何特定列）；`standalone-bootstrap` 改为复制 `templates/vision/roadmap.md` 骨架并重写（不再整文件照搬他仓 VP 行）；两处漏 VP-004 的漂移改为指针；fixture 升为带投影标注的 6 列；新增 `CompositionRoadmapAuthorityTests`（6 项）。回归：docs **62 OK**、skills 43 OK、镜像 37 对、`git diff --check` 洁净。`progress` **50.0%（3/6）**。未新增 MUST。冷启动端到端演练登记 S6 前闭合（A-006 F-001）。
-- **independent 复审（grok build）**：S1/S2/S3 的交叉审计**尚未出具**（本地 grok build，grok-4.6 / reasoning-effort high；首轮会话无输出被终止，已改为有界提示重跑）。在此之前不得宣称任一阶段已获交叉验证。
+- **independent 交叉复审（2026-09-13，A-007，grok build / grok-4.6 / reasoning-effort high）**：在**基线快照 `b90b2d8`**（`git worktree` 检出）核对 S1 主张 → 抽查 **12 条全部一致**，判定 I-001/I-002/I-003（S1 时点）**成立**、S3 修复**自洽且未新增「不完整安装」路径**，**verdict `pass`、无 required**；2 条 recommended（F-001 `workspace_count` 表述、F-002 D-003 把 I-003 写成 verified）已在本轮 `fixed`。该意见同时确认 A-004 F-002（S1 交叉验证待出具）可闭合，并提示**不得**据此放行 S4（I-003 须用户裁决）。
+- **S4 结果（2026-09-13，D-009 / E-006 / A-008）**：用户裁决共存模型 **A（标记块合并）** 且 `docs/` 本轮只做现状 + 说明。落地：新增 `skills/agents_merge.py`（安装器与 updater 共用）、`install.sh`/`install.ps1` 两处 `AGENTS.md` 改为受管区间合并（无 Python 时 fail closed）、`update.py` 不再把根 `AGENTS.md` 当完全托管文件并新增 legacy 迁移、三个规则源面加外层受管标记、新增 `scripts/tests/test_agents_merge.py`（12 例）。回归：**skills 89 OK / docs 62 OK / scripts 除既有证据过期项外全绿 / PowerShell 隔离安装 PASS / `git diff --check` 洁净**；端到端隔离仓验证「消费方自有规则保留 + 受管区间写入」。`progress` **66.7%（4/6）**。S4 前 A-004 F-001（I-003 选型）由此**闭合**。
+- **仍未闭合（均不阻断 S5，S6 前必须闭合）**：A-001 F-005（I-006 发布基线）、A-005 F-001（宿主行为证据）、A-005 F-002（12 份 runtime evidence 锚点过期 → S6 重捕获）、A-006/A-008 F-001（隔离仓冷启动与真实升级实测）。

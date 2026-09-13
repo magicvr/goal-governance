@@ -1,4 +1,5 @@
-﻿---
+<!-- goal-governance:begin managed -->
+---
 title: GitHub Copilot 指令 · 目标治理
 status: active
 created: 2026-07-18
@@ -368,3 +369,5 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 - 愿景对齐：`{{GOVERNANCE_ROOT}}/vision/alignment.md`；审视台账：`{{GOVERNANCE_ROOT}}/vision/reviews.md`
 - 代码/应用布局：仓库根为常见默认；若已约定子目录则填 `{{APP_DIR}}`（可空）
 - Skills 目录：`{{SKILLS_DIR}}`
+
+<!-- goal-governance:end managed -->
