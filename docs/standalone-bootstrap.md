@@ -101,7 +101,7 @@ Copy-Item (Join-Path $target 'docs\templates\vision\vision-plan.md') (Join-Path 
 | 文件 | MUST 要求 |
 |------|-----------|
 | `docs/vision/README.md` | 目录入口（可从本包 `docs/vision/README.md` 复制后改写，或极简自拟） |
-| `docs/vision/roadmap.md` | 组合编排索引；至少列出本 VP |
+| `docs/vision/roadmap.md` | 组合编排索引；至少列出本 VP。**必须按本地 VP 集合重写**，不得整文件照搬他仓实例行（他仓行只作 legacy 提示，不阻断推进） |
 | `docs/vision/revisions.md` | Charter 修订台账（可仅表头 + 初建一行） |
 | `docs/vision/reviews.md` | Vision Review 稳定索引；文件本身为 MUST |
 | `docs/vision/reviews/VRev-NNN-<slug>.md` | 单条正式报告；Charter 初建后宜有一条 self VRev，新安装从第一条起使用目录 |
@@ -110,14 +110,18 @@ Copy-Item (Join-Path $target 'docs\templates\vision\vision-plan.md') (Join-Path 
 
 ```powershell
 # 示例：从源仓复制愿景树骨架后改写（路径按实际调整）
-foreach ($name in @('README.md','roadmap.md','revisions.md','workspaces.md','consumer-checklist.md')) {
+# 注意：组合编排索引不得整文件照搬——它带有源仓的 VP 行，会造成他仓行泄漏。
+foreach ($name in @('README.md','revisions.md','workspaces.md','consumer-checklist.md')) {
   Copy-Item (Join-Path $source "docs\vision\$name") (Join-Path $vision $name) -ErrorAction SilentlyContinue
 }
 Copy-Item (Join-Path $source 'docs\templates\vision\reviews-index.md') (Join-Path $vision 'reviews.md')
+# 组合编排索引从模板生成，不是复制实例
+Copy-Item (Join-Path $source 'docs\templates\vision\roadmap.md') (Join-Path $vision 'roadmap.md')
+# 然后把模板里的示例 VP 行替换成本仓真实 VP 行（id / title / vision_ref / lead_workspace / detail）
 New-Item -ItemType Directory -Path (Join-Path $vision 'reviews') -Force | Out-Null
 ```
 
-若源仓复制不可用，可手写极简占位文件，但**不得**省略文件名后仍宣称完整启用。规则权威仍是已复制的 `alignment.md`，不是 dogfood 过程记录。
+若源仓复制不可用，可手写极简占位文件（含组合编排索引），但**不得**省略文件名后仍宣称完整启用。规则权威仍是已复制的 `alignment.md`，不是 dogfood 过程记录。骨架复制后必须核对：`roadmap.md` 不含他仓 VP 行（legacy 残留只作提示，见 alignment §0.4）。
 
 ## 3. 工作区 + Root（必须挂 VP）
 

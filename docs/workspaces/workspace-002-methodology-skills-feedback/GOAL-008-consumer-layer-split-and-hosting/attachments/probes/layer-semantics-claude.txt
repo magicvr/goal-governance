@@ -1,0 +1,83 @@
+﻿```json
+{
+  "host": "layer-semantics-readonly-probe",
+  "cases": [
+    {
+      "id": "CE1",
+      "verdict": "legal",
+      "action": "允许推进 VP 阶段，但应在 VP 保持方向级语义，并由工作区 Root 的纲领路线图和目标记录承接可执行实施；不得仅因一区一 Root 一 VP 而拒绝。",
+      "evidence": "docs/architecture/principles.md:464；docs/vision/alignment.md:81"
+    },
+    {
+      "id": "CE2",
+      "verdict": "legal",
+      "action": "应只更新 docs/vision/roadmap.md 中的 VP 组合编排、波次或工作区投影；不得把 Root 阶段、Goal progress 或 finding 写入愿景总路线图。",
+      "evidence": "docs/vision/roadmap.md:10-15；docs/vision/alignment.md:70-77"
+    },
+    {
+      "id": "CE3",
+      "verdict": "legal",
+      "action": "允许在 VP 正文补充方向级路线图或阶段结构；若内容变成可执行纲领阶段或具体实施计划，应改写到对应 Root 的 00-meta.md、01-decision.md 或阶段计划中。",
+      "evidence": "docs/architecture/principles.md:443-445；docs/vision/alignment.md:72-79"
+    },
+    {
+      "id": "CE4",
+      "verdict": "legal",
+      "action": "VP 侧可记录 R1-R3 的方向级阶段结构，Root 侧可记录对应的可执行纲领路线图；两者职责不同，不应互相替代。",
+      "evidence": "docs/vision/plans/VP-004-mcp-file-dual-channel-delivery.md:75-149；docs/workspaces/workspace-003-mcp-file-dual-channel/GOAL-001-mcp-file-dual-channel-delivery/00-meta.md:32-41"
+    },
+    {
+      "id": "CE5",
+      "verdict": "legal",
+      "action": "允许为 VP 建立独立可验收的 GOAL 五件套并挂到 parent；parent 必须是同一工作区内父目标的完整 id，不能把 VP id 当作 parent。",
+      "evidence": "AGENTS.md:37-45；AGENTS.md:47-63；docs/vision/alignment.md:74, 129-133"
+    },
+    {
+      "id": "CE6",
+      "verdict": "misplaced",
+      "action": "拒绝把 roadmap 中的 VP 行整体搬入目标 00-meta.md；目标应通过 plan_refs、primary_plan 和简短 serves_summary 引用 VP，目标自身只记录实现层事实与路线图。",
+      "evidence": "docs/vision/roadmap.md:12-15；docs/vision/alignment.md:159-162；docs/vision/alignment.md:83-93"
+    },
+    {
+      "id": "CE7",
+      "verdict": "legal",
+      "action": "允许多个 VP 绑定同一工作区；应在 workspace.md 使用 plan_refs，并用 primary_plan 指定当前焦点，不得把 VP 数量误判为层级错误。",
+      "evidence": "docs/architecture/principles.md:464；docs/vision/alignment.md:135-144；docs/vision/alignment.md:173-175"
+    },
+    {
+      "id": "CE8",
+      "verdict": "legal",
+      "action": "允许 active VP 暂无工作区，但必须告警并按 14 个日历日空转规则处理；超过宽限期且无合规用户留痕时，对放行或关门执行 fail closed。",
+      "evidence": "docs/vision/alignment.md:166-183"
+    },
+    {
+      "id": "CE9",
+      "verdict": "legal",
+      "action": "允许把某阶段的实施方案和安排写入目标的 01-decision/D-00N-*.md；该内容属于目标内阶段计划，不应被当作独立树节点或 VP 层路线图。",
+      "evidence": "docs/architecture/principles.md:118-125；docs/architecture/principles.md:442；AGENTS.md:91-95"
+    },
+    {
+      "id": "CE10",
+      "verdict": "misplaced",
+      "action": "拒绝把 VP status: closed 简化读取为“该目标已完成”；应依据 VP 自身关门记录、工作区证据和适用退出判据表述为 VP 已有界关门，Goal 完成仍以目标自身 status、审计和关门证据为准。",
+      "evidence": "docs/vision/alignment.md:95-106；docs/vision/alignment.md:200-206；docs/architecture/principles.md:393-396"
+    }
+  ],
+  "marker": "LAYER_SEMANTICS_PROBE_OK"
+}
+```
+
+### 逐条依据
+
+- **CE1**：规则明确指出“一工作区一 Root 一 VP”本身不决定合法性，判断对象是职责与权威；VP 阶段属于愿景层方向级结构，实施推进属于 Root/目标层。
+- **CE2**：`roadmap.md` 是组合编排索引，不是目标层纲领路线图，也不是 progress 或 finding 的存储位置。
+- **CE3**：VP 可以有方向级阶段结构，但不能写可执行纲领阶段、子目标编号或 Goal 状态。
+- **CE4**：VP 中的 R1-R3 是方向级阶段；Root 中的 R1-R4 是实现层纲领路线图，分别合法。
+- **CE5**：目标五件套和 `parent` 完整父目标 id 是目标层结构要求；VP 不得作为目标节点或 `parent`。
+- **CE6**：`roadmap.md` 中的 VP 行只是组合编排/投影；目标层应通过 `plan_refs`、`primary_plan` 与 `serves_summary` 对齐，而不是复制愿景表行。
+- **CE7**：一工作区可以绑定一个或多个 VP；多个 VP 时用 `primary_plan` 标出当前焦点。
+- **CE8**：`active` 且零工作区是合法但受空转规则约束的结构，不应直接判为 misplaced。
+- **CE9**：`01-decision` 是决策与阶段计划的合法落点；阶段计划不是独立树节点。
+- **CE10**：VP 的 `closed` 是愿景规划状态，不能替代目标 `done` 或目标审计结论；VP 关门必须有区内证据和关门记录。
+
+LAYER_SEMANTICS_PROBE_OK

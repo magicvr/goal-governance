@@ -9,8 +9,8 @@ version: 0.14.0
 
 # AGENTS.md
 
-> **适用工具**：Claude Code  
-> 将本文件放在**目标项目根目录**并命名为 `AGENTS.md`。  
+> **适用工具**：Claude Code
+> 将本文件放在**目标项目根目录**并命名为 `AGENTS.md`。
 > 按项目实际情况修改路径与可选节；未使用的可选节可删除。
 
 面向在本仓库工作的 AI 助手（及人类协作者）。**以下规则必须遵守。**
@@ -110,12 +110,12 @@ version: 0.14.0
 
 **派生进度展示**：仅当目标内存在显式、可枚举的路线图或阶段计划检查点时，才可写 `progress`。默认等权计算 `已完成检查点数 / 总检查点数`；若使用权重，权重必须随检查点显式落盘。无来源或来源不一致时省略/显示 `—`，不得手填百分比兜底。任何 progress 值都不得放行阶段、关闭 finding、覆盖信息门禁、推导 `done`，也不得进入愿景目录作为权威。
 
-原则以本文件第 6 节为操作入口；**全文**以 `docs/architecture/principles.md` 为准（**必备**）。  
+原则以本文件第 6 节为操作入口；**全文**以 `docs/architecture/principles.md` 为准（**必备**）。
 Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安装，不得当作可跳过。
 
 ## 6b. 治理闭环、交叉审计与信息就绪（P-002～P-005）
 
-操作摘要如下；**全文**见 `docs/architecture/principles.md`。  
+操作摘要如下；**全文**见 `docs/architecture/principles.md`。
 降级兜底：若 principles 暂时缺失，仍须遵守本小节并报告不完整安装——**不是**「architecture 可选」产品定位。
 
 ### P-002 · 阶段质量意识
@@ -219,14 +219,20 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | 名称 | 含义 |
 |------|------|
 | 组合编排 | 愿景级 VP 索引/波次（非 progress%） |
-| 纲领路线图 | 目标层 P-001 阶段 |
+| 纲领路线图 | 目标层 P-001 阶段；写在**该目标**的 `00-meta.md` / `01-decision.md` |
 | 阶段计划 | 目标内方案（非树节点） |
-| 意图 | 已落盘 `VP-*.md`（草案不可作 primary_plan） |
+| 意图（VP） | 已落盘 `{governance_root}/vision/plans/VP-*.md` |
+| 子目标 | 工作区内 `GOAL-NNN-<slug>` 五件套节点；`parent` = 父**目标**完整 id |
+| VP 内阶段结构 | 波次内**方向级**阶段（先后与退出方向）；**不是**可执行纲领路线图 |
+
+**层级判定谓词**（详见 `{governance_root}/architecture/principles.md` §6.4）：内容授权或改变**决策** → 愿景层（Charter/组合编排）；内容是已落盘 VP 的意图、方向级退出判据、绑定或关门记录 → 愿景层（该 VP 正文）；内容是某 Root/大目标的纲领阶段 → 实现层（该目标 `00-meta`/`01-decision`）；内容是某阶段内方案 → 阶段计划（非树节点）；内容是可独立验收、需要 `parent` 与五件套的交付节点 → **子目标**。
+**层级错位（fail closed）**：把 VP / Charter / 愿景文件当目标节点、`parent` 或 Goal 状态源；在愿景层写可执行纲领阶段、子目标编号、Goal status 或 progress%；在目标层复写第二套愿景边界。**判定对象是职责与权威，不是节点数量**——一区一 Root 一 VP、多 VP 绑同区、0 区 `active` VP 均合法。
+**「总路线图」**（口语）= 愿景层组合编排索引 `{governance_root}/vision/roadmap.md`，**不是**目标层纲领路线图。VP 的 `status` / `vision_ref` / `lead_workspace` 权威在 VP 文件 frontmatter；组合编排索引中的同名列只是**派生投影**，不得用于门禁。
 
 **结构选型**：改源头→Charter strategic；新波次→VP；独立树/隔离→新工作区；同 Root→子目标；高不确定探索先按 P-005 建立有界信息收集阶段或目标。
-**强制审视**：Charter 初建/strategic → Vision Review；新 VP → 用户确认；开区 → 对齐校验；目标层按 P-002/P-003（小目标可合并）。  
-**继承**：语境与边界约束可继承；residual/overruled/进度/审计**不**自动继承。有界偏离须 P-004；改边界则升级改上一级。  
-**跨区**：禁止跨区 `parent`；用 Q2/Q3。多区同一 VP 时 `lead_workspace` 必填。  
+**强制审视**：Charter 初建/strategic → Vision Review；新 VP → 用户确认；开区 → 对齐校验；目标层按 P-002/P-003（小目标可合并）。
+**继承**：语境与边界约束可继承；residual/overruled/进度/审计**不**自动继承。有界偏离须 P-004；改边界则升级改上一级。
+**跨区**：禁止跨区 `parent`；用 Q2/Q3。多区同一 VP 时 `lead_workspace` 必填。
 工具：决策层 → `/vision`（Skills 第二刀）；实现层 → `/govern`。
 
 ## 7. 必须同步更新 goal-tree.md
@@ -239,7 +245,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 - 完成或取消目标
 - 重命名文件夹或 slug（并修正所有引用）
 
-更新内容至少包括：**ASCII/文本树** + **状态表格**。  
+更新内容至少包括：**ASCII/文本树** + **状态表格**。
 只改单目标文件、不更新 goal-tree → **视为任务未完成**。
 
 ## 8. 代码与文档边界
@@ -260,7 +266,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 ## 8c. Monorepo · canonical → Skills 镜像 stage（本仓维护者 / 存在 stage 脚本时）
 
-> **何时适用**：仓库根存在 `scripts/stage_skills_mirrors.py`（本 monorepo 维护面）。消费方目标仓通常**无**此脚本，可删除本小节。  
+> **何时适用**：仓库根存在 `scripts/stage_skills_mirrors.py`（本 monorepo 维护面）。消费方目标仓通常**无**此脚本，可删除本小节。
 > 细则与白名单：`docs/README.md`「canonical → Skills 镜像」；脚本：`scripts/stage_skills_mirrors.py`（GOAL-022）。
 
 **真相源只在 `docs/`。** `skills/core/docs/` 与 `skills/contracts/` 是分发镜像，不是第二套规范。**禁止**手改镜像侧正文来「修好」漂移；应改 canonical 再 stage。
@@ -301,7 +307,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 ## 9b. Skills 主入口（若已安装本包）
 
-- **编排主路径（实现层）**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md` → **`/govern`**。  
+- **编排主路径（实现层）**：`{{SKILLS_DIR}}/prompts/00-govern-orchestrator.md` → **`/govern`**。
   愿景完整性 → 工作区校验 → 扫描 → 意见台账 → 分类 → P-004 裁决 → 提议 → 确认 → 原语 `01`～`04`。
 - **交叉审计（目标层）**：`{{SKILLS_DIR}}/prompts/05-independent-audit.md` → **`/audit`**（只出意见，不改 status；响应归 `/govern`）。
 - **愿景/决策层**：**`/vision`** → `{{SKILLS_DIR}}/prompts/06-vision-orchestrator.md`——建修 Charter、组合编排、VP、Vision Review、re-align；冷启动优先本入口，再交 `/govern` 开区。

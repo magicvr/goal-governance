@@ -32,6 +32,20 @@ FORCE=0
 NON_INTERACTIVE=0
 DRY_RUN=0
 
+# GOAL-008 S4: root AGENTS.md is merged through a managed block. Python is the
+# single shared merge implementation; without it we never overwrite consumer
+# rules (fail closed) and only write the file when it does not exist yet.
+PYTHON_BIN=""
+for _candidate in python3 python; do
+  if command -v "$_candidate" >/dev/null 2>&1; then
+    if "$_candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 1)' >/dev/null 2>&1; then
+      PYTHON_BIN="$_candidate"
+      break
+    fi
+  fi
+done
+unset _candidate
+
 usage() {
   cat <<'EOF'
 Goal Governance Skills installer
@@ -155,28 +169,81 @@ copy_file() {
     return 0
   fi
   mkdir -p "$(dirname "$dest")"
-  # Same source content already at dest (e.g. Claude then Codex both install AGENTS.md) — skip prompt
-  if [[ -f "$dest" ]]; then
-    local src_hash dest_hash
-    if command -v sha256sum >/dev/null 2>&1; then
-      src_hash="$(sha256sum "$src" | awk '{print $1}')"
-      dest_hash="$(sha256sum "$dest" | awk '{print $1}')"
-    elif command -v shasum >/dev/null 2>&1; then
-      src_hash="$(shasum -a 256 "$src" | awk '{print $1}')"
-      dest_hash="$(shasum -a 256 "$dest" | awk '{print $1}')"
-    else
-      src_hash=""
-      dest_hash="diff"
-    fi
-    if [[ -n "$src_hash" && "$src_hash" == "$dest_hash" ]]; then
-      echo "Already present: $dest"
-      return 0
-    fi
+  if [[ -f "$dest" ]] && same_content "$src" "$dest"; then
+    echo "Already present: $dest"
+    return 0
   fi
   if confirm_overwrite "$dest"; then
     cp "$src" "$dest"
     echo "Installed: $dest"
   fi
+}
+
+same_content() {
+  local src="$1"
+  local dest="$2"
+  [[ -f "$src" && -f "$dest" ]] || return 1
+  local src_hash dest_hash
+  if command -v sha256sum >/dev/null 2>&1; then
+    src_hash="$(sha256sum "$src" | awk '{print $1}')"
+    dest_hash="$(sha256sum "$dest" | awk '{print $1}')"
+  elif command -v shasum >/dev/null 2>&1; then
+    src_hash="$(shasum -a 256 "$src" | awk '{print $1}')"
+    dest_hash="$(shasum -a 256 "$dest" | awk '{print $1}')"
+  else
+    return 1
+  fi
+  [[ -n "$src_hash" && "$src_hash" == "$dest_hash" ]]
+}
+
+# GOAL-008 S6: under Git Bash / MSYS on Windows the shell speaks POSIX paths
+# (/tmp/..., /c/...) while a native Windows Python cannot open them. Convert
+# before handing paths to the interpreter; on POSIX hosts this is a no-op.
+native_path() {
+  local path="$1"
+  case "$(uname -s 2>/dev/null)" in
+    MINGW*|MSYS*|CYGWIN*)
+      if command -v cygpath >/dev/null 2>&1; then
+        cygpath -w "$path"
+        return 0
+      fi
+      ;;
+  esac
+  printf '%s\n' "$path"
+}
+
+# GOAL-008 S4 (model A): the consumer repo owns root AGENTS.md. The framework
+# rules live inside a delimited managed block; bytes outside the markers are
+# never touched. Consumer content is preserved on install and update.
+merge_agents_file() {
+  local src="$1"
+  local dest="$2"
+  [[ -f "$src" ]] || die "Source file not found: $src"
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    echo "Dry-run: would merge managed block into $dest"
+    return 0
+  fi
+  if [[ -n "$PYTHON_BIN" ]]; then
+    local helper native_source native_target
+    helper="$(native_path "$SCRIPT_DIR/agents_merge.py")"
+    native_source="$(native_path "$src")"
+    native_target="$(native_path "$dest")"
+    "$PYTHON_BIN" "$helper" --source "$native_source" --target "$native_target" \
+      || die "AGENTS.md managed-block merge failed (fail closed): $dest"
+    return 0
+  fi
+  if [[ -f "$dest" ]]; then
+    # No Python: never overwrite consumer-owned rules; fail closed instead.
+    if same_content "$src" "$dest"; then
+      echo "Already present: $dest"
+    else
+      die "AGENTS.md already exists and python3 is unavailable to merge the managed block (fail closed): $dest"
+    fi
+    return 0
+  fi
+  mkdir -p "$(dirname "$dest")"
+  cp "$src" "$dest"
+  echo "Installed: $dest  (python3 unavailable: full file, no managed-block split)"
 }
 
 copy_dir_merge() {
@@ -522,14 +589,17 @@ CLAUDE_GOVERN_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
 CLAUDE_AUDIT_SRC="$PACKAGE_ROOT/install/claude/skills/audit/SKILL.md"
 CLAUDE_VISION_SRC="$PACKAGE_ROOT/install/claude/skills/vision/SKILL.md"
 CLAUDE_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/claude/skills/vision-audit/SKILL.md"
+CLAUDE_COMMIT_SRC="$PACKAGE_ROOT/install/claude/skills/commit/SKILL.md"
 GROK_GOVERN_SRC="$PACKAGE_ROOT/install/grok/skills/govern/SKILL.md"
 GROK_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/audit/SKILL.md"
 GROK_VISION_SRC="$PACKAGE_ROOT/install/grok/skills/vision/SKILL.md"
 GROK_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/grok/skills/vision-audit/SKILL.md"
+GROK_COMMIT_SRC="$PACKAGE_ROOT/install/grok/skills/commit/SKILL.md"
 CODEX_GOVERN_SRC="$PACKAGE_ROOT/install/codex/skills/govern/SKILL.md"
 CODEX_AUDIT_SRC="$PACKAGE_ROOT/install/codex/skills/audit/SKILL.md"
 CODEX_VISION_SRC="$PACKAGE_ROOT/install/codex/skills/vision/SKILL.md"
 CODEX_VISION_AUDIT_SRC="$PACKAGE_ROOT/install/codex/skills/vision-audit/SKILL.md"
+CODEX_COMMIT_SRC="$PACKAGE_ROOT/install/codex/skills/commit/SKILL.md"
 COPILOT_SRC="$PACKAGE_ROOT/install/copilot/copilot-instructions.md"
 COPILOT_WRAPPERS_SRC="$PACKAGE_ROOT/install/copilot/prompts"
 PROMPTS_SRC="$PACKAGE_ROOT/prompts"
@@ -579,11 +649,12 @@ echo "Package root:  $PACKAGE_ROOT"
 echo
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
-  copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  merge_agents_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
   copy_file "$CLAUDE_GOVERN_SRC" "$TARGET_DIR/.claude/skills/govern/SKILL.md"
   copy_file "$CLAUDE_AUDIT_SRC" "$TARGET_DIR/.claude/skills/audit/SKILL.md"
   copy_file "$CLAUDE_VISION_SRC" "$TARGET_DIR/.claude/skills/vision/SKILL.md"
   copy_file "$CLAUDE_VISION_AUDIT_SRC" "$TARGET_DIR/.claude/skills/vision-audit/SKILL.md"
+  copy_file "$CLAUDE_COMMIT_SRC" "$TARGET_DIR/.claude/skills/commit/SKILL.md"
   echo "Claude skills: /govern + /audit + /vision + /vision-audit"
 fi
 
@@ -592,6 +663,7 @@ if [[ "$INSTALL_GROK" -eq 1 ]]; then
   copy_file "$GROK_AUDIT_SRC" "$TARGET_DIR/.grok/skills/audit/SKILL.md"
   copy_file "$GROK_VISION_SRC" "$TARGET_DIR/.grok/skills/vision/SKILL.md"
   copy_file "$GROK_VISION_AUDIT_SRC" "$TARGET_DIR/.grok/skills/vision-audit/SKILL.md"
+  copy_file "$GROK_COMMIT_SRC" "$TARGET_DIR/.grok/skills/commit/SKILL.md"
   echo "Grok skills: /govern + /audit + /vision + /vision-audit"
   # Optional: also ensure AGENTS if missing (Grok reads AGENTS.md as project rules)
   if [[ ! -f "$TARGET_DIR/AGENTS.md" && -f "$CLAUDE_AGENTS_SRC" ]]; then
@@ -601,11 +673,12 @@ fi
 
 if [[ "$INSTALL_CODEX" -eq 1 ]]; then
   # D-002: REPO skills under .agents/skills; AGENTS.md reuses Claude source (same protocol)
-  copy_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  merge_agents_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
   copy_file "$CODEX_GOVERN_SRC" "$TARGET_DIR/.agents/skills/govern/SKILL.md"
   copy_file "$CODEX_AUDIT_SRC" "$TARGET_DIR/.agents/skills/audit/SKILL.md"
   copy_file "$CODEX_VISION_SRC" "$TARGET_DIR/.agents/skills/vision/SKILL.md"
   copy_file "$CODEX_VISION_AUDIT_SRC" "$TARGET_DIR/.agents/skills/vision-audit/SKILL.md"
+  copy_file "$CODEX_COMMIT_SRC" "$TARGET_DIR/.agents/skills/commit/SKILL.md"
   echo "Codex skills: \$govern + \$audit + \$vision + \$vision-audit under .agents/skills/"
 fi
 
@@ -616,13 +689,15 @@ if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   mkdir -p "$TARGET_DIR/.github/prompts"
   # Default product surface: impl + Goal audit + vision decision + independent Vision Review
   WRAPPER_NAMES=(govern audit vision vision-audit)
+CONVENIENCE_WRAPPER_NAMES=(commit)
   if [[ "$INSTALL_PRIMITIVE_WRAPPERS" -eq 1 ]]; then
     WRAPPER_NAMES+=(new-goal log-decision update-execution write-audit)
     echo "Including advanced primitive slash wrappers (--with-primitives)"
   else
-    echo "Copilot slash surface: /govern + /audit + /vision + /vision-audit (pass --with-primitives for form-fill ops)"
+    echo "Copilot slash surface: /govern + /audit + /vision + /vision-audit (governance-must)"
+  echo "Convenience entry: /commit (default-installed; NOT a governance-must entrypoint)"
   fi
-  for name in "${WRAPPER_NAMES[@]}"; do
+  for name in "${WRAPPER_NAMES[@]}" "${CONVENIENCE_WRAPPER_NAMES[@]}"; do
     copy_file \
       "$COPILOT_WRAPPERS_SRC/${name}.md" \
       "$TARGET_DIR/.github/prompts/${name}.prompt.md"

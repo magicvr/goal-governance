@@ -1,0 +1,96 @@
+copilot replay model: gemini-3.8-flash-high
+● skill(govern)
+
+I am starting the read-only replay for GOAL-008. I will inspect the governance sources, scan
+GOAL-008 records, and evaluate its closure eligibility under /govern semantics.
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L1:100 (99 lines read)
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ L1:120 (119 lines read)
+
+/ Search (glob)
+  │ "*008*" in docs\workspaces\workspace-001-goal-governance
+  └ No matches found
+
+/ Search (glob)
+  │ "*" in docs\workspaces\workspace-001-goal-governance
+  └ 8 files found
+
+/ Search (grep)
+  │ "GOAL-008" (docs\workspaces\workspace-001-goal-governance\goal-tree.md)
+  └ 1 file found
+
+/ Search (grep)
+  │ "GOAL-008" (docs\workspaces\workspace-001-goal-governance\goal-tree.md)
+  └ 2 lines found
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:100 (100 lines read)
+
+● Read 00-govern-orchestrator.md
+  │ skills\prompts\00-govern-orchestrator.md
+  └ L101:250 (150 lines read)
+
+/ Search (glob)
+  │ "**/*" in docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release
+  │ -consistency
+  └ 8 files found
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ 1 line read
+
+● Read 00-meta.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\00-meta.md
+  └ 103 lines read
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ 1 line read
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L1:120 (120 lines read)
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ L1:100 (99 lines read)
+
+● Read 02-execution.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\02-execution.md
+  └ L1:100 (100 lines read)
+
+治理扫描与 /govern 重放（GOAL-008）
+
+ - 工作区页眉：workspace_id: workspace-001-goal-governance（显式 canonical）；Root:
+GOAL-001-main-vision（done）；焦点目标:
+GOAL-008-skills-consumer-adapter-release-consistency；资料引用有效，无跨区违规。
+ - 情境：S1（工作区已封存，Root 与全部子目标均已关门）。
+ - 状态与进度：status: done，progress: 100%（parent: GOAL-001-main-vision）。
+ - 信息门禁（P-005）： - I-001 (required): verified（Schema、manifest 契约与单测）。
+ - I-002 (required): verified（宿主 CLI 运行时重放与 Web CI run 29700051047）。
+ - I-003 (required): verified（annotated v0.7.0、clean commit 8a33ecd 与 release-candidate 归档）。
+ - 到期开放 required 信息项：0。
+ - 相关审计意见： - 台账覆盖 A-001～A-017（含 A-014 independent CLI 重放、A-016 self close-out
+pass、A-017 历史新鲜度复审）。
+ - 开放必改 findings: 0；冲突: 无；残余风险: 0。
+ - 关门判定：允许关门（目标已于 2026-07-20 合法关门归档为 done / 100%，所有前置 required
+门禁与审计结论完全闭合，无阻断项）。
+
+COPILOT_CLI_GOVERN_DISPATCH_OK
+

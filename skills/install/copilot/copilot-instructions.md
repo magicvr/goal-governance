@@ -1,3 +1,4 @@
+<!-- goal-governance:begin managed -->
 ---
 title: GitHub Copilot 指令 · 目标治理
 status: active
@@ -216,6 +217,21 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 
 **结构选型**：改源头→Charter strategic；新波次→VP；独立树/隔离→新工作区；同 Root→子目标；高不确定探索先按 P-005 建立有界信息收集阶段或目标。
 工具：决策层 → `/vision`；实现层 → `/govern`；独立 Vision Review → `/vision-audit`。
+### 6e.1 层级命名与判定谓词（防「路线图」混淆）
+
+| 名称 | 层 | 含义 / 写什么 | 不写什么 |
+|------|----|---------------|----------|
+| **组合编排** | 愿景 | VP 索引、波次先后/并行、lead 区；VP status 只可作**显式标注的派生投影** | progress%、goal-tree、finding、作为 VP status 第二权威 |
+| **纲领路线图** | 实现（Root/大目标） | 该目标的纲领阶段与先后、完成标记；写在**该目标**的 `00-meta.md` / `01-decision.md` | 细任务流水；愿景层不得出现同名的可执行纲领路线图 |
+| **阶段计划** | 实现（目标内） | 某阶段方案与实施安排（多在 `01-decision`） | 独立生命周期实体、第二套状态源 |
+| **意图（VP）** | 愿景（权威） | 已落盘 `VP-*.md`：意图、方向级退出判据、`vision_ref`、工作区绑定、关门记录 | 目标五件套、`parent`、Goal status、progress% 权威、可执行纲领路线图 |
+| **子目标** | 实现 | 工作区内 `GOAL-NNN-<slug>` 五件套节点；`parent` = 父**目标**完整 id | 把 VP/Charter 当 `parent`；把 VP 写成可执行子目标 |
+| **VP 内阶段结构** | 愿景（受限） | 波次内**方向级**阶段（先后与退出方向） | 可执行纲领阶段、子目标编号、Goal status、progress% |
+
+**「总路线图」**（口语）= 愿景层组合编排索引 `{{GOVERNANCE_ROOT}}/vision/roadmap.md`，**不是**目标层纲领路线图；两者不得互相替代。
+**判定谓词**（任一成立即层级错位，须改写或升级修订）：①把 VP / Charter / 愿景文件当目标节点、`parent` 或 Goal 状态源；②在愿景层写可执行纲领阶段、子目标编号、Goal status 或 progress%；③在目标层复写第二套愿景边界（超出短 `serves_summary` + 链接）。
+**判定对象是职责与权威，不是节点数量**：一区一 Root 一 VP、多 VP 绑同区、0 区 `active` VP 都合法。
+**VP 状态权威**在该 VP 文件 frontmatter；组合编排索引里的同名列只是派生投影，不得用于门禁。
 
 ## 7. 必须同步更新 goal-tree.md
 
@@ -353,3 +369,5 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 - 愿景对齐：`{{GOVERNANCE_ROOT}}/vision/alignment.md`；审视台账：`{{GOVERNANCE_ROOT}}/vision/reviews.md`
 - 代码/应用布局：仓库根为常见默认；若已约定子目录则填 `{{APP_DIR}}`（可空）
 - Skills 目录：`{{SKILLS_DIR}}`
+
+<!-- goal-governance:end managed -->

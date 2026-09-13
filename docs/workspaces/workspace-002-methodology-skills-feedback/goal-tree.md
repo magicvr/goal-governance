@@ -1,16 +1,49 @@
----
+﻿---
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-08-11
+updated: 2026-09-13
 parent: null
-version: 0.14.0
+version: 0.22.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-13 · GOAL-008 S6 首轮（回归 + 证据重捕获 + 发布准备）
+
+S6 主体完成：**全量回归全绿**（docs 65 / skills 89 / scripts 128，镜像 37 对 0 漂移，`git diff --check` 洁净）；**12 格 runtime 证据在 `docs/releases/runtime/v0.13.3/` 重捕获全部 `pass`**（claude `2.1.270` / grok `1.0.30` / copilot `1.0.75`），`capture_runtime_evidence --check` 12/12 一致，`compatibility_report --require-ready` 通过（`ready-for-release-evidence`），release rehearsal 通过；隔离消费仓冷启动与升级重放实测通过；版本落地 `0.13.3`（CHANGELOG + docs 台账）。Copilot 首轮因本机 BYOK 模型失效（`deepseek-v4-flash` 已停用）四格 fail → 改为显式传 `--model gemini-3.8-flash-high` 后全部 pass，失败 JSON 保留为过程记录但未被矩阵引用（D-012）。
+
+GOAL-008 仍为 **`active / 83%`**（S6 未完全关门）。**未完成**：S6 independent 关门审计结论落盘、PR/merge 到 `main`、annotated tag `v0.13.3` + tag workflow、Release 资产逐项核对、`/commit` 单列宿主证据。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
+## 2026-09-13 · GOAL-008 S5 完成（默认 /commit 便利入口）
+
+S5「默认 `/commit` 便利入口」完成：四个已支持宿主（claude / grok / codex / copilot）安装面新增 `/commit`（`$commit`）壳并**默认产出**；安装输出显式区分 `governance-must` 与便利入口。**治理边界未被污染**——契约 `hostEntrypoints` / `files.entrypoints` 仍**只含四个治理入口**，`/commit` 不是完整安装 MUST、不是治理入口必达、不替代 `/govern` checkpoint；边界由 `docs/tests/test_file_l1.py` **三个机读守卫**固定，拒绝未来把 `commit` 混入必达集。fail-closed 负例（越界、既有用户改动、无改动、非 Git、hook 拒绝、detached HEAD、用户禁用、禁 `git add -A`、不 push）写入四个壳文本。回归：**docs 65 OK / skills 89 OK / PowerShell 隔离安装 PASS / 镜像 37 对一致 / `git diff --check` 洁净**；端到端隔离仓四路径均落盘。GOAL-008 推进为 **`active / 83%`**（S1～S6 5/6），**仅剩 S6**。开放 required 4 项全部属 S6 范围（A-001 F-005 发布基线、A-005 F-001/F-002 宿主行为与 runtime 证据、A-006/A-008 F-001 隔离仓实测、A-009 F-001 便利入口实测）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
+## 2026-09-13 · GOAL-008 S4 完成 + A-007 独立交叉复审 pass
+
+**A-007（independent · grok build / grok-4.6 / reasoning-effort high）**：在基线快照 `b90b2d8` 上核对 S1 盘点主张——抽查 **12 条全部一致**，判定 I-001/I-002/I-003（S1 时点）**成立**、S3 修复**自洽且未新增「不完整安装」路径**，**verdict `pass`、无 required**；2 条 recommended 已 `fixed`。该意见闭合 A-004 F-002（S1 交叉验证待出具）。
+
+**S4「消费仓 AGENTS.md / docs 共存」完成**：用户裁决 **A 模型（受管标记块）**——根 `AGENTS.md` 归消费方，框架规则位于受管区间内、**区间外字节永不改写**；安装器（bash/PowerShell）与 updater 共用新增的 `skills/agents_merge.py`；半写标记 fail closed、无 Python 时拒绝覆盖；根 `AGENTS.md` 不再是「完全托管文件」（updater managed 集移除），并支持 legacy 整份安装迁移。`docs/` 归属本轮只做现状 + 共存说明（可配置治理根候选 C 未做）。回归：**skills 89 OK / docs 62 OK / scripts 除既有 runtime 证据过期项外全绿 / PowerShell 隔离安装 PASS / `git diff --check` 洁净**；端到端隔离仓验证消费方自有规则保留。A-004 F-001（I-003 选型）由此**闭合**。GOAL-008 推进为 **`active / 67%`**（S1～S6 4/6），S5 未开始。仍未闭合（不阻断 S5）：A-001 F-005、A-005 F-001/F-002、A-006/A-008 F-001。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
+## 2026-09-13 · GOAL-008 S3 完成（投影与兼容解耦）
+
+S3「愿景总路线图与 VP 跟踪解耦」完成：按用户裁决 **A1 索引承载投影** 落地——`docs/vision/roadmap.md` 列名与正文均标注**派生投影**、权威指向各 VP frontmatter、写入顺序改为「先改 VP frontmatter 再刷新投影」；兼容读取规则写入规则权威 alignment **§0.4**（legacy 行/列只作提示、**不得**因残留而判「不完整安装」、VP frontmatter 优先、MUST 表**不要求任何特定列**）；`docs/standalone-bootstrap.md` 改为复制 `templates/vision/roadmap.md` 骨架并重写（不再整文件照搬他仓 VP 行）；两处漏 VP-004 的漂移（overview.md 与其镜像、workspace-001 Root 00-meta）改为指针；fixture 升为带投影标注的 6 列；新增 `CompositionRoadmapAuthorityTests`（6 项）。回归：docs **62 OK**、skills 43 OK、镜像 37 对、`git diff --check` 洁净；**未新增 MUST**。GOAL-008 推进为 **`active / 50%`**（S1～S6 3/6），S4 未开始（S4 方案冻结前须取得用户对共存模型的裁决）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
+
+## 2026-09-13 · GOAL-008 S2 完成（层级语义拆分）
+
+S2「双层路线图语义拆分」完成：命名表由 4 类扩为 **6 类**（补「子目标」「VP 内阶段结构」），新增**落位谓词 8 条**与「判定对象是职责与权威，不是节点数量」守卫；口语「总路线图」映射到愿景层组合编排索引（不再歧义）；VP 内阶段结构限定为方向级；消费端规则面新增 **§6e.1**（claude / copilot / AGENTS.template 三处同文）；新增 `docs/templates/vision/roadmap.md`（投影列标注 + 禁门禁用途）与目标/愿景模板槽位；新增机器守卫测试 2 套（命名面/模板/规则面）。回归：skills 43 OK、docs 56 OK、consumer-surface+mcp 25 OK、镜像 37 对一致、`git diff --check` 洁净。GOAL-008 推进为 **`active / 33%`**（S1～S6 2/6），S3 未开始。副作用已登记：根 `AGENTS.md` 变更使 12 份 runtime evidence 锚点过期 → **S6 重捕获**（A-005 F-002，不阻断 S3）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
+
+## 2026-09-13 · GOAL-008 S1 完成（契约冻结）
+
+S1「现状复现与契约冻结」完成：四路只读盘点（I-001 双层语义命名 / I-002 愿景跟踪权威 / I-003 消费仓写入面 / I-004 `/commit` 入口）产出 `file:line` 级证据；D-003 冻结共享不变量 C1～C7 并分列留待各阶段的细案（响应 A-003 F-006）；验收矩阵 + probe corpus（10 例正反例与通过阈值）+ S4/S5 owned paths 与 **S4→S5 串行**判定落盘（D-006）。用户裁决 S3 权威模型 = **A1 索引承载投影**、消费仓**必须兼容不得 fail closed**（D-005），并指定 independent provider = 本地 grok build（grok-4.6 / effort high）→ **I-005 closed**。**A-001 F-002、F-003 由 D-004 / D-006 合法闭合**（F-001/F-004 早已闭合），开放 required 降为 **2**：A-001 F-005（I-006 发布基线，S6 前）+ I-003 共存模型选型（S4 方案冻结前）。**S2～S5 不另开子目标**（用户裁决「先等 S1 结论再按需拆」；各阶段写集与证据可在本目标内闭环）。GOAL-008 推进为 **`active / 17%`**（S1～S6 1/6），S2 未开始；S1 的 independent 复审（A-005）待执行，未完成前不得宣称 S1 契约已获交叉验证。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
+
+## 2026-09-13 · GOAL-008 响应 A-001
+
+独立设计审计 A-001 `conditional` 已由 A-002 响应：F-001、F-004 **fixed**；F-002、F-003、F-005 仍 **open**（阻断 S2–S4 冻结/并行与 S6 发布）。GOAL-008 保持 **`active / 0%`**；S1 未开始。Root R3 仍进行中、Root progress 保持 67%。
+
+## 2026-09-13 · GOAL-008 立项
+
+用户提交第二批消费仓质量框架痛点（双层路线图混淆、愿景总路线图被 VP 跟踪干扰、安装占用 `AGENTS.md`/`docs/`、缺少默认 `/commit`），要求在本区新建子目标承载治理上下文。创建 **GOAL-008-consumer-layer-split-and-hosting**（`active / 0%`，S1～S6 0/6）；D-001 冻结「同一大目标 + S1 先行、不立即改协议/安装/Skills」。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-009**。
 
 ## 2026-08-11 · GOAL-007 S5 正式发布与关门
 
@@ -121,27 +154,29 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-004-frozen-web-asset-retirement        [done]    移除冻结 Web 资产并挂起 VP-003  progress 100%
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
-└── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
+├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
+└── GOAL-008-consumer-layer-split-and-hosting   [active]  双层路线图拆分与消费仓宿主共存  progress 83% (S1–S5 完成；仅剩 S6)
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-08-04 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-09-13 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-005-vision-review-ledger-scaling | 愿景审视台账分片与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-06 |
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
+| GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | active | 83% | 2026-09-13 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 007 |
-| 下一可用 | **GOAL-008** |
+| 最大编号 | 008 |
+| 下一可用 | **GOAL-009** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

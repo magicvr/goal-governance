@@ -50,7 +50,7 @@ parent: null
 | 愿景规则 | `{governance_root}/vision/alignment.md` | **MUST** | 本文件；规则权威 |
 | 愿景入口 | `{governance_root}/vision/README.md` | **MUST** | 目录地图与硬边界 |
 | 愿景实例 | `{governance_root}/vision/charter.md`（`status: active`） | **MUST** | 单愿景；缺 = 不完整 |
-| 愿景树 | `{governance_root}/vision/roadmap.md` | **MUST** | 组合编排索引（可极简，但文件必须存在） |
+| 愿景树 | `{governance_root}/vision/roadmap.md` | **MUST** | 组合编排索引（可极简，但文件必须存在；**不要求任何特定列**） |
 | 愿景树 | `{governance_root}/vision/revisions.md` | **MUST** | Charter 修订台账（可极简） |
 | 愿景树 | `{governance_root}/vision/reviews.md` | **MUST** | Vision Review 稳定索引；报告在 `reviews/VRev-NNN-*.md`（有条目时创建目录） |
 | 愿景树 | `{governance_root}/vision/workspaces.md` | **MUST** | 工作区贡献图（可极简） |
@@ -69,17 +69,37 @@ parent: null
 |------|------|
 | **组合编排** | 愿景级 VP 索引与波次（[roadmap.md](roadmap.md)），非 progress% |
 | **意图** | 已落盘 [plans/VP-*.md](plans/)；草案不可作 `primary_plan` |
-| **纲领路线图** | Root/大目标 P-001 阶段 |
+| **纲领路线图** | Root/大目标 P-001 阶段，写在**该目标**的 `00-meta.md` / `01-decision.md` |
 | **阶段计划** | 目标内方案/实施安排（非树节点） |
+| **子目标** | 工作区内 `GOAL-NNN-<slug>` 五件套节点；`parent` = 父**目标**完整 id |
+| **VP 内阶段结构** | 波次内方向级阶段（先后与退出方向）；**不是**可执行纲领路线图 |
 | **Vision Review** | 愿景层审视；≠ Goal Audit |
+| **总路线图**（口语） | = 组合编排索引 [roadmap.md](roadmap.md)；**不是**目标层纲领路线图 |
+
+**判定谓词 ·「某段路线图/阶段内容属于哪一层」**（最小充分条件，全文见 [principles.md §6.4](../architecture/principles.md)）：内容授权或改变**决策**（目的/边界/非目标/波次/lead）→ 愿景层（Charter 或组合编排）；内容是**已落盘 VP** 的意图、方向级退出判据、绑定或关门记录 → 愿景层（该 VP 正文）；内容划分**本区某 Root/大目标**的纲领阶段 → 实现层（该目标 `00-meta`/`01-decision`）；内容安排某阶段内方案 → 阶段计划（非树节点）；内容是可独立验收、需要 `parent` 与五件套的交付节点 → **子目标**。
+
+**层级错位（fail closed）**：把 VP / Charter / 愿景文件当作目标节点、`parent` 或 Goal 状态源；在愿景层写可执行纲领阶段、子目标编号、Goal status 或 progress%；在目标层复写第二套愿景边界（超出短 `serves_summary` + 链接）。**判定对象是职责与权威，不是节点数量**——一区一 Root 一 VP、多 VP 绑同区、0 区 `active` VP 均合法。
+
+**状态与跟踪权威**：VP 的 `status` / `vision_ref` / `lead_workspace` 权威在**该 VP 文件 frontmatter**。`roadmap.md` 保留 `status` 列时，该列**只是派生投影**：必须显式标注、不得用于任何门禁判定，也不构成第二权威（见 [principles.md §6.5](../architecture/principles.md)）。
+
+### 0.4 组合编排索引的投影与兼容读取（D-005）
+
+1. **投影**：`roadmap.md` 的 `status` 列（及其它可由 VP 派生的列）必须标注为**派生投影**；写入顺序恒为「先改 VP frontmatter → 再刷新投影」。投影不一致时**以 VP 文件为准**，且该不一致本身**不构成**门禁失败。
+2. **无列要求**：MUST 表只要求该文件存在；列集合（含 `workspace_count` 等自定义列）不是门禁条件，可增删。
+3. **legacy 兼容（不得 fail closed）**：其他版本写入的行/列、或由骨架复制而来的**他仓 VP 行**，一律只作 **legacy 提示**：
+   - 不得用于任何门禁判定、不得阻断新建区/推进/放行/关门；
+   - **不得**因残留行/列或缺列而判「不完整安装」；
+   - 兼容读取顺序 = **VP frontmatter 优先**；仅当该 VP 文件缺失时，投影值可作提示，且不得据此宣告 VP 状态。
+4. **骨架复制**：冷启动复制愿景树时，组合编排索引必须按**本地 VP 集合**重写，不得整文件照搬他仓实例行（[standalone-bootstrap.md §2.3](../standalone-bootstrap.md)）。
 
 ## 1. 类型与禁止
 
 | 类型 | 允许 status | 禁止 |
 |------|-------------|------|
 | Charter (`doc_type: vision-charter`) | `active` \| `superseded` | Goal 的 `done` / `draft` / `blocked` / `cancelled`；progress%；goal-tree；并行第二 active |
-| Vision Plan (`doc_type: vision-plan`) | `planned` \| `active` \| `closed` \| `abandoned` | Goal 的 `done` 作 VP status；完整五件套；progress% 权威 |
+| Vision Plan (`doc_type: vision-plan`) | `planned` \| `active` \| `closed` \| `abandoned` | Goal 的 `done` 作 VP status；完整五件套；progress% 权威；被当作目标 `parent` 或目标节点；可执行纲领路线图 |
 | 工作区目标 | 既有 Goal status | 把 vision/VP 目录当目标父节点；跨区 `parent` |
+| 组合编排索引（`roadmap.md`） | 无独立 status | 作为 VP status 权威；用于门禁判定；progress%；finding |
 
 Charter **没有 canonical `draft` 状态**：尚不满足最小完备或尚未获用户确认的草案只能留在会话/提案中，不得占用现行 `{governance_root}/vision/charter.md`。`active` Charter 可以显式登记战略假设/未知；若某项影响“方向已稳”，在 verified 或合规 residual 前不得作该宣称（见 P-006 §6.5）。
 

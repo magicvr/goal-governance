@@ -2,7 +2,7 @@
  "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
  "format": "goal-governance.skills-consumer-compatibility-matrix",
  "formatVersion": "1.0.0",
- "candidateRevision": "v0.13.2",
+ "candidateRevision": "v0.13.3",
  "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
  "protocol": {
   "current": "0.1.0",
@@ -35,7 +35,7 @@
    "kind": "host-adapter",
    "host": {
     "product": "Claude Code CLI",
-    "version": "2.1.226",
+    "version": "2.1.270",
     "platform": "Windows 11",
     "installationSurface": ".claude/skills/govern and .claude/skills/audit and vision skill/prompt"
    },
@@ -50,39 +50,39 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/claude-code-cli-govern-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/claude-code-cli-govern-2026-09-13.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/claude-code-cli-audit-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/claude-code-cli-audit-2026-09-13.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/claude-code-cli-vision-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/claude-code-cli-vision-2026-09-13.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/claude-code-cli-vision-audit-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/claude-code-cli-vision-audit-2026-09-13.json"
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.2: runtime captures refreshed 2026-08-11 after canonical workspace consolidation under workspaces/ (GOAL-007); evidence files live under releases/runtime/v0.13.2/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.3: runtime captures refreshed 2026-09-13 after GOAL-008 (layer-semantics predicates, composition-index projection, managed-block AGENTS.md coexistence, /commit convenience entry). Evidence files live under releases/runtime/v0.13.3/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   },
   {
    "id": "grok-build-cli",
    "kind": "host-adapter",
    "host": {
     "product": "Grok Build CLI",
-    "version": "1.0.0",
+    "version": "1.0.30",
     "build": "3cd0d0cbce",
     "platform": "Windows 11",
     "installationSurface": ".grok/skills/govern and .grok/skills/audit and vision skill/prompt"
@@ -98,32 +98,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/grok-build-cli-govern-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/grok-build-cli-govern-2026-09-13.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/grok-build-cli-audit-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/grok-build-cli-audit-2026-09-13.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/grok-build-cli-vision-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/grok-build-cli-vision-2026-09-13.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/grok-build-cli-vision-audit-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/grok-build-cli-vision-audit-2026-09-13.json"
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.2: runtime captures refreshed 2026-08-11 after canonical workspace consolidation under workspaces/ (GOAL-007); evidence files live under releases/runtime/v0.13.2/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.3: runtime captures refreshed 2026-09-13 after GOAL-008 (layer-semantics predicates, composition-index projection, managed-block AGENTS.md coexistence, /commit convenience entry). Evidence files live under releases/runtime/v0.13.3/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   },
   {
    "id": "github-copilot-cli",
@@ -145,32 +145,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/github-copilot-cli-govern-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/github-copilot-cli-govern-2026-09-13.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/github-copilot-cli-audit-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/github-copilot-cli-audit-2026-09-13.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/github-copilot-cli-vision-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/github-copilot-cli-vision-2026-09-13.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.2/github-copilot-cli-vision-audit-2026-08-11.json"
+      "docs/releases/runtime/v0.13.3/github-copilot-cli-vision-audit-2026-09-13.json"
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.2: runtime captures refreshed 2026-08-11 after canonical workspace consolidation under workspaces/ (GOAL-007); evidence files live under releases/runtime/v0.13.2/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.3: runtime captures refreshed 2026-09-13 after GOAL-008 (layer-semantics predicates, composition-index projection, managed-block AGENTS.md coexistence, /commit convenience entry). Evidence files live under releases/runtime/v0.13.3/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   }
  ],
  "deliveryChannels": [

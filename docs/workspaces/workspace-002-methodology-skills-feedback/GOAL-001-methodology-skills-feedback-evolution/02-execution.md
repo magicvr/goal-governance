@@ -4,11 +4,19 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-08-08
-version: 1.4.0
+updated: 2026-09-13
+version: 1.5.0
 ---
 
 # 执行记录 · GOAL-001
+
+## 执行索引（ledger）
+
+> 本目标 inline 时间线已超过 12 条阈值；新事实从 `02-execution/` 写入。legacy `### YYYY-MM-DD` 仍有效。
+
+| E-ID | 日期 | 标题 | 状态 | 文件 |
+|------|------|------|------|------|
+| E-001 | 2026-09-13 | 创建 GOAL-008 承接第二批消费仓痛点 | recorded | `02-execution/E-001-goal-008-created.md` |
 
 ## 时间线
 
@@ -121,23 +129,29 @@ version: 1.4.0
 - **D-008**：R3 重定义为「持续闭环与长期演进」；退出判据挂起（本轮核对结论留档：退出条件当前全部满足，证据链完整）；Root/VP-002 保持 `active`；Root progress 保持 67%（长期化不虚增）。
 - 02-execution 待办更新（退出核对完成、F-006 完成）+「后续波次候选」表登记（F-003 e2e、新反馈 GOAL-007、Codex 矩阵 I-003、matrix candidateRevision R-001、Web writer F-003 复审）。
 
+### 2026-09-13 · 创建 GOAL-008（ledger E-001）
+
+- 详见 [E-001-goal-008-created.md](02-execution/E-001-goal-008-created.md)：四项消费仓痛点立项为 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/)；R3 仍进行中；Root progress 保持 67%。
+
 ## 待办
 
 1. ~~完成 GOAL-005 的 S2～S5、cross close-out 与正式发布~~（已闭门，2026-08-06）。
 2. ~~单独核对 R3 / Root / VP-002 退出判据与剩余 required 协议缺口~~（2026-08-08 核对：全部满足；**D-008 长期持续治理，退出挂起**——不执行关门）。
 3. 在该 scope 的审计与用户决策完成前，不自动把 R3、Root 或 VP-002 关门（D-008 后为长期挂起，非临时）。
 4. ~~承接 F-006（消费面路径收敛）~~（已并入 VP-002 消费面承接路线图；GOAL-006 2026-08-08 done，实现关闭）。
+5. GOAL-008 S1：盘点双层路线图判定、愿景跟踪解耦、安装共存与 `/commit` 边界；指定 cross independent provider 后再进入 S2。
 
 ## 后续波次候选（长期持续，D-008）
 
 | 项 | 来源 | 触发 |
 |----|------|------|
 | ~~`governance_root≠docs` 消费场景 e2e~~ | GOAL-006 F-003 / A-001 R-002 | **已执行**（2026-08-08，E-006/A-004：`ConsumerSurfaceE2ETests` 3 条，242 测试绿） |
-| 新反馈波次 → GOAL-007 | VP-002 意图（真实项目/消费方反馈） | 用户提交新问题 |
+| ~~新反馈波次 → GOAL-007~~ | VP-002 意图（真实项目/消费方反馈） | **已执行**（2026-08-10 立项；2026-08-11 done） |
+| 第二批消费仓痛点 → GOAL-008 | 用户 2026-09-13 提交 FB-006～FB-009 | **已立项**；S1 未开始 |
 | Codex 矩阵 committed | GOAL-002 I-003 | 发版宣称前另决 |
 | matrix candidateRevision 刷新 | GOAL-006 R-001 | 下一次 release 轮 |
 | Web legacy writer 复审 | GOAL-003 F-003 | 触发条件（子目标 03-audit） |
 
 ## 进度评估
 
-Root 纲领 **2/3** 阶段完成（R1、R2）；R3 进行中；I-001/I-002 verified；Root 仍 `active`。progress 见 meta。
+Root 纲领 **2/3** 阶段完成（R1、R2）；R3 进行中；I-001/I-002/I-004 verified；Root 仍 `active`。progress 见 meta。

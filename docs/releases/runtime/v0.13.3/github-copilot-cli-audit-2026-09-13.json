@@ -1,0 +1,93 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-09-13T08:05:37.721533Z",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "provider": null,
+    "model": "gemini-3.8-flash-high"
+  },
+  "behaviorSources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "edccf61a640a2c16b0886dd719a415e6608a74d45e4ac2bdf5e1aed205fce4ce"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "d2df7a8181ec5c719de2276e2565ba409106746cd2b1772fe880461ecc90b4c8"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-File",
+      "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\docs\\workspaces\\workspace-001-goal-governance\\GOAL-008-skills-consumer-adapter-release-consistency\\attachments\\runtime\\prompts\\copilot-cli-replay.ps1",
+      "gemini-3.8-flash-high"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 900.0,
+    "inputSha256": "9613e78f676d6d4d3a515c35d4363acdb170ab1ce0a17420c330044645b27fc3",
+    "inputSummary": "Read-only /audit dispatch probe requiring marker COPILOT_CLI_AUDIT_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "COPILOT_CLI_AUDIT_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "COPILOT_CLI_AUDIT_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "COPILOT_CLI_AUDIT_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.3/github-copilot-cli-audit-2026-09-13.d/stdout.txt",
+    "stdoutSha256": "87ce3068ef501f15ff2b98efe06d830e756831f2ef173bd8676e0400c2d362ae",
+    "stdoutMode": "raw",
+    "stderrPath": "docs/releases/runtime/v0.13.3/github-copilot-cli-audit-2026-09-13.d/stderr.txt",
+    "stderrSha256": "e50a0c367b665478c19bde1171a80666ffb37592b9e6df0d2767174034c7605c",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

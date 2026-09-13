@@ -67,7 +67,7 @@ version: 0.10.0
 - **真相源**：显式工作区 `{governance_root}/workspaces/workspace-001-goal-governance/`（GOAL-011 已完成自 `{governance_root}/goals/` 迁移）；legacy 隐式单工作区仅兼容外部旧仓。
 - **迁移边界**：旧直属 `{governance_root}/workspace-*/` 只用于检测与迁移引导；新旧显式布局并存时 fail closed，不双读。
 - **原则**：[principles.md](principles.md) P-001～**P-006**（含 finding 三路径闭合、P-004.1～4.4、单愿景级联）；工作区/资料/愿景见 [workspace-protocol.md](workspace-protocol.md) 与 [../vision/alignment.md](../vision/alignment.md)。
-- **愿景**：[charter.md](../vision/charter.md) **`vision-goal-governance@0.2.0`**。组合编排：VP-001 **closed**（奠基）· VP-002 **active**（反馈演进，workspace-002）· VP-003 **planned + 正式挂起**（人类 UI）。
+- **愿景**：[charter.md](../vision/charter.md) **`vision-goal-governance@0.2.0`**。组合编排（**投影**，权威在各 VP frontmatter）：[roadmap.md](../vision/roadmap.md) 与 `plans/VP-*.md`。
 - **Skills**：现行主消费适配器；演进挂 **VP-002**（真实项目反馈）。
 - **人类 UI**：VP-003 仍是远期适配器类，冻结 FastAPI 资产已由 GOAL-004 物理退役；R-009-X 仍 accepted。
 - **workspace-001**：Root `GOAL-001-main-vision` **有界 done**；区 **archived**。演进须新开 **workspace-002** 挂 VP-002。
