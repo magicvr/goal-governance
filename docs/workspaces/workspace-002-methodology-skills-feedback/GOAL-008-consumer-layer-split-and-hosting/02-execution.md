@@ -1,11 +1,11 @@
-﻿---
+---
 id: GOAL-008-consumer-layer-split-and-hosting
 doc: execution
 status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-13
 updated: 2026-09-13
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 执行记录 · GOAL-008
@@ -21,6 +21,8 @@ version: 0.8.0
 | E-005 | 2026-09-13 | S3 解耦：投影标注 + legacy 兼容规则 + 骨架复制修正 | recorded | `02-execution/E-005-s3-projection-and-compat.md` |
 | E-006 | 2026-09-13 | S4 共存：受管标记块合并 + 安装器/updater 落地 + 12 例负例 | recorded | `02-execution/E-006-s4-agents-coexistence.md` |
 | E-007 | 2026-09-13 | S5 便利入口：四宿主 `/commit` 壳 + 契约边界守卫 + 负例 | recorded | `02-execution/E-007-s5-commit-entry.md` |
+| E-008 | 2026-09-13 | S6 首轮：全量回归 + 12 格证据重捕获 + 发布准备 | recorded | `02-execution/E-008-s6-regression-and-release-prep.md` |
+| E-009 | 2026-09-13 | S6 补做：宿主探针 / `/commit` 实测 / legacy 核对 / PR #21 与 CI 缺陷修复 | recorded | `02-execution/E-009-s6-evidence-completion.md` |
 
 ## 事实边界
 
