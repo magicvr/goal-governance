@@ -41,6 +41,9 @@ INSTALL_PS1 = SKILLS_ROOT / "install.ps1"
 INSTALL_PS1_ISOLATED = SKILLS_ROOT / "tests" / "test_install_ps1_isolated.ps1"
 README = SKILLS_ROOT / "README.md"
 CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
+# Recaptured evidence keeps the capture date in its filename; assert the shape
+# (not a frozen month) so a legitimate recapture does not silently break the gate.
+EVIDENCE_DATED_RE = r"-\d{4}-\d{2}-\d{2}\.json$"
 # GOAL-022: package distribution mirror is core/docs/templates (not skills/templates)
 SKILLS_TEMPLATES = SKILLS_ROOT / "core" / "docs" / "templates" / "goal-folder"
 CORE_WORKSPACE_TEMPLATE = SKILLS_ROOT.parent / "docs" / "templates" / "workspace-context.md"
@@ -685,21 +688,21 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 self.assertTrue(entrypoints[name]["evidence"])
                 for path in entrypoints[name]["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
-                    self.assertIn("-2026-08-", path)
+                    self.assertRegex(path, EVIDENCE_DATED_RE)
             vision = entrypoints["vision"]
             self.assertEqual(vision["status"], "runtime-verified")
             self.assertTrue(vision["evidence"])
             for path in vision["evidence"]:
                 self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                 self.assertIn("vision", path)
-                self.assertIn("-2026-08-", path)
+                self.assertRegex(path, EVIDENCE_DATED_RE)
             vision_audit = entrypoints["vision-audit"]
             self.assertEqual(vision_audit["status"], "runtime-verified")
             self.assertTrue(vision_audit["evidence"])
             for path in vision_audit["evidence"]:
                 self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                 self.assertIn("vision-audit", path)
-                self.assertIn("-2026-08-", path)
+                self.assertRegex(path, EVIDENCE_DATED_RE)
     def test_p005_core_contract_guards_unknown_information_gates(self) -> None:
         """Keep P-005's actual gates from regressing to a keyword-only policy."""
         if not (CORE_PRINCIPLES.is_file() and CORE_AGENTS.is_file()):
