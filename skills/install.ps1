@@ -87,6 +87,7 @@ Options:
   -MethodologyDir / --methodology-dir DIR
                            Methodology directory (default: .\docs). Core methodology is installed
                            there, and managed placeholders are rendered to this path and -SkillsDir.
+                           The two directories must not contain each other.
   -Force / --force         Overwrite existing files/dirs without prompting
   -NonInteractive / --non-interactive
                            Fail (exit 1) if an overwrite would require a prompt
@@ -311,34 +312,24 @@ function Merge-RenderedAgentsFile {
     }
 }
 
+function Assert-SeparateInstallDirs {
+    Invoke-RenderManaged -Arguments @(
+        '--require-separate',
+        '--methodology-dir', $script:MethodologyToken,
+        '--skills-dir', $script:SkillsToken,
+        '--target-dir', $TargetDir
+    )
+}
+
 function Update-RenderedManagedCopies {
     if ($DryRun) { return }
-    $trees = @(
-        (Join-Path $TargetDir ($script:MethodologyToken -replace '/', '\')),
-        (Join-Path $TargetDir '.claude\skills'),
-        (Join-Path $TargetDir '.grok\skills'),
-        (Join-Path $TargetDir '.agents\skills'),
-        (Join-Path $TargetDir '.github\prompts')
+    Invoke-RenderManaged -Arguments @(
+        '--render-map',
+        '--package-root', $PackageRoot,
+        '--methodology-dir', $script:MethodologyToken,
+        '--skills-dir', $script:SkillsToken,
+        '--target-dir', $TargetDir
     )
-    foreach ($tree in $trees) {
-        if (Test-Path -LiteralPath $tree -PathType Container) {
-            Invoke-RenderManaged -Arguments @(
-                '--methodology-dir', $script:MethodologyToken,
-                '--skills-dir', $script:SkillsToken,
-                '--target-dir', $TargetDir,
-                '--tree', $tree
-            )
-        }
-    }
-    $copilot = Join-Path $TargetDir '.github\copilot-instructions.md'
-    if (Test-Path -LiteralPath $copilot -PathType Leaf) {
-        Invoke-RenderManaged -Arguments @(
-            '--methodology-dir', $script:MethodologyToken,
-            '--skills-dir', $script:SkillsToken,
-            '--target-dir', $TargetDir,
-            '--in-place', $copilot
-        )
-    }
 }
 
 function Copy-DirMerge {
@@ -707,6 +698,7 @@ $TargetDir = (Get-Location).Path
 $SkillsDirResolved = Get-ResolvedPath -Path $SkillsDir -BaseDir $TargetDir
 $script:MethodologyToken = Get-InstallToken -Path $MethodologyDir
 $script:SkillsToken = Get-InstallToken -Path $SkillsDir
+Assert-SeparateInstallDirs
 
 $ClaudeAgentsSrc = Join-Path $PackageRoot 'install\claude\AGENTS.md'
 $ClaudeGovernSrc = Join-Path $PackageRoot 'install\claude\skills\govern\SKILL.md'

@@ -268,6 +268,14 @@ class SkillsUpdateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "consumer"
             target.mkdir()
+            note = target / "methodology" / "notes" / "mine.md"
+            note.parent.mkdir(parents=True)
+            note_bytes = "see {governance_root}\n".encode("utf-8")
+            note.write_bytes(note_bytes)
+            custom = target / ".claude" / "skills" / "local-only" / "SKILL.md"
+            custom.parent.mkdir(parents=True)
+            custom_bytes = "local {{SKILLS_DIR}}\n".encode("utf-8")
+            custom.write_bytes(custom_bytes)
             if kind == "ps1":
                 executable = shutil.which("powershell") or shutil.which("pwsh")
                 self.assertIsNotNone(executable)
@@ -331,6 +339,8 @@ class SkillsUpdateTests(unittest.TestCase):
             self.assertNotIn("{{GOVERNANCE_ROOT}}", agents_text)
             self.assertNotIn("{{SKILLS_DIR}}", agents_text)
             self.assertNotIn("{governance_root}", principles.read_text(encoding="utf-8"))
+            self.assertEqual(note.read_bytes(), note_bytes)
+            self.assertEqual(custom.read_bytes(), custom_bytes)
 
             result = pack.pack_skills(
                 version="0.0.0-testupdate",
@@ -368,6 +378,107 @@ class SkillsUpdateTests(unittest.TestCase):
 
     def test_install_sh_rendered_placeholders_survive_update(self) -> None:
         self._assert_real_install_then_update("sh")
+
+    def test_nested_dirs_are_rejected_by_update(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp)
+            (target / "docs" / "skills").mkdir(parents=True)
+            with self.assertRaisesRegex(update.UpdateError, "outside the methodology"):
+                update.modified_managed_files(
+                    SKILLS,
+                    target,
+                    methodology_dir="docs",
+                    skills_dir="docs/skills",
+                )
+
+    def test_methodology_inside_skills_is_rejected_before_render(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp)
+            principles = target / "skills" / "core" / "docs" / "architecture" / "principles.md"
+            principles.parent.mkdir(parents=True)
+            original = "keep {governance_root}\n".encode("utf-8")
+            principles.write_bytes(original)
+            with self.assertRaisesRegex(update.UpdateError, "outside the methodology"):
+                update.modified_managed_files(
+                    SKILLS,
+                    target,
+                    methodology_dir="skills/core/docs",
+                    skills_dir="skills",
+                )
+            with self.assertRaisesRegex(render.RenderError, "outside the methodology"):
+                render.render_managed_pairs(SKILLS, target, "skills/core/docs", "skills")
+            self.assertEqual(principles.read_bytes(), original)
+            with self.assertRaisesRegex(update.UpdateError, "outside the methodology"):
+                update.modified_managed_files(
+                    SKILLS,
+                    target,
+                    methodology_dir="docs",
+                    skills_dir="docs",
+                )
+
+    def _assert_nested_install_writes_nothing(self, kind: str) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "consumer"
+            target.mkdir()
+            marker = target / "methodology" / "my-skills" / "KEEP"
+            marker.parent.mkdir(parents=True)
+            marker.write_text("keep\n", encoding="utf-8")
+            if kind == "ps1":
+                executable = shutil.which("powershell") or shutil.which("pwsh")
+                self.assertIsNotNone(executable)
+                command = [
+                    executable,
+                    "-NoProfile",
+                    "-NonInteractive",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    str(SKILLS / "install.ps1"),
+                    "-All",
+                    "-NonInteractive",
+                    "-Force",
+                    "-MethodologyDir",
+                    "methodology",
+                    "-SkillsDir",
+                    "methodology/my-skills",
+                ]
+            else:
+                executable = self._working_bash()
+                if executable is None:
+                    self.skipTest("bash cannot execute install.sh")
+                command = [
+                    executable,
+                    str(SKILLS / "install.sh"),
+                    "--all",
+                    "--non-interactive",
+                    "--force",
+                    "--methodology-dir",
+                    "methodology",
+                    "--skills-dir",
+                    "methodology/my-skills",
+                ]
+            proc = subprocess.run(
+                command,
+                cwd=target,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=180,
+                env={**os.environ, "TERM": "dumb"},
+            )
+            combined = (proc.stdout or "") + "\n" + (proc.stderr or "")
+            self.assertNotEqual(proc.returncode, 0, msg=combined)
+            self.assertIn("outside the methodology", combined)
+            self.assertEqual(marker.read_text(encoding="utf-8"), "keep\n")
+            self.assertFalse((target / "methodology" / "architecture" / "principles.md").exists())
+
+    @unittest.skipUnless(sys.platform.startswith("win"), "install.ps1 is the Windows update path")
+    def test_install_ps1_rejects_nested_skills_before_write(self) -> None:
+        self._assert_nested_install_writes_nothing("ps1")
+
+    def test_install_sh_rejects_nested_skills_before_write(self) -> None:
+        self._assert_nested_install_writes_nothing("sh")
 
 
 if __name__ == "__main__":

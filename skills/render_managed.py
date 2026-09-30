@@ -74,15 +74,70 @@ def _render_file(path: Path, methodology_dir: str, skills_dir: str) -> None:
         path.write_bytes(rendered)
 
 
-def _render_tree(root: Path, methodology_dir: str, skills_dir: str) -> None:
-    if not root.is_dir():
-        raise RenderError(f"managed tree not found: {root}")
-    for path in sorted(root.rglob("*")):
-        if not path.is_file() or any(part.startswith(".") for part in path.relative_to(root).parts[:-1]):
+def install_dirs_nest(methodology: str, skills: str) -> bool:
+    """True when either install path is the other path, or sits inside it."""
+    left = tuple(PurePosixPath(methodology).parts)
+    right = tuple(PurePosixPath(skills).parts)
+    if not left or not right:
+        return False
+    if len(left) <= len(right):
+        return right[: len(left)] == left
+    return left[: len(right)] == right
+
+
+def assert_separate_install_dirs(methodology: str, skills: str) -> None:
+    if install_dirs_nest(methodology, skills):
+        raise RenderError(
+            "skills directory must stay outside the methodology directory: "
+            f"{skills} and {methodology}"
+        )
+
+
+def list_managed_pairs(package: Path, target: Path, methodology: str) -> list[tuple[Path, Path]]:
+    """Package source and consumer destination for files update is allowed to compare.
+
+    Root AGENTS.md is not in this list. Consumer files that merely share a
+    destination directory are not in this list either.
+    """
+    pairs: list[tuple[Path, Path]] = []
+    fixed = {
+        "install/copilot/copilot-instructions.md": ".github/copilot-instructions.md",
+        "core/docs/README.md": f"{methodology}/README.md",
+    }
+    for source, destination in fixed.items():
+        pairs.append((package / source, target / PurePosixPath(destination)))
+    trees = {
+        "install/claude/skills": ".claude/skills",
+        "install/grok/skills": ".grok/skills",
+        "install/codex/skills": ".agents/skills",
+        "core/docs/architecture": f"{methodology}/architecture",
+        "core/docs/templates": f"{methodology}/templates",
+        "core/docs/vision": f"{methodology}/vision",
+    }
+    for source_root, destination_root in trees.items():
+        root = package / source_root
+        if not root.is_dir():
             continue
-        if path.name.startswith("."):
-            continue
-        _render_file(path, methodology_dir, skills_dir)
+        for source in sorted(root.rglob("*")):
+            if source.is_file() and not source.name.startswith("."):
+                pairs.append(
+                    (source, target / PurePosixPath(destination_root) / source.relative_to(root))
+                )
+    copilot_prompts = package / "install" / "copilot" / "prompts"
+    if copilot_prompts.is_dir():
+        for source in sorted(copilot_prompts.glob("*.md")):
+            pairs.append(
+                (source, target / ".github" / "prompts" / f"{source.stem}.prompt.md")
+            )
+    return pairs
+
+
+def render_managed_pairs(package: Path, target: Path, methodology: str, skills: str) -> None:
+    """Render copied managed destinations. Leave every other consumer file alone."""
+    assert_separate_install_dirs(methodology, skills)
+    for _source, destination in list_managed_pairs(package, target, methodology):
+        if destination.is_file():
+            _render_file(destination, methodology, skills)
 
 
 def _tokens(args: argparse.Namespace) -> tuple[str, str]:
@@ -101,7 +156,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--skills-dir")
     parser.add_argument("--source")
     parser.add_argument("--dest")
-    parser.add_argument("--tree", action="append", default=[])
+    parser.add_argument("--package-root")
+    parser.add_argument("--require-separate", action="store_true")
+    parser.add_argument("--render-map", action="store_true")
     parser.add_argument("--in-place", action="append", default=[])
     args = parser.parse_args(argv)
     try:
@@ -112,15 +169,27 @@ def main(argv: list[str] | None = None) -> int:
             print(install_token(args.path, target))
             return 0
         methodology, skills = _tokens(args)
+        if args.require_separate:
+            assert_separate_install_dirs(methodology, skills)
+        if args.render_map:
+            if not args.package_root:
+                raise RenderError("--render-map requires --package-root")
+            render_managed_pairs(
+                Path(args.package_root),
+                Path(args.target_dir),
+                methodology,
+                skills,
+            )
         if args.source or args.dest:
             if not args.source or not args.dest:
                 raise RenderError("--source and --dest are required together")
+            assert_separate_install_dirs(methodology, skills)
             source = Path(args.source)
             dest = Path(args.dest)
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_bytes(render_managed_bytes(source.read_bytes(), methodology, skills))
-        for tree in args.tree:
-            _render_tree(Path(tree), methodology, skills)
+        if args.in_place:
+            assert_separate_install_dirs(methodology, skills)
         for file_name in args.in_place:
             path = Path(file_name)
             if not path.is_file():

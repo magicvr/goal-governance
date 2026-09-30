@@ -25,7 +25,9 @@ try:  # package-relative import (skills package) with script fallback
         merge_agents_text,
     )
     from skills.render_managed import (
+        assert_separate_install_dirs,
         install_token,
+        list_managed_pairs,
         render_managed_bytes,
         render_managed_text,
     )
@@ -37,7 +39,9 @@ except ImportError:  # pragma: no cover - direct script execution
         merge_agents_text,
     )
     from render_managed import (  # type: ignore[no-redef]
+        assert_separate_install_dirs,
         install_token,
+        list_managed_pairs,
         render_managed_bytes,
         render_managed_text,
     )
@@ -179,7 +183,10 @@ def download(url: str, destination: Path) -> None:
 
 def _install_tokens(target: Path, methodology_dir: str, skills_dir: str) -> tuple[str, str]:
     try:
-        return install_token(methodology_dir, target), install_token(skills_dir, target)
+        methodology = install_token(methodology_dir, target)
+        skills = install_token(skills_dir, target)
+        assert_separate_install_dirs(methodology, skills)
+        return methodology, skills
     except ValueError as error:
         raise UpdateError(str(error)) from error
 
@@ -212,37 +219,11 @@ def managed_file_pairs(
     target: Path,
     methodology_dir: str = "docs",
 ) -> list[tuple[Path, Path]]:
-    pairs: list[tuple[Path, Path]] = []
     # GOAL-008 S4: root AGENTS.md is deliberately NOT a fully-managed destination.
     # It is merged through the managed block (see agents_modification / merge_agents_text)
     # so consumer-owned rules in the same file survive updates.
     methodology = install_token(methodology_dir, target)
-    fixed = {
-        "install/copilot/copilot-instructions.md": ".github/copilot-instructions.md",
-        "core/docs/README.md": f"{methodology}/README.md",
-    }
-    for source, destination in fixed.items():
-        pairs.append((package / source, target / destination))
-    host_roots = {
-        "install/claude/skills": ".claude/skills",
-        "install/grok/skills": ".grok/skills",
-        "install/codex/skills": ".agents/skills",
-        "core/docs/architecture": f"{methodology}/architecture",
-        "core/docs/templates": f"{methodology}/templates",
-        "core/docs/vision": f"{methodology}/vision",
-    }
-    for source_root, destination_root in host_roots.items():
-        root = package / source_root
-        if not root.is_dir():
-            continue
-        for source in sorted(root.rglob("*")):
-            if source.is_file() and not source.name.startswith("."):
-                pairs.append((source, target / destination_root / source.relative_to(root)))
-    copilot_prompts = package / "install" / "copilot" / "prompts"
-    if copilot_prompts.is_dir():
-        for source in sorted(copilot_prompts.glob("*.md")):
-            pairs.append((source, target / ".github" / "prompts" / f"{source.stem}.prompt.md"))
-    return pairs
+    return list_managed_pairs(package, target, methodology)
 
 
 def agents_managed_conflict(

@@ -97,7 +97,8 @@ Options:
                         Relative paths are resolved from the current working directory.
   --methodology-dir DIR Methodology directory (default: ./docs). Core methodology is
                         installed there, and managed placeholders are rendered to this
-                        path and --skills-dir. Relative to the project root.
+                        path and --skills-dir. The two directories must not contain
+                        each other. Relative to the project root.
   --force               Overwrite existing files/dirs without prompting
   --non-interactive     Fail if an overwrite would require a prompt (unless --force)
   --dry-run             Print planned installs; do not write files
@@ -333,23 +334,19 @@ merge_rendered_agents() {
   rm -f "$tmp"
 }
 
+assert_separate_install_dirs() {
+  require_python
+  "$PYTHON_BIN" "$(native_path "$SCRIPT_DIR/render_managed.py")" \
+    --require-separate \
+    --methodology-dir "$METHODOLOGY_TOKEN" \
+    --skills-dir "$SKILLS_TOKEN" \
+    --target-dir "$(native_path "$TARGET_DIR")" \
+    || die "skills directory must stay outside the methodology directory"
+}
+
 render_installed_placeholders() {
   [[ "$DRY_RUN" -eq 1 ]] && return 0
-  local tree
-  for tree in \
-    "$TARGET_DIR/$METHODOLOGY_TOKEN" \
-    "$TARGET_DIR/.claude/skills" \
-    "$TARGET_DIR/.grok/skills" \
-    "$TARGET_DIR/.agents/skills" \
-    "$TARGET_DIR/.github/prompts"
-  do
-    if [[ -d "$tree" ]]; then
-      render_managed_copy --tree "$(native_path "$tree")"
-    fi
-  done
-  if [[ -f "$TARGET_DIR/.github/copilot-instructions.md" ]]; then
-    render_managed_copy --in-place "$(native_path "$TARGET_DIR/.github/copilot-instructions.md")"
-  fi
+  render_managed_copy --render-map --package-root "$(native_path "$SCRIPT_DIR")"
 }
 
 print_next_steps() {
@@ -667,6 +664,7 @@ fi
 METHODOLOGY_TOKEN="$(print_install_token "$METHODOLOGY_DIR_ARG")"
 SKILLS_TOKEN="$(print_install_token "$SKILLS_DIR_ARG")"
 [[ -n "$METHODOLOGY_TOKEN" && -n "$SKILLS_TOKEN" ]] || die "methodology and skills directories must stay inside the project"
+assert_separate_install_dirs
 
 CLAUDE_AGENTS_SRC="$PACKAGE_ROOT/install/claude/AGENTS.md"
 CLAUDE_GOVERN_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
