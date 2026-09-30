@@ -2,15 +2,19 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-09-30
+updated: 2026-10-01
 parent: null
-version: 0.33.0
+version: 0.34.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-01 · GOAL-009 A-006 闭合复审落盘
+
+本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 high）对 A-006 的闭合主张给出独立意见 A-007，verdict **fail**。F-001 与 F-004 的关闭证据成立。同内容 CRLF 受管块在结束标记后没有字节时，合并会补上 LF，升级把它当成手改，因此 F-002 重新作为 required 开放。F-003 仍为 recommended。A-006 保留为当时记录，不改写。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。用户尚未选择剩余 F-002 的闭合路径，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-09-30 · GOAL-009 A-005 按继续修正闭合
 
@@ -206,7 +210,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-09-30 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-10-01 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
@@ -214,7 +218,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
-| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-09-30 |
+| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-10-01 |
 
 ## 编号
 
