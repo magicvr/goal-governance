@@ -186,32 +186,31 @@ def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
     block = extract_managed_block(source)
     payload = block_payload(block)
 
-    if target.strip() == "":
-        # Fresh install: the package copy becomes the managed block.
-        return f"{block}\n", True
-
-    # Pre-S4 installs: the file *is* the rule face (with or without the old
-    # rule-level pair). Migrate them to the marked form. There is no consumer
-    # byte outside that face, so the migrated file is the LF block.
-    if target.strip() == source.strip() or target.strip() == payload:
-        marked = f"{block}\n"
-        if target_raw == marked:
-            return target_raw, False
-        return marked, True
-
+    # A file that already has markers is sliced from the original text before
+    # any strip(). Newline-only bytes outside the block are consumer bytes.
     raw_frame = _outer_frame(target_raw)
     if raw_frame is not None:
         begin, end = raw_frame
         if target_raw[begin:end] == block:
-            # Already converged: nothing to do.
             return target_raw, False
-        # The block itself is framework-managed and is written as LF. Bytes
-        # before and after the frame stay exactly as they were read.
         suffix = target_raw[end:]
         merged = f"{target_raw[:begin]}{block}{suffix}"
         if suffix == "" and not merged.endswith("\n"):
             merged += "\n"
         return merged, merged != target_raw
+
+    if target_raw == "":
+        # Fresh install: the package copy becomes the managed block.
+        return f"{block}\n", True
+
+    # Unmarked pre-S4 installs: the file *is* the rule face. Migrate it to
+    # the marked form. This comparison is only reached when no managed frame
+    # exists, so it cannot discard bytes around an existing block.
+    if target.strip() == source.strip() or target.strip() == payload:
+        marked = f"{block}\n"
+        if target_raw == marked:
+            return target_raw, False
+        return marked, True
 
     # Consumer owns this file: append the block, keep every existing byte.
     return _append_block(target_raw, block), True

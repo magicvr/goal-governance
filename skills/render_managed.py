@@ -9,6 +9,7 @@ bytes. Any other difference is a hand edit and stays fail closed.
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path, PurePosixPath
 import sys
 
@@ -74,10 +75,22 @@ def _render_file(path: Path, methodology_dir: str, skills_dir: str) -> None:
         path.write_bytes(rendered)
 
 
+def _identity_parts(token: str) -> tuple[str, ...]:
+    """Path parts in the identity the current platform uses for directories.
+
+    Windows treats ``SKILLS`` and ``skills`` as the same directory. Other
+    platforms keep the spelling.
+    """
+    parts = tuple(part for part in PurePosixPath(token).parts if part not in ("", "."))
+    if os.name == "nt":
+        return tuple(part.casefold() for part in parts)
+    return parts
+
+
 def install_dirs_nest(methodology: str, skills: str) -> bool:
     """True when either install path is the other path, or sits inside it."""
-    left = tuple(PurePosixPath(methodology).parts)
-    right = tuple(PurePosixPath(skills).parts)
+    left = _identity_parts(methodology)
+    right = _identity_parts(skills)
     if not left or not right:
         return False
     if len(left) <= len(right):

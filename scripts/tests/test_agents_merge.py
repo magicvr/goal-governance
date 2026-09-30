@@ -218,6 +218,26 @@ class AgentsMergeUnitTests(unittest.TestCase):
             self.assertEqual(again["status"], "unchanged")
             self.assertEqual(target.read_bytes(), written)
 
+    def test_whitespace_only_outside_a_marked_block_stays(self) -> None:
+        """A marked file keeps newline-only bytes outside the block."""
+        source = (SKILLS / "install" / "claude" / "AGENTS.md").read_text(encoding="utf-8")
+        block = agents_merge.extract_managed_block(source)
+        shapes = {
+            "crlf suffix": block + "\r\n",
+            "crlf around the block": "\r\n" + block + "\r\n\r\n",
+        }
+        for label, target in shapes.items():
+            with self.subTest(shape=label):
+                merged, changed = agents_merge.merge_agents_text(target, source)
+                self.assertFalse(changed, msg=repr(merged))
+                self.assertEqual(merged, target)
+                self.assertTrue(agents_merge.managed_block_equivalent(target, source))
+        blank = "\r\n\r\n"
+        merged, changed = agents_merge.merge_agents_text(blank, source)
+        self.assertTrue(changed)
+        self.assertTrue(merged.startswith(blank), msg=repr(merged[:24]))
+        self.assertIn(block, merged)
+
     def test_half_written_markers_fail_closed(self) -> None:
         with self.assertRaises(agents_merge.MergeError):
             agents_merge.merge_agents_text(

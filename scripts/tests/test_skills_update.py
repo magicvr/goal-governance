@@ -391,6 +391,30 @@ class SkillsUpdateTests(unittest.TestCase):
                     skills_dir="docs/skills",
                 )
 
+    def test_case_alias_nest_follows_platform_path_identity(self) -> None:
+        self.assertFalse(render.install_dirs_nest("docs", "docs-extra"))
+        alias_nested = render.install_dirs_nest("SKILLS/core/docs", "skills")
+        if not sys.platform.startswith("win"):
+            self.assertFalse(alias_nested)
+            return
+        self.assertTrue(alias_nested)
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp)
+            principles = target / "skills" / "core" / "docs" / "architecture" / "principles.md"
+            principles.parent.mkdir(parents=True)
+            original = "keep {governance_root}\n".encode("utf-8")
+            principles.write_bytes(original)
+            with self.assertRaisesRegex(update.UpdateError, "outside the methodology"):
+                update.modified_managed_files(
+                    SKILLS,
+                    target,
+                    methodology_dir="SKILLS/core/docs",
+                    skills_dir="skills",
+                )
+            with self.assertRaisesRegex(render.RenderError, "outside the methodology"):
+                render.render_managed_pairs(SKILLS, target, "SKILLS/core/docs", "skills")
+            self.assertEqual(principles.read_bytes(), original)
+
     def test_methodology_inside_skills_is_rejected_before_render(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp)
