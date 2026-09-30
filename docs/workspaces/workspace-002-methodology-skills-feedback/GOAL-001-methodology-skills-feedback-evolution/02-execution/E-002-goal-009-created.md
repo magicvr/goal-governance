@@ -7,7 +7,7 @@ status: recorded
 parent: null
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-002 · 创建 GOAL-009（2026-09-30）
@@ -22,3 +22,7 @@ version: 0.1.0
 ## 编号
 
 下一可用编号变为 **GOAL-010**。
+
+## Checkpoint
+
+立项文档提交为 `e9ea2b2`。本条补记该 hash，不改变 Root progress，也不放行 GOAL-009 的 S1。
