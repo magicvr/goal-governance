@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.5.0
+version: 0.6.0
 ---
 
 # 执行记录 · GOAL-009
@@ -19,3 +19,4 @@ version: 0.5.0
 | E-003 | 2026-09-30 | 写入结果尚不存在时的门禁区分 | recorded | `02-execution/E-003-rule-distinction.md` |
 | E-004 | 2026-09-30 | 安装时渲染受管占位符并让升级接受该结果 | recorded | `02-execution/E-004-render-placeholders.md` |
 | E-005 | 2026-09-30 | 跑完 S2/S3 交叉审计并落盘意见 | recorded | `02-execution/E-005-cross-audit-filed.md` |
+| E-006 | 2026-09-30 | 按 D-005 限定受管渲染写集 | recorded | `02-execution/E-006-f001-managed-map.md` |

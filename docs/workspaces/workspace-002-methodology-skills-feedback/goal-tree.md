@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-30
 parent: null
-version: 0.29.0
+version: 0.30.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-30 · GOAL-009 F-001 按 fixed 闭合
+
+用户书面选择修正 F-001。渲染改为受管文件映射；方法论目录与 skills 目录互相包含或相同时，安装与升级在写入前停止。真实安装器下，消费方笔记与自定义 skill 的占位符字节保持不变；嵌套路径不会写出 `methodology/architecture/principles.md`。代码提交 `c449915`。F-002 仍开放：用户要求评估全库 CRLF 归一化为 LF，并用 git 规则与 `/commit` 技能强制，这是评估请求，闭合路径未选。F-003 仍为 recommended。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-09-30 · GOAL-009 S2/S3 交叉审计落盘
 

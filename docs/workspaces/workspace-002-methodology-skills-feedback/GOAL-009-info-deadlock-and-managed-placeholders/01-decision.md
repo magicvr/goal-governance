@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.4.1
+version: 0.5.0
 ---
 
 # 决策记录 · GOAL-009
@@ -19,7 +19,7 @@ version: 0.4.1
 | I-001 | required | verified | S2 方案冻结前的条文级死锁证据已有；原则正文已由 D-003 修改 |
 | I-002 | required | verified | S3 方案冻结前的复现与负结果已有；策略已由 D-004 选定 |
 | I-003 | required | verified | 用户拒绝「不替换占位符」分支；截断句不再需要 |
-| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high；意见见 A-001，required 未闭合 |
+| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high；意见见 A-001。F-001 已由 D-005 / A-003 按 fixed 闭合。F-002 仍开放 |
 
 ## 决策索引
 
@@ -29,3 +29,4 @@ version: 0.4.1
 | D-002 | 2026-09-30 | S1 证据闭合条文与复现，占位符策略不在本条冻结 | accepted | `01-decision/D-002-s1-evidence.md` |
 | D-003 | 2026-09-30 | 结果尚不存在时不是进入该项工作的门禁 | accepted | `01-decision/D-003-research-result-is-not-a-gate.md` |
 | D-004 | 2026-09-30 | 安装时渲染受管占位符，升级按双基线比较 | accepted | `01-decision/D-004-render-placeholders-on-install.md` |
+| D-005 | 2026-09-30 | F-001 按受管映射闭合；F-002 评估不构成闭合 | accepted | `01-decision/D-005-f001-managed-map.md` |
