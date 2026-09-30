@@ -817,6 +817,97 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             audit_prompt,
         )
 
+    def test_research_result_is_not_a_gate_into_its_own_work(self) -> None:
+        """GOAL-009: investigation may proceed; a fact already checkable still gates.
+
+        The shipped rule text is the behavior. A required answer that exists only
+        after the work it would block is not a gate into that work. A fact that
+        can already be queried before execution still is.
+        """
+        research_not_a_gate = (
+            "只有做完它要挡住的那项工作才有答案，则它不是进入该项工作的门禁"
+        )
+        prior_fact_still_gates = (
+            "工作开始前已经可以独立查询或核对的事实，仍然可以是进入执行、发布或验收的 required 门禁"
+        )
+        checklist_exception = "只有做完本阶段工作才存在"
+
+        def blocks_entry(text: str, *, answer_only_after_work: bool) -> bool:
+            if answer_only_after_work:
+                return research_not_a_gate not in text
+            return prior_fact_still_gates in text
+
+        def section(text: str, start: str, end: str) -> str:
+            self.assertIn(start, text)
+            self.assertIn(end, text)
+            return text.split(start, 1)[1].split(end, 1)[0]
+
+        repo = SKILLS_ROOT.parent
+        rule_sections = {
+            repo / "docs" / "architecture" / "principles.md": ("## P-005", "## P-006"),
+            repo / "skills" / "core" / "docs" / "architecture" / "principles.md": (
+                "## P-005",
+                "## P-006",
+            ),
+            repo / "AGENTS.md": ("### P-005", "## 6c"),
+            SKILLS_ROOT / "AGENTS.template.md": ("### P-005", "## 6c"),
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md": ("### P-005", "## 6c"),
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md": (
+                "### P-005",
+                "## 6c",
+            ),
+            repo / ".github" / "copilot-instructions.md": ("### P-005", "## 6c"),
+            PROMPTS / "00-govern-orchestrator.md": (
+                "# P-005 信息就绪（目标领域）",
+                "# 资源定位",
+            ),
+        }
+        for path, bounds in rule_sections.items():
+            body = section(path.read_text(encoding="utf-8"), *bounds)
+            with self.subTest(path=str(path), case="research-deadlock"):
+                self.assertFalse(
+                    blocks_entry(body, answer_only_after_work=True),
+                    msg="research deadlock counterexample is still a gate into its own work",
+                )
+            with self.subTest(path=str(path), case="prior-fact"):
+                self.assertTrue(
+                    blocks_entry(body, answer_only_after_work=False),
+                    msg="a fact checkable before execution no longer gates",
+                )
+
+        orchestrator = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
+        implementation_gate = section(orchestrator, "### 3.5", "### 3.6")
+        with self.subTest(path="orchestrator-3.5", case="research-deadlock"):
+            self.assertFalse(
+                blocks_entry(implementation_gate, answer_only_after_work=True),
+                msg="section 3.5 still blocks a result that exists only after the work",
+            )
+        with self.subTest(path="orchestrator-3.5", case="prior-fact"):
+            self.assertTrue(
+                blocks_entry(implementation_gate, answer_only_after_work=False),
+                msg="section 3.5 dropped the gate for a fact checkable before execution",
+            )
+
+        checklist_paths = (
+            repo / "AGENTS.md",
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+            repo / ".github" / "copilot-instructions.md",
+            PROMPTS / "00-govern-orchestrator.md",
+        )
+        for path in checklist_paths:
+            matched = False
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if (
+                    "本次要推进的阶段没有开放 required 信息门禁" in line
+                    or "未跨越到期 required 信息门禁" in line
+                ):
+                    matched = True
+                    with self.subTest(path=str(path), line=line):
+                        self.assertIn(checklist_exception, line)
+            self.assertTrue(matched, msg=f"missing stage-gate checklist line: {path}")
+
     def test_progress_is_derived_and_sandbox_role_is_removed(self) -> None:
         principles = CORE_PRINCIPLES.read_text(encoding="utf-8")
         for marker in (

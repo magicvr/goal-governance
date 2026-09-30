@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 决策记录 · GOAL-009
@@ -27,3 +27,4 @@ version: 0.2.0
 |------|------|------|------|------|
 | D-001 | 2026-09-30 | 两条反馈纳入同一 R3 子目标，S1 先行 | accepted | `01-decision/D-001-scope-and-roadmap.md` |
 | D-002 | 2026-09-30 | S1 证据闭合条文与复现，占位符策略不在本条冻结 | accepted | `01-decision/D-002-s1-evidence.md` |
+| D-003 | 2026-09-30 | 结果尚不存在时不是进入该项工作的门禁 | accepted | `01-decision/D-003-research-result-is-not-a-gate.md` |

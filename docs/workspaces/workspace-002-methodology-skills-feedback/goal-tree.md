@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-30
 parent: null
-version: 0.25.0
+version: 0.26.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-30 · GOAL-009 S2 规则区分落盘
+
+按 D-003 在原则 P-005 增加「结果尚不存在时」：只有做完该项工作才有的答案，不是进入该项工作的门禁；开始前已经可以查询或核对的事实，仍可挡住进入执行。同一对句子写入 AGENTS 摘要、安装副本、`.github/copilot-instructions.md` 和编排提示 §3.5。完成清单加上「答案只有做完本阶段工作才存在」这一例外。镜像 `--check` 37 对一致。新测试改文前 24 项失败，改文后与相关回归共 15 项通过。GOAL-009 为 **`active / 50%`**（S1～S4 2/4）。S3 占位符策略未冻结，安装器未改。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。交叉审计尚未跑。
 
 ## 2026-09-30 · GOAL-009 S1 核对完成
 
@@ -167,7 +171,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
 ├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
-└── GOAL-009-info-deadlock-and-managed-placeholders [active] 未知信息门禁死锁与受管占位符升级  progress 25%
+└── GOAL-009-info-deadlock-and-managed-placeholders [active] 未知信息门禁死锁与受管占位符升级  progress 50%
 ```
 
 ## 状态表
@@ -182,7 +186,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
-| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-09-30 |
+| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-09-30 |
 
 ## 编号
 

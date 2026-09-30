@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.1
+version: 0.1.2
 ---
 
 # 审计 · GOAL-009
@@ -29,4 +29,4 @@ version: 0.1.1
 
 ## 结论状态
 
-S1 是只读核对，不是审计节点，尚无 A 条目。预定：S2/S3 实施使用 `cross`（self + 本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 `high`）。provider 已由用户书面指定；意见仍须该 CLI 的可核对输出，编排器的话不算 independent。
+S1 是只读核对，不是审计节点。S2 的规则文本已经落盘，尚无 A 条目。预定：S2/S3 实施使用 `cross`（self + 本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 `high`）。provider 已由用户书面指定；意见仍须该 CLI 的可核对输出，编排器的话不算 independent。S3 方案未冻结，交叉审计放在安装/升级改动可核对之后一次进行，避免只审一半实现。
