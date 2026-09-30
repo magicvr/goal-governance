@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-10-01
 parent: null
-version: 0.36.0
+version: 0.37.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-01 · GOAL-009 关门，不发布
+
+用户书面确认关门，并且不把正式发布纳入本目标。A-009（independent，pass）支持空后缀按 fixed 闭合，开放 required 为无。F-003 仍为 recommended。S1～S4 均已完成。GOAL-009 标为 **`done / 100%`**（4/4）。没有打 tag，没有发布，不宣称消费方已经拿到这次安装行为。Root R3 仍进行中、Root progress 保持 67%；VP-002 保持 active；下一编号 **GOAL-010**。
 
 ## 2026-10-01 · GOAL-009 空后缀闭合复审落盘
 
@@ -211,7 +215,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
 ├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
-└── GOAL-009-info-deadlock-and-managed-placeholders [active] 未知信息门禁死锁与受管占位符升级  progress 75%
+└── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
 ```
 
 ## 状态表
@@ -226,7 +230,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
-| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-10-01 |
+| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 
 ## 编号
 
