@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-10-01
 parent: null
-version: 0.37.0
+version: 0.37.1
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-01 · GOAL-009 关门后对齐回滚测试与 R3 说明
+
+回滚测试桩接受安装器传入的 `methodology_dir` 与 `skills_dir`，仍先写入新受管文件再抛错。测试提交 `f47f59a`。`scripts.tests.test_skills_update` 15 项通过（Python 3.11.9，退出码 0）。Root R3 当前说明改为 GOAL-009 已关门（`done` / 100%，不包含正式发布），开放 required 为无。GOAL-009 仍为 **`done / 100%`**。Root R3 仍进行中、Root progress 保持 67%；VP-002 保持 active；下一编号 **GOAL-010**。没有打 tag，没有发布。
 
 ## 2026-10-01 · GOAL-009 关门，不发布
 

@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-01
-version: 0.14.13
+version: 0.14.14
 progress: 67%
 ---
 
@@ -33,7 +33,7 @@ progress: 67%
 |------|------|------|------|
 | **R1** | 消费宿主补齐与入口一致 | **完成**（2026-07-31） | claude / copilot / grok 既有；Codex 经 [GOAL-002](../GOAL-002-codex-skills-entry/) 补齐（install 面 + 主入口 runtime）；用户 `/govern` 确认收口（D-003） |
 | **R2** | 反馈驱动的协议 / Skills 修正 | **完成**（2026-08-04） | [GOAL-003](../GOAL-003-consumer-governance-ergonomics/) `v0.12.0` 正式 Release / consumer update / A-006 independent pass；F-001 fixed，开放 required = 0 |
-| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 已 done；[GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 承接第三批反馈（未知信息门禁死锁、受管占位符与升级），S1 至 S3 已完成（D-002、D-003、D-004）；S4 进行中，A-001（independent，fail）与 A-002（self，conditional）仍在台账，用户书面选择继续修正 A-005 的 F-001、F-002，并把 F-004 纳入修正；GOAL-009 已于 2026-10-01 关门（`done` / 100%，不包含正式发布），开放 required 为无；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
+| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 已 done；[GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 已于 2026-10-01 关门（`done` / 100%，不包含正式发布），开放 required 为无；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
 
 同一纲领阶段内可并行多个子目标；阶段间通常串行。
 
@@ -83,3 +83,4 @@ progress: 67%
 - **工作区目录收敛（2026-08-10）**：用户反馈工作区直属 `docs/` 在多区后影响查阅，创建 GOAL-007；2026-08-11 已 `done`。
 - **第二批消费仓痛点（2026-09-13，D-009）**：创建 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 承载 FB-006～FB-009；该目标已于 2026-09-13 `done`。
 - **第三批使用反馈（2026-09-30，D-010）**：创建 [GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 承载 FB-010～FB-011；S1 完成前不改协议/安装/Skills；下一编号 **GOAL-010**。
+- **GOAL-009 关门（2026-10-01）**：用户书面确认关门且不发布。GOAL-009 为 `done` / 100%，开放 required 为无。F-003 仍为 recommended。R3 仍进行中，Root progress 仍为 67%。关门后对齐回滚测试桩与本表 R3 当前说明，见 GOAL-009 [E-014](../GOAL-009-info-deadlock-and-managed-placeholders/02-execution/E-014-post-close-alignment.md)。

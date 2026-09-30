@@ -5,7 +5,7 @@ status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-10-01
-version: 0.6.0
+version: 0.6.1
 progress: 100%
 ---
 
@@ -68,6 +68,6 @@ S1 已经核对过这些项。I-001、I-002、I-004 的证据见 D-002。I-003 �
 
 ## 备注
 
-- S1～S4 已完成。原则区分见 D-003。占位符行为见 D-004 与 E-004。2026-10-01 用户书面确认关门且不发布，目标为 `done` / 100%。开放 required 为无。F-003 仍为 recommended。本次不宣称消费方已经拿到发布版本。
+- S1～S4 已完成。原则区分见 D-003。占位符行为见 D-004 与 E-004。2026-10-01 用户书面确认关门且不发布，目标为 `done` / 100%。开放 required 为无。F-003 仍为 recommended。本次不宣称消费方已经拿到发布版本。关门后的回滚测试桩与 Root R3 当前说明见 [E-014](02-execution/E-014-post-close-alignment.md)。
 - 涉及 `docs/architecture`、`docs/templates`、`docs/contracts` 或 `docs/vision/alignment.md` 时，同一任务内 stage 镜像并 `--check`。
 - S1 没有出现必须拆出才能取证或关门的范围。按用户「无必要则不开」，不另立子目标；S2 与 S3 仍在本目标内。
