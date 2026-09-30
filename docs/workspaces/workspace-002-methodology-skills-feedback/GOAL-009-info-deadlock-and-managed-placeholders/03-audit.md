@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.4
+version: 0.2.0
 ---
 
 # 审计 · GOAL-009
@@ -17,16 +17,16 @@ version: 0.1.4
 | 核对项 | 状态 | 备注 |
 |--------|------|------|
 | 影响本 scope 的 I-00N | I-001、I-002、I-003、I-004 均为 verified | I-003 因用户拒绝不替换分支而闭合。见 D-004 |
-| 到期 required 是否已 verified / residual | S1 与 S3 实施已退出 | S2 实施前的 provider 已指定；审计本身尚未产生 A 条目。安装/升级改动已可对照 E-004 |
+| 到期 required 是否已 verified / residual | S1 与 S3 实施已退出 | 信息项仍为 verified。审计 required 见 A-001 / A-002，尚未闭合 |
 | 资料引用 | 无 | 本目标未引用共享资料 |
 
 ## 意见台账索引
 
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
-
-尚无 A 条目。
+| A-001 | 2026-09-30 | independent | S2/S3 执行事实 | fail | F-001、F-002 | `03-audit/A-001-s2-s3-independent.md` |
+| A-002 | 2026-09-30 | self | S2/S3 执行事实 | conditional | F-001、F-002 | `03-audit/A-002-s2-s3-self.md` |
 
 ## 结论状态
 
-S1 是只读核对，不是审计节点。S2 的规则文本与 S3 的安装/升级改动都已落盘，尚无 A 条目。预定：S2/S3 实施使用 `cross`（self + 本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 `high`）。provider 已由用户书面指定；意见仍须该 CLI 的可核对输出，编排器的话不算 independent。交叉审计对照 E-004 所在提交一次进行。
+S2/S3 的 cross 审计已经落盘。独立意见来自本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 high。A-001 verdict 为 fail，A-002 verdict 为 conditional。两边的开放 required 都是 F-001（整树渲染越界）和 F-002（AGENTS 标记外换行被改写）。F-003 为 recommended。双基线没有被两边当成必须另问的静默决策。用户尚未选择闭合路径。在 F-001、F-002 合法闭合前，不得把 GOAL-009 标为 `done`，也不得宣称消费方已经拿到可交付的安装行为。

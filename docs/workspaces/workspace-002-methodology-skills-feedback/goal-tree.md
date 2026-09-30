@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-30
 parent: null
-version: 0.28.0
+version: 0.29.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-30 · GOAL-009 S2/S3 交叉审计落盘
+
+本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 high）对 S2/S3 给出独立意见 A-001，verdict **fail**。自审 A-002 verdict **conditional**。两边开放 required 都是 F-001（整树渲染会改到消费方自有文件和嵌套技能包）和 F-002（AGENTS 标记外 CRLF 在受管块更新时变成 LF）。F-003 为 recommended。GOAL-009 仍为 **`active / 75%`**。用户尚未选择闭合路径，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-09-30 · GOAL-009 S3 安装与升级落盘
 

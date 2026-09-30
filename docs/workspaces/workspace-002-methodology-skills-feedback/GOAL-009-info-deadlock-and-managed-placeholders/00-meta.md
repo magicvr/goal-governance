@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.5.0
+version: 0.5.1
 progress: 75%
 ---
 
@@ -56,7 +56,7 @@ S1 已经核对过这些项。I-001、I-002、I-004 的证据见 D-002。I-003 �
 | I-001 | required | 现行 P-005、AGENTS 第 6b 节和编排提示里，哪些句子把「为达成目标而调查」写成「未知道则不得进入后继」；其中哪些事实只有做完后继工作才存在 | S2 方案冻结 | S2 前 | S1 对照原则、编排器与一条研究类反例 | **verified**（2026-09-30） | — | [D-002](01-decision/D-002-s1-evidence.md) 与 [附件 §1](attachments/s1-failure-modes-2026-09-30.md)。研究结论死锁反例与先于执行的事实反例已分开写。原则正文尚未改 |
 | I-002 | required | 指定方法论目录与 skills 目录时，受管范围内哪些占位符会被替换；update 报错的具体路径与比较规则是什么。若当前安装器不能同时指定这两个目录，该不能也是结论 | S3 方案冻结 | S3 前 | S1 读安装/升级脚本并做最小复现或记录负结果 | **verified**（2026-09-30） | — | [附件 §2](attachments/s1-failure-modes-2026-09-30.md)。S1 当时不能用安装参数指定方法论目录；替换受管占位符后 `modified_managed_files` 列出 2 个路径，对照为 0。策略已由 [D-004](01-decision/D-004-render-placeholders-on-install.md) 选定 |
 | I-003 | required | 若不替换占位符，已安装提示是否仍让 AI 找到方法论与 skills 路径。用户后半句在「尤其是让ai从」处截断 | S3 方案冻结里「不替换」那一支 | 选定不替换之前 | 用户选定分支；只有走不替换时才补全截断句 | **verified**（2026-09-30） | 不走该分支后，截断句不再构成门禁 | 用户书面选择安装时渲染，并书面拒绝不替换分支。见 [D-004](01-decision/D-004-render-placeholders-on-install.md)。这不是不替换时的路径实测 |
-| I-004 | required | S2/S3 改元规则和安装兼容，审计模式为 `cross`；independent provider 是谁 | S2 或 S3 的实施（取先开始者） | 实施前 | 用户书面指定；失败不降级、不由编排器冒充 | **verified**（2026-09-30） | CLI 不能以该模型与强度给出可核对意见时，门禁回到未满足 | 用户书面指定本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 `high`。见 D-002。审计尚未执行 |
+| I-004 | required | S2/S3 改元规则和安装兼容，审计模式为 `cross`；independent provider 是谁 | S2 或 S3 的实施（取先开始者） | 实施前 | 用户书面指定；失败不降级、不由编排器冒充 | **verified**（2026-09-30） | CLI 不能以该模型与强度给出可核对意见时，门禁回到未满足 | 用户书面指定本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 `high`。见 D-002。意见已落盘为 [A-001](03-audit/A-001-s2-s3-independent.md)。开放 required 仍未闭合 |
 
 ## 父目标
 
@@ -68,6 +68,6 @@ S1 已经核对过这些项。I-001、I-002、I-004 的证据见 D-002。I-003 �
 
 ## 备注
 
-- S1、S2、S3 已完成。原则区分见 D-003。占位符行为见 D-004 与 E-004：安装时渲染，升级按双基线比较。S4 的交叉审计、发布范围和关门尚未做。未发布前不宣称消费方已经拿到这次安装行为。
+- S1、S2、S3 已完成。原则区分见 D-003。占位符行为见 D-004 与 E-004。S4 审计已落盘：A-001 fail，A-002 conditional，开放 required 为 F-001、F-002。闭合路径未选，不得关门。未发布前不宣称消费方已经拿到这次安装行为。
 - 涉及 `docs/architecture`、`docs/templates`、`docs/contracts` 或 `docs/vision/alignment.md` 时，同一任务内 stage 镜像并 `--check`。
 - S1 没有出现必须拆出才能取证或关门的范围。按用户「无必要则不开」，不另立子目标；S2 与 S3 仍在本目标内。
