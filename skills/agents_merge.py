@@ -161,8 +161,9 @@ def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
       * **Bytes outside the managed markers are never rewritten.** Consumer
         rules placed before or after the block survive verbatim, in every shape
         (fresh file, pre-S4 whole-file install, already-merged file), including
-        their original CR, LF, and CRLF bytes. This is the S4/S6 promise and it
-        is covered by
+        their original CR, LF, and CRLF bytes. An empty suffix stays empty.
+        A file with no bytes at all still becomes the block plus one LF.
+        This is the S4/S6 promise and it is covered by
         ``test_all_pre_s4_shapes_keep_bytes_outside_the_markers``.
       * **Text inside the managed markers is framework-managed and is replaced**
         by the source face when it differs. The inserted block uses LF. A
@@ -194,9 +195,8 @@ def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
         if target_raw[begin:end] == block:
             return target_raw, False
         suffix = target_raw[end:]
+        # An empty suffix is still outside the markers. Do not invent a newline.
         merged = f"{target_raw[:begin]}{block}{suffix}"
-        if suffix == "" and not merged.endswith("\n"):
-            merged += "\n"
         return merged, merged != target_raw
 
     if target_raw == "":

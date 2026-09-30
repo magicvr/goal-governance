@@ -342,6 +342,40 @@ class RootAgentsNotFullyManagedTests(unittest.TestCase):
             self.assertTrue(written.endswith(suffix), msg=written)
             self.assertNotIn(b"\r\n", written[len(prefix) : written.rfind(suffix)])
 
+    def test_crlf_block_without_a_trailing_newline_is_not_a_hand_edit(self) -> None:
+        """A same-content CRLF block that ends on the end marker is not a hand edit.
+
+        Replacing an existing block keeps an empty suffix. A brand-new empty
+        file still becomes the managed block plus one LF.
+        """
+        source_path = SKILLS / "install" / "claude" / "AGENTS.md"
+        source_text = agents_merge.read_preserved_text(source_path)
+        block = agents_merge.extract_managed_block(source_text)
+        consumer = block.replace("\n", "\r\n")
+        self.assertIn("\r\n", consumer)
+        self.assertTrue(consumer.endswith(agents_merge.MANAGED_END))
+
+        merged, _changed = agents_merge.merge_agents_text(consumer, source_text)
+        self.assertTrue(merged.endswith(agents_merge.MANAGED_END), msg=repr(merged[-20:]))
+        self.assertFalse(merged.endswith("\n"), msg=repr(merged[-20:]))
+        self.assertTrue(agents_merge.managed_block_equivalent(consumer, source_text))
+
+        stale = f"{agents_merge.MANAGED_BEGIN}\nold rules\n{agents_merge.MANAGED_END}"
+        refreshed, refreshed_changed = agents_merge.merge_agents_text(stale, source_text)
+        self.assertTrue(refreshed_changed)
+        self.assertTrue(refreshed.endswith(agents_merge.MANAGED_END))
+        self.assertNotIn("old rules", refreshed)
+
+        fresh, fresh_changed = agents_merge.merge_agents_text("", source_text)
+        self.assertTrue(fresh_changed)
+        self.assertTrue(fresh.endswith(f"{agents_merge.MANAGED_END}\n"))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            target = self._stage_consumer(tmp)
+            (target / "AGENTS.md").write_bytes(consumer.encode("utf-8"))
+            conflict = skills_update.agents_managed_conflict(SKILLS, target)
+            self.assertIsNone(conflict)
+
     def test_crlf_spelling_of_the_same_block_is_not_a_conflict(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             target = self._stage_consumer(tmp)
