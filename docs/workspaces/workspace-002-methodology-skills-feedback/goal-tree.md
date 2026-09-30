@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-30
 parent: null
-version: 0.26.0
+version: 0.27.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-30 · GOAL-009 S3 方案冻结
+
+用户选定安装时按方法论目录与 skills 目录渲染受管占位符，并拒绝不替换分支，I-003 改为 verified。升级比较的兼容后果写入 D-004：包内原文或这次渲染结果都算干净，其他差异仍 fail closed。GOAL-009 仍为 **`active / 50%`**（S1～S4 2/4）；S3 实施尚未记为完成，本条不改安装器。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。交叉审计尚未跑。
 
 ## 2026-09-30 · GOAL-009 S2 规则区分落盘
 
