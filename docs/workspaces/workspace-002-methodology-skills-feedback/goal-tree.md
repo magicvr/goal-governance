@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-30
 parent: null
-version: 0.30.0
+version: 0.31.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-30 · GOAL-009 F-002 按 fixed 闭合
+
+用户书面选择「修正：保留标记外字节」。刷新根 `AGENTS.md` 的受管块时，标记外字节保持原样，包括 CR、LF 与 CRLF；新写入的受管块使用 LF。同一逻辑块的 CRLF 拼写不算手改，块内手改仍 fail closed。代码提交 `8861832`。没有改 `.gitattributes`、`/commit` 或 `mcp/lifecycle.py`。F-003 仍为 recommended。开放 required 为 0。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。行为变更的 independent 复审尚未落盘，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-09-30 · GOAL-009 F-001 按 fixed 闭合
 
