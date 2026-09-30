@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-007 · 按 D-006 保留 AGENTS 标记外字节（2026-09-30）
@@ -25,7 +25,9 @@ version: 0.1.0
 
 - 行为提交：`8861832`（`8861832092acbb67007f8de0961f095ba8dbf009`）
 - 该提交的 scope：`skills/agents_merge.py`、`skills/update.py`、`scripts/tests/test_agents_merge.py`
-- 此 hash 证明 F-002 的代码与测试已提交。它不证明已经发布或已经关门
+- 响应提交：`a60fae5`（`a60fae54d8d5e9b4293632d27f27d50867bc53c4`）
+- 响应 scope：D-006、E-007、A-004、三个索引、GOAL-009 `00-meta.md`、本区 `goal-tree.md`、Root `00-meta.md` 的 R3 指针
+- 这两个 hash 证明 F-002 的代码、测试和闭合留痕已提交。它们不证明已经发布或已经关门，也不代替尚未落盘的复审
 
 ## 本轮未发生
 
