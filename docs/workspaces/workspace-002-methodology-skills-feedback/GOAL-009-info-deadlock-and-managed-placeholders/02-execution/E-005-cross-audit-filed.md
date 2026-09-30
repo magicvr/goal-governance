@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-005 · 跑完 S2/S3 交叉审计并落盘意见（2026-09-30）
@@ -22,7 +22,9 @@ version: 0.1.0
 
 ## Checkpoint
 
-意见落盘与本条在同一次 owned-path 提交中。提交 hash 在该提交完成后回填到本节。
+- commit：`1e4bd49`（`1e4bd49bbc76f5a918c7d874d92339605984f2a0`）
+- scope：A-001、A-002、E-005、审计索引、执行索引、决策索引里的 I-004 备注、本区 `goal-tree.md`、Root `00-meta` 的阶段指针
+- 此 hash 只证明意见已落盘，不证明 F-001 或 F-002 已闭合
 
 ## 本轮未发生
 
