@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-009 · 按 D-007 补上路径身份与标记外换行（2026-09-30）
@@ -24,7 +24,9 @@ version: 0.1.0
 
 - 行为提交：`599d2d8`（`599d2d860d5aecd3b3dc2a8631ef004afc9a26fc`）
 - 该提交的 scope：`skills/render_managed.py`、`skills/agents_merge.py`、`mcp/lifecycle.py`、`scripts/tests/test_agents_merge.py`、`scripts/tests/test_skills_update.py`、`skills/tests/test_mcp_lifecycle.py`
-- 此 hash 证明这次修正的代码与测试已提交。它不证明已经发布或已经关门
+- 响应提交：`7d63cc6`（`7d63cc6df3b59e7b33c9e231342432927172d32f`）
+- 响应 scope：D-007、E-009、A-006、三个索引、GOAL-009 `00-meta.md`、本区 `goal-tree.md`、Root `00-meta.md` 的 R3 指针
+- 这两个 hash 证明这次修正的代码、测试和闭合留痕已提交。它们不证明已经发布或已经关门，也不代替尚未落盘的复审
 
 ## 本轮未发生
 
