@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-006 · 按 D-005 限定受管渲染写集（2026-09-30）
@@ -29,7 +29,9 @@ version: 0.1.0
 
 - 行为提交：`c449915`（`c4499158775d20609ca1fce9e5bb1607a9791ced`）
 - 该提交的 scope：`skills/render_managed.py`、`skills/update.py`、`skills/install.sh`、`skills/install.ps1`、`scripts/tests/test_skills_update.py`
-- 此 hash 证明 F-001 的代码与测试已提交。它不证明 F-002 已闭合，也不证明已经发布或已经关门
+- 响应提交：`8fc6b6f`（`8fc6b6f3220cfd604e135ab99830ca82e6cca7fc`）
+- 响应 scope：D-005、E-006、A-003、三个索引、GOAL-009 `00-meta.md`、本区 `goal-tree.md`、Root `00-meta.md` 的 R3 指针
+- 这两个 hash 证明 F-001 的代码、测试和闭合留痕已提交。它们不证明 F-002 已闭合，也不证明已经发布或已经关门
 
 ## 本轮未发生
 
