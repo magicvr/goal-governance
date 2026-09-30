@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-002 · 记录 S1 失败模式并标阶段完成（2026-09-30）
@@ -24,7 +24,9 @@ version: 0.1.0
 
 ## Checkpoint
 
-本条目与 S1 证据在同一次 owned-path 提交中落盘。提交 hash 在该提交完成后回填到本节。
+- commit：`c8daecf`（`c8daecf477631849d1fa1d98ab0d6d8b8a04d202`）
+- scope：GOAL-009 的 S1 证据附件、D-002、E-002、四个索引、本区 `goal-tree.md`、Root `00-meta` 里 GOAL-009 的阶段指针
+- 核对：未改原则、安装器、编排提示或 Skills。此 hash 只证明 S1 证据已提交，不证明规则或升级行为已改
 
 ## 本轮未发生
 
