@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-004 · 安装时渲染受管占位符并让升级接受该结果（2026-09-30）
@@ -25,7 +25,9 @@ version: 0.1.0
 
 ## Checkpoint
 
-安装器、升级脚本、渲染模块、测试与本条在同一次 owned-path 提交中落盘。提交 hash 在该提交完成后回填到本节。方案冻结 hash 是上一节的 `a1730ba`，不是本切片。
+- commit：`ecca659`（`ecca65995fe40f7344fbb826a1d5b83e9b2c9425`）
+- scope：`skills/render_managed.py`、`install.sh`、`install.ps1`、`update.py`、安装后再升级测试、E-004、执行索引、审计索引、本区 `goal-tree.md`、Root `00-meta` 里 GOAL-009 的阶段指针
+- 方案冻结是前一个提交 `a1730ba`，不含这些安装器改动。此 hash 证明占位符升级行为已提交，不证明已经发布或已经关门
 
 ## 本轮未发生
 
