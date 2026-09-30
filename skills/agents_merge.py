@@ -160,12 +160,14 @@ def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
 
       * **Bytes outside the managed markers are never rewritten.** Consumer
         rules placed before or after the block survive verbatim, in every shape
-        (fresh file, pre-S4 whole-file install, already-merged file). This is the
-        S4/S6 promise and it is covered by
+        (fresh file, pre-S4 whole-file install, already-merged file), including
+        their original CR, LF, and CRLF bytes. This is the S4/S6 promise and it
+        is covered by
         ``test_all_pre_s4_shapes_keep_bytes_outside_the_markers``.
       * **Text inside the managed markers is framework-managed and is replaced**
-        by the source face when it differs. A consumer edit made *inside* the
-        block is therefore not preserved — by design, not by accident.
+        by the source face when it differs. The inserted block uses LF. A
+        consumer edit made *inside* the block is therefore not preserved — by
+        design, not by accident.
       * A target byte-identical to the shipped rule face (a pre-S4 whole-file
         install) migrates to the marked form with no content change.
       * Markers nest: the shipped rule face may contain its own rule-level pair
@@ -175,6 +177,9 @@ def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
     only normalises markers) should compare :func:`block_payload` themselves
     instead of assuming this function leaves an in-block edit alone.
     """
+    # Marker decisions use LF text. Bytes copied around the block come from
+    # ``target_text``, so a consumer CR outside the markers is not rewritten.
+    target_raw = target_text
     target = _norm_newlines(target_text)
     source = _norm_newlines(source_text)
     validate_markers(target)
@@ -186,30 +191,59 @@ def merge_agents_text(target_text: str, source_text: str) -> tuple[str, bool]:
         return f"{block}\n", True
 
     # Pre-S4 installs: the file *is* the rule face (with or without the old
-    # rule-level pair). Migrate them to the marked form.
+    # rule-level pair). Migrate them to the marked form. There is no consumer
+    # byte outside that face, so the migrated file is the LF block.
     if target.strip() == source.strip() or target.strip() == payload:
         marked = f"{block}\n"
-        if target == marked:
-            return target, False
+        if target_raw == marked:
+            return target_raw, False
         return marked, True
 
-    frame = _outer_frame(target)
-    if frame is not None:
-        begin, end = frame
-        if target[begin:end] == block:
+    raw_frame = _outer_frame(target_raw)
+    if raw_frame is not None:
+        begin, end = raw_frame
+        if target_raw[begin:end] == block:
             # Already converged: nothing to do.
-            return target, False
-        # A pre-S4 install of these same rules became "this frame, plus whatever
-        # the consumer owned". Either way the block itself is framework-managed,
-        # so it is refreshed from the source; only bytes outside the frame are
-        # guaranteed to survive (see the behaviour boundary in the docstring).
-        merged = f"{target[:begin]}{block}{target[end:]}"
-        if not merged.endswith("\n"):
+            return target_raw, False
+        # The block itself is framework-managed and is written as LF. Bytes
+        # before and after the frame stay exactly as they were read.
+        suffix = target_raw[end:]
+        merged = f"{target_raw[:begin]}{block}{suffix}"
+        if suffix == "" and not merged.endswith("\n"):
             merged += "\n"
-        return merged, True
+        return merged, merged != target_raw
 
     # Consumer owns this file: append the block, keep every existing byte.
-    return _append_block(target, block), True
+    return _append_block(target_raw, block), True
+
+
+def managed_block_equivalent(consumer: str, source_text: str) -> bool:
+    """True when a merge would leave the logical file unchanged.
+
+    Newline spelling inside an otherwise identical block is not a hand edit.
+    A change to the words inside the block is not equivalent. Bytes outside
+    the block do not by themselves make the file different.
+    """
+    merged, changed = merge_agents_text(consumer, source_text)
+    if not changed:
+        return True
+    return _norm_newlines(merged) == _norm_newlines(consumer)
+
+
+def read_preserved_text(path: Path) -> str:
+    """Read UTF-8 without translating newlines.
+
+    ``Path.read_text`` on Python 3.11 has no ``newline`` argument, so the
+    universal-newline translation has to be turned off on the open file.
+    """
+    with path.open(encoding="utf-8", newline="") as handle:
+        return handle.read()
+
+
+def write_preserved_text(path: Path, text: str) -> None:
+    """Write UTF-8 bytes unchanged, including CR outside the managed block."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(text.encode("utf-8"))
 
 
 def merge_agents_file(
@@ -221,16 +255,15 @@ def merge_agents_file(
     """Merge ``source``'s managed block into ``target`` (creating it if absent)."""
     if not source.is_file():
         raise MergeError(f"framework AGENTS source not found: {source}")
-    source_text = source.read_text(encoding="utf-8")
+    source_text = read_preserved_text(source)
     existed = target.is_file()
-    target_text = target.read_text(encoding="utf-8") if existed else ""
+    target_text = read_preserved_text(target) if existed else ""
     merged, changed = merge_agents_text(target_text, source_text)
     if not changed:
         return {"status": "unchanged", "path": str(target), "existed": existed}
     if dry_run:
         return {"status": "would-merge", "path": str(target), "existed": existed}
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(merged, encoding="utf-8", newline="\n")
+    write_preserved_text(target, merged)
     return {"status": "merged", "path": str(target), "existed": existed}
 
 

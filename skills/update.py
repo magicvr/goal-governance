@@ -22,7 +22,10 @@ try:  # package-relative import (skills package) with script fallback
     from skills.agents_merge import (
         MergeError,
         has_managed_block,
+        managed_block_equivalent,
         merge_agents_text,
+        read_preserved_text,
+        write_preserved_text,
     )
     from skills.render_managed import (
         assert_separate_install_dirs,
@@ -36,7 +39,10 @@ except ImportError:  # pragma: no cover - direct script execution
     from agents_merge import (  # type: ignore[no-redef]
         MergeError,
         has_managed_block,
+        managed_block_equivalent,
         merge_agents_text,
+        read_preserved_text,
+        write_preserved_text,
     )
     from render_managed import (  # type: ignore[no-redef]
         assert_separate_install_dirs,
@@ -208,8 +214,7 @@ def _agents_block_matches(consumer: str, source_text: str, methodology: str, ski
     rendered = render_managed_text(source_text, methodology, skills)
     variants = (rendered, source_text) if rendered != source_text else (source_text,)
     for variant in variants:
-        _merged, changed = merge_agents_text(consumer, variant)
-        if not changed:
+        if managed_block_equivalent(consumer, variant):
             return True
     return False
 
@@ -247,7 +252,7 @@ def agents_managed_conflict(
     destination = target / "AGENTS.md"
     if not destination.is_file():
         return None
-    text = destination.read_text(encoding="utf-8")
+    text = read_preserved_text(destination)
     methodology, skills = _install_tokens(target, methodology_dir, skills_dir)
     candidates = [
         package / "install" / "claude" / "AGENTS.md",
@@ -278,16 +283,16 @@ def merge_root_agents(
     destination = target / "AGENTS.md"
     if not source.is_file():
         return "skipped-no-source"
-    text = destination.read_text(encoding="utf-8") if destination.is_file() else ""
+    text = read_preserved_text(destination) if destination.is_file() else ""
     methodology, skills = _install_tokens(target, methodology_dir, skills_dir)
-    source_text = render_managed_text(source.read_text(encoding="utf-8"), methodology, skills)
+    source_text = render_managed_text(read_preserved_text(source), methodology, skills)
     try:
         merged, changed = merge_agents_text(text, source_text)
     except MergeError as error:
         raise UpdateError(f"AGENTS.md managed block is malformed: {error}") from error
     if not changed:
         return "unchanged"
-    destination.write_text(merged, encoding="utf-8", newline="\n")
+    write_preserved_text(destination, merged)
     return "merged"
 
 
@@ -475,18 +480,18 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         # block before the package is swapped, then let the installer merge.
         agents = target / "AGENTS.md"
         if agents.is_file():
-            existing = agents.read_text(encoding="utf-8")
+            existing = read_preserved_text(agents)
             if not has_managed_block(existing):
                 legacy_source = skills / "install" / "claude" / "AGENTS.md"
                 if legacy_source.is_file():
                     try:
                         converted, changed = merge_agents_text(
-                            existing, legacy_source.read_text(encoding="utf-8")
+                            existing, read_preserved_text(legacy_source)
                         )
                     except MergeError:
                         changed = False
                     if changed:
-                        agents.write_text(converted, encoding="utf-8", newline="\n")
+                        write_preserved_text(agents, converted)
 
         plan = {
             "version": version,
