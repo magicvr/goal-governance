@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-10-01
 parent: null
-version: 0.34.0
+version: 0.35.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-01 · GOAL-009 A-007 空后缀按继续修正闭合
+
+用户书面选择继续修正 A-007 剩余的 F-002。替换已有受管块时，结束标记后的空后缀保持为空；同内容且没有末尾换行的 CRLF 块不再被升级检查当成手改。完全空的新文件仍写成受管块加一个 LF。代码提交 `bd4a863`。修正前该项测试失败，合并结果以 LF 结尾；修正后 `scripts.tests.test_agents_merge` 21 项通过。F-003 仍为 recommended。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。这次修正的 independent 复审尚未落盘，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-10-01 · GOAL-009 A-006 闭合复审落盘
 

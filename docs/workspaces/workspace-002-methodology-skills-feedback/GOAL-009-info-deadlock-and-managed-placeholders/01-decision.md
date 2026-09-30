@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-10-01
-version: 0.8.1
+version: 0.9.0
 ---
 
 # 决策记录 · GOAL-009
@@ -19,7 +19,7 @@ version: 0.8.1
 | I-001 | required | verified | S2 方案冻结前的条文级死锁证据已有；原则正文已由 D-003 修改 |
 | I-002 | required | verified | S3 方案冻结前的复现与负结果已有；策略已由 D-004 选定 |
 | I-003 | required | verified | 用户拒绝「不替换占位符」分支；截断句不再需要 |
-| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high。A-005 verdict 为 fail。用户随后书面选择继续修正 F-001、F-002，并把 F-004 纳入修正。见 D-007 与 A-006。[A-007](03-audit/A-007-a006-reaudit.md) verdict 为 fail：F-001、F-004 的关闭证据成立，F-002 的空后缀仍为 required。用户尚未选择这条剩余缺口的闭合路径 |
+| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high。A-007 verdict 为 fail。用户于 2026-10-01 书面选择继续修正剩余的空后缀，见 [D-008](01-decision/D-008-a007-empty-suffix.md) 与 [A-008](03-audit/A-008-a007-response.md)。这次修正的复审尚未落盘 |
 
 ## 决策索引
 
@@ -32,3 +32,4 @@ version: 0.8.1
 | D-005 | 2026-09-30 | F-001 按受管映射闭合；F-002 评估不构成闭合 | accepted | `01-decision/D-005-f001-managed-map.md` |
 | D-006 | 2026-09-30 | F-002 按保留标记外字节闭合 | accepted | `01-decision/D-006-f002-preserve-outside-bytes.md` |
 | D-007 | 2026-09-30 | A-005 的必改项按继续修正闭合 | accepted | `01-decision/D-007-a005-continue-fix.md` |
+| D-008 | 2026-10-01 | A-007 的空后缀按继续修正闭合 | accepted | `01-decision/D-008-a007-empty-suffix.md` |
