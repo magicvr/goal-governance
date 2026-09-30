@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-01
 updated: 2026-10-01
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-014 · 关门后对齐回滚测试桩与 Root R3 当前说明（2026-10-01）
@@ -23,7 +23,9 @@ version: 0.1.0
 
 - 测试提交：`f47f59a`（`f47f59af95b3e95a369aade6a05f921e3ac1756a`）
 - 该提交的 scope：`scripts/tests/test_skills_update.py`
-- 留痕提交在本条提交之后补记。本段不预写该 hash。
+- 留痕提交：`1eeb7fe`（`1eeb7fea12c6015e22fd0ebadec13dff2069b592`）
+- 留痕 scope：E-014、执行索引、GOAL-009 `00-meta.md`、本区 `goal-tree.md`、Root `00-meta.md` 的 R3 当前说明
+- 这两个 hash 证明测试修正和路线图对齐已提交。它们不证明已经发布
 
 ## 本轮未发生
 
