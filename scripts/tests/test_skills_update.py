@@ -181,7 +181,17 @@ class SkillsUpdateTests(unittest.TestCase):
                 skip_stage=True,
             )
 
-            def fail_after_new_write(package: Path, consumer: Path) -> None:
+            def fail_after_new_write(
+                package: Path,
+                consumer: Path,
+                *,
+                methodology_dir: str,
+                skills_dir: str,
+            ) -> None:
+                if methodology_dir != "docs" or skills_dir != "skills":
+                    raise AssertionError(
+                        f"unexpected installer tokens: {methodology_dir!r} {skills_dir!r}"
+                    )
                 written = consumer / ".agents" / "skills" / "new-surface" / "SKILL.md"
                 written.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(
