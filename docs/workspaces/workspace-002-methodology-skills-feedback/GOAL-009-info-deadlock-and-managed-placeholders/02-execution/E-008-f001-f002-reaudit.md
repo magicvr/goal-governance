@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-008 · 落盘 F-001 与 F-002 的闭合复审（2026-09-30）
@@ -22,7 +22,9 @@ version: 0.1.0
 ## Checkpoint
 
 - 被审树：`bdb7e87`（`bdb7e87dcdef1b67ec154f6ab63f1a7693af32d2`）
-- 本条落盘提交的 hash 在下一笔记录。此节不证明 F-001 或 F-002 已闭合
+- 落盘提交：`ea41dd3`（`ea41dd31c63d880c3542e8e11ea1721ce06ed452`）
+- 该提交的 scope：A-005、E-008、三个索引里的当前投影、GOAL-009 `00-meta.md`、本区 `goal-tree.md`、Root `00-meta.md` 的 R3 指针
+- 此 hash 只证明复审意见已落盘。它不证明 F-001 或 F-002 已闭合，也不证明已经发布或已经关门
 
 ## 本轮未发生
 
