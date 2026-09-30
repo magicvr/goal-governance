@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-30
 parent: null
-version: 0.27.0
+version: 0.28.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-30 · GOAL-009 S3 安装与升级落盘
+
+按 D-004 增加 `skills/render_managed.py`，安装器接受方法论目录并渲染受管占位符，升级把包内原文或这次渲染结果视为干净，手改仍 fail closed。真实 `install.ps1` / `install.sh` 安装 `methodology` + `my-skills` 后再 dry-run 升级，冲突列表为空；手改一行后仍报 `managed files have local changes`。相关回归 25 项通过。镜像未改白名单，`--check` 37 对一致。GOAL-009 为 **`active / 75%`**（S1～S4 3/4）。S4 的交叉审计与关门未做。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-09-30 · GOAL-009 S3 方案冻结
 
@@ -175,7 +179,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
 ├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
-└── GOAL-009-info-deadlock-and-managed-placeholders [active] 未知信息门禁死锁与受管占位符升级  progress 50%
+└── GOAL-009-info-deadlock-and-managed-placeholders [active] 未知信息门禁死锁与受管占位符升级  progress 75%
 ```
 
 ## 状态表
@@ -190,7 +194,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
-| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-09-30 |
+| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-09-30 |
 
 ## 编号
 

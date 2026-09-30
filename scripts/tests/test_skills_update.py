@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import os
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -26,6 +28,7 @@ def _load(name: str, path: Path):
 
 
 update = _load("skills_update", SKILLS / "update.py")
+render = _load("skills_render_managed", SKILLS / "render_managed.py")
 pack = _load("pack_skills_release_for_update", SCRIPTS / "pack_skills_release.py")
 
 
@@ -35,6 +38,7 @@ def _args(target: Path, result, **overrides):
         "latest": False,
         "target_dir": str(target),
         "skills_dir": "skills",
+        "methodology_dir": "docs",
         "zip_path": str(result.zip_path),
         "sha256_path": str(result.sha256_path),
         "repo": "magicvr/goal-governance",
@@ -199,6 +203,171 @@ class SkillsUpdateTests(unittest.TestCase):
             (target / "AGENTS.md").write_text("local customization\n", encoding="utf-8")
             modified = update.modified_managed_files(target / "skills", target)
             self.assertIn(target / "AGENTS.md", modified)
+
+    def test_rendered_bytes_match_and_a_hand_edit_still_conflicts(self) -> None:
+        """Update accepts the rendered bytes this module would write, and nothing else."""
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp)
+            package = target / "skills"
+            source = SKILLS / "core" / "docs" / "architecture" / "principles.md"
+            destination_source = package / "core" / "docs" / "architecture" / "principles.md"
+            destination_source.parent.mkdir(parents=True)
+            shutil.copy2(source, destination_source)
+            installed = target / "methodology" / "architecture" / "principles.md"
+            installed.parent.mkdir(parents=True)
+            installed.write_bytes(
+                render.render_managed_bytes(source.read_bytes(), "methodology", "my-skills")
+            )
+
+            clean = update.modified_managed_files(
+                package,
+                target,
+                methodology_dir="methodology",
+                skills_dir="my-skills",
+            )
+            self.assertNotIn(installed, clean)
+            self.assertNotIn(b"{governance_root}", installed.read_bytes())
+
+            installed.write_bytes(installed.read_bytes() + b"\nhand edit\n")
+            modified = update.modified_managed_files(
+                package,
+                target,
+                methodology_dir="methodology",
+                skills_dir="my-skills",
+            )
+            self.assertIn(installed, modified)
+
+    def _working_bash(self) -> str | None:
+        candidates: list[str] = []
+        found = shutil.which("bash")
+        if found:
+            candidates.append(found)
+        for extra in (
+            r"C:\Program Files\Git\bin\bash.exe",
+            r"C:\Program Files\Git\usr\bin\bash.exe",
+        ):
+            if Path(extra).is_file() and extra not in candidates:
+                candidates.append(extra)
+        for candidate in candidates:
+            try:
+                proc = subprocess.run(
+                    [candidate, "-c", "echo ok"],
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=15,
+                )
+            except (OSError, subprocess.TimeoutExpired):
+                continue
+            if proc.returncode == 0 and "ok" in (proc.stdout or ""):
+                return candidate
+        return None
+
+    def _assert_real_install_then_update(self, kind: str) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "consumer"
+            target.mkdir()
+            if kind == "ps1":
+                executable = shutil.which("powershell") or shutil.which("pwsh")
+                self.assertIsNotNone(executable)
+                command = [
+                    executable,
+                    "-NoProfile",
+                    "-NonInteractive",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    str(SKILLS / "install.ps1"),
+                    "-All",
+                    "-NonInteractive",
+                    "-Force",
+                    "-MethodologyDir",
+                    "methodology",
+                    "-SkillsDir",
+                    "my-skills",
+                ]
+            else:
+                executable = self._working_bash()
+                if executable is None:
+                    self.skipTest("bash cannot execute install.sh")
+                command = [
+                    executable,
+                    str(SKILLS / "install.sh"),
+                    "--all",
+                    "--non-interactive",
+                    "--force",
+                    "--methodology-dir",
+                    "methodology",
+                    "--skills-dir",
+                    "my-skills",
+                ]
+            proc = subprocess.run(
+                command,
+                cwd=target,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=180,
+                env={**os.environ, "TERM": "dumb"},
+            )
+            combined = (proc.stdout or "") + "\n" + (proc.stderr or "")
+            self.assertEqual(proc.returncode, 0, msg=combined)
+
+            principles_src = SKILLS / "core" / "docs" / "architecture" / "principles.md"
+            principles = target / "methodology" / "architecture" / "principles.md"
+            agents = target / "AGENTS.md"
+            self.assertTrue(principles.is_file(), msg=combined)
+            self.assertEqual(
+                principles.read_bytes(),
+                render.render_managed_bytes(
+                    principles_src.read_bytes(), "methodology", "my-skills"
+                ),
+            )
+            agents_text = agents.read_text(encoding="utf-8")
+            self.assertIn("methodology/architecture", agents_text)
+            self.assertIn("my-skills", agents_text)
+            self.assertNotIn("{{GOVERNANCE_ROOT}}", agents_text)
+            self.assertNotIn("{{SKILLS_DIR}}", agents_text)
+            self.assertNotIn("{governance_root}", principles.read_text(encoding="utf-8"))
+
+            result = pack.pack_skills(
+                version="0.0.0-testupdate",
+                output_dir=Path(tmp) / "dist",
+                skills_root=SKILLS,
+                skip_stage=True,
+            )
+            report = update.update_package(
+                _args(
+                    target,
+                    result,
+                    skills_dir="my-skills",
+                    methodology_dir="methodology",
+                    dry_run=True,
+                )
+            )
+            self.assertEqual(report["result"], "dry-run")
+            self.assertEqual(report["managed_conflicts"], [])
+
+            principles.write_bytes(principles.read_bytes() + b"\nhand edit\n")
+            with self.assertRaisesRegex(update.UpdateError, "managed files have local changes"):
+                update.update_package(
+                    _args(
+                        target,
+                        result,
+                        skills_dir="my-skills",
+                        methodology_dir="methodology",
+                        dry_run=True,
+                    )
+                )
+
+    @unittest.skipUnless(sys.platform.startswith("win"), "install.ps1 is the Windows update path")
+    def test_install_ps1_rendered_placeholders_survive_update(self) -> None:
+        self._assert_real_install_then_update("ps1")
+
+    def test_install_sh_rendered_placeholders_survive_update(self) -> None:
+        self._assert_real_install_then_update("sh")
 
 
 if __name__ == "__main__":

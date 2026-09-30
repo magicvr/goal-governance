@@ -5,8 +5,8 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.4.0
-progress: 50%
+version: 0.5.0
+progress: 75%
 ---
 
 # GOAL-009 · 未知信息门禁死锁与受管占位符升级
@@ -28,7 +28,7 @@ progress: 50%
 
 - [x] 研究型工作可以把「为达成目标而做的调查」当作工作本身推进；规则不再把「只有做完后继工作才知道的事实」写成进入该后继工作的 required 门禁。执行型场景中、真正先于工作存在的前置事实仍可以是门禁。证据：原则 P-005 第 5 条，及 `skills/tests/test_skills_orchestrator.py` 的 `test_research_result_is_not_a_gate_into_its_own_work`
 - [x] 有一条可核对的死锁反例：按修订后的规则，该反例不会被它自己的结果挡住。同一测试在改文前 24 项失败，改文后通过；先于执行的事实仍会挡住进入执行
-- [ ] 指定方法论目录与 skills 目录之后，安装按这两个目录渲染受管占位符；升级把包内原文和这次渲染结果都视为干净，其余差异仍 fail closed。证据待实施切片提交后回填。不替换分支未采用
+- [x] 指定方法论目录与 skills 目录之后，安装按这两个目录渲染受管占位符；升级把包内原文和这次渲染结果都视为干净，其余差异仍 fail closed。证据：[D-004](01-decision/D-004-render-placeholders-on-install.md)、[E-004](02-execution/E-004-render-placeholders.md)，以及 `test_install_ps1_rendered_placeholders_survive_update` / `test_install_sh_rendered_placeholders_survive_update`。不替换分支未采用
 - [ ] 原则、编排提示、安装/升级脚本与受影响模板一致；相关测试覆盖死锁判定和安装后再升级。改了 stage 白名单时，镜像 `--check` 通过
 - [ ] 消费面变更在宣称可安装使用前，经过与元规则 / 安装兼容相称的审计，开放 required 已合法闭合。发布版本不在立项时冻结
 
@@ -38,14 +38,14 @@ progress: 50%
 |------|------|------|----------|
 | **S1** | 失败模式核对与边界冻结 | 已完成（2026-09-30） | 两条反馈都有可核对的失败模式（文件与行为，或「现有安装路径做不到用户描述的指定方式」这一负结果）；死锁反例与「真正的前置事实」反例分开写；占位符替换与 update 报错的关系写成证据或明确的未复现。本阶段不改原则正文、安装器或 Skills。证据：[D-002](01-decision/D-002-s1-evidence.md)、[附件](attachments/s1-failure-modes-2026-09-30.md) |
 | **S2** | 未知信息语义修正 | 已完成（2026-09-30） | 原则、AGENTS 摘要与编排提示把「调查工作」和「后继门禁」拆开；研究类死锁反例不再被自己的结果阻断；执行类前置事实仍可设门禁。实施前已书面指定 cross 审计的 independent provider。证据：[D-003](01-decision/D-003-research-result-is-not-a-gate.md)、[E-003](02-execution/E-003-rule-distinction.md) |
-| **S3** | 安装与升级的占位符策略 | 方案已冻结（2026-09-30），实施尚未记为完成 | 用户选定安装时按方法论目录与 skills 目录渲染受管占位符（D-004）。升级把包内原文和这次渲染结果都视为干净，手改仍 fail closed。指定这两个目录的安装再跑升级，不再因该占位符差异报错。实施前同一 provider 约束有效 |
+| **S3** | 安装与升级的占位符策略 | 已完成（2026-09-30） | 用户选定安装时按方法论目录与 skills 目录渲染受管占位符（D-004）。升级把包内原文和这次渲染结果都视为干净，手改仍 fail closed。指定这两个目录的安装再跑升级，不再因该占位符差异报错。证据：[E-004](02-execution/E-004-render-placeholders.md) |
 | **S4** | 验证、审计与消费面交付 | 未开始 | 相关测试与镜像检查通过；cross 审计的开放 required 已合法闭合；若改动了消费安装面，发布范围在本阶段再冻结，未发布前不宣称消费方已经拿到修正 |
 
 S1 先做。S1 退出后，S2（原则与提示）和 S3（安装与升级）在写集不重叠时可以并行。S4 等 S2 与 S3 都退出。`progress` 只来自本表：已完成阶段数 / 4。
 
 ## 派生进度展示
 
-`progress: 50%` = 上表 4 个阶段完成 **2 / 4**（S1、S2 已完成；S3 方案已冻结，实施尚未记为完成；S4 未开始）。progress 只展示，不放行阶段、不关闭 finding、不推导 `done`。
+`progress: 75%` = 上表 4 个阶段完成 **3 / 4**（S1、S2、S3 已完成，S4 未开始）。progress 只展示，不放行阶段、不关闭 finding、不推导 `done`。
 
 ## 信息就绪与未知项
 
@@ -68,6 +68,6 @@ S1 已经核对过这些项。I-001、I-002、I-004 的证据见 D-002。I-003 �
 
 ## 备注
 
-- S1 与 S2 已完成。原则、AGENTS 摘要和编排提示已把「结果尚不存在」与「先于执行的事实」拆开。S3 方案已按 D-004 冻结为安装时渲染、升级双基线比较。本文件所在提交不包含安装器改动，不宣称升级行为已经交付。
+- S1、S2、S3 已完成。原则区分见 D-003。占位符行为见 D-004 与 E-004：安装时渲染，升级按双基线比较。S4 的交叉审计、发布范围和关门尚未做。未发布前不宣称消费方已经拿到这次安装行为。
 - 涉及 `docs/architecture`、`docs/templates`、`docs/contracts` 或 `docs/vision/alignment.md` 时，同一任务内 stage 镜像并 `--check`。
 - S1 没有出现必须拆出才能取证或关门的范围。按用户「无必要则不开」，不另立子目标；S2 与 S3 仍在本目标内。
