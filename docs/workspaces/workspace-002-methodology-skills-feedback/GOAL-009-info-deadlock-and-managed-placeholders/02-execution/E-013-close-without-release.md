@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-01
 updated: 2026-10-01
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-013 · 按 D-009 关门且不发布（2026-10-01）
@@ -21,7 +21,9 @@ version: 0.1.0
 
 ## Checkpoint
 
-- 关门提交在本条提交之后补记。本段不预写该 hash。
+- 关门提交：`94eb2a4`（`94eb2a4bfba6ce9a37cf3a5178bbc29ab2855b23`）
+- 该提交的 scope：D-009、E-013、A-010、三个索引、GOAL-009 `00-meta.md`、本区 `goal-tree.md`、`workspace.md`、Root `00-meta.md` 的 R3 指针与子目标表
+- 此 hash 证明关门留痕已提交。它不证明已经发布
 
 ## 本轮未发生
 
