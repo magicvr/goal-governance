@@ -7,7 +7,7 @@ status: recorded
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.1.0
+version: 0.1.1
 ---
 
 # E-003 · 写入结果尚不存在时的门禁区分（2026-09-30）
@@ -22,7 +22,9 @@ version: 0.1.0
 
 ## Checkpoint
 
-规则文本、镜像、测试与本条在同一次 owned-path 提交中落盘。提交 hash 在该提交完成后回填到本节。
+- commit：`d1256eb`（`d1256ebb877b42a7c10af22f6703c3966170ac99`）
+- scope：原则第 5 条、五份规则摘要、编排提示、原则镜像、新测试、D-003、E-003、四个索引、本区 `goal-tree.md`、Root `00-meta` 里 GOAL-009 的阶段指针
+- 核对：未改 `install.sh`、`install.ps1`、`update.py`。此 hash 证明规则区分已提交，不证明占位符升级行为已改
 
 ## 本轮未发生
 
