@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-10-01
-version: 0.9.0
+version: 0.9.1
 ---
 
 # 决策记录 · GOAL-009
@@ -19,7 +19,7 @@ version: 0.9.0
 | I-001 | required | verified | S2 方案冻结前的条文级死锁证据已有；原则正文已由 D-003 修改 |
 | I-002 | required | verified | S3 方案冻结前的复现与负结果已有；策略已由 D-004 选定 |
 | I-003 | required | verified | 用户拒绝「不替换占位符」分支；截断句不再需要 |
-| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high。A-007 verdict 为 fail。用户于 2026-10-01 书面选择继续修正剩余的空后缀，见 [D-008](01-decision/D-008-a007-empty-suffix.md) 与 [A-008](03-audit/A-008-a007-response.md)。这次修正的复审尚未落盘 |
+| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high。用户于 2026-10-01 书面选择继续修正剩余的空后缀。[A-009](03-audit/A-009-a007-reaudit.md) verdict 为 pass。开放 required 为无。用户尚未书面确认关门 |
 
 ## 决策索引
 

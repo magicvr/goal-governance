@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-10-01
 parent: null
-version: 0.35.0
+version: 0.36.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-01 · GOAL-009 空后缀闭合复审落盘
+
+本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 high）对空后缀修正给出独立意见 A-009，verdict **pass**。它支持 A-008 把这项按 fixed 闭合。开放 required 为无。F-003 仍为 recommended。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。用户尚未书面确认关门，不得标为 `done`。发布范围未冻结。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-10-01 · GOAL-009 A-007 空后缀按继续修正闭合
 

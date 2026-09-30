@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-10-01
-version: 0.9.2
+version: 0.9.3
 ---
 
 # 执行记录 · GOAL-009
@@ -25,3 +25,4 @@ version: 0.9.2
 | E-009 | 2026-09-30 | 按 D-007 补上路径身份与标记外换行 | recorded | `02-execution/E-009-a005-continue-fix.md` |
 | E-010 | 2026-10-01 | 落盘 A-006 闭合复审 | recorded | `02-execution/E-010-a006-reaudit.md` |
 | E-011 | 2026-10-01 | 按 D-008 保留受管块的空后缀 | recorded | `02-execution/E-011-a007-empty-suffix.md` |
+| E-012 | 2026-10-01 | 落盘空后缀闭合复审 | recorded | `02-execution/E-012-a007-reaudit.md` |

@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-01
-version: 0.14.11
+version: 0.14.12
 progress: 67%
 ---
 
@@ -33,7 +33,7 @@ progress: 67%
 |------|------|------|------|
 | **R1** | 消费宿主补齐与入口一致 | **完成**（2026-07-31） | claude / copilot / grok 既有；Codex 经 [GOAL-002](../GOAL-002-codex-skills-entry/) 补齐（install 面 + 主入口 runtime）；用户 `/govern` 确认收口（D-003） |
 | **R2** | 反馈驱动的协议 / Skills 修正 | **完成**（2026-08-04） | [GOAL-003](../GOAL-003-consumer-governance-ergonomics/) `v0.12.0` 正式 Release / consumer update / A-006 independent pass；F-001 fixed，开放 required = 0 |
-| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 已 done；[GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 承接第三批反馈（未知信息门禁死锁、受管占位符与升级），S1 至 S3 已完成（D-002、D-003、D-004）；S4 进行中，A-001（independent，fail）与 A-002（self，conditional）仍在台账，用户书面选择继续修正 A-005 的 F-001、F-002，并把 F-004 纳入修正；A-007 将空后缀的 F-002 重新开放；用户于 2026-10-01 选择继续修正，提交 `bd4a863` 保留空后缀，A-008 记为 fixed，复审尚未落盘，未关门；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
+| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 已 done；[GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 承接第三批反馈（未知信息门禁死锁、受管占位符与升级），S1 至 S3 已完成（D-002、D-003、D-004）；S4 进行中，A-001（independent，fail）与 A-002（self，conditional）仍在台账，用户书面选择继续修正 A-005 的 F-001、F-002，并把 F-004 纳入修正；A-009（independent，pass）支持空后缀 F-002 已按 fixed 闭合，开放 required 为无，用户尚未确认关门；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
 
 同一纲领阶段内可并行多个子目标；阶段间通常串行。
 
