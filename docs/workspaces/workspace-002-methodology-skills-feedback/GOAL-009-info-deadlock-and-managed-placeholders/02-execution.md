@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 执行记录 · GOAL-009
@@ -22,3 +22,4 @@ version: 0.8.0
 | E-006 | 2026-09-30 | 按 D-005 限定受管渲染写集 | recorded | `02-execution/E-006-f001-managed-map.md` |
 | E-007 | 2026-09-30 | 按 D-006 保留 AGENTS 标记外字节 | recorded | `02-execution/E-007-f002-preserve-outside-bytes.md` |
 | E-008 | 2026-09-30 | 落盘 F-001 与 F-002 的闭合复审 | recorded | `02-execution/E-008-f001-f002-reaudit.md` |
+| E-009 | 2026-09-30 | 按 D-007 补上路径身份与标记外换行 | recorded | `02-execution/E-009-a005-continue-fix.md` |

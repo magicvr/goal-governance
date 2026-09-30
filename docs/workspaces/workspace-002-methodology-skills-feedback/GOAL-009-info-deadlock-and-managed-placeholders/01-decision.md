@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 决策记录 · GOAL-009
@@ -19,7 +19,7 @@ version: 0.7.0
 | I-001 | required | verified | S2 方案冻结前的条文级死锁证据已有；原则正文已由 D-003 修改 |
 | I-002 | required | verified | S3 方案冻结前的复现与负结果已有；策略已由 D-004 选定 |
 | I-003 | required | verified | 用户拒绝「不替换占位符」分支；截断句不再需要 |
-| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high。A-001 与复审 A-005 均已落盘。A-005 verdict 为 fail：F-001、F-002 的 fixed 主张未被确认，这两项重新作为 required 开放。闭合路径尚未由用户选择 |
+| I-004 | required | verified | provider 已书面指定为本地 codex / `gpt-6.1-sol` / high。A-005 verdict 为 fail。用户随后书面选择继续修正 F-001、F-002，并把 F-004 纳入修正。见 D-007 与 A-006。该修正的复审尚未落盘 |
 
 ## 决策索引
 
@@ -31,3 +31,4 @@ version: 0.7.0
 | D-004 | 2026-09-30 | 安装时渲染受管占位符，升级按双基线比较 | accepted | `01-decision/D-004-render-placeholders-on-install.md` |
 | D-005 | 2026-09-30 | F-001 按受管映射闭合；F-002 评估不构成闭合 | accepted | `01-decision/D-005-f001-managed-map.md` |
 | D-006 | 2026-09-30 | F-002 按保留标记外字节闭合 | accepted | `01-decision/D-006-f002-preserve-outside-bytes.md` |
+| D-007 | 2026-09-30 | A-005 的必改项按继续修正闭合 | accepted | `01-decision/D-007-a005-continue-fix.md` |

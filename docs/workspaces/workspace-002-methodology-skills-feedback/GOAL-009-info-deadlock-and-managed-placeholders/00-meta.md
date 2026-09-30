@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-09-30
 updated: 2026-09-30
-version: 0.5.4
+version: 0.5.5
 progress: 75%
 ---
 
@@ -39,7 +39,7 @@ progress: 75%
 | **S1** | 失败模式核对与边界冻结 | 已完成（2026-09-30） | 两条反馈都有可核对的失败模式（文件与行为，或「现有安装路径做不到用户描述的指定方式」这一负结果）；死锁反例与「真正的前置事实」反例分开写；占位符替换与 update 报错的关系写成证据或明确的未复现。本阶段不改原则正文、安装器或 Skills。证据：[D-002](01-decision/D-002-s1-evidence.md)、[附件](attachments/s1-failure-modes-2026-09-30.md) |
 | **S2** | 未知信息语义修正 | 已完成（2026-09-30） | 原则、AGENTS 摘要与编排提示把「调查工作」和「后继门禁」拆开；研究类死锁反例不再被自己的结果阻断；执行类前置事实仍可设门禁。实施前已书面指定 cross 审计的 independent provider。证据：[D-003](01-decision/D-003-research-result-is-not-a-gate.md)、[E-003](02-execution/E-003-rule-distinction.md) |
 | **S3** | 安装与升级的占位符策略 | 已完成（2026-09-30） | 用户选定安装时按方法论目录与 skills 目录渲染受管占位符（D-004）。升级把包内原文和这次渲染结果都视为干净，手改仍 fail closed。指定这两个目录的安装再跑升级，不再因该占位符差异报错。证据：[E-004](02-execution/E-004-render-placeholders.md) |
-| **S4** | 验证、审计与消费面交付 | 进行中 | 相关测试与镜像检查通过。A-005（independent，fail）复审后，F-001 与 F-002 重新作为 required 开放。F-003、F-004 为 recommended。本阶段未完成。发布范围未冻结，未发布前不宣称消费方已经拿到修正 |
+| **S4** | 验证、审计与消费面交付 | 进行中 | 用户书面选择继续修正 A-005 的 F-001、F-002，并把 F-004 纳入修正。A-006 将这些项记为 fixed（提交 `599d2d8`）。F-003 仍为 recommended。该修正的 independent 复审尚未落盘，本阶段未完成。发布范围未冻结，未发布前不宣称消费方已经拿到修正 |
 
 S1 先做。S1 退出后，S2（原则与提示）和 S3（安装与升级）在写集不重叠时可以并行。S4 等 S2 与 S3 都退出。`progress` 只来自本表：已完成阶段数 / 4。
 
@@ -56,7 +56,7 @@ S1 已经核对过这些项。I-001、I-002、I-004 的证据见 D-002。I-003 �
 | I-001 | required | 现行 P-005、AGENTS 第 6b 节和编排提示里，哪些句子把「为达成目标而调查」写成「未知道则不得进入后继」；其中哪些事实只有做完后继工作才存在 | S2 方案冻结 | S2 前 | S1 对照原则、编排器与一条研究类反例 | **verified**（2026-09-30） | — | [D-002](01-decision/D-002-s1-evidence.md) 与 [附件 §1](attachments/s1-failure-modes-2026-09-30.md)。研究结论死锁反例与先于执行的事实反例已分开写。原则正文尚未改 |
 | I-002 | required | 指定方法论目录与 skills 目录时，受管范围内哪些占位符会被替换；update 报错的具体路径与比较规则是什么。若当前安装器不能同时指定这两个目录，该不能也是结论 | S3 方案冻结 | S3 前 | S1 读安装/升级脚本并做最小复现或记录负结果 | **verified**（2026-09-30） | — | [附件 §2](attachments/s1-failure-modes-2026-09-30.md)。S1 当时不能用安装参数指定方法论目录；替换受管占位符后 `modified_managed_files` 列出 2 个路径，对照为 0。策略已由 [D-004](01-decision/D-004-render-placeholders-on-install.md) 选定 |
 | I-003 | required | 若不替换占位符，已安装提示是否仍让 AI 找到方法论与 skills 路径。用户后半句在「尤其是让ai从」处截断 | S3 方案冻结里「不替换」那一支 | 选定不替换之前 | 用户选定分支；只有走不替换时才补全截断句 | **verified**（2026-09-30） | 不走该分支后，截断句不再构成门禁 | 用户书面选择安装时渲染，并书面拒绝不替换分支。见 [D-004](01-decision/D-004-render-placeholders-on-install.md)。这不是不替换时的路径实测 |
-| I-004 | required | S2/S3 改元规则和安装兼容，审计模式为 `cross`；independent provider 是谁 | S2 或 S3 的实施（取先开始者） | 实施前 | 用户书面指定；失败不降级、不由编排器冒充 | **verified**（2026-09-30） | CLI 不能以该模型与强度给出可核对意见时，门禁回到未满足 | 用户书面指定本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 `high`。见 D-002。A-001 与复审 [A-005](03-audit/A-005-f001-f002-reaudit.md) 均已落盘。A-005 verdict 为 fail：F-001、F-002 的 fixed 主张未被确认，这两项重新作为 required 开放。闭合路径尚未由用户选择 |
+| I-004 | required | S2/S3 改元规则和安装兼容，审计模式为 `cross`；independent provider 是谁 | S2 或 S3 的实施（取先开始者） | 实施前 | 用户书面指定；失败不降级、不由编排器冒充 | **verified**（2026-09-30） | CLI 不能以该模型与强度给出可核对意见时，门禁回到未满足 | 用户书面指定本地 codex CLI，模型 `gpt-6.1-sol`，思考强度 `high`。见 D-002。A-001 与 [A-005](03-audit/A-005-f001-f002-reaudit.md) 均已落盘。用户随后选择继续修正，见 [D-007](01-decision/D-007-a005-continue-fix.md) 与 [A-006](03-audit/A-006-a005-response.md)。该修正的复审尚未落盘 |
 
 ## 父目标
 
@@ -68,6 +68,6 @@ S1 已经核对过这些项。I-001、I-002、I-004 的证据见 D-002。I-003 �
 
 ## 备注
 
-- S1、S2、S3 已完成。原则区分见 D-003。占位符行为见 D-004 与 E-004。S4 进行中：A-005（independent，fail）复审后，F-001 与 F-002 重新作为 required 开放。A-003、A-004 保留为当时的响应，不改写。F-003、F-004 为 recommended。不得关门。未发布前不宣称消费方已经拿到这次安装行为。
+- S1、S2、S3 已完成。原则区分见 D-003。占位符行为见 D-004 与 E-004。S4 进行中：A-006 将 A-005 的 F-001、F-002、F-004 记为 fixed（提交 `599d2d8`）。F-003 仍为 recommended。该修正的复审尚未落盘，不得关门。未发布前不宣称消费方已经拿到这次安装行为。
 - 涉及 `docs/architecture`、`docs/templates`、`docs/contracts` 或 `docs/vision/alignment.md` 时，同一任务内 stage 镜像并 `--check`。
 - S1 没有出现必须拆出才能取证或关门的范围。按用户「无必要则不开」，不另立子目标；S2 与 S3 仍在本目标内。
