@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-09-30
 parent: null
-version: 0.24.0
+version: 0.25.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-09-30 · GOAL-009 S1 核对完成
+
+S1 只记证据，不改原则、安装器或 Skills。I-001 / I-002 / I-004 记为 verified；I-003 仍 open（截断句未补全，只阻断「不替换」分支）。死锁条文与占位符复现见 GOAL-009 附件 `s1-failure-modes-2026-09-30.md` 与 D-002：安装器不能指定方法论目录；替换受管占位符后 `modified_managed_files` 列出 2 个路径，对照为 0。占位符策略未冻结。不另开子目标。GOAL-009 为 **`active / 25%`**（S1～S4 1/4）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。provider 已指定为本地 codex CLI（`gpt-6.1-sol`，思考强度 high），审计尚未跑。
 
 ## 2026-09-30 · GOAL-009 立项
 
@@ -163,7 +167,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
 ├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
-└── GOAL-009-info-deadlock-and-managed-placeholders [active] 未知信息门禁死锁与受管占位符升级  progress 0%
+└── GOAL-009-info-deadlock-and-managed-placeholders [active] 未知信息门禁死锁与受管占位符升级  progress 25%
 ```
 
 ## 状态表
@@ -178,7 +182,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
-| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 0% | 2026-09-30 |
+| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-09-30 |
 
 ## 编号
 
