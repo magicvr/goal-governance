@@ -611,9 +611,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
         self.assertEqual(by_id["claude-code-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
-        # GOAL-008 S6: copilot was blocked during the first recapture attempt
-        # (stale BYOK model) and re-verified after the provider mapping was
-        # updated; the adapter is verified again against the v0.13.3 captures.
+        # GOAL-008 S6 / GOAL-010: copilot was blocked during the first v0.13.3
+        # recapture attempt (stale BYOK model) and re-verified after the provider
+        # mapping was updated; the adapter stays verified against the v0.13.4
+        # captures once the recapture for that candidate is complete.
         self.assertEqual(by_id["github-copilot-cli"]["verificationStatus"], "verified")
         self.assertNotIn("web-readonly-parser", by_id)
 
@@ -633,7 +634,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.13.3")
+        self.assertEqual(matrix["candidateRevision"], "v0.13.4")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -667,14 +668,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "github-copilot-cli",
             },
         )
-        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.270")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.30")
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.285")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.44")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # GOAL-008 S6: Claude + Grok cells are runtime-verified against the
-        # v0.13.3 recapture; copilot's first attempt was blocked by a stale BYOK
-        # model and re-verified after the provider mapping was updated.
+        # GOAL-008 S6 / GOAL-010: Claude + Grok + Copilot cells are runtime-verified
+        # against the v0.13.4 recapture; copilot's first v0.13.3 attempt was blocked by
+        # a stale BYOK model and re-verified after the provider mapping was updated.
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -695,7 +696,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 for path in entry["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertRegex(path, EVIDENCE_DATED_RE)
-                    self.assertIn(f"v0.13.3/{consumer_id}-{name}-", path.replace("\\", "/"))
+                    self.assertIn(f"v0.13.4/{consumer_id}-{name}-", path.replace("\\", "/"))
             vision = entrypoints["vision"]
             self.assertIn("vision", vision["evidence"][0])
             vision_audit = entrypoints["vision-audit"]
@@ -1098,13 +1099,25 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
 
     @unittest.skipUnless(sys.platform.startswith("win"), "InitWorkspace refuse smoke is Windows/ps1-first")
     def test_init_workspace_refuses_existing_path(self) -> None:
-        """GOAL-019 A-001 F-002: second -InitWorkspace on same path must fail."""
+        """GOAL-019 A-001 F-002: second -InitWorkspace on same path must fail.
+
+        GOAL-009 added a containment rule: the installer refuses an install path
+        outside the project (``render_managed.install_token``). This probe therefore
+        stages the package *inside* the disposable project and passes ``-SkillsDir``
+        as a relative path, so the first init can succeed and the refuse-overwrite
+        behaviour is what the second init actually exercises.
+        """
         pwsh = shutil.which("powershell") or shutil.which("pwsh")
         if not pwsh:
             self.skipTest("PowerShell not found on PATH")
         with tempfile.TemporaryDirectory(prefix="gg-init-refuse-") as tmp:
             target = Path(tmp)
-            skills = SKILLS_ROOT
+            staged_skills = target / "staged-skills"
+            shutil.copytree(
+                SKILLS_ROOT,
+                staged_skills,
+                ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+            )
             cmd_base = [
                 pwsh,
                 "-NoProfile",
@@ -1112,14 +1125,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                str(INSTALL_PS1),
+                str(staged_skills / "install.ps1"),
                 "-InitWorkspace",
                 "-WorkspaceSlug",
                 "refuse-demo",
                 "-RootSlug",
                 "refuse-root",
                 "-SkillsDir",
-                str(skills),
+                ".\\staged-skills",
             ]
             first = subprocess.run(
                 cmd_base,

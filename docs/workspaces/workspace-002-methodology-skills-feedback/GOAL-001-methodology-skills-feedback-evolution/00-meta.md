@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-01
-version: 0.14.14
+version: 0.14.15
 progress: 67%
 ---
 
@@ -33,7 +33,7 @@ progress: 67%
 |------|------|------|------|
 | **R1** | 消费宿主补齐与入口一致 | **完成**（2026-07-31） | claude / copilot / grok 既有；Codex 经 [GOAL-002](../GOAL-002-codex-skills-entry/) 补齐（install 面 + 主入口 runtime）；用户 `/govern` 确认收口（D-003） |
 | **R2** | 反馈驱动的协议 / Skills 修正 | **完成**（2026-08-04） | [GOAL-003](../GOAL-003-consumer-governance-ergonomics/) `v0.12.0` 正式 Release / consumer update / A-006 independent pass；F-001 fixed，开放 required = 0 |
-| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 已 done；[GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 已于 2026-10-01 关门（`done` / 100%，不包含正式发布），开放 required 为无；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
+| **R3** | 持续闭环与长期演进（原「有界闭环验证与 VP 退出准备」；退出挂起，D-008） | **进行中** | [GOAL-004](../GOAL-004-frozen-web-asset-retirement/) 至 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 已 done；[GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 已于 2026-10-01 关门（`done` / 100%，不包含正式发布），开放 required 为无；[GOAL-010](../GOAL-010-release-gate-recapture-and-v0-13-4/) 于 2026-10-01 立项，承载发布门禁转绿与 `v0.13.4` 正式发布；**D-008：长期持续治理，退出挂起**，Root/VP-002 保持 active |
 
 同一纲领阶段内可并行多个子目标；阶段间通常串行。
 
@@ -72,6 +72,7 @@ progress: 67%
 | [GOAL-007-workspaces-directory-consolidation](../GOAL-007-workspaces-directory-consolidation/00-meta.md) | 工作区目录统一收敛与正式发布 | done |
 | [GOAL-008-consumer-layer-split-and-hosting](../GOAL-008-consumer-layer-split-and-hosting/00-meta.md) | 双层路线图拆分与消费仓宿主共存 | done |
 | [GOAL-009-info-deadlock-and-managed-placeholders](../GOAL-009-info-deadlock-and-managed-placeholders/00-meta.md) | 未知信息门禁死锁与受管占位符升级 | done |
+| [GOAL-010-release-gate-recapture-and-v0-13-4](../GOAL-010-release-gate-recapture-and-v0-13-4/00-meta.md) | 发布门禁转绿与 v0.13.4 正式发布 | active |
 
 ## 备注
 
@@ -84,3 +85,4 @@ progress: 67%
 - **第二批消费仓痛点（2026-09-13，D-009）**：创建 [GOAL-008](../GOAL-008-consumer-layer-split-and-hosting/) 承载 FB-006～FB-009；该目标已于 2026-09-13 `done`。
 - **第三批使用反馈（2026-09-30，D-010）**：创建 [GOAL-009](../GOAL-009-info-deadlock-and-managed-placeholders/) 承载 FB-010～FB-011；S1 完成前不改协议/安装/Skills；下一编号 **GOAL-010**。
 - **GOAL-009 关门（2026-10-01）**：用户书面确认关门且不发布。GOAL-009 为 `done` / 100%，开放 required 为无。F-003 仍为 recommended。R3 仍进行中，Root progress 仍为 67%。关门后对齐回滚测试桩与本表 R3 当前说明，见 GOAL-009 [E-014](../GOAL-009-info-deadlock-and-managed-placeholders/02-execution/E-014-post-close-alignment.md)。
+- **发布门禁转绿与 v0.13.4 发布（2026-10-01，D-011）**：GOAL-009 关门后发现 `dev` 顶端发布门禁为红——GOAL-009 S2 改根 `AGENTS.md` 与编排提示使 v0.13.3 的 12 格 runtime 证据全部过期，publish job 的 `--mode release` 首步即失败。创建 [GOAL-010](../GOAL-010-release-gate-recapture-and-v0-13-4/) 承载「重捕获 12 格证据 + 修 containment 测试 + 版本清单 + PR/合并/tag 发布」。版本 **`v0.13.4`（patch）**；修复走重捕获而非回滚。下一编号 **GOAL-011**。

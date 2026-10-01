@@ -108,11 +108,11 @@ version: 0.1.0
 ## 可复制包版本与变更范围
 
 - **文档入口版本**（本文件 frontmatter）：`0.14.0` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
-- **可复制核心包版本**：`0.13.3`（GOAL-008：层级命名与落位判定、组合编排投影与 legacy 兼容、消费仓 `AGENTS.md` 受管标记块、默认 `/commit` 便利入口 + 证据重捕获）。入口文修订号与发布身份刻意分离。
-- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / `v0.13.2` / **`v0.13.3`**（annotated tag 指向 main merge commit `dfa8600`；tag workflow run `34748891084` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）。
-- **快照日期**：2026-09-13。
-- **快照身份**：`v0.13.3` 正式发布。Codex 仍仅是 install surface（非矩阵）。
-- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.270`、Grok Build `1.0.30` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`；证据日期 2026-09-13，位于 `docs/releases/runtime/v0.13.3/`。`/commit` 为默认安装的**便利入口**，不属于矩阵必达格。Root R3 终态仍未声明。
+- **可复制核心包版本**：`0.13.4`（GOAL-010：对当前树重捕获 12 格宿主 runtime 证据、修好与 containment 规则不一致的 Windows 安装器测试，并把过期的发布门禁转绿）。入口文修订号与发布身份刻意分离。
+- **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / `v0.13.2` / `v0.13.3`（annotated tag 指向 main merge commit `dfa8600`；tag workflow run `34748891084` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）。**`v0.13.4` 为发布候选**，尚未打 tag，见下。
+- **快照日期**：2026-10-01。
+- **快照身份**：`v0.13.4` **发布候选**（尚未打 tag；正式身份以 merged-main ancestry + annotated tag + strict release evidence 为准）。`v0.13.3` 为最近已发布基线。Codex 仍仅是 install surface（非矩阵）。
+- **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.285`、Grok Build `1.0.44` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`；证据日期 2026-10-01，位于 `docs/releases/runtime/v0.13.4/`。`/commit` 为默认安装的**便利入口**，不属于矩阵必达格。Root R3 终态仍未声明。
 
 ### canonical → Skills 镜像（GOAL-022）
 

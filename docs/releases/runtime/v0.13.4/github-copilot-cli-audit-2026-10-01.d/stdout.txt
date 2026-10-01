@@ -1,0 +1,166 @@
+copilot replay model: gemini-3.8-flash-high
+I will start the read-only independent audit replay for GOAL-008 by loading the audit skill and
+inspecting the specified governance sources (AGENTS.md, .github/copilot-instructions.md,
+skills/prompts/05-independent-audit.md, goal-tree.md, and the GOAL-008 directory).
+
+● skill(audit)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ 1 line read
+
+● Read 05-independent-audit.md
+  │ skills\prompts\05-independent-audit.md
+  └ L1:160 (108 lines read)
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ L1:160 (159 lines read)
+
+/ Search (glob)
+  │ "*GOAL-008*" in docs\workspaces\workspace-001-goal-governance
+  └ No matches found
+
+I will now read .github/copilot-instructions.md, the rest of goal-tree.md, and list
+docs\workspaces\workspace-001-goal-governance to locate GOAL-008.
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ L161:400 (240 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L221:500 (114 lines read)
+
+● Read copilot-instructions.md
+  │ .github\copilot-instructions.md
+  └ L1:220 (219 lines read)
+
+● Read goal-tree.md
+  │ docs\workspaces\workspace-001-goal-governance\goal-tree.md
+  └ L401:700 (168 lines read)
+
+/ Search (glob)
+  │ "GOAL-008*/**/*" in docs\workspaces\workspace-001-goal-governance
+  └ No matches found
+
+I will now read AGENTS.md and the GOAL-008-skills-consumer-adapter-release-consistency directory and
+ core records (00-meta.md, 01-decision.md, 02-execution.md, 03-audit.md).
+
+● Read AGENTS.md
+  └ L1:260 (236 lines read)
+
+● Read 00-meta.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\00-meta.md
+  └ L1:250 (103 lines read)
+
+● Read 02-execution.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\02-execution.md
+  └ L1:250 (144 lines read)
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L1:250 (250 lines read)
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ L1:250 (185 lines read)
+
+● List directory docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-rel…
+  └ 5 files found
+
+I will now read the remaining lines of 01-decision.md, 02-execution.md, 03-audit.md, and list
+attachments/ in GOAL-008-skills-consumer-adapter-release-consistency.
+
+● Read 02-execution.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\02-execution.md
+  └ L145:250 (49 lines read)
+
+● Read 01-decision.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\01-decision.md
+  └ L187:300 (76 lines read)
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L251:550 (267 lines read)
+
+● List directory docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-rel…
+  └ 10 files found
+
+I will now read the remaining sections of AGENTS.md, 03-audit.md, and inspect the contents of
+GOAL-008's attachments/runtime/ directory.
+
+● Read 03-audit.md
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\03-audit.md
+  └ L518:750 (199 lines read)
+
+● Read AGENTS.md
+  └ L237:430 (184 lines read)
+
+● List directory docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-rel…
+  └ 119 files found
+
+I will now inspect the GOAL-008 close-out runtime evidence attachments
+(release-candidate-v0.7.0-2026-07-20.json, web-parser-ci-replay-2026-07-20.json,
+copilot-cli-govern-2026-07-20.json, and copilot-cli-audit-2026-07-20.json).
+
+● Read web-parser-ci-replay-2026-07-20.json
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\attachments\runtime\web-parser-ci-replay-2026-07-20.json
+  └ 39 lines read
+
+● Read copilot-cli-govern-2026-07-20.json
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\attachments\runtime\copilot-cli-govern-2026-07-20.json
+  └ 70 lines read
+
+● Read copilot-cli-audit-2026-07-20.json
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\attachments\runtime\copilot-cli-audit-2026-07-20.json
+  └ 70 lines read
+
+● Read release-candidate-v0.7.0-2026-07-20.json
+  │ docs\workspaces\workspace-001-goal-governance\GOAL-008-skills-consumer-adapter-release-consisten
+  │ cy\attachments\runtime\release-candidate-v0.7.0-2026-07-20.json
+  └ 28 lines read
+
+Independent Cross-Audit Replay · GOAL-008-skills-consumer-adapter-release-consistency
+
+ - source: independent
+ - auditor: GitHub Copilot CLI 1.0.71 (read-only CLI replay; no VS Code/IDE plugin, no file
+writes/commits/tags)
+ - workspace / target:
+docs/workspaces/workspace-001-goal-governance/GOAL-008-skills-consumer-adapter-release-consistency
+(parent: GOAL-001-main-vision, status: done, progress: 100%)
+ - closure verdict: pass
+
+Evidence Verified
+
+ 1. I-001 (verified): Canonical contract/schema (D-002), skills/contracts/ byte-identical mirror,
+positive/negative fixtures, and contract/bootstrap tests (A-002).
+ 2. I-002 (verified): Six CLI runtime cells (Claude Code 2.1.215, Grok Build 0.2.103, GitHub Copilot
+ CLI 1.0.71 at attachments/runtime/copilot-cli-{govern,audit}-2026-07-20.json, with VS Code plugin
+excluded as historical context per D-009) plus Web parser CI replay on GitHub Actions run
+29700051047 (attachments/runtime/web-parser-ci-replay-2026-07-20.json, D-010).
+ 3. I-003 (verified): Candidate commit 8a33ecd21d9183a680c9c0d63e471469f5e515a8, annotated tag
+v0.7.0, coverageStatus: ready-for-release-evidence (uncovered: []), and
+attachments/runtime/release-candidate-v0.7.0-2026-07-20.json (A-016). Later worktree changes (D-011
+/ A-017, 2026-07-28 runtime refreshes) are bounded to subsequent release candidates without
+reopening v0.7.0.
+
+Open Required Findings
+
+ - None (0): A-010 (F-001–F-005) and A-014/A-015 gaps are closed with verifiable evidence (A-011,
+A-013, A-016); I-001–I-003 are verified with no residual risk; upstream GOAL-001 F-005 is satisfied.
+ Any follow-up response remains with /govern.
+
+COPILOT_CLI_AUDIT_DISPATCH_OK
+

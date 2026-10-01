@@ -4,8 +4,8 @@ doc: decision
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-09-30
-version: 0.9.0
+updated: 2026-10-01
+version: 0.10.0
 ---
 
 # 决策记录 · GOAL-001
@@ -29,6 +29,7 @@ version: 0.9.0
 | D-008 | 2026-08-08 | 长期持续治理决策：Root 与 VP-002 暂不关门（退出挂起） | accepted | `01-decision/D-008-long-running-governance.md` |
 | D-009 | 2026-09-13 | 承接第二批消费仓痛点，创建 GOAL-008 | accepted | `01-decision/D-009-create-goal-008.md` |
 | D-010 | 2026-09-30 | 承接第三批使用反馈，创建 GOAL-009 | accepted | `01-decision/D-010-create-goal-009.md` |
+| D-011 | 2026-10-01 | 承接发布门禁缺口，创建 GOAL-010 并冻结 v0.13.4 发布范围 | accepted | `01-decision/D-011-create-goal-010.md` |
 
 ## D-001 · 开区 workspace-002 + Root 服务 VP-002（2026-07-31）
 
