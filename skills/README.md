@@ -116,7 +116,7 @@ skills/
 
 **当前正式发布 pin `v0.13.4`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
 
-> 状态：`v0.13.4` 为**发布候选**，待打 annotated tag；最近一次**已发布**的 tag 仍是 `v0.13.3`。
+> 状态：`v0.13.4` 已正式发布（annotated tag → main merge commit `43479838…`；9 项 Release 资产，zip 摘要与 sidecar 一致）。
 
 在目标项目根执行（先落盘 bootstrap，再跑；默认**不**管道直跑）：
 

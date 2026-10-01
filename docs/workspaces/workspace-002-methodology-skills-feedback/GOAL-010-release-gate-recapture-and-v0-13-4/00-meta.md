@@ -1,12 +1,12 @@
 ---
 id: GOAL-010-release-gate-recapture-and-v0-13-4
 title: 发布门禁转绿与 v0.13.4 正式发布
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-01
 updated: 2026-10-01
-version: 0.2.0
-progress: 75%
+version: 0.3.0
+progress: 100%
 ---
 
 # GOAL-010 · 发布门禁转绿与 v0.13.4 正式发布
@@ -26,7 +26,7 @@ progress: 75%
 - [x] `scripts/compatibility_report.py` 与 `release_evidence.py --mode rehearsal --run-checks` 通过；`scripts/tests`、`skills/tests`、`docs/tests` 全绿
 - [x] 与本轮 containment 规则不一致的 Windows 安装器测试已修，保留原判定语义
 - [x] 版本清单一致：CHANGELOG 有 `0.13.4` 节（标注为发布候选）、三处安装 pin 指向 `v0.13.4`
-- [ ] PR 合入 `main` 后 annotated tag `v0.13.4` 指向该 merge commit，publish job 经 Environment `release` 审批发布 9 项资产且 zip 摘要与 sidecar 一致
+- [x] PR 合入 `main` 后 annotated tag `v0.13.4` 指向该 merge commit，publish job 经 Environment `release` 审批发布 9 项资产且 zip 摘要与 sidecar 一致
 
 ## 纲领路线图（P-001）
 
@@ -35,13 +35,13 @@ progress: 75%
 | **S1** | 门禁缺口核对与发布范围冻结 | 已完成（2026-10-01） | 缺口可复现（命令 + 失败计数 + 文件行），版本号与发布纪律冻结；不改代码。证据：[D-001](01-decision/D-001-scope-freeze-v0-13-4.md) |
 | **S2** | 证据重捕获与清单修正 | 已完成（2026-10-01） | 12 格证据重捕获并全部 `pass`；矩阵改指新目录；CHANGELOG 与三处 pin 同步；containment 测试修好。证据：[E-001](02-execution/E-001-recapture-12-cells.md)、[E-002](02-execution/E-002-test-realignment-and-manifest.md) |
 | **S3** | 回归、门禁与 independent 发布候选审计 | 已完成（2026-10-01） | 三套测试全绿、镜像 0 漂移、`--require-ready` 与 rehearsal 通过；independent 审计落盘（A-002 `pass`，开放 required = 0）且 5 条 recommended 已闭合。证据：[E-003](02-execution/E-003-regression-gates-and-release.md)、[A-002](03-audit/A-002-independent-release-candidate.md)、[A-003](03-audit/A-003-response-a002.md) |
-| **S4** | PR、合并、tag 与资产核对 | 进行中 | PR 绿后合入 `main`；annotated tag 指向 merge commit；publish 经 Environment 审批；9 项资产核对完成 |
+| **S4** | PR、合并、tag 与资产核对 | 已完成（2026-10-01） | PR 绿后合入 `main`；annotated tag 指向 merge commit；publish 经 Environment 审批；9 项资产核对完成。证据：[E-004](02-execution/E-004-release-receipt.md)、[A-004](03-audit/A-004-release-output-review.md) |
 
-S1 先做且已完成。S2、S3 已完成。S3 的 independent 审计结论为 `pass` 且开放 required 为 0，故放行 S4。`progress` 只来自本表：已完成阶段数 / 4。
+S1 先做且已完成。S2、S3、S4 均已完成。`progress` 只来自本表：已完成阶段数 / 4。
 
 ## 派生进度展示
 
-`progress: 75%` = 上表 4 个阶段完成 **3 / 4**。progress 只展示。它不放行阶段、不关闭 finding、不覆盖信息门禁，也不推导 `status: done`。
+`progress: 100%` = 上表 4 个阶段完成 **4 / 4**。progress 只展示。`done` 的依据是本表四个阶段均已退出、A-004 发布产出核对 `pass`、开放 required 为 0；不靠百分比推导。
 
 ## 信息就绪与未知项
 
@@ -63,6 +63,9 @@ S1 先做且已完成。S2、S3 已完成。S3 的 independent 审计结论为 `
 
 ## 备注
 
-- 本轮不新增架构规则；`docs/architecture/`、`docs/templates/`、`docs/vision/alignment.md` 的 canonical 正文**不改**，因此镜像 stage 只作为一致性守卫运行。
-- `docs/contracts/**` 改动会进 stage 白名单，必须同一任务内 stage 并提交镜像（AGENTS §8c）。
-- 证据文件是本目标的**产品**：`docs/releases/runtime/v0.13.4/` 的 12 份 JSON 与各自 `.d/` 原始 stdout/stderr 都要入库。
+- **2026-10-01 关门**：S1～S4 全部退出。`v0.13.4` 已正式发布——PR #23 合入 `main`（merge commit `43479838…`），annotated tag `v0.13.4` 指向该 commit，tag workflow run `36808519534` 的两个 job（`pack` / `Publish GitHub Release (gated)`）全绿，Environment `release` 由用户人工审批，Release 发布 **9 项**资产，两个 zip 重下载 sha256 与 sidecar 逐项一致。见 [E-004](02-execution/E-004-release-receipt.md) 与 [A-004](03-audit/A-004-release-output-review.md)。**未独立核对**：GHCR 镜像（本会话 token 无 `read:packages`），已登记为 recommended 残余。
+- Root R3 与 VP-002 为长期持续治理（D-008），不随本目标关门；Root `progress` 保持 67%。
+- 本轮不新增架构规则；`docs/architecture/`、`docs/templates/`、`docs/vision/alignment.md` 的 canonical 正文**未改**，镜像 stage 只作为一致性守卫运行。
+- `docs/contracts/**` 改动进了 stage 白名单，已同一任务内 stage 并提交镜像（AGENTS §8c）。
+- 证据文件是本目标的**产品**：`docs/releases/runtime/v0.13.4/` 的 12 份 JSON 与各自 `.d/` 原始 stdout/stderr 均已入库。
+- 残余（不阻断）：A-001 F-001（重捕获用的一次性探针运行器与 `--settings` 覆盖文件未入库）、A-002 F-001（Claude 格命令级重放需重建该覆盖文件）、A-004 F-001（GHCR 镜像未产物级核对）、A-004 F-002（未做隔离消费仓重放）。

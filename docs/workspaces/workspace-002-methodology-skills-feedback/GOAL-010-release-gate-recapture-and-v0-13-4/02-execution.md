@@ -17,6 +17,7 @@ version: 0.1.0
 | E-001 | 2026-10-01 | 12 格 L3 宿主证据在 v0.13.4 目录重捕获 | recorded | `02-execution/E-001-recapture-12-cells.md` |
 | E-002 | 2026-10-01 | containment 测试对齐与版本清单同步 | recorded | `02-execution/E-002-test-realignment-and-manifest.md` |
 | E-003 | 2026-10-01 | 回归、门禁与发布产出 | recorded | `02-execution/E-003-regression-gates-and-release.md` |
+| E-004 | 2026-10-01 | v0.13.4 正式发布产出与资产核对 | recorded | `02-execution/E-004-release-receipt.md` |
 
 ## 事实边界
 

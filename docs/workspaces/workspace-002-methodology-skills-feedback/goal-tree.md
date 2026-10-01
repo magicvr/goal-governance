@@ -12,15 +12,19 @@ version: 0.38.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-01 · GOAL-010 关门（v0.13.4 正式发布）
+
+S1～S4 全部退出。**发布产出**：PR **#23** 合入 `main`（merge commit **`43479838d65d97f4a8b70d37d8c8226cb96c81ef`**，merged `2026-10-01T02:56:24Z`；PR CI run `36807895977` 双 job pass、main CI run `36808178721` success）；annotated tag **`v0.13.4`**（tag 对象 `acb0a389…` → merge commit，与 `origin/main` 一致）；tag workflow run **`36808519534`** 的 `pack` 与 `Publish GitHub Release (gated)` **全绿**（含硬 release-evidence 门禁与 GHCR 镜像推送）；Environment `release` 由用户人工审批（编排器未代签）；Release 发布 **9 项**资产（缺失 0 / 多余 0），两个 zip 重下载 sha256 **与 sidecar 逐项一致**。**审计**：A-001 self `conditional`、**A-002 independent（`grok-4.6`）`pass`，开放 required = 0**、A-003 响应按 3 fixed / 1 accepted-residual / 1 fixed 闭合、A-004 发布产出核对 `pass`。**残余（不阻断）**：重捕获探针运行器与 `--settings` 覆盖文件未入库（命令级重放需重建）、GHCR 镜像未做产物级核对（本会话 token 无 `read:packages`）、未做隔离消费仓重放。GOAL-010 标为 **`done / 100%`**（S1～S4 4/4）。Root R3 与 VP-002 为长期持续治理（D-008），不随之关门；Root progress 保持 67%；下一编号 **GOAL-011**。证据：[E-004](../GOAL-010-release-gate-recapture-and-v0-13-4/02-execution/E-004-release-receipt.md)、[A-004](../GOAL-010-release-gate-recapture-and-v0-13-4/03-audit/A-004-release-output-review.md)。
+
 ## 2026-10-01 · GOAL-010 立项（发布门禁转绿与 v0.13.4 发布）
 
 用户要求推送 PR、确保 CI 全绿后合并 `main`、再打 tag 发布新资产。编排前的只读核对发现 `dev` 顶端的**发布门禁是红的**：v0.13.3 的 12 格宿主 runtime 证据在 `d1256eb`（GOAL-009 S2）改根 `AGENTS.md` 与编排提示后全部过期（`AGENTS.md` 记录 `edccf61a…` → 当前 `e8afa1d4…`；`skills/prompts/00-govern-orchestrator.md` 记录 `d2df7a81…` → 当前 `222d37a7…`）。在临时 worktree 上对照 `4d35623`（证据录制点，通过）与 `d30abb3`（`dev` 顶端，失败）确认：变更是正确的，证据过期是唯一缺口。后果为 `scripts/compatibility_report.py` 失败、`release_evidence --mode rehearsal` 失败、`scripts/tests` 4 failures / 12 errors；而 publish job 以 `--mode release` 为第一步，故证据刷新前不可能产出资产。
 
-用户裁决：**完整执行**（重捕获 12 格 → 版本清单 → PR → 合并 → tag），版本 **`v0.13.4`（patch）**，修复路径为**重捕获而非回滚**（D-001）；开 **GOAL-010-release-gate-recapture-and-v0-13-4**（`active / 25%`，S1～S4 1/4）并写完整治理记录；把与 containment 规则不一致的 Windows 安装器测试**修好**（D-003）。（D-002）
+用户裁决：**完整执行**（重捕获 12 格 → 版本清单 → PR → 合并 → tag），版本 **`v0.13.4`（patch）**，修复路径为**重捕获而非回滚**（D-001）；开 **GOAL-010-release-gate-recapture-and-v0-13-4**（立项时 `active / 25%`，S1～S4 1/4）并写完整治理记录；把与 containment 规则不一致的 Windows 安装器测试**修好**（D-003）。（D-002）
 
 **S2 完成**：3 宿主 × 4 治理入口 = **12 格**证据在 `docs/releases/runtime/v0.13.4/` 重捕获，全部 `pass`（claude `2.1.285` / grok `1.0.44` / copilot `1.0.75`），`capture_runtime_evidence --check` 12/12，矩阵 `candidateRevision = v0.13.4`，`compatibility_report` 为 `ready-for-release-evidence`。清单同步：CHANGELOG `0.13.4` 节、三处安装 pin 与 GHCR 示例、两处测试断言。门禁：skills 45 / docs 3 / scripts 145 全绿、镜像 37 对 0 漂移、rehearsal `checks passed: True`（[E-001](../GOAL-010-release-gate-recapture-and-v0-13-4/02-execution/E-001-recapture-12-cells.md) / [E-002](../GOAL-010-release-gate-recapture-and-v0-13-4/02-execution/E-002-test-realignment-and-manifest.md) / [E-003](../GOAL-010-release-gate-recapture-and-v0-13-4/02-execution/E-003-regression-gates-and-release.md)）。
 
-**审计**：A-001 self `conditional`（0 required / 2 recommended）；independent provider 原定本地 codex CLI，因该 CLI 在本机沙箱下无法初始化，经用户书面**改派为本地 grok build CLI（`grok-4.6`）**；**A-002 independent `pass`，开放 required = 0**（5 recommended）；A-003 响应按 3 fixed / 1 accepted-residual / 1 fixed 闭合，无冲突。S2/S3 放行 S4（PR → 合并 `main` → annotated tag `v0.13.4` → Release 资产），S4 产出尚未发生。Root R3 仍进行中、Root progress 保持 67%；VP-002 保持 active；下一编号 **GOAL-011**。
+**审计**：A-001 self `conditional`（0 required / 2 recommended）；independent provider 原定本地 codex CLI，因该 CLI 在本机沙箱下无法初始化，经用户书面**改派为本地 grok build CLI（`grok-4.6`）**；**A-002 independent `pass`，开放 required = 0**（5 recommended）；A-003 响应按 3 fixed / 1 accepted-residual / 1 fixed 闭合，无冲突。S2/S3 放行 S4（PR → 合并 `main` → annotated tag `v0.13.4` → Release 资产）。Root R3 仍进行中、Root progress 保持 67%；VP-002 保持 active；下一编号 **GOAL-011**。
 
 ## 2026-10-01 · GOAL-009 关门后对齐回滚测试与 R3 说明
 
@@ -230,7 +234,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
 ├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
 ├── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
-└── GOAL-010-release-gate-recapture-and-v0-13-4 [active]  发布门禁转绿与 v0.13.4 正式发布  progress 75% (S1～S3/4)
+└── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
 ```
 
 ## 状态表
@@ -246,7 +250,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
 | GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
-| GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-10-01 |
+| GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 
 ## 编号
 

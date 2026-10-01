@@ -4,11 +4,11 @@
 
 ## Unreleased
 
-（未发布；`0.13.4` 为发布候选，须经 merge 进 `main`、annotated tag 指向 merge commit 与 tag workflow 上传后才构成发布声明。）
+（空；2026-10-01 发布 v0.13.4。）
 
 ## 0.13.4 - 2026-10-01
 
-发布门禁修复 patch（GOAL-010）：把 `dev` 上已经变红的发布门禁转绿，并为正式发布做准备。**本节为发布候选**：须经 merge 进 `main`、annotated tag 指向 merge commit 与 tag workflow 上传后才构成发布声明。协议（`protocol 0.1.0`）与消费契约数据结构不变；三个宿主 × 四个治理入口的 12 格 runtime 证据在 `docs/releases/runtime/v0.13.4/` 重捕获。
+发布门禁修复 patch（GOAL-010）：把 `dev` 上已经变红的发布门禁转绿并正式发布。协议（`protocol 0.1.0`）与消费契约数据结构不变；三个宿主 × 四个治理入口的 12 格 runtime 证据在 `docs/releases/runtime/v0.13.4/` 重捕获。
 
 ### 背景（为什么必须重捕获）
 
@@ -33,6 +33,13 @@
 - 修好 `test_init_workspace_refuses_existing_path`（GOAL-019 A-001 F-002）：该测试原先用**项目外**的绝对 `-SkillsDir`，被 GOAL-009 引入的 containment 规则在写入前拒绝，导致「第二次 init 被拒」的原意从未被执行到。改为把包复制到临时项目内并以相对路径安装，断言原意不变（见 D-003）。
 - `scripts/tests/test_release_evidence.py` 与 `skills/tests/test_skills_orchestrator.py` 的 `candidateRevision` / 证据路径断言由 `v0.13.3` 改为 `v0.13.4`。
 - 发布 pin 同步：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 的安装示例与 GHCR 镜像示例改为 `v0.13.4`（`mcp/README.md` 同步）。
+
+### 发布凭据
+
+- PR **#23** 合入 `main`，merge commit **`43479838d65d97f4a8b70d37d8c8226cb96c81ef`**（merged 2026-10-01T02:56:24Z）；annotated tag **`v0.13.4`**（tag 对象 `acb0a389…`）指向该 commit。
+- tag workflow run **`36808519534`**：`pack` 与 `Publish GitHub Release (gated)` 全部 success；Environment `release` 由维护者人工审批。
+- Release 发布 **9 项**资产；`goal-governance-skills-v0.13.4.zip`（sha256 `2cc277dc…`）与 `goal-governance-core-v0.13.4.zip`（sha256 `2f5ad1cf…`）重下载摘要**与 sidecar 逐项一致**。
+- 独立审计 A-002（`grok-4.6`）verdict `pass`、开放 required = 0；发布产出核对 A-004 `pass`。
 
 ## 0.13.3 - 2026-09-13
 

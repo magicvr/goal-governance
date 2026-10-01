@@ -25,6 +25,7 @@ version: 0.1.0
 |------|------|--------|-------|---------|---------------|------|
 | A-001 | 2026-10-01 | self | S2 实施自查（证据重捕获与清单修正） | conditional | 0 required（2 recommended） | [A-001-s2-self.md](03-audit/A-001-s2-self.md) |
 | A-002 | 2026-10-01 | independent | 发布候选完整审计（provider `grok-4.6`） | **pass** | 0 required（5 recommended） | [A-002-independent-release-candidate.md](03-audit/A-002-independent-release-candidate.md) |
-| A-003 | 2026-10-01 | self | 对 A-002 的响应与 finding 闭合 | recorded | 0 required（3 fixed / 2 accepted-residual） | [A-003-response-a002.md](03-audit/A-003-response-a002.md) |
+| A-003 | 2026-10-01 | self | 对 A-002 的响应与 finding 闭合 | recorded | 0 required（3 fixed / 1 accepted-residual / 1 fixed） | [A-003-response-a002.md](03-audit/A-003-response-a002.md) |
+| A-004 | 2026-10-01 | self | 发布产出核对（S4） | **pass** | 0 required（2 recommended） | [A-004-release-output-review.md](03-audit/A-004-release-output-review.md) |
 
 > 自审与独立审共用 A 序列。verdict 与开放 required 必须在条目落盘后回填本索引；未落盘的条目不作为放行依据。

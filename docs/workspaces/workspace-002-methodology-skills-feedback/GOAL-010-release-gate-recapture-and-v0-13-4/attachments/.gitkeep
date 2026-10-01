@@ -1,0 +1,8 @@
+# attachments/
+
+本目标的附件目录。当前为空（`.gitkeep` 占位）：本轮的 12 格 runtime 证据与原始 stdout/stderr 按发布约定落在
+`docs/releases/runtime/v0.13.4/`（矩阵引用的路径），不放这里；失败过程与处置写在
+[E-001](../02-execution/E-001-recapture-12-cells.md) 的过程偏差表内。
+
+需要长附件（截图、隔离仓重放记录、发布产出核对原始输出）时放本目录，并在对应的
+D / E / A 条目里链接。
