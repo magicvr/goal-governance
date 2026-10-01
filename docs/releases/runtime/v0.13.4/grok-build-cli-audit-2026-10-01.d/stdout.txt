@@ -1,0 +1,24 @@
+I'll load the installed audit skill and read only the repository sources needed for this GOAL-008 dispatch probe.The installed Grok audit skill is next; I’ll read it and the independent-audit prompt it names.Next I’ll locate the installed skill on disk, read the independent-audit prompt, and inspect GOAL-008 for source/status semantics and an evidence gap.I’ll read the on-disk installed skill, GOAL-008’s current sources, and a prior probe capture so the report matches the required fields.The installed skill is at `.grok/skills/audit`. I’ll read that file and GOAL-008’s current meta so the gap is from the live sources, not a prior capture.I’ll confirm the current compatibility-matrix gap so the report uses live required-evidence state.**GROK_AUDIT_DISPATCH_OK**
+
+| # | Item | Value |
+|---|------|--------|
+| 1 | Marker | `GROK_AUDIT_DISPATCH_OK` |
+| 2 | Loaded skill | **Title:** `audit · 独立交叉审计（Grok Build skill）` · **Path:** `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\audit\SKILL.md` |
+| 3 | Independent-audit prompt | Named by skill as `<SKILLS_PKG>/prompts/05-independent-audit.md` · Resolved: `skills/prompts/05-independent-audit.md` (`C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\05-independent-audit.md`) |
+| 4 | Source/status semantics + evidence gap | See below |
+
+### Required source / status semantics (from the loaded skill + `05-independent-audit.md`)
+
+- **`source` must be `independent`.** The auditor writes opinions; `/govern` owns response and status change.
+- **Default write:** audit opinion only into the audited goal’s `03-audit.md` (A-00N shared with self); long form may go in `attachments/` with an index section.
+- **Forbidden by default:** change goal `status`, checkpoints, derived `progress`, plan body, or goal-tree status columns; progress cannot close findings or authorize advance.
+- **Findings:** each is `required` \| `recommended` (with severity). Required findings block corresponding gates until closed under `/govern`.
+- **`verdict`:** `pass` \| `conditional` \| `fail`. `pass` only when the scope has no open high-required items and no due required I-00N info gates.
+
+This probe did not append an A-entry or change GOAL-008 status.
+
+### One current required evidence gap (GOAL-008)
+
+GOAL-008 remains historically **`done` / 100%** for annotated `v0.7.0` (I-001–I-003 verified in `00-meta.md` / A-016). The live producer matrix is **`candidateRevision: v0.13.4`**, with Claude / Grok / Copilot × four entrypoints all **`runtime-verified`** against `docs/releases/runtime/v0.13.4/` (2026-10-01).
+
+The still-open required gap: **formal release identity for `v0.13.4`**. Matrix `evidenceScope` and CHANGELOG still gate that candidate on **merged-main ancestry, an annotated tag pointing at the merge commit, and strict release-evidence / tag-workflow upload**. Until those exist, `v0.13.4` is a release candidate, not a release declaration. Complete cross-host / cross-version recertification also stays **deferred required** on first new host/version or first public/reproducible release.

@@ -238,5 +238,45 @@ class McpLifecycleTests(unittest.TestCase):
         self.assertTrue(doctor_report["gitignore"]["thinShellIgnored"])
 
 
+class McpOutsideByteTests(unittest.TestCase):
+    """MCP install, upgrade, and uninstall keep bytes outside the markers."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.consumer = Path(self.tmp.name) / "consumer"
+        self.consumer.mkdir()
+        import mcp.lifecycle as lifecycle
+
+        self.lifecycle = lifecycle
+
+    def test_remove_keeps_suffix_newlines(self) -> None:
+        section = self.lifecycle.managed_section("1.0.0")
+        original = section + "keep\n\n"
+        self.assertEqual(self.lifecycle.remove_managed_section(original), "keep\n\n")
+
+    def test_install_upgrade_and_uninstall_keep_crlf_outside(self) -> None:
+        agents = self.consumer / "AGENTS.md"
+        prefix = b"# consumer\r\n"
+        suffix = b"\r\nkeep\r\n\r\n"
+        agents.write_bytes(prefix)
+        installed = self.lifecycle.install(self.consumer, confirm=True, version="1.2.3")
+        self.assertEqual(installed.operation, "install")
+        written = agents.read_bytes()
+        self.assertTrue(written.startswith(prefix), msg=written)
+        agents.write_bytes(written + suffix)
+        upgraded = self.lifecycle.upgrade(self.consumer, confirm=True, version="9.9.9")
+        self.assertEqual(upgraded.operation, "upgrade")
+        updated = agents.read_bytes()
+        self.assertTrue(updated.startswith(prefix), msg=updated)
+        self.assertTrue(updated.endswith(suffix), msg=updated)
+        self.assertIn(b"- version: 9.9.9\n", updated)
+        self.lifecycle.uninstall(self.consumer, confirm=True)
+        left = agents.read_bytes()
+        self.assertTrue(left.startswith(prefix), msg=left)
+        self.assertTrue(left.endswith(suffix), msg=left)
+        self.assertNotIn(MANAGED_BEGIN.encode("utf-8"), left)
+
+
 if __name__ == "__main__":
     unittest.main()

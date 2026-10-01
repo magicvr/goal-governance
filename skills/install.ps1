@@ -25,6 +25,7 @@ param(
     [string]$RootTitle = '',
     [string]$WorkspaceNnn = '001',
     [string]$SkillsDir = './skills',
+    [string]$MethodologyDir = './docs',
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$RemainingArgs
 )
@@ -41,11 +42,11 @@ Prerequisites:
   from the project root.
 
 Usage (run from target project root):
-  .\install.ps1 -Claude [-SkillsDir DIR]
-  .\install.ps1 -Grok [-SkillsDir DIR]
-  .\install.ps1 -Copilot [-SkillsDir DIR] [-WithPrimitives]
-  .\install.ps1 -Codex [-SkillsDir DIR]
-  .\install.ps1 -All [-SkillsDir DIR] [-WithPrimitives]
+  .\install.ps1 -Claude [-SkillsDir DIR] [-MethodologyDir DIR]
+  .\install.ps1 -Grok [-SkillsDir DIR] [-MethodologyDir DIR]
+  .\install.ps1 -Copilot [-SkillsDir DIR] [-WithPrimitives] [-MethodologyDir DIR]
+  .\install.ps1 -Codex [-SkillsDir DIR] [-MethodologyDir DIR]
+  .\install.ps1 -All [-SkillsDir DIR] [-WithPrimitives] [-MethodologyDir DIR]
   .\install.ps1 -InitWorkspace -WorkspaceSlug SLUG -RootSlug SLUG [host flags...]
   .\install.ps1 -Help
 
@@ -71,8 +72,8 @@ Options:
                            Also install advanced Copilot form-fill slash wrappers. Opt-in only.
   -All / --all             Install Claude + Grok + Copilot + Codex + prompts/templates/contracts under -SkillsDir
   -InitWorkspace / --init-workspace
-                           Create docs\workspaces\workspace-NNN-SLUG\ with workspace.md + goal-tree.md
-                           (does NOT create GOAL-* five-pack; use /govern for Root)
+                           Create <methodology-dir>\workspaces\workspace-NNN-SLUG\ with workspace.md + goal-tree.md
+                           (default docs\workspaces; does NOT create GOAL-* five-pack; use /govern for Root)
   -WorkspaceSlug / --workspace-slug S
                            Required with -InitWorkspace (lowercase hyphen slug)
   -RootSlug / --root-slug S
@@ -83,6 +84,10 @@ Options:
                            Optional three-digit workspace number (default: 001)
   -SkillsDir / --skills-dir DIR
                            Skills package / destination directory (default: .\skills)
+  -MethodologyDir / --methodology-dir DIR
+                           Methodology directory (default: .\docs). Core methodology is installed
+                           there, and managed placeholders are rendered to this path and -SkillsDir.
+                           The two directories must not contain each other.
   -Force / --force         Overwrite existing files/dirs without prompting
   -NonInteractive / --non-interactive
                            Fail (exit 1) if an overwrite would require a prompt
@@ -95,8 +100,10 @@ Behavior:
     - Grok skills -> govern + audit + vision + vision-audit
     - Codex skills -> govern + audit + vision + vision-audit under .\.agents\skills\
     - Default Copilot slash surface: /govern + /audit + /vision + /vision-audit
-  - Core methodology (GOAL-019 D-004): ALWAYS installs package core\docs -> .\docs\
-    (architecture + templates + slim docs\README). Missing core = incomplete install.
+  - Core methodology (GOAL-019 D-004): ALWAYS installs package core\docs into
+    -MethodologyDir (default .\docs\): architecture + templates + slim README.
+    Managed placeholders are rendered to that directory and -SkillsDir.
+    Missing core = incomplete install. Python 3.8+ is required for that render.
   - -InitWorkspace alone is allowed (still installs core); slugs must be explicit (D-005)
   - Core orchestrator: prompts\00-govern-orchestrator.md
   - Cross-audit core: prompts\05-independent-audit.md
@@ -255,6 +262,76 @@ function Merge-RuleAgentsFile {
     Copy-Item -LiteralPath $Source -Destination $Destination -Force
     Write-Host "Installed: $Destination  (Python unavailable: full file, no managed-block split)"
 }
+
+function Invoke-RenderManaged {
+    param([Parameter(Mandatory = $true)][string[]]$Arguments)
+    if (-not $script:PythonBin) {
+        Write-Err 'Python 3.8+ is required to render managed placeholders'
+    }
+    & $script:PythonBin (Join-Path $PackageRoot 'render_managed.py') @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        Write-Err 'managed placeholder render failed'
+    }
+}
+
+function Get-InstallToken {
+    param([string]$Path)
+    if (-not $script:PythonBin) {
+        Write-Err 'Python 3.8+ is required to render managed placeholders'
+    }
+    $token = & $script:PythonBin (Join-Path $PackageRoot 'render_managed.py') --print-token --target-dir $TargetDir --path $Path
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($token)) {
+        Write-Err "install path must stay inside the project: $Path"
+    }
+    return $token.Trim()
+}
+
+function Merge-RenderedAgentsFile {
+    param(
+        [string]$Source,
+        [string]$Destination
+    )
+    if ($DryRun) {
+        Write-Host "Dry-run: would merge rendered managed block into $Destination"
+        return
+    }
+    $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ("gg-agents-" + [guid]::NewGuid().ToString() + '.md')
+    try {
+        Invoke-RenderManaged -Arguments @(
+            '--methodology-dir', $script:MethodologyToken,
+            '--skills-dir', $script:SkillsToken,
+            '--target-dir', $TargetDir,
+            '--source', $Source,
+            '--dest', $tmp
+        )
+        Merge-RuleAgentsFile -Source $tmp -Destination $Destination
+    } finally {
+        if (Test-Path -LiteralPath $tmp) {
+            Remove-Item -LiteralPath $tmp -Force
+        }
+    }
+}
+
+function Assert-SeparateInstallDirs {
+    Invoke-RenderManaged -Arguments @(
+        '--require-separate',
+        '--methodology-dir', $script:MethodologyToken,
+        '--skills-dir', $script:SkillsToken,
+        '--target-dir', $TargetDir
+    )
+}
+
+function Update-RenderedManagedCopies {
+    if ($DryRun) { return }
+    Invoke-RenderManaged -Arguments @(
+        '--render-map',
+        '--package-root', $PackageRoot,
+        '--methodology-dir', $script:MethodologyToken,
+        '--skills-dir', $script:SkillsToken,
+        '--target-dir', $TargetDir
+    )
+}
+
 function Copy-DirMerge {
     param(
         [string]$Source,
@@ -301,7 +378,7 @@ function Show-NextSteps {
         [string]$PackageRoot
     )
     $step2 = if ($script:InitWorkspaceDone) {
-        "  2. Workspace skeleton ready: docs\workspaces\workspace-$($script:InitWorkspaceNnn)-$($script:InitWorkspaceSlug)\`n" +
+        "  2. Workspace skeleton ready: $($script:MethodologyToken)\workspaces\workspace-$($script:InitWorkspaceNnn)-$($script:InitWorkspaceSlug)\`n" +
         "     Run /govern to create Root GOAL-001-$($script:InitRootSlug) (five-pack)."
     } else {
         "  2. Create workspace skeleton (pick one):`n" +
@@ -313,10 +390,10 @@ function Show-NextSteps {
 Done.
 
 Next steps:
-  1. Review installed rule file(s) and docs\architecture (core methodology; required).
+  1. Review installed rule file(s) and $($script:MethodologyToken)\architecture (core methodology; required).
 $step2
     3. DEFAULT user path: /govern (impl) + /audit (Goal cross-audit) + /vision (decision) + /vision-audit (independent Vision Review)
-     - Methodology: .\docs\architecture\principles.md
+     - Methodology: .\$($script:MethodologyToken)\architecture\principles.md
      - Orchestrator: $SkillsDir\prompts\00-govern-orchestrator.md
      - Cross-audit: $SkillsDir\prompts\05-independent-audit.md
      - Vision: $SkillsDir\prompts\06-vision-orchestrator.md
@@ -369,11 +446,12 @@ function Install-CoreDocs {
     if (-not (Test-Path -LiteralPath $alignment -PathType Leaf)) {
         Write-Err "Missing alignment.md in core vision mirror (GOAL-001 A-018 F-013 / D-025)"
     }
-    Write-Host 'Installing core methodology -> .\docs\ (architecture + templates + vision rules + README)'
-    Copy-RuleFile -Source $readme -Destination (Join-Path $TargetDir 'docs\README.md')
-    Copy-DirMerge -Source $arch -Destination (Join-Path $TargetDir 'docs\architecture') -Label 'core architecture'
-    Copy-DirMerge -Source $templates -Destination (Join-Path $TargetDir 'docs\templates') -Label 'core templates'
-    Copy-DirMerge -Source $vision -Destination (Join-Path $TargetDir 'docs\vision') -Label 'core vision rules'
+    $methodologyDest = Join-Path $TargetDir ($script:MethodologyToken -replace '/', '\')
+    Write-Host "Installing core methodology -> .\$($script:MethodologyToken)\ (architecture + templates + vision rules + README)"
+    Copy-RuleFile -Source $readme -Destination (Join-Path $methodologyDest 'README.md')
+    Copy-DirMerge -Source $arch -Destination (Join-Path $methodologyDest 'architecture') -Label 'core architecture'
+    Copy-DirMerge -Source $templates -Destination (Join-Path $methodologyDest 'templates') -Label 'core templates'
+    Copy-DirMerge -Source $vision -Destination (Join-Path $methodologyDest 'vision') -Label 'core vision rules'
 }
 
 function Test-HyphenSlug([string]$Value, [string]$Label) {
@@ -403,8 +481,8 @@ function Initialize-WorkspaceSkeleton {
     $today = Get-Date -Format 'yyyy-MM-dd'
     $wsId = "workspace-$WorkspaceNnn-$WorkspaceSlug"
     $rootId = "GOAL-001-$RootSlug"
-    $scope = "docs/workspaces/$wsId/"
-    $docsRoot = Join-Path $TargetDir 'docs'
+    $scope = "$($script:MethodologyToken)/workspaces/$wsId/"
+    $docsRoot = Join-Path $TargetDir ($script:MethodologyToken -replace '/', '\')
     $workspacesRoot = Join-Path $docsRoot 'workspaces'
     $wsDir = Join-Path $workspacesRoot $wsId
     $wsFile = Join-Path $wsDir 'workspace.md'
@@ -420,15 +498,15 @@ function Initialize-WorkspaceSkeleton {
                 Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'workspace.md') -PathType Leaf }
         )
         if ($canonicalContexts.Count -gt 0) {
-            Write-Err 'Mixed workspace layouts detected; migrate/remove docs/workspace-* before scaffold'
+            Write-Err "Mixed workspace layouts detected; migrate/remove $($script:MethodologyToken)/workspace-* before scaffold"
         }
-        Write-Err 'Legacy workspace layout detected at docs/workspace-*; migrate to docs/workspaces/ before scaffold'
+        Write-Err "Legacy workspace layout detected at $($script:MethodologyToken)/workspace-*; migrate to $($script:MethodologyToken)/workspaces/ before scaffold"
     }
     if (Test-Path -LiteralPath $wsDir) {
         Write-Err "Workspace path already exists (refuse overwrite): $wsDir"
     }
 
-    $tmpl = Join-Path $TargetDir 'docs\templates\workspace-context.md'
+    $tmpl = Join-Path $docsRoot 'templates\workspace-context.md'
     if (-not (Test-Path -LiteralPath $tmpl -PathType Leaf)) {
         $tmpl = Join-Path $PackageRoot 'core\docs\templates\workspace-context.md'
     }
@@ -570,6 +648,20 @@ while ($i -lt $extraArgs.Count) {
             }
             $i++
         }
+        '^--methodology-dir$' {
+            if ($i + 1 -ge $extraArgs.Count) {
+                Write-Err "--methodology-dir requires a path argument"
+            }
+            $MethodologyDir = $extraArgs[$i + 1]
+            $i += 2
+        }
+        '^--methodology-dir=(.+)$' {
+            $MethodologyDir = $Matches[1]
+            if ([string]::IsNullOrWhiteSpace($MethodologyDir)) {
+                Write-Err "--methodology-dir requires a path argument"
+            }
+            $i++
+        }
         '^--force$' { $Force = $true; $i++ }
         '^--non-interactive$' { $NonInteractive = $true; $i++ }
         '^--dry-run$' { $DryRun = $true; $i++ }
@@ -604,6 +696,9 @@ if ($All) {
 $PackageRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TargetDir = (Get-Location).Path
 $SkillsDirResolved = Get-ResolvedPath -Path $SkillsDir -BaseDir $TargetDir
+$script:MethodologyToken = Get-InstallToken -Path $MethodologyDir
+$script:SkillsToken = Get-InstallToken -Path $SkillsDir
+Assert-SeparateInstallDirs
 
 $ClaudeAgentsSrc = Join-Path $PackageRoot 'install\claude\AGENTS.md'
 $ClaudeGovernSrc = Join-Path $PackageRoot 'install\claude\skills\govern\SKILL.md'
@@ -712,7 +807,7 @@ Write-Host "Package root:  $PackageRoot"
 Write-Host ''
 
 if ($Claude) {
-    Merge-RuleAgentsFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
+    Merge-RenderedAgentsFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
     Copy-RuleFile -Source $ClaudeGovernSrc -Destination (Join-Path $TargetDir '.claude\skills\govern\SKILL.md')
     Copy-RuleFile -Source $ClaudeAuditSrc -Destination (Join-Path $TargetDir '.claude\skills\audit\SKILL.md')
     Copy-RuleFile -Source $ClaudeVisionSrc -Destination (Join-Path $TargetDir '.claude\skills\vision\SKILL.md')
@@ -736,7 +831,7 @@ if ($Grok) {
 
 if ($Codex) {
     # D-002: REPO skills under .agents/skills; AGENTS.md reuses Claude source (same protocol)
-    Merge-RuleAgentsFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
+    Merge-RenderedAgentsFile -Source $ClaudeAgentsSrc -Destination (Join-Path $TargetDir 'AGENTS.md')
     Copy-RuleFile -Source $CodexGovernSrc -Destination (Join-Path $TargetDir '.agents\skills\govern\SKILL.md')
     Copy-RuleFile -Source $CodexAuditSrc -Destination (Join-Path $TargetDir '.agents\skills\audit\SKILL.md')
     Copy-RuleFile -Source $CodexVisionSrc -Destination (Join-Path $TargetDir '.agents\skills\vision\SKILL.md')
@@ -793,6 +888,7 @@ if ($installExtras) {
 
 # GOAL-019 D-003/D-004: core methodology is co-required with any host or workspace init
 Install-CoreDocs -PackageRoot $PackageRoot -TargetDir $TargetDir
+Update-RenderedManagedCopies
 
 if ($InitWorkspace) {
     Initialize-WorkspaceSkeleton `

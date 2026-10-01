@@ -4,7 +4,35 @@
 
 ## Unreleased
 
-（空；2026-09-13 发布 v0.13.3。）
+（未发布；`0.13.4` 为发布候选，须经 merge 进 `main`、annotated tag 指向 merge commit 与 tag workflow 上传后才构成发布声明。）
+
+## 0.13.4 - 2026-10-01
+
+发布门禁修复 patch（GOAL-010）：把 `dev` 上已经变红的发布门禁转绿，并为正式发布做准备。**本节为发布候选**：须经 merge 进 `main`、annotated tag 指向 merge commit 与 tag workflow 上传后才构成发布声明。协议（`protocol 0.1.0`）与消费契约数据结构不变；三个宿主 × 四个治理入口的 12 格 runtime 证据在 `docs/releases/runtime/v0.13.4/` 重捕获。
+
+### 背景（为什么必须重捕获）
+
+- v0.13.3 的 12 格证据录制于提交 `4d35623`；其后 `d1256eb`（GOAL-009 S2，把 P-005「结果尚不存在时」的例外写进原则、AGENTS 摘要与编排提示）改动了两个 behavior source，使**全部 12 格**的锚点过期。
+- 后果：`scripts/compatibility_report.py` 失败、`release_evidence.py --mode rehearsal --run-checks` 失败、`scripts/tests` 4 failures / 12 errors。`skills-pack-release.yml` 的 publish job 以 `--mode release` 为第一步，因此证据刷新前**不可能**产出任何 Release 资产。
+- 修复路径是**重捕获**，不是回滚：回滚 `d1256eb` 会撤销 GOAL-009 已关门并已审计的 P-005 语义修正。
+
+### 12 格 runtime 证据重捕获
+
+- 在 `docs/releases/runtime/v0.13.4/` 重捕获 **3 宿主** × 4 治理入口（`govern` / `audit` / `vision` / `vision-audit`），全部 `verdict=pass`，`capture_runtime_evidence.py --check` 一致。
+- 宿主实测版本：Claude Code CLI `2.1.285`、Grok Build CLI `1.0.44`、GitHub Copilot CLI `1.0.75`（BYOK，显式 `--model gemini-3.8-flash-high`）。兼容矩阵的 `host.version` 同步改为实测值。
+- 探针 corpus 未改：沿用 GOAL-008 冻结的 prompt 文件（哈希未变），并更新了本机环境（见下）。v0.13.3 及更早目录保留为历史捕获点，不改写。
+
+### 本机环境修正（影响探针可复现性）
+
+- Claude Code CLI 的 `ANTHROPIC_BASE_URL` 在用户 settings 中带 `/v1`，而 CLI 会再拼 `/v1/messages`，实际请求打到 `/v1/v1/messages` 并返回 404（模型不可用）。探针通过 `--settings` 覆盖 base URL 修正。
+- Claude Code CLI 默认模型别名在本机已不可用，探针显式指定可用模型。
+- 控制台代码页为 936（GBK）时，Python 会用 cp936 解码子进程 stdout，破坏宿主 CLI 输出的 UTF-8 字节。探针运行需 `PYTHONUTF8=1`。
+
+### 测试与门禁
+
+- 修好 `test_init_workspace_refuses_existing_path`（GOAL-019 A-001 F-002）：该测试原先用**项目外**的绝对 `-SkillsDir`，被 GOAL-009 引入的 containment 规则在写入前拒绝，导致「第二次 init 被拒」的原意从未被执行到。改为把包复制到临时项目内并以相对路径安装，断言原意不变（见 D-003）。
+- `scripts/tests/test_release_evidence.py` 与 `skills/tests/test_skills_orchestrator.py` 的 `candidateRevision` / 证据路径断言由 `v0.13.3` 改为 `v0.13.4`。
+- 发布 pin 同步：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 的安装示例与 GHCR 镜像示例改为 `v0.13.4`（`mcp/README.md` 同步）。
 
 ## 0.13.3 - 2026-09-13
 

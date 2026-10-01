@@ -1,0 +1,92 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-09-30T17:58:09.436393Z",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.285",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gpt-6.1-sol"
+  },
+  "behaviorSources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "e8afa1d414cb5f2a563aca2151edb6aa5d1a51468fa00a51991ec69a3daf642b"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "222d37a7843a2b06be35c1c541beda11eade23d1ff94d7ed977dda3c959d6a4c"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "cmd.exe",
+      "/d",
+      "/s",
+      "/c",
+      "claude -p --no-session-persistence --settings C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\.gg-probe-settings.json --model gpt-6.1-sol --tools Read,Glob,Grep --permission-mode plan --output-format stream-json --verbose --effort low --max-turns 12"
+    ],
+    "cwd": ".",
+    "timeoutSeconds": 900.0,
+    "inputSha256": "d1b9d242732098a2dd0412eb20cc402eb37ecb3719d82d6ab854a4a49d9e396f",
+    "inputSummary": "Read-only /govern dispatch probe requiring marker CLAUDE_GOVERN_DISPATCH_OK and assertion policy marker+entrypoint+nontrivial-stdout@1 (protocol 0.1.0)."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "CLAUDE_GOVERN_DISPATCH_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "CLAUDE_GOVERN_DISPATCH_OK",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "CLAUDE_GOVERN_DISPATCH_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.4/claude-code-cli-govern-2026-10-01.d/stdout.txt",
+    "stdoutSha256": "ec27fb8f8cb4a8e558ec072a170a7e4c72b979c244622b8b24c5551eec1e4e76",
+    "stdoutMode": "claude-stream-json-sanitized",
+    "stderrPath": "docs/releases/runtime/v0.13.4/claude-code-cli-govern-2026-10-01.d/stderr.txt",
+    "stderrSha256": "9e3bab7227e169ac6d85e7fcade18a205eac5751d1b968d9c83ae885668240fb",
+    "stderrMode": "raw",
+    "warnings": [],
+    "reason": "Main process exited 0, emitted the required marker, and satisfied structured assertions (marker+entrypoint+nontrivial-stdout@1) bound to entrypoint/protocol."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

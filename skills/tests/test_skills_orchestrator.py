@@ -611,9 +611,10 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
         self.assertEqual(by_id["claude-code-cli"]["verificationStatus"], "verified")
         self.assertEqual(by_id["grok-build-cli"]["verificationStatus"], "verified")
-        # GOAL-008 S6: copilot was blocked during the first recapture attempt
-        # (stale BYOK model) and re-verified after the provider mapping was
-        # updated; the adapter is verified again against the v0.13.3 captures.
+        # GOAL-008 S6 / GOAL-010: copilot was blocked during the first v0.13.3
+        # recapture attempt (stale BYOK model) and re-verified after the provider
+        # mapping was updated; the adapter stays verified against the v0.13.4
+        # captures once the recapture for that candidate is complete.
         self.assertEqual(by_id["github-copilot-cli"]["verificationStatus"], "verified")
         self.assertNotIn("web-readonly-parser", by_id)
 
@@ -633,7 +634,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.13.3")
+        self.assertEqual(matrix["candidateRevision"], "v0.13.4")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -667,14 +668,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "github-copilot-cli",
             },
         )
-        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.270")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.30")
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.285")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.44")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
-        # GOAL-008 S6: Claude + Grok cells are runtime-verified against the
-        # v0.13.3 recapture; copilot's first attempt was blocked by a stale BYOK
-        # model and re-verified after the provider mapping was updated.
+        # GOAL-008 S6 / GOAL-010: Claude + Grok + Copilot cells are runtime-verified
+        # against the v0.13.4 recapture; copilot's first v0.13.3 attempt was blocked by
+        # a stale BYOK model and re-verified after the provider mapping was updated.
         for consumer_id in (
             "claude-code-cli",
             "grok-build-cli",
@@ -695,7 +696,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 for path in entry["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertRegex(path, EVIDENCE_DATED_RE)
-                    self.assertIn(f"v0.13.3/{consumer_id}-{name}-", path.replace("\\", "/"))
+                    self.assertIn(f"v0.13.4/{consumer_id}-{name}-", path.replace("\\", "/"))
             vision = entrypoints["vision"]
             self.assertIn("vision", vision["evidence"][0])
             vision_audit = entrypoints["vision-audit"]
@@ -816,6 +817,97 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             "若 required 信息项已到期、影响 scope、或 `accepted-residual` 没有用户书面接受，应作为 finding",
             audit_prompt,
         )
+
+    def test_research_result_is_not_a_gate_into_its_own_work(self) -> None:
+        """GOAL-009: investigation may proceed; a fact already checkable still gates.
+
+        The shipped rule text is the behavior. A required answer that exists only
+        after the work it would block is not a gate into that work. A fact that
+        can already be queried before execution still is.
+        """
+        research_not_a_gate = (
+            "只有做完它要挡住的那项工作才有答案，则它不是进入该项工作的门禁"
+        )
+        prior_fact_still_gates = (
+            "工作开始前已经可以独立查询或核对的事实，仍然可以是进入执行、发布或验收的 required 门禁"
+        )
+        checklist_exception = "只有做完本阶段工作才存在"
+
+        def blocks_entry(text: str, *, answer_only_after_work: bool) -> bool:
+            if answer_only_after_work:
+                return research_not_a_gate not in text
+            return prior_fact_still_gates in text
+
+        def section(text: str, start: str, end: str) -> str:
+            self.assertIn(start, text)
+            self.assertIn(end, text)
+            return text.split(start, 1)[1].split(end, 1)[0]
+
+        repo = SKILLS_ROOT.parent
+        rule_sections = {
+            repo / "docs" / "architecture" / "principles.md": ("## P-005", "## P-006"),
+            repo / "skills" / "core" / "docs" / "architecture" / "principles.md": (
+                "## P-005",
+                "## P-006",
+            ),
+            repo / "AGENTS.md": ("### P-005", "## 6c"),
+            SKILLS_ROOT / "AGENTS.template.md": ("### P-005", "## 6c"),
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md": ("### P-005", "## 6c"),
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md": (
+                "### P-005",
+                "## 6c",
+            ),
+            repo / ".github" / "copilot-instructions.md": ("### P-005", "## 6c"),
+            PROMPTS / "00-govern-orchestrator.md": (
+                "# P-005 信息就绪（目标领域）",
+                "# 资源定位",
+            ),
+        }
+        for path, bounds in rule_sections.items():
+            body = section(path.read_text(encoding="utf-8"), *bounds)
+            with self.subTest(path=str(path), case="research-deadlock"):
+                self.assertFalse(
+                    blocks_entry(body, answer_only_after_work=True),
+                    msg="research deadlock counterexample is still a gate into its own work",
+                )
+            with self.subTest(path=str(path), case="prior-fact"):
+                self.assertTrue(
+                    blocks_entry(body, answer_only_after_work=False),
+                    msg="a fact checkable before execution no longer gates",
+                )
+
+        orchestrator = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
+        implementation_gate = section(orchestrator, "### 3.5", "### 3.6")
+        with self.subTest(path="orchestrator-3.5", case="research-deadlock"):
+            self.assertFalse(
+                blocks_entry(implementation_gate, answer_only_after_work=True),
+                msg="section 3.5 still blocks a result that exists only after the work",
+            )
+        with self.subTest(path="orchestrator-3.5", case="prior-fact"):
+            self.assertTrue(
+                blocks_entry(implementation_gate, answer_only_after_work=False),
+                msg="section 3.5 dropped the gate for a fact checkable before execution",
+            )
+
+        checklist_paths = (
+            repo / "AGENTS.md",
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+            repo / ".github" / "copilot-instructions.md",
+            PROMPTS / "00-govern-orchestrator.md",
+        )
+        for path in checklist_paths:
+            matched = False
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if (
+                    "本次要推进的阶段没有开放 required 信息门禁" in line
+                    or "未跨越到期 required 信息门禁" in line
+                ):
+                    matched = True
+                    with self.subTest(path=str(path), line=line):
+                        self.assertIn(checklist_exception, line)
+            self.assertTrue(matched, msg=f"missing stage-gate checklist line: {path}")
 
     def test_progress_is_derived_and_sandbox_role_is_removed(self) -> None:
         principles = CORE_PRINCIPLES.read_text(encoding="utf-8")
@@ -1007,13 +1099,25 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
 
     @unittest.skipUnless(sys.platform.startswith("win"), "InitWorkspace refuse smoke is Windows/ps1-first")
     def test_init_workspace_refuses_existing_path(self) -> None:
-        """GOAL-019 A-001 F-002: second -InitWorkspace on same path must fail."""
+        """GOAL-019 A-001 F-002: second -InitWorkspace on same path must fail.
+
+        GOAL-009 added a containment rule: the installer refuses an install path
+        outside the project (``render_managed.install_token``). This probe therefore
+        stages the package *inside* the disposable project and passes ``-SkillsDir``
+        as a relative path, so the first init can succeed and the refuse-overwrite
+        behaviour is what the second init actually exercises.
+        """
         pwsh = shutil.which("powershell") or shutil.which("pwsh")
         if not pwsh:
             self.skipTest("PowerShell not found on PATH")
         with tempfile.TemporaryDirectory(prefix="gg-init-refuse-") as tmp:
             target = Path(tmp)
-            skills = SKILLS_ROOT
+            staged_skills = target / "staged-skills"
+            shutil.copytree(
+                SKILLS_ROOT,
+                staged_skills,
+                ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+            )
             cmd_base = [
                 pwsh,
                 "-NoProfile",
@@ -1021,14 +1125,14 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                str(INSTALL_PS1),
+                str(staged_skills / "install.ps1"),
                 "-InitWorkspace",
                 "-WorkspaceSlug",
                 "refuse-demo",
                 "-RootSlug",
                 "refuse-root",
                 "-SkillsDir",
-                str(skills),
+                ".\\staged-skills",
             ]
             first = subprocess.run(
                 cmd_base,

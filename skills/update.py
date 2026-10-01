@@ -22,14 +22,34 @@ try:  # package-relative import (skills package) with script fallback
     from skills.agents_merge import (
         MergeError,
         has_managed_block,
+        managed_block_equivalent,
         merge_agents_text,
+        read_preserved_text,
+        write_preserved_text,
+    )
+    from skills.render_managed import (
+        assert_separate_install_dirs,
+        install_token,
+        list_managed_pairs,
+        render_managed_bytes,
+        render_managed_text,
     )
 except ImportError:  # pragma: no cover - direct script execution
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from agents_merge import (  # type: ignore[no-redef]
         MergeError,
         has_managed_block,
+        managed_block_equivalent,
         merge_agents_text,
+        read_preserved_text,
+        write_preserved_text,
+    )
+    from render_managed import (  # type: ignore[no-redef]
+        assert_separate_install_dirs,
+        install_token,
+        list_managed_pairs,
+        render_managed_bytes,
+        render_managed_text,
     )
 
 
@@ -167,43 +187,57 @@ def download(url: str, destination: Path) -> None:
         raise UpdateError(f"download failed: {url}: {error}") from error
 
 
-def managed_file_pairs(package: Path, target: Path) -> list[tuple[Path, Path]]:
-    pairs: list[tuple[Path, Path]] = []
+def _install_tokens(target: Path, methodology_dir: str, skills_dir: str) -> tuple[str, str]:
+    try:
+        methodology = install_token(methodology_dir, target)
+        skills = install_token(skills_dir, target)
+        assert_separate_install_dirs(methodology, skills)
+        return methodology, skills
+    except ValueError as error:
+        raise UpdateError(str(error)) from error
+
+
+def _managed_bytes_match(source: Path, destination: Path, methodology: str, skills: str) -> bool:
+    """True when destination is the package bytes or this install's rendering.
+
+    The previous installer's unsubstituted copy is not a hand edit. The rendered
+    copy is not a hand edit. Anything else still fails closed.
+    """
+    raw = source.read_bytes()
+    current = destination.read_bytes()
+    if current == raw:
+        return True
+    return current == render_managed_bytes(raw, methodology, skills)
+
+
+def _agents_block_matches(consumer: str, source_text: str, methodology: str, skills: str) -> bool:
+    rendered = render_managed_text(source_text, methodology, skills)
+    variants = (rendered, source_text) if rendered != source_text else (source_text,)
+    for variant in variants:
+        if managed_block_equivalent(consumer, variant):
+            return True
+    return False
+
+
+def managed_file_pairs(
+    package: Path,
+    target: Path,
+    methodology_dir: str = "docs",
+) -> list[tuple[Path, Path]]:
     # GOAL-008 S4: root AGENTS.md is deliberately NOT a fully-managed destination.
     # It is merged through the managed block (see agents_modification / merge_agents_text)
     # so consumer-owned rules in the same file survive updates.
-    fixed = {
-        "install/copilot/copilot-instructions.md": ".github/copilot-instructions.md",
-        "core/docs/README.md": "docs/README.md",
-    }
-    for source, destination in fixed.items():
-        pairs.append((package / source, target / destination))
-    host_roots = {
-        "install/claude/skills": ".claude/skills",
-        "install/grok/skills": ".grok/skills",
-        "install/codex/skills": ".agents/skills",
-        "core/docs/architecture": "docs/architecture",
-        "core/docs/templates": "docs/templates",
-        "core/docs/vision": "docs/vision",
-    }
-    for source_root, destination_root in host_roots.items():
-        root = package / source_root
-        if not root.is_dir():
-            continue
-        for source in sorted(root.rglob("*")):
-            if source.is_file() and not source.name.startswith("."):
-                pairs.append((source, target / destination_root / source.relative_to(root)))
-    copilot_prompts = package / "install" / "copilot" / "prompts"
-    if copilot_prompts.is_dir():
-        for source in sorted(copilot_prompts.glob("*.md")):
-            pairs.append((source, target / ".github" / "prompts" / f"{source.stem}.prompt.md"))
-    return pairs
+    methodology = install_token(methodology_dir, target)
+    return list_managed_pairs(package, target, methodology)
 
 
 def agents_managed_conflict(
     package: Path,
     target: Path,
     incoming_package: Path | None = None,
+    *,
+    methodology_dir: str = "docs",
+    skills_dir: str = "skills",
 ) -> Path | None:
     """Return root AGENTS.md when its content would need review before merging.
 
@@ -211,12 +245,15 @@ def agents_managed_conflict(
     just because the consumer wrote their own rules next to the block — those
     bytes are preserved. It is a conflict only when the existing block was
     hand-edited away from what either the current or the incoming package
-    declares (``--force-managed`` then replaces just the block).
+    declares (``--force-managed`` then replaces just the block). A block that
+    matches this install's rendered placeholders is the installer output, not
+    a hand edit. The unsubstituted package block remains valid too.
     """
     destination = target / "AGENTS.md"
     if not destination.is_file():
         return None
-    text = destination.read_text(encoding="utf-8")
+    text = read_preserved_text(destination)
+    methodology, skills = _install_tokens(target, methodology_dir, skills_dir)
     candidates = [
         package / "install" / "claude" / "AGENTS.md",
         (incoming_package / "install" / "claude" / "AGENTS.md")
@@ -227,28 +264,35 @@ def agents_managed_conflict(
         if source is None or not source.is_file():
             continue
         try:
-            _merged, changed = merge_agents_text(text, source.read_text(encoding="utf-8"))
+            if _agents_block_matches(text, source.read_text(encoding="utf-8"), methodology, skills):
+                return None
         except MergeError:
             return destination
-        if not changed:
-            return None
     return destination
 
 
-def merge_root_agents(package: Path, target: Path) -> str:
+def merge_root_agents(
+    package: Path,
+    target: Path,
+    *,
+    methodology_dir: str = "docs",
+    skills_dir: str = "skills",
+) -> str:
     """Merge the package's managed block into the consumer root AGENTS.md."""
     source = package / "install" / "claude" / "AGENTS.md"
     destination = target / "AGENTS.md"
     if not source.is_file():
         return "skipped-no-source"
-    text = destination.read_text(encoding="utf-8") if destination.is_file() else ""
+    text = read_preserved_text(destination) if destination.is_file() else ""
+    methodology, skills = _install_tokens(target, methodology_dir, skills_dir)
+    source_text = render_managed_text(read_preserved_text(source), methodology, skills)
     try:
-        merged, changed = merge_agents_text(text, source.read_text(encoding="utf-8"))
+        merged, changed = merge_agents_text(text, source_text)
     except MergeError as error:
         raise UpdateError(f"AGENTS.md managed block is malformed: {error}") from error
     if not changed:
         return "unchanged"
-    destination.write_text(merged, encoding="utf-8", newline="\n")
+    write_preserved_text(destination, merged)
     return "merged"
 
 
@@ -256,23 +300,41 @@ def modified_managed_files(
     package: Path,
     target: Path,
     incoming_package: Path | None = None,
+    *,
+    methodology_dir: str = "docs",
+    skills_dir: str = "skills",
 ) -> list[Path]:
-    current = {destination: source for source, destination in managed_file_pairs(package, target)}
+    methodology, skills = _install_tokens(target, methodology_dir, skills_dir)
+    current = {
+        destination: source
+        for source, destination in managed_file_pairs(package, target, methodology)
+    }
     incoming = (
-        {destination: source for source, destination in managed_file_pairs(incoming_package, target)}
+        {
+            destination: source
+            for source, destination in managed_file_pairs(incoming_package, target, methodology)
+        }
         if incoming_package is not None
         else {}
     )
     modified: list[Path] = []
     for destination, source in current.items():
-        if source.is_file() and destination.is_file() and file_sha256(source) != file_sha256(destination):
+        if source.is_file() and destination.is_file() and not _managed_bytes_match(
+            source, destination, methodology, skills
+        ):
             modified.append(destination)
     for destination, source in incoming.items():
         if destination in current or not source.is_file() or not destination.is_file():
             continue
-        if file_sha256(source) != file_sha256(destination):
+        if not _managed_bytes_match(source, destination, methodology, skills):
             modified.append(destination)
-    agents_conflict = agents_managed_conflict(package, target, incoming_package)
+    agents_conflict = agents_managed_conflict(
+        package,
+        target,
+        incoming_package,
+        methodology_dir=methodology,
+        skills_dir=skills,
+    )
     if agents_conflict is not None:
         modified.append(agents_conflict)
     return sorted(set(modified))
@@ -283,13 +345,17 @@ def backup_external_files(
     target: Path,
     backup: Path,
     incoming_package: Path | None = None,
+    *,
+    methodology_dir: str = "docs",
 ) -> list[str]:
     absent: list[str] = []
     project_backup = backup / "project"
-    destinations = {destination for _source, destination in managed_file_pairs(package, target)}
+    methodology = install_token(methodology_dir, target)
+    destinations = {destination for _source, destination in managed_file_pairs(package, target, methodology)}
     if incoming_package is not None:
         destinations.update(
-            destination for _source, destination in managed_file_pairs(incoming_package, target)
+            destination
+            for _source, destination in managed_file_pairs(incoming_package, target, methodology)
         )
     for destination in sorted(destinations):
         relative = destination.relative_to(target)
@@ -316,7 +382,14 @@ def restore_external_files(target: Path, backup: Path, absent: list[str]) -> Non
                 shutil.copy2(source, destination)
 
 
-def run_installer(package: Path, target: Path) -> None:
+def run_installer(
+    package: Path,
+    target: Path,
+    *,
+    methodology_dir: str = "docs",
+    skills_dir: str = "skills",
+) -> None:
+    """Re-run the package installer with the same directory tokens install used."""
     if os.name == "nt":
         executable = shutil.which("powershell") or shutil.which("pwsh")
         if not executable:
@@ -331,8 +404,10 @@ def run_installer(package: Path, target: Path) -> None:
             "-All",
             "-NonInteractive",
             "-Force",
+            "-MethodologyDir",
+            methodology_dir,
             "-SkillsDir",
-            str(package),
+            skills_dir,
         ]
     else:
         bash = shutil.which("bash")
@@ -344,8 +419,10 @@ def run_installer(package: Path, target: Path) -> None:
             "--all",
             "--non-interactive",
             "--force",
+            "--methodology-dir",
+            methodology_dir,
             "--skills-dir",
-            str(package),
+            skills_dir,
         ]
     result = subprocess.run(command, cwd=target, text=True, capture_output=True, check=False)
     if result.returncode != 0:
@@ -387,7 +464,14 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         incoming_protocol = protocol_version(read_contract(incoming))
         assert_protocol_compatible(current_protocol, incoming_protocol, args.allow_protocol_upgrade)
 
-        modified = modified_managed_files(skills, target, incoming)
+        methodology_dir = getattr(args, "methodology_dir", "docs")
+        modified = modified_managed_files(
+            skills,
+            target,
+            incoming,
+            methodology_dir=methodology_dir,
+            skills_dir=args.skills_dir,
+        )
         if modified and not args.force_managed:
             shown = ", ".join(str(path.relative_to(target)) for path in modified[:8])
             raise UpdateError(f"managed files have local changes; review or pass --force-managed: {shown}")
@@ -396,18 +480,18 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         # block before the package is swapped, then let the installer merge.
         agents = target / "AGENTS.md"
         if agents.is_file():
-            existing = agents.read_text(encoding="utf-8")
+            existing = read_preserved_text(agents)
             if not has_managed_block(existing):
                 legacy_source = skills / "install" / "claude" / "AGENTS.md"
                 if legacy_source.is_file():
                     try:
                         converted, changed = merge_agents_text(
-                            existing, legacy_source.read_text(encoding="utf-8")
+                            existing, read_preserved_text(legacy_source)
                         )
                     except MergeError:
                         changed = False
                     if changed:
-                        agents.write_text(converted, encoding="utf-8", newline="\n")
+                        write_preserved_text(agents, converted)
 
         plan = {
             "version": version,
@@ -422,13 +506,20 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         backup = target / ".goal-governance-updates" / f"{stamp}-v{version}"
         backup.mkdir(parents=True, exist_ok=False)
-        absent = backup_external_files(skills, target, backup, incoming)
+        absent = backup_external_files(
+            skills, target, backup, incoming, methodology_dir=methodology_dir
+        )
         old_skills = backup / "skills"
         shutil.move(str(skills), str(old_skills))
         try:
             shutil.move(str(incoming), str(skills))
             if not args.skip_install:
-                run_installer(skills, target)
+                run_installer(
+                    skills,
+                    target,
+                    methodology_dir=methodology_dir,
+                    skills_dir=args.skills_dir,
+                )
             state = {
                 "format": "goal-governance.skills-install-state/v1",
                 "version": version,
@@ -459,6 +550,11 @@ def build_parser() -> argparse.ArgumentParser:
     version.add_argument("--latest", action="store_true", help="discover the latest GitHub Release")
     parser.add_argument("--target-dir", default=".", help="consumer project root")
     parser.add_argument("--skills-dir", default="skills", help="Skills path under target")
+    parser.add_argument(
+        "--methodology-dir",
+        default="docs",
+        help="methodology directory under target (default: docs)",
+    )
     parser.add_argument("--zip-path", help="offline release zip")
     parser.add_argument("--sha256-path", help="offline SHA-256 sidecar")
     parser.add_argument("--repo", default="magicvr/goal-governance")

@@ -16,6 +16,7 @@ PACKAGE_ROOT="$SCRIPT_DIR"
 
 TARGET_DIR="${PWD}"
 SKILLS_DIR_ARG="./skills"
+METHODOLOGY_DIR_ARG="./docs"
 INSTALL_CLAUDE=0
 INSTALL_GROK=0
 INSTALL_COPILOT=0
@@ -56,11 +57,11 @@ Prerequisites:
   from the project root.
 
 Usage (run from target project root):
-  ./install.sh --claude [--skills-dir DIR]
-  ./install.sh --grok [--skills-dir DIR]
-  ./install.sh --copilot [--skills-dir DIR] [--with-primitives]
-  ./install.sh --codex [--skills-dir DIR]
-  ./install.sh --all [--skills-dir DIR] [--with-primitives]
+  ./install.sh --claude [--skills-dir DIR] [--methodology-dir DIR]
+  ./install.sh --grok [--skills-dir DIR] [--methodology-dir DIR]
+  ./install.sh --copilot [--skills-dir DIR] [--with-primitives] [--methodology-dir DIR]
+  ./install.sh --codex [--skills-dir DIR] [--methodology-dir DIR]
+  ./install.sh --all [--skills-dir DIR] [--with-primitives] [--methodology-dir DIR]
   ./install.sh --init-workspace --workspace-slug SLUG --root-slug SLUG [host flags…]
   ./install.sh --help
 
@@ -86,14 +87,18 @@ Options:
                         Opt-in only — avoids form-menu UX.
   --all                 Install Claude + Grok + Copilot + Codex + ensure prompts/, templates/ and
                         contracts/ under --skills-dir; primary entry remains /govern
-  --init-workspace      Create docs/workspaces/workspace-NNN-SLUG/ with workspace.md +
-                        goal-tree.md (does NOT create GOAL-* five-pack; use /govern for Root)
+  --init-workspace      Create <methodology-dir>/workspaces/workspace-NNN-SLUG/ with workspace.md +
+                        goal-tree.md (default docs/workspaces; does NOT create GOAL-* five-pack)
   --workspace-slug S    Required with --init-workspace (lowercase hyphen slug)
   --root-slug S         Required with --init-workspace → GOAL-001-<S>
   --root-title T        Optional display title for planned Root (default: pending)
   --workspace-nnn NNN   Optional three-digit workspace number (default: 001)
   --skills-dir DIR      Skills package / destination directory (default: ./skills)
                         Relative paths are resolved from the current working directory.
+  --methodology-dir DIR Methodology directory (default: ./docs). Core methodology is
+                        installed there, and managed placeholders are rendered to this
+                        path and --skills-dir. The two directories must not contain
+                        each other. Relative to the project root.
   --force               Overwrite existing files/dirs without prompting
   --non-interactive     Fail if an overwrite would require a prompt (unless --force)
   --dry-run             Print planned installs; do not write files
@@ -106,8 +111,10 @@ Behavior:
   - Codex skills → govern + audit + vision + vision-audit under ./.agents/skills/
   - Default Copilot slash surface: /govern + /audit + /vision + /vision-audit
   - Advanced form-filling slashes are NOT installed unless --with-primitives
-  - Core methodology (GOAL-019 D-004): ALWAYS installs package core/docs → ./docs/
-    (architecture + templates + slim docs/README). Missing core = incomplete install.
+  - Core methodology (GOAL-019 D-004): ALWAYS installs package core/docs into
+    --methodology-dir (default ./docs/): architecture + templates + slim README.
+    Managed placeholders are rendered to that directory and --skills-dir.
+    Missing core = incomplete install. Python 3.8+ is required for that render.
   - --init-workspace alone is allowed (still installs core); slugs must be explicit (D-005)
   - Core orchestrator: prompts/00-govern-orchestrator.md
   - Cross-audit core: prompts/05-independent-audit.md
@@ -282,10 +289,70 @@ copy_dir_merge() {
   echo "Installed: $dest/  (from $label)"
 }
 
+require_python() {
+  [[ -n "$PYTHON_BIN" ]] || die "Python 3.8+ is required to render managed placeholders"
+}
+
+print_install_token() {
+  local path="$1"
+  require_python
+  "$PYTHON_BIN" "$(native_path "$SCRIPT_DIR/render_managed.py")" \
+    --print-token \
+    --target-dir "$(native_path "$TARGET_DIR")" \
+    --path "$path"
+}
+
+render_managed_copy() {
+  [[ "$DRY_RUN" -eq 1 ]] && return 0
+  require_python
+  "$PYTHON_BIN" "$(native_path "$SCRIPT_DIR/render_managed.py")" \
+    --methodology-dir "$METHODOLOGY_TOKEN" \
+    --skills-dir "$SKILLS_TOKEN" \
+    --target-dir "$(native_path "$TARGET_DIR")" \
+    "$@" \
+    || die "managed placeholder render failed"
+}
+
+merge_rendered_agents() {
+  local src="$1"
+  local dest="$2"
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    echo "Dry-run: would merge rendered managed block into $dest"
+    return 0
+  fi
+  require_python
+  local tmp
+  tmp="$(mktemp)"
+  "$PYTHON_BIN" "$(native_path "$SCRIPT_DIR/render_managed.py")" \
+    --methodology-dir "$METHODOLOGY_TOKEN" \
+    --skills-dir "$SKILLS_TOKEN" \
+    --target-dir "$(native_path "$TARGET_DIR")" \
+    --source "$(native_path "$src")" \
+    --dest "$(native_path "$tmp")" \
+    || die "managed placeholder render failed"
+  merge_agents_file "$tmp" "$dest"
+  rm -f "$tmp"
+}
+
+assert_separate_install_dirs() {
+  require_python
+  "$PYTHON_BIN" "$(native_path "$SCRIPT_DIR/render_managed.py")" \
+    --require-separate \
+    --methodology-dir "$METHODOLOGY_TOKEN" \
+    --skills-dir "$SKILLS_TOKEN" \
+    --target-dir "$(native_path "$TARGET_DIR")" \
+    || die "skills directory must stay outside the methodology directory"
+}
+
+render_installed_placeholders() {
+  [[ "$DRY_RUN" -eq 1 ]] && return 0
+  render_managed_copy --render-map --package-root "$(native_path "$SCRIPT_DIR")"
+}
+
 print_next_steps() {
   local step2
   if [[ "$INIT_WORKSPACE_DONE" -eq 1 ]]; then
-    step2="2. Workspace skeleton ready: docs/workspaces/workspace-${WORKSPACE_NNN}-${WORKSPACE_SLUG}/
+    step2="2. Workspace skeleton ready: ${METHODOLOGY_TOKEN}/workspaces/workspace-${WORKSPACE_NNN}-${WORKSPACE_SLUG}/
      Run /govern to create Root GOAL-001-${ROOT_SLUG} (five-pack)."
   else
     step2="2. Create workspace skeleton (pick one):
@@ -297,10 +364,10 @@ print_next_steps() {
 Done.
 
 Next steps:
-  1. Review installed rule file(s) and docs/architecture (core methodology; required).
+  1. Review installed rule file(s) and ${METHODOLOGY_TOKEN}/architecture (core methodology; required).
   $step2
   3. DEFAULT user path: /govern (impl) + /audit (Goal cross-audit) + /vision (decision) + /vision-audit (independent Vision Review)
-     - Methodology: ./docs/architecture/principles.md
+     - Methodology: ./${METHODOLOGY_TOKEN}/architecture/principles.md
      - Orchestrator: $SKILLS_DIR/prompts/00-govern-orchestrator.md
      - Cross-audit: $SKILLS_DIR/prompts/05-independent-audit.md
      - Vision: $SKILLS_DIR/prompts/06-vision-orchestrator.md
@@ -340,23 +407,23 @@ init_workspace_skeleton() {
   today="$(date +%Y-%m-%d 2>/dev/null || echo '2026-07-24')"
   local ws_id="workspace-${WORKSPACE_NNN}-${WORKSPACE_SLUG}"
   local root_id="GOAL-001-${ROOT_SLUG}"
-  local scope="docs/workspaces/${ws_id}/"
+  local scope="${METHODOLOGY_TOKEN}/workspaces/${ws_id}/"
   local ws_dir="$TARGET_DIR/$scope"
   local ws_file="${ws_dir}workspace.md"
   local tree_file="${ws_dir}goal-tree.md"
 
-  local legacy_pattern="$TARGET_DIR/docs/workspace-*/workspace.md"
+  local legacy_pattern="$TARGET_DIR/$METHODOLOGY_TOKEN/workspace-*/workspace.md"
   if compgen -G "$legacy_pattern" >/dev/null; then
-    if compgen -G "$TARGET_DIR/docs/workspaces/workspace-*/workspace.md" >/dev/null; then
-      die "Mixed workspace layouts detected; migrate/remove docs/workspace-* before scaffold"
+    if compgen -G "$TARGET_DIR/$METHODOLOGY_TOKEN/workspaces/workspace-*/workspace.md" >/dev/null; then
+      die "Mixed workspace layouts detected; migrate/remove ${METHODOLOGY_TOKEN}/workspace-* before scaffold"
     fi
-    die "Legacy workspace layout detected at docs/workspace-*; migrate to docs/workspaces/ before scaffold"
+    die "Legacy workspace layout detected at ${METHODOLOGY_TOKEN}/workspace-*; migrate to ${METHODOLOGY_TOKEN}/workspaces/ before scaffold"
   fi
   if [[ -e "$ws_dir" ]]; then
     die "Workspace path already exists (refuse overwrite): $ws_dir"
   fi
   # Prefer installed templates; fall back to package core
-  local tmpl="$TARGET_DIR/docs/templates/workspace-context.md"
+  local tmpl="$TARGET_DIR/$METHODOLOGY_TOKEN/templates/workspace-context.md"
   if [[ ! -f "$tmpl" ]]; then
     tmpl="$PACKAGE_ROOT/core/docs/templates/workspace-context.md"
   fi
@@ -449,11 +516,12 @@ install_core_docs() {
     die "core mirror must not ship tech-stack.md (D-004)"
   fi
   [[ -f "$core_docs/vision/alignment.md" ]] || die "Missing alignment.md in core vision mirror (GOAL-001 A-018 F-013 / D-025)"
-  echo "Installing core methodology → ./docs/ (architecture + templates + vision rules + README)"
-  copy_file "$core_docs/README.md" "$TARGET_DIR/docs/README.md"
-  copy_dir_merge "$core_docs/architecture" "$TARGET_DIR/docs/architecture" "core architecture"
-  copy_dir_merge "$core_docs/templates" "$TARGET_DIR/docs/templates" "core templates"
-  copy_dir_merge "$core_docs/vision" "$TARGET_DIR/docs/vision" "core vision rules"
+  local methodology_dest="$TARGET_DIR/$METHODOLOGY_TOKEN"
+  echo "Installing core methodology → ./$METHODOLOGY_TOKEN/ (architecture + templates + vision rules + README)"
+  copy_file "$core_docs/README.md" "$methodology_dest/README.md"
+  copy_dir_merge "$core_docs/architecture" "$methodology_dest/architecture" "core architecture"
+  copy_dir_merge "$core_docs/templates" "$methodology_dest/templates" "core templates"
+  copy_dir_merge "$core_docs/vision" "$methodology_dest/vision" "core vision rules"
 }
 
 # --- parse args ---
@@ -554,6 +622,16 @@ while [[ $# -gt 0 ]]; do
       [[ -n "$SKILLS_DIR_ARG" ]] || die "--skills-dir requires a path argument"
       shift
       ;;
+    --methodology-dir)
+      [[ $# -ge 2 ]] || die "--methodology-dir requires a path argument"
+      METHODOLOGY_DIR_ARG="$2"
+      shift 2
+      ;;
+    --methodology-dir=*)
+      METHODOLOGY_DIR_ARG="${1#--methodology-dir=}"
+      [[ -n "$METHODOLOGY_DIR_ARG" ]] || die "--methodology-dir requires a path argument"
+      shift
+      ;;
     --help|-h)
       usage
       exit 0
@@ -583,6 +661,10 @@ fi
 if [[ -d "$SKILLS_DIR" ]]; then
   SKILLS_DIR="$(cd "$SKILLS_DIR" && pwd)"
 fi
+METHODOLOGY_TOKEN="$(print_install_token "$METHODOLOGY_DIR_ARG")"
+SKILLS_TOKEN="$(print_install_token "$SKILLS_DIR_ARG")"
+[[ -n "$METHODOLOGY_TOKEN" && -n "$SKILLS_TOKEN" ]] || die "methodology and skills directories must stay inside the project"
+assert_separate_install_dirs
 
 CLAUDE_AGENTS_SRC="$PACKAGE_ROOT/install/claude/AGENTS.md"
 CLAUDE_GOVERN_SRC="$PACKAGE_ROOT/install/claude/skills/govern/SKILL.md"
@@ -649,7 +731,7 @@ echo "Package root:  $PACKAGE_ROOT"
 echo
 
 if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
-  merge_agents_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  merge_rendered_agents "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
   copy_file "$CLAUDE_GOVERN_SRC" "$TARGET_DIR/.claude/skills/govern/SKILL.md"
   copy_file "$CLAUDE_AUDIT_SRC" "$TARGET_DIR/.claude/skills/audit/SKILL.md"
   copy_file "$CLAUDE_VISION_SRC" "$TARGET_DIR/.claude/skills/vision/SKILL.md"
@@ -673,7 +755,7 @@ fi
 
 if [[ "$INSTALL_CODEX" -eq 1 ]]; then
   # D-002: REPO skills under .agents/skills; AGENTS.md reuses Claude source (same protocol)
-  merge_agents_file "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
+  merge_rendered_agents "$CLAUDE_AGENTS_SRC" "$TARGET_DIR/AGENTS.md"
   copy_file "$CODEX_GOVERN_SRC" "$TARGET_DIR/.agents/skills/govern/SKILL.md"
   copy_file "$CODEX_AUDIT_SRC" "$TARGET_DIR/.agents/skills/audit/SKILL.md"
   copy_file "$CODEX_VISION_SRC" "$TARGET_DIR/.agents/skills/vision/SKILL.md"
@@ -717,6 +799,7 @@ fi
 
 # GOAL-019 D-003/D-004: core methodology is co-required with any host or workspace init
 install_core_docs
+render_installed_placeholders
 
 if [[ "$INIT_WORKSPACE" -eq 1 ]]; then
   init_workspace_skeleton

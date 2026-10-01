@@ -1,0 +1,12 @@
+I'll load the installed vision skill and run only its scan phase, reading the minimum repo sources needed for the dispatch probe.The install tree has a Grok vision skill. Next I’ll load that skill and the scan-phase sources it names.The latest govern probe used `.grok/skills`. I’ll load the installed vision skill from there and follow its scan-phase sources.Installed skill is at `.grok/skills/vision`. I’ll read that copy, the orchestrator scan phase, and the Charter/workspace-001 sources.Charter is `vision-goal-governance@0.2.0`. Next I’ll read workspace-001 and confirm `primary_plan` points at an existing VP.GROK_VISION_DISPATCH_OK
+
+| Item | Result |
+|------|--------|
+| **1. Marker** | `GROK_VISION_DISPATCH_OK` |
+| **2. Loaded skill** | Title: **vision · 愿景与组合治理（Grok Build skill）** (`name: vision`). Source: `C:\Users\magicvr\Documents\Code\goal-governance\.grok\skills\vision\SKILL.md` |
+| **3. Orchestrator prompt** | Named as `<SKILLS_PKG>/prompts/06-vision-orchestrator.md`. Resolved: `C:\Users\magicvr\Documents\Code\goal-governance\skills\prompts\06-vision-orchestrator.md` |
+| **4. Charter / workspace-001** | Active Charter **`vision-goal-governance@0.2.0`**. **`primary_plan` resolves.** |
+
+**Scan (phase 1 only).** Core is present (`docs/architecture/principles.md`, `docs/architecture/workspace-protocol.md`). Vision tree is present (`charter.md`, `alignment.md`, `roadmap.md`, `revisions.md`, `reviews.md`, `workspaces.md`, `plans/`). One active Charter (`doc_type: vision-charter`, `status: active`).
+
+**workspace-001 `primary_plan`:** `docs/workspaces/workspace-001-goal-governance/workspace.md` has `primary_plan: VP-001-governance-platform-delivery` (`plan_refs` same, `vision_role: primary`). File `docs/vision/plans/VP-001-governance-platform-delivery.md` exists with matching `id` and `vision_ref: vision-goal-governance@0.2.0`.

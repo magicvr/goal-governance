@@ -115,18 +115,28 @@ def replace_managed_section(agents_text: str, version: str) -> str:
     return agents_text + section + "\n"
 
 
+def _read_preserved(path: Path) -> str:
+    """Read UTF-8 without translating CR or CRLF. Missing file is empty."""
+    if not path.is_file():
+        return ""
+    with path.open(encoding="utf-8", newline="") as handle:
+        return handle.read()
+
+
+def _write_preserved(path: Path, text: str) -> None:
+    """Write UTF-8 bytes unchanged, including CR outside the managed section."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(text.encode("utf-8"))
+
+
 def remove_managed_section(agents_text: str) -> str:
-    """Remove only the managed section (markers + content)."""
+    """Remove only the managed section. Bytes outside the markers stay."""
     if MANAGED_BEGIN not in agents_text and MANAGED_END not in agents_text:
         return agents_text
     if MANAGED_BEGIN in agents_text and MANAGED_END in agents_text:
         begin = agents_text.index(MANAGED_BEGIN)
         end = agents_text.index(MANAGED_END) + len(MANAGED_END)
-        removed = agents_text[:begin] + agents_text[end:]
-        # Clean up a dangling newline left by the removed block.
-        while removed.endswith("\n\n"):
-            removed = removed[:-1]
-        return removed
+        return agents_text[:begin] + agents_text[end:]
     raise LifecycleError("managed section is malformed: begin/end markers mismatch")
 
 
@@ -198,12 +208,9 @@ def install(
     _validate_allowlist(root, ["AGENTS.md", THIN_SHELL_DIR])
 
     agents_path = _ensure_inside_repo(root, "AGENTS.md")
-    original = (
-        agents_path.read_text(encoding="utf-8") if agents_path.is_file() else ""
-    )
+    original = _read_preserved(agents_path)
     updated = replace_managed_section(original, version)
-    agents_path.parent.mkdir(parents=True, exist_ok=True)
-    agents_path.write_text(updated, encoding="utf-8", newline="")
+    _write_preserved(agents_path, updated)
     state_file = write_install_state(root, channel=channel, version=version)
     return WriteResult(
         operation="install",
@@ -234,13 +241,13 @@ def upgrade(
             "AGENTS.md not found; run install first (upgrade only rewrites "
             "the managed section)"
         )
-    original = agents_path.read_text(encoding="utf-8")
+    original = _read_preserved(agents_path)
     if MANAGED_BEGIN not in original:
         raise LifecycleError(
             "AGENTS.md has no managed section; run install first"
         )
     updated = replace_managed_section(original, version)
-    agents_path.write_text(updated, encoding="utf-8", newline="")
+    _write_preserved(agents_path, updated)
     state_file = write_install_state(root, channel="mcp", version=version)
     return WriteResult(
         operation="upgrade",
@@ -265,10 +272,10 @@ def uninstall(
     wrote: list[str] = []
     agents_path = _ensure_inside_repo(root, "AGENTS.md")
     if agents_path.is_file():
-        original = agents_path.read_text(encoding="utf-8")
+        original = _read_preserved(agents_path)
         if MANAGED_BEGIN in original or MANAGED_END in original:
             updated = remove_managed_section(original)
-            agents_path.write_text(updated, encoding="utf-8", newline="")
+            _write_preserved(agents_path, updated)
             wrote.append(_repo_relative(root, agents_path))
 
     state_dir = _ensure_inside_repo(root, THIN_SHELL_DIR)

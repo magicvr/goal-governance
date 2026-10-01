@@ -1,16 +1,86 @@
-﻿---
+---
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-09-13
+updated: 2026-10-01
 parent: null
-version: 0.23.0
+version: 0.38.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-01 · GOAL-010 立项（发布门禁转绿与 v0.13.4 发布）
+
+用户要求推送 PR、确保 CI 全绿后合并 `main`、再打 tag 发布新资产。编排前的只读核对发现 `dev` 顶端的**发布门禁是红的**：v0.13.3 的 12 格宿主 runtime 证据在 `d1256eb`（GOAL-009 S2）改根 `AGENTS.md` 与编排提示后全部过期（`AGENTS.md` 记录 `edccf61a…` → 当前 `e8afa1d4…`；`skills/prompts/00-govern-orchestrator.md` 记录 `d2df7a81…` → 当前 `222d37a7…`）。在临时 worktree 上对照 `4d35623`（证据录制点，通过）与 `d30abb3`（`dev` 顶端，失败）确认：变更是正确的，证据过期是唯一缺口。后果为 `scripts/compatibility_report.py` 失败、`release_evidence --mode rehearsal` 失败、`scripts/tests` 4 failures / 12 errors；而 publish job 以 `--mode release` 为第一步，故证据刷新前不可能产出资产。
+
+用户裁决：**完整执行**（重捕获 12 格 → 版本清单 → PR → 合并 → tag），版本 **`v0.13.4`（patch）**，修复路径为**重捕获而非回滚**（D-001）；开 **GOAL-010-release-gate-recapture-and-v0-13-4**（`active / 25%`，S1～S4 1/4）并写完整治理记录；把与 containment 规则不一致的 Windows 安装器测试**修好**（D-003）。（D-002）
+
+**S2 完成**：3 宿主 × 4 治理入口 = **12 格**证据在 `docs/releases/runtime/v0.13.4/` 重捕获，全部 `pass`（claude `2.1.285` / grok `1.0.44` / copilot `1.0.75`），`capture_runtime_evidence --check` 12/12，矩阵 `candidateRevision = v0.13.4`，`compatibility_report` 为 `ready-for-release-evidence`。清单同步：CHANGELOG `0.13.4` 节、三处安装 pin 与 GHCR 示例、两处测试断言。门禁：skills 45 / docs 3 / scripts 145 全绿、镜像 37 对 0 漂移、rehearsal `checks passed: True`（[E-001](../GOAL-010-release-gate-recapture-and-v0-13-4/02-execution/E-001-recapture-12-cells.md) / [E-002](../GOAL-010-release-gate-recapture-and-v0-13-4/02-execution/E-002-test-realignment-and-manifest.md) / [E-003](../GOAL-010-release-gate-recapture-and-v0-13-4/02-execution/E-003-regression-gates-and-release.md)）。
+
+**审计**：A-001 self `conditional`（0 required / 2 recommended）；independent provider 原定本地 codex CLI，因该 CLI 在本机沙箱下无法初始化，经用户书面**改派为本地 grok build CLI（`grok-4.6`）**；**A-002 independent `pass`，开放 required = 0**（5 recommended）；A-003 响应按 3 fixed / 1 accepted-residual / 1 fixed 闭合，无冲突。S2/S3 放行 S4（PR → 合并 `main` → annotated tag `v0.13.4` → Release 资产），S4 产出尚未发生。Root R3 仍进行中、Root progress 保持 67%；VP-002 保持 active；下一编号 **GOAL-011**。
+
+## 2026-10-01 · GOAL-009 关门后对齐回滚测试与 R3 说明
+
+回滚测试桩接受安装器传入的 `methodology_dir` 与 `skills_dir`，仍先写入新受管文件再抛错。测试提交 `f47f59a`。`scripts.tests.test_skills_update` 15 项通过（Python 3.11.9，退出码 0）。Root R3 当前说明改为 GOAL-009 已关门（`done` / 100%，不包含正式发布），开放 required 为无。GOAL-009 仍为 **`done / 100%`**。Root R3 仍进行中、Root progress 保持 67%；VP-002 保持 active；下一编号 **GOAL-010**。没有打 tag，没有发布。
+
+## 2026-10-01 · GOAL-009 关门，不发布
+
+用户书面确认关门，并且不把正式发布纳入本目标。A-009（independent，pass）支持空后缀按 fixed 闭合，开放 required 为无。F-003 仍为 recommended。S1～S4 均已完成。GOAL-009 标为 **`done / 100%`**（4/4）。没有打 tag，没有发布，不宣称消费方已经拿到这次安装行为。Root R3 仍进行中、Root progress 保持 67%；VP-002 保持 active；下一编号 **GOAL-010**。
+
+## 2026-10-01 · GOAL-009 空后缀闭合复审落盘
+
+本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 high）对空后缀修正给出独立意见 A-009，verdict **pass**。它支持 A-008 把这项按 fixed 闭合。开放 required 为无。F-003 仍为 recommended。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。用户尚未书面确认关门，不得标为 `done`。发布范围未冻结。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-10-01 · GOAL-009 A-007 空后缀按继续修正闭合
+
+用户书面选择继续修正 A-007 剩余的 F-002。替换已有受管块时，结束标记后的空后缀保持为空；同内容且没有末尾换行的 CRLF 块不再被升级检查当成手改。完全空的新文件仍写成受管块加一个 LF。代码提交 `bd4a863`。修正前该项测试失败，合并结果以 LF 结尾；修正后 `scripts.tests.test_agents_merge` 21 项通过。F-003 仍为 recommended。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。这次修正的 independent 复审尚未落盘，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-10-01 · GOAL-009 A-006 闭合复审落盘
+
+本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 high）对 A-006 的闭合主张给出独立意见 A-007，verdict **fail**。F-001 与 F-004 的关闭证据成立。同内容 CRLF 受管块在结束标记后没有字节时，合并会补上 LF，升级把它当成手改，因此 F-002 重新作为 required 开放。F-003 仍为 recommended。A-006 保留为当时记录，不改写。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。用户尚未选择剩余 F-002 的闭合路径，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-09-30 · GOAL-009 A-005 按继续修正闭合
+
+用户书面选择继续修正 A-005 的 F-001、F-002，并把 F-004 纳入修正。Windows 上大小写不同的同一目录在写入前停止；已有标记时，只有换行的标记外字节保持原样；MCP 安装、升级、卸载不再折掉这些字节。代码提交 `599d2d8`。修正前 4 项测试失败 6 处，修正后相关 34 项通过。F-003 仍为 recommended。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。这次修正的 independent 复审尚未落盘，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-09-30 · GOAL-009 F-001/F-002 闭合复审落盘
+
+本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 high）对 F-001、F-002 的闭合主张给出独立意见 A-005，verdict **fail**。Windows 上大小写不同的同一目录仍可能穿过分离检查；只含空白的标记外换行仍会被改写。这两项重新作为 required 开放。F-003 与 MCP 路径 F-004 为 recommended。A-003、A-004 保留为当时记录，不改写。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。用户尚未选择新的闭合路径，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-09-30 · GOAL-009 F-002 按 fixed 闭合
+
+用户书面选择「修正：保留标记外字节」。刷新根 `AGENTS.md` 的受管块时，标记外字节保持原样，包括 CR、LF 与 CRLF；新写入的受管块使用 LF。同一逻辑块的 CRLF 拼写不算手改，块内手改仍 fail closed。代码提交 `8861832`。没有改 `.gitattributes`、`/commit` 或 `mcp/lifecycle.py`。F-003 仍为 recommended。开放 required 为 0。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。行为变更的 independent 复审尚未落盘，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-09-30 · GOAL-009 F-001 按 fixed 闭合
+
+用户书面选择修正 F-001。渲染改为受管文件映射；方法论目录与 skills 目录互相包含或相同时，安装与升级在写入前停止。真实安装器下，消费方笔记与自定义 skill 的占位符字节保持不变；嵌套路径不会写出 `methodology/architecture/principles.md`。代码提交 `c449915`。F-002 仍开放：用户要求评估全库 CRLF 归一化为 LF，并用 git 规则与 `/commit` 技能强制，这是评估请求，闭合路径未选。F-003 仍为 recommended。GOAL-009 仍为 **`active / 75%`**（S1～S3 完成，S4 未完成）。不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-09-30 · GOAL-009 S2/S3 交叉审计落盘
+
+本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 high）对 S2/S3 给出独立意见 A-001，verdict **fail**。自审 A-002 verdict **conditional**。两边开放 required 都是 F-001（整树渲染会改到消费方自有文件和嵌套技能包）和 F-002（AGENTS 标记外 CRLF 在受管块更新时变成 LF）。F-003 为 recommended。GOAL-009 仍为 **`active / 75%`**。用户尚未选择闭合路径，不得关门。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-09-30 · GOAL-009 S3 安装与升级落盘
+
+按 D-004 增加 `skills/render_managed.py`，安装器接受方法论目录并渲染受管占位符，升级把包内原文或这次渲染结果视为干净，手改仍 fail closed。真实 `install.ps1` / `install.sh` 安装 `methodology` + `my-skills` 后再 dry-run 升级，冲突列表为空；手改一行后仍报 `managed files have local changes`。相关回归 25 项通过。镜像未改白名单，`--check` 37 对一致。GOAL-009 为 **`active / 75%`**（S1～S4 3/4）。S4 的交叉审计与关门未做。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
+
+## 2026-09-30 · GOAL-009 S3 方案冻结
+
+用户选定安装时按方法论目录与 skills 目录渲染受管占位符，并拒绝不替换分支，I-003 改为 verified。升级比较的兼容后果写入 D-004：包内原文或这次渲染结果都算干净，其他差异仍 fail closed。GOAL-009 仍为 **`active / 50%`**（S1～S4 2/4）；S3 实施尚未记为完成，本条不改安装器。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。交叉审计尚未跑。
+
+## 2026-09-30 · GOAL-009 S2 规则区分落盘
+
+按 D-003 在原则 P-005 增加「结果尚不存在时」：只有做完该项工作才有的答案，不是进入该项工作的门禁；开始前已经可以查询或核对的事实，仍可挡住进入执行。同一对句子写入 AGENTS 摘要、安装副本、`.github/copilot-instructions.md` 和编排提示 §3.5。完成清单加上「答案只有做完本阶段工作才存在」这一例外。镜像 `--check` 37 对一致。新测试改文前 24 项失败，改文后与相关回归共 15 项通过。GOAL-009 为 **`active / 50%`**（S1～S4 2/4）。S3 占位符策略未冻结，安装器未改。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。交叉审计尚未跑。
+
+## 2026-09-30 · GOAL-009 S1 核对完成
+
+S1 只记证据，不改原则、安装器或 Skills。I-001 / I-002 / I-004 记为 verified；I-003 仍 open（截断句未补全，只阻断「不替换」分支）。死锁条文与占位符复现见 GOAL-009 附件 `s1-failure-modes-2026-09-30.md` 与 D-002：安装器不能指定方法论目录；替换受管占位符后 `modified_managed_files` 列出 2 个路径，对照为 0。占位符策略未冻结。不另开子目标。GOAL-009 为 **`active / 25%`**（S1～S4 1/4）。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。provider 已指定为本地 codex CLI（`gpt-6.1-sol`，思考强度 high），审计尚未跑。
+
+## 2026-09-30 · GOAL-009 立项
+
+用户提交第三批使用反馈：未知信息被用成后继门禁并在研究场景死锁；指定方法论目录与 skills 目录时，受管范围内替换占位符会导致 update 报错。创建 **GOAL-009-info-deadlock-and-managed-placeholders**（`active / 0%`，S1～S4 0/4）；D-001 冻结「同一子目标 + S1 先行、不立即改协议/安装/Skills」。FB-011 原话在「尤其是让ai从」处截断，记为 I-003，不阻断 S1。Root R3 仍进行中、Root progress 保持 67%；下一编号 **GOAL-010**。
 
 ## 2026-09-13 · GOAL-008 关门（v0.13.3 正式发布）
 
@@ -158,14 +228,16 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-005-vision-review-ledger-scaling        [done]    愿景审视台账分片与正式发布      progress 100%
 ├── GOAL-006-consumer-surface-convergence       [done]    消费面路径收敛（F-006 承接 + R-001 扫尾）  progress 100%
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
-└── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
+├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
+├── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
+└── GOAL-010-release-gate-recapture-and-v0-13-4 [active]  发布门禁转绿与 v0.13.4 正式发布  progress 75% (S1～S3/4)
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-09-13 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-10-01 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
@@ -173,13 +245,15 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-006-consumer-surface-convergence | 消费面路径收敛（F-006 承接 + R-001 扫尾） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-08 |
 | GOAL-007-workspaces-directory-consolidation | 工作区目录统一收敛与正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-11 |
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
+| GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
+| GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-10-01 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 008 |
-| 下一可用 | **GOAL-009** |
+| 最大编号 | 010 |
+| 下一可用 | **GOAL-011** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

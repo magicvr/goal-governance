@@ -163,6 +163,81 @@ class AgentsMergeUnitTests(unittest.TestCase):
         self.assertFalse(changed_again)
         self.assertEqual(merged, again)
 
+    def test_block_update_keeps_outside_newline_bytes(self) -> None:
+        """GOAL-009 F-002: a block refresh must not rewrite bytes outside it."""
+        begin, end = agents_merge.MANAGED_BEGIN, agents_merge.MANAGED_END
+        shapes = {
+            "crlf prefix and suffix": ("consumer\r\n", "\r\nkeep"),
+            "mixed endings, no trailing newline": ("before\r\n", "after"),
+            "bare cr prefix": ("before\r", "\r\nafter\r\n"),
+            "lf prefix and crlf suffix": ("before\n", "\r\nkeep\r\n"),
+        }
+        source = f"{begin}\nnew rules\n{end}\n"
+        for label, (prefix, suffix) in shapes.items():
+            with self.subTest(shape=label):
+                target = f"{prefix}{begin}\nold rules\n{end}{suffix}"
+                merged, changed = agents_merge.merge_agents_text(target, source)
+                self.assertTrue(changed, msg=label)
+                self.assertEqual(merged[: len(prefix)], prefix, msg=repr(merged))
+                self.assertTrue(merged.endswith(suffix), msg=repr(merged))
+                self.assertIn(f"{begin}\nnew rules\n{end}", merged, msg=label)
+                self.assertNotIn("old rules", merged, msg=label)
+                self.assertNotIn("\r\nnew rules", merged, msg=label)
+
+    def test_merge_agents_file_keeps_outside_crlf_bytes(self) -> None:
+        begin, end = agents_merge.MANAGED_BEGIN, agents_merge.MANAGED_END
+        prefix = b"consumer\r\n"
+        suffix = b"\r\nkeep"
+        raw = prefix + f"{begin}\nold rules\n{end}".encode("utf-8") + suffix
+        source_text = f"{begin}\nnew rules\n{end}\n".encode("utf-8")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "source.md"
+            target = root / "AGENTS.md"
+            source.write_bytes(source_text)
+            target.write_bytes(raw)
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(SKILLS / "agents_merge.py"),
+                    "--source",
+                    str(source),
+                    "--target",
+                    str(target),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(completed.returncode, 0, msg=completed.stderr)
+            written = target.read_bytes()
+            self.assertTrue(written.startswith(prefix), msg=written)
+            self.assertTrue(written.endswith(suffix), msg=written)
+            self.assertIn(b"\nnew rules\n", written)
+            self.assertNotIn(b"\r\nnew rules", written)
+            again = agents_merge.merge_agents_file(source, target)
+            self.assertEqual(again["status"], "unchanged")
+            self.assertEqual(target.read_bytes(), written)
+
+    def test_whitespace_only_outside_a_marked_block_stays(self) -> None:
+        """A marked file keeps newline-only bytes outside the block."""
+        source = (SKILLS / "install" / "claude" / "AGENTS.md").read_text(encoding="utf-8")
+        block = agents_merge.extract_managed_block(source)
+        shapes = {
+            "crlf suffix": block + "\r\n",
+            "crlf around the block": "\r\n" + block + "\r\n\r\n",
+        }
+        for label, target in shapes.items():
+            with self.subTest(shape=label):
+                merged, changed = agents_merge.merge_agents_text(target, source)
+                self.assertFalse(changed, msg=repr(merged))
+                self.assertEqual(merged, target)
+                self.assertTrue(agents_merge.managed_block_equivalent(target, source))
+        blank = "\r\n\r\n"
+        merged, changed = agents_merge.merge_agents_text(blank, source)
+        self.assertTrue(changed)
+        self.assertTrue(merged.startswith(blank), msg=repr(merged[:24]))
+        self.assertIn(block, merged)
+
     def test_half_written_markers_fail_closed(self) -> None:
         with self.assertRaises(agents_merge.MergeError):
             agents_merge.merge_agents_text(
@@ -250,6 +325,84 @@ class RootAgentsNotFullyManagedTests(unittest.TestCase):
                 "hand edit\n" + agents_merge.MANAGED_END,
             )
             (target / "AGENTS.md").write_text(tampered, encoding="utf-8")
+            self.assertIsNotNone(skills_update.agents_managed_conflict(SKILLS, target))
+
+    def test_merge_root_agents_keeps_outside_crlf_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = self._stage_consumer(tmp)
+            begin, end = agents_merge.MANAGED_BEGIN, agents_merge.MANAGED_END
+            prefix = b"consumer\r\n"
+            suffix = b"\r\nkeep"
+            raw = prefix + f"{begin}\nold rules\n{end}".encode("utf-8") + suffix
+            (target / "AGENTS.md").write_bytes(raw)
+            status = skills_update.merge_root_agents(SKILLS, target)
+            self.assertEqual(status, "merged")
+            written = (target / "AGENTS.md").read_bytes()
+            self.assertTrue(written.startswith(prefix), msg=written)
+            self.assertTrue(written.endswith(suffix), msg=written)
+            self.assertNotIn(b"\r\n", written[len(prefix) : written.rfind(suffix)])
+
+    def test_crlf_block_without_a_trailing_newline_is_not_a_hand_edit(self) -> None:
+        """A same-content CRLF block that ends on the end marker is not a hand edit.
+
+        Replacing an existing block keeps an empty suffix. A brand-new empty
+        file still becomes the managed block plus one LF.
+        """
+        source_path = SKILLS / "install" / "claude" / "AGENTS.md"
+        source_text = agents_merge.read_preserved_text(source_path)
+        block = agents_merge.extract_managed_block(source_text)
+        consumer = block.replace("\n", "\r\n")
+        self.assertIn("\r\n", consumer)
+        self.assertTrue(consumer.endswith(agents_merge.MANAGED_END))
+
+        merged, _changed = agents_merge.merge_agents_text(consumer, source_text)
+        self.assertTrue(merged.endswith(agents_merge.MANAGED_END), msg=repr(merged[-20:]))
+        self.assertFalse(merged.endswith("\n"), msg=repr(merged[-20:]))
+        self.assertTrue(agents_merge.managed_block_equivalent(consumer, source_text))
+
+        stale = f"{agents_merge.MANAGED_BEGIN}\nold rules\n{agents_merge.MANAGED_END}"
+        refreshed, refreshed_changed = agents_merge.merge_agents_text(stale, source_text)
+        self.assertTrue(refreshed_changed)
+        self.assertTrue(refreshed.endswith(agents_merge.MANAGED_END))
+        self.assertNotIn("old rules", refreshed)
+
+        fresh, fresh_changed = agents_merge.merge_agents_text("", source_text)
+        self.assertTrue(fresh_changed)
+        self.assertTrue(fresh.endswith(f"{agents_merge.MANAGED_END}\n"))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            target = self._stage_consumer(tmp)
+            (target / "AGENTS.md").write_bytes(consumer.encode("utf-8"))
+            conflict = skills_update.agents_managed_conflict(SKILLS, target)
+            self.assertIsNone(conflict)
+
+    def test_crlf_spelling_of_the_same_block_is_not_a_conflict(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = self._stage_consumer(tmp)
+            source_text = (SKILLS / "install" / "claude" / "AGENTS.md").read_text(
+                encoding="utf-8"
+            )
+            merged, _changed = agents_merge.merge_agents_text("# consumer\n", source_text)
+            (target / "AGENTS.md").write_bytes(merged.replace("\n", "\r\n").encode("utf-8"))
+            self.assertIsNone(
+                skills_update.agents_managed_conflict(SKILLS, target),
+                msg="newline spelling of an unchanged block is not a hand edit",
+            )
+
+    def test_crlf_outside_a_hand_edit_still_conflicts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = self._stage_consumer(tmp)
+            source_text = (SKILLS / "install" / "claude" / "AGENTS.md").read_text(
+                encoding="utf-8"
+            )
+            merged, _changed = agents_merge.merge_agents_text("# consumer\n", source_text)
+            tampered = merged.replace(
+                agents_merge.MANAGED_END,
+                "hand edit\n" + agents_merge.MANAGED_END,
+                1,
+            )
+            raw = tampered.replace("# consumer\n", "# consumer\r\n", 1).encode("utf-8")
+            (target / "AGENTS.md").write_bytes(raw)
             self.assertIsNotNone(skills_update.agents_managed_conflict(SKILLS, target))
 
     def test_merge_root_agents_preserves_consumer_bytes(self) -> None:
