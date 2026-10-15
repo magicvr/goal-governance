@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-15
-version: 0.14.17
+version: 0.14.18
 progress: 67%
 ---
 
@@ -73,9 +73,11 @@ progress: 67%
 | [GOAL-008-consumer-layer-split-and-hosting](../GOAL-008-consumer-layer-split-and-hosting/00-meta.md) | 双层路线图拆分与消费仓宿主共存 | done |
 | [GOAL-009-info-deadlock-and-managed-placeholders](../GOAL-009-info-deadlock-and-managed-placeholders/00-meta.md) | 未知信息门禁死锁与受管占位符升级 | done |
 | [GOAL-010-release-gate-recapture-and-v0-13-4](../GOAL-010-release-gate-recapture-and-v0-13-4/00-meta.md) | 发布门禁转绿与 v0.13.4 正式发布 | done |
-| [GOAL-011-standalone-bootstrap-distribution](../GOAL-011-standalone-bootstrap-distribution/00-meta.md) | 修复 issue #24：独立启用说明的消费分发与引用 | active |
+| [GOAL-011-standalone-bootstrap-distribution](../GOAL-011-standalone-bootstrap-distribution/00-meta.md) | 修复 issue #24：独立启用说明的消费分发与引用 | done |
 
 ## 备注
+
+- **GOAL-011 关门（2026-10-15）**：修复由 PR #25 经双平台 CI 合入 main，issue #24 已关闭并回读；子目标 A-004 pass、无开放 required，done / 100%。未发布新版本。R3 与 VP-002 保持长期 active，Root progress 仍为 67%，下一编号 GOAL-012；见子目标 E-005。
 
 - **issue #24（2026-10-15）**：用户要求在本区建子目标、修复后关闭 issue；创建 [GOAL-011](../GOAL-011-standalone-bootstrap-distribution/00-meta.md) 承接独立启用说明的消费分发与引用问题。方案与 cross provider 尚待裁决，尚未实施。Root R3 持续进行、progress 仍为 67%；下一编号 **GOAL-012**。
 

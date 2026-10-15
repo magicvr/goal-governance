@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-10-15
 parent: null
-version: 0.39.0
+version: 0.40.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-15 · GOAL-011 关门（issue #24 已关闭）
+
+PR #25 的 Ubuntu/Windows CI 均 success，受测提交 1b8de38 已以 merge a28b125 合入 main。issue #24 于 2026-10-15T05:44:10Z 关闭，API 回读 CLOSED。A-001 self / A-002 independent 均 pass，F-001 fixed；A-004 关门 pass，无开放 required，I-001～I-005 verified。D-003 将 GOAL-011 标为 **done / 100%（S1～S3 3/3）**，证据见子目标 E-005 与回执附件。Root R3/VP-002 保持长期 active，Root progress 仍为 67%；下一编号 GOAL-012。本次交付源码，未新增 tag/Release。
 
 ## 2026-10-15 · GOAL-011 S2 候选验证完成
 
@@ -247,7 +251,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
 ├── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
 ├── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
-└── GOAL-011-standalone-bootstrap-distribution [active]  独立启用说明的消费分发与引用  progress 67%
+└── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
 ```
 
 ## 状态表
@@ -264,7 +268,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
 | GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
-| GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | active | 67% | 2026-10-15 |
+| GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 
 ## 编号
 
