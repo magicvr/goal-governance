@@ -1,0 +1,73 @@
+test_agents_template_does_not_force_web_app_dir (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_agents_template_does_not_force_web_app_dir) ... ok
+test_candidate_compatibility_matrix_keeps_runtime_coverage_explicit (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_candidate_compatibility_matrix_keeps_runtime_coverage_explicit)
+Verified host cells and remaining candidate gaps must stay distinct. ... ok
+test_claude_audit_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_claude_audit_skill_source) ... ok
+test_claude_govern_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_claude_govern_skill_source) ... ok
+test_codex_audit_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_codex_audit_skill_source) ... ok
+test_codex_govern_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_codex_govern_skill_source) ... ok
+test_contract_schema_manifest_and_fixtures_enforce_d002_semantics (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_contract_schema_manifest_and_fixtures_enforce_d002_semantics)
+Validate D-002/D-003 schema identity, fields, and boundary fixtures. ... ok
+test_copilot_audit_wrapper (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_copilot_audit_wrapper) ... ok
+test_copilot_govern_wrapper_is_primary (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_copilot_govern_wrapper_is_primary) ... ok
+test_core_contracts_are_mirrored_by_skills_package (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_core_contracts_are_mirrored_by_skills_package)
+The distributed contract must remain a byte-for-byte mirror of canonical docs. ... ok
+test_core_d004_mirror_is_complete (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_core_d004_mirror_is_complete)
+GOAL-019 D-004 + GOAL-001 D-025: core ships methodology + vision alignment. ... ok
+test_core_templates_are_mirrored_by_skills_package (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_core_templates_are_mirrored_by_skills_package)
+The Skills package must distribute the canonical core templates unchanged. ... ok
+test_d003_declares_baseline_and_tiered_adapter_scope (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_d003_declares_baseline_and_tiered_adapter_scope)
+D-003 keeps commitment separate from version-fixed runtime evidence. ... ok
+test_docs_readme_hash_ledger_matches_template_bytes (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_docs_readme_hash_ledger_matches_template_bytes)
+Canonical templates/contracts must match staged package mirrors (GOAL-022). ... ok
+test_govern_ergonomics_contract_is_shipped (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_govern_ergonomics_contract_is_shipped) ... ok
+test_grok_audit_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_grok_audit_skill_source) ... ok
+test_grok_govern_skill_source (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_grok_govern_skill_source) ... ok
+test_independent_audit_prompt_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_independent_audit_prompt_exists) ... ok
+test_independent_vision_review_core_is_separate_from_goal_audit (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_independent_vision_review_core_is_separate_from_goal_audit)
+V-F-001: independent Vision Review has a dedicated ledger boundary. ... ok
+test_independent_vision_review_entrypoints_exist (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_independent_vision_review_entrypoints_exist)
+V-F-001: every installed host gets the dedicated Vision Review entry. ... ok
+test_information_readiness_is_shipped_to_all_rule_surfaces (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_information_readiness_is_shipped_to_all_rule_surfaces)
+P-005 must survive the reusable rule and host-install surfaces. ... ok
+test_init_workspace_refuses_existing_path (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_init_workspace_refuses_existing_path)
+GOAL-019 A-001 F-002: second -InitWorkspace on same path must fail. ... ok
+test_install_all_ships_contract_mirror (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_all_ships_contract_mirror) ... ok
+test_install_default_slash_includes_independent_vision_review (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_default_slash_includes_independent_vision_review)
+Default install exposes both audit boundaries without form-fill primitives. ... ok
+test_install_ps1_isolated_all_produces_govern_and_audit (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_isolated_all_produces_govern_and_audit)
+Execute install.ps1 -All in a temp project; assert default product surface. ... ok
+test_install_ps1_isolated_smoke_script_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_isolated_smoke_script_exists) ... ok
+test_install_ps1_with_primitives_keeps_information_readiness (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_ps1_with_primitives_keeps_information_readiness)
+Optional Copilot primitives must not silently fall behind P-005. ... ok
+test_install_scripts_install_govern (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_scripts_install_govern) ... ok
+test_install_scripts_wire_claude_and_grok_skills (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_install_scripts_wire_claude_and_grok_skills) ... ok
+test_installers_ship_without_utf8_bom (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_installers_ship_without_utf8_bom)
+GOAL-008 S6: a BOM breaks `install.sh`'s shebang when downloaded. ... ok
+test_layer_naming_disambiguation_ships_to_rule_surfaces (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_layer_naming_disambiguation_ships_to_rule_surfaces)
+S2 (GOAL-008): consumer rule faces must define the layer vocabulary. ... ok
+test_monorepo_agents_architecture_not_optional_supplement (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_monorepo_agents_architecture_not_optional_supplement)
+GOAL-019 A-001 F-001 + A-018 F-015: root AGENTS must not call architecture optional. ... ok
+test_orchestrator_encodes_lifecycle_and_classification (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_orchestrator_encodes_lifecycle_and_classification) ... ok
+test_p005_core_contract_guards_unknown_information_gates (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_p005_core_contract_guards_unknown_information_gates)
+Keep P-005's actual gates from regressing to a keyword-only policy. ... ok
+test_p005_operational_contract_guards_prompts_and_templates (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_p005_operational_contract_guards_prompts_and_templates)
+Prompts/templates must operationalize gates, not merely name P-005. ... ok
+test_portability_skills_pkg_and_required_architecture (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_portability_skills_pkg_and_required_architecture)
+Package may rename skills dir; architecture is co-required (GOAL-019). ... ok
+test_primary_orchestrator_file_exists (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_primary_orchestrator_file_exists) ... ok
+test_primitives_exist_and_marked (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_primitives_exist_and_marked) ... ok
+test_progress_is_derived_and_sandbox_role_is_removed (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_progress_is_derived_and_sandbox_role_is_removed) ... ok
+test_prompts_readme_primary_vs_primitive (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_prompts_readme_primary_vs_primitive) ... ok
+test_research_result_is_not_a_gate_into_its_own_work (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_research_result_is_not_a_gate_into_its_own_work)
+GOAL-009: investigation may proceed; a fact already checkable still gates. ... ok
+test_skills_readme_default_install_documents_govern_audit_vision (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_skills_readme_default_install_documents_govern_audit_vision)
+F-017 guard: README must match default four-entrypoint surface (incl. vision-audit). ... ok
+test_skills_readme_documents_primary_and_audit_paths (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_skills_readme_documents_primary_and_audit_paths) ... ok
+test_vision_prompt_and_skills_exist (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_vision_prompt_and_skills_exist) ... ok
+test_workspace_protocol_is_shipped_to_skills_surfaces (skills.tests.test_skills_orchestrator.TestSkillsOrchestratorPackage.test_workspace_protocol_is_shipped_to_skills_surfaces)
+Workspace isolation and fixed-reference rules must not remain core-doc-only. ... ok
+
+----------------------------------------------------------------------
+Ran 45 tests in 6.340s
+
+OK

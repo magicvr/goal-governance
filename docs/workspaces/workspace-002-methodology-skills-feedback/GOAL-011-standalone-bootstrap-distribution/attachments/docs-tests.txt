@@ -1,0 +1,95 @@
+test_audit_and_vision_audit_are_readonly_in_both_channels (test_dual_channel_l2.DualChannelL2Tests.test_audit_and_vision_audit_are_readonly_in_both_channels) ... C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:117: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:117: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_both_channel_descriptions_are_backed_by_real_artifacts (test_dual_channel_l2.DualChannelL2Tests.test_both_channel_descriptions_are_backed_by_real_artifacts) ... C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:102: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:102: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_checkpoints_are_the_ten_vf016_items (test_dual_channel_l2.DualChannelL2Tests.test_checkpoints_are_the_ten_vf016_items) ... ok
+test_dual_channel_fixture_has_canonical_goal_shape (test_dual_channel_l2.DualChannelL2Tests.test_dual_channel_fixture_has_canonical_goal_shape)
+Checkpoint 5 concretely: fixture matches the canonical five-piece shape. ... ok
+test_equivalence_holds_for_both_channels (test_dual_channel_l2.DualChannelL2Tests.test_equivalence_holds_for_both_channels) ... C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:87: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:87: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_consumer_contract_splits_files_channel_with_evidence_levels (test_file_l1.FileChannelL1Tests.test_consumer_contract_splits_files_channel_with_evidence_levels) ... ok
+test_contract_host_entrypoints_match_file_prompt_surface (test_file_l1.FileChannelL1Tests.test_contract_host_entrypoints_match_file_prompt_surface) ... ok
+test_convenience_commit_contract_forbids_unsafe_staging (test_file_l1.FileChannelL1Tests.test_convenience_commit_contract_forbids_unsafe_staging)
+Every shipped /commit face must carry the fail-closed contract. ... ok
+test_convenience_commit_entry_never_joins_the_must_set (test_file_l1.FileChannelL1Tests.test_convenience_commit_entry_never_joins_the_must_set)
+GOAL-008 S5: `/commit` is default-installed but must stay non-must. ... ok
+test_convenience_commit_surface_ships_for_every_host (test_file_l1.FileChannelL1Tests.test_convenience_commit_surface_ships_for_every_host)
+The convenience entry is default-installed on each supported host. ... ok
+test_copilot_prompt_surface_covers_four_entries (test_file_l1.FileChannelL1Tests.test_copilot_prompt_surface_covers_four_entries) ... ok
+test_file_channel_description_is_backed_by_real_assets (test_file_l1.FileChannelL1Tests.test_file_channel_description_is_backed_by_real_assets) ... ok
+test_four_entry_prompts_exist_with_role_boundaries (test_file_l1.FileChannelL1Tests.test_four_entry_prompts_exist_with_role_boundaries) ... ok
+test_host_install_surfaces_cover_all_four_entries (test_file_l1.FileChannelL1Tests.test_host_install_surfaces_cover_all_four_entries) ... ok
+test_install_and_bootstrap_scripts_exist (test_file_l1.FileChannelL1Tests.test_install_and_bootstrap_scripts_exist) ... ok
+test_alignment_defines_governance_root_and_exception (test_governance_root_canonical.GovernanceRootCanonicalTests.test_alignment_defines_governance_root_and_exception) ... ok
+test_alignment_mci_table_is_governance_root_relative (test_governance_root_canonical.GovernanceRootCanonicalTests.test_alignment_mci_table_is_governance_root_relative) ... ok
+test_mcp_config_schema_ships_with_package (test_governance_root_canonical.GovernanceRootCanonicalTests.test_mcp_config_schema_ships_with_package) ... ok
+test_root_agents_defines_governance_root (test_governance_root_canonical.GovernanceRootCanonicalTests.test_root_agents_defines_governance_root) ... ok
+test_templates_are_governance_root_relative (test_governance_root_canonical.GovernanceRootCanonicalTests.test_templates_are_governance_root_relative) ... ok
+test_workspace_protocol_defines_governance_root (test_governance_root_canonical.GovernanceRootCanonicalTests.test_workspace_protocol_defines_governance_root) ... ok
+test_docs_entry_declares_package_version_and_sync_ledger (test_standalone_bootstrap.StandaloneBootstrapTests.test_docs_entry_declares_package_version_and_sync_ledger) ... ok
+test_empty_git_repo_can_bootstrap_core_root_without_adapters (test_standalone_bootstrap.StandaloneBootstrapTests.test_empty_git_repo_can_bootstrap_core_root_without_adapters) ... ok
+test_guide_declares_core_sources_and_boundaries (test_standalone_bootstrap.StandaloneBootstrapTests.test_guide_declares_core_sources_and_boundaries) ... ok
+test_guide_is_recommended_without_new_complete_install_gate (test_standalone_bootstrap.StandaloneBootstrapTests.test_guide_is_recommended_without_new_complete_install_gate) ... ok
+test_alignment_defines_projection_and_legacy_compatibility (test_vision_protocol.CompositionRoadmapAuthorityTests.test_alignment_defines_projection_and_legacy_compatibility) ... ok
+test_bootstrap_does_not_copy_composition_index_verbatim (test_vision_protocol.CompositionRoadmapAuthorityTests.test_bootstrap_does_not_copy_composition_index_verbatim) ... ok
+test_no_stale_portfolio_status_list_in_overview_or_root_meta (test_vision_protocol.CompositionRoadmapAuthorityTests.test_no_stale_portfolio_status_list_in_overview_or_root_meta)
+The two known drift sites (missing VP-004) must point at the authority. ... ok
+test_production_roadmap_labels_status_column_as_projection (test_vision_protocol.CompositionRoadmapAuthorityTests.test_production_roadmap_labels_status_column_as_projection) ... ok
+test_roadmap_write_order_puts_vp_frontmatter_first (test_vision_protocol.CompositionRoadmapAuthorityTests.test_roadmap_write_order_puts_vp_frontmatter_first) ... ok
+test_vision_index_declares_projection_authority (test_vision_protocol.CompositionRoadmapAuthorityTests.test_vision_index_declares_projection_authority) ... ok
+test_alignment_maps_colloquial_term_and_projection_authority (test_vision_protocol.LayerNamingTests.test_alignment_maps_colloquial_term_and_projection_authority) ... ok
+test_composition_roadmap_template_exists_and_avoids_duplicate_authority (test_vision_protocol.LayerNamingTests.test_composition_roadmap_template_exists_and_avoids_duplicate_authority) ... ok
+test_goal_folder_templates_provide_roadmap_and_phase_plan_slots (test_vision_protocol.LayerNamingTests.test_goal_folder_templates_provide_roadmap_and_phase_plan_slots) ... ok
+test_naming_tables_cover_subgoal_and_vp_phase_structure (test_vision_protocol.LayerNamingTests.test_naming_tables_cover_subgoal_and_vp_phase_structure) ... ok
+test_principles_define_layer_placement_predicate (test_vision_protocol.LayerNamingTests.test_principles_define_layer_placement_predicate) ... ok
+test_vision_plan_template_has_no_executable_roadmap_section (test_vision_protocol.LayerNamingTests.test_vision_plan_template_has_no_executable_roadmap_section) ... ok
+test_agents_and_principles_document_p006 (test_vision_protocol.VisionProtocolTests.test_agents_and_principles_document_p006) ... ok
+test_dogfood_workspace_and_root_align_to_vp (test_vision_protocol.VisionProtocolTests.test_dogfood_workspace_and_root_align_to_vp) ... ok
+test_duplicate_legacy_and_report_id_is_rejected (test_vision_protocol.VisionProtocolTests.test_duplicate_legacy_and_report_id_is_rejected) ... ok
+test_duplicate_report_id_is_rejected (test_vision_protocol.VisionProtocolTests.test_duplicate_report_id_is_rejected) ... ok
+test_fixture_bad_vp_status_is_rejected (test_vision_protocol.VisionProtocolTests.test_fixture_bad_vp_status_is_rejected) ... ok
+test_fixture_charter_done_is_rejected (test_vision_protocol.VisionProtocolTests.test_fixture_charter_done_is_rejected) ... ok
+test_fixture_valid_stack_passes (test_vision_protocol.VisionProtocolTests.test_fixture_valid_stack_passes) ... ok
+test_legacy_and_directory_reports_are_merged (test_vision_protocol.VisionProtocolTests.test_legacy_and_directory_reports_are_merged) ... ok
+test_missing_plan_refs_is_rejected (test_vision_protocol.VisionProtocolTests.test_missing_plan_refs_is_rejected) ... ok
+test_primary_plan_not_in_refs_is_rejected (test_vision_protocol.VisionProtocolTests.test_primary_plan_not_in_refs_is_rejected) ... ok
+test_protocol_and_agents_document_three_layer_chain (test_vision_protocol.VisionProtocolTests.test_protocol_and_agents_document_three_layer_chain) ... ok
+test_repo_vision_stack_is_complete_and_valid (test_vision_protocol.VisionProtocolTests.test_repo_vision_stack_is_complete_and_valid) ... ok
+test_report_filename_and_id_must_match (test_vision_protocol.VisionProtocolTests.test_report_filename_and_id_must_match) ... ok
+test_report_link_must_be_present_in_index (test_vision_protocol.VisionProtocolTests.test_report_link_must_be_present_in_index) ... ok
+test_sandbox_role_is_rejected (test_vision_protocol.VisionProtocolTests.test_sandbox_role_is_rejected) ... ok
+test_superseded_charter_rejected_for_current_stack (test_vision_protocol.VisionProtocolTests.test_superseded_charter_rejected_for_current_stack) ... ok
+test_vision_ref_mismatch_is_rejected (test_vision_protocol.VisionProtocolTests.test_vision_ref_mismatch_is_rejected) ... ok
+test_vision_review_reports_have_unique_ids_and_index_links (test_vision_protocol.VisionProtocolTests.test_vision_review_reports_have_unique_ids_and_index_links) ... ok
+test_workspace_plan_ref_vision_ref_is_checked (test_vision_protocol.VisionProtocolTests.test_workspace_plan_ref_vision_ref_is_checked)
+Each plan_ref must validate vision_ref against active Charter (not file existence only). ... ok
+test_workspace_template_declares_vision_fields (test_vision_protocol.VisionProtocolTests.test_workspace_template_declares_vision_fields) ... ok
+test_current_project_uses_canonical_workspace_parent (test_workspace_protocol.WorkspaceProtocolTests.test_current_project_uses_canonical_workspace_parent) ... ok
+test_empty_workspace_id_is_rejected (test_workspace_protocol.WorkspaceProtocolTests.test_empty_workspace_id_is_rejected) ... ok
+test_legacy_scope_cannot_be_declared_by_an_explicit_workspace (test_workspace_protocol.WorkspaceProtocolTests.test_legacy_scope_cannot_be_declared_by_an_explicit_workspace) ... ok
+test_missing_root_goal_on_disk_is_rejected_when_required (test_workspace_protocol.WorkspaceProtocolTests.test_missing_root_goal_on_disk_is_rejected_when_required) ... ok
+test_protocol_has_core_and_legacy_boundaries (test_workspace_protocol.WorkspaceProtocolTests.test_protocol_has_core_and_legacy_boundaries) ... ok
+test_unfixed_workspace_reference_is_rejected (test_workspace_protocol.WorkspaceProtocolTests.test_unfixed_workspace_reference_is_rejected) ... ok
+test_valid_workspace_reference_is_accepted (test_workspace_protocol.WorkspaceProtocolTests.test_valid_workspace_reference_is_accepted) ... ok
+test_workspace_reference_mismatch_is_rejected (test_workspace_protocol.WorkspaceProtocolTests.test_workspace_reference_mismatch_is_rejected) ... ok
+test_workspace_template_declares_the_required_context_contract (test_workspace_protocol.WorkspaceProtocolTests.test_workspace_template_declares_the_required_context_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 66 tests in 1.020s
+
+OK

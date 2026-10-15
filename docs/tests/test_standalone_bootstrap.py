@@ -53,6 +53,19 @@ class StandaloneBootstrapTests(unittest.TestCase):
         # Architecture row must not stop at P-005 only
         self.assertIn("P-001～P-006", guide)
 
+    def test_guide_is_recommended_without_new_complete_install_gate(self) -> None:
+        alignment = (REPO_ROOT / "docs" / "vision" / "alignment.md").read_text(encoding="utf-8")
+        rows = [line for line in alignment.splitlines() if line.startswith("| 操作说明 |")]
+        self.assertEqual(len(rows), 1)
+        self.assertIn("standalone-bootstrap.md", rows[0])
+        self.assertIn("| Recommended |", rows[0])
+        for relative in (
+            "standalone-bootstrap.md", "architecture/principles.md",
+            "vision/alignment.md", "vision/consumer-checklist.md",
+        ):
+            text = (REPO_ROOT / "docs" / relative).read_text(encoding="utf-8")
+            self.assertIn("缺少说明不构成不完整安装", text, msg=relative)
+
     def test_docs_entry_declares_package_version_and_sync_ledger(self) -> None:
         entry = (REPO_ROOT / "docs" / "README.md").read_text(encoding="utf-8")
         for phrase in (
@@ -81,6 +94,10 @@ class StandaloneBootstrapTests(unittest.TestCase):
             target = Path(tmp)
             self._init_git_repo(target)
             self._copy_core_package(target)
+            self.assertEqual(
+                (target / "docs" / "standalone-bootstrap.md").read_bytes(),
+                (REPO_ROOT / "docs" / "standalone-bootstrap.md").read_bytes(),
+            )
             self._materialize_vision(target)
             self._materialize_root(target)
             self._materialize_workspace(target)
@@ -176,6 +193,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         (target / "docs" / "vision").mkdir()
         shutil.copy2(REPO_ROOT / "AGENTS.md", target / "AGENTS.md")
         shutil.copy2(source_docs / "README.md", target / "docs" / "README.md")
+        shutil.copy2(source_docs / "standalone-bootstrap.md", target / "docs" / "standalone-bootstrap.md")
         shutil.copytree(source_docs / "architecture", target / "docs" / "architecture")
         shutil.copytree(source_docs / "templates", target / "docs" / "templates")
         shutil.copytree(source_docs / "contracts", target / "docs" / "contracts")
@@ -248,6 +266,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
                 raise AssertionError(f"canonical template missing: {name}")
             shutil.copy2(template / name, root / name)
         shutil.copytree(template / "attachments", root / "attachments")
+        for ledger in ("01-decision", "02-execution", "03-audit"):
+            shutil.copytree(template / ledger, root / ledger)
 
         common = {
             "id": ROOT_ID,
@@ -380,6 +400,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
         self.assertTrue(root.is_dir())
         self.assertTrue((root / "attachments").is_dir())
         self.assertTrue((root / "attachments" / ".gitkeep").is_file())
+        for ledger in ("01-decision", "02-execution", "03-audit"):
+            self.assertTrue((root / ledger).is_dir())
         self.assertEqual(
             [path.name for path in workspace.iterdir() if path.is_dir()],
             [ROOT_ID],

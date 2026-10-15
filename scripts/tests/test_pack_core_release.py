@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import posixpath
 import re
 import subprocess
 import sys
@@ -45,6 +46,7 @@ def _minimal_core_tree(root: Path) -> Path:
     core = root / "skills" / "core"
     _write(core / "README.md", "# core\n")
     _write(core / "docs" / "README.md", "# docs\n")
+    _write(core / "docs" / "standalone-bootstrap.md", "# standalone guide\n")
     _write(core / "docs" / "architecture" / "principles.md", "# p\n")
     _write(core / "docs" / "architecture" / "workspace-protocol.md", "# wp\n")
     _write(core / "docs" / "architecture" / "overview.md", "# o\n")
@@ -111,6 +113,7 @@ class PackCoreReleaseTests(unittest.TestCase):
             root = "goal-governance-core-v0.0.0-testpack"
             self.assertIn(f"{root}/README.md", names)
             self.assertIn(f"{root}/docs/architecture/principles.md", names)
+            self.assertIn(f"{root}/docs/standalone-bootstrap.md", names)
             self.assertIn(f"{root}/docs/templates/goal-folder/00-meta.md", names)
             joined = "\n".join(names)
             self.assertNotIn("__pycache__", joined)
@@ -130,6 +133,11 @@ class PackCoreReleaseTests(unittest.TestCase):
                 )
 
             full = _minimal_core_tree(base)
+            guide = full / "docs" / "standalone-bootstrap.md"
+            guide.unlink()
+            with self.assertRaisesRegex(core_pack.PackCoreError, "standalone-bootstrap"):
+                core_pack.inventoriable_core_files(full)
+            _write(guide, "# restored guide\n")
             _write(full / "docs" / "architecture" / "tech-stack.md", "# no\n")
             with self.assertRaisesRegex(core_pack.PackCoreError, "tech-stack"):
                 core_pack.inventoriable_core_files(full)
@@ -227,6 +235,35 @@ class PackCoreReleaseTests(unittest.TestCase):
             )
             self.assertIn("docs/architecture/principles.md", checked)
             self.assertIn("docs/templates/goal-folder/00-meta.md", checked)
+            self.assertIn("docs/standalone-bootstrap.md", checked)
+            # Resolve the reported references using only each archive's members.
+            # A producer checkout must not hide broken packaged links (#24).
+            for archive, prefix, sources in (
+                (skills_result.zip_path, f"goal-governance-skills-v{ver}/", (
+                    "README.md", "core/README.md", "core/docs/README.md",
+                    "core/docs/vision/alignment.md", "core/docs/architecture/principles.md",
+                )),
+                (core_result.zip_path, f"goal-governance-core-v{ver}/", (
+                    "README.md", "docs/README.md", "docs/vision/alignment.md",
+                    "docs/architecture/principles.md",
+                )),
+            ):
+                with zipfile.ZipFile(archive) as zf:
+                    names = set(zf.namelist())
+                    for source in sources:
+                        body = zf.read(prefix + source).decode("utf-8")
+                        links = re.findall(r"\]\(([^)]*standalone-bootstrap\.md(?:#[^)]*)?)\)", body)
+                        self.assertTrue(links, msg=f"no guide link in {source}")
+                        for link in links:
+                            # zip member paths always use POSIX separators.
+                            resolved = posixpath.normpath(posixpath.join(
+                                prefix, posixpath.dirname(source), link.split("#", 1)[0]
+                            ))
+                            self.assertIn(resolved, names, msg=f"{source}: {link}")
+                            self.assertEqual(
+                                zf.read(resolved),
+                                (REPO_ROOT / "docs" / "standalone-bootstrap.md").read_bytes(),
+                            )
 
 
 if __name__ == "__main__":

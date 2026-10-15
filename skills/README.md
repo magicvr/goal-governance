@@ -2,9 +2,9 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-08-06
+updated: 2026-10-15
 parent: null
-version: 1.10.0
+version: 1.10.1
 ---
 
 # Skills
@@ -110,7 +110,7 @@ skills/
 | **2 · 包内 install** | 解压后的 `skills/install.ps1` / `install.sh` | **离线**（不访问网络） |
 
 **skills zip 内嵌 core**（GOAL-019）：默认安装路径**不**再从网上拉 core。  
-并行 **core-only** 资产 `goal-governance-core-vX.Y.Z.zip` 供 standalone / 无 Skills 场景；**不是**本表默认 Skills 路径（见 [standalone-bootstrap](../docs/standalone-bootstrap.md)、`pack_core_release.py`）。
+并行 **core-only** 资产 `goal-governance-core-vX.Y.Z.zip` 供 standalone / 无 Skills 场景；**不是**本表默认 Skills 路径（见包内 [standalone-bootstrap](core/docs/standalone-bootstrap.md)、`pack_core_release.py`）。说明也安装到配置的治理根；文件本身为 Recommended，不新增完整安装 MUST 门禁。
 
 ### 入口 1 · Bootstrap（推荐 · 其他项目）
 

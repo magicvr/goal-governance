@@ -2,9 +2,9 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-08-11
+updated: 2026-10-15
 parent: null
-version: 0.14.0
+version: 0.14.1
 ---
 
 # docs/ · 文档体系
@@ -116,7 +116,7 @@ version: 0.1.0
 
 ### canonical → Skills 镜像（GOAL-022）
 
-`{governance_root}/architecture/`（白名单文件）、`{governance_root}/templates/`、`{governance_root}/vision/alignment.md` 与 `{governance_root}/contracts/` 是唯一上游。刷新镜像：
+`{governance_root}/architecture/`（白名单文件）、`{governance_root}/templates/`、`{governance_root}/vision/alignment.md`、`{governance_root}/standalone-bootstrap.md` 与 `{governance_root}/contracts/` 是唯一上游。刷新镜像：
 
 ```bash
 python scripts/stage_skills_mirrors.py
@@ -128,6 +128,7 @@ python scripts/stage_skills_mirrors.py --check
 | `skills/core/docs/architecture/*` | 排除 `tech-stack.md` |
 | `skills/core/docs/templates/**` | 五件套 + workspace-context + vision 模板 |
 | `skills/core/docs/vision/alignment.md` | 愿景规则 |
+| `skills/core/docs/standalone-bootstrap.md` | 独立启用说明（Recommended；随两个消费包分发） |
 | `skills/contracts/**` | 契约与 fixtures 逐字节镜像 |
 | **不**覆盖 | `skills/core/docs/README.md`、`skills/core/docs/vision/README.md`（消费方手维精简） |
 

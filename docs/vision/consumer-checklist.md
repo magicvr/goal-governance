@@ -3,14 +3,17 @@ doc_type: vision-consumer-checklist
 title: 愿景体系消费方检查清单
 status: active
 created: 2026-07-28
-updated: 2026-08-06
-version: 0.5.0
+updated: 2026-10-15
+version: 0.5.1
+parent: null
 ---
 
 # 消费方检查清单
 
 > 政策以 [alignment.md](alignment.md) 与 **P-006** 为准。本清单只做操作映射；变更规则时先改 alignment，再同步本页。  
 > **完整安装 MUST 权威表**：[alignment.md §0.2](alignment.md#02-完整安装与冷启动)（与 [standalone-bootstrap](../standalone-bootstrap.md) **同表**，禁止另立「建议必含」）。
+
+独立启用说明随消费包分发，文件本身为 **Recommended**；其完整安装判定须与权威 MUST 表一致。缺少说明不构成不完整安装，也不阻断推进。
 
 ## A. 仓库发现与完整安装
 

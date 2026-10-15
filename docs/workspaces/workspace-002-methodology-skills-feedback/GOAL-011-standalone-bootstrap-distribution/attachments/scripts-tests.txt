@@ -1,0 +1,212 @@
+test_all_pre_s4_shapes_keep_bytes_outside_the_markers (test_agents_merge.AgentsMergeUnitTests.test_all_pre_s4_shapes_keep_bytes_outside_the_markers)
+GOAL-008 S6 (v0.13.3): the promise is about bytes *outside* the markers. ... ok
+test_block_update_keeps_outside_newline_bytes (test_agents_merge.AgentsMergeUnitTests.test_block_update_keeps_outside_newline_bytes)
+GOAL-009 F-002: a block refresh must not rewrite bytes outside it. ... ok
+test_cli_reports_fail_closed_on_malformed_target (test_agents_merge.AgentsMergeUnitTests.test_cli_reports_fail_closed_on_malformed_target) ... ok
+test_consumer_content_outside_block_is_preserved (test_agents_merge.AgentsMergeUnitTests.test_consumer_content_outside_block_is_preserved) ... ok
+test_consumer_edits_inside_block_are_refreshed_but_outside_kept (test_agents_merge.AgentsMergeUnitTests.test_consumer_edits_inside_block_are_refreshed_but_outside_kept) ... ok
+test_dry_run_does_not_write (test_agents_merge.AgentsMergeUnitTests.test_dry_run_does_not_write) ... ok
+test_fresh_target_becomes_managed_block (test_agents_merge.AgentsMergeUnitTests.test_fresh_target_becomes_managed_block) ... ok
+test_half_written_markers_fail_closed (test_agents_merge.AgentsMergeUnitTests.test_half_written_markers_fail_closed) ... ok
+test_legacy_install_with_rule_pair_is_migrated_in_place (test_agents_merge.AgentsMergeUnitTests.test_legacy_install_with_rule_pair_is_migrated_in_place) ... ok
+test_legacy_whole_file_install_is_wrapped_equivalently (test_agents_merge.AgentsMergeUnitTests.test_legacy_whole_file_install_is_wrapped_equivalently) ... ok
+test_merge_agents_file_keeps_outside_crlf_bytes (test_agents_merge.AgentsMergeUnitTests.test_merge_agents_file_keeps_outside_crlf_bytes) ... ok
+test_repeated_merge_never_touches_a_converged_file (test_agents_merge.AgentsMergeUnitTests.test_repeated_merge_never_touches_a_converged_file)
+A converged file must be byte-stable on every later merge. ... ok
+test_whitespace_only_outside_a_marked_block_stays (test_agents_merge.AgentsMergeUnitTests.test_whitespace_only_outside_a_marked_block_stays)
+A marked file keeps newline-only bytes outside the block. ... ok
+test_consumer_edited_agents_is_not_a_managed_conflict (test_agents_merge.RootAgentsNotFullyManagedTests.test_consumer_edited_agents_is_not_a_managed_conflict) ... ok
+test_crlf_block_without_a_trailing_newline_is_not_a_hand_edit (test_agents_merge.RootAgentsNotFullyManagedTests.test_crlf_block_without_a_trailing_newline_is_not_a_hand_edit)
+A same-content CRLF block that ends on the end marker is not a hand edit. ... ok
+test_crlf_outside_a_hand_edit_still_conflicts (test_agents_merge.RootAgentsNotFullyManagedTests.test_crlf_outside_a_hand_edit_still_conflicts) ... ok
+test_crlf_spelling_of_the_same_block_is_not_a_conflict (test_agents_merge.RootAgentsNotFullyManagedTests.test_crlf_spelling_of_the_same_block_is_not_a_conflict) ... ok
+test_hand_edited_block_is_a_managed_conflict (test_agents_merge.RootAgentsNotFullyManagedTests.test_hand_edited_block_is_a_managed_conflict) ... ok
+test_managed_pairs_exclude_root_agents (test_agents_merge.RootAgentsNotFullyManagedTests.test_managed_pairs_exclude_root_agents) ... ok
+test_merge_root_agents_keeps_outside_crlf_bytes (test_agents_merge.RootAgentsNotFullyManagedTests.test_merge_root_agents_keeps_outside_crlf_bytes) ... ok
+test_merge_root_agents_preserves_consumer_bytes (test_agents_merge.RootAgentsNotFullyManagedTests.test_merge_root_agents_preserves_consumer_bytes) ... ok
+test_files_channel_explicit_is_full_install (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_files_channel_explicit_is_full_install)
+VP-004 R2: -Channel files (explicit) keeps the full File install. ... ok
+test_mcp_channel_bootstrap_installs_thin_shell_only_and_preserves_user_agents (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_mcp_channel_bootstrap_installs_thin_shell_only_and_preserves_user_agents)
+VP-004 R2/R4 dual entry: -Channel mcp = thin shell via GHCR image; no File ���, no mcp code. ... ok
+test_mcp_channel_rejects_unknown_channel_value (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_mcp_channel_rejects_unknown_channel_value) ... ok
+test_offline_bootstrap_fail_closed_on_digest_mismatch (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_offline_bootstrap_fail_closed_on_digest_mismatch) ... ok
+test_offline_bootstrap_success_installs_core_and_hosts (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_offline_bootstrap_success_installs_core_and_hosts) ... ok
+test_offline_relative_zip_resolved_against_cwd_not_target (test_bootstrap_install_online.BootstrapOfflinePs1Tests.test_offline_relative_zip_resolved_against_cwd_not_target)
+Skeptic: -ZipPath relative to CWD when TargetDir is a different empty tree. ... ok
+test_bash_mcp_channel_when_available (test_bootstrap_install_online.BootstrapShStructuralTests.test_bash_mcp_channel_when_available)
+VP-004 R2/R4: bash --channel mcp installs the thin shell via GHCR image (PS �Ե� e2e). ... skipped "bash on PATH is not usable: 'w\\x00s\\x00l\\x00:\\x00 \\x00\ufffdhKm0R \\x00l\\x00o\\x00c\\x00a\\x00l\\x00h\\x00o\\x00s\\x00t\\x00 \\x00\ufffdN\\x06tM\ufffdn\\x7f\\x0c\ufffdFO*g\\\\\ufffd\ufffdP0R \\x00W\\x00S\\x00L\\x00\\x020N\\x00A\\x00T\\x00 \\x00!j\\x0f_\\x0bN\ufffdv \\x00W\\x00S\\x00L\\x00 \\x00\\nN/e\\x01c \\x00l\\x00o\\x00c\\x00a\\x00l\\x00h\\x00o\\x00s\\x00t\\x00 \\x00\ufffdN\\x06t\\x020\\n\\x00\\n\\x00<3>WSL (3080) ERROR: CreateProcessCommon:559: execvpe(/bin/bash) failed: No such file or directory\\n'"
+test_bash_offline_when_available (test_bootstrap_install_online.BootstrapShStructuralTests.test_bash_offline_when_available) ... skipped "bash on PATH is not usable (e.g. WSL stub without distro): 'w\\x00s\\x00l\\x00:\\x00 \\x00\ufffdhKm0R \\x00l\\x00o\\x00c\\x00a\\x00l\\x00h\\x00o\\x00s\\x00t\\x00 \\x00\ufffdN\\x06tM\ufffdn\\x7f\\x0c\ufffdFO*g\\\\\ufffd\ufffdP0R \\x00W\\x00S\\x00L\\x00\\x020N\\x00A\\x00T\\x00 \\x00!j\\x0f_\\x0bN\ufffdv \\x00W\\x00S\\x00L\\x00 \\x00\\nN/e\\x01c \\x00l\\x00o\\x00c\\x00a\\x00l\\x00h\\x00o\\x00s\\x00t\\x00 \\x00\ufffdN\\x06t\\x020\\n\\x00\\n\\x00<3>WSL (3083) ERROR: CreateProcessCommon:559: execvpe(/bin/bash) failed: No such file or directory\\n'"
+test_bash_script_exists_and_declares_offline_flags (test_bootstrap_install_online.BootstrapShStructuralTests.test_bash_script_exists_and_declares_offline_flags) ... ok
+test_bootstrap_docs_declare_dual_entry_and_file_first_class (test_bootstrap_install_online.BootstrapShStructuralTests.test_bootstrap_docs_declare_dual_entry_and_file_first_class)
+VP-004 R2: bootstrap README recommends MCP with File-first-class disclaimer. ... ok
+test_root_readme_mentions_dual_entry_and_embedded_core (test_bootstrap_install_online.BootstrapShStructuralTests.test_root_readme_mentions_dual_entry_and_embedded_core) ... ok
+test_workflow_packs_core_and_bootstrap (test_bootstrap_install_online.BootstrapShStructuralTests.test_workflow_packs_core_and_bootstrap) ... ok
+test_ephemeral_tempdir_cleanup_never_raises_on_permission_denied_tree (test_bootstrap_install_online.EphemeralTempdirCleanupTests.test_ephemeral_tempdir_cleanup_never_raises_on_permission_denied_tree)
+Drive the real helper: a non-writable nested tree must not raise on exit. ... ok
+test_contract_mirror_is_byte_identical (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_contract_mirror_is_byte_identical) ... ok
+test_contract_validates_and_splits_files_and_mcp (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_contract_validates_and_splits_files_and_mcp) ... ok
+test_format_version_bumped_for_split (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_format_version_bumped_for_split) ... ok
+test_legacy_file_contract_shape_unchanged (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_legacy_file_contract_shape_unchanged)
+Existing File contract semantics must not conflict with the split. ... ok
+test_matrix_validates_and_splits_channels (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_matrix_validates_and_splits_channels) ... ok
+test_mcp_channel_rejects_docker_only_claim (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_mcp_channel_rejects_docker_only_claim)
+VP-004: MCP must not be Docker-only; stdio runtime must be declared. ... ok
+test_missing_delivery_channels_fails_schema (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_missing_delivery_channels_fails_schema) ... ok
+test_valid_fixtures_still_validate_with_split (test_contract_delivery_channels.ContractDeliveryChannelsTests.test_valid_fixtures_still_validate_with_split) ... ok
+test_historical_provider_failure_remains_explicit (test_grok_runtime_fixture.GrokRuntimeFixtureTests.test_historical_provider_failure_remains_explicit) ... ok
+test_replay_command_uses_api_model_not_adapter_id (test_grok_runtime_fixture.GrokRuntimeFixtureTests.test_replay_command_uses_api_model_not_adapter_id) ... ok
+test_runtime_attachment_scopes_adapter_id_and_model_failure (test_grok_runtime_fixture.GrokRuntimeFixtureTests.test_runtime_attachment_scopes_adapter_id_and_model_failure) ... ok
+test_archive_names (test_pack_core_release.PackCoreReleaseTests.test_archive_names) ... ok
+test_cli_packs_real_core_tree (test_pack_core_release.PackCoreReleaseTests.test_cli_packs_real_core_tree) ... ok
+test_core_subset_matches_skills_embedded_core (test_pack_core_release.PackCoreReleaseTests.test_core_subset_matches_skills_embedded_core)
+I-004: same version, core-only members \u2286 skills zip core/ byte-identical. ... ok
+test_pack_core_on_temp_tree (test_pack_core_release.PackCoreReleaseTests.test_pack_core_on_temp_tree) ... ok
+test_pack_core_rejects_incomplete_and_tech_stack (test_pack_core_release.PackCoreReleaseTests.test_pack_core_rejects_incomplete_and_tech_stack) ... ok
+test_real_core_subset_of_real_skills_pack (test_pack_core_release.PackCoreReleaseTests.test_real_core_subset_of_real_skills_pack) ... ok
+test_cli_packs_real_skills_tree (test_pack_skills_release.PackSkillsReleaseTests.test_cli_packs_real_skills_tree)
+Drive the shipped CLI entry point against the real repository skills/. ... ok
+test_normalize_version_strips_v_and_rejects_empty (test_pack_skills_release.PackSkillsReleaseTests.test_normalize_version_strips_v_and_rejects_empty) ... ok
+test_pack_skills_on_temp_tree_excludes_caches (test_pack_skills_release.PackSkillsReleaseTests.test_pack_skills_on_temp_tree_excludes_caches) ... ok
+test_pack_skills_rejects_incomplete_tree (test_pack_skills_release.PackSkillsReleaseTests.test_pack_skills_rejects_incomplete_tree) ... ok
+test_pack_skills_rejects_symlink (test_pack_skills_release.PackSkillsReleaseTests.test_pack_skills_rejects_symlink)
+GOAL-021 F-003: symlink members must not enter the zip (escape risk). ... skipped "symlink creation not permitted: [WinError 1314] �ͻ���û���������Ȩ��: 'C:\\\\Users\\\\magicvr\\\\AppData\\\\Local\\\\Temp\\\\tmpxqf964kz\\\\outside-secret.txt' -> 'C:\\\\Users\\\\magicvr\\\\AppData\\\\Local\\\\Temp\\\\tmpxqf964kz\\\\skills\\\\leaked-via-symlink.txt'"
+test_should_exclude_caches_and_forbidden_prefixes (test_pack_skills_release.PackSkillsReleaseTests.test_should_exclude_caches_and_forbidden_prefixes) ... ok
+test_should_exclude_mcp_integration_tests (test_pack_skills_release.PackSkillsReleaseTests.test_should_exclude_mcp_integration_tests)
+A-012 F-003: skills/tests/test_mcp_*.py import the repo-root mcp/ ... ok
+test_pack_job_pins_evidence_consistency_gate (test_pack_skills_release.SkillsPackWorkflowContractTests.test_pack_job_pins_evidence_consistency_gate)
+M-001 (A-016): the pack job must run the L3 evidence consistency ... ok
+test_publish_job_is_environment_gated_and_fail_closed (test_pack_skills_release.SkillsPackWorkflowContractTests.test_publish_job_is_environment_gated_and_fail_closed) ... ok
+test_publish_job_pins_r4_docker_release_steps (test_pack_skills_release.SkillsPackWorkflowContractTests.test_publish_job_pins_r4_docker_release_steps)
+VP-004 R4 (GOAL-005 F-002): the tag publish flow must keep the GHCR ... ok
+test_cli_rebuilds_a_repository_relative_directory (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_cli_rebuilds_a_repository_relative_directory) ... ok
+test_rebuild_is_stable_and_ignores_root_control_files (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rebuild_is_stable_and_ignores_root_control_files) ... ok
+test_rebuilds_sorted_candidate_inventory_with_hashes (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rebuilds_sorted_candidate_inventory_with_hashes) ... ok
+test_rejects_output_outside_the_materials_root (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rejects_output_outside_the_materials_root) ... ok
+test_rejects_symbolic_links_when_supported (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_rejects_symbolic_links_when_supported) ... skipped 'symbolic links require unavailable Windows privileges'
+test_repository_skeleton_is_an_empty_candidate_inventory (test_rebuild_shared_materials_index.SharedMaterialsIndexTests.test_repository_skeleton_is_an_empty_candidate_inventory) ... ok
+test_compatibility_report_rejects_a_fake_negative_fixture (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_rejects_a_fake_negative_fixture) ... ok
+test_compatibility_report_rejects_evidence_path_escape (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_rejects_evidence_path_escape) ... ok
+test_compatibility_report_tracks_uncovered_candidate_runtime_cells (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_tracks_uncovered_candidate_runtime_cells) ... ok
+test_compatibility_report_uses_supplied_root_for_mirrors (test_release_evidence.ReleaseEvidenceToolTests.test_compatibility_report_uses_supplied_root_for_mirrors) ... ok
+test_generate_evidence_does_not_accept_caller_supplied_checks (test_release_evidence.ReleaseEvidenceToolTests.test_generate_evidence_does_not_accept_caller_supplied_checks) ... ok
+test_malformed_compatibility_report_fails_cleanly (test_release_evidence.ReleaseEvidenceToolTests.test_malformed_compatibility_report_fails_cleanly) ... ok
+test_matrix_matches_its_json_schema (test_release_evidence.ReleaseEvidenceToolTests.test_matrix_matches_its_json_schema) ... ok
+test_matrix_rejects_an_unbound_candidate_revision (test_release_evidence.ReleaseEvidenceToolTests.test_matrix_rejects_an_unbound_candidate_revision) ... ok
+test_rehearsal_checks_are_executed_internally (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_checks_are_executed_internally) ... ok
+test_rehearsal_cli_fails_when_an_executed_check_fails (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_cli_fails_when_an_executed_check_fails) ... ok
+test_rehearsal_evidence_never_claims_a_release (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_evidence_never_claims_a_release) ... ok
+test_rehearsal_rejects_stale_coverage (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_rejects_stale_coverage) ... ok
+test_rehearsal_rejects_stale_mirror_result (test_release_evidence.ReleaseEvidenceToolTests.test_rehearsal_rejects_stale_mirror_result) ... ok
+test_release_cli_prints_failed_check_details_before_raising (test_release_evidence.ReleaseEvidenceToolTests.test_release_cli_prints_failed_check_details_before_raising)
+Release mode must surface which check failed (diagnostics regression: ... ok
+test_release_mode_accepts_annotated_semver_tag_when_gates_are_met (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_accepts_annotated_semver_tag_when_gates_are_met) ... ok
+test_release_mode_rejects_an_unverifiable_tag (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_rejects_an_unverifiable_tag) ... ok
+test_release_mode_rejects_dirty_tree_and_missing_changelog_version (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_rejects_dirty_tree_and_missing_changelog_version) ... ok
+test_release_mode_requires_candidate_revision_to_match_tag (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_requires_candidate_revision_to_match_tag) ... ok
+test_release_mode_requires_ready_coverage (test_release_evidence.ReleaseEvidenceToolTests.test_release_mode_requires_ready_coverage) ... ok
+test_release_rejects_stale_compatibility_report (test_release_evidence.ReleaseEvidenceToolTests.test_release_rejects_stale_compatibility_report) ... ok
+test_behavior_source_digest_tampering_is_rejected (test_runtime_evidence.EvidenceConsistencyCheckTests.test_behavior_source_digest_tampering_is_rejected) ... ok
+test_capture_api_accepts_vision_audit_entrypoint_and_validates (test_runtime_evidence.EvidenceConsistencyCheckTests.test_capture_api_accepts_vision_audit_entrypoint_and_validates) ... ok
+test_capture_api_accepts_vision_entrypoint_and_validates (test_runtime_evidence.EvidenceConsistencyCheckTests.test_capture_api_accepts_vision_entrypoint_and_validates) ... ok
+test_capture_marker_only_must_fail (test_runtime_evidence.EvidenceConsistencyCheckTests.test_capture_marker_only_must_fail)
+GOAL-021 F-002: exit 0 + arbitrary marker alone is not a pass. ... ok
+test_capture_normalizes_text_output_digests_for_windows_checkouts (test_runtime_evidence.EvidenceConsistencyCheckTests.test_capture_normalizes_text_output_digests_for_windows_checkouts)
+CRLF working trees must validate evidence captured with LF output. ... ok
+test_capture_records_blocked_timeout (test_runtime_evidence.EvidenceConsistencyCheckTests.test_capture_records_blocked_timeout) ... ok
+test_capture_records_fail_without_required_exit_and_marker (test_runtime_evidence.EvidenceConsistencyCheckTests.test_capture_records_fail_without_required_exit_and_marker) ... ok
+test_capture_writes_schema_valid_payload_and_raw_digests (test_runtime_evidence.EvidenceConsistencyCheckTests.test_capture_writes_schema_valid_payload_and_raw_digests) ... ok
+test_check_cli_accepts_multiple_evidence_dirs (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_cli_accepts_multiple_evidence_dirs) ... ok
+test_check_cli_exit_codes (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_cli_exit_codes) ... evidence consistency FAILED: runtime.json: behavior source is stale: behavior.md (recorded af96ee9e3c0b��, current 74a5732c2159��)
+checked 1 evidence file(s); 1 problem(s)
+ok
+test_check_cli_missing_dir_fails (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_cli_missing_dir_fails) ... evidence consistency check failed: evidence directory not found: C:\Users\magicvr\AppData\Local\Temp\gg-check-nodir-0s_at_jw\nope
+ok
+test_check_cli_requires_evidence_dir (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_cli_requires_evidence_dir)
+--check without --evidence-dir must not silently scan the whole repo: ... usage: python.exe -m unittest [-h] [--check] [--evidence-dir EVIDENCE_DIR]
+                              [--consumer CONSUMER]
+                              [--entrypoint {govern,audit,vision,vision-audit}]
+                              [--protocol-version PROTOCOL_VERSION]
+                              [--product PRODUCT]
+                              [--product-version PRODUCT_VERSION]
+                              [--provider PROVIDER] [--model MODEL]
+                              [--prompt-file PROMPT_FILE] [--marker MARKER]
+                              [--require-assert REQUIRE_ASSERT]
+                              [--behavior-source BEHAVIOR_SOURCE]
+                              [--screenshot SCREENSHOT] [--output OUTPUT]
+                              [--timeout-seconds TIMEOUT_SECONDS]
+                              [--stdout-mode {raw,claude-stream-json-sanitized}]
+                              [--stderr-mode {raw,request-url-redacted}]
+                              ...
+python.exe -m unittest: error: --evidence-dir is required in --check mode
+ok
+test_check_file_ok_when_sources_match (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_file_ok_when_sources_match) ... ok
+test_check_file_rejects_path_escape (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_file_rejects_path_escape) ... ok
+test_check_file_reports_missing_source (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_file_reports_missing_source) ... ok
+test_check_file_reports_stale_source (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_file_reports_stale_source)
+A stale behavior source (e.g. mcp/ change without recapture) must be flagged. ... ok
+test_check_file_skips_non_evidence_json (test_runtime_evidence.EvidenceConsistencyCheckTests.test_check_file_skips_non_evidence_json) ... ok
+test_claude_stream_sanitizer_omits_thinking_and_tool_result_content (test_runtime_evidence.EvidenceConsistencyCheckTests.test_claude_stream_sanitizer_omits_thinking_and_tool_result_content) ... ok
+test_cli_accepts_vision_audit_entrypoint_choice (test_runtime_evidence.EvidenceConsistencyCheckTests.test_cli_accepts_vision_audit_entrypoint_choice)
+Shipped capture CLI must accept the independent vision-audit entrypoint. ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+ok
+test_cli_accepts_vision_entrypoint_choice (test_runtime_evidence.EvidenceConsistencyCheckTests.test_cli_accepts_vision_entrypoint_choice)
+Shipped capture CLI must accept unit.entrypoint=vision (P-006 decision layer). ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+ok
+test_compatibility_rechecks_assertions_against_stdout (test_runtime_evidence.EvidenceConsistencyCheckTests.test_compatibility_rechecks_assertions_against_stdout)
+Stored observed=true is not trusted; stdout re-evaluation must fail marker-only. ... ok
+test_raw_output_digest_tampering_is_rejected (test_runtime_evidence.EvidenceConsistencyCheckTests.test_raw_output_digest_tampering_is_rejected) ... ok
+test_request_url_redaction_preserves_error_without_private_endpoint (test_runtime_evidence.EvidenceConsistencyCheckTests.test_request_url_redaction_preserves_error_without_private_endpoint) ... ok
+test_run_check_counts_evidence_and_skips_others (test_runtime_evidence.EvidenceConsistencyCheckTests.test_run_check_counts_evidence_and_skips_others) ... ok
+test_runtime_verified_requires_valid_machine_readable_json (test_runtime_evidence.EvidenceConsistencyCheckTests.test_runtime_verified_requires_valid_machine_readable_json) ... ok
+test_behavior_source_digest_tampering_is_rejected (test_runtime_evidence.RuntimeEvidenceTests.test_behavior_source_digest_tampering_is_rejected) ... ok
+test_capture_api_accepts_vision_audit_entrypoint_and_validates (test_runtime_evidence.RuntimeEvidenceTests.test_capture_api_accepts_vision_audit_entrypoint_and_validates) ... ok
+test_capture_api_accepts_vision_entrypoint_and_validates (test_runtime_evidence.RuntimeEvidenceTests.test_capture_api_accepts_vision_entrypoint_and_validates) ... ok
+test_capture_marker_only_must_fail (test_runtime_evidence.RuntimeEvidenceTests.test_capture_marker_only_must_fail)
+GOAL-021 F-002: exit 0 + arbitrary marker alone is not a pass. ... ok
+test_capture_normalizes_text_output_digests_for_windows_checkouts (test_runtime_evidence.RuntimeEvidenceTests.test_capture_normalizes_text_output_digests_for_windows_checkouts)
+CRLF working trees must validate evidence captured with LF output. ... ok
+test_capture_records_blocked_timeout (test_runtime_evidence.RuntimeEvidenceTests.test_capture_records_blocked_timeout) ... ok
+test_capture_records_fail_without_required_exit_and_marker (test_runtime_evidence.RuntimeEvidenceTests.test_capture_records_fail_without_required_exit_and_marker) ... ok
+test_capture_writes_schema_valid_payload_and_raw_digests (test_runtime_evidence.RuntimeEvidenceTests.test_capture_writes_schema_valid_payload_and_raw_digests) ... ok
+test_claude_stream_sanitizer_omits_thinking_and_tool_result_content (test_runtime_evidence.RuntimeEvidenceTests.test_claude_stream_sanitizer_omits_thinking_and_tool_result_content) ... ok
+test_cli_accepts_vision_audit_entrypoint_choice (test_runtime_evidence.RuntimeEvidenceTests.test_cli_accepts_vision_audit_entrypoint_choice)
+Shipped capture CLI must accept the independent vision-audit entrypoint. ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+ok
+test_cli_accepts_vision_entrypoint_choice (test_runtime_evidence.RuntimeEvidenceTests.test_cli_accepts_vision_entrypoint_choice)
+Shipped capture CLI must accept unit.entrypoint=vision (P-006 decision layer). ... runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+ok
+test_compatibility_rechecks_assertions_against_stdout (test_runtime_evidence.RuntimeEvidenceTests.test_compatibility_rechecks_assertions_against_stdout)
+Stored observed=true is not trusted; stdout re-evaluation must fail marker-only. ... ok
+test_raw_output_digest_tampering_is_rejected (test_runtime_evidence.RuntimeEvidenceTests.test_raw_output_digest_tampering_is_rejected) ... ok
+test_request_url_redaction_preserves_error_without_private_endpoint (test_runtime_evidence.RuntimeEvidenceTests.test_request_url_redaction_preserves_error_without_private_endpoint) ... ok
+test_runtime_verified_requires_valid_machine_readable_json (test_runtime_evidence.RuntimeEvidenceTests.test_runtime_verified_requires_valid_machine_readable_json) ... ok
+test_case_alias_nest_follows_platform_path_identity (test_skills_update.SkillsUpdateTests.test_case_alias_nest_follows_platform_path_identity) ... ok
+test_install_failure_restores_previous_package (test_skills_update.SkillsUpdateTests.test_install_failure_restores_previous_package) ... ok
+test_install_ps1_rejects_nested_skills_before_write (test_skills_update.SkillsUpdateTests.test_install_ps1_rejects_nested_skills_before_write) ... ok
+test_install_ps1_rendered_placeholders_survive_update (test_skills_update.SkillsUpdateTests.test_install_ps1_rendered_placeholders_survive_update) ... ok
+test_install_sh_rejects_nested_skills_before_write (test_skills_update.SkillsUpdateTests.test_install_sh_rejects_nested_skills_before_write) ... ok
+test_install_sh_rendered_placeholders_survive_update (test_skills_update.SkillsUpdateTests.test_install_sh_rendered_placeholders_survive_update) ... ok
+test_managed_file_conflict_fails_closed (test_skills_update.SkillsUpdateTests.test_managed_file_conflict_fails_closed) ... ok
+test_methodology_inside_skills_is_rejected_before_render (test_skills_update.SkillsUpdateTests.test_methodology_inside_skills_is_rejected_before_render) ... ok
+test_nested_dirs_are_rejected_by_update (test_skills_update.SkillsUpdateTests.test_nested_dirs_are_rejected_by_update) ... ok
+test_new_guide_conflict_and_failed_upgrade_restore_legacy_install (test_skills_update.SkillsUpdateTests.test_new_guide_conflict_and_failed_upgrade_restore_legacy_install) ... ok
+test_new_managed_path_conflicts_and_rolls_back_when_install_fails (test_skills_update.SkillsUpdateTests.test_new_managed_path_conflicts_and_rolls_back_when_install_fails) ... ok
+test_offline_dry_run_verifies_digest_and_protocol (test_skills_update.SkillsUpdateTests.test_offline_dry_run_verifies_digest_and_protocol) ... ok
+test_offline_update_runs_real_consumer_installer (test_skills_update.SkillsUpdateTests.test_offline_update_runs_real_consumer_installer) ... ok
+test_offline_update_writes_state_and_keeps_rollback (test_skills_update.SkillsUpdateTests.test_offline_update_writes_state_and_keeps_rollback) ... ok
+test_rendered_bytes_match_and_a_hand_edit_still_conflicts (test_skills_update.SkillsUpdateTests.test_rendered_bytes_match_and_a_hand_edit_still_conflicts)
+Update accepts the rendered bytes this module would write, and nothing else. ... ok
+test_safe_extract_rejects_path_traversal (test_skills_update.SkillsUpdateTests.test_safe_extract_rejects_path_traversal) ... ok
+test_check_detects_drift (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_check_detects_drift) ... ok
+test_repo_root_stage_check_clean_after_write (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_repo_root_stage_check_clean_after_write) ... ok
+test_stage_copies_and_strips_legacy_templates (test_stage_skills_mirrors.StageSkillsMirrorsTests.test_stage_copies_and_strips_legacy_templates) ... ok
+
+----------------------------------------------------------------------
+Ran 146 tests in 49.387s
+
+OK (skipped=4)
+wrote release evidence: C:\Users\magicvr\AppData\Local\Temp\gg-release-cli-failure-7l0upbni\evidence.json
+release status: rehearsal
+checks passed: False
+evidence consistency ok (2 evidence file(s))
+evidence consistency ok (1 evidence file(s))

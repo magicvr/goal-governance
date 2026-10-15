@@ -1,0 +1,265 @@
+{
+  "reportFormat": "goal-governance.compatibility-report",
+  "reportFormatVersion": "1.0.0",
+  "generatedAt": "2026-10-15T05:31:08.707862Z",
+  "source": {
+    "commit": "ecb243ecb6b3940145c2a31e7739460e7cd023dc",
+    "branch": "codex/issue-24-bootstrap-guide",
+    "tagsAtHead": []
+  },
+  "contract": {
+    "path": "docs/contracts/skills-consumer-contract.json",
+    "protocolVersion": "0.1.0",
+    "sha256": "e33af44228eabaa9421d17870e1326efdca56e642b3e35198fe7e4b69b4b5c6b"
+  },
+  "matrix": {
+    "path": "docs/contracts/skills-consumer-compatibility-matrix.json",
+    "sha256": "74d65e988be50963f5aa13767359f3f5c631631f603e39be21d4eebfdfaf0583",
+    "candidateRevision": "v0.13.4",
+    "previousProtocol": null,
+    "previousProtocolStatus": "not-applicable-first-supported-protocol"
+  },
+  "mirrorVerification": {
+    "passed": true,
+    "files": [
+      {
+        "path": "fixtures/invalid/declared-adapter-without-commitment.json",
+        "canonicalSha256": "142b49e832220333f89a7013792610be036062ac96afa98a51e413e124a26fbc",
+        "mirrorSha256": "142b49e832220333f89a7013792610be036062ac96afa98a51e413e124a26fbc",
+        "matches": true
+      },
+      {
+        "path": "fixtures/invalid/fabricated-predecessor-0.0.0.json",
+        "canonicalSha256": "512b118ee186c8b2b9c5dba7c2ba9b713d19d341c380bd2878ce7edfe67bac46",
+        "mirrorSha256": "512b118ee186c8b2b9c5dba7c2ba9b713d19d341c380bd2878ce7edfe67bac46",
+        "matches": true
+      },
+      {
+        "path": "fixtures/invalid/missing-contract-schema-id.json",
+        "canonicalSha256": "d627d1cc4cf95ce8367d00d350ea3132f07c7e33f4ab1513e7bde6b631d77af1",
+        "mirrorSha256": "d627d1cc4cf95ce8367d00d350ea3132f07c7e33f4ab1513e7bde6b631d77af1",
+        "matches": true
+      },
+      {
+        "path": "fixtures/invalid/missing-support-baseline.json",
+        "canonicalSha256": "16cb621b7a1838c2b1bf976e7d83d7531dbadf569e13cb4d047bfc265b82f3b0",
+        "mirrorSha256": "16cb621b7a1838c2b1bf976e7d83d7531dbadf569e13cb4d047bfc265b82f3b0",
+        "matches": true
+      },
+      {
+        "path": "fixtures/invalid/reversed-protocol-range.json",
+        "canonicalSha256": "a853b6958ea87440da9defd245c53fbd990055276a0ab229d4da3a2947a16e7f",
+        "mirrorSha256": "a853b6958ea87440da9defd245c53fbd990055276a0ab229d4da3a2947a16e7f",
+        "matches": true
+      },
+      {
+        "path": "fixtures/invalid/unstable-cross-minor-range.json",
+        "canonicalSha256": "ec194dadc2bd31f25da2fc6d8110bdc8c0461e8e4443bb7765af9f1a002b890c",
+        "mirrorSha256": "ec194dadc2bd31f25da2fc6d8110bdc8c0461e8e4443bb7765af9f1a002b890c",
+        "matches": true
+      },
+      {
+        "path": "fixtures/invalid/unsupported-protocol-0.2.0.json",
+        "canonicalSha256": "53ca55d5173027323808b869903e61986c0ea663c93fc85628ec7769a48a2733",
+        "mirrorSha256": "53ca55d5173027323808b869903e61986c0ea663c93fc85628ec7769a48a2733",
+        "matches": true
+      },
+      {
+        "path": "fixtures/valid/declared-adapter-0.1.0.json",
+        "canonicalSha256": "0f2637343808b2f1a09cd74dffaa643c6354f0b75de1eb086dccd1c49d1c8bdb",
+        "mirrorSha256": "0f2637343808b2f1a09cd74dffaa643c6354f0b75de1eb086dccd1c49d1c8bdb",
+        "matches": true
+      },
+      {
+        "path": "fixtures/valid/manifest-0.1.0.json",
+        "canonicalSha256": "33a7c9caa92b6d94f899e9acc7b13d94df46900149667f8b4f35d54f0f3af5c0",
+        "mirrorSha256": "33a7c9caa92b6d94f899e9acc7b13d94df46900149667f8b4f35d54f0f3af5c0",
+        "matches": true
+      },
+      {
+        "path": "runtime-evidence.schema.json",
+        "canonicalSha256": "24a1814ea507f51c8939e1e3b98eb24389752c2fca36d300913bce53f60c1c79",
+        "mirrorSha256": "24a1814ea507f51c8939e1e3b98eb24389752c2fca36d300913bce53f60c1c79",
+        "matches": true
+      },
+      {
+        "path": "skills-consumer-compatibility-matrix.json",
+        "canonicalSha256": "74d65e988be50963f5aa13767359f3f5c631631f603e39be21d4eebfdfaf0583",
+        "mirrorSha256": "74d65e988be50963f5aa13767359f3f5c631631f603e39be21d4eebfdfaf0583",
+        "matches": true
+      },
+      {
+        "path": "skills-consumer-compatibility-matrix.schema.json",
+        "canonicalSha256": "e17cd080e244f9eb85a30c2317c4dd3a736829754446776d5ed058079bd19e9f",
+        "mirrorSha256": "e17cd080e244f9eb85a30c2317c4dd3a736829754446776d5ed058079bd19e9f",
+        "matches": true
+      },
+      {
+        "path": "skills-consumer-contract.json",
+        "canonicalSha256": "e33af44228eabaa9421d17870e1326efdca56e642b3e35198fe7e4b69b4b5c6b",
+        "mirrorSha256": "e33af44228eabaa9421d17870e1326efdca56e642b3e35198fe7e4b69b4b5c6b",
+        "matches": true
+      },
+      {
+        "path": "skills-consumer-contract.schema.json",
+        "canonicalSha256": "1c0bbd2e6111a729b604be34c5993b3c89891b8645af7387bdf48954654d9d98",
+        "mirrorSha256": "1c0bbd2e6111a729b604be34c5993b3c89891b8645af7387bdf48954654d9d98",
+        "matches": true
+      }
+    ]
+  },
+  "coverage": {
+    "status": "ready-for-release-evidence",
+    "requiredEntrypoints": [
+      "govern",
+      "audit",
+      "vision",
+      "vision-audit"
+    ],
+    "consumers": [
+      {
+        "id": "claude-code-cli",
+        "kind": "host-adapter",
+        "host": {
+          "product": "Claude Code CLI",
+          "version": "2.1.285",
+          "platform": "Windows 11",
+          "installationSurface": ".claude/skills/govern and .claude/skills/audit and vision skill/prompt"
+        },
+        "supportsProtocol": {
+          "minInclusive": "0.1.0",
+          "maxExclusive": "0.2.0"
+        },
+        "supportCommitment": "committed",
+        "contractVerificationStatus": "verified",
+        "entrypoints": [
+          {
+            "name": "govern",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/claude-code-cli-govern-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "audit",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/claude-code-cli-audit-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "vision",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/claude-code-cli-vision-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "vision-audit",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/claude-code-cli-vision-audit-2026-10-01.json"
+            ]
+          }
+        ],
+        "evidenceScope": "Candidate v0.13.4: runtime captures refreshed 2026-10-01 after GOAL-009 (P-005 research-result-is-not-a-gate distinction, managed-placeholder rendering on install, managed-block suffix preservation). Evidence files live under releases/runtime/v0.13.4/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+      },
+      {
+        "id": "grok-build-cli",
+        "kind": "host-adapter",
+        "host": {
+          "product": "Grok Build CLI",
+          "version": "1.0.44",
+          "build": "3cd0d0cbce",
+          "platform": "Windows 11",
+          "installationSurface": ".grok/skills/govern and .grok/skills/audit and vision skill/prompt"
+        },
+        "supportsProtocol": {
+          "minInclusive": "0.1.0",
+          "maxExclusive": "0.2.0"
+        },
+        "supportCommitment": "committed",
+        "contractVerificationStatus": "verified",
+        "entrypoints": [
+          {
+            "name": "govern",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/grok-build-cli-govern-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "audit",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/grok-build-cli-audit-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "vision",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/grok-build-cli-vision-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "vision-audit",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/grok-build-cli-vision-audit-2026-10-01.json"
+            ]
+          }
+        ],
+        "evidenceScope": "Candidate v0.13.4: runtime captures refreshed 2026-10-01 after GOAL-009 (P-005 research-result-is-not-a-gate distinction, managed-placeholder rendering on install, managed-block suffix preservation). Evidence files live under releases/runtime/v0.13.4/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+      },
+      {
+        "id": "github-copilot-cli",
+        "kind": "host-adapter",
+        "host": {
+          "product": "GitHub Copilot CLI",
+          "version": "1.0.75",
+          "platform": "Windows 11",
+          "installationSurface": "%APPDATA%/npm/@github/copilot and vision skill/prompt"
+        },
+        "supportsProtocol": {
+          "minInclusive": "0.1.0",
+          "maxExclusive": "0.2.0"
+        },
+        "supportCommitment": "committed",
+        "contractVerificationStatus": "verified",
+        "entrypoints": [
+          {
+            "name": "govern",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/github-copilot-cli-govern-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "audit",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/github-copilot-cli-audit-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "vision",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/github-copilot-cli-vision-2026-10-01.json"
+            ]
+          },
+          {
+            "name": "vision-audit",
+            "status": "runtime-verified",
+            "evidence": [
+              "docs/releases/runtime/v0.13.4/github-copilot-cli-vision-audit-2026-10-01.json"
+            ]
+          }
+        ],
+        "evidenceScope": "Candidate v0.13.4: runtime captures refreshed 2026-10-01 after GOAL-009 (P-005 research-result-is-not-a-gate distinction, managed-placeholder rendering on install, managed-block suffix preservation). Evidence files live under releases/runtime/v0.13.4/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+      }
+    ],
+    "uncovered": []
+  }
+}

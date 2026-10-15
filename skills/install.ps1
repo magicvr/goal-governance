@@ -449,6 +449,11 @@ function Install-CoreDocs {
     $methodologyDest = Join-Path $TargetDir ($script:MethodologyToken -replace '/', '\')
     Write-Host "Installing core methodology -> .\$($script:MethodologyToken)\ (architecture + templates + vision rules + README)"
     Copy-RuleFile -Source $readme -Destination (Join-Path $methodologyDest 'README.md')
+    # Recommended in consumer installs; older packages may omit this guide.
+    $bootstrapGuide = Join-Path $coreDocs 'standalone-bootstrap.md'
+    if (Test-Path -LiteralPath $bootstrapGuide -PathType Leaf) {
+        Copy-RuleFile -Source $bootstrapGuide -Destination (Join-Path $methodologyDest 'standalone-bootstrap.md')
+    }
     Copy-DirMerge -Source $arch -Destination (Join-Path $methodologyDest 'architecture') -Label 'core architecture'
     Copy-DirMerge -Source $templates -Destination (Join-Path $methodologyDest 'templates') -Label 'core templates'
     Copy-DirMerge -Source $vision -Destination (Join-Path $methodologyDest 'vision') -Label 'core vision rules'

@@ -45,6 +45,7 @@ def _mini_repo(base: Path) -> Path:
     _write(docs / "templates" / "workspace-context.md", "# ws\n")
     _write(docs / "templates" / "README.md", "# tmpl\n")
     _write(docs / "vision" / "alignment.md", "# align\n")
+    _write(docs / "standalone-bootstrap.md", "# standalone guide\n")
     _write(docs / "contracts" / "skills-consumer-contract.json", "{}\n")
     # Hand-maintained consumer files required by stage
     _write(skills / "core" / "docs" / "README.md", "# slim\n")
@@ -71,6 +72,10 @@ class StageSkillsMirrorsTests(unittest.TestCase):
                 (root / "docs" / "contracts" / "skills-consumer-contract.json").read_bytes(),
                 (root / "skills" / "contracts" / "skills-consumer-contract.json").read_bytes(),
             )
+            self.assertEqual(
+                (root / "docs" / "standalone-bootstrap.md").read_bytes(),
+                (root / "skills" / "core" / "docs" / "standalone-bootstrap.md").read_bytes(),
+            )
             self.assertFalse(
                 (root / "skills" / "core" / "docs" / "architecture" / "tech-stack.md").is_file()
             )
@@ -86,10 +91,13 @@ class StageSkillsMirrorsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = _mini_repo(Path(tmp))
             stage.stage_skills_mirrors(root, check=False, dry_run=False)
-            mirror = root / "skills" / "core" / "docs" / "architecture" / "principles.md"
-            mirror.write_text("# drifted\n", encoding="utf-8")
-            with self.assertRaises(stage.StageSkillsError):
-                stage.stage_skills_mirrors(root, check=True, dry_run=False)
+            for relative in ("architecture/principles.md", "standalone-bootstrap.md"):
+                with self.subTest(relative=relative):
+                    mirror = root / "skills" / "core" / "docs" / relative
+                    mirror.write_text("# drifted\n", encoding="utf-8")
+                    with self.assertRaises(stage.StageSkillsError):
+                        stage.stage_skills_mirrors(root, check=True, dry_run=False)
+                    stage.stage_skills_mirrors(root)
 
     def test_repo_root_stage_check_clean_after_write(self) -> None:
         if not (REPO_ROOT / "docs" / "architecture" / "principles.md").is_file():

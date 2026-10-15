@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-08-10
-version: 0.8.0
+updated: 2026-10-15
+version: 0.8.1
 parent: null
 ---
 
@@ -27,7 +27,7 @@ parent: null
 
 ### 0.2 完整安装与冷启动
 
-1. 完整安装文件集以本节 **Minimal Complete Install（MUST）** 为**唯一权威**；[consumer-checklist.md](consumer-checklist.md)、[standalone-bootstrap.md](../standalone-bootstrap.md)、[principles P-006 §6.2](../architecture/principles.md#62-完整安装与冷启动) **必须同表**，禁止三处各写「建议/必含」分裂定义。缺任一 MUST 行 = **不完整安装**。
+1. 完整安装文件集以本节 **Minimal Complete Install（MUST）** 为**唯一权威**；[consumer-checklist.md](consumer-checklist.md)、[独立启用说明](../standalone-bootstrap.md)、[principles P-006 §6.2](../architecture/principles.md#62-完整安装与冷启动) 的完整安装判定**必须同表**，禁止三处各写「建议/必含」分裂定义。独立启用说明随消费包分发，文件本身为 **Recommended**；缺少说明不构成不完整安装，也不阻断推进。一致性要求约束其内容，不新增 MUST。缺任一 MUST 行 = **不完整安装**。
 2. **法定顺序（严格串行）**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（`plan_refs` + `primary_plan`）→ 区内纲领路线图与子目标。
 3. **缺 Charter**：仅允许**引导补齐**；拒绝非引导开区、推进、放行、关门；须报告不完整安装。
 4. **legacy** 无 vision：不完整；补齐前不得新开显式区或放行/关门（只读与引导除外）。
@@ -59,6 +59,7 @@ parent: null
 | 工作区 | 显式 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` | **MUST**（开区后） | 含必填 `plan_refs` / `primary_plan` |
 | 目标 | 工作区根 `goal-tree.md` + Root 五件套 | **MUST**（开区后） | Root `parent: null` |
 | 方法论（可选扩展） | `{governance_root}/architecture/overview.md`、`directory-layout.md` 等 | Recommended | 增强可读性，不替代 MUST |
+| 操作说明 | `{governance_root}/standalone-bootstrap.md` | Recommended | 随 core-only / Skills 包分发并安装；可离线核对，缺少说明不阻断完整安装或推进 |
 | 实例 dogfood | 他仓过程树、本仓历史 GOAL 附件 | 勿复制 | 不是完整安装条件 |
 
 **半安装**：仅有 architecture/templates、无 Charter 或无上表愿景树 MUST 文件 → 只可读原则，**不得**记为完整独立启用通过，也不得非引导推进/放行/关门。
