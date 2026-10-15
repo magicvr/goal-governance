@@ -19,7 +19,7 @@ progress: 67%
 
 - [x] 消费包中的相关引用在实际分发与安装布局中可用，一致性规则可核对。
 - [x] canonical、stage 镜像、打包与安装路径一致；有隔离消费验证和防回归覆盖。
-- [ ] self 与指定 provider 的 independent 意见已落盘，相关 required findings 合法闭合。
+- [x] self 与指定 provider 的 independent 意见已落盘，相关 required findings 合法闭合。
 - [ ] 修复已交付至 GitHub，issue #24 已关闭且状态经回读确认。
 
 ## 纲领路线图（P-001）
@@ -44,7 +44,7 @@ S1 → S2 → S3 串行。范围涉及文档协议与分发/安装两个表面�
 
 ## 审计模式
 
-`cross`：涉及消费分发契约及完整安装规则表述，需 self + 至少一个用户指定 provider 的 independent。provider = 用户指定 Codex 独立子代理（干净上下文，L0）。A-001 self 候选验证 pass；independent 尚待执行。
+`cross`：涉及消费分发契约及完整安装规则表述，需 self + 至少一个用户指定 provider 的 independent。provider = 用户指定 Codex 独立子代理（干净上下文，L0）。A-001 self 与 A-002 independent 均 pass；A-003 响应 F-001 fixed，开放 required/recommended = 0。最终交付/关闭仍待 S3。
 
 ## 父目标与证据
 

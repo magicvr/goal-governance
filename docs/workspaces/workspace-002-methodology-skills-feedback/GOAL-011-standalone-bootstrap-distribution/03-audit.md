@@ -25,5 +25,7 @@ version: 0.1.0
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
 | A-001 | 2026-10-15 | self | S1/S2 候选验证 | pass | 0 | [A-001](03-audit/A-001-self-candidate-validation.md) |
+| A-002 | 2026-10-15 | independent | S1/S2 独立候选审计 | pass | 0 | [A-002](03-audit/A-002-independent-candidate-review.md) |
+| A-003 | 2026-10-15 | self | cross 响应、F-001 fixed | pass | 0 | [A-003](03-audit/A-003-cross-response.md) |
 
-cross = self + 用户指定 provider 的 independent。A-001 仅为候选自审，独立意见与交付/关门尚待 S3。
+cross 候选审计完成：A-001/A-002 pass，A-003 响应 F-001 fixed，开放 required/recommended = 0。交付/关门与 I-005 尚待 S3，不以候选意见替代。

@@ -3,8 +3,10 @@ from __future__ import annotations
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 
@@ -176,6 +178,57 @@ class StandaloneBootstrapTests(unittest.TestCase):
                 text=True,
             )
             self.assertEqual(result.stdout.strip(), "true")
+
+    def test_core_zip_bootstraps_without_producer_checkout_files(self) -> None:
+        """Use only released core files during cold start (GOAL-011 A-002 F-001)."""
+        with tempfile.TemporaryDirectory(prefix="gg-core-zip-bootstrap-") as tmp:
+            base = Path(tmp)
+            subprocess.run(
+                [sys.executable, str(REPO_ROOT / "scripts" / "pack_core_release.py"),
+                 "--version", "0.0.0-testpack", "--output-dir", str(base / "dist"),
+                 "--skip-stage"],
+                check=True, capture_output=True, text=True,
+            )
+            archive = base / "dist" / "goal-governance-core-v0.0.0-testpack.zip"
+            with zipfile.ZipFile(archive) as zf:
+                zf.extractall(base / "unpacked")
+            source = base / "unpacked" / "goal-governance-core-v0.0.0-testpack"
+            self.assertFalse((source / "AGENTS.md").exists())
+            self.assertFalse((source / "scripts").exists())
+            target = base / "consumer"
+            target.mkdir()
+            self._init_git_repo(target)
+            shutil.copytree(source / "docs", target / "docs")
+            # The guide calls for project-owned equivalent rules, not producer AGENTS.
+            common = {"status": "active", "created": DATE, "updated": DATE,
+                      "parent": "null", "version": "0.1.0"}
+            (target / "AGENTS.md").write_text(self._frontmatter(
+                common, "# 项目规则\n\n遵守 docs/architecture/principles.md、"
+                "workspace-protocol.md 与 docs/vision/alignment.md。\n"
+            ), encoding="utf-8")
+            self._materialize_vision(target)
+            vision = target / "docs" / "vision"
+            for name in ("revisions.md", "workspaces.md", "consumer-checklist.md"):
+                (vision / name).write_text(self._frontmatter(
+                    common, "# 项目治理索引\n\n完整安装对照 alignment.md §0.2 MUST 表。\n"
+                ), encoding="utf-8")
+            templates = target / "docs" / "templates" / "vision"
+            shutil.copy2(templates / "reviews-index.md", vision / "reviews.md")
+            (vision / "roadmap.md").write_text(self._frontmatter(
+                common, f"# 组合编排\n\n本地意图：{VP_ID}。\n"
+            ), encoding="utf-8")
+            self._materialize_root(target)
+            self._materialize_workspace(target)
+            self._assert_vision_shape(target)
+            self._assert_root_shape(target)
+            self._assert_workspace_shape(target)
+            for name in ("README.md", "alignment.md", "roadmap.md", "revisions.md",
+                         "reviews.md", "workspaces.md", "consumer-checklist.md"):
+                self.assertTrue((vision / name).is_file(), msg=name)
+            guide = target / "docs" / "standalone-bootstrap.md"
+            self.assertEqual(guide.read_bytes(), (source / "docs" / guide.name).read_bytes())
+            self.assertFalse((target / "skills").exists())
+            self.assertFalse((target / "web").exists())
 
     @staticmethod
     def _init_git_repo(target: Path) -> None:

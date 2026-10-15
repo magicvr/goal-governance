@@ -41,6 +41,8 @@ test_mcp_config_schema_ships_with_package (test_governance_root_canonical.Govern
 test_root_agents_defines_governance_root (test_governance_root_canonical.GovernanceRootCanonicalTests.test_root_agents_defines_governance_root) ... ok
 test_templates_are_governance_root_relative (test_governance_root_canonical.GovernanceRootCanonicalTests.test_templates_are_governance_root_relative) ... ok
 test_workspace_protocol_defines_governance_root (test_governance_root_canonical.GovernanceRootCanonicalTests.test_workspace_protocol_defines_governance_root) ... ok
+test_core_zip_bootstraps_without_producer_checkout_files (test_standalone_bootstrap.StandaloneBootstrapTests.test_core_zip_bootstraps_without_producer_checkout_files)
+Use only released core files during cold start (GOAL-011 A-002 F-001). ... ok
 test_docs_entry_declares_package_version_and_sync_ledger (test_standalone_bootstrap.StandaloneBootstrapTests.test_docs_entry_declares_package_version_and_sync_ledger) ... ok
 test_empty_git_repo_can_bootstrap_core_root_without_adapters (test_standalone_bootstrap.StandaloneBootstrapTests.test_empty_git_repo_can_bootstrap_core_root_without_adapters) ... ok
 test_guide_declares_core_sources_and_boundaries (test_standalone_bootstrap.StandaloneBootstrapTests.test_guide_declares_core_sources_and_boundaries) ... ok
@@ -90,6 +92,6 @@ test_workspace_reference_mismatch_is_rejected (test_workspace_protocol.Workspace
 test_workspace_template_declares_the_required_context_contract (test_workspace_protocol.WorkspaceProtocolTests.test_workspace_template_declares_the_required_context_contract) ... ok
 
 ----------------------------------------------------------------------
-Ran 66 tests in 1.020s
+Ran 67 tests in 0.974s
 
 OK
