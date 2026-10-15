@@ -12,6 +12,10 @@ version: 0.41.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-15 · GOAL-012 候选就绪
+
+版本清单、38 对镜像、runtime 校验、完整 rehearsal 及本地两 ZIP 核对通过；A-001 Codex independent pass、A-002 响应无开放 required。S2 完成，active / 50%（2/4），进入 S3 PR/CI/main/tag/gated 发布。S4 真实资产验收尚未发生。Root progress 仍为 67%。
+
 ## 2026-10-15 · GOAL-012 发布立项
 
 用户要求发布新版本资产。创建 GOAL-012-release-v0-13-5（active / 25%，S1～S4 1/4），按兼容性 patch v0.13.5 准备正式 Release。既有 12+4 runtime captures 经校验可复用，保留原日期和路径；独立审计沿用会话指定 Codex 子代理。现有 release 环境人工 reviewer + 5 分钟 wait timer 保留。Root R3 active、progress 67%；下一编号 GOAL-013。
@@ -256,7 +260,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
 ├── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
 ├── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
-└── GOAL-012-release-v0-13-5                  [active]  v0.13.5 正式发布与消费资产验收  progress 25%
+└── GOAL-012-release-v0-13-5                  [active]  v0.13.5 正式发布与消费资产验收  progress 50%
 ```
 
 ## 状态表
@@ -274,7 +278,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
-| GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-10-15 |
+| GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-10-15 |
 
 ## 编号
 
