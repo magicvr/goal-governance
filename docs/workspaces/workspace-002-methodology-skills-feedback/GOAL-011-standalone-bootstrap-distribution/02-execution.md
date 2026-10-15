@@ -1,7 +1,7 @@
 ---
 id: GOAL-011-standalone-bootstrap-distribution
 doc: execution
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-15
 updated: 2026-10-15
@@ -16,3 +16,4 @@ version: 0.1.0
 | E-002 | 2026-10-15 | 方案与独立审计 provider 冻结 | recorded | [E-002](02-execution/E-002-plan-freeze.md) |
 | E-003 | 2026-10-15 | 分发与安装实现及 S2 验证 | recorded | [E-003](02-execution/E-003-implementation-and-validation.md) |
 | E-004 | 2026-10-15 | 独立审计与真实 ZIP 冷启动补测 | recorded | [E-004](02-execution/E-004-cross-audit-and-recommendation.md) |
+| E-005 | 2026-10-15 | GitHub 修复交付与 issue 关闭回执 | recorded | [E-005](02-execution/E-005-github-delivery-and-close.md) |

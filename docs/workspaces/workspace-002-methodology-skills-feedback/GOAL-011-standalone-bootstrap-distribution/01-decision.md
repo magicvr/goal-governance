@@ -1,7 +1,7 @@
 ---
 id: GOAL-011-standalone-bootstrap-distribution
 doc: decision
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-15
 updated: 2026-10-15
@@ -16,3 +16,4 @@ version: 0.1.0
 |------|------|------|------|------|
 | D-001 | 2026-10-15 | 承接 issue #24 与初始边界 | accepted | [D-001](01-decision/D-001-issue-scope.md) |
 | D-002 | 2026-10-15 | 方案 A 与 Codex 独立子代理 | accepted | [D-002](01-decision/D-002-solution-and-provider.md) |
+| D-003 | 2026-10-15 | 修复交付后的目标关门 | accepted | [D-003](01-decision/D-003-close-out.md) |

@@ -4,8 +4,8 @@ doc: execution
 status: active
 parent: null
 created: 2026-07-31
-updated: 2026-09-30
-version: 1.6.0
+updated: 2026-10-15
+version: 1.6.1
 ---
 
 # 执行记录 · GOAL-001
@@ -18,6 +18,7 @@ version: 1.6.0
 |------|------|------|------|------|
 | E-001 | 2026-09-13 | 创建 GOAL-008 承接第二批消费仓痛点 | recorded | `02-execution/E-001-goal-008-created.md` |
 | E-002 | 2026-09-30 | 创建 GOAL-009 承接第三批使用反馈 | recorded | `02-execution/E-002-goal-009-created.md` |
+| E-003 | 2026-10-15 | issue 24 修复与 GOAL-011 关门 | recorded | [E-003](02-execution/E-003-goal-011-closed.md) |
 
 ## 时间线
 

@@ -2,7 +2,7 @@
 id: D-001
 goal: GOAL-011-standalone-bootstrap-distribution
 doc: decision
-title: 承接 issue #24 与初始边界
+title: "承接 issue #24 与初始边界"
 status: accepted
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-15
