@@ -1,9 +1,9 @@
 {
   "reportFormat": "goal-governance.compatibility-report",
   "reportFormatVersion": "1.0.0",
-  "generatedAt": "2026-10-15T05:31:08.707862Z",
+  "generatedAt": "2026-10-15T05:35:03.337097Z",
   "source": {
-    "commit": "ecb243ecb6b3940145c2a31e7739460e7cd023dc",
+    "commit": "15413cc7a04282a01d5ac909d6cd0903adfbc26c",
     "branch": "codex/issue-24-bootstrap-guide",
     "tagsAtHead": []
   },
