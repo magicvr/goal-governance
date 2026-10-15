@@ -1,0 +1,73 @@
+Offline mode: using local zip <download>\goal-governance-skills-v0.13.5.zip
+SHA-256 OK: goal-governance-skills-v0.13.5.zip
+Materialized skills package: <download>\consumer\skills
+Running package install: install.ps1 -All -NonInteractive -Force
+Project root:  <download>\consumer
+Skills dir:    <download>\consumer\skills
+Package root:  <download>\consumer\skills
+
+Merged managed block: <download>\consumer\AGENTS.md
+Installed: <download>\consumer\.claude\skills\govern\SKILL.md
+Installed: <download>\consumer\.claude\skills\audit\SKILL.md
+Installed: <download>\consumer\.claude\skills\vision\SKILL.md
+Installed: <download>\consumer\.claude\skills\vision-audit\SKILL.md
+Installed: <download>\consumer\.claude\skills\commit\SKILL.md
+Claude skills: /govern + /audit + /vision + /vision-audit
+Installed: <download>\consumer\.grok\skills\govern\SKILL.md
+Installed: <download>\consumer\.grok\skills\audit\SKILL.md
+Installed: <download>\consumer\.grok\skills\vision\SKILL.md
+Installed: <download>\consumer\.grok\skills\vision-audit\SKILL.md
+Installed: <download>\consumer\.grok\skills\commit\SKILL.md
+Grok skills: /govern + /audit + /vision + /vision-audit
+Already present (managed block unchanged): <download>\consumer\AGENTS.md
+Installed: <download>\consumer\.agents\skills\govern\SKILL.md
+Installed: <download>\consumer\.agents\skills\audit\SKILL.md
+Installed: <download>\consumer\.agents\skills\vision\SKILL.md
+Installed: <download>\consumer\.agents\skills\vision-audit\SKILL.md
+Installed: <download>\consumer\.agents\skills\commit\SKILL.md
+Codex skills: $govern + $audit + $vision + $vision-audit under .agents/skills/
+Installed: <download>\consumer\.github\copilot-instructions.md
+Copilot slash surface: /govern + /audit + /vision + /vision-audit (governance-must)
+Convenience entry: /commit (default-installed; NOT a governance-must entrypoint)
+Installed: <download>\consumer\.github\prompts\govern.prompt.md
+Installed: <download>\consumer\.github\prompts\audit.prompt.md
+Installed: <download>\consumer\.github\prompts\vision.prompt.md
+Installed: <download>\consumer\.github\prompts\vision-audit.prompt.md
+Installed: <download>\consumer\.github\prompts\commit.prompt.md
+Already present: <download>\consumer\skills\prompts\  (from prompts)
+Installed: <download>\consumer\skills\templates\  (from templates)
+Already present: <download>\consumer\skills\contracts\skills-consumer-contract.json
+Already present: <download>\consumer\skills\contracts\skills-consumer-contract.schema.json
+Consumer contract profile: contract + schema only; producer runtime evidence remains release-owned.
+Installing core methodology -> .\docs\ (architecture + templates + vision rules + README)
+Installed: <download>\consumer\docs\README.md
+Installed: <download>\consumer\docs\standalone-bootstrap.md
+Installed: <download>\consumer\docs\architecture\  (from core architecture)
+Installed: <download>\consumer\docs\templates\  (from core templates)
+Installed: <download>\consumer\docs\vision\  (from core vision rules)
+
+Done.
+
+Next steps:
+  1. Review installed rule file(s) and docs\architecture (core methodology; required).
+  2. Create workspace skeleton (pick one):
+     - /govern S0 (AI asks for slugs), or
+     - re-run install with -InitWorkspace -WorkspaceSlug S -RootSlug S
+    3. DEFAULT user path: /govern (impl) + /audit (Goal cross-audit) + /vision (decision) + /vision-audit (independent Vision Review)
+     - Methodology: .\docs\architecture\principles.md
+     - Orchestrator: <download>\consumer\skills\prompts\00-govern-orchestrator.md
+     - Cross-audit: <download>\consumer\skills\prompts\05-independent-audit.md
+     - Vision: <download>\consumer\skills\prompts\06-vision-orchestrator.md
+    - Independent Vision Review: <download>\consumer\skills\prompts\07-independent-vision-review.md
+     - Contract: <download>\consumer\skills\contracts\skills-consumer-contract.json
+    - Claude: /govern + /audit + /vision + /vision-audit under .\.claude\skills\
+    - Grok:   /govern + /audit + /vision + /vision-audit under .\.grok\skills\
+    - Codex:  $govern + $audit + $vision + $vision-audit under .\.agents\skills\
+    - Copilot: govern + audit + vision + vision-audit prompts
+  4. Advanced Copilot form-filling slashes only if you used -WithPrimitives.
+  5. Cold start: /vision (Charter->VP) then /govern (workspace+Root).
+
+Project root:  <download>\consumer
+Skills dir:    <download>\consumer\skills
+Package root:  <download>\consumer\skills
+Bootstrap complete.

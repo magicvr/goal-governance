@@ -1,0 +1,422 @@
+{
+  "tag": "v0.13.5",
+  "tagObject": "14afdb080c37561cf0a5e3a7f6b0cba6c52caf50",
+  "tagType": "annotated",
+  "commit": "1a6668e6b791b63af1caded0924335db7bd00aac",
+  "sourcePullRequest": {
+    "number": 27,
+    "url": "https://github.com/magicvr/goal-governance/pull/27",
+    "state": "MERGED",
+    "mergedAt": "2026-10-15T06:10:59Z"
+  },
+  "ci": [
+    {
+      "runId": 38690508297,
+      "event": "pull_request",
+      "conclusion": "success"
+    },
+    {
+      "runId": 38690908662,
+      "event": "push",
+      "branch": "main",
+      "conclusion": "success"
+    }
+  ],
+  "workflow": {
+    "url": "https://github.com/magicvr/goal-governance/actions/runs/38691121485",
+    "headSha": "1a6668e6b791b63af1caded0924335db7bd00aac",
+    "headBranch": "v0.13.5",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {
+      "name": "pack",
+      "conclusion": "success",
+      "url": "https://github.com/magicvr/goal-governance/actions/runs/38691121485/job/116277024176",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Resolve pack version",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stage skills mirrors (GOAL-022)",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install check dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Evidence consistency gate (M-001)",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pack unit tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Pack skills + core zips and stage bootstrap scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload pack artifacts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "Publish GitHub Release (gated)",
+      "conclusion": "success",
+      "url": "https://github.com/magicvr/goal-governance/actions/runs/38691121485/job/116277093165",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Ensure annotated tag is visible",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install check dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Hard release-evidence gate (fail closed)",
+          "conclusion": "success"
+        },
+        {
+          "name": "Download pack artifact",
+          "conclusion": "success"
+        },
+        {
+          "name": "Log in to GitHub Container Registry",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build and push MCP server Docker image (GHCR)",
+          "conclusion": "success"
+        },
+        {
+          "name": "Create GitHub Release if missing",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload release assets",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build and push MCP server Docker image (GHCR)",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Log in to GitHub Container Registry",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "environmentReviewHistory": [
+    {
+      "actor": "magicvr",
+      "state": "skipped",
+      "comment": "",
+      "environments": [
+        "release"
+      ]
+    },
+    {
+      "actor": "magicvr",
+      "state": "skipped",
+      "comment": "",
+      "environments": [
+        "release"
+      ]
+    }
+  ],
+  "environmentProtectionReadback": {
+    "reviewer": "magicvr",
+    "waitTimerMinutes": 5,
+    "canAdminsBypass": true,
+    "aiApprovedOrBypassed": false,
+    "aiChangedConfiguration": false
+  },
+  "release": {
+    "tagName": "v0.13.5",
+    "url": "https://github.com/magicvr/goal-governance/releases/tag/v0.13.5",
+    "publishedAt": "2026-10-15T06:14:48Z",
+    "isDraft": false,
+    "isPrerelease": false
+  },
+  "assets": [
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888392",
+      "contentType": "text/markdown; charset=utf-8",
+      "createdAt": "2026-10-15T06:14:49Z",
+      "digest": "sha256:503a1824e794f8763b13b9898fa52a5c0fbae9909243ec8498dcdb743c3047d8",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLI",
+      "label": "",
+      "name": "bootstrap-README.md",
+      "size": 6052,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:49Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/bootstrap-README.md"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888388",
+      "contentType": "application/json",
+      "createdAt": "2026-10-15T06:14:49Z",
+      "digest": "sha256:fd4e31bada040e75ede192c87b9d3af8c8d9695c9cc5981513bb0d3de49ee200",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLE",
+      "label": "",
+      "name": "compatibility-report.json",
+      "size": 10705,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:49Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/compatibility-report.json"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888385",
+      "contentType": "application/zip",
+      "createdAt": "2026-10-15T06:14:49Z",
+      "digest": "sha256:f74a1c5c94d3392970582d183299093b2fda689a7903a82dcaaf6be53349ac2a",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLB",
+      "label": "",
+      "name": "goal-governance-core-v0.13.5.zip",
+      "size": 68866,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:49Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/goal-governance-core-v0.13.5.zip"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888391",
+      "contentType": "application/octet-stream",
+      "createdAt": "2026-10-15T06:14:49Z",
+      "digest": "sha256:fc7f0f461cf8130f84d147397d16a63c4d2052387b1dc6b52ad376a0f0bf63eb",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLH",
+      "label": "",
+      "name": "goal-governance-core-v0.13.5.zip.sha256",
+      "size": 99,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:49Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/goal-governance-core-v0.13.5.zip.sha256"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888389",
+      "contentType": "application/zip",
+      "createdAt": "2026-10-15T06:14:49Z",
+      "digest": "sha256:b164f20c7e9ff6bbc1f85cf4c4e1dff7fb419b39ef53bbdfcac3d7e6f2cd8900",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLF",
+      "label": "",
+      "name": "goal-governance-skills-v0.13.5.zip",
+      "size": 266109,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:49Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/goal-governance-skills-v0.13.5.zip"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888410",
+      "contentType": "application/octet-stream",
+      "createdAt": "2026-10-15T06:14:50Z",
+      "digest": "sha256:16e4dd219606994d73331ba149d720530be818f01e2a4760033937751da8af46",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLa",
+      "label": "",
+      "name": "goal-governance-skills-v0.13.5.zip.sha256",
+      "size": 101,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:50Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/goal-governance-skills-v0.13.5.zip.sha256"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888409",
+      "contentType": "application/x-powershell",
+      "createdAt": "2026-10-15T06:14:50Z",
+      "digest": "sha256:89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLZ",
+      "label": "",
+      "name": "install-online.ps1",
+      "size": 12737,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:50Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/install-online.ps1"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888411",
+      "contentType": "application/x-shellscript",
+      "createdAt": "2026-10-15T06:14:50Z",
+      "digest": "sha256:86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLb",
+      "label": "",
+      "name": "install-online.sh",
+      "size": 10400,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:50Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/install-online.sh"
+    },
+    {
+      "apiUrl": "https://api.github.com/repos/magicvr/goal-governance/releases/assets/642888412",
+      "contentType": "application/json",
+      "createdAt": "2026-10-15T06:14:50Z",
+      "digest": "sha256:bab8e8e372900209c9cf3f0860b921aac4158c4eb9d0d9141f45cca10c7da2c9",
+      "downloadCount": 0,
+      "id": "RA_kwDOTbrmRs4mUbLc",
+      "label": "",
+      "name": "release-evidence.json",
+      "size": 119646,
+      "state": "uploaded",
+      "updatedAt": "2026-10-15T06:14:50Z",
+      "url": "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/release-evidence.json"
+    }
+  ],
+  "localStrictGate": {
+    "checksPassed": true,
+    "source": {
+      "commit": "1a6668e6b791b63af1caded0924335db7bd00aac",
+      "branch": "codex/release-v0.13.5",
+      "annotatedTag": "v0.13.5",
+      "tagObject": "14afdb080c37561cf0a5e3a7f6b0cba6c52caf50"
+    },
+    "rawSha256": "7d4913544da8d86fb9b91e00fac624c0abb7bb805548ec1dd3d1b184ce78a216"
+  },
+  "publishedEvidence": {
+    "checksPassed": true,
+    "source": {
+      "commit": "1a6668e6b791b63af1caded0924335db7bd00aac",
+      "branch": null,
+      "annotatedTag": "v0.13.5",
+      "tagObject": "14afdb080c37561cf0a5e3a7f6b0cba6c52caf50"
+    },
+    "candidateRevision": "v0.13.5",
+    "releaseStatus": "release-candidate",
+    "sha256": "bab8e8e372900209c9cf3f0860b921aac4158c4eb9d0d9141f45cca10c7da2c9",
+    "checks": [
+      {
+        "name": "skills-contract-tests",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "skills/tests/test_skills_orchestrator.py",
+          "-v"
+        ],
+        "exitCode": 0,
+        "passed": true,
+        "outputSha256": "86f3da0125fd7882785af3937cbe32a262494d0f5daa11f3d93438c319ff6c8c"
+      },
+      {
+        "name": "standalone-bootstrap-tests",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/tests",
+          "-p",
+          "test_standalone_bootstrap.py",
+          "-v"
+        ],
+        "exitCode": 0,
+        "passed": true,
+        "outputSha256": "6cca0db88ddb76dfb49738eb0d6afa78711592b315713e1427217131517a63ed"
+      },
+      {
+        "name": "release-evidence-tool-tests",
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "scripts/tests",
+          "-p",
+          "test_*.py",
+          "-v"
+        ],
+        "exitCode": 0,
+        "passed": true,
+        "outputSha256": "8dac02ae0e96fb5a6d7b982f04b85ec52877c4ebfdcdc608fdedce4061e21132"
+      },
+      {
+        "name": "diff-whitespace",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "passed": true,
+        "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "ghcr": {
+    "tagsPushed": [
+      "ghcr.io/magicvr/goal-governance-mcp-server:0.13.5",
+      "ghcr.io/magicvr/goal-governance-mcp-server:latest"
+    ],
+    "digest": "sha256:d315fe4296d95ee386e8a572b66a5aff66516f1e9e9cf24bf7de9d19c88a0a03",
+    "actualVersionPullAndExecution": {
+      "image": "ghcr.io/magicvr/goal-governance-mcp-server:0.13.5",
+      "pulledDigest": "sha256:d315fe4296d95ee386e8a572b66a5aff66516f1e9e9cf24bf7de9d19c88a0a03",
+      "matchesPublishDigest": true,
+      "reportedVersion": "0.13.5",
+      "versionCommand": "docker run --rm ghcr.io/magicvr/goal-governance-mcp-server:0.13.5 -c 'import __init__; print(__init__.__version__)'",
+      "versionExitCode": 0
+    }
+  }
+}
