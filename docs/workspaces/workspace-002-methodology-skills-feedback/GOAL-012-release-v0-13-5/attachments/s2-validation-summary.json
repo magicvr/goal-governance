@@ -1,0 +1,80 @@
+{
+  "kind": "local-rehearsal-not-release",
+  "source": {
+    "commit": "12b7ad9b889ce01bf3160944fb53f386d1600d37",
+    "branch": "codex/release-v0.13.5",
+    "annotatedTag": null,
+    "tagObject": null
+  },
+  "candidateRevision": "v0.13.5",
+  "checksPassed": true,
+  "rawEvidenceSha256": "9ae5a8353cafba4cb290f7138848197df839fe1909bd04076071ff9d0b6ab07d",
+  "checks": [
+    {
+      "name": "skills-contract-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "skills/tests/test_skills_orchestrator.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "83700e0d2ab5bcf841973023f84b334b2cb74a086198bd6490ffc96da2fee789"
+    },
+    {
+      "name": "standalone-bootstrap-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/tests",
+        "-p",
+        "test_standalone_bootstrap.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "0e5b97a96408f2e4ed6e97b837e00822a84e3b97f8411dbbbb0108b21a7ba0b8"
+    },
+    {
+      "name": "release-evidence-tool-tests",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "0e0a8b10d499022f33d3d3d108f6e9e5359ff79c6eb679bcfac2dcf0c07d7f88"
+    },
+    {
+      "name": "diff-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "docsTests": {
+    "count": 67,
+    "passed": true
+  },
+  "candidateArchives": {
+    "goal-governance-core-v0.13.5.zip": "ccb0ce20b56dcf1ec0bb41884772d0942104cce670241ba113ef5b3d977be0a3",
+    "goal-governance-skills-v0.13.5.zip": "8fc7d107eb62def1977478565440f83916368e652653166f8972d249cc70ec05"
+  }
+}

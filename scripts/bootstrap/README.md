@@ -2,9 +2,9 @@
 title: Bootstrap installers · dual entry point (online)
 status: active
 created: 2026-07-30
-updated: 2026-08-07
+updated: 2026-10-15
 parent: null
-version: 0.3.0
+version: 0.3.1
 ---
 
 # Bootstrap installers (GOAL-023 / VP-004 R2 dual entry)
@@ -76,22 +76,22 @@ bash scripts/bootstrap/install-online.sh \
 
 ## Online (Release)
 
-**Docs pin the current formal release** (currently **`v0.13.4`**). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
+**Installation version pin: `v0.13.5`** (formal identity is established by its annotated tag and gated Release). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
 
 Fetch bootstrap from the Release, then run (save to disk first; avoid `curl | bash` / `irm | iex` as the default path):
 
 ```powershell
-# Current formal release tag: v0.13.4
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.4/install-online.ps1" `
+# Installation version pin: v0.13.5
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.4 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.5 -Force
 ```
 
 ```bash
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.13.4/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.13.4 --force
+bash ./install-online.sh --version 0.13.5 --force
 ```
 
 URL shape (D-002 / D-003):

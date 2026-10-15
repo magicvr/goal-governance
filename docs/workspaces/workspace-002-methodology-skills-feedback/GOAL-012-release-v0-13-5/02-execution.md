@@ -13,3 +13,4 @@ version: 0.1.0
 | E-ID | 日期 | 标题 | 状态 | 文件 |
 |------|------|------|------|------|
 | E-001 | 2026-10-15 | 发布前只读基线核对 | recorded | [E-001](02-execution/E-001-baseline.md) |
+| E-002 | 2026-10-15 | 版本清单与发布预演 | recorded | [E-002](02-execution/E-002-candidate-manifest-and-rehearsal.md) |

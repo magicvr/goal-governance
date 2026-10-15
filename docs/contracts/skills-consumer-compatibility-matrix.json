@@ -2,7 +2,7 @@
  "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
  "format": "goal-governance.skills-consumer-compatibility-matrix",
  "formatVersion": "1.0.0",
- "candidateRevision": "v0.13.4",
+ "candidateRevision": "v0.13.5",
  "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
  "protocol": {
   "current": "0.1.0",
@@ -75,7 +75,7 @@
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.4: runtime captures refreshed 2026-10-01 after GOAL-009 (P-005 research-result-is-not-a-gate distinction, managed-placeholder rendering on install, managed-block suffix preservation). Evidence files live under releases/runtime/v0.13.4/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.5: reuses immutable runtime captures recorded 2026-10-01 under releases/runtime/v0.13.4/. Protocol and captured behaviorSources remain unchanged and were revalidated for this distribution-only patch; no new host run or capture date is claimed. Formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   },
   {
    "id": "grok-build-cli",
@@ -123,7 +123,7 @@
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.4: runtime captures refreshed 2026-10-01 after GOAL-009 (P-005 research-result-is-not-a-gate distinction, managed-placeholder rendering on install, managed-block suffix preservation). Evidence files live under releases/runtime/v0.13.4/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.5: reuses immutable runtime captures recorded 2026-10-01 under releases/runtime/v0.13.4/. Protocol and captured behaviorSources remain unchanged and were revalidated for this distribution-only patch; no new host run or capture date is claimed. Formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   },
   {
    "id": "github-copilot-cli",
@@ -170,7 +170,7 @@
      ]
     }
    ],
-   "evidenceScope": "Candidate v0.13.4: runtime captures refreshed 2026-10-01 after GOAL-009 (P-005 research-result-is-not-a-gate distinction, managed-placeholder rendering on install, managed-block suffix preservation). Evidence files live under releases/runtime/v0.13.4/; formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
+   "evidenceScope": "Candidate v0.13.5: reuses immutable runtime captures recorded 2026-10-01 under releases/runtime/v0.13.4/. Protocol and captured behaviorSources remain unchanged and were revalidated for this distribution-only patch; no new host run or capture date is claimed. Formal release identity remains gated by merged-main ancestry, annotated tag, and release evidence."
   }
  ],
  "deliveryChannels": [

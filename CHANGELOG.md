@@ -1,10 +1,30 @@
+---
+title: Changelog
+status: active
+created: 2026-07-20
+updated: 2026-10-15
+parent: null
+version: 0.1.0
+---
+
 # Changelog
 
 所有可发布变更以 annotated SemVer tag 和对应的 release evidence 为准。工作树中的“Unreleased”内容不构成发布声明。
 
 ## Unreleased
 
-（空；2026-10-01 发布 v0.13.4。）
+（空；本次 v0.13.5 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.13.5 - 2026-10-15
+
+消费分发修复 patch（issue #24 / [GOAL-011](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-011-standalone-bootstrap-distribution/00-meta.md)，发布由 [GOAL-012](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-012-release-v0-13-5/00-meta.md) 承载）。协议 0.1.0、consumer contract 数据结构及完整安装 MUST 门禁保持。
+
+- canonical 独立启用说明进入 stage、core-only 与 Skills ZIP；包内 README 链接可在离线分发布局中解析。
+- PowerShell/Bash 安装器将说明复制到配置的治理根；受管渲染与 updater 覆盖旧包补齐、手改冲突和失败回滚。
+- 说明为 Recommended，缺失不新增消费仓阻断；补充源码仓、core-only 与已安装 Skills 的操作来源区别。
+- 新增真实 ZIP 相对链接、core-only 冷启动、旧包升级及回滚回归；源码修复 self / Codex independent 审计均 pass，建议项已 fixed。
+- 矩阵 candidateRevision 与安装/GHCR 示例 pin 对齐 v0.13.5；复用原日期、原路径的 v0.13.4 runtime captures，经哈希、协议及完整证据校验，不宣称新宿主运行。
+- 发布身份须由 main merge、annotated v0.13.5、strict release evidence、Environment release 人工审批及真实资产核对建立。
 
 ## 0.13.4 - 2026-10-01
 
