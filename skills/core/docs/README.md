@@ -2,9 +2,9 @@
 title: 文档体系说明（消费方精简入口）
 status: active
 created: 2026-07-18
-updated: 2026-08-06
+updated: 2026-10-15
 parent: null
-version: 0.13.0
+version: 0.13.1
 ---
 
 # docs/ · 文档体系（消费方）
@@ -21,6 +21,7 @@ version: 0.13.0
 ```text
 docs/
 ├── README.md                 # 本文件（消费方精简入口）
+├── standalone-bootstrap.md   # 独立启用说明（Recommended）
 ├── architecture/             # 治理原则与协议（必备）
 │   ├── principles.md         # P-001～P-006
 │   ├── workspace-protocol.md
@@ -73,3 +74,4 @@ docs/
 3. [vision/alignment.md](vision/alignment.md)
 4. [templates/README.md](templates/README.md)
 5. 仓库根 `AGENTS.md`（install 安装）
+6. [standalone-bootstrap.md](standalone-bootstrap.md)（独立启用操作说明；缺少说明不阻断完整安装或推进）

@@ -119,6 +119,9 @@ def list_managed_pairs(package: Path, target: Path, methodology: str) -> list[tu
     }
     for source, destination in fixed.items():
         pairs.append((package / source, target / PurePosixPath(destination)))
+    guide = package / "core" / "docs" / "standalone-bootstrap.md"
+    if guide.is_file():
+        pairs.append((guide, target / PurePosixPath(methodology) / guide.name))
     trees = {
         "install/claude/skills": ".claude/skills",
         "install/grok/skills": ".grok/skills",

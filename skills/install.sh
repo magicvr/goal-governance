@@ -519,6 +519,10 @@ install_core_docs() {
   local methodology_dest="$TARGET_DIR/$METHODOLOGY_TOKEN"
   echo "Installing core methodology → ./$METHODOLOGY_TOKEN/ (architecture + templates + vision rules + README)"
   copy_file "$core_docs/README.md" "$methodology_dest/README.md"
+  # Recommended in consumer installs; older packages may omit this guide.
+  if [[ -f "$core_docs/standalone-bootstrap.md" ]]; then
+    copy_file "$core_docs/standalone-bootstrap.md" "$methodology_dest/standalone-bootstrap.md"
+  fi
   copy_dir_merge "$core_docs/architecture" "$methodology_dest/architecture" "core architecture"
   copy_dir_merge "$core_docs/templates" "$methodology_dest/templates" "core templates"
   copy_dir_merge "$core_docs/vision" "$methodology_dest/vision" "core vision rules"

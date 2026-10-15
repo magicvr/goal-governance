@@ -6,8 +6,8 @@ into skills/core/docs (methodology subset) and skills/contracts.
 
 Operator / AI rule (fail closed in CI if violated):
   After editing any staged canonical path (architecture whitelist, templates/**,
-  vision/alignment.md, contracts/**), run this script, run --check, and commit
-  the skills/core + skills/contracts diff in the same change-set. Do not hand-edit
+  vision/alignment.md, standalone-bootstrap.md, contracts/**), run this script,
+  run --check, and commit the skills/core + skills/contracts diff in the same change-set. Do not hand-edit
   mirror files to clear drift. See AGENTS.md §8c and docs/README.md.
 
 Hand-maintained (never overwritten by stage):
@@ -101,6 +101,12 @@ def planned_pairs(repo_root: Path) -> list[tuple[Path, Path]]:
         (
             docs / "vision" / "alignment.md",
             skills / "core" / "docs" / "vision" / "alignment.md",
+        )
+    )
+    pairs.append(
+        (
+            docs / "standalone-bootstrap.md",
+            skills / "core" / "docs" / "standalone-bootstrap.md",
         )
     )
 

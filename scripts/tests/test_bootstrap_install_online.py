@@ -188,6 +188,12 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
                 msg=proc.stdout,
             )
             self.assertTrue((target / "skills" / "install.ps1").is_file())
+            self.assertEqual(
+                (target / "docs" / "standalone-bootstrap.md").read_bytes(),
+                (REAL_SKILLS / "core" / "docs" / "standalone-bootstrap.md").read_bytes().replace(
+                    b"{governance_root}", b"docs"
+                ),
+            )
             self.assertTrue(
                 (target / ".claude" / "skills" / "govern" / "SKILL.md").is_file()
                 or (target / ".grok" / "skills" / "govern" / "SKILL.md").is_file()

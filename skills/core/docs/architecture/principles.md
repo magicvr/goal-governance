@@ -2,9 +2,9 @@
 title: 治理原则
 status: active
 created: 2026-07-18
-updated: 2026-09-30
+updated: 2026-10-15
 parent: null
-version: 0.13.0
+version: 0.13.1
 ---
 
 # 治理原则
@@ -371,7 +371,7 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 
 ### 6.2 完整安装与冷启动
 
-1. **完整安装**文件集以 [alignment.md §0.2 Minimal Complete Install](../vision/alignment.md#02-完整安装与冷启动) 的 **MUST** 表为唯一权威；`consumer-checklist` 与 `standalone-bootstrap` **必须同表**，不得各写一套「建议/必含」。缺任一 MUST = **不完整安装**，不得假装可长期推进或「完整独立启用成功」。
+1. **完整安装**文件集以 [alignment.md §0.2 Minimal Complete Install](../vision/alignment.md#02-完整安装与冷启动) 的 **MUST** 表为唯一权威；`consumer-checklist` 与 [独立启用说明](../standalone-bootstrap.md) 的完整安装判定**必须同表**，不得各写一套「建议/必含」。独立启用说明随消费包分发，文件本身为 **Recommended**，缺少说明不构成不完整安装，也不阻断推进；一致性要求约束其内容，不把它升级为 MUST。缺任一 MUST = **不完整安装**，不得假装可长期推进或「完整独立启用成功」。
 2. **法定冷启动顺序（严格串行）**：
    ```text
    最小完备 Charter

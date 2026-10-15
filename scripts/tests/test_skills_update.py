@@ -105,6 +105,8 @@ class SkillsUpdateTests(unittest.TestCase):
             target = root / "consumer"
             target.mkdir()
             shutil.copytree(SKILLS, target / "skills")
+            # Simulate an installed package from before the guide shipped (#24).
+            (target / "skills" / "core" / "docs" / "standalone-bootstrap.md").unlink()
             result = pack.pack_skills(
                 version="0.0.0-testupdate",
                 output_dir=root / "dist",
@@ -115,6 +117,13 @@ class SkillsUpdateTests(unittest.TestCase):
             report = update.update_package(_args(target, result, skip_install=False))
 
             self.assertEqual(report["result"], "updated")
+            self.assertEqual(
+                (target / "docs" / "standalone-bootstrap.md").read_bytes(),
+                render.render_managed_bytes(
+                    (SKILLS / "core" / "docs" / "standalone-bootstrap.md").read_bytes(),
+                    "docs", "skills",
+                ),
+            )
             self.assertTrue((target / "AGENTS.md").is_file())
             self.assertTrue(
                 (target / ".agents" / "skills" / "govern" / "SKILL.md").is_file()
@@ -213,6 +222,36 @@ class SkillsUpdateTests(unittest.TestCase):
             (target / "AGENTS.md").write_text("local customization\n", encoding="utf-8")
             modified = update.modified_managed_files(target / "skills", target)
             self.assertIn(target / "AGENTS.md", modified)
+
+    def test_new_guide_conflict_and_failed_upgrade_restore_legacy_install(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = root / "consumer"
+            target.mkdir()
+            shutil.copytree(SKILLS, target / "skills")
+            old_guide = target / "skills" / "core" / "docs" / "standalone-bootstrap.md"
+            old_guide.unlink()
+            result = pack.pack_skills(
+                version="0.0.0-testupdate", output_dir=root / "dist",
+                skills_root=SKILLS, skip_stage=True,
+            )
+            installed = target / "docs" / "standalone-bootstrap.md"
+            installed.parent.mkdir()
+            installed.write_text("consumer-owned guide\n", encoding="utf-8")
+            with self.assertRaisesRegex(update.UpdateError, "managed files have local changes"):
+                update.update_package(_args(target, result, dry_run=True))
+            self.assertEqual(installed.read_text(encoding="utf-8"), "consumer-owned guide\n")
+            installed.unlink()
+
+            def fail_after_guide_write(*args, **kwargs):
+                installed.write_text("new guide\n", encoding="utf-8")
+                raise update.UpdateError("failed after guide write")
+
+            with mock.patch.object(update, "run_installer", side_effect=fail_after_guide_write):
+                with self.assertRaisesRegex(update.UpdateError, "failed after guide write"):
+                    update.update_package(_args(target, result, skip_install=False))
+            self.assertFalse(installed.exists())
+            self.assertFalse(old_guide.exists())
 
     def test_rendered_bytes_match_and_a_hand_edit_still_conflicts(self) -> None:
         """Update accepts the rendered bytes this module would write, and nothing else."""
@@ -349,6 +388,14 @@ class SkillsUpdateTests(unittest.TestCase):
             self.assertNotIn("{{GOVERNANCE_ROOT}}", agents_text)
             self.assertNotIn("{{SKILLS_DIR}}", agents_text)
             self.assertNotIn("{governance_root}", principles.read_text(encoding="utf-8"))
+            guide = target / "methodology" / "standalone-bootstrap.md"
+            self.assertEqual(
+                guide.read_bytes(),
+                render.render_managed_bytes(
+                    (SKILLS / "core" / "docs" / "standalone-bootstrap.md").read_bytes(),
+                    "methodology", "my-skills",
+                ),
+            )
             self.assertEqual(note.read_bytes(), note_bytes)
             self.assertEqual(custom.read_bytes(), custom_bytes)
 

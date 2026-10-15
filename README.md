@@ -33,7 +33,7 @@
 从 **GitHub Release 固定 tag** 拉取 bootstrap 脚本（无需浏览器另存），脚本再下载**已内嵌 core 的 skills zip**、校验 SHA-256，并调用包内 install（等价 `-All`）。  
 **当前正式发布 pin `v0.13.4`**（发新版时同步改本节与 [skills/README.md](skills/README.md)；**不是**无版本锁的 always-latest，也**不用** branch raw URL）。仓库内源：`scripts/bootstrap/`。
 
-> 状态：`v0.13.4` 为**发布候选**，已冻结、待打 annotated tag；最近一次**已发布**的 tag 仍是 `v0.13.3`。下面的示例 URL 在 `v0.13.4` 的 Release 产出后即可直接使用。
+> 状态：`v0.13.4` 已正式发布（annotated tag → main merge commit `43479838…`；9 项 Release 资产，zip 摘要与 sidecar 一致）。下面的示例 URL 可直接使用。
 
 ```powershell
 # 在目标项目根：从 Release 拉 bootstrap，再在线安装（当前最新 tag）

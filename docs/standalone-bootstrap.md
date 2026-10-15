@@ -2,9 +2,9 @@
 title: 核心包独立启用说明
 status: active
 created: 2026-07-19
-updated: 2026-07-29
+updated: 2026-10-15
 parent: null
-version: 0.8.0
+version: 0.9.0
 ---
 
 # 核心包独立启用说明
@@ -21,6 +21,8 @@ version: 0.8.0
 
 **Minimal Complete Install（MUST）** 唯一权威表见 [vision/alignment.md §0.2](vision/alignment.md#02-完整安装与冷启动)；本说明与 [consumer-checklist](vision/consumer-checklist.md)、[principles §6.2](architecture/principles.md#62-完整安装与冷启动) **同表**。下文章节是操作步骤，**不**另立较弱的「建议」完整集。
 
+本说明文件为 **Recommended**，随 core-only 与 Skills 包分发，Skills 安装器会复制到配置的治理根。缺少说明不构成不完整安装，也不阻断推进；“同表”约束完整安装判定，不把说明本身升级为 MUST。
+
 ## 适用边界
 
 > **治理根（`governance_root`，默认 `docs`）**：下文 `docs/…` 路径默认落盘到治理根 `docs/`；消费仓若通过 `.goal-governance.json` 配置其他相对根（如 `governance/`），将目标侧 `docs/` 替换为 `{governance_root}/` 即可，根下内部相对布局不可改（VP-004 R3）。
@@ -31,6 +33,7 @@ version: 0.8.0
 |------|----------------|------|
 | `AGENTS.md` | 根目录 `AGENTS.md` | AI 与协作者的强制规则 |
 | `docs/README.md` | `{governance_root}/README.md` | 核心文档入口与协议索引 |
+| `docs/standalone-bootstrap.md` | `{governance_root}/standalone-bootstrap.md` | 本说明（Recommended，离线操作参考） |
 | `docs/architecture/` | `{governance_root}/architecture/` | 架构约定与 **P-001～P-006** |
 | `docs/templates/` | `{governance_root}/templates/` | 五件套、workspace 上下文、**vision/** 模板 |
 | `docs/contracts/` | `{governance_root}/contracts/` | 消费适配器机读契约 |
@@ -42,6 +45,10 @@ version: 0.8.0
 **结构完整 ≠ 行为自动治理**：本说明验证文件、引用链与模板可独立建立，并提供默认 L0 规则；未安装 Skills 时，不存在自动扫描、提醒或写入门禁执行器。人或其他工具仍须实际按 AGENTS / principles / alignment 执行 P-004、P-005 与审计闭合，才能声称治理行为发生。
 
 ## 1. 建立空 Git 仓库并复制核心层
+
+**从 monorepo 操作**：下面 `$source` 是源码仓根，包含根 `AGENTS.md` 和 `docs/`。**从 core-only ZIP 操作**：解压根包含 `README.md` 与 `docs/`，将整个 `docs/` 复制到目标治理根，再按 alignment MUST 表创建项目自己的根 `AGENTS.md`（或等价 AI 规则）；包不含源码仓根 `AGENTS.md`、测试脚本或愿景实例，不要直接执行依赖它们的源码复制命令。**已安装 Skills**：核心层及本说明已在治理根，直接进入第 2 节，不重复复制或覆盖已有项目实例。
+
+core-only 的 `docs/README.md`、architecture、templates、vision 规则与 Skills 内嵌 core 字节一致；本说明在两种包内均可离线阅读。下文 `consumer-checklist` 等愿景树文件在冷启动时生成，未初始化前不要求包预装实例。
 
 ```powershell
 $source = (Resolve-Path '.').Path
@@ -55,6 +62,7 @@ New-Item -ItemType Directory -Path (Join-Path $target 'docs\vision') | Out-Null
 # 以下命令示例以默认 governance_root = docs 落盘；配置其他根时替换目标侧 docs/。
 Copy-Item (Join-Path $source 'AGENTS.md') (Join-Path $target 'AGENTS.md')
 Copy-Item (Join-Path $source 'docs/README.md') (Join-Path $target 'docs/README.md')
+Copy-Item (Join-Path $source 'docs/standalone-bootstrap.md') (Join-Path $target 'docs/standalone-bootstrap.md')
 Copy-Item -Recurse (Join-Path $source 'docs/architecture') (Join-Path $target 'docs/architecture')
 Copy-Item -Recurse (Join-Path $source 'docs/templates') (Join-Path $target 'docs/templates')
 Copy-Item -Recurse (Join-Path $source 'docs/contracts') (Join-Path $target 'docs/contracts')
@@ -106,7 +114,7 @@ Copy-Item (Join-Path $target 'docs\templates\vision\vision-plan.md') (Join-Path 
 | `docs/vision/reviews.md` | Vision Review 稳定索引；文件本身为 MUST |
 | `docs/vision/reviews/VRev-NNN-<slug>.md` | 单条正式报告；Charter 初建后宜有一条 self VRev，新安装从第一条起使用目录 |
 | `docs/vision/workspaces.md` | 工作区贡献图（开区前可写「尚无区」；开区后更新） |
-| `docs/vision/consumer-checklist.md` | 与 alignment MUST 表一致的勾选（可从本包复制） |
+| `docs/vision/consumer-checklist.md` | 与 alignment MUST 表一致的勾选；源码仓可复制后改写，消费包按 alignment MUST 表创建 |
 
 ```powershell
 # 示例：从源仓复制愿景树骨架后改写（路径按实际调整）
@@ -141,6 +149,9 @@ Copy-Item (Join-Path $template '01-decision.md') $root
 Copy-Item (Join-Path $template '02-execution.md') $root
 Copy-Item (Join-Path $template '03-audit.md') $root
 Copy-Item -Recurse (Join-Path $template 'attachments') $root
+foreach ($ledger in @('01-decision','02-execution','03-audit')) {
+  Copy-Item -Recurse (Join-Path $template $ledger) $root
+}
 Copy-Item (Join-Path $target 'docs\templates\workspace-context.md') (Join-Path $workspace 'workspace.md')
 ```
 
@@ -170,7 +181,7 @@ updated: YYYY-MM-DD
 version: 0.1.0
 ```
 
-建议在 Root `00-meta` 同步 `plan_refs` / `primary_plan` 与短 `serves_summary`。四个 Markdown 与 `attachments/` 必须齐全；模板示例 id（如 `GOAL-042`）不得原样留下。
+建议在 Root `00-meta` 同步 `plan_refs` / `primary_plan` 与短 `serves_summary`。四个 Markdown、三个 ledger 目录与 `attachments/` 必须齐全；模板示例 id（如 `GOAL-042`）不得原样留下。
 
 若已识别关键未知，立即建立 P-005 信息需求表。
 
@@ -203,19 +214,19 @@ GOAL-001-main-vision · <项目总目标> [active]
 
 完整独立启用须留下：
 
-1. **来源**：核心层复制路径与版本（含 `alignment.md` 与愿景树 MUST 文件来源）。  
-2. **生成路径**：alignment MUST 表所列愿景文件、`docs/vision/plans/<VP>.md`、`workspace.md`、`goal-tree.md`、Root 五件套。  
+1. **来源**：核心层复制路径与版本（含 `alignment.md` 与愿景树 MUST 文件来源）。
+2. **生成路径**：alignment MUST 表所列愿景文件、`docs/vision/plans/<VP>.md`、`workspace.md`、`goal-tree.md`、Root 五件套。
 3. **核对结果**：
    - `git rev-parse --is-inside-work-tree` → `true`
    - Charter `status: active`；VP `vision_ref` 精确匹配 Charter
    - 愿景树 MUST 文件均存在：`README`、`roadmap`、`revisions`、`reviews`、`workspaces`、`consumer-checklist`、`alignment`；已有 VRev 时每条索引都链接 `reviews/VRev-NNN-*.md`
    - `workspace.md` 含 `plan_refs` 与 `primary_plan`，且 VP 文件存在
-   - Root `parent: null`；`id` = 文件夹名；五件套齐全  
+   - Root `parent: null`；`id` = 文件夹名；五件套齐全
 4. **边界**：无 `skills/` / `web/`；本验证不代表 Skills 安装或 Web 发布完成；保证等级默认 **L0**（见 principles P-003）。
 
 **半安装**（仅 architecture、无 Charter/plan、或缺愿景树 MUST 文件）只可用于阅读原则，**不得**记为完整独立启用通过，也不得非引导推进/放行/关门。
 
-可重复验证：
+源码仓维护者可重复验证（消费包不分发测试脚本）：
 
 ```powershell
 python -m unittest discover -s docs/tests -p "test_standalone_bootstrap.py" -v

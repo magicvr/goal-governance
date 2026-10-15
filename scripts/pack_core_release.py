@@ -67,6 +67,7 @@ def inventoriable_core_files(core_root: Path) -> list[Path]:
     required = (
         root / "README.md",
         root / "docs" / "README.md",
+        root / "docs" / "standalone-bootstrap.md",
         root / "docs" / "architecture" / "principles.md",
         root / "docs" / "architecture" / "workspace-protocol.md",
         root / "docs" / "architecture" / "overview.md",
