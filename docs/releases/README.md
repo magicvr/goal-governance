@@ -1,3 +1,12 @@
+---
+title: 发布证据与资产流程
+status: active
+created: 2026-07-20
+updated: 2026-10-15
+parent: null
+version: 0.1.0
+---
+
 # 发布证据与 Skills 安装包
 
 本目录定义发行证据格式，并说明 **Skills 消费 zip** 如何与 annotated tag / GitHub Release 对齐。它不是目标状态源。
@@ -35,7 +44,7 @@
 
 默认 skills 路径**不**要求联网拉取 core；core-only 与 skills 内嵌 core 在同 version 下应字节一致（pack 单测）。
 
-**文档 pin 规则（GOAL-023 D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例**必须**使用**当前正式发布 annotated tag**（本轮为 `v0.13.4`）。每次正式发版同步改写示例中的 tag/version；**禁止**以 `main`/branch raw 或无版本 pin 的 always-latest 作权威安装入口。
+**文档 pin 规则（GOAL-023 D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例**必须**使用**当前正式发布 annotated tag**（本轮发版 pin 为 `v0.13.5`，正式身份由该 tag 的 gated Release 建立）。每次正式发版同步改写示例中的 tag/version；**禁止**以 `main`/branch raw 或无版本 pin 的 always-latest 作权威安装入口。
 
 ### 本地打包（维护者 / 调试）
 
