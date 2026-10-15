@@ -2,15 +2,23 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-10-01
+updated: 2026-10-15
 parent: null
-version: 0.38.0
+version: 0.39.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-15 · GOAL-011 S1 方案冻结
+
+用户选择 A（随包分发，Recommended，不新增 MUST）并指定 Codex 独立子代理；D-002 冻结 canonical/stage/两 ZIP/双安装器/受管升级验证与 cross 审计。S1 完成，GOAL-011 active / 33%（1/3），进入 S2。GitHub 授权会话已能回读 issue OPEN，最终关闭证据仍待 S3。Root R3 与 Root progress 67% 保持。
+
+## 2026-10-15 · GOAL-011 承接 issue #24
+
+用户明确要求在本区建立子目标、修复 GitHub 开放 issue 后关闭。创建 **GOAL-011-standalone-bootstrap-distribution**（active / 0%，S1～S3 0/3），承接消费分发缺失 `standalone-bootstrap.md` 导致死链及一致性规则无法核对的问题。I-001 已核对；方案 I-002 与 cross provider I-003 待用户裁决，尚未实施。GitHub CLI token invalid，I-005 阻断最终交付与关闭；公开 REST 可读取 issue。Root R3 持续演进，Root progress 保持 67%；下一编号 **GOAL-012**。
 
 ## 2026-10-01 · GOAL-010 关门（v0.13.4 正式发布）
 
@@ -234,14 +242,15 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-007-workspaces-directory-consolidation [done]    工作区目录统一收敛与正式发布  progress 100%
 ├── GOAL-008-consumer-layer-split-and-hosting   [done]    双层路线图拆分与消费仓宿主共存  progress 100%
 ├── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
-└── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
+├── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
+└── GOAL-011-standalone-bootstrap-distribution [active]  独立启用说明的消费分发与引用  progress 33%
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-10-01 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-10-15 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
@@ -251,13 +260,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-008-consumer-layer-split-and-hosting | 双层路线图拆分与消费仓宿主共存 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-09-13 |
 | GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
+| GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | active | 33% | 2026-10-15 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 010 |
-| 下一可用 | **GOAL-011** |
+| 最大编号 | 011 |
+| 下一可用 | **GOAL-012** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）
