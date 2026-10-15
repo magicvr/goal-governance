@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-10-15
 parent: null
-version: 0.41.0
+version: 0.42.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-15 · GOAL-012 关门（v0.13.5 正式发布）
+
+PR #27 经 Ubuntu/Windows CI 合入 main merge `1a6668e6b791b63af1caded0924335db7bd00aac`，main CI success；annotated v0.13.5 指向该 merge，clean-tree strict 预检与正式 tag run [38691121485](https://github.com/magicvr/goal-governance/actions/runs/38691121485) 全绿。Environment 回执为 magicvr 人工 `skipped` 放行（非普通 approved，AI 未代批/改配置）。[Release](https://github.com/magicvr/goal-governance/releases/tag/v0.13.5) 9 项真实资产下载、双 ZIP 摘要、core 子集、guide 与包内链接、隔离安装及原 AGENTS 保留均通过；GHCR 0.13.5 拉取 digest 与内置版本核对通过。A-001 independent / A-002 响应 / A-003 close-out 均 pass，无开放 required，I-001～I-005 verified。D-002 将 GOAL-012 标为 **done / 100%（S1～S4 4/4）**，见 E-004/E-005 与附件。Root R3 / VP-002 继续 active，Root progress 67%；下一编号 GOAL-013。
 
 ## 2026-10-15 · GOAL-012 候选就绪
 
@@ -260,7 +264,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
 ├── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
 ├── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
-└── GOAL-012-release-v0-13-5                  [active]  v0.13.5 正式发布与消费资产验收  progress 50%
+└── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
 ```
 
 ## 状态表
@@ -278,7 +282,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-009-info-deadlock-and-managed-placeholders | 未知信息门禁死锁与受管占位符升级 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
-| GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-10-15 |
+| GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 
 ## 编号
 

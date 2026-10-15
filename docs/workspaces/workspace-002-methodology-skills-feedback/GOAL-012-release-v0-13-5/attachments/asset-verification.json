@@ -1,0 +1,33 @@
+{
+  "tag": "v0.13.5",
+  "commit": "1a6668e6b791b63af1caded0924335db7bd00aac",
+  "assetCount": 9,
+  "assetSha256": {
+    "bootstrap-README.md": "503a1824e794f8763b13b9898fa52a5c0fbae9909243ec8498dcdb743c3047d8",
+    "compatibility-report.json": "fd4e31bada040e75ede192c87b9d3af8c8d9695c9cc5981513bb0d3de49ee200",
+    "goal-governance-core-v0.13.5.zip": "f74a1c5c94d3392970582d183299093b2fda689a7903a82dcaaf6be53349ac2a",
+    "goal-governance-core-v0.13.5.zip.sha256": "fc7f0f461cf8130f84d147397d16a63c4d2052387b1dc6b52ad376a0f0bf63eb",
+    "goal-governance-skills-v0.13.5.zip": "b164f20c7e9ff6bbc1f85cf4c4e1dff7fb419b39ef53bbdfcac3d7e6f2cd8900",
+    "goal-governance-skills-v0.13.5.zip.sha256": "16e4dd219606994d73331ba149d720530be818f01e2a4760033937751da8af46",
+    "install-online.ps1": "89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3",
+    "install-online.sh": "86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127",
+    "release-evidence.json": "bab8e8e372900209c9cf3f0860b921aac4158c4eb9d0d9141f45cca10c7da2c9"
+  },
+  "sidecarsMatch": true,
+  "coreSubsetMembers": 27,
+  "guideAndReadmeLinkValid": true,
+  "strictEvidenceValid": true,
+  "downloadedBootstrapInstallPassed": true,
+  "consumerRulesPreserved": true,
+  "verifiedGitHubAssetDigestCount": 9,
+  "consumerInstallExitCode": 0,
+  "verificationCommand": ".venv/Scripts/python.exe artifacts/verify_release_135.py",
+  "container": {
+    "image": "ghcr.io/magicvr/goal-governance-mcp-server:0.13.5",
+    "pulledDigest": "sha256:d315fe4296d95ee386e8a572b66a5aff66516f1e9e9cf24bf7de9d19c88a0a03",
+    "matchesPublishDigest": true,
+    "reportedVersion": "0.13.5",
+    "versionCommand": "docker run --rm ghcr.io/magicvr/goal-governance-mcp-server:0.13.5 -c 'import __init__; print(__init__.__version__)'",
+    "versionExitCode": 0
+  }
+}

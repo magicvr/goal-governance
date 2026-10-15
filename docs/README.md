@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-10-15
 parent: null
-version: 0.14.2
+version: 0.14.3
 ---
 
 # docs/ · 文档体系
@@ -107,11 +107,12 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **文档入口版本**（本文件 frontmatter）：`0.14.2` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
-- **可复制核心包版本**：`0.13.5` 发布候选（[GOAL-011](workspaces/workspace-002-methodology-skills-feedback/GOAL-011-standalone-bootstrap-distribution/00-meta.md) 独立启用说明分发修复；[GOAL-012](workspaces/workspace-002-methodology-skills-feedback/GOAL-012-release-v0-13-5/00-meta.md) 正式发布准备）。入口文修订号与发布身份分离，实际发行以 annotated tag 与 gated Release 为准。
+- **文档入口版本**（本文件 frontmatter）：`0.14.3` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
+- **可复制核心包版本**：[`0.13.5`](https://github.com/magicvr/goal-governance/releases/tag/v0.13.5) 正式发布（[GOAL-011](workspaces/workspace-002-methodology-skills-feedback/GOAL-011-standalone-bootstrap-distribution/00-meta.md) 独立启用说明分发修复；[GOAL-012](workspaces/workspace-002-methodology-skills-feedback/GOAL-012-release-v0-13-5/00-meta.md) 完成正式资产验收）。入口文修订号与发布身份分离，实际发行以 annotated tag 与 gated Release 为准。
 - **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / `v0.13.2` / `v0.13.3`（annotated tag 指向 main merge commit `dfa8600`；tag workflow run `34748891084` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）/ **`v0.13.4`**（PR #23 → main merge commit `43479838`；tag workflow run `36808519534` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）。
 - **快照日期**：2026-10-15。
-- **快照身份**：`v0.13.5` 发布准备；最近正式基线仍见上表 `v0.13.4`。矩阵 candidateRevision 已指向新版本，复用未修改的 2026-10-01 runtime captures；Codex 仍仅是 install surface（非矩阵）。
+- **最新发布基线**：**`v0.13.5`**（PR #27 → main merge `1a6668e`；tag workflow [38691121485](https://github.com/magicvr/goal-governance/actions/runs/38691121485) 全绿，Environment API 记录 magicvr 人工 `skipped` 放行；9 项正式资产、双 ZIP SHA-256、实际下载的 bootstrap 隔离安装均验证通过；GHCR `0.13.5` 实际拉取及内置版本核对通过）。
+- **快照身份**：`v0.13.5` 正式发布。矩阵 candidateRevision 已指向新版本，复用未修改的 2026-10-01 runtime captures；Codex 仍仅是 install surface（非矩阵）。
 - **当前工作树边界**：`/govern` `/audit` `/vision` `/vision-audit` 在 Claude Code `2.1.285`、Grok Build `1.0.44` 与 GitHub Copilot CLI `1.0.75`（BYOK）上 `runtime-verified`；证据日期 2026-10-01，位于 `docs/releases/runtime/v0.13.4/`。`/commit` 为默认安装的**便利入口**，不属于矩阵必达格。Root R3 终态仍未声明。
 
 ### canonical → Skills 镜像（GOAL-022）
