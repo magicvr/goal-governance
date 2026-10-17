@@ -1,0 +1,103 @@
+{
+  "tag": "v0.13.7",
+  "releaseUrl": "https://github.com/magicvr/goal-governance/releases/tag/v0.13.7",
+  "isDraft": false,
+  "isPrerelease": false,
+  "publishedAt": "2026-10-17T13:10:14Z",
+  "tagObject": "6197ed6ea4f720d0d0a966665e75b7821d0a5df5",
+  "sourceCommit": "6ca04ee1cb07ae4b5efe1d0e06bed08524bdd2d1",
+  "workflowRun": 39034827440,
+  "jobs": {
+    "pack": "completed/success",
+    "publishGated": "completed/success"
+  },
+  "environment": {
+    "name": "release",
+    "deploymentId": 7139921295,
+    "createdAt": "2026-10-17T13:01:14Z",
+    "statusTimeline": [
+      { "state": "waiting", "creator": "magicvr", "createdAt": "2026-10-17T13:01:15Z" },
+      { "state": "queued", "creator": "magicvr", "createdAt": "2026-10-17T13:09:22Z" },
+      { "state": "in_progress", "creator": "magicvr", "createdAt": "2026-10-17T13:09:23Z" },
+      { "state": "success", "creator": "magicvr", "createdAt": "2026-10-17T13:10:22Z" }
+    ],
+    "pendingDeploymentsAfterPublish": 0,
+    "approvedBy": "magicvr (human maintainer; AI did not approve or change environment configuration)"
+  },
+  "assets": {
+    "count": 9,
+    "expectedCount": 9,
+    "names": [
+      "bootstrap-README.md",
+      "compatibility-report.json",
+      "goal-governance-core-v0.13.7.zip",
+      "goal-governance-core-v0.13.7.zip.sha256",
+      "goal-governance-skills-v0.13.7.zip",
+      "goal-governance-skills-v0.13.7.zip.sha256",
+      "install-online.ps1",
+      "install-online.sh",
+      "release-evidence.json"
+    ]
+  },
+  "digests": {
+    "skillsZipComputed": "0c9c2dee830643bcf0a11c1ae814f7c5f73870e69bfc8c3b6d90ff7f54c5039e",
+    "skillsZipSidecar": "0c9c2dee830643bcf0a11c1ae814f7c5f73870e69bfc8c3b6d90ff7f54c5039e",
+    "skillsZipMatch": true,
+    "coreZipComputed": "e512c0c68340f4711c396bfe81b9eba66f0c1d4dcf9c00745363b3831765b8cd",
+    "coreZipSidecar": "e512c0c68340f4711c396bfe81b9eba66f0c1d4dcf9c00745363b3831765b8cd",
+    "coreZipMatch": true
+  },
+  "releaseEvidence": {
+    "releaseStatus": "release-candidate",
+    "checksPassed": true,
+    "sourceCommit": "6ca04ee1cb07ae4b5efe1d0e06bed08524bdd2d1",
+    "annotatedTag": "v0.13.7",
+    "tagObject": "6197ed6ea4f720d0d0a966665e75b7821d0a5df5",
+    "workingTreeClean": true,
+    "digestCount": 657
+  },
+  "subset": {
+    "skillsMembers": 86,
+    "coreMembers": 27,
+    "corePrefixInSkills": "core/",
+    "missing": 0,
+    "byteDiffering": 0,
+    "coreIsByteIdenticalSubsetOfSkills": true
+  },
+  "isolatedConsumerInstall": {
+    "installer": "artifacts/release-0.13.7/install-online.ps1 (actually downloaded)",
+    "command": "install-online.ps1 -Version 0.13.7 -Channel files -Force -ZipPath <downloaded skills zip> -Sha256Path <sidecar> -TargetDir <isolated consumer>",
+    "exitCode": 0,
+    "targetDir": "artifacts/consumer-0.13.7",
+    "keyArtifactsPresent": {
+      "docs/standalone-bootstrap.md": true,
+      "docs/architecture/principles.md": true,
+      "docs/templates/goal-folder/00-meta.md": true,
+      "skills/prompts/00-govern-orchestrator.md": true,
+      "skills/contracts/skills-consumer-contract.json": true,
+      ".claude/skills/govern/SKILL.md": true,
+      ".grok/skills/audit/SKILL.md": true,
+      ".agents/skills/vision/SKILL.md": true,
+      ".github/prompts/vision-audit.prompt.md": true
+    },
+    "consumerOwnRulePreserved": true,
+    "consumerOwnRuleMarker": "KEEP-CONSUMER-RULE-137",
+    "installedAgentsCarriesLabeledForm": true,
+    "outputLog": "artifacts/consumer-0.13.7-install.txt"
+  },
+  "ghcr": {
+    "image": "ghcr.io/magicvr/goal-governance-mcp-server:0.13.7",
+    "publishLogDigest": "sha256:3f9fc5e525f6ba081110b0683ac3a8e43b7071c4111f72820f27f07e0965dd6f",
+    "pulledDigest": "sha256:3f9fc5e525f6ba081110b0683ac3a8e43b7071c4111f72820f27f07e0965dd6f",
+    "digestMatch": true,
+    "builtInVersion": "0.13.7"
+  },
+  "logMilestones": [
+    "Release evidence passed for v0.13.7 (2026-10-17T13:10:00Z)",
+    "Uploaded 9 asset(s) to release v0.13.7 (2026-10-17T13:10:16Z)"
+  ],
+  "warnings": [
+    "Artifacts were downloaded from the published Release and verified locally; the local rehearsal zips were not used as evidence.",
+    "GHCR image was pulled and inspected; the built-in version was read from the image itself."
+  ]
+}

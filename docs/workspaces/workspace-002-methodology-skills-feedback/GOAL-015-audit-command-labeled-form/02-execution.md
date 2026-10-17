@@ -19,7 +19,9 @@ version: 0.1.0
 | E-003 | 2026-10-17 | S3：回归、静态核对与运行证据影响 | recorded | `02-execution/E-003-verification-and-evidence-impact.md` |
 | E-004 | 2026-10-17 | S4：cross 审计派发、响应与关门就绪 | recorded | `02-execution/E-004-s4-cross-audit-and-response.md` |
 | E-005 | 2026-10-17 | 提交边界裁决后的检查点提交 | recorded | `02-execution/E-005-checkpoint.md` |
-| E-006 | 2026-10-17 | S5 证据重捕获（11/16 pass；Copilot 5 格阻塞于 provider 认证） | recorded | `02-execution/E-006-s5-evidence-recapture.md` |
+| E-006 | 2026-10-17 | S5 证据重捕获：16/16 pass，两门禁转绿（Copilot 首轮失败经更正为编排侧环境缺 key） | recorded | `02-execution/E-006-s5-evidence-recapture.md` |
+| E-007 | 2026-10-17 | S5 步骤 b–e：清单、本地门禁、PR/CI、merge 与 tag | recorded | `02-execution/E-007-s5-pr-ci-merge-tag.md` |
+| E-008 | 2026-10-17 | S5 步骤 e–f：Environment 审批、正式发布与资产验收 | recorded | `02-execution/E-008-s5-release-and-asset-verification.md` |
 
 ## 用户待答与恢复（按需保留）
 
@@ -32,7 +34,9 @@ version: 0.1.0
 | Q-005 | 发布版本号 patch/minor | 版本清单、tag 与资产身份 | 影响清单与 tag 身份，不得推定 | 无 | 收到真实选择 | 2026-10-17 用户答复 **patch `v0.13.7`**（本轮指令「开始 S5，版本号 patch v0.13.7」） |
 | Q-006 | Copilot 探针 401 如何处置 | S5 步骤 a 退出、compatibility 与 release 门禁 | 5 格证据无法重取；provider 失败不得由编排器代替或复用过期证据 | 无（其余 11 格已 pass） | 收到真实答复并按选项复核门禁 | 2026-10-17 同步卡片返回 **A（恢复凭据后重取）**；答复后复测仍 401，经用户质疑核对进程/用户作用域环境，**根因更正为编排侧未继承 `COPILOT_PROVIDER_API_KEY`**（非凭据失效）；runner 注入后 Copilot 5 格以 `-r2` 全部 pass，I-006 → verified，目标恢复 active，见 [E-006](02-execution/E-006-s5-evidence-recapture.md) |
 
-> 两问均在同一次卡片中真实提交，无空返回、无预选未提交情形；未产生 blocked 状态，也未预写答复。详见 [D-001](01-decision/D-001-scope-and-roadmap.md#用户裁决留痕同步阻塞卡片2026-10-17)。
+| Q-007 | Environment `release` 人工审批（tag workflow 39034827440 的 gated publish） | S5 步骤 e 退出与资产验收 | 规则禁止 AI 代批或改环境配置；未审批则 Release 不发布、无法核验资产 | 无（pack 已 success、strict 预检 checks passed True） | 维护者在 GitHub 批准后由编排侧回读 run 与 Release 事实 | 2026-10-17 用户答复「我已批准」；**先回读后记录**：部署 `release` 状态 waiting→queued→in_progress→success，creator 均为 `magicvr`（人工），`pending_deployments` 为空；run completed success、Release 9 项资产已发布，见 [E-008](02-execution/E-008-s5-release-and-asset-verification.md) |
+
+> Q-001～Q-007 均已获真实答复（Q-006 的答复与根因更正见 [E-006](02-execution/E-006-s5-evidence-recapture.md)；Q-007 由维护者在 GitHub 完成 Environment 审批，编排侧**先回读 run 与 Release 事实后**才记录，见 [E-008](02-execution/E-008-s5-release-and-asset-verification.md)）。其间 GOAL-015 曾两次按 UI-01～UI-06 置 `blocked`（Copilot 探针环境、Environment 审批）并同步树/表，原因解除后恢复；未预写任何答复或未发生的工具返回。
 
 ## 事实边界
 
