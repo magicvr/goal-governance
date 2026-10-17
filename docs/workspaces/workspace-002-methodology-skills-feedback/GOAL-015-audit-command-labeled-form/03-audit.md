@@ -32,4 +32,4 @@ version: 0.1.0
 
 ## 结论状态
 
-S1～S4 全部完成，派生 `progress` = 4/4 = 100%，`status` 仍为 `active`。A-001 self 与 A-002 independent（Grok Build，`/audit workspace-002 goal-015`）已落盘；A-003 汇总响应——`fixed` 3 条、`保持 open` 2 条（运行验证缺口、提交边界，均为 recommended，带复审触发与责任人），**开放 required = 0**，无冲突、无 residual/overruled；A-004 关门就绪审视 `pass`。保证等级 L0（规范文本契约 + 仓库静态/回归 + 1 次 Grok Build 入口解析），producer 发布门禁为红且按 D-001 属本目标外。关门决定与提交边界待用户；独立意见不直接改 `status` / `progress`。
+S1～S4 全部完成；**S5（发布）** 由用户 2026-10-17 指令经 [D-003](01-decision/D-003-scope-extension-s5-release.md) 追加为最后一个阶段。派生 `progress` = 完成阶段 4 / 5 = **80%**，`status` 仍为 `active`。A-001 self 与 A-002 independent（Grok Build，`/audit workspace-002 goal-015`）已落盘；A-003 汇总响应——`fixed` 3 条、`保持 open` 2 条（均为 recommended，带触发与责任人），**开放 required = 0**，无冲突、无 residual/overruled；A-004 关门就绪审视 `pass`，其「重捕获与发布在本目标外」的范围判断已被 D-003 取代（历史结论不改写）。两条 open recommended 的去向：运行验证缺口 → S5 重捕获（复审触发）；提交边界 → 检查点 `e396711`（[E-005](02-execution/E-005-checkpoint.md)）。保证等级仍为 L0（规范文本契约 + 仓库静态/回归 + 1 次 Grok Build 入口解析）；producer 发布门禁为红，是 S5 第一步要解除的前置。I-005（发布版本号）required/open，门禁 = S5 版本清单步骤前。独立意见不直接改 `status` / `progress`。

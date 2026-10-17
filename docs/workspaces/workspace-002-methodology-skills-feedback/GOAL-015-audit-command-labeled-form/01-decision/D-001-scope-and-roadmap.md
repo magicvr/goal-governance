@@ -23,7 +23,7 @@ version: 0.1.0
 1. 在本区创建 **GOAL-015-audit-command-labeled-form**（`active`，parent = 本区 Root），承载该修正；不重开已 `done` 的 GOAL-013。
 2. 纲领路线图 S1～S4 见 [00-meta.md](../00-meta.md#纲领路线图p-001)：契约冻结 → 规范与消费面同步 → 验证与证据影响核对 → cross 审计与关门。本目标为可直接执行的小目标，阶段内不拆子目标。
 3. 语法与拒绝面冻结见 [D-002](D-002-labeled-command-contract.md)。
-4. 范围含本次实施；**不含**运行证据重捕获、版本发布/tag/Release。
+4. 范围含本次实施；**不含**运行证据重捕获、版本发布/tag/Release。**现时注（2026-10-17）**：该排除已被 [D-003](D-003-scope-extension-s5-release.md) 取代——重捕获与发布并入 **S5**；本条其余内容与历史留痕不变。
 5. 审计模式 `cross`（改 P-003 元规则）；independent provider = **Grok Build**。
 
 ### 用户裁决留痕（同步阻塞卡片，2026-10-17）

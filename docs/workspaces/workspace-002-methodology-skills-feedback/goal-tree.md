@@ -12,6 +12,10 @@ version: 0.56.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-17 · GOAL-015 提交检查点与 S5 发布阶段（active / 80%）
+
+用户指令「先提交代码，然后把合并代码到main、确保CI全绿并打tag发布资产的任务作为目标15的最后一个阶段任务」。检查点 **`e396711`**（`fix: restore labeled audit dispatch commands`，78 files changed, +1010/−102，只暂存 owned paths、无 `git add -A`，提交后树干净），见 E-005。[D-003](../GOAL-015-audit-command-labeled-form/01-decision/D-003-scope-extension-s5-release.md) 把发布链路并入本目标为 **S5**：16 格运行证据重捕获 → 版本清单 → 全量回归/strict rehearsal → PR 双平台 CI 全绿 → 合并 `main` → annotated tag → gated 发布（Environment `release` 仍由用户人工审批，AI 不代批）→ Release 资产逐项验收；S5 审计模式 `independent`，provider 沿用 Grok Build。I-005（发布版本号 patch `v0.13.7` / minor `v0.14.0`）登记为 required/open，门禁 = 版本清单步骤前，Q-005 待答、不推定。路线图由 4 阶段扩为 5 阶段，派生 progress 重算为 **4/5 = 80%**（此前 100% 对应 4 阶段路线图，不表示发布完成）；producer 门禁仍红，是 S5 第一步的前置。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
 ## 2026-10-17 · GOAL-015 S4 完成（cross 审计与响应，100%）
 
 向用户指定 provider 派发正式命令 `/audit workspace-002 goal-015`（`inputSha256` = `6034d818…46ec`，干净会话、stdin 为 NUL、无 resume/scope/历史注入）；首次尝试因 DSH 沙箱禁止 provider 在仓库外 `~/.grok` 建会话而 `FS_PERMISSION_DENIED`（失败输出原样保留），以同一 provider/模型/输入放宽文件权限重跑 exit 0（421.1 s）。Grok Build 1.0.60 / `grok-4.6` 自主定 scope 并落盘 A-002 independent / conditional / **开放 required 0** / 5 recommended，且自行更新审计索引；该会话本身即带标签命令的一次真实唯一绑定（L0 单宿主入口解析，不替代矩阵重捕获）。编排器 A-003 汇总响应 A-001 + A-002 全部意见：`fixed` 3 条（历史旧形式保留、写集追加、索引结论滞后）、保持 open recommended 2 条（运行验证缺口、提交边界，均带复审触发与责任人），无冲突、无 residual/overruled；A-004 关门就绪审视 `pass`，5/5 成功标准可核对。GOAL-015 推进为 **active / 100%（S1～S4 4/4）**，`status` 仍为 `active`——关门决定与提交边界待用户；producer 门禁仍红（16/16 运行记录过期），按 D-001 属本目标外。见 E-004。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
@@ -335,7 +339,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
-└── GOAL-015-audit-command-labeled-form       [active]  审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
+└── GOAL-015-audit-command-labeled-form       [active]  审计命令带标签形式修正（workspace-/goal-/vp-）  progress 80%
 ```
 
 ## 状态表
@@ -356,7 +360,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
-| GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | active | 100% | 2026-10-17 |
+| GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-10-17 |
 
 ## 编号
 
