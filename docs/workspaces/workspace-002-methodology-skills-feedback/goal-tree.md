@@ -12,6 +12,14 @@ version: 0.56.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-17 · GOAL-015 S5 完成：v0.13.7 正式发布与资产验收（active / 100%）
+
+Environment `release` 由维护者 **`magicvr` 人工审批**（部署 id `7139921295`，状态链 waiting→queued→in_progress→success，creator 均为 magicvr，发布后 `pending_deployments` 为空；AI 未代批、未改环境配置）。Tag workflow [39034827440](https://github.com/magicvr/goal-governance/actions/runs/39034827440) 的 `pack` 与 `Publish GitHub Release (gated)` 全绿（`Release evidence passed for v0.13.7` 13:10:00Z → `Uploaded 9 asset(s)` 13:10:16Z）。[Release v0.13.7](https://github.com/magicvr/goal-governance/releases/tag/v0.13.7) 于 **2026-10-17T13:10:14Z** 发布，`isDraft=false` / `isPrerelease=false`，9 项资产。资产逐项验收（全部用实际下载产物）：双 ZIP sha256 与 sidecar 一致（skills `0c9c2dee…`、core `e512c0c6…`）；Core 27 成员在 Skills 86 成员的 `core/` 前缀下逐字节相同；下载的 `release-evidence.json` `checksPassed: true`、`source.commit = 6ca04ee`、`annotatedTag = v0.13.7`、`tagObject = 6197ed6e`、工作树干净、657 条 digests；隔离消费安装 exit 0 且消费者自有规则 `KEEP-CONSUMER-RULE-137` 保留、安装后 AGENTS 含带标签形式；GHCR `0.13.7` digest `sha256:3f9fc5e5…dd6f` 与发布日志一致、内置版本 `0.13.7`。GOAL-015 由 blocked 恢复 **active / 100%（S1～S5 5/5）**，`status` 仍为 `active`：S5 审计模式 `independent`，尚需一条指定 provider 的独立意见与响应后方可关门。见 E-008 与 [asset-verification.json](../GOAL-015-audit-command-labeled-form/attachments/asset-verification.json)。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
+## 2026-10-17 · GOAL-015 S5 步骤 b–e 完成：CI 全绿、merge main、tag v0.13.7（blocked 待 Environment 审批）
+
+清单与边界文档：`CHANGELOG.md` 新增 `0.13.7` 节并复位 `Unreleased`；`docs/README.md` 边界补记改写为「v0.13.7 候选 + 16 格重捕获已通过」。本地门禁（系统 Python 3.11.9）：skills 102 / docs 67 / scripts 147 全绿（S3 的 4 failures / 12 errors 随证据转绿消失）、`capture_runtime_evidence --check` 22 份 ok、`compatibility_report` `ready-for-release-evidence`、strict rehearsal `checks passed: True`（`.venv` 3.14 临时移出回落系统解释器后立即恢复）。检查点 `8f1315f`（250 files, +40406/−78）→ 分支 `codex/release-v0.13.7` → [PR #31](https://github.com/magicvr/goal-governance/pull/31) 双平台 CI 全绿（`contract-and-report` 55s、`windows-install-surface` 3m6s）→ 合入 main merge `6ca04ee1cb07ae4b5efe1d0e06bed08524bdd2d1`；在该 merge 上 strict 预检 `release status: release-candidate` / `checks passed: True`；annotated `v0.13.7`（tag object `6197ed6e`）已推送。Tag workflow [39034827440](https://github.com/magicvr/goal-governance/actions/runs/39034827440)：`pack` **success**（12 s，含 M-001 证据一致性门禁与两个 ZIP），`Publish GitHub Release (gated)` **waiting**——等待 Environment `release` **人工审批**。GOAL-015 置 **`blocked` / 80%**（S1～S4 4/5，检查点与 progress 未改），I-007 登记为 required/open；AI 未代批、未改环境配置，Release 尚未发布、资产验收未执行。见 E-007。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
 ## 2026-10-17 · GOAL-015 S5 步骤 a 完成：证据 16/16 pass，两门禁转绿（active / 80%）
 
 用户答复发布版本号 = patch **v0.13.7**，S5 启动。从 GOAL-013 驱动派生 `s5-host-probes.py`（探针正文改为带标签命令 `/audit workspace-002 goal-013`、`/vision-audit vp-002`，含 MCP catalog task 正文），四宿主并行重捕获 16 格到 `docs/releases/runtime/v0.13.7/`：**11 格 pass**（claude govern/vision/vision-audit/catalog、grok 四入口 + catalog、codex catalog，以及 claude audit 的重试 `-r2`）。claude audit 首轮因宿主 `Glob` 对只匹配目录的模式返回空而误判目标不存在，重试通过（与命令形式无关）。**GitHub Copilot CLI 5 格失败于 BYOK provider HTTP 401「Invalid API key」**（`--attempt 02` 复测仍 401）。门禁：`capture_runtime_evidence --check --evidence-dir docs/releases/runtime/v0.13.7` **已转绿**（17 份一致，exit 0）；`compatibility_report.py` 失败于 `runtime evidence is not a pass for github-copilot-cli/govern`。版本清单已同步：矩阵 `candidateRevision` = `v0.13.7`、12 条证据路径与 3 处 `evidenceScope`、安装/GHCR pin（根/skills/bootstrap/mcp/docs-releases README）、CI 证据目录与两处测试断言；镜像 38 对一致。同步卡片 Q-006 收到真实答复 A（恢复凭据后重取）；答复后复测仍 401，经用户质疑「是否真的用了 `COPILOT_PROVIDER_API_KEY`」核对进程/用户作用域环境，**根因更正**为编排侧派发环境未继承该变量（User 作用域有、Process 作用域为空；`BASE_URL`/`TYPE`/`MODEL` 均已继承），**不是凭据失效**。runner 增加 User→Process 注入后以 `-r2` 重取，Copilot 5 格全部 pass → **16/16 pass**；`capture_runtime_evidence --check`（22 份）与 `compatibility_report`（`ready-for-release-evidence`、uncovered 0）均转绿。I-006 → verified，GOAL-015 由 blocked 恢复 **active / 80%**（S1～S4 4/5，检查点与 progress 未改）。见 E-006。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
@@ -343,7 +351,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
-└── GOAL-015-audit-command-labeled-form       [active]  审计命令带标签形式修正（workspace-/goal-/vp-）  progress 80%
+└── GOAL-015-audit-command-labeled-form       [active]  审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
 ```
 
 ## 状态表
@@ -364,7 +372,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
-| GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-10-17 |
+| GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | active | 100% | 2026-10-17 |
 
 ## 编号
 
