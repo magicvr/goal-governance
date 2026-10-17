@@ -1,0 +1,6 @@
+{"type": "thread.started", "thread_id": "01a1459a-705f-7b91-8b52-d524b60fd344"}
+{"type": "item.completed", "item": {"id": "item_0", "type": "error", "message": "Under-development features enabled: default_mode_request_user_input, local_thread_store_compression. Under-development features are incomplete and may behave unpredictably. To suppress this warning, set `suppress_unstable_features_warning = true` in C:\\Users\\magicvr\\.codex\\config.toml."}}
+{"type": "item.completed", "item": {"id": "item_1", "type": "error", "message": "Model metadata for `deepseek-flash` not found. Defaulting to fallback metadata; this can degrade performance and cause issues."}}
+{"type": "turn.started"}
+{"type": "error", "message": "{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The 'deepseek-flash' model is not supported when using Codex with a ChatGPT account.\"}}"}
+{"type": "turn.failed", "error": {"message": "{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The 'deepseek-flash' model is not supported when using Codex with a ChatGPT account.\"}}"}}

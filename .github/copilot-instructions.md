@@ -2,9 +2,9 @@
 title: AGENTS 模板 · 目标治理 AI 规则
 status: active
 created: 2026-07-18
-updated: 2026-09-30
+updated: 2026-10-17
 parent: null
-version: 0.12.0
+version: 0.13.1
 ---
 
 # AGENTS.md
@@ -127,6 +127,8 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 - **编排器**汇总并响应与焦点相关的**全部**意见（`self` + `independent`），驱动修正/复审/推进。
 - **开放必改门禁**：存在**未关闭**的 required / 必改 findings（不论 self 还是 independent、不论是否与其它意见冲突）时，**不得**推进该门禁对应的下一阶段，**不得**将目标标为 `done`（关门）。仅汇总意见而不关闭必改项 = 违规放行。
 - 默认主入口仍为编排器；交叉审计为专用入口（如 `/audit`），非四填表并列主路径。
+- **自动派发 AD-01～AD-06**（全文 `{{GOVERNANCE_ROOT}}/architecture/principles.md#audit-dispatch`）：只向独立审计员输入 `/audit NNN NNN` 或 `/vision-audit NNN`；三位正整数唯一解析完整身份，拒绝附言/包装/非法编号。禁止自编审计提示词、scope/文件清单/结论预期及隐藏上下文注入，不复制编排历史；审计员自主定范围，入口失败不自由提示兜底。人类直调可给关注点，MCP 参数兼容不豁免自动请求；规则约束不宣称系统级强制拦截。
+
 
 #### 审计模式（实施前按风险确定）
 
@@ -167,6 +169,16 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 | 多条意见在结论/必改项上冲突 | 展示冲突 + **给建议** + **等用户决策**并留痕；未决不放行/不关门 |
 
 已有 independent 而无 self 不再单独触发询问：`independent` 不固定要求 self，`cross` 必须有 self。required finding、冲突、residual / overruled 与信息冲突仍必须由用户裁决。
+
+### 用户询问与缺答暂停（UI-01～UI-06）
+
+已授权治理任务中的待答/blocked/执行索引/目标树同步是必须完成的暂停收尾，**无需另次确认**；在返回问题或进入等待前完成，不得因未答省略，不预写真实答复或未发生的工具返回。独立审计仍不扩大写权限。
+
+全文 `{{GOVERNANCE_ROOT}}/architecture/principles.md#user-input-wait`。有可用且允许的同步阻塞询问卡片时必须使用；选择题给 2～3 个互斥方案、AI 推荐及取舍，保留自由输入。卡片不可用/用途受限/headless 无真人答复通路时文本提问并停止，不以异步询问替代阻塞。
+
+发问后暂停当前任务；空答复、取消/关闭/超时、缺题、答非所问、预选未提交或仅展示成功均不是答复，不补默认、不虚构。由有权编排侧记录问题 ID、原题/选项、影响门禁、原因、提问方式、其他阻塞及恢复条件，将当前 active/draft Goal 置 blocked、记执行事实并同步 goal-tree 树/表与已有父级投影；不改检查点/progress。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen；独立审计只记录/返回待答事实，不越权改 meta。写盘失败仍停止并报告未持久成功。
+
+空卡片返回后只记录待答/阻塞、报告并停止，不继续实施/放行/关门或其他工作，不将沉默当接受、否决、residual/overruled。自动续跑仍等真实答复、不重复计阻塞；真实答复逐题留痕后复核全部信息/审计门禁及其他阻塞，仅解除对应原因，部分答复不解除未答部分，无其他阻塞才恢复 active。
 
 ### P-005 · 信息就绪与未知项门禁
 

@@ -1,0 +1,12 @@
+{
+  "capturedAt": "2026-10-17T02:24:54.291102+00:00",
+  "stage": "after genuine format and newline answers",
+  "I001": "verified JSON",
+  "I002": "verified LF",
+  "B001": "still open/no closing evidence",
+  "goalStatus": "blocked",
+  "treeStatus": "blocked",
+  "counterUnchanged": true,
+  "noImplementation": true,
+  "noAutomaticDone": true
+}

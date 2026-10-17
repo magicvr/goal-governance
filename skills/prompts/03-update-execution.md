@@ -2,9 +2,9 @@
 title: 提示词 · 更新执行进度
 status: active
 created: 2026-07-18
-updated: 2026-08-10
+updated: 2026-10-17
 parent: null
-version: 0.7.0
+version: 0.8.1
 role: primitive
 ---
 
@@ -27,6 +27,12 @@ role: primitive
 
 # 任务
 在 `02-execution/` 创建下一条 `E-NNN-<slug>.md` **已发生事实**并更新 `02-execution.md` 索引；完成检查点时更新其标记并确定性重算派生 progress，status 仅按治理事实更新；同步 goal-tree。
+
+# 待答与阻塞记录
+
+执行 `{governance_root}/architecture/principles.md#user-input-wait` 的 UI-01～UI-06。需用户信息时同步卡片优先，缺答/空返回/取消等只记待答事实并停止，不补默认答案。由有权编排侧为当前 active/draft Goal 置 blocked，并同步 meta、goal-tree 树/表与已有父级投影；已有 blocked 保留其他原因，done/cancelled 不自动 reopen，无 Goal 只暂停任务、VP 不改 blocked。不得因记录阻塞而虚增检查点/progress。
+
+待答记录至少含问题 ID、原题/选项、影响范围/门禁、等待原因、提问方式、原有阻塞与恢复条件；答案只在真实提交后登记来源与内容。已授权治理任务中的这些暂停收尾写入**无需另次确认**：在返回问题/进入阻塞等待前完成待答、meta blocked、执行索引、goal-tree 树/表及已有父级投影；不能以“未答不写入”为由省略，也不能预写实际答复或未发生的工具返回。恢复时核对所有门禁，未答部分/其他原因保留。写盘失败仍停止并报告未持久成功；独立审计员不得用本原语越权改状态。
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：

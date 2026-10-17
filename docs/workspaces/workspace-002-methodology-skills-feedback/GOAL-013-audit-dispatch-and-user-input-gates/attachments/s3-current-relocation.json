@@ -1,0 +1,26 @@
+[
+  {
+    "source": "docs/releases/runtime/goal-013-s3-2026-10-17-r2/claude-code-cli-govern-2026-10-17.json",
+    "sourceSha256": "1de34955dfc8d531e53b9924af7b117ffddba158ab113cf0833c2c1549371197",
+    "destination": "docs/releases/runtime/goal-013-s3-2026-10-17-current/claude-code-cli-govern-2026-10-17.json",
+    "changes": "stdoutPath/stderrPath relocation only; capturedAt, sources, invocation, output bytes and digests unchanged"
+  },
+  {
+    "source": "docs/releases/runtime/goal-013-s3-2026-10-17-r2/claude-code-cli-vision-audit-2026-10-17-r3.json",
+    "sourceSha256": "dba7e7a8edf5582ea4a05f4aefd4d06576d85db1e7aeca93a7b18a1783d738ab",
+    "destination": "docs/releases/runtime/goal-013-s3-2026-10-17-current/claude-code-cli-vision-audit-2026-10-17.json",
+    "changes": "stdoutPath/stderrPath relocation only; capturedAt, sources, invocation, output bytes and digests unchanged"
+  },
+  {
+    "source": "docs/releases/runtime/goal-013-s3-2026-10-17-r2/github-copilot-cli-govern-2026-10-17.json",
+    "sourceSha256": "2451907b45b6f090db328ae171d8b55d319e95f56665356d23fe25af7b3d92e0",
+    "destination": "docs/releases/runtime/goal-013-s3-2026-10-17-current/github-copilot-cli-govern-2026-10-17.json",
+    "changes": "stdoutPath/stderrPath relocation only; capturedAt, sources, invocation, output bytes and digests unchanged"
+  },
+  {
+    "source": "docs/releases/runtime/goal-013-s3-2026-10-17-r2/grok-build-cli-govern-2026-10-17.json",
+    "sourceSha256": "43fe8c3480812361fd51aeece63c8dcb67300443b0d299c979effa2526c77143",
+    "destination": "docs/releases/runtime/goal-013-s3-2026-10-17-current/grok-build-cli-govern-2026-10-17.json",
+    "changes": "stdoutPath/stderrPath relocation only; capturedAt, sources, invocation, output bytes and digests unchanged"
+  }
+]

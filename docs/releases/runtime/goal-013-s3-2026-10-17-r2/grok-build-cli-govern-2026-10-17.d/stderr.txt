@@ -1,0 +1,4 @@
+2026-10-17T02:09:31.896207Z  WARN auth recovery: proceeding without file lock
+2026-10-17T02:09:33.944129Z  WARN Ignoring context_window downgrade from response header current_context_window=500000 header_context_window=256000
+2026-10-17T02:09:38.193288Z  WARN Ignoring context_window downgrade from response header current_context_window=500000 header_context_window=256000
+2026-10-17T02:09:44.629799Z  WARN Ignoring context_window downgrade from response header current_context_window=500000 header_context_window=256000

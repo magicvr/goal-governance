@@ -1,0 +1,20 @@
+{
+  "receivedAt": "2026-10-17T02:23:24.821036+00:00",
+  "source": "actual functions.request_user_input return in current conversation",
+  "rawReturn": {
+    "answers": {
+      "s3_format": {
+        "answers": [
+          "JSON (Recommended)"
+        ]
+      },
+      "s3_preselection": {
+        "answers": [
+          "你从后台调用的cli任务对用户来说并不具备可见性，这一点无法验证"
+        ]
+      }
+    }
+  },
+  "humanAnswerSubmitted": true,
+  "scope": "JSON preference only for synthetic I-001. User visibility feedback is not evidence of preselection. No CLI human submission is claimed."
+}

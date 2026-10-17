@@ -1,0 +1,230 @@
+{
+  "checked_on": "2026-10-16",
+  "purpose": "S2 implementation source snapshot, not a host runtime capture",
+  "files": [
+    {
+      "path": ".agents/skills/audit/SKILL.md",
+      "sha256": "7d58f9b9f49dec70a7058c3a1cb4eaa2837e18026b5a231275afa0b11a6a8e37"
+    },
+    {
+      "path": ".agents/skills/govern/SKILL.md",
+      "sha256": "05f5ec04c63b85aad2bcd8ae2e25f7132e4e9017da381994af885914f81bd8e1"
+    },
+    {
+      "path": ".agents/skills/vision-audit/SKILL.md",
+      "sha256": "a150020d34daca10b0c33f69c87c0fcd817b9807d109072a3f07d97b1b7b9ab4"
+    },
+    {
+      "path": ".agents/skills/vision/SKILL.md",
+      "sha256": "43688e68231a41dc373c18d9d28592618ad5a2dbd55d2fa7aed33771b40213fb"
+    },
+    {
+      "path": ".claude/skills/audit/SKILL.md",
+      "sha256": "6dbdb456787345b00d5acee2454545f2ea9119fd2452ea48b64d0959ff27ce0b"
+    },
+    {
+      "path": ".claude/skills/govern/SKILL.md",
+      "sha256": "1f8bbe0ebc552662b900bbcf9510b824af0d82b6d68aceae42f586594588e8a9"
+    },
+    {
+      "path": ".claude/skills/vision-audit/SKILL.md",
+      "sha256": "f3e377b673cafbe3bbd2f5b1018fa7a1aece67f7622e27499e8194985a30d1e4"
+    },
+    {
+      "path": ".claude/skills/vision/SKILL.md",
+      "sha256": "8584102b301b730a3b0f446a5366616c8ae192c1bcd18577fcaae83c2d2750e0"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "sha256": "17d607583868d5d1ea4295a0bfad91bc636f6aa48468ae1f621d6fc5e3e44fe7"
+    },
+    {
+      "path": ".github/prompts/audit.prompt.md",
+      "sha256": "1ec6188ff91ff1afbcc999a3a37516b4ae89488b2a1c566a8686a40c7f537fe9"
+    },
+    {
+      "path": ".github/prompts/govern.prompt.md",
+      "sha256": "b09a8171c6ef650c64d9996415ce968ac60e30184905a398ef99d5cc4776044b"
+    },
+    {
+      "path": ".github/prompts/vision-audit.prompt.md",
+      "sha256": "7c00013c0c2731873bde3e983207d1ef55e456cdcf16c069b685dae01f087fa6"
+    },
+    {
+      "path": ".github/prompts/vision.prompt.md",
+      "sha256": "424ec4d59205ca6cd4c08e9da864bdd643d07d3a9bf10eee1f9b63de67eb3381"
+    },
+    {
+      "path": ".grok/skills/audit/SKILL.md",
+      "sha256": "2a679f46458dbd983d407a98bf0db6df6295ff6932b4d26a63fb9d74969fbf2a"
+    },
+    {
+      "path": ".grok/skills/govern/SKILL.md",
+      "sha256": "21a56f08f381b54f096af542d0608bc335cda6e9a048c804f70fdebb1a54f7cd"
+    },
+    {
+      "path": ".grok/skills/vision-audit/SKILL.md",
+      "sha256": "ae8d7155b5681369ba0538fe0fef27ef4a75d097b44e24944d2d274a9b0665b6"
+    },
+    {
+      "path": ".grok/skills/vision/SKILL.md",
+      "sha256": "f47cbd54da960a4a463443104c936501ccdc5755cedb0bbc3f98bce8f2ffa2a5"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "bc7869220ca5b0093093bea74782841b8fdb9e9ba6a35caa3911c512a1968ae7"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "d95ab3f601a5041a20aa5eadb81996a3840e0ae37ff0b9fcd9744c5143f04483"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "4a2d7badeb29a6ec4a2b8b922468bc4d403dddf4f95bf8f49b243be905940ec0"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "f85d70a1675ccdeb7373a8055fa7a4398869678326919c89bff3a4a7fcbdd0a4"
+    },
+    {
+      "path": "docs/templates/goal-folder/02-execution.md",
+      "sha256": "6e7f289200997f49e1d0e21832d6771e77e503e6e941fcaacfee07f984fbfb4c"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "588d3f8f7d53d3eadb3f1db33c4036333b648b04cb329177e99b20f091d9f338"
+    },
+    {
+      "path": "mcp/README.md",
+      "sha256": "c9c2e832738faece00f8d725a5568a76713ce1d2ca91007b1e9a36c24c8ac346"
+    },
+    {
+      "path": "mcp/entries.py",
+      "sha256": "775c98bb04e053143ec9695c99681b94722d6911c7793d7efac32190ae38fb75"
+    },
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "f17decbf4d637cb707ab5a6d970bc3f04c76b11735837b2e41223797c8dfbfc4"
+    },
+    {
+      "path": "skills/core/docs/architecture/principles.md",
+      "sha256": "4a2d7badeb29a6ec4a2b8b922468bc4d403dddf4f95bf8f49b243be905940ec0"
+    },
+    {
+      "path": "skills/core/docs/architecture/workspace-protocol.md",
+      "sha256": "f85d70a1675ccdeb7373a8055fa7a4398869678326919c89bff3a4a7fcbdd0a4"
+    },
+    {
+      "path": "skills/core/docs/templates/goal-folder/02-execution.md",
+      "sha256": "6e7f289200997f49e1d0e21832d6771e77e503e6e941fcaacfee07f984fbfb4c"
+    },
+    {
+      "path": "skills/core/docs/vision/alignment.md",
+      "sha256": "588d3f8f7d53d3eadb3f1db33c4036333b648b04cb329177e99b20f091d9f338"
+    },
+    {
+      "path": "skills/install/claude/AGENTS.md",
+      "sha256": "aa4b5402dc3e521fde17ffc1ab0db85e60f0c6d45cae7afdf5f51702a6af9241"
+    },
+    {
+      "path": "skills/install/claude/skills/audit/SKILL.md",
+      "sha256": "6dbdb456787345b00d5acee2454545f2ea9119fd2452ea48b64d0959ff27ce0b"
+    },
+    {
+      "path": "skills/install/claude/skills/govern/SKILL.md",
+      "sha256": "1f8bbe0ebc552662b900bbcf9510b824af0d82b6d68aceae42f586594588e8a9"
+    },
+    {
+      "path": "skills/install/claude/skills/vision-audit/SKILL.md",
+      "sha256": "f3e377b673cafbe3bbd2f5b1018fa7a1aece67f7622e27499e8194985a30d1e4"
+    },
+    {
+      "path": "skills/install/claude/skills/vision/SKILL.md",
+      "sha256": "8584102b301b730a3b0f446a5366616c8ae192c1bcd18577fcaae83c2d2750e0"
+    },
+    {
+      "path": "skills/install/codex/skills/audit/SKILL.md",
+      "sha256": "7d58f9b9f49dec70a7058c3a1cb4eaa2837e18026b5a231275afa0b11a6a8e37"
+    },
+    {
+      "path": "skills/install/codex/skills/govern/SKILL.md",
+      "sha256": "05f5ec04c63b85aad2bcd8ae2e25f7132e4e9017da381994af885914f81bd8e1"
+    },
+    {
+      "path": "skills/install/codex/skills/vision-audit/SKILL.md",
+      "sha256": "a150020d34daca10b0c33f69c87c0fcd817b9807d109072a3f07d97b1b7b9ab4"
+    },
+    {
+      "path": "skills/install/codex/skills/vision/SKILL.md",
+      "sha256": "43688e68231a41dc373c18d9d28592618ad5a2dbd55d2fa7aed33771b40213fb"
+    },
+    {
+      "path": "skills/install/copilot/copilot-instructions.md",
+      "sha256": "f65e526b13529631be988e91fb3b0b115b108330b46e47faae264c5b3bb92013"
+    },
+    {
+      "path": "skills/install/copilot/prompts/audit.md",
+      "sha256": "1ec6188ff91ff1afbcc999a3a37516b4ae89488b2a1c566a8686a40c7f537fe9"
+    },
+    {
+      "path": "skills/install/copilot/prompts/govern.md",
+      "sha256": "b09a8171c6ef650c64d9996415ce968ac60e30184905a398ef99d5cc4776044b"
+    },
+    {
+      "path": "skills/install/copilot/prompts/vision-audit.md",
+      "sha256": "7c00013c0c2731873bde3e983207d1ef55e456cdcf16c069b685dae01f087fa6"
+    },
+    {
+      "path": "skills/install/copilot/prompts/vision.md",
+      "sha256": "424ec4d59205ca6cd4c08e9da864bdd643d07d3a9bf10eee1f9b63de67eb3381"
+    },
+    {
+      "path": "skills/install/grok/skills/audit/SKILL.md",
+      "sha256": "2a679f46458dbd983d407a98bf0db6df6295ff6932b4d26a63fb9d74969fbf2a"
+    },
+    {
+      "path": "skills/install/grok/skills/govern/SKILL.md",
+      "sha256": "21a56f08f381b54f096af542d0608bc335cda6e9a048c804f70fdebb1a54f7cd"
+    },
+    {
+      "path": "skills/install/grok/skills/vision-audit/SKILL.md",
+      "sha256": "ae8d7155b5681369ba0538fe0fef27ef4a75d097b44e24944d2d274a9b0665b6"
+    },
+    {
+      "path": "skills/install/grok/skills/vision/SKILL.md",
+      "sha256": "f47cbd54da960a4a463443104c936501ccdc5755cedb0bbc3f98bce8f2ffa2a5"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "e50b9aa1c83939460dcaf49b561a45ca5c643cdec1620c0029e39ac3b0ec6526"
+    },
+    {
+      "path": "skills/prompts/02-record-decision.md",
+      "sha256": "e7f2a86c1c56ae9a7f9ca5aa33d1f793ad3ea1a4ebacd053081cc3553fb95726"
+    },
+    {
+      "path": "skills/prompts/03-update-execution.md",
+      "sha256": "06b68ef04d424d5a2760a1a27e8d371de76c6efab7a51cb0b997239683e02917"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "48354f77269f5df3dcf89a5ac187fe5454d79fa39e9628e88ea6bd9409456fbf"
+    },
+    {
+      "path": "skills/prompts/05-independent-audit.md",
+      "sha256": "9f60f59c122ff303f5ec5aca414d6d42cb6b1a9ed37e6b2fe3c019e771301052"
+    },
+    {
+      "path": "skills/prompts/06-vision-orchestrator.md",
+      "sha256": "8b6d5d0b4bd68ed5b1a0708e6ec70a9f25822862841b84ebbbffbcddf4a73209"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "fb389b4194d2786ee4bb6ecde2a30b706b0077ad57a047724e81764aafb1a112"
+    },
+    {
+      "path": "skills/tests/test_governance_interaction_contract.py",
+      "sha256": "cc5814b9f48568ada782f2a6c51f3425b517752323300b19018065cdaaeaa110"
+    }
+  ]
+}

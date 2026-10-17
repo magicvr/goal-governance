@@ -1,0 +1,5 @@
+warning: --disallowed-tools "Bash", "PowerShell", "NotebookEdit" name no tool, so they remove nothing
+2026-10-16T15:41:15.841110Z  WARN disallowedTools entry matched nothing agent=grok-build-plan tool=Bash
+2026-10-16T15:41:15.841152Z  WARN disallowedTools entry matched nothing agent=grok-build-plan tool=Shell
+2026-10-16T15:41:15.841156Z  WARN disallowedTools entry matched nothing agent=grok-build-plan tool=PowerShell
+2026-10-16T15:41:15.841159Z  WARN disallowedTools entry matched nothing agent=grok-build-plan tool=NotebookEdit

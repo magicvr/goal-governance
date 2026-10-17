@@ -1,0 +1,2 @@
+2026-10-16T16:32:45.273682Z ERROR tool_error: tool_output_error session_id=01a1458e-0c5c-71c3-ac4a-357b87947b5f tool_name="search_replace" effective_tool_name="search_replace" model_id="grok-4.6" error_kind="tool_output_error"
+2026-10-16T16:32:54.916512Z  WARN Resident session actor exited unexpectedly; reaping as DeadFailed session_id=01a1458e-0c5c-71c3-ac4a-357b87947b5f

@@ -1,0 +1,26 @@
+{
+  "test": "Grok numeric option shortcut experiment; excluded from genuine human answer/preselection evidence",
+  "fixture": "C:/Users/magicvr/AppData/Local/Temp/gg-goal013-s3-4ffg648p",
+  "syntheticFixture": true,
+  "humanAnswerSubmitted": false,
+  "testAnswerInjected": true,
+  "operatorEvents": [
+    {
+      "input": "y",
+      "meaning": "Trust own fixture, permission only"
+    },
+    {
+      "input": "1",
+      "meaning": "Test intended selection without Enter; actual UI immediately submitted JSON"
+    },
+    {
+      "input": "Ctrl+C",
+      "meaning": "Cancelled next agent turn; then stopped unique TUI PID 40236"
+    }
+  ],
+  "notEvidenceFor": [
+    "U04 card preselection without submission",
+    "U11 genuine human answer"
+  ],
+  "outcome": "The submitted test event must not be attributed to the production user or treated as a production goal decision."
+}

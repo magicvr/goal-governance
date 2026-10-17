@@ -1,0 +1,13 @@
+{
+  "recorded_on": "2026-10-16",
+  "source": "functions.request_user_input actual tool result in this conversation",
+  "answers": {
+    "independent_provider": {
+      "answers": ["Grok Build"]
+    },
+    "s1_contract_path": {
+      "answers": ["A 现有入口规范化 (Recommended)"]
+    }
+  },
+  "not_tested": ["empty answer", "cancel", "unsubmitted default", "other host card UI"]
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "toolUseId": "call_OIBIjOwn6dg51FI4UGSjkL9Y",
+    "isError": true,
+    "content": "EPERM: operation not permitted, rename 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\GOAL-013-synthetic-counter\\00-meta.md.tmp.37308.185df765e22c' -> 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\GOAL-013-synthetic-counter\\00-meta.md'",
+    "source": "actual raw tool_result error; no model reconstruction"
+  },
+  {
+    "toolUseId": "call_zY1Y1JSBj2MmI4A6NLJHDv2K",
+    "isError": true,
+    "content": "EPERM: operation not permitted, rename 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\GOAL-013-synthetic-counter\\02-execution.md.tmp.37308.4b1b66c3edb2' -> 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\GOAL-013-synthetic-counter\\02-execution.md'",
+    "source": "actual raw tool_result error; no model reconstruction"
+  },
+  {
+    "toolUseId": "call_4A0KJkfzMpeZRz4LuhqDqS6k",
+    "isError": true,
+    "content": "EPERM: operation not permitted, rename 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\GOAL-013-synthetic-counter\\00-meta.md.tmp.37308.f16781a638ee' -> 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\GOAL-013-synthetic-counter\\00-meta.md'",
+    "source": "actual raw tool_result error; no model reconstruction"
+  },
+  {
+    "toolUseId": "call_5qeRO0gffIOE6uAgBv9sUEGU",
+    "isError": true,
+    "content": "EPERM: operation not permitted, rename 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\goal-tree.md.tmp.37308.ca07d0245ccf' -> 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\goal-tree.md'",
+    "source": "actual raw tool_result error; no model reconstruction"
+  },
+  {
+    "toolUseId": "call_AMq47YkT2ifqHd8xdOblGe9X",
+    "isError": true,
+    "content": "EPERM: operation not permitted, rename 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\goal-tree.md.tmp.37308.323f8fad2a80' -> 'C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-kg_udbh5\\docs\\workspaces\\workspace-002-synthetic\\goal-tree.md'",
+    "source": "actual raw tool_result error; no model reconstruction"
+  }
+]

@@ -7,14 +7,16 @@ plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
-updated: 2026-10-15
-version: 0.14.20
+updated: 2026-10-17
+version: 0.14.29
 progress: 67%
 ---
 
 # GOAL-001 · 真实项目反馈驱动的协议与 Skills 演进
 
 ## 概述
+
+GOAL-013 S3 完成，真实同步卡片答复及已列负例/运行证据、回归就位；I-004 在 D-003 路径 A 范围 verified，子目标恢复 active / 75%，无当前待答。S4 尚未开始，见子目标 E-009。Root R3 active / 67% 保持。
 
 在 Charter `vision-goal-governance@0.2.0` 与 **VP-001 奠基有界关** 之后，以**真实项目 / 消费方使用中发现的问题**为触发，持续修正核心方法论与 Skills，使协议在实战中保持可复制、可审计、可安装。
 
@@ -75,8 +77,17 @@ progress: 67%
 | [GOAL-010-release-gate-recapture-and-v0-13-4](../GOAL-010-release-gate-recapture-and-v0-13-4/00-meta.md) | 发布门禁转绿与 v0.13.4 正式发布 | done |
 | [GOAL-011-standalone-bootstrap-distribution](../GOAL-011-standalone-bootstrap-distribution/00-meta.md) | 修复 issue #24：独立启用说明的消费分发与引用 | done |
 | [GOAL-012-release-v0-13-5](../GOAL-012-release-v0-13-5/00-meta.md) | v0.13.5 正式发布与消费资产验收 | done |
+| [GOAL-013-audit-dispatch-and-user-input-gates](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) | 独立审计命令派发与用户答复阻塞门禁 | active |
 
 ## 备注
+
+- **GOAL-013 S2 完成（2026-10-16）**：路径 A 的 canonical、prompts、四宿主入口/MCP guidance、待答模板及镜像已同步并通过回归/隔离安装；子目标 active / 50%（2/4）。旧 12 份 runtime 证据对当前工作树过期，I-004 保持 S3 门禁；S3/S4 未开始，Grok Build provider 保持。Root R3 active / 67% 不变，见子目标 E-004。
+
+- **GOAL-013 S1 完成（2026-10-16）**：用户同步卡片采纳 A 现有入口规范化、指定 Grok Build，子目标 D-003 冻结。真实答复解除待答阻塞，active / 25%（1/4），S2 未开始；实际宿主问答仍按 I-004 于 S3 验证。Root R3 active / 67% 保持。
+
+- **GOAL-013 S1 调查（2026-10-16）**：命令契约、四宿主能力与验收用例已提出，D-002 待裁决；当前 blocked / 0%，等待真实用户答复后判断 S1 退出与后续实施路径。Root R3 active / 67% 保持。
+
+- **独立审计与答复门禁反馈（2026-10-16）**：用户要求本区新建 [GOAL-013](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md)，承载自动审计只输入正式命令与用户询问空答复暂停/目标 blocked 两项约束。active / 0%，先登记 S1～S4 与信息门禁，尚未实施；Root R3 进行中、progress 67% 保持，下一编号 GOAL-014。
 
 - **v0.13.5 正式发布（2026-10-15）**：[GOAL-012](../GOAL-012-release-v0-13-5/00-meta.md) 完成 PR #27 → main `1a6668e` → annotated tag → run 38691121485 → 9 项资产验收及隔离消费安装，MCP 镜像拉取/内置版本通过；A-003 close-out pass，无开放 required，done / 100%。Root R3 / VP-002 保持长期 active，Root progress 67%，下一编号 GOAL-013；见子目标 E-004/E-005。
 

@@ -2,15 +2,51 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-10-15
+updated: 2026-10-17
 parent: null
-version: 0.42.0
+version: 0.51.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-17 · GOAL-013 S3 完成与真实答复后恢复
+
+当前 16 份 producer 证据一致，矩阵与 CI 指向 current；负例整改、真实 EPERM/待答持久化复测完成。当前对话实际同步卡片收到 JSON、LF 和“已有预选”观察，不外推后台 CLI 可见性；部分答复与 B-001 保留轨迹已留痕。docs 67 / Skills 101 / scripts 146（4 skipped）通过，38 对镜像一致。I-004 在 D-003 路径 A 及已列 profile 范围 verified；S3 完成，GOAL-013 从 blocked 恢复 active / 75%（3/4），无待答，S4 未开始。Root active / 67% 不变，见 E-008/E-009；未提交/发布。
+
+## 2026-10-17 · GOAL-013 实际卡片验证等待
+
+已补零匹配、身份不符、非法根、junction、cancelled、VP-only 与真实 EPERM 故障等负例并整改复测，当前 16 份来源一致记录就位。按 E-008 准备实际同步卡片，尚无工具返回或用户答案；GOAL-013 blocked / 50%，I-004 collecting、S3 未退出、S4 未开始。合成示例偏好不改变生产范围；Root active / 67% 不变。
+
+## 2026-10-17 · GOAL-013 按用户指令继续
+
+用户明确要求继续中断任务。上一轮 E-006 的参与安排题未实际展示，已撤回，不记作答复或用户未答；恢复 active / 50% 的 S3 信息收集，I-004 collecting，补剩余负例。真实交互未验收，S4 未开始；Root active / 67% 不变，见 E-007。
+
+## 2026-10-17 · GOAL-013 S3 取证整改与待答
+
+Claude 更新供应商后重试成功；三宿主四入口 12 格及四宿主目录角色探针 4 份当前来源一致，矩阵与 CI 门禁已切换。Claude 缺答持久化、Grok 混合布局后继续审计、Copilot 非审计 .gitkeep 写入均整改复测。docs 67 / Skills 101 / scripts 146（4 skipped）通过，38 对镜像一致。真实交互及剩余负例仍有缺口，I-004 collecting；Q-003 等待用户安排真实参与，GOAL-013 **blocked / 50%（2/4）**，S3 未退出、S4 未开始。Root active / 67% 不变，见子目标 E-005/E-006。
+
+## 2026-10-16 · GOAL-013 S3 进行中
+
+按用户指令开展隔离宿主取证，D-004 留实际重试授权。39 项定向回归通过、38 对镜像一致；Grok 两类纯命令在合成仓完成 Goal/VRev 路由，其他入口与问答仍在验证。I-004 collecting，旧 12 格 runtime 尚未替换；S3 未完成、S4 未开始。GOAL-013 **active / 50%（2/4）**，无当前待答阻塞；Root R3 active / 67% 不变，事实见子目标 E-005。
+
+## 2026-10-16 · GOAL-013 S2 完成
+
+按 D-003 路径 A 落实 AD-01～AD-06 / UI-01～UI-06：canonical、核心 prompts、四宿主 16 份发货及本仓副本、待答模板与 MCP guidance 同步，MCP 参数形状不变，无新 runner。38 对镜像一致；文档 67、Skills 101、交付/镜像 11、打包 10（1 skipped）通过，PowerShell 隔离安装 PASS。旧 runtime 12 份记录报 24 个 source stale，保持原记录，I-004 open，S3 须真实重取证与问答验证；无正式审计意见，不宣称发布/运行时通过。GOAL-013 **active / 50%（2/4）**，S3/S4 未开始；Root R3 active / 67% 保持。
+
+## 2026-10-16 · GOAL-013 S1 完成（用户采纳 A + Grok Build）
+
+同步询问卡片收到 Q-001 = A 现有入口规范化、Q-002 = Grok Build，D-003 留真实裁决，D-002 契约冻结。I-001/I-002 在设计范围 verified，实际版本空返回/恢复仍在 I-004 required，于 S3 验证；I-003/I-005 verified，没有 residual 接受。待答阻塞解除，GOAL-013 恢复 **active / 25%（S1～S4 1/4）**；S2 未开始。调查证据、22 条验收用例及 32 项既有测试基线已就位，无正式审计意见。Root R3 active / 67% 保持。
+
+## 2026-10-16 · GOAL-013 S1 调查准备与待裁决
+
+已形成命令派发现状、37 文件源码快照、四宿主能力矩阵与 22 条正反例计划；既有 File/MCP/L2 基线 32 tests OK。D-002 为 proposed，等待 Q-001（共同契约及 A 现有入口规范化 / B 代码校验路径）、Q-002（cross provider）；I-001/I-002 collecting，I-005 required/open。GOAL-013 为 **blocked / 0%（S1 进行中，0/4）**，等待真实答复；空卡片返回不得推进。尚未冻结方案、实施或审计。Root R3 active / 67% 保持。
+
+## 2026-10-16 · GOAL-013 立项
+
+用户要求在本区新建目标，约束独立审计自动派发仅使用 `/audit <工作区编号> <目标编号>` 或 `/vision-audit <vp编号>`，禁止编排器自编提示词限制范围；询问信息优先使用阻塞卡片，无真实答复（含空返回）立即暂停任务，有当前目标则置为 blocked 并同步树，禁止臆造答复或自行推进。创建 **GOAL-013-audit-dispatch-and-user-input-gates**（active / 0%，S1～S4 0/4），D-001 记录范围；I-001～I-004 登记命令解析、宿主能力、cross provider 与证据充分性，尚未冻结方案或实施。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 **GOAL-014**。
 
 ## 2026-10-15 · GOAL-012 关门（v0.13.5 正式发布）
 
@@ -264,14 +300,15 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-009-info-deadlock-and-managed-placeholders [done]    未知信息门禁死锁与受管占位符升级  progress 100%
 ├── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
 ├── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
-└── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
+├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
+└── GOAL-013-audit-dispatch-and-user-input-gates [active]  独立审计命令派发与用户答复阻塞门禁  progress 75%
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-10-15 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-10-16 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
@@ -283,13 +320,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
+| GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-10-17 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 012 |
-| 下一可用 | **GOAL-013** |
+| 最大编号 | 013 |
+| 下一可用 | **GOAL-014** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

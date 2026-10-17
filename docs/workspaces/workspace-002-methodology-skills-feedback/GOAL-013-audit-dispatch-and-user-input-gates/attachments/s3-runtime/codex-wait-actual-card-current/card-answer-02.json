@@ -1,0 +1,15 @@
+{
+  "receivedAt": "2026-10-17T02:24:54.282103+00:00",
+  "source": "actual functions.request_user_input return in current conversation",
+  "rawReturn": {
+    "answers": {
+      "s3_newline": {
+        "answers": [
+          "LF (Recommended)"
+        ]
+      }
+    }
+  },
+  "humanAnswerSubmitted": true,
+  "scope": "synthetic I-002 only; not backend CLI answer or production scope approval"
+}

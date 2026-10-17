@@ -1,0 +1,33 @@
+{
+  "test": "Real Grok terminal question dismissal in a synthetic consumer",
+  "product": "Grok Build CLI",
+  "version": "1.0.60 (01a8e1c591c0)",
+  "model": "grok-4.6",
+  "reasoningEffort": "low",
+  "fixture": "C:/Users/magicvr/AppData/Local/Temp/gg-goal013-s3-2ln0on6f",
+  "explicitCwd": true,
+  "syntheticFixture": true,
+  "humanAnswerSubmitted": false,
+  "operatorEvents": [
+    {
+      "input": "y",
+      "meaning": "Trust permission for own generated fixture; not a format answer"
+    },
+    {
+      "input": null,
+      "meaning": "Question card observed awaiting response; no format option submitted"
+    },
+    {
+      "input": "X",
+      "meaning": "Shift+X dismissed the actual live question card",
+      "observedAtUtc": "2026-10-16T16:24:22Z"
+    },
+    {
+      "input": null,
+      "meaning": "Agent returned a stop report; remained blocked; no export implementation; idle TUI then closed by unique PID 14024"
+    }
+  ],
+  "visibleCardExcerpt": "GOAL-013 导出格式（I-001，实施门禁）：计数结果文件用哪种格式？未书面选择前不能实现导出。│││ 1 (○) JSON（Recommended）    结构化对象/数组，便于程序读取与复核。      █│z(○)Typeyouranswerhere│ ↑/↓ navigate · y copyEnter:submit │  Tab:next answr │ Esc:scrollback │  Shift+x:dismis",
+  "rawToolResponseCaptured": false,
+  "limitation": "ANSI viewport excerpt only; card tool return 'declined/empty' is reported in the saved agent ledger, not a captured raw payload. No claim of genuine human format submission or radio preselection testing."
+}

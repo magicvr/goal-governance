@@ -1,0 +1,145 @@
+{
+  "checked_on": "2026-10-16",
+  "scope": "S2 source/distribution verification; actual host question UI and recapture remain S3",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s docs/tests -q",
+      "exit_code": 0,
+      "tests": 67,
+      "note": "rerun with required permission after sandbox denied two temporary git init .git/config writes"
+    },
+    {
+      "command": "python -m unittest discover -s skills/tests -q",
+      "exit_code": 0,
+      "tests": 101,
+      "new_contract_tests_included": 8
+    },
+    {
+      "command": "python -m unittest scripts.tests.test_stage_skills_mirrors scripts.tests.test_contract_delivery_channels -q",
+      "exit_code": 0,
+      "tests": 11
+    },
+    {
+      "command": "python -m unittest scripts.tests.test_pack_skills_release -q",
+      "exit_code": 0,
+      "tests": 10,
+      "skipped": 1
+    },
+    {
+      "command": "pwsh -NoProfile -File skills/tests/test_install_ps1_isolated.ps1",
+      "exit_code": 0,
+      "result": "PASS, isolated -All + InitWorkspace"
+    },
+    {
+      "command": "python scripts/stage_skills_mirrors.py",
+      "exit_code": 0,
+      "checked_pairs": 38,
+      "copied": 4
+    },
+    {
+      "command": "python scripts/stage_skills_mirrors.py --check",
+      "exit_code": 0,
+      "checked_pairs": 38
+    },
+    {
+      "command": "python scripts/capture_runtime_evidence.py --check --evidence-dir docs/releases/runtime/v0.13.4",
+      "exit_code": 1,
+      "stale_files": 12,
+      "problems": 24,
+      "gate": "I-004 remains open, no old evidence modified"
+    }
+  ],
+  "runtime_evidence_issues": [
+    {
+      "path": "docs/releases/runtime/v0.13.4/claude-code-cli-audit-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/claude-code-cli-govern-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/claude-code-cli-vision-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/claude-code-cli-vision-audit-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/github-copilot-cli-audit-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/github-copilot-cli-govern-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/github-copilot-cli-vision-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/github-copilot-cli-vision-audit-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/grok-build-cli-audit-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/grok-build-cli-govern-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/grok-build-cli-vision-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.13.4/grok-build-cli-vision-audit-2026-10-01.json",
+      "errors": [
+        "behavior source is stale: AGENTS.md (recorded e8afa1d414cb…, current bc7869220ca5…)",
+        "behavior source is stale: skills/prompts/00-govern-orchestrator.md (recorded 222d37a7843a…, current e50b9aa1c839…)"
+      ]
+    }
+  ],
+  "boundaries": [
+    "No actual provider model audit invoked",
+    "No card empty/cancel/headless UI validation claimed",
+    "No new runner or MCP parameter shape change",
+    "No tag or release",
+    "No automatic git commit; baseline contained existing changes and runtime validation is pending"
+  ]
+}
