@@ -24,7 +24,7 @@ version: 0.1.0
 
 ## 信息需求与阶段门禁
 
-台账见 [00-meta.md](00-meta.md#信息就绪与未知项)；I-001～I-004 均为 required，结论已回填：I-001/I-002 verified（D-002 + E-002）、I-003 verified（用户指定 Grok Build 且 2026-10-17 实际派发成功）、I-004 verified（E-003：16/16 运行记录过期、24 个 behaviorSource 变更，重捕获由 D-003 收回 S5）。**I-005（发布版本号）仍为 open**，门禁 = S5 版本清单步骤前，待用户裁决。本文件是稳定索引。
+台账见 [00-meta.md](00-meta.md#信息就绪与未知项)；I-001～I-007 均为 required，当前态（2026-10-17 更新）：I-001/I-002 verified（D-002 + E-002）、I-003 verified（用户指定 Grok Build 且同日实际派发成功）、I-004 verified（E-003 记录过期事实，重捕获由 D-003 收回 S5 并已由 E-006 完成）、I-005 verified（用户答复 **patch `v0.13.7`**，矩阵/CHANGELOG/tag 已对齐）、I-006 verified（根因更正为编排侧环境未继承 `COPILOT_PROVIDER_API_KEY`，非凭据失效；注入后 copilot 5 格 pass）、I-007 verified（Environment `release` 由维护者人工审批，Release 已发布并逐项验收）。本文件是稳定索引。
 
 ## 决策索引
 

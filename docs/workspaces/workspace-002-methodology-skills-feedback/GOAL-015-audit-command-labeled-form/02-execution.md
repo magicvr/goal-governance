@@ -36,7 +36,7 @@ version: 0.1.0
 
 | Q-007 | Environment `release` 人工审批（tag workflow 39034827440 的 gated publish） | S5 步骤 e 退出与资产验收 | 规则禁止 AI 代批或改环境配置；未审批则 Release 不发布、无法核验资产 | 无（pack 已 success、strict 预检 checks passed True） | 维护者在 GitHub 批准后由编排侧回读 run 与 Release 事实 | 2026-10-17 用户答复「我已批准」；**先回读后记录**：部署 `release` 状态 waiting→queued→in_progress→success，creator 均为 `magicvr`（人工），`pending_deployments` 为空；run completed success、Release 9 项资产已发布，见 [E-008](02-execution/E-008-s5-release-and-asset-verification.md) |
 
-> Q-001～Q-005 均为已获真实答复的裁决；Q-006 的答复与根因更正见 [E-006](02-execution/E-006-s5-evidence-recapture.md)；Q-007 待维护者在 GitHub 完成 Environment 审批。其间 GOAL-015 曾按 UI-01～UI-06 置 `blocked` 并同步树/表，恢复后继续；未预写任何答复或未发生的工具返回。
+> Q-001～Q-007 均已获真实答复（Q-006 的答复与根因更正见 [E-006](02-execution/E-006-s5-evidence-recapture.md)；Q-007 由维护者在 GitHub 完成 Environment 审批，编排侧**先回读 run 与 Release 事实后**才记录，见 [E-008](02-execution/E-008-s5-release-and-asset-verification.md)）。其间 GOAL-015 曾两次按 UI-01～UI-06 置 `blocked`（Copilot 探针环境、Environment 审批）并同步树/表，原因解除后恢复；未预写任何答复或未发生的工具返回。
 
 ## 事实边界
 

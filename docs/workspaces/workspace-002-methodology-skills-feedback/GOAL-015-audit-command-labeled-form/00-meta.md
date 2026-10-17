@@ -43,7 +43,7 @@ S1～S5 全部完成，当前 **active / 100%（5/5）**，关门待用户。S5�
 | S4 | cross 审计、响应与关门 | 完成（2026-10-17） | A-001 self + A-002 Grok Build independent 落盘并由 A-003 响应（开放 required 0，2 条 recommended 保持 open）；A-004 关门就绪审视 `pass`；见 E-004 |
 | S5 | 发布：证据重捕获 → CI 全绿 → 合并 main → tag → 资产验收 | 完成（2026-10-17） | 16 格证据 16/16 pass、两门禁转绿；清单/CHANGELOG 同步；本地门禁与 strict rehearsal/预检 `checks passed: True`；PR #31 CI 全绿 → merge `6ca04ee` → annotated tag `v0.13.7` → tag run 39034827440 的 pack 与 gated publish 全绿（Environment 由维护者人工审批）→ Release 9 项资产；资产逐项验收通过（摘要/子集/隔离安装/GHCR）。S5 的 independent 审计待出具，关门待用户。见 [D-003](01-decision/D-003-scope-extension-s5-release.md)、[E-006](02-execution/E-006-s5-evidence-recapture.md)、[E-007](02-execution/E-007-s5-pr-ci-merge-tag.md)、[E-008](02-execution/E-008-s5-release-and-asset-verification.md) |
 
-顺序为 S1 → S2 → S3 → S4 → S5；本目标为可直接执行的小目标，不批量拆子目标，S1/S2 在同一轮完成。派生 `progress` = 完成阶段 4 / 5 = **80%**（等权检查点；S5 由 D-003 于 2026-10-17 追加，此前的 100% 对应 4 阶段路线图，**不**表示发布完成）；progress 不代表关门决定，也不放行任何门禁。
+顺序为 S1 → S2 → S3 → S4 → S5；本目标为可直接执行的小目标，不批量拆子目标，S1/S2 在同一轮完成。派生 `progress` = 完成阶段 **5 / 5 = 100%**（等权检查点；S5 由 D-003 于 2026-10-17 追加并在同日完成）；progress 不代表关门决定，也不放行任何门禁——`status` 仍为 `active`，关门待用户。
 
 ## 信息就绪与未知项
 
