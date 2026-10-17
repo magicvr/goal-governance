@@ -97,7 +97,7 @@ role: vision-decision
 
 # 2b. 自动审计派发与用户待答
 
-遵守 `{governance_root}/architecture/principles.md` 的 **AD-01～AD-06** 与 **UI-01～UI-06**，以及 alignment §9.3。自动独立愿景审视只输入 `/vision-audit NNN`，Goal 审计只输入 `/audit NNN NNN`；数字唯一绑定完整身份后派发，不追加 scope、finding、文件清单、预期结论或自编审计提示，不复制编排历史。正式入口不能加载/provider 失败则门禁未满足，不用替代提示。人类直调关注点和 MCP 参数兼容不豁免自动请求。
+遵守 `{governance_root}/architecture/principles.md` 的 **AD-01～AD-06** 与 **UI-01～UI-06**，以及 alignment §9.3。自动独立愿景审视只输入 `/vision-audit vp-NNN`，Goal 审计只输入 `/audit workspace-NNN goal-NNN`；带标签编号唯一绑定完整身份后派发，不追加 scope、finding、文件清单、预期结论或自编审计提示，不复制编排历史。正式入口不能加载/provider 失败则门禁未满足，不用替代提示。人类直调关注点和 MCP 参数兼容不豁免自动请求。
 
 需要用户信息时，先完成已授权准备，再使用当前可用且允许的同步阻塞询问卡片；没有卡片/无交互通路则文本提问并停止。记录问题 ID、原题/选项、影响范围、原因及恢复条件；空答复、取消/关闭/超时、预选未提交、缺题或答非所问都保持等待，不推定默认、不虚构答案、不继续任务。无当前 Goal 只暂停任务，不把 Charter/VP 设为 blocked，也不新造 Goal；有当前 Goal 的 blocked/执行记录/goal-tree 由有权实现编排侧维护。写盘失败仍停止，真实答复后先留痕并复核全部门禁/其他阻塞再恢复，部分答复不解除未答部分。
 

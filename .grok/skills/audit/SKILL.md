@@ -8,7 +8,7 @@ description: >
 when-to-use: >
   /audit, 交叉审计, 独立审计, 独立复审, cross-audit, second opinion audit
 user-invocable: true
-argument-hint: "[workspace-number goal-number | human goal id or scope]"
+argument-hint: "[workspace-NNN goal-NNN | human goal id or scope]"
 metadata:
   role: independent-audit
   package: goal-governance-skills
@@ -26,7 +26,7 @@ metadata:
 
 治理根预检：配置存在时必须先读仓库根 `.goal-governance.json`，校验 JSON 与 `governance_root` 的类型、仓内相对路径及解析后的边界（含符号链接）；只有配置文件不存在才默认 `docs`。配置非法/仓外逃逸立即停止，不扫描 Goal/VP 正文、不分配审计编号、不写台账，不回退 `docs` 或包内镜像。随后才在已验证根读取权威与解析身份。
 
-- 先读 `{governance_root}/architecture/principles.md` 的 **AD-01～AD-06** 与 **UI-01～UI-06**，以及 workspace-protocol §2.7。自动审计正文仅 `/audit NNN NNN` 或 `/vision-audit NNN`；数字唯一绑定完整身份，拒绝非法编号、多余参数、换行/包装，不截断后执行。
+- 先读 `{governance_root}/architecture/principles.md` 的 **AD-01～AD-06** 与 **UI-01～UI-06**，以及 workspace-protocol §2.7。自动审计正文仅 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`；带标签编号唯一绑定完整身份，拒绝裸数字、非法编号、多余参数、换行/包装，不截断后执行。
 - 自动派发禁止自编提示词、scope/文件清单/结论预期及隐藏上下文注入；使用干净会话，不复制编排历史，审计员自主扫描和定 scope。正式入口不可用则门禁未满足，不用自由提示兜底；人类直调关注点不作为自动请求的豁免。
 - 需用户信息时同步阻塞询问卡片优先；不可用/用途受限/headless 无答复通路则文本提问并停止。空返回、取消/关闭/超时、缺题、预选未提交均未答，不补默认或虚构答复，不以权限批准/工具成功当答案；部分答复仍等待其余。
 - 发问后停止当前任务；由有权编排侧记录原问题/选项、影响、原因、恢复条件和其他阻塞，将当前 active/draft Goal 置 blocked 并同步执行记录、goal-tree 树/表及父级投影。独立审计只在自身权限记录/返回待答事实，不越权改 meta；无 Goal 只暂停，VP 不改 blocked，done/cancelled 不自动 reopen。写盘失败仍停止；真实答复留痕、复核全部门禁后才解除相应阻塞恢复。

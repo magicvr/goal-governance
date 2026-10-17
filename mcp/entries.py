@@ -21,8 +21,8 @@ IMPLEMENTATION_LAYER = "implementation"
 # Shared guidance is available even when a thin MCP consumer has no File prompts.
 # This is a protocol constraint, not a new parser, runner, or schema boundary.
 _INPUT_BOUNDARY = (
-    " 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit NNN NNN 或 "
-    "/vision-audit NNN；数字唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，"
+    " 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 "
+    "/vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，"
     "不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。"
     "同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，"
     "不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，"

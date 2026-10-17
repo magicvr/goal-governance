@@ -12,6 +12,8 @@ version: 0.2.0
 
 # D-002 · S1 契约提案（路径 A 已采纳）
 
+> **现时注（2026-10-17 · GOAL-015）**：本条把用户原始要求「形式审计命令 `/audit <工作区编号> <目标编号>` 或 `/vision-audit <vp编号>`」写成了裸数字 `/audit NNN NNN`、`/vision-audit NNN`，该形式已被用户判定为错误并被 [GOAL-015 D-002](../../GOAL-015-audit-command-labeled-form/01-decision/D-002-labeled-command-contract.md) 取代：现行正式命令为 `/audit workspace-NNN goal-NNN` 与 `/vision-audit vp-NNN`，裸数字不再合法。本条保留为当时记录，不改写历史结论与状态。
+
 ## 依据与当前状态
 
 用户本轮明确授权开展 S1。调查证据见 [S1 核对](../attachments/s1-contract-and-host-evidence.md)，后续用例见 [验收矩阵](../attachments/s1-acceptance-cases.md)。以下保留提交裁决时的提案及选项；用户随后通过同步卡片选择路径 A 和 Grok Build，正式采纳及保证边界见 [D-003](D-003-s1-freeze-and-grok-provider.md)。尚未修改规范或实现。

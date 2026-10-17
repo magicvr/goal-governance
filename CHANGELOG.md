@@ -13,7 +13,18 @@ version: 0.2.0
 
 ## Unreleased
 
-（空；本次 v0.13.6 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+（空；本次 v0.13.7 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.13.7 - 2026-10-17
+
+审计命令形式修正 patch（[GOAL-015](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-015-audit-command-labeled-form/00-meta.md)）。协议 0.1.0、consumer contract 数据结构、MUST 门禁与 File/MCP 渠道边界保持。
+
+- 自动派发独立审计的正式命令改为**带标签形式** `/audit workspace-<NNN> goal-<NNN>` 与 `/vision-audit vp-<NNN>`；裸数字 `/audit 002 013`、`/vision-audit 002` 不再合法。前缀固定小写拼写，编号为 1～3 位十进制正整数并补零为三位。
+- 拒绝面明确：裸数字、前缀缺失/大小写或拼写不符、完整 id/slug 冒充选择器、选择器顺序错误、多余参数、换行/注释/包装等一律 fail closed，不截断附言后派发；解析语义（唯一绑定完整身份、Q1/Q2/Q3 与区内短 `parent` 不变）保持。
+- 约束同步到 canonical 原则 AD-01/AD-02、`workspace-protocol` §2.7、`alignment` §9.3、根 `AGENTS.md` 摘要、五个 Skills prompts、四宿主安装源与规则模板、MCP guidance 与契约测试（含防再犯守卫），并保持 `skills/core`、`skills/contracts` 镜像与 canonical 一致。
+- **16 格 runtime 证据重捕获**：3 宿主 × 4 治理入口 + 四宿主 MCP 目录探针在修正后的工作树上重新采集（探针正文即带标签命令），全部 `pass`，位于 `docs/releases/runtime/v0.13.7/`；`capture_runtime_evidence --check` 与 `compatibility_report --require-ready` 通过。矩阵 `candidateRevision` 与安装/GHCR 示例 pin 对齐 `v0.13.7`。
+- 审计：A-001 self 与用户指定 Grok Build 的 A-002 independent 均 `conditional`、开放 required = 0；A-003 响应 `fixed` 3 条、保持 open recommended 2 条（运行验证缺口已由本批重捕获回应、提交边界已由检查点闭合），A-004 关门就绪审视 `pass`。
+- 发布身份须由 main merge、annotated `v0.13.7`、strict release evidence、Environment release 人工审批及真实资产核对建立。
 
 ## 0.13.6 - 2026-10-17
 

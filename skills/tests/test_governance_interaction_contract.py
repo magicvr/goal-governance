@@ -66,6 +66,49 @@ class GovernanceInteractionContractTests(unittest.TestCase):
             with self.subTest(installed=installed.relative_to(ROOT).as_posix()):
                 self.assertEqual(source.read_bytes(), installed.read_bytes())
 
+    def test_automatic_audit_commands_use_labeled_selectors(self):
+        """AD-01: automatic dispatch carries workspace-/goal-/vp- labels, never bare numbers."""
+        legacy = ("/audit NNN NNN", "/vision-audit NNN")
+        goal_cmd = "/audit workspace-NNN goal-NNN"
+        vp_cmd = "/vision-audit vp-NNN"
+        both = [
+            ROOT / "docs/architecture/principles.md",
+            ROOT / "docs/architecture/workspace-protocol.md",
+            ROOT / "AGENTS.md",
+            ROOT / "skills/AGENTS.template.md",
+            ROOT / "skills/install/claude/AGENTS.md",
+            ROOT / "skills/install/copilot/copilot-instructions.md",
+            ROOT / ".github/copilot-instructions.md",
+            ROOT / "mcp/entries.py",
+            ROOT / "mcp/README.md",
+        ]
+        both += [ROOT / f"skills/prompts/{name}" for name in (
+            "00-govern-orchestrator.md",
+            "04-write-audit.md",
+            "05-independent-audit.md",
+            "06-vision-orchestrator.md",
+            "07-independent-vision-review.md",
+        )]
+        both += [ROOT / f"skills/install/copilot/prompts/{entry}.md" for entry in ENTRIES]
+        both += [ROOT / f".github/prompts/{entry}.prompt.md" for entry in ENTRIES]
+        both += [source for source, _ in surfaces()]
+        both += [installed for _, installed in surfaces()]
+        # The vision alignment rule surface only carries the VP-side command.
+        vp_only = [ROOT / "docs/vision/alignment.md"]
+        for path in both:
+            with self.subTest(path=path.relative_to(ROOT).as_posix()):
+                text = path.read_text(encoding="utf-8")
+                self.assertIn(goal_cmd, text)
+                self.assertIn(vp_cmd, text)
+        for path in vp_only:
+            with self.subTest(path=path.relative_to(ROOT).as_posix()):
+                self.assertIn(vp_cmd, path.read_text(encoding="utf-8"))
+        for path in both + vp_only:
+            with self.subTest(legacy=path.relative_to(ROOT).as_posix()):
+                text = path.read_text(encoding="utf-8")
+                for form in legacy:
+                    self.assertNotIn(form, text)
+
     def test_automatic_audits_do_not_require_human_scope_forms(self):
         for file in ("05-independent-audit.md", "07-independent-vision-review.md"):
             with self.subTest(file=file):
@@ -113,7 +156,7 @@ class GovernanceInteractionContractTests(unittest.TestCase):
                     structured = result["structuredContent"]
                     self.assertEqual(structured["status"], "ok")
                     self.assertIsNone(structured["promptSha256"])
-                    for boundary in ("AD-01～AD-06", "UI-01～UI-06", "/audit NNN NNN", "/vision-audit NNN", "空返回", "预选未提交", "真实答复", "独立审计只返回待答事实"):
+                    for boundary in ("AD-01～AD-06", "UI-01～UI-06", "/audit workspace-NNN goal-NNN", "/vision-audit vp-NNN", "空返回", "预选未提交", "真实答复", "独立审计只返回待答事实"):
                         self.assertIn(boundary, structured["guidance"])
                     self.assertEqual(structured["readonly"], name in {"audit", "vision-audit"})
                     after = {p.relative_to(repo): p.read_bytes() for p in repo.rglob("*") if p.is_file()}

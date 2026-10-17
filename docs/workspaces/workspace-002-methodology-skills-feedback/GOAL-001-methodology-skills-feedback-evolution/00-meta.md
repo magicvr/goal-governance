@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-17
-version: 0.14.34
+version: 0.14.35
 progress: 67%
 ---
 
@@ -79,8 +79,11 @@ GOAL-013 先提交 e37cad3，再完成 S4 cross/全部意见响应/关门审视�
 | [GOAL-012-release-v0-13-5](../GOAL-012-release-v0-13-5/00-meta.md) | v0.13.5 正式发布与消费资产验收 | done |
 | [GOAL-013-audit-dispatch-and-user-input-gates](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) | 独立审计命令派发与用户答复阻塞门禁 | done |
 | [GOAL-014-release-v0-13-6](../GOAL-014-release-v0-13-6/00-meta.md) | v0.13.6 正式发布与消费资产验收 | done |
+| [GOAL-015-audit-command-labeled-form](../GOAL-015-audit-command-labeled-form/00-meta.md) | 审计命令带标签形式修正（workspace-/goal-/vp-） | active |
 
 ## 备注
+
+- **GOAL-015 立项与 S2/S3（2026-10-17）**：用户指出形式审计命令应为 `/audit workspace-<工作区编号> goal-<目标编号>` 与 `/vision-audit vp-<vp编号>`，而 [GOAL-013](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) 的契约写成了裸数字形式。创建 [GOAL-015](../GOAL-015-audit-command-labeled-form/00-meta.md) 恢复用户原始形式；[D-001](../GOAL-015-audit-command-labeled-form/01-decision/D-001-scope-and-roadmap.md) 冻结范围（含本次实施，不含运行证据重捕获与发布），[D-002](../GOAL-015-audit-command-labeled-form/01-decision/D-002-labeled-command-contract.md) 冻结带标签语法与写集。同步卡片真实返回 Q-001 = A、Q-002 = Grok Build，审计模式 `cross`。canonical、根 AGENTS、prompts、四宿主安装源、规则模板、MCP 与契约测试已同改，镜像 38 对一致、dogfood 16 对一致；skills 102 / docs 67 回归 OK。**已知后果**：16 份运行记录因 24 个 behaviorSources 变更全部过期，scripts 147 红（4 failures / 12 errors），release/compatibility 门禁在重捕获前保持红；重捕获按用户裁决留在本目标外。GOAL-015 现为 **active / 80%（S1～S4 4/5）**：S5 已启动（版本号用户裁决为 patch `v0.13.7`），16 格运行证据重捕获 **16/16 pass**，一致性 `--check`（22 份）与 `compatibility_report`（`ready-for-release-evidence`、uncovered 0）均已转绿，版本清单（矩阵 `candidateRevision`、pin、CI 证据目录与测试断言）已同步。过程更正：Copilot 5 格首轮 401 经用户质疑后核对为**编排侧派发环境未继承 `COPILOT_PROVIDER_API_KEY`**（User 作用域有、Process 为空），非凭据失效；runner 注入后以 `-r2` 重取全部 pass，I-006 → verified，目标由 blocked 恢复 active。下一步 S5：CHANGELOG/边界文档 → 回归与 strict rehearsal → PR/CI → merge → tag → 资产验收。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-016。
 
 - **v0.13.6 正式发布与 GOAL-014 关门（2026-10-17）**：PR #29 经双平台 CI 全绿后合入 main（merge `97f6f1ea`），main CI 38999290522 success；annotated `v0.13.6` 指向该 merge，tag workflow 39000107099 的 pack 与 gated publish 全绿，Environment 回执为 magicvr 人工 `skipped`（AI 未代批）。[Release](https://github.com/magicvr/goal-governance/releases/tag/v0.13.6) 9 项资产、双 ZIP 摘要、Core 子集、隔离消费安装与 GHCR 镜像均核对通过；A-001 independent/pass、A-002 fixed、A-003 关门审视 pass，无开放 required，I-001～I-006 verified。D-003 将 [GOAL-014](../GOAL-014-release-v0-13-6/00-meta.md) 标为 **done / 100%（S1～S4 4/4）**，见 E-004/E-005 与附件。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-015。
 

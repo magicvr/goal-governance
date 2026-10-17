@@ -12,6 +12,26 @@ version: 0.56.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-17 · GOAL-015 S5 步骤 a 完成：证据 16/16 pass，两门禁转绿（active / 80%）
+
+用户答复发布版本号 = patch **v0.13.7**，S5 启动。从 GOAL-013 驱动派生 `s5-host-probes.py`（探针正文改为带标签命令 `/audit workspace-002 goal-013`、`/vision-audit vp-002`，含 MCP catalog task 正文），四宿主并行重捕获 16 格到 `docs/releases/runtime/v0.13.7/`：**11 格 pass**（claude govern/vision/vision-audit/catalog、grok 四入口 + catalog、codex catalog，以及 claude audit 的重试 `-r2`）。claude audit 首轮因宿主 `Glob` 对只匹配目录的模式返回空而误判目标不存在，重试通过（与命令形式无关）。**GitHub Copilot CLI 5 格失败于 BYOK provider HTTP 401「Invalid API key」**（`--attempt 02` 复测仍 401）。门禁：`capture_runtime_evidence --check --evidence-dir docs/releases/runtime/v0.13.7` **已转绿**（17 份一致，exit 0）；`compatibility_report.py` 失败于 `runtime evidence is not a pass for github-copilot-cli/govern`。版本清单已同步：矩阵 `candidateRevision` = `v0.13.7`、12 条证据路径与 3 处 `evidenceScope`、安装/GHCR pin（根/skills/bootstrap/mcp/docs-releases README）、CI 证据目录与两处测试断言；镜像 38 对一致。同步卡片 Q-006 收到真实答复 A（恢复凭据后重取）；答复后复测仍 401，经用户质疑「是否真的用了 `COPILOT_PROVIDER_API_KEY`」核对进程/用户作用域环境，**根因更正**为编排侧派发环境未继承该变量（User 作用域有、Process 作用域为空；`BASE_URL`/`TYPE`/`MODEL` 均已继承），**不是凭据失效**。runner 增加 User→Process 注入后以 `-r2` 重取，Copilot 5 格全部 pass → **16/16 pass**；`capture_runtime_evidence --check`（22 份）与 `compatibility_report`（`ready-for-release-evidence`、uncovered 0）均转绿。I-006 → verified，GOAL-015 由 blocked 恢复 **active / 80%**（S1～S4 4/5，检查点与 progress 未改）。见 E-006。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
+## 2026-10-17 · GOAL-015 提交检查点与 S5 发布阶段（active / 80%）
+
+用户指令「先提交代码，然后把合并代码到main、确保CI全绿并打tag发布资产的任务作为目标15的最后一个阶段任务」。检查点 **`e396711`**（`fix: restore labeled audit dispatch commands`，78 files changed, +1010/−102，只暂存 owned paths、无 `git add -A`，提交后树干净），见 E-005。[D-003](../GOAL-015-audit-command-labeled-form/01-decision/D-003-scope-extension-s5-release.md) 把发布链路并入本目标为 **S5**：16 格运行证据重捕获 → 版本清单 → 全量回归/strict rehearsal → PR 双平台 CI 全绿 → 合并 `main` → annotated tag → gated 发布（Environment `release` 仍由用户人工审批，AI 不代批）→ Release 资产逐项验收；S5 审计模式 `independent`，provider 沿用 Grok Build。I-005（发布版本号 patch `v0.13.7` / minor `v0.14.0`）登记为 required/open，门禁 = 版本清单步骤前，Q-005 待答、不推定。路线图由 4 阶段扩为 5 阶段，派生 progress 重算为 **4/5 = 80%**（此前 100% 对应 4 阶段路线图，不表示发布完成）；producer 门禁仍红，是 S5 第一步的前置。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
+## 2026-10-17 · GOAL-015 S4 完成（cross 审计与响应，100%）
+
+向用户指定 provider 派发正式命令 `/audit workspace-002 goal-015`（`inputSha256` = `6034d818…46ec`，干净会话、stdin 为 NUL、无 resume/scope/历史注入）；首次尝试因 DSH 沙箱禁止 provider 在仓库外 `~/.grok` 建会话而 `FS_PERMISSION_DENIED`（失败输出原样保留），以同一 provider/模型/输入放宽文件权限重跑 exit 0（421.1 s）。Grok Build 1.0.60 / `grok-4.6` 自主定 scope 并落盘 A-002 independent / conditional / **开放 required 0** / 5 recommended，且自行更新审计索引；该会话本身即带标签命令的一次真实唯一绑定（L0 单宿主入口解析，不替代矩阵重捕获）。编排器 A-003 汇总响应 A-001 + A-002 全部意见：`fixed` 3 条（历史旧形式保留、写集追加、索引结论滞后）、保持 open recommended 2 条（运行验证缺口、提交边界，均带复审触发与责任人），无冲突、无 residual/overruled；A-004 关门就绪审视 `pass`，5/5 成功标准可核对。GOAL-015 推进为 **active / 100%（S1～S4 4/4）**，`status` 仍为 `active`——关门决定与提交边界待用户；producer 门禁仍红（16/16 运行记录过期），按 D-001 属本目标外。见 E-004。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
+## 2026-10-17 · GOAL-015 S2/S3 完成（带标签命令已落全部消费面）
+
+按 D-002 把正式命令改为 `/audit workspace-NNN goal-NNN` 与 `/vision-audit vp-NNN`，裸数字判为非法：canonical（`principles.md` AD-01/AD-02/示例、`workspace-protocol.md` §2.7、`alignment.md` §9.3）、根 `AGENTS.md` §6b、prompts 00/04/05/06/07、规则模板 4 份、四宿主安装源 16 份（含 `argument-hint`）、MCP entries/README 与契约测试同改，并新增防再犯测试。镜像 38 对 `--check` ok；16 份 dogfood 副本复制前 `git rev-parse HEAD:` 全 `SAME`、复制后一致；共 55 个文件 + 1 新目录（+161/−102）。回归：skills 102 OK、docs 67 OK；scripts 147 为 4 failures / 12 errors，全部归因 `runtime evidence behavior source is stale`——16/16 运行记录因 24 个 behaviorSources 变更过期（`capture_runtime_evidence --check` exit 1）。重捕获按 D-001 留在本目标外，release/compatibility 门禁保持红，不宣称发布就绪。GOAL-015 **active / 75%（S1～S3 3/4）**，S4 cross（Grok Build）未开始，见 E-002/E-003。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
+## 2026-10-17 · GOAL-015 立项（审计命令带标签形式修正）
+
+用户指出「上一次修正搞错了一点小问题」：形式审计命令应为 `/audit workspace-<工作区编号> goal-<目标编号>` 与 `/vision-audit vp-<vp编号>`，而 GOAL-013 D-002 把用户 2026-10-16 的原始要求写成了裸数字 `/audit NNN NNN`、`/vision-audit NNN` 并固化进 AD-01 与全部消费面。创建 **GOAL-015-audit-command-labeled-form**（active / 0%，S1～S4 0/4）恢复用户原始形式；D-001 冻结范围（含本次实施，不含运行证据重捕获与发布）与路线图，D-002 冻结带标签语法、补零/拒绝面与写集；I-001～I-004 登记命令语法、消费面写集、cross provider 与运行证据影响。同步阻塞卡片真实返回 Q-001 = A（立项 + 立即实施修正）、Q-002 = A（Grok Build），审计模式 `cross`。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-016。
+
 ## 2026-10-17 · GOAL-014 关门（v0.13.6 正式发布，done / 100%）
 
 PR #29 经 Ubuntu/Windows CI 全绿后合入 main merge `97f6f1ea028006769518d9854aeaff58b8cfa453`（PR CI run 38999047596、main CI run 38999290522 均 success）；annotated `v0.13.6`（tag object `a1224918`）指向该 merge，推 tag 前在该 merge 上执行 strict release 预检 `checks passed: True`，tag workflow run 39000107099 的 `pack` 与 `Publish GitHub Release (gated)` 全绿；Environment 回执为 magicvr 人工 `skipped` 放行（AI 未代批/改配置）。[Release v0.13.6](https://github.com/magicvr/goal-governance/releases/tag/v0.13.6) 于 2026-10-17T03:50:16Z 发布，`isDraft=false` / `isPrerelease=false`，9 项资产；双 ZIP 摘要与 sidecar 一致、Core 27 成员为 Skills 86 成员的逐字节子集、下载资产驱动的隔离消费安装 exit 0 且消费者自有 AGENTS 规则保留、GHCR `0.13.6` digest 与发布日志一致且内置版本为 `0.13.6`。审计：A-001 Grok independent/pass（开放 required 0）、A-002 fixed 响应、A-003 发布产出与关门审视 pass；I-001～I-006 verified。D-003 将 GOAL-014 标为 **done / 100%（S1～S4 4/4）**，见 E-004/E-005 与附件。Root R3 / VP-002 继续长期 active，Root progress 67%；下一编号 GOAL-015。
@@ -322,7 +342,8 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
 ├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
-└── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
+├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
+└── GOAL-015-audit-command-labeled-form       [active]  审计命令带标签形式修正（workspace-/goal-/vp-）  progress 80%
 ```
 
 ## 状态表
@@ -343,13 +364,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
+| GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-10-17 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 014 |
-| 下一可用 | **GOAL-015** |
+| 最大编号 | 015 |
+| 下一可用 | **GOAL-016** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

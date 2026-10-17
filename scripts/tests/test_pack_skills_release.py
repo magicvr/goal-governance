@@ -314,7 +314,7 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         self.assertIn("Evidence consistency gate (M-001)", pack_block)
         self.assertIn("capture_runtime_evidence.py --check", pack_block)
         self.assertIn(
-            "--evidence-dir docs/releases/runtime/goal-013-s3-2026-10-17-current",
+            "--evidence-dir docs/releases/runtime/v0.13.7",
             pack_block,
         )
         # The gate must run after deps are installed (jsonschema) and before
