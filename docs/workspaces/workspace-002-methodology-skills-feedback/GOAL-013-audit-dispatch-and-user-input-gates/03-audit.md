@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-16
 updated: 2026-10-17
-version: 0.12.0
+version: 0.13.0
 ---
 
 # 审计 · GOAL-013
@@ -37,3 +37,5 @@ version: 0.12.0
 ## 结论状态
 
 A-001 self/pass 与 A-002 independent/pass 已齐；A-003 补充归档问题、A-002 建议均由 A-004 fixed 闭合，开放 required/recommended 0，无 residual/overruled。A-005 关门审视 pass；S4 完成，Goal active / 100%，尚未执行正式 done 状态收尾，无当前待答。
+
+2026-10-17 更新：用户指令闭门，D-005 将 GOAL-013 收尾为 **done / 100%**（S1～S4 4/4），树与父级投影见 E-013。台账不再追加意见；本条不新增 verdict，也不改变 A-001～A-005 的原始记录。

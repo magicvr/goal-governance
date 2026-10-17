@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-17
-version: 0.14.31
+version: 0.14.33
 progress: 67%
 ---
 
@@ -77,9 +77,14 @@ GOAL-013 先提交 e37cad3，再完成 S4 cross/全部意见响应/关门审视�
 | [GOAL-010-release-gate-recapture-and-v0-13-4](../GOAL-010-release-gate-recapture-and-v0-13-4/00-meta.md) | 发布门禁转绿与 v0.13.4 正式发布 | done |
 | [GOAL-011-standalone-bootstrap-distribution](../GOAL-011-standalone-bootstrap-distribution/00-meta.md) | 修复 issue #24：独立启用说明的消费分发与引用 | done |
 | [GOAL-012-release-v0-13-5](../GOAL-012-release-v0-13-5/00-meta.md) | v0.13.5 正式发布与消费资产验收 | done |
-| [GOAL-013-audit-dispatch-and-user-input-gates](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) | 独立审计命令派发与用户答复阻塞门禁 | active |
+| [GOAL-013-audit-dispatch-and-user-input-gates](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) | 独立审计命令派发与用户答复阻塞门禁 | done |
+| [GOAL-014-release-v0-13-6](../GOAL-014-release-v0-13-6/00-meta.md) | v0.13.6 正式发布与消费资产验收 | active |
 
 ## 备注
+
+- **GOAL-014 立项（2026-10-17）**：用户在 GOAL-013 关门后要求「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。另建 [GOAL-014](../GOAL-014-release-v0-13-6/00-meta.md) 承载下一个兼容性 patch **v0.13.6** 的正式发布与消费资产验收；[D-001](../GOAL-014-release-v0-13-6/01-decision/D-001-release-scope.md) 冻结范围与证据策略（复用 GOAL-013 S3 的 16 份现行运行证据，协议 0.1.0 与 consumer contract 不变）。E-001 基线：远端最新 v0.13.5、v0.13.6 未占用，证据 `--check` 与 compatibility ready。审计模式 independent，provider 待用户指定（P-004 询问）。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-015。
+
+- **GOAL-013 关门（2026-10-17）**：用户指令闭门；[D-005](../GOAL-013-audit-dispatch-and-user-input-gates/01-decision/D-005-close-out.md) 依 A-001 self/pass、A-002 Grok independent/pass、A-004 全部 `fixed`、A-005 关门审视 pass（开放 required/recommended 0，I-001～I-005 在路径 A 范围内 verified）将子目标收尾为 **done / 100%（S1～S4 4/4）**。交付边界照 A-005：规范、现有入口消费与已列代表运行，保证等级 L0，不新增系统级硬拦截；本目标内未 tag、未发布，v0.13.6 正式发布另立目标。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；见子目标 E-013。
 
 - **GOAL-013 S2 完成（2026-10-16）**：路径 A 的 canonical、prompts、四宿主入口/MCP guidance、待答模板及镜像已同步并通过回归/隔离安装；子目标 active / 50%（2/4）。旧 12 份 runtime 证据对当前工作树过期，I-004 保持 S3 门禁；S3/S4 未开始，Grok Build provider 保持。Root R3 active / 67% 不变，见子目标 E-004。
 

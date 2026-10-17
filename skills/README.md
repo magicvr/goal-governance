@@ -114,30 +114,30 @@ skills/
 
 ### 入口 1 · Bootstrap（推荐 · 其他项目）
 
-**本版本安装 pin `v0.13.5`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
+**本版本安装 pin `v0.13.6`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
 
 > 发行身份以对应 annotated tag、gated Release 及资产校验为准。
 
 在目标项目根执行（先落盘 bootstrap，再跑；默认**不**管道直跑）：
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.5 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.6 -Force
 
 # 离线（本地 skills zip + .sha256）：
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.13.5 -ZipPath .\goal-governance-skills-v0.13.5.zip -Force
+  -Version 0.13.6 -ZipPath .\goal-governance-skills-v0.13.6.zip -Force
 ```
 
 ```bash
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.13.5/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.13.5 --force
+bash ./install-online.sh --version 0.13.6 --force
 
 # 离线：
-bash ./install-online.sh --version 0.13.5 --zip-path ./goal-governance-skills-v0.13.5.zip --force
+bash ./install-online.sh --version 0.13.6 --zip-path ./goal-governance-skills-v0.13.6.zip --force
 ```
 
 Bootstrap 会：校验 SHA-256 → 落到 `./skills` → 调用包内 install **默认 `-All` / `--all`**（四入口 + core → `docs/`）。digest 失败 **fail closed**。详见 [scripts/bootstrap/README.md](../scripts/bootstrap/README.md)。

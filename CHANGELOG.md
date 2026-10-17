@@ -2,9 +2,9 @@
 title: Changelog
 status: active
 created: 2026-07-20
-updated: 2026-10-15
+updated: 2026-10-17
 parent: null
-version: 0.1.0
+version: 0.2.0
 ---
 
 # Changelog
@@ -13,7 +13,18 @@ version: 0.1.0
 
 ## Unreleased
 
-（空；本次 v0.13.5 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+（空；本次 v0.13.6 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.13.6 - 2026-10-17
+
+治理规则 patch（[GOAL-013](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md)，发布由 [GOAL-014](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-014-release-v0-13-6/00-meta.md) 承载）。协议 0.1.0、consumer contract 数据结构、MUST 门禁与 File/MCP 渠道边界保持。
+
+- 自动派发独立审计时，向审计员提供的输入只允许正式命令 `/audit <工作区编号> <目标编号>` 或 `/vision-audit <vp编号>`；禁止编排器自编、附加或包装审计提示词来收窄审计范围。三位编号唯一解析完整身份，歧义或非法编号停止并询问，不退回自由提示词。
+- 需要向用户询问信息时使用可阻塞任务的询问卡片；空返回、取消、超时或未提交预选都不算答复——暂停任务，存在当前目标时置 `blocked` 并同步目标树，保留待答问题与阻塞原因。真实答复并解除相应门禁后才恢复；禁止推定默认选择或虚构答复。
+- 上述约束同步到 canonical 原则、AGENTS 摘要、四个宿主 prompts/入口、模板与 MCP guidance，并保持 `skills/core`、`skills/contracts` 镜像与 canonical 一致。
+- 审计：A-001 self 与用户指定 Grok Build 的 A-002 independent 均 `pass`；补充归档可移植性问题按 `fixed` 闭合，A-005 关门审视 `pass`，开放 required/recommended 为 0。保证范围限于路径 A 的规范、现有入口消费与已列代表运行，不新增系统级强制拦截。
+- 矩阵 candidateRevision 与安装/GHCR 示例 pin 对齐 v0.13.6；复用 GOAL-013 S3 于 2026-10-17 为当前工作树捕获、保持原路径与原日期的 runtime captures，经哈希、协议及完整证据校验，不宣称新宿主运行。
+- 发布身份须由 main merge、annotated v0.13.6、strict release evidence、Environment release 人工审批及真实资产核对建立。
 
 ## 0.13.5 - 2026-10-15
 

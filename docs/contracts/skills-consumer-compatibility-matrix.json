@@ -2,7 +2,7 @@
  "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
  "format": "goal-governance.skills-consumer-compatibility-matrix",
  "formatVersion": "1.0.0",
- "candidateRevision": "v0.13.5",
+ "candidateRevision": "v0.13.6",
  "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
  "protocol": {
   "current": "0.1.0",
@@ -75,7 +75,7 @@
      ]
     }
    ],
-   "evidenceScope": "GOAL-013 S3: fresh isolated consumer entrypoint/ledger captures for the unversioned working tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained). Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. candidateRevision retains the existing v0.13.5 identity; these captures do not establish a new release. Historical runtime records remain immutable."
+   "evidenceScope": "GOAL-013 S3: fresh isolated consumer entrypoint/ledger captures for the unversioned working tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained). Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Reused unchanged by GOAL-014 as the v0.13.6 candidate baseline; these captures establish no new host run. Historical runtime records remain immutable."
   },
   {
    "id": "grok-build-cli",
@@ -123,7 +123,7 @@
      ]
     }
    ],
-   "evidenceScope": "GOAL-013 S3: fresh isolated consumer entrypoint/ledger captures for the unversioned working tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained). Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. candidateRevision retains the existing v0.13.5 identity; these captures do not establish a new release. Historical runtime records remain immutable."
+   "evidenceScope": "GOAL-013 S3: fresh isolated consumer entrypoint/ledger captures for the unversioned working tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained). Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Reused unchanged by GOAL-014 as the v0.13.6 candidate baseline; these captures establish no new host run. Historical runtime records remain immutable."
   },
   {
    "id": "github-copilot-cli",
@@ -170,7 +170,7 @@
      ]
     }
    ],
-   "evidenceScope": "GOAL-013 S3: fresh isolated consumer entrypoint/ledger captures for the unversioned working tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained). Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. candidateRevision retains the existing v0.13.5 identity; these captures do not establish a new release. Historical runtime records remain immutable."
+   "evidenceScope": "GOAL-013 S3: fresh isolated consumer entrypoint/ledger captures for the unversioned working tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained). Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Reused unchanged by GOAL-014 as the v0.13.6 candidate baseline; these captures establish no new host run. Historical runtime records remain immutable."
   }
  ],
  "deliveryChannels": [

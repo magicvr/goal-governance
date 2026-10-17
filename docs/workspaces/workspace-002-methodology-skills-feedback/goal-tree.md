@@ -4,13 +4,21 @@ status: active
 created: 2026-07-31
 updated: 2026-10-17
 parent: null
-version: 0.53.0
+version: 0.55.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-17 · GOAL-014 立项（v0.13.6 发布）
+
+用户要求在 GOAL-013 关门后「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。创建 **GOAL-014-release-v0-13-6**（active / 25%，S1～S4 1/4）承载下一个兼容性 patch v0.13.6 的正式发布与消费资产验收。D-001 冻结范围与证据策略：复用 GOAL-013 S3 在 2026-10-17 为当前工作树捕获的 16 份运行证据（保持日期/路径不变，只改矩阵 candidateRevision），协议 0.1.0 与 consumer contract 不变，不覆盖旧 Release。E-001 记录基线：远端最新 v0.13.5、v0.13.6 未占用；`capture_runtime_evidence --check` 16 份一致、compatibility ready、镜像 38 对、本地回归与 rehearsal 在 Python 3.11.9 下通过。审计模式 independent，provider 尚未由用户指定（I-003 collecting），按 P-004 询问后留痕；尚未改清单、未推送、未 tag、未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-015。
+
+## 2026-10-17 · GOAL-013 关门（done / 100%）
+
+用户指令「闭门工作区2目标13」。D-005 记录关门决定：A-001 self/pass、A-002 Grok independent/pass 落盘，A-003 补充发现与 A-002 建议经 A-004 全部 `fixed`，A-005 关门审视 pass，开放 required/recommended 0，无 residual/overruled，I-001～I-005 在 D-003 路径 A 范围内 verified。GOAL-013 由 `active / 100%` 收尾为 **`done / 100%`（S1～S4 4/4）**；树、状态表与父级子目标表同步，见 E-013。交付边界照 A-005：规范、现有入口消费与已列代表运行，保证等级 L0，不新增系统级硬拦截。本目标内未 tag、未发布；v0.13.6 正式发布另立目标。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-014。
 
 ## 2026-10-17 · GOAL-013 S4 响应与关门审视完成
 
@@ -309,7 +317,8 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-010-release-gate-recapture-and-v0-13-4 [done]    发布门禁转绿与 v0.13.4 正式发布  progress 100%
 ├── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
 ├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
-└── GOAL-013-audit-dispatch-and-user-input-gates [active]  独立审计命令派发与用户答复阻塞门禁  progress 100%
+├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
+└── GOAL-014-release-v0-13-6                  [active]  v0.13.6 正式发布与消费资产验收  progress 25%
 ```
 
 ## 状态表
@@ -328,14 +337,15 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-010-release-gate-recapture-and-v0-13-4 | 发布门禁转绿与 v0.13.4 正式发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-01 |
 | GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
-| GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | active | 100% | 2026-10-17 |
+| GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
+| GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-10-17 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 013 |
-| 下一可用 | **GOAL-014** |
+| 最大编号 | 014 |
+| 下一可用 | **GOAL-015** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

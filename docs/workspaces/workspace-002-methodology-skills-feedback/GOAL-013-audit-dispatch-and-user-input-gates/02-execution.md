@@ -32,7 +32,8 @@ version: 0.11.0
 
 | E-011 | 2026-10-17 | 独立审计返回与意见整改 | recorded | [E-011](02-execution/E-011-independent-audit-and-remediation.md) |
 | E-012 | 2026-10-17 | S4 响应及关门审视完成 | recorded | [E-012](02-execution/E-012-s4-review-complete.md) |
+| E-013 | 2026-10-17 | 关门状态收尾与台账同步 | recorded | [E-013](02-execution/E-013-close-out.md) |
 
 ## 事实边界
 
-S1～S4 完成，当前 active / 100%，未正式改 done，无待答阻塞。代码检查点 e37cad3 后完成 cross、自审补充整改和关门审视；A-001/A-002/A-004/A-005 pass，全部 findings 已 fixed，见 E-011/E-012。未发布。
+S1～S4 完成；2026-10-17 经 D-005 将 status 收尾为 `done / 100%`，无待答阻塞。代码检查点 e37cad3 后完成 cross、自审补充整改和关门审视；A-001/A-002/A-004/A-005 pass，全部 findings 已 fixed，见 E-011/E-012；状态与树同步见 E-013。本目标内未发布；v0.13.6 正式发布另立目标。
