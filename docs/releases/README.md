@@ -44,7 +44,7 @@ version: 0.1.1
 
 默认 skills 路径**不**要求联网拉取 core；core-only 与 skills 内嵌 core 在同 version 下应字节一致（pack 单测）。
 
-**文档 pin 规则（GOAL-023 D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例**必须**使用**当前正式发布 annotated tag**（本轮发版 pin 为 `v0.13.6`，正式身份由该 tag 的 gated Release 建立）。每次正式发版同步改写示例中的 tag/version；**禁止**以 `main`/branch raw 或无版本 pin 的 always-latest 作权威安装入口。
+**文档 pin 规则（GOAL-023 D-003）**：根 `README.md`、`skills/README.md`、`scripts/bootstrap/README.md` 入口 1 示例**必须**使用**当前正式发布 annotated tag**（本轮发版 pin 为 `v0.13.7`，正式身份由该 tag 的 gated Release 建立）。每次正式发版同步改写示例中的 tag/version；**禁止**以 `main`/branch raw 或无版本 pin 的 always-latest 作权威安装入口。
 
 ### 本地打包（维护者 / 调试）
 

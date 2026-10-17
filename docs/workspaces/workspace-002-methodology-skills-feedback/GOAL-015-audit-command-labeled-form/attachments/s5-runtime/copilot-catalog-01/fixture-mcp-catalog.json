@@ -1,0 +1,361 @@
+{
+  "transport": "actual local stdio; guidance only, no audit execution",
+  "requests": [
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "initialize",
+      "params": {}
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "method": "tools/list"
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "method": "tools/call",
+      "params": {
+        "name": "vision",
+        "arguments": {
+          "task": "Inspect vision entry guidance"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "method": "tools/call",
+      "params": {
+        "name": "vision-audit",
+        "arguments": {
+          "task": "/vision-audit vp-002"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "method": "tools/call",
+      "params": {
+        "name": "govern",
+        "arguments": {
+          "task": "Inspect govern entry guidance",
+          "goal_id": "GOAL-013-synthetic-counter"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 6,
+      "method": "tools/call",
+      "params": {
+        "name": "audit",
+        "arguments": {
+          "task": "/audit workspace-002 goal-013",
+          "goal_id": "GOAL-013-synthetic-counter"
+        }
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": 1,
+      "jsonrpc": "2.0",
+      "result": {
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "instructions": "Goal-governance MCP channel. Tools: vision (decision layer), vision-audit (independent Vision Review, opinions only), govern (implementation orchestration), audit (goal cross-audit, opinions only). Instance truth stays in the repository governance tree; this server never becomes an authoritative state store.",
+        "protocolVersion": "2025-03-26",
+        "serverInfo": {
+          "name": "goal-governance-mcp",
+          "version": "0.2.0"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "jsonrpc": "2.0",
+      "result": {
+        "tools": [
+          {
+            "description": "decision · 决策层：建修 Charter、组合编排（VP）、Vision Review、re-align；冷启动优先。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "task": {
+                  "description": "决策层请求：建修 Charter / VP / Vision Review / re-align 意图。",
+                  "type": "string"
+                },
+                "workspace": {
+                  "description": "工作区 id 路径（如 docs/workspaces/workspace-003-...），缺省由上下文定位。",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "task"
+              ],
+              "type": "object"
+            },
+            "name": "vision"
+          },
+          {
+            "description": "decision · 独立 Vision Review：只写意见到 {governance_root}/vision/reviews* 台账，不改 Charter / VP / Goal 状态。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "scope": {
+                  "description": "审视范围（charter / plan / portfolio / existing-vrev）。",
+                  "type": "string"
+                },
+                "task": {
+                  "description": "独立 Vision Review 请求：被审对象与关注点。",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "task"
+              ],
+              "type": "object"
+            },
+            "name": "vision-audit"
+          },
+          {
+            "description": "implementation · 实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、确认后调用原语写入目标五件套。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "goal_id": {
+                  "description": "焦点目标 id（如 GOAL-002-r1-mcp-equivalence-kernel）。",
+                  "type": "string"
+                },
+                "task": {
+                  "description": "实现编排请求：推进目标 / 响应审计 / 下一步建议。",
+                  "type": "string"
+                },
+                "workspace": {
+                  "description": "工作区 id 路径；缺省当前工作区。",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "task"
+              ],
+              "type": "object"
+            },
+            "name": "govern"
+          },
+          {
+            "description": "implementation · Goal 交叉审计：只出意见到被审目标 03-audit 台账，不直接改 status/progress。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "goal_id": {
+                  "description": "被审目标 id（完整 id，如 GOAL-002-r1-mcp-equivalence-kernel）。",
+                  "type": "string"
+                },
+                "scope": {
+                  "description": "审计范围（整体 / 阶段 / 门禁）。",
+                  "type": "string"
+                },
+                "task": {
+                  "description": "交叉审计请求：被审对象与关注点。",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "task",
+                "goal_id"
+              ],
+              "type": "object"
+            },
+            "name": "audit"
+          },
+          {
+            "description": "安装 MCP 薄壳（VP-004 R2）：写 AGENTS.md managed 段 + .goal-governance/install.json；managed paths allowlist；默认确认写盘（confirm=true 才写）。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "channel": {
+                  "description": "安装通道标识（默认 mcp）",
+                  "type": "string"
+                },
+                "confirm": {
+                  "description": "确认写盘；默认 false 拒绝写入",
+                  "type": "boolean"
+                },
+                "root": {
+                  "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": "install"
+          },
+          {
+            "description": "升级 MCP 薄壳 managed 段与 install.json 到当前 server 版本；只改标记内内容。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "confirm": {
+                  "description": "确认写盘；默认 false 拒绝写入",
+                  "type": "boolean"
+                },
+                "root": {
+                  "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": "upgrade"
+          },
+          {
+            "description": "卸载 MCP 薄壳：只移除 AGENTS.md managed 段与 .goal-governance/ 状态；标记外用户内容不动。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "confirm": {
+                  "description": "确认写盘；默认 false 拒绝写入",
+                  "type": "boolean"
+                },
+                "root": {
+                  "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": "uninstall"
+          },
+          {
+            "description": "只读安装状态报告（managed 段、薄壳状态、gitignore、governance_root）。",
+            "inputSchema": {
+              "additionalProperties": false,
+              "properties": {
+                "root": {
+                  "description": "仓库根路径（默认 server --repo-root；必须位于其内，越界 fail closed）",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": "doctor"
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "决策层：建修 Charter、组合编排（VP）、Vision Review、re-align；冷启动优先。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/06-vision-orchestrator.md 承载方法论正文（仓内已存在，可核对 sha256）",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "entrypoint": "vision",
+          "guidance": "决策层：建修 Charter、组合编排（VP）、Vision Review、re-align；冷启动优先。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/06-vision-orchestrator.md 承载方法论正文（仓内已存在，可核对 sha256）",
+          "layer": "decision",
+          "promptPath": "prompts/06-vision-orchestrator.md",
+          "promptSha256": "ae5a487086fae78c8bbba1967fca0a7722b8ba633321d075f3ebfa5acadf3529",
+          "readonly": false,
+          "role": "决策层：建修 Charter、组合编排（VP）、Vision Review、re-align；冷启动优先。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+          "status": "ok",
+          "writesTo": [
+            "vision/"
+          ]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "独立 Vision Review：只写意见到 {governance_root}/vision/reviews* 台账，不改 Charter / VP / Goal 状态。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/07-independent-vision-review.md 承载方法论正文（仓内已存在，可核对 sha256）",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "entrypoint": "vision-audit",
+          "guidance": "独立 Vision Review：只写意见到 {governance_root}/vision/reviews* 台账，不改 Charter / VP / Goal 状态。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/07-independent-vision-review.md 承载方法论正文（仓内已存在，可核对 sha256）",
+          "layer": "decision",
+          "promptPath": "prompts/07-independent-vision-review.md",
+          "promptSha256": "5a607fcb2f3dbe40fcdbb7239254b140cb93dd87363e4430b558bb8518bac07a",
+          "readonly": true,
+          "role": "独立 Vision Review：只写意见到 {governance_root}/vision/reviews* 台账，不改 Charter / VP / Goal 状态。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+          "status": "ok",
+          "writesTo": [
+            "vision/reviews.md",
+            "vision/reviews/VRev-*"
+          ]
+        }
+      }
+    },
+    {
+      "id": 5,
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、确认后调用原语写入目标五件套。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/00-govern-orchestrator.md 承载方法论正文（仓内已存在，可核对 sha256）",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "entrypoint": "govern",
+          "guidance": "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、确认后调用原语写入目标五件套。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/00-govern-orchestrator.md 承载方法论正文（仓内已存在，可核对 sha256）",
+          "layer": "implementation",
+          "promptPath": "prompts/00-govern-orchestrator.md",
+          "promptSha256": "e1362e2411c03390aae156ddcd922a9dffc78975d514110790580206791e3da7",
+          "readonly": false,
+          "role": "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、确认后调用原语写入目标五件套。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+          "status": "ok",
+          "writesTo": [
+            "workspaces/workspace-*/",
+            "workspaces/workspace-*/goal-tree.md",
+            "workspaces/workspace-*/GOAL-*/"
+          ]
+        }
+      }
+    },
+    {
+      "id": 6,
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "Goal 交叉审计：只出意见到被审目标 03-audit 台账，不直接改 status/progress。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/05-independent-audit.md 承载方法论正文（仓内已存在，可核对 sha256）",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "entrypoint": "audit",
+          "guidance": "Goal 交叉审计：只出意见到被审目标 03-audit 台账，不直接改 status/progress。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/05-independent-audit.md 承载方法论正文（仓内已存在，可核对 sha256）",
+          "layer": "implementation",
+          "promptPath": "prompts/05-independent-audit.md",
+          "promptSha256": "444914191f1afd7818bf81544d9f8f95e1b22b520cd90226d2f95eb565bf8bd3",
+          "readonly": true,
+          "role": "Goal 交叉审计：只出意见到被审目标 03-audit 台账，不直接改 status/progress。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+          "status": "ok",
+          "writesTo": [
+            "workspaces/workspace-*/GOAL-*/03-audit/"
+          ]
+        }
+      }
+    }
+  ]
+}

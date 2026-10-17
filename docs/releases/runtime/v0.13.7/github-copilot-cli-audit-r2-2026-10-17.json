@@ -1,0 +1,128 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-10-17T12:39:29.984525+00:00",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gemini-3.8-flash-high"
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "8ebabc97b877bc254824bc72285a4e56f47d9a64d22dbd22422ccc990e07d5b3"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "96108354b5dacd868b4c4078f9379d9a90d5947498ca6aafe648f9a6ec7567fe"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "88f412d1ae70a7bfce8572b50ee55cac19fc1a931630024876bed707a5c37e69"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "0239653d2224991837a417e3fbfc9b3dd816ec3b0758c93e4e94c900bcdb2b59"
+    },
+    {
+      "path": "skills/prompts/05-independent-audit.md",
+      "sha256": "444914191f1afd7818bf81544d9f8f95e1b22b520cd90226d2f95eb565bf8bd3"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "3b0538a0fe81e7e93832b99936463a0bf401331aaa52c1769c695eac6ebc2b05"
+    },
+    {
+      "path": "skills/install/copilot/prompts/audit.md",
+      "sha256": "15ee45d293a29a1ce34161413888bd818e2e1a91e36caa826ab04bcb968dd228"
+    },
+    {
+      "path": "skills/install/copilot/copilot-instructions.md",
+      "sha256": "83fbe338c71b906deea2dce831539643310dad08d9ef9ffea3b9c44253a7c24c"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Windows\\system32\\cmd.exe",
+      "/d",
+      "/c",
+      "C:\\Users\\magicvr\\AppData\\Roaming\\npm\\copilot.CMD",
+      "--prompt",
+      "/audit workspace-002 goal-013",
+      "--no-auto-update",
+      "--no-remote-export",
+      "--disable-builtin-mcps",
+      "--model",
+      "gemini-3.8-flash-high",
+      "--allow-tool=read,write",
+      "--excluded-tools=shell",
+      "--no-ask-user",
+      "--output-format",
+      "json",
+      "--silent"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal015-s5-d6005d4b",
+    "timeoutSeconds": 600,
+    "inputSha256": "c836d9c9bd101b89da67186d1a9bd1c0d8e1ff257bf8cdcbf2b1869ad3a6e24b",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /audit invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-015-audit-command-labeled-form/attachments/s5-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-015-audit-command-labeled-form/attachments/s5-runtime/copilot-audit-02/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "A-001",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "A-001",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "A-001",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.7/github-copilot-cli-audit-r2-2026-10-17.d/stdout.txt",
+    "stdoutSha256": "52b75fdb4ede289cc63da6c6dea13bbe9759a28c8aa6798848314a6062b62ac3",
+    "stderrPath": "docs/releases/runtime/v0.13.7/github-copilot-cli-audit-r2-2026-10-17.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

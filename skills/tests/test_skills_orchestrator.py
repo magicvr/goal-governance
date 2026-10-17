@@ -634,7 +634,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.13.6")
+        self.assertEqual(matrix["candidateRevision"], "v0.13.7")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -695,7 +695,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 for path in entry["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertRegex(path, EVIDENCE_DATED_RE)
-                    self.assertIn(f"goal-013-s3-2026-10-17-current/{consumer_id}-{name}-", path.replace("\\", "/"))
+                    self.assertIn(f"v0.13.7/{consumer_id}-{name}-", path.replace("\\", "/"))
             vision = entrypoints["vision"]
             self.assertIn("vision", vision["evidence"][0])
             vision_audit = entrypoints["vision-audit"]
