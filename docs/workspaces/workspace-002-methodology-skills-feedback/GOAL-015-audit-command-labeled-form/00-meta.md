@@ -1,11 +1,11 @@
 ---
 id: GOAL-015-audit-command-labeled-form
 title: 审计命令带标签形式修正（workspace-/goal-/vp-）
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-17
 updated: 2026-10-17
-version: 0.9.0
+version: 0.10.0
 progress: 100%
 ---
 
@@ -22,7 +22,7 @@ progress: 100%
 
 裸数字形式（`/audit 002 015`、`/vision-audit 002`）不再合法。本目标位于本区 Root 的 R3「持续闭环与长期演进」，经父目标服务 VP-002。范围与路线图见 [D-001](01-decision/D-001-scope-and-roadmap.md)，语法与拒绝面冻结见 [D-002](01-decision/D-002-labeled-command-contract.md)。
 
-S1～S5 全部完成，当前 **active / 100%（5/5）**，关门待用户。S5（发布）已按 D-003 全链路完成：16 格运行证据重捕获 **16/16 pass**（一致性 `--check` 22 份、`compatibility_report` `ready-for-release-evidence`、uncovered 0）；清单与 CHANGELOG `0.13.7` 同步；本地门禁 skills 102 / docs 67 / scripts 147 全绿、strict rehearsal 与 strict 预检 `checks passed: True`；检查点 `8f1315f` → [PR #31](https://github.com/magicvr/goal-governance/pull/31) 双平台 CI 全绿 → merge `6ca04ee` → annotated tag `v0.13.7`（tag object `6197ed6e`）→ tag workflow [39034827440](https://github.com/magicvr/goal-governance/actions/runs/39034827440) 的 `pack` 与 gated publish 全绿（Environment `release` 由维护者 `magicvr` 人工审批，AI 未代批）。[Release v0.13.7](https://github.com/magicvr/goal-governance/releases/tag/v0.13.7) 于 2026-10-17T13:10:14Z 发布 9 项资产；逐项验收通过（双 ZIP 摘要与 sidecar 一致、Core 27 成员为 Skills 86 成员的逐字节子集、下载资产驱动的隔离消费安装 exit 0 且消费者自有规则保留、GHCR digest 与发布日志一致且内置版本 `0.13.7`），见 [asset-verification.json](attachments/asset-verification.json) 与 [E-008](02-execution/E-008-s5-release-and-asset-verification.md)。过程更正见 [E-006](02-execution/E-006-s5-evidence-recapture.md)（Copilot 首轮 401 系编排侧环境未继承 `COPILOT_PROVIDER_API_KEY`，非凭据失效）。S5 审计模式为 `independent`，仍需一条指定 provider 的独立意见后方可关门。
+S1～S5 全部完成，经用户 2026-10-17 指令「闭门」按 [D-004](01-decision/D-004-close-out.md) 收尾为 **`done` / 100%（5/5）**。S5（发布）全链路事实：16 格运行证据重捕获 **16/16 pass**（一致性 `--check` 22 份、`compatibility_report` `ready-for-release-evidence`、uncovered 0）；清单与 CHANGELOG `0.13.7` 同步；本地门禁 skills 102 / docs 67 / scripts 147 全绿、strict rehearsal 与 strict 预检 `checks passed: True`；检查点 `8f1315f` → [PR #31](https://github.com/magicvr/goal-governance/pull/31) 双平台 CI 全绿 → merge `6ca04ee` → annotated tag `v0.13.7`（tag object `6197ed6e`）→ tag workflow [39034827440](https://github.com/magicvr/goal-governance/actions/runs/39034827440) 的 `pack` 与 gated publish 全绿（Environment `release` 由维护者 `magicvr` 人工审批，AI 未代批）。[Release v0.13.7](https://github.com/magicvr/goal-governance/releases/tag/v0.13.7) 于 2026-10-17T13:10:14Z 发布 9 项资产并逐项验收（双 ZIP 摘要与 sidecar 一致、Core 27 成员为 Skills 86 成员的逐字节子集、下载资产驱动的隔离消费安装 exit 0 且消费者自有规则保留、GHCR digest 与发布日志一致且内置版本 `0.13.7`）。审计：A-005 independent（Grok Build）对 S5 退出条件 a–f 判 `pass`，A-006 响应全部意见；**开放 required = 0、开放 recommended = 0、无冲突、无 residual/overruled**。过程更正见 [E-006](02-execution/E-006-s5-evidence-recapture.md)（Copilot 首轮 401 系编排侧环境未继承 `COPILOT_PROVIDER_API_KEY`，非凭据失效）。**关门边界（保证等级 L0）**：规范文本契约 + 全部消费面与镜像/dogfood 一致 + 仓库静态/回归 + 16 格 L3 宿主入口证据 + 一次独立审计入口解析 + `v0.13.7` 发布身份与资产验收；不新增系统级硬拦截，不宣称穷尽所有 GUI/API 返回形态。收尾事实见 [E-009](02-execution/E-009-close-out-sync.md)。
 
 ## 成功标准
 

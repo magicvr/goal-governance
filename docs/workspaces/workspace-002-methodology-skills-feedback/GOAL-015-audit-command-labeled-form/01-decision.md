@@ -33,5 +33,6 @@ version: 0.1.0
 | D-001 | 2026-10-17 | 立项范围、路线图与用户裁决 | accepted | `01-decision/D-001-scope-and-roadmap.md` |
 | D-002 | 2026-10-17 | 带标签审计命令契约冻结与写集 | accepted | `01-decision/D-002-labeled-command-contract.md` |
 | D-003 | 2026-10-17 | 范围扩展：新增 S5 发布阶段与提交边界裁决 | accepted | `01-decision/D-003-scope-extension-s5-release.md` |
+| D-004 | 2026-10-17 | 关门决定：GOAL-015 → done / 100% | accepted | `01-decision/D-004-close-out.md` |
 
 > 编号在本目标内单调不复用；历史记录中的旧命令形式保留原样，不回写成新形式。
