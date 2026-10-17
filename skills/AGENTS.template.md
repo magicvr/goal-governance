@@ -132,7 +132,7 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 - **开放必改门禁**：存在**未合法闭合**的 required / 必改 findings（不论 self 还是 independent、不论是否与其它意见冲突）时，**不得**推进该门禁对应的下一阶段，**不得**将目标标为 `done`（关门）。仅汇总意见而不闭合必改项 = 违规放行。
 - **Finding 合法闭合**（三路径，全文见 principles）：`fixed`（可核对修正）｜`accepted-residual`（用户书面接受残余，含范围与复审触发）｜`user-overruled`（用户书面驳回/降级，**单条意见亦可**）。口头不算。
 - 默认主入口仍为编排器；交叉审计为专用入口（如 `/audit`），非四填表并列主路径。
-- **自动派发 AD-01～AD-06**（全文 `{{GOVERNANCE_ROOT}}/architecture/principles.md#audit-dispatch`）：只向独立审计员输入 `/audit NNN NNN` 或 `/vision-audit NNN`；三位正整数唯一解析完整身份，拒绝附言/包装/非法编号。禁止自编审计提示词、scope/文件清单/结论预期及隐藏上下文注入，不复制编排历史；审计员自主定范围，入口失败不自由提示兜底。人类直调可给关注点，MCP 参数兼容不豁免自动请求；规则约束不宣称系统级强制拦截。
+- **自动派发 AD-01～AD-06**（全文 `{{GOVERNANCE_ROOT}}/architecture/principles.md#audit-dispatch`）：只向独立审计员输入 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`；带标签的三位正整数唯一解析完整身份，拒绝裸数字、附言、包装与非法编号。禁止自编审计提示词、scope/文件清单/结论预期及隐藏上下文注入，不复制编排历史；审计员自主定范围，入口失败不自由提示兜底。人类直调可给关注点，MCP 参数兼容不豁免自动请求；规则约束不宣称系统级强制拦截。
 
 
 #### 审计模式（实施前按风险确定）

@@ -101,7 +101,7 @@ MCP 客户端配置指向容器（stdio 直连，见上）或本地 `python mcp/
 
 ### 自动审计与用户待答 guidance
 
-四治理入口均携带核心 P-003 的 AD-01～AD-06 与 P-004 的 UI-01～UI-06 约束（完整规则在已解析治理根的 `architecture/principles.md`）：自动请求的 task 正文只可为 `/audit NNN NNN` 或 `/vision-audit NNN`，按 workspace-protocol §2.7 唯一解析完整身份。保留人类直调的 task/goal_id/scope 参数兼容；自动请求不得用 scope、身份元数据或 guidance 夹带范围限制、自编提示词或预期结论，不复制编排历史。正式入口不可用时停止，不自由提示兜底。
+四治理入口均携带核心 P-003 的 AD-01～AD-06 与 P-004 的 UI-01～UI-06 约束（完整规则在已解析治理根的 `architecture/principles.md`）：自动请求的 task 正文只可为 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`（小写标签加 1～3 位编号），按 workspace-protocol §2.7 唯一解析完整身份。保留人类直调的 task/goal_id/scope 参数兼容；自动请求不得用 scope、身份元数据或 guidance 夹带范围限制、自编提示词或预期结论，不复制编排历史。正式入口不可用时停止，不自由提示兜底。
 
 同步阻塞卡片优先；不可用/无交互通路则文本提问并停止。空返回/取消/预选未提交不算答复，当前可治理 Goal 的 blocked/执行记录/goal-tree 由有权编排侧维护，保留其他阻塞；独立审计只返回待答事实，不越权写 meta，无 Goal 仍暂停，VP 不改 blocked，写盘失败仍停止。真实答复留痕并复核全部门禁后才恢复。
 

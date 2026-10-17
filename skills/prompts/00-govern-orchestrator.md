@@ -198,7 +198,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 - provider 不可用、失败、超时或无可核对输出时，门禁保持未满足；不得静默降级或由编排器冒充 independent。
 - 已有 independent 而无 self 不再机械询问：`independent` 可直接响应，`cross` 必须补 self。
 
-**自动派发（AD-01～AD-06）**：遵守 `{governance_root}/architecture/principles.md#audit-dispatch` 与 workspace-protocol §2.7。向指定 provider 的正文只能是 `/audit NNN NNN` 或 `/vision-audit NNN`（三位正整数）；先唯一解析完整身份，不附加 scope、阶段、文件清单、finding 提示、结论预期或自编审计提示词，不将这些藏入 description/system/context/附件/stdin。独立会话不得复制编排历史，审计员自主扫描与定 scope。合法命令不要求补 scope/audit_type 表单；正式入口不能加载或 provider 失败则保持门禁，不写替代提示。人类直调可表达关注点；MCP 参数兼容不豁免自动请求。File 规范不宣称系统级强制拦截。
+**自动派发（AD-01～AD-06）**：遵守 `{governance_root}/architecture/principles.md#audit-dispatch` 与 workspace-protocol §2.7。向指定 provider 的正文只能是 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`（小写标签加三位正整数）；先唯一解析完整身份，不附加 scope、阶段、文件清单、finding 提示、结论预期或自编审计提示词，不将这些藏入 description/system/context/附件/stdin。独立会话不得复制编排历史，审计员自主扫描与定 scope。合法命令不要求补 scope/audit_type 表单；正式入口不能加载或 provider 失败则保持门禁，不写替代提示。人类直调可表达关注点；MCP 参数兼容不豁免自动请求。File 规范不宣称系统级强制拦截。
 
 ### 3.2 多条意见冲突
 

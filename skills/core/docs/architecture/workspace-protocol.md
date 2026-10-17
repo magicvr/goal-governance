@@ -2,9 +2,9 @@
 title: 工作区与共享资料区协议
 status: active
 created: 2026-07-20
-updated: 2026-10-16
+updated: 2026-10-17
 parent: null
-version: 1.1.0
+version: 1.2.0
 ---
 
 # 工作区与共享资料区协议
@@ -58,15 +58,15 @@ version: 1.1.0
 - **展示**：Skills/编排器每轮须有工作区页眉（`workspace_id`、canonical 范围、Root、焦点目标）；单区焦点清晰时正文可用短 id；跨区或歧义时正文用 Q3（对话）或 Q2（落盘）。多区无焦点 → fail closed，不输出裸 id 推进建议。用户只说裸 `GOAL-NNN` 且多区时，反问 `workspace_id` 并给候选。
 - **历史文档**不要求回写限定名；**新写入**的跨区提及遵守本条。Web 展示/复合路由属后续产品切片（A1/A2），本协议不因 A0 自动关闭。
 
-### 2.7 审计命令的数字选择器
+### 2.7 审计命令的带标签选择器
 
-自动独立审计遵守 [principles P-003 · AD-01～AD-06](principles.md#audit-dispatch)：`/audit NNN NNN` 与 `/vision-audit NNN`，正文不得携带范围限制。入口接受 1～3 位 ASCII 十进制正整数、按数值补为三位（001～999）；输出用单个空格分隔的规范形式。拒绝额外参数、换行/注释/包装和非法数字，不先删附言再派发。
+自动独立审计遵守 [principles P-003 · AD-01～AD-06](principles.md#audit-dispatch)：`/audit workspace-NNN goal-NNN` 与 `/vision-audit vp-NNN`，正文不得携带范围限制。前缀必须为小写 `workspace-` / `goal-` / `vp-`；编号接受 1～3 位 ASCII 十进制正整数、按数值补为三位（001～999）；输出用单个空格分隔的规范形式。拒绝裸数字、前缀缺失/大小写或拼写不符、完整 id/slug 冒充选择器、选择器顺序错误、额外参数、换行/注释/包装和非法数字，不先删附言再派发。
 
-1. 先安全解析 governance_root，检测 canonical/legacy/mixed 布局；数字命令必须在 canonical 显式布局解析。legacy 兼容入口不因此失效，但自动数字选择器不能猜 legacy 对应的工作区编号，应停止询问。
-2. `/audit W G` 只枚举 `workspaces/workspace-<NNN>-<slug>/workspace.md` 的声明定位工作区：按完整三位编号相等匹配，不能用字符串前缀或目录排序。匹配必须唯一，workspace.id 与目录一致，canonical_scope 指向本目录，Root 绑定与 plan 对齐合法。再在该区定位唯一 `GOAL-<NNN>-<slug>/00-meta.md`，核对 id=目录名、同区 parent 与 goal-tree；不得为消歧读取其他区目标正文。
-3. `/vision-audit V` 在 `vision/plans/VP-<NNN>-<slug>.md` 按完整编号唯一匹配，核对 frontmatter id 与文件名及 Charter 对齐；由愿景审计入口自行扫描适用愿景资料，不改 Goal 状态或台账。
+1. 先安全解析 governance_root，检测 canonical/legacy/mixed 布局；带标签命令必须在 canonical 显式布局解析。legacy 兼容入口不因此失效，但自动带标签选择器不能猜 legacy 对应的工作区编号，应停止询问。
+2. `/audit workspace-W goal-G` 只枚举 `workspaces/workspace-<NNN>-<slug>/workspace.md` 的声明定位工作区：按完整三位编号相等匹配，不能用字符串前缀或目录排序。匹配必须唯一，workspace.id 与目录一致，canonical_scope 指向本目录，Root 绑定与 plan 对齐合法。再在该区定位唯一 `GOAL-<NNN>-<slug>/00-meta.md`，核对 id=目录名、同区 parent 与 goal-tree；不得为消歧读取其他区目标正文。
+3. `/vision-audit vp-V` 在 `vision/plans/VP-<NNN>-<slug>.md` 按完整编号唯一匹配，核对 frontmatter id 与文件名及 Charter 对齐；由愿景审计入口自行扫描适用愿景资料，不改 Goal 状态或台账。
 4. 任何零匹配、多匹配、id/绑定不符、符号链接逃逸或仓外路径均 fail closed；停止派发并按 [P-004 · UI-01～UI-06](principles.md#user-input-wait) 询问，不能任选候选或拼自由提示词兜底。
-5. 解析成功后仍以完整 workspace_id + goal_id（Q1）或 VP id 为身份，文档 Q2、对话 Q3、区内 parent 均不变。数字只是入口选择器，不能取代 §2.6 的限定引用。
+5. 解析成功后仍以完整 workspace_id + goal_id（Q1）或 VP id 为身份，文档 Q2、对话 Q3、区内 parent 均不变。带标签编号只是入口选择器，不能取代 §2.6 的限定引用。
 
 ## 3. Root Goal、纲领阶段与并行
 

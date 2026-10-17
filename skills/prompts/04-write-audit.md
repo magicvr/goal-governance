@@ -35,7 +35,7 @@ role: primitive
 
 # 询问、派发与角色边界
 
-遵守 `{governance_root}/architecture/principles.md` 的 AD-01～AD-06 与 UI-01～UI-06。自动邀请 independent 仅输入 `/audit NNN NNN` 或 `/vision-audit NNN`，不把本原语的 self scope/关注点改写成供应商审计提示。需要用户信息时同步阻塞卡片优先，空答复/取消/预选未提交即暂停，不虚构裁决；独立意见代贴不授权改变 Goal 状态。待答交编排侧记录问题、blocked 与 goal-tree；真实答复后复核全部门禁再恢复，不以卡片关闭推定 finding 已闭合。
+遵守 `{governance_root}/architecture/principles.md` 的 AD-01～AD-06 与 UI-01～UI-06。自动邀请 independent 仅输入 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`，不把本原语的 self scope/关注点改写成供应商审计提示。需要用户信息时同步阻塞卡片优先，空答复/取消/预选未提交即暂停，不虚构裁决；独立意见代贴不授权改变 Goal 状态。待答交编排侧记录问题、blocked 与 goal-tree；真实答复后复核全部门禁再恢复，不以卡片关闭推定 finding 已闭合。
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：

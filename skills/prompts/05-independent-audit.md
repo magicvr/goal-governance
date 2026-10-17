@@ -51,7 +51,7 @@ role: independent-audit
 
 完整执行 `{governance_root}/architecture/principles.md#audit-dispatch` 的 AD-01～AD-06，以及 workspace-protocol §2.7：
 
-1. 自动请求正文仅 `/audit NNN NNN`。入口接受 1～3 位 ASCII 十进制正整数补零为 001～999，按工作区、目标顺序唯一绑定完整 workspace_id + goal_id。拒绝 0/非法数字、多余参数、换行/注释/包装；不能截断后执行。`/vision-audit NNN` 应走 07，不能写入 Goal 台账。
+1. 自动请求正文仅 `/audit workspace-NNN goal-NNN`。标签必须为小写 `workspace-` / `goal-`；入口接受 1～3 位 ASCII 十进制正整数补零为 001～999，按工作区、目标顺序唯一绑定完整 workspace_id + goal_id。拒绝裸数字、前缀缺失/大小写或拼写不符、完整 id/slug、选择器顺序错误、0/非法数字、多余参数、换行/注释/包装；不能截断后执行。`/vision-audit vp-NNN` 应走 07，不能写入 Goal 台账。
 2. **先完成解析门禁，失败立即返回，不进入后续审计步骤。** 先读取并校验仓库根 `.goal-governance.json`（只有文件不存在才默认 `docs`），确认 governance_root 为安全仓内相对根；配置非法时不回退 docs，不用包镜像代替。随后检测 canonical/旧直属显式/混合布局，再枚举 canonical workspace 声明定位唯一数字编号，验证 id/目录/canonical_scope/Root/plan，再在该区唯一定位目标、核对 meta.id/parent/tree。零匹配、多匹配、旧/混合布局或路径逃逸时，只返回解析失败、迁移/修复要求与待答事实；不通读 Goal 正文、不分配 A 编号、不写 `03-audit`，也不能“先审目标，再把解析失败写成 finding”。不读其他区目标正文消歧。数字不替代 Q1/Q2/Q3 身份。
 3. 合法命令无需用户补 scope、audit_type、finding、日期或 auditor 表单。自主通读目标 meta、三个索引及 ledger 与适用权威，从事实判断审计范围、类型与所需证据；记录自己形成的 scope。禁止编排器附加的范围限制、文件清单、结论预期或其他自编提示影响独立视角，不能用复制编排历史代替自主扫描。明确由人类直调时可采纳其关注点，但不把自动附言伪装成人类要求。
 

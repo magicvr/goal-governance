@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-10-17
 parent: null
-version: 0.14.9
+version: 0.15.0
 ---
 
 # docs/ · 文档体系
@@ -107,13 +107,14 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
-- **文档入口版本**（本文件 frontmatter）：`0.14.9` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
+- **文档入口版本**（本文件 frontmatter）：`0.15.0` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
 - **可复制核心包版本**：[`0.13.6`](https://github.com/magicvr/goal-governance/releases/tag/v0.13.6) 正式发布（[GOAL-013](workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) 自动审计派发与用户答复阻塞门禁；[GOAL-014](workspaces/workspace-002-methodology-skills-feedback/GOAL-014-release-v0-13-6/00-meta.md) 完成正式发布与资产验收）。入口文修订号与发布身份分离，实际发行以 annotated tag 与 gated Release 为准。
 - **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / `v0.13.2` / `v0.13.3`（annotated tag 指向 main merge commit `dfa8600`；tag workflow run `34748891084` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）/ **`v0.13.4`**（PR #23 → main merge commit `43479838`；tag workflow run `36808519534` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）。
 - **快照日期**：2026-10-17。
 - **最新发布基线**：**`v0.13.6`**（PR #29 → main merge `97f6f1ea`；tag workflow [39000107099](https://github.com/magicvr/goal-governance/actions/runs/39000107099) 的 pack 与 gated publish 全绿，Environment API 记录 magicvr 人工 `skipped` 放行；9 项正式资产、双 ZIP SHA-256 与 sidecar 一致、实际下载的 bootstrap 隔离安装通过；GHCR `0.13.6` 拉取 digest 与发布日志一致、内置版本核对为 `0.13.6`）。上一基线 `v0.13.5`（PR #27 → main merge `1a6668e`）保留其历史身份。
 - **发布快照身份**：`v0.13.6` 正式发布复用 GOAL-013 S3 于 2026-10-17 为当前工作树捕获、未修改的 16 份运行记录（`docs/releases/runtime/goal-013-s3-2026-10-17-current/`），矩阵 candidateRevision = `v0.13.6`；不宣称新宿主运行。Codex 不在承诺矩阵中。
 - **当前工作树边界（2026-10-17）**：[GOAL-013](workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) S3 已为 Claude Code `2.1.301`、Grok Build `1.0.60`、GitHub Copilot CLI `1.0.75` 重取四入口 12 格证据，另有四宿主只读 MCP 目录角色探针（含 Codex `0.163.0`，不新增矩阵支持承诺）。16 份当前来源一致的记录位于 `docs/releases/runtime/goal-013-s3-2026-10-17-current/`，矩阵与 CI 一致性门禁已改指新记录；旧记录保留历史身份。当前对话真实同步卡片的 JSON/LF 提交、用户预选观察及部分答复/其他 blocker 保留已留痕；与后台 CLI 可见性严格区分。I-004 在 D-003 路径 A 及已列 profile 范围 verified，S3/S4 验证及关门审视完成，cross 意见与修正已落盘；GOAL-013 经 D-005 收尾为 done / 100%；v0.13.6 已由 GOAL-014 正式发布（PR #29 → main `97f6f1ea` → annotated tag → run 39000107099 → 9 项资产验收）并关门。静态规范不代表全平台硬拦截或穷尽所有 GUI 返回形态。`/commit` 不属于矩阵必达格；Root R3 终态未声明。
+- **当前工作树边界补记（2026-10-17 · GOAL-015）**：[GOAL-015](workspaces/workspace-002-methodology-skills-feedback/GOAL-015-audit-command-labeled-form/00-meta.md) 把自动审计正式命令改为带标签形式 `/audit workspace-NNN goal-NNN` 与 `/vision-audit vp-NNN`（裸数字不再合法）。该修正改动 `principles.md`、`workspace-protocol.md`、`alignment.md`、`skills/AGENTS.template.md`、`skills/prompts/00·04·05·06·07`、四宿主安装源与 `mcp/entries.py` 等 24 个 `behaviorSources`，因此上条所述 16 份运行记录**全部过期**（`python scripts/capture_runtime_evidence.py --check --evidence-dir docs/releases/runtime/goal-013-s3-2026-10-17-current` 失败）；`scripts/tests/test_release_evidence.py` 的 4 failures / 12 errors 即此后果。重捕获不在 GOAL-015 范围内，release / compatibility 门禁在重捕获前保持红，且不得据此宣称发布就绪。
 
 ### canonical → Skills 镜像（GOAL-022）
 
