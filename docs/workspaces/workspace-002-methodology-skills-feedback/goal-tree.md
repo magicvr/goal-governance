@@ -14,7 +14,7 @@ version: 0.55.0
 
 ## 2026-10-17 · GOAL-014 立项（v0.13.6 发布）
 
-用户要求在 GOAL-013 关门后「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。创建 **GOAL-014-release-v0-13-6**（active / 25%，S1～S4 1/4）承载下一个兼容性 patch v0.13.6 的正式发布与消费资产验收。D-001 冻结范围与证据策略：复用 GOAL-013 S3 在 2026-10-17 为当前工作树捕获的 16 份运行证据（保持日期/路径不变，只改矩阵 candidateRevision），协议 0.1.0 与 consumer contract 不变，不覆盖旧 Release。E-001 记录基线：远端最新 v0.13.5、v0.13.6 未占用；`capture_runtime_evidence --check` 16 份一致、compatibility ready、镜像 38 对、本地回归与 rehearsal 在 Python 3.11.9 下通过。审计模式 independent，provider 尚未由用户指定（I-003 collecting），按 P-004 询问后留痕；尚未改清单、未推送、未 tag、未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-015。
+用户要求在 GOAL-013 关门后「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。创建 **GOAL-014-release-v0-13-6** 承载下一个兼容性 patch v0.13.6 的正式发布与消费资产验收。D-001 冻结范围与证据策略：复用 GOAL-013 S3 在 2026-10-17 为当前工作树捕获的 16 份运行证据（保持日期/路径不变，只改矩阵 candidateRevision），协议 0.1.0 与 consumer contract 不变，不覆盖旧 Release。E-001 记录基线：远端最新 v0.13.5、v0.13.6 未占用；`capture_runtime_evidence --check` 16 份一致、compatibility ready、镜像 38 对、本地回归与 rehearsal 在 Python 3.11.9 下通过。审计模式 independent；provider 由用户通过阻塞卡片指定为 Grok Build（D-002）。E-002 记录清单检查点 `5de854d`（CHANGELOG 0.13.6、矩阵与全部安装/GHCR pin、镜像同步）与本地 rehearsal/strict release 预检通过。E-003 记录独立审计返回：正式命令 `/audit 002 014` → A-001 independent/pass、开放 required 0，三条 recommended 由 A-002 按 fixed 闭合。S1/S2 完成、S3 进行中，**progress 50%**；尚未 push、未开 PR、未 tag、未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-015。
 
 ## 2026-10-17 · GOAL-013 关门（done / 100%）
 
@@ -318,7 +318,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
 ├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
-└── GOAL-014-release-v0-13-6                  [active]  v0.13.6 正式发布与消费资产验收  progress 25%
+└── GOAL-014-release-v0-13-6                  [active]  v0.13.6 正式发布与消费资产验收  progress 50%
 ```
 
 ## 状态表
@@ -338,7 +338,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
-| GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-10-17 |
+| GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-10-17 |
 
 ## 编号
 

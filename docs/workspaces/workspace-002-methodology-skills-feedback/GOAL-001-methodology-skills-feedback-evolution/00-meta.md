@@ -82,7 +82,7 @@ GOAL-013 先提交 e37cad3，再完成 S4 cross/全部意见响应/关门审视�
 
 ## 备注
 
-- **GOAL-014 立项（2026-10-17）**：用户在 GOAL-013 关门后要求「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。另建 [GOAL-014](../GOAL-014-release-v0-13-6/00-meta.md) 承载下一个兼容性 patch **v0.13.6** 的正式发布与消费资产验收；[D-001](../GOAL-014-release-v0-13-6/01-decision/D-001-release-scope.md) 冻结范围与证据策略（复用 GOAL-013 S3 的 16 份现行运行证据，协议 0.1.0 与 consumer contract 不变）。E-001 基线：远端最新 v0.13.5、v0.13.6 未占用，证据 `--check` 与 compatibility ready。审计模式 independent，provider 待用户指定（P-004 询问）。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-015。
+- **GOAL-014 立项（2026-10-17）**：用户在 GOAL-013 关门后要求「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。另建 [GOAL-014](../GOAL-014-release-v0-13-6/00-meta.md) 承载下一个兼容性 patch **v0.13.6** 的正式发布与消费资产验收；[D-001](../GOAL-014-release-v0-13-6/01-decision/D-001-release-scope.md) 冻结范围与证据策略（复用 GOAL-013 S3 的 16 份现行运行证据，协议 0.1.0 与 consumer contract 不变）。E-001 基线：远端最新 v0.13.5、v0.13.6 未占用，证据 `--check` 与 compatibility ready。E-002/E-003：清单检查点 `5de854d`、本地 rehearsal 与 strict release 预检通过；provider 由用户指定为 Grok Build（D-002），`/audit 002 014` 返回 A-001 independent/pass、开放 required 0，建议项经 A-002 fixed。S1/S2 完成、S3 进行中，progress 50%。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-015。
 
 - **GOAL-013 关门（2026-10-17）**：用户指令闭门；[D-005](../GOAL-013-audit-dispatch-and-user-input-gates/01-decision/D-005-close-out.md) 依 A-001 self/pass、A-002 Grok independent/pass、A-004 全部 `fixed`、A-005 关门审视 pass（开放 required/recommended 0，I-001～I-005 在路径 A 范围内 verified）将子目标收尾为 **done / 100%（S1～S4 4/4）**。交付边界照 A-005：规范、现有入口消费与已列代表运行，保证等级 L0，不新增系统级硬拦截；本目标内未 tag、未发布，v0.13.6 正式发布另立目标。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；见子目标 E-013。
 

@@ -1,7 +1,7 @@
 ---
 id: GOAL-014-release-v0-13-6
 title: v0.13.6 正式发布与消费资产验收
-progress: 25%
+progress: 50%
 status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-17
@@ -26,9 +26,9 @@ version: 0.1.0
 
 | 阶段 | 名称 | 状态 | 退出条件 |
 |------|------|------|----------|
-| S1 | 范围与证据基线冻结 | 进行中（2026-10-17） | 版本未占用、发布流程明确，现有 runtime 证据 `--check` 与 compatibility 通过 |
-| S2 | 清单、预演与独立审计 | 未开始 | 版本清单与镜像 pin 一致，rehearsal/回归通过，指定 provider independent 意见落盘且无开放 required |
-| S3 | PR、CI、main、tag 与 gated 发布 | 未开始 | PR 双平台 CI 全绿、合入 main、clean-tree strict 预检通过、tag 工作流完成发布 |
+| S1 | 范围与证据基线冻结 | 完成（2026-10-17） | 版本未占用、发布流程明确，现有 runtime 证据 `--check` 与 compatibility 通过 |
+| S2 | 清单、预演与独立审计 | 完成（2026-10-17） | 版本清单与镜像 pin 一致，rehearsal/回归通过，指定 provider independent 意见落盘且无开放 required |
+| S3 | PR、CI、main、tag 与 gated 发布 | 进行中（2026-10-17） | PR 双平台 CI 全绿、合入 main、clean-tree strict 预检通过、tag 工作流完成发布 |
 | S4 | 资产验收与关门 | 未开始 | 九项资产、双 ZIP digest、消费安装、镜像与证据身份核对通过，关门审视 pass |
 
 S1 → S2 → S3 → S4 串行；不批量建立子目标。派生 `progress` 按完成阶段 4/4 等权计算，不用于放行或关门。
@@ -39,14 +39,14 @@ S1 → S2 → S3 → S4 串行；不批量建立子目标。派生 `progress` �
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | 版本、发布范围与是否覆盖既有 Release | 方案冻结 | S1 退出 | 回读远端 tag/Release 与 dev 上待发布范围 | verified | 范围改变时复核 | [E-001](02-execution/E-001-baseline.md)：远端最新为 v0.13.5，v0.13.6 未占用；dev 待发布为 GOAL-013 的 e37cad3、f86b406 |
 | I-002 | required | GOAL-013 S3 的现行 runtime 证据能否支撑 v0.13.6 | 证据基线 | S1/S2 | `capture_runtime_evidence --check` + compatibility report；清单变更后再核对 | verified | behaviorSources / protocol 变化时复核 | [E-001](02-execution/E-001-baseline.md)：`goal-013-s3-2026-10-17-current` 的 16 份证据 `--check` 通过，coverage `ready-for-release-evidence`；不复制改名、不伪造新捕获日期 |
-| I-003 | required | 本目标 independent 审计 provider 是谁 | S2 独立审计 | S2 进入前 | 同步卡片收集用户指定并核对本机入口 | collecting | 实际审计前再核对服务可用性；失败不降级、不换 provider | 会话尚未指定；按 P-004 询问用户后留痕，不由编排器自选或冒充 |
-| I-004 | required | 候选清单、预演与独立审计是否通过 | PR / merge | S2 退出 | 测试、rehearsal、independent 审计 | open | 候选实现变更时复核 | 待 S2 |
+| I-003 | required | 本目标 independent 审计 provider 是谁 | S2 独立审计 | S2 进入前 | 同步卡片收集用户指定并核对本机入口 | verified | 实际审计前再核对服务可用性；失败不降级、不换 provider | [D-002](01-decision/D-002-independent-provider.md)：用户 2026-10-17 通过阻塞卡片明确选择 **Grok Build CLI**；派发输入仅 `/audit 002 014` |
+| I-004 | required | 候选清单、预演与独立审计是否通过 | PR / merge | S2 退出 | 测试、rehearsal、independent 审计 | verified | 候选实现变更时复核 | [E-002](02-execution/E-002-candidate-manifest-and-rehearsal.md)：清单检查点 `5de854d`；本地回归/rehearsal/strict release 预检均通过；[A-001](03-audit/A-001-independent-s1-s2-candidate.md) independent/pass、开放 required 0，F-001～F-003 由 [A-002](03-audit/A-002-findings-response.md) fixed；见 [E-003](02-execution/E-003-s2-independent-audit.md) |
 | I-005 | required | GitHub PR CI、main merge、tag、审批与发布结果 | 发行完成 | S3 退出 | 实际工作流与 API 回读 | open | 重发时复核 | 待 S3 |
 | I-006 | required | 九项资产、摘要、消费安装与镜像核对 | 关门 | S4 退出 | 下载真实资产逐项核对并隔离安装 | open | 资产变化时复核 | 待 S4 |
 
 ## 审计模式
 
-**independent**：release / compatibility 高影响门禁，至少一个独立 provider 意见。provider 尚未由用户指定（I-003），编排器不得自选或冒充；失败不静默降级。主代理负责实施、意见落盘与响应，不冒充 independent。
+**independent**：release / compatibility 高影响门禁，至少一个独立 provider 意见。provider 已由用户 2026-10-17 通过阻塞卡片指定为 **Grok Build**（I-003 verified，见 [D-002](01-decision/D-002-independent-provider.md)）；派发输入仅正式命令 `/audit 002 014`，编排器不自选、不附加 scope、不冒充；provider 失败时不静默降级。主代理负责实施、意见落盘与响应，不冒充 independent。
 
 ## 对齐
 

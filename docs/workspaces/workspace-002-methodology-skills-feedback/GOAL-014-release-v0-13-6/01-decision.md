@@ -17,3 +17,4 @@ version: 0.2.0
 | D-ID | 日期 | 标题 | 状态 | 文件 |
 |------|------|------|------|------|
 | D-001 | 2026-10-17 | v0.13.6 发布范围、证据策略与 provider 门禁 | accepted | [D-001-release-scope.md](01-decision/D-001-release-scope.md) |
+| D-002 | 2026-10-17 | 用户指定 independent 审计 provider 为 Grok Build | accepted | [D-002-independent-provider.md](01-decision/D-002-independent-provider.md) |
