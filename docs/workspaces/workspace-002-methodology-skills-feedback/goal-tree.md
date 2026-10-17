@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-10-17
 parent: null
-version: 0.55.0
+version: 0.56.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-17 · GOAL-014 关门（v0.13.6 正式发布，done / 100%）
+
+PR #29 经 Ubuntu/Windows CI 全绿后合入 main merge `97f6f1ea028006769518d9854aeaff58b8cfa453`（PR CI run 38999047596、main CI run 38999290522 均 success）；annotated `v0.13.6`（tag object `a1224918`）指向该 merge，推 tag 前在该 merge 上执行 strict release 预检 `checks passed: True`，tag workflow run 39000107099 的 `pack` 与 `Publish GitHub Release (gated)` 全绿；Environment 回执为 magicvr 人工 `skipped` 放行（AI 未代批/改配置）。[Release v0.13.6](https://github.com/magicvr/goal-governance/releases/tag/v0.13.6) 于 2026-10-17T03:50:16Z 发布，`isDraft=false` / `isPrerelease=false`，9 项资产；双 ZIP 摘要与 sidecar 一致、Core 27 成员为 Skills 86 成员的逐字节子集、下载资产驱动的隔离消费安装 exit 0 且消费者自有 AGENTS 规则保留、GHCR `0.13.6` digest 与发布日志一致且内置版本为 `0.13.6`。审计：A-001 Grok independent/pass（开放 required 0）、A-002 fixed 响应、A-003 发布产出与关门审视 pass；I-001～I-006 verified。D-003 将 GOAL-014 标为 **done / 100%（S1～S4 4/4）**，见 E-004/E-005 与附件。Root R3 / VP-002 继续长期 active，Root progress 67%；下一编号 GOAL-015。
 
 ## 2026-10-17 · GOAL-014 立项（v0.13.6 发布）
 
@@ -318,7 +322,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-011-standalone-bootstrap-distribution [done]    独立启用说明的消费分发与引用  progress 100%
 ├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
-└── GOAL-014-release-v0-13-6                  [active]  v0.13.6 正式发布与消费资产验收  progress 50%
+└── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
 ```
 
 ## 状态表
@@ -338,7 +342,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-011-standalone-bootstrap-distribution | 修复 issue #24：独立启用说明的消费分发与引用 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-012-release-v0-13-5 | v0.13.5 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-15 |
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
-| GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-10-17 |
+| GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 
 ## 编号
 

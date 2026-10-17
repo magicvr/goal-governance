@@ -1,0 +1,138 @@
+{
+    "tag":  "v0.13.6",
+    "verifiedAt":  "2026-10-17T03:58:59.5079616Z",
+    "downloadDir":  "artifacts/release-0.13.6",
+    "assetCount":  9,
+    "assets":  [
+                   {
+                       "name":  "bootstrap-README.md",
+                       "size":  6052,
+                       "state":  "uploaded",
+                       "sha256":  "871fe10bc52b07776cb51fdd375f6c06cc9b762a58d0a013ff609a6ef6a244a9",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/bootstrap-README.md"
+                   },
+                   {
+                       "name":  "compatibility-report.json",
+                       "size":  11265,
+                       "state":  "uploaded",
+                       "sha256":  "2003b6b548267eb8478fb7b65a665d8d812a27e3ae36222eaa68313ef4cd08b8",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/compatibility-report.json"
+                   },
+                   {
+                       "name":  "goal-governance-core-v0.13.6.zip",
+                       "size":  73584,
+                       "state":  "uploaded",
+                       "sha256":  "b06b55ec22bb94a61f9d135b003982a3ebdf7f1c1be11f54e77001bb52913f87",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/goal-governance-core-v0.13.6.zip"
+                   },
+                   {
+                       "name":  "goal-governance-core-v0.13.6.zip.sha256",
+                       "size":  99,
+                       "state":  "uploaded",
+                       "sha256":  "6ff369ee93260ad39aca5d4d1bf7dd5737561c8db7e0eabafa5fb66808fa1596",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/goal-governance-core-v0.13.6.zip.sha256"
+                   },
+                   {
+                       "name":  "goal-governance-skills-v0.13.6.zip",
+                       "size":  304631,
+                       "state":  "uploaded",
+                       "sha256":  "de3ce7b8801ed22e59586ba267b4f4c600b5601538f410a2fb8c9741d70fc6ba",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/goal-governance-skills-v0.13.6.zip"
+                   },
+                   {
+                       "name":  "goal-governance-skills-v0.13.6.zip.sha256",
+                       "size":  101,
+                       "state":  "uploaded",
+                       "sha256":  "c1fed761b4e6b276cc6c1a4bfef85bdd7eaf0efe674fa46926c54842f83ce813",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/goal-governance-skills-v0.13.6.zip.sha256"
+                   },
+                   {
+                       "name":  "install-online.ps1",
+                       "size":  12737,
+                       "state":  "uploaded",
+                       "sha256":  "89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/install-online.ps1"
+                   },
+                   {
+                       "name":  "install-online.sh",
+                       "size":  10400,
+                       "state":  "uploaded",
+                       "sha256":  "86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/install-online.sh"
+                   },
+                   {
+                       "name":  "release-evidence.json",
+                       "size":  159840,
+                       "state":  "uploaded",
+                       "sha256":  "8f08fa6c683d5b953770d1210025a983da0e093b388b6fc28a0133f5606651dc",
+                       "url":  "https://github.com/magicvr/goal-governance/releases/download/v0.13.6/release-evidence.json"
+                   }
+               ],
+    "sidecarMatch":  {
+                         "goal-governance-skills-v0.13.6.zip":  {
+                                                                    "actual":  "de3ce7b8801ed22e59586ba267b4f4c600b5601538f410a2fb8c9741d70fc6ba",
+                                                                    "sidecar":  "de3ce7b8801ed22e59586ba267b4f4c600b5601538f410a2fb8c9741d70fc6ba",
+                                                                    "match":  true
+                                                                },
+                         "goal-governance-core-v0.13.6.zip":  {
+                                                                  "actual":  "b06b55ec22bb94a61f9d135b003982a3ebdf7f1c1be11f54e77001bb52913f87",
+                                                                  "sidecar":  "b06b55ec22bb94a61f9d135b003982a3ebdf7f1c1be11f54e77001bb52913f87",
+                                                                  "match":  true
+                                                              }
+                     },
+    "zipLayout":  {
+                      "skillsMembers":  86,
+                      "coreMembers":  27,
+                      "coreMissingInSkills":  0,
+                      "coreByteMismatch":  0,
+                      "guideInSkillsZip":  true,
+                      "skillsReadmeInZip":  true
+                  },
+    "publishedEvidence":  {
+                              "releaseStatus":  "release-candidate",
+                              "checksPassed":  true,
+                              "annotatedTag":  "v0.13.6",
+                              "tagObject":  "a1224918ae8b2d11fdbb915b2dd866a6c6cacf4e",
+                              "sourceCommit":  "97f6f1ea028006769518d9854aeaff58b8cfa453",
+                              "candidateRevision":  "v0.13.6",
+                              "workingTreeClean":  true,
+                              "digestEntries":  591,
+                              "checks":  [
+                                             {
+                                                 "name":  "skills-contract-tests",
+                                                 "passed":  true,
+                                                 "exitCode":  0
+                                             },
+                                             {
+                                                 "name":  "standalone-bootstrap-tests",
+                                                 "passed":  true,
+                                                 "exitCode":  0
+                                             },
+                                             {
+                                                 "name":  "release-evidence-tool-tests",
+                                                 "passed":  true,
+                                                 "exitCode":  0
+                                             },
+                                             {
+                                                 "name":  "diff-whitespace",
+                                                 "passed":  true,
+                                                 "exitCode":  0
+                                             }
+                                         ]
+                          },
+    "consumerInstall":  {
+                            "command":  "install-online.ps1 -Version 0.13.6 -Channel files -Force -ZipPath \u003cdownloaded skills zip\u003e -Sha256Path \u003csidecar\u003e -TargetDir \u003cisolated consumer\u003e",
+                            "exitCode":  0,
+                            "guideInstalled":  true,
+                            "coreDocsInstalled":  true,
+                            "consumerAgentsRulePreserved":  true,
+                            "output":  "consumer-install.txt"
+                        },
+    "mcpImage":  {
+                     "image":  "ghcr.io/magicvr/goal-governance-mcp-server:0.13.6",
+                     "digest":  "sha256:0d48e35e80967128d1d3c8e37b6436afc6092b2d56bff996a211eb702b87389b",
+                     "workflowDigest":  "sha256:0d48e35e80967128d1d3c8e37b6436afc6092b2d56bff996a211eb702b87389b",
+                     "reportedVersion":  "0.13.6",
+                     "versionCommand":  "docker run --rm ghcr.io/magicvr/goal-governance-mcp-server:0.13.6 -c \u0027import __init__; print(__init__.__version__)\u0027"
+                 }
+}

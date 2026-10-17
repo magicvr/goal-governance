@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-17
-version: 0.14.33
+version: 0.14.34
 progress: 67%
 ---
 
@@ -78,11 +78,13 @@ GOAL-013 先提交 e37cad3，再完成 S4 cross/全部意见响应/关门审视�
 | [GOAL-011-standalone-bootstrap-distribution](../GOAL-011-standalone-bootstrap-distribution/00-meta.md) | 修复 issue #24：独立启用说明的消费分发与引用 | done |
 | [GOAL-012-release-v0-13-5](../GOAL-012-release-v0-13-5/00-meta.md) | v0.13.5 正式发布与消费资产验收 | done |
 | [GOAL-013-audit-dispatch-and-user-input-gates](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) | 独立审计命令派发与用户答复阻塞门禁 | done |
-| [GOAL-014-release-v0-13-6](../GOAL-014-release-v0-13-6/00-meta.md) | v0.13.6 正式发布与消费资产验收 | active |
+| [GOAL-014-release-v0-13-6](../GOAL-014-release-v0-13-6/00-meta.md) | v0.13.6 正式发布与消费资产验收 | done |
 
 ## 备注
 
-- **GOAL-014 立项（2026-10-17）**：用户在 GOAL-013 关门后要求「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。另建 [GOAL-014](../GOAL-014-release-v0-13-6/00-meta.md) 承载下一个兼容性 patch **v0.13.6** 的正式发布与消费资产验收；[D-001](../GOAL-014-release-v0-13-6/01-decision/D-001-release-scope.md) 冻结范围与证据策略（复用 GOAL-013 S3 的 16 份现行运行证据，协议 0.1.0 与 consumer contract 不变）。E-001 基线：远端最新 v0.13.5、v0.13.6 未占用，证据 `--check` 与 compatibility ready。E-002/E-003：清单检查点 `5de854d`、本地 rehearsal 与 strict release 预检通过；provider 由用户指定为 Grok Build（D-002），`/audit 002 014` 返回 A-001 independent/pass、开放 required 0，建议项经 A-002 fixed。S1/S2 完成、S3 进行中，progress 50%。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-015。
+- **v0.13.6 正式发布与 GOAL-014 关门（2026-10-17）**：PR #29 经双平台 CI 全绿后合入 main（merge `97f6f1ea`），main CI 38999290522 success；annotated `v0.13.6` 指向该 merge，tag workflow 39000107099 的 pack 与 gated publish 全绿，Environment 回执为 magicvr 人工 `skipped`（AI 未代批）。[Release](https://github.com/magicvr/goal-governance/releases/tag/v0.13.6) 9 项资产、双 ZIP 摘要、Core 子集、隔离消费安装与 GHCR 镜像均核对通过；A-001 independent/pass、A-002 fixed、A-003 关门审视 pass，无开放 required，I-001～I-006 verified。D-003 将 [GOAL-014](../GOAL-014-release-v0-13-6/00-meta.md) 标为 **done / 100%（S1～S4 4/4）**，见 E-004/E-005 与附件。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-015。
+
+- **GOAL-014 立项与 S2 完成（2026-10-17）**：用户在 GOAL-013 关门后要求「提交 PR、CI 全绿后合并 main、打 tag 发布新资产」。另建 [GOAL-014](../GOAL-014-release-v0-13-6/00-meta.md) 承载下一个兼容性 patch **v0.13.6** 的正式发布与消费资产验收；[D-001](../GOAL-014-release-v0-13-6/01-decision/D-001-release-scope.md) 冻结范围与证据策略（复用 GOAL-013 S3 的 16 份现行运行证据，协议 0.1.0 与 consumer contract 不变）。E-001 基线：远端最新 v0.13.5、v0.13.6 未占用，证据 `--check` 与 compatibility ready。E-002/E-003：清单检查点 `5de854d`、本地 rehearsal 与 strict release 预检通过；provider 由用户指定为 Grok Build（D-002），`/audit 002 014` 返回 A-001 independent/pass、开放 required 0，建议项经 A-002 fixed。S1/S2 完成、S3 进行中，progress 50%。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-015。
 
 - **GOAL-013 关门（2026-10-17）**：用户指令闭门；[D-005](../GOAL-013-audit-dispatch-and-user-input-gates/01-decision/D-005-close-out.md) 依 A-001 self/pass、A-002 Grok independent/pass、A-004 全部 `fixed`、A-005 关门审视 pass（开放 required/recommended 0，I-001～I-005 在路径 A 范围内 verified）将子目标收尾为 **done / 100%（S1～S4 4/4）**。交付边界照 A-005：规范、现有入口消费与已列代表运行，保证等级 L0，不新增系统级硬拦截；本目标内未 tag、未发布，v0.13.6 正式发布另立目标。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；见子目标 E-013。
 
