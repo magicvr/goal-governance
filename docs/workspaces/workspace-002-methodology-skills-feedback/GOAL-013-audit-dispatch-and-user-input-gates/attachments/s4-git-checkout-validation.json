@@ -1,0 +1,16 @@
+{
+  "afterFix": {
+    "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/attachments/s3-runtime/claude-wait-readonly-fault-current/stdout.jsonl",
+    "recordedSha256": "107d4a8290940b0e8f8cd68d9d4c22570d6908cea91a8ebe14ae643be4a78c80",
+    "checkoutFilteredSha256": "107d4a8290940b0e8f8cd68d9d4c22570d6908cea91a8ebe14ae643be4a78c80",
+    "sameBytes": true,
+    "checkoutCRLF": 0
+  },
+  "beforeFix": {
+    "workingTreeSha256": "107d4a8290940b0e8f8cd68d9d4c22570d6908cea91a8ebe14ae643be4a78c80",
+    "checkoutFilteredSha256": "09d5e9d5e17d24d4cb979dcce555c7815b7fb23c88fa0d3c758c02f205f5393d",
+    "checkoutCRLF": 53
+  },
+  "regression": "actual temp Git checkout with core.autocrlf=true; red before attribute, green after",
+  "scope": "No archived stdout or recorded hash rewritten"
+}

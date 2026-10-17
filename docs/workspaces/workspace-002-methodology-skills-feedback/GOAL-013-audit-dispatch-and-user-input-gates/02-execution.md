@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-16
 updated: 2026-10-17
-version: 0.9.0
+version: 0.11.0
 ---
 
 # 执行记录 · GOAL-013
@@ -28,6 +28,11 @@ version: 0.9.0
 
 | E-009 | 2026-10-17 | S3 验证完成与真实答复后恢复 | recorded | [E-009-s3-validation-complete.md](02-execution/E-009-s3-validation-complete.md) |
 
+| E-010 | 2026-10-17 | 检查点提交与 S4 开始 | recorded | [E-010-checkpoint-and-s4-start.md](02-execution/E-010-checkpoint-and-s4-start.md) |
+
+| E-011 | 2026-10-17 | 独立审计返回与意见整改 | recorded | [E-011](02-execution/E-011-independent-audit-and-remediation.md) |
+| E-012 | 2026-10-17 | S4 响应及关门审视完成 | recorded | [E-012](02-execution/E-012-s4-review-complete.md) |
+
 ## 事实边界
 
-S1～S3 完成，当前 active / 75%，I-004 verified（D-003 路径 A 与已列 profile），无当前待答。真实提交、限制与恢复见 E-008/E-009；S4 未开始，无正式审计/发布。
+S1～S4 完成，当前 active / 100%，未正式改 done，无待答阻塞。代码检查点 e37cad3 后完成 cross、自审补充整改和关门审视；A-001/A-002/A-004/A-005 pass，全部 findings 已 fixed，见 E-011/E-012。未发布。

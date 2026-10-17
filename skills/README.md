@@ -2,9 +2,9 @@
 title: Skills · 目标治理可复用包
 status: active
 created: 2026-07-18
-updated: 2026-10-15
+updated: 2026-10-17
 parent: null
-version: 1.10.2
+version: 1.10.3
 ---
 
 # Skills
@@ -45,9 +45,9 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 | 工具 / 表面 | 安装位置 | 斜杠 | 当前契约层级 |
 |------|----------|------|--------------|
-| Claude Code CLI `2.1.220` | `.claude/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
-| Grok Build CLI `0.2.114` | `.grok/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-07-30)`** |
-| GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` · `/vision-audit` | 四个入口均 `runtime-verified` via BYOK（2026-07-30） |
+| Claude Code CLI `2.1.301` | `.claude/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-10-17)`** |
+| Grok Build CLI `1.0.60` | `.grok/skills/{govern,audit,vision,vision-audit}/` | `/govern` · `/audit` · `/vision` · `/vision-audit` | govern/audit/vision/vision-audit **`runtime-verified (2026-10-17)`** |
+| GitHub Copilot CLI `1.0.75` | `.github/…` + prompts | `/govern` · `/audit` · `/vision` · `/vision-audit` | 四个入口均 `runtime-verified` via BYOK（2026-10-17） |
 | OpenAI Codex | `.agents/skills/{govern,audit,vision,vision-audit}/` | `$govern` · `$audit` · `$vision` · `$vision-audit` | **install surface shipped**（GOAL-002）；runtime 探针见目标证据链（非矩阵 committed） |
 | 便利入口（非必达） | `.claude/skills/commit/`、`.grok/skills/commit/`、`.agents/skills/commit/`、`.github/prompts/commit.prompt.md` | `/commit` · `$commit` | **默认安装的便利入口**（GOAL-008 S5 / D-002 §4）：**不在**治理必达集、**不是**完整安装 MUST、**不替代** `/govern` checkpoint；缺它不影响完整安装判定 |
 
@@ -55,7 +55,7 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 核心行为：
 
-> Contract manifest 的 `verificationStatus` 仍是历史有界事实，不能替代候选矩阵。Claude Code 机读证据保存脱敏 stream transcript；Grok Build 机读证据保留辅助 session-title `grok-build` alias 的 502 警告，但主 `grok-4.5` 调用 exit `0` 且输出实际 dispatch marker。完整发行验收仍以全部 matrix 单元、coverage、CI 与 release 证据为准。
+> Contract manifest 的 `verificationStatus` 是有界事实，当前版本与取证范围以生产者矩阵为准。GOAL-013 的工作树证据位于 `docs/releases/runtime/goal-013-s3-2026-10-17-current/`：三宿主四入口 12 格及四宿主目录角色探针 4 份。Goal/VRev 合成台账路由已验证；不代表全部 GUI/API 返回形态、后台 CLI 人类提交或系统级硬拦截已实测。候选证据不改变既有 Release 身份，完整发行仍须经过 CI 与正式 release 门禁。
 
 - 编排：[`prompts/00-govern-orchestrator.md`](prompts/00-govern-orchestrator.md)
 - 交叉：[`prompts/05-independent-audit.md`](prompts/05-independent-audit.md)
@@ -206,6 +206,8 @@ bash ./skills/install.sh --all --skills-dir ./skills
 > `python scripts/pack_skills_release.py --version X.Y.Z --output-dir dist/`  
 > `python scripts/pack_core_release.py --version X.Y.Z --output-dir dist/`  
 > 尚未对齐矩阵/`candidateRevision` 的工作树**不要**推正式 tag；门禁失败则**不会**创建 Release。
+Windows 生产仓含深层原始证据：新 clone 使用 `git -c core.longpaths=true clone <repo-url> <short-path>`，已有仓使用 `git config --local core.longpaths true`。普通消费安装不复制目标实例目录，不新增该门禁。
+
 ### 0. 从源码树复制包（开发者 / 无 Release 时）
 
 ```bash
@@ -218,7 +220,7 @@ Copy-Item -Recurse path\to\goal-governance\skills .\skills
 
 ### 1. 手动安装
 
-**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**（Codex 侧为 `$govern` 等）。填表类 advanced slash 仍为可选。四入口在 Claude / Grok / Copilot CLI 上均为 **`runtime-verified`（2026-07-28）**：`/vision-audit` 证据为只读 dispatch（wrapper 路由、核心提示词加载、愿景发现），**不是**写盘全路径 e2e；见兼容矩阵。Codex 已提供 install 面（GOAL-002），**尚未**写入矩阵 `committed` / runtime-verified。
+**默认安装面**（与脚本一致）：每个所列安装产物都装 **`/govern` + `/audit` + `/vision` + `/vision-audit`**（Codex 侧为 `$govern` 等）。填表类 advanced slash 可选。Claude / Grok / Copilot CLI 四入口为 **`runtime-verified`（2026-10-17 工作树捕获）**，包括合成 Goal audit / VRev 台账写入边界；具体版本、模式和证据以生产者矩阵为准，不外推完整 GUI 问答或生产审计结论。Codex 仍是 install 面及补充探针，未加入矩阵 committed 支持承诺。
 
 #### Claude Code
 

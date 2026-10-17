@@ -12,6 +12,9 @@ AGENTS.md text eol=lf
 docs/**/attachments/runtime/**/*.txt text eol=lf
 docs/**/attachments/runtime/**/*.json text eol=lf
 
+# Recorded JSONL digests must survive core.autocrlf=true on Windows checkout.
+docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/attachments/**/*.jsonl text eol=lf
+
 # Immutable S3 host-generated Markdown snapshots retain original hard breaks
 # and final blank lines. Do not reformat evidence; source/docs checks stay on.
 docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/attachments/s3-runtime/**/changed/**/*.md whitespace=-blank-at-eol,-blank-at-eof

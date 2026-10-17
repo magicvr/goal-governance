@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-10-17
-version: 0.14.29
+version: 0.14.31
 progress: 67%
 ---
 
@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-GOAL-013 S3 完成，真实同步卡片答复及已列负例/运行证据、回归就位；I-004 在 D-003 路径 A 范围 verified，子目标恢复 active / 75%，无当前待答。S4 尚未开始，见子目标 E-009。Root R3 active / 67% 保持。
+GOAL-013 先提交 e37cad3，再完成 S4 cross/全部意见响应/关门审视；A-002 independent/pass、A-004 fixed、A-005 pass，开放 required/recommended 0。子目标 active / 100%（4/4），尚未正式改 done，无待答；见 E-012。Root R3 active / 67% 保持。
 
 在 Charter `vision-goal-governance@0.2.0` 与 **VP-001 奠基有界关** 之后，以**真实项目 / 消费方使用中发现的问题**为触发，持续修正核心方法论与 Skills，使协议在实战中保持可复制、可审计、可安装。
 
