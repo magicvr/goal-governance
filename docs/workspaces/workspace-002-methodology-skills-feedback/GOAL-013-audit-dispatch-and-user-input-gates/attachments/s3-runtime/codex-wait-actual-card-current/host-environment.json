@@ -1,0 +1,9 @@
+{
+  "product": "Codex desktop",
+  "installedPackageName": "OpenAI.Codex",
+  "installedPackageVersion": "26.1013.3656.0",
+  "source": "read-only Get-AppxPackage -Name *Codex* query in this turn",
+  "questionTool": "functions.request_user_input",
+  "mode": "actual current conversation synchronous cards",
+  "limits": "Package inventory version; not inferred from Codex CLI version. GUI preselection is user-reported, no assistant screenshot."
+}

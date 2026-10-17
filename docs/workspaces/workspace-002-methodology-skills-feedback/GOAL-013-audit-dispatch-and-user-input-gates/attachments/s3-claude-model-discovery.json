@@ -1,0 +1,6 @@
+{
+  "test": "read-only configured Claude endpoint model discovery",
+  "endpointSha256": "644be88d53311e87e2de7c088388d9b3d2eff4a22fded65ea98bf51854994b8d",
+  "redirectsAllowed": false,
+  "status": 404
+}

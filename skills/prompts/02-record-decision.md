@@ -2,9 +2,9 @@
 title: 提示词 · 记录决策
 status: active
 created: 2026-07-18
-updated: 2026-08-10
+updated: 2026-10-16
 parent: null
-version: 0.7.0
+version: 0.8.0
 role: primitive
 ---
 
@@ -27,6 +27,10 @@ role: primitive
 
 # 任务
 为指定目标在 `01-decision/` 创建真实决策并更新 `01-decision.md` 索引：写清「决定了什么」与「为什么」。
+
+# 真实裁决与待答
+
+遵守 `{governance_root}/architecture/principles.md#user-input-wait` 的 UI-01～UI-06：同步阻塞卡片优先，空答复、取消、未提交预选或答非所问均不得写成 accepted 决策。先保留原问题与 proposed 提案，由编排侧用 03 记录待答/blocked 并同步目标树，然后停止当前任务。只有真实答复到达且逐题核对后，才记录决定、来源和适用范围；部分答复不能替代未答部分，不凭权限批准或工具 exit 0 推定用户选择。
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：

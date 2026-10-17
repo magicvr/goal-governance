@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-17",
+  "docs": {
+    "tests": 67,
+    "result": "OK",
+    "mode": "escalated retry after sandbox Git init failure"
+  },
+  "skills": {
+    "tests": 101,
+    "result": "OK"
+  },
+  "scripts": {
+    "tests": 146,
+    "skipped": 4,
+    "result": "OK",
+    "mode": "escalated retry after sandbox Git init/atomic replace failure"
+  },
+  "mirrors": {
+    "pairs": 38,
+    "result": "consistent"
+  },
+  "runtime": {
+    "files": 16,
+    "directory": "docs/releases/runtime/goal-013-s3-2026-10-17-current",
+    "result": "consistent; all pass"
+  },
+  "compatibility": "ready-for-release-evidence",
+  "goalAcceptance": "S3 completed within D-003 path A and listed evidence profiles; I-004 verified, no pending question, S4 not started",
+  "gitCheckpoint": "not created; existing baseline ownership gate",
+  "realUserCardReceipts": [
+    "card-answer-01.json",
+    "card-answer-02.json",
+    "card-answer-03.json"
+  ],
+  "desktopInstalledPackage": "OpenAI.Codex 26.1013.3656.0"
+}

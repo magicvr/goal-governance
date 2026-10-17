@@ -1,0 +1,9 @@
+{
+  "kind": "actual Windows read-only file attributes",
+  "files": [
+    "docs/workspaces/workspace-002-synthetic/GOAL-013-synthetic-counter/00-meta.md",
+    "docs/workspaces/workspace-002-synthetic/GOAL-013-synthetic-counter/02-execution.md",
+    "docs/workspaces/workspace-002-synthetic/goal-tree.md"
+  ],
+  "syntheticFixture": true
+}

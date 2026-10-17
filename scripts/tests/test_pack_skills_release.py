@@ -111,6 +111,7 @@ class PackSkillsReleaseTests(unittest.TestCase):
         self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_l1.py"))
         self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_config.py"))
         self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_lifecycle.py"))
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_governance_interaction_contract.py"))
         self.assertFalse(pack.should_exclude(Path("tests") / "test_skills_orchestrator.py"))
         self.assertFalse(pack.should_exclude(Path("tests") / "test_install_ps1_isolated.ps1"))
 
@@ -313,8 +314,7 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         self.assertIn("Evidence consistency gate (M-001)", pack_block)
         self.assertIn("capture_runtime_evidence.py --check", pack_block)
         self.assertIn(
-            "--evidence-dir docs/workspaces/workspace-003-mcp-file-dual-channel/"
-            "GOAL-002-r1-mcp-equivalence-kernel/attachments/runtime/evidence",
+            "--evidence-dir docs/releases/runtime/goal-013-s3-2026-10-17-current",
             pack_block,
         )
         # The gate must run after deps are installed (jsonschema) and before

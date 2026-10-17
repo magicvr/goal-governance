@@ -1,0 +1,6 @@
+error: invalid value 'stream-json' for '--output-format <OUTPUT_FORMAT>'
+  [possible values: plain, json, streaming-json, streaming-messages-json]
+
+  tip: a similar value exists: 'streaming-json'
+
+For more information, try '--help'.

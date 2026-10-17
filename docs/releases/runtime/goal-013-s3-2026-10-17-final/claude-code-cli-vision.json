@@ -1,0 +1,121 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-10-16T16:35:40.404230+00:00",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "vision",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.301",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gpt-6-luna"
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "2adf48a39dcd078dd7a7d2ba26bea2bc2c57eafdeb0625bbdd123a682e6a748f"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "0b2ead804434a3b2f0c0ddcaef73c6d2da1c889f7520dab5eb281babc0328aa7"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "f85d70a1675ccdeb7373a8055fa7a4398869678326919c89bff3a4a7fcbdd0a4"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "588d3f8f7d53d3eadb3f1db33c4036333b648b04cb329177e99b20f091d9f338"
+    },
+    {
+      "path": "skills/prompts/06-vision-orchestrator.md",
+      "sha256": "8b6d5d0b4bd68ed5b1a0708e6ec70a9f25822862841b84ebbbffbcddf4a73209"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "fb389b4194d2786ee4bb6ecde2a30b706b0077ad57a047724e81764aafb1a112"
+    },
+    {
+      "path": "skills/install/claude/skills/vision/SKILL.md",
+      "sha256": "5ae374a6522f2c91f815e6524806f63e0a2f25886af3f88b74c3e71b915d1591"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Users\\magicvr\\.local\\bin\\claude.EXE",
+      "--print",
+      "--no-session-persistence",
+      "--tools",
+      "Read,Glob,Grep,Edit,Write,Skill,AskUserQuestion",
+      "--permission-mode",
+      "acceptEdits",
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--effort",
+      "low",
+      "--max-turns",
+      "60"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal013-s3-271pidb3",
+    "timeoutSeconds": 900,
+    "inputSha256": "77bc57e2244afcf3926a60215fe5c25023835e7a2b7fb1c787736f03498ef305",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /vision invocation. Exact audit body only; no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/attachments/s3-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/attachments/s3-runtime/claude-vision-final/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "AD-01",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "AD-01",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "AD-01",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/goal-013-s3-2026-10-17-final/claude-code-cli-vision.d/stdout.txt",
+    "stdoutSha256": "d9d6ca194e1c98eaea09ae12d8cf6ed550d5bbf2a15076f844028d593e43a5da",
+    "stderrPath": "docs/releases/runtime/goal-013-s3-2026-10-17-final/claude-code-cli-vision.d/stderr.txt",
+    "stderrSha256": "c4c7d6c938aef1c3035f5899b75137defae11774797a65dda70c81385d62f599",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

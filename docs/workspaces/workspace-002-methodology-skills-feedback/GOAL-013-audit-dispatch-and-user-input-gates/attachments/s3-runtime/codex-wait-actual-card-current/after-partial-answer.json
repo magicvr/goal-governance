@@ -1,0 +1,12 @@
+{
+  "capturedAt": "2026-10-17T02:23:24.829036+00:00",
+  "stage": "after genuine format answer, before newline answer",
+  "goalStatus": "blocked",
+  "I001": "verified by real JSON submission",
+  "I002": "open/no answer",
+  "B001": "still open",
+  "counterUnchanged": true,
+  "goalMetaSha256": "a786a8c0d24d8d3be2f24f83685a0a3da30a1f3171683acc3151585c99af7462",
+  "treeSha256": "b60c240374024c271b44c000d7d3431b0b8a8fbc5c3ba5c2130d27b0012af892",
+  "notes": "Question sequence intentionally one field at a time; not a claim that multi-question card returned only a subset."
+}

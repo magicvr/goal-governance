@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-10-15
-version: 0.8.1
+updated: 2026-10-16
+version: 0.9.0
 parent: null
 ---
 
@@ -252,6 +252,12 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 | **`/govern`** | 实现层推进与 Goal finding 响应 | 无 Charter 时不得假装完整推进 |
 
 独立愿景审视**必须**走 `/vision-audit`；Goal 交叉审计走 `/audit`。两台账不得混写。
+
+### 9.3 自动派发与用户待答边界
+
+自动调用独立 Vision Review provider 时，遵守 [P-003 · AD-01～AD-06](../architecture/principles.md#audit-dispatch)，语义正文仅为 `/vision-audit NNN`；三位 VP 选择器按 [workspace-protocol §2.7](../architecture/workspace-protocol.md) 唯一解析为完整 VP id，不能追加 scope、finding、文件清单或编排器自编提示词，不能复制编排历史。审计员自主判断范围并形成正式 scope；人类直接提出关注点不受自动派发白名单扩张限制。
+
+愿景编排与愿景审计中的询问同样遵守 [P-004 · UI-01～UI-06](../architecture/principles.md#user-input-wait)：阻塞卡片优先，缺答/空返回即暂停，真实答复留痕后复核门禁再恢复。没有当前可治理 Goal 时暂停任务并保留待答记录，**不**把 Charter/VP status 改成 blocked，不为等待新造 Goal。独立审计只写 VRev/索引或返回待答事实，不越权维护 Goal 状态。未答不等于残余风险已接受，相关 required 门禁保持。
 
 ## 10. 结构选型（摘要）
 

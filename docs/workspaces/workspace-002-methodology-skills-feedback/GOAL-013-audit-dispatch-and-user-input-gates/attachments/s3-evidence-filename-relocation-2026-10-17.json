@@ -1,0 +1,65 @@
+{
+  "reason": "Retain dated evidence filename contract; JSON contents and referenced raw captures unchanged.",
+  "renames": [
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-govern.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-govern-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-audit.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-audit-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-vision.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-vision-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-vision-audit.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-vision-audit-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-govern.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-govern-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-audit.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-audit-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-vision.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-vision-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-vision-audit.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-vision-audit-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-govern.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-govern-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-audit.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-audit-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-vision.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-vision-2026-10-17.json",
+      "contentUnchanged": true
+    },
+    {
+      "from": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-vision-audit.json",
+      "to": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-vision-audit-2026-10-17.json",
+      "contentUnchanged": true
+    }
+  ]
+}

@@ -115,7 +115,9 @@ def should_exclude(relative: Path) -> bool:
     # A-012 F-003: MCP integration tests (skills/tests/test_mcp_*.py) import
     # the repo-root mcp/ package (channel asset separation); they only pass
     # inside the monorepo and would fail in a pure File-channel unpack.
-    if joined.startswith("tests/test_mcp_"):
+    # The GOAL-013 cross-surface test also imports repo-root mcp/ and reads
+    # canonical producer/dogfood paths; it has the same File-only boundary.
+    if joined.startswith("tests/test_mcp_") or joined == "tests/test_governance_interaction_contract.py":
         return True
     return False
 

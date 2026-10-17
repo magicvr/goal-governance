@@ -18,21 +18,41 @@ from typing import Any
 DECISION_LAYER = "decision"
 IMPLEMENTATION_LAYER = "implementation"
 
+# Shared guidance is available even when a thin MCP consumer has no File prompts.
+# This is a protocol constraint, not a new parser, runner, or schema boundary.
+_INPUT_BOUNDARY = (
+    " 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit NNN NNN 或 "
+    "/vision-audit NNN；数字唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，"
+    "不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。"
+    "同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，"
+    "不补默认或虚构。由有权编排侧记录问题/恢复条件，将当前 active/draft Goal 置 blocked，"
+    "同步执行记录/goal-tree 并保留其他阻塞；独立审计只返回待答事实，不越权改 meta。"
+    "已授权治理任务的待答/blocked/索引/树同步是暂停收尾，无需另次确认，"
+    "必须在返回问题/进入等待前完成，不因未答省略；不预写真实答复或未发生的工具返回。"
+    "无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen，写盘失败仍停止；"
+    "真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；"
+    "本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。"
+)
+
 # Human-readable role boundary per entry (kept in sync with VP-004 entry table).
 ROLE_BOUNDARIES: dict[str, str] = {
     "vision": (
         "决策层：建修 Charter、组合编排（VP）、Vision Review、re-align；冷启动优先。"
+        + _INPUT_BOUNDARY
     ),
     "vision-audit": (
         "独立 Vision Review：只写意见到 {governance_root}/vision/reviews* 台账，"
         "不改 Charter / VP / Goal 状态。"
+        + _INPUT_BOUNDARY
     ),
     "govern": (
         "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、"
         "确认后调用原语写入目标五件套。"
+        + _INPUT_BOUNDARY
     ),
     "audit": (
         "Goal 交叉审计：只出意见到被审目标 03-audit 台账，不直接改 status/progress。"
+        + _INPUT_BOUNDARY
     ),
 }
 

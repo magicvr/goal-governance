@@ -2,9 +2,9 @@
 title: MCP 通道说明
 status: active
 created: 2026-08-07
-updated: 2026-10-15
+updated: 2026-10-16
 parent: null
-version: 0.1.0
+version: 0.1.1
 ---
 
 # goal-governance MCP channel（VP-004 R1/R4）
@@ -18,7 +18,7 @@ File 发布资产（skills zip）**不**包含本目录代码；MCP 通道的发
 ## 运行形态
 
 - **主消费形态（R4）**：**Docker 镜像** `ghcr.io/magicvr/goal-governance-mcp-server:<版本>`
-（与 GitHub Release 同 tag 同版本，如 tag `v0.13.5` → 镜像 `:0.13.5`；另有 `latest`）。
+（与 GitHub Release 同 tag 同版本，如 tag `v0.13.6` → 镜像 `:0.13.6`；另有 `latest`）。
   固定入口：`python server.py --repo-root /workspace`（MCP client 零参数，见下）。
 - **本地 stdio 进程形态仍合法**（VP-004：不强制 Docker-only）：
   `python mcp/server.py [--repo-root PATH]`。
@@ -28,10 +28,10 @@ File 发布资产（skills zip）**不**包含本目录代码；MCP 通道的发
 
 ```bash
 # 拉取（版本与 GitHub Release tag vX.Y.Z 对应；latest 指向最新发布）
-docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.5
+docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.6
 
 # 手动验证（stdio 直连；将 <仓库根> 换为消费仓路径）
-docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.5
+docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.6
 ```
 
 **MCP client 配置**（mcpServers，stdio 直连容器，零参数；固定入口自动使用
@@ -41,7 +41,7 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 {
   "goal-governance": {
     "command": "docker",
-    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.5"]
+    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.6"]
   }
 }
 ```
@@ -49,8 +49,8 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 镜像内亦可调用其他 CLI（覆盖 CMD），如 lifecycle：
 
 ```bash
-docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.5 \
-  lifecycle.py install --root /workspace --version 0.13.5 --channel mcp --confirm
+docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.6 \
+  lifecycle.py install --root /workspace --version 0.13.6 --channel mcp --confirm
 ```
 
 镜像构建（发布由 `skills-pack-release.yml` tag 流程自动完成）：`docker build -t <tag> mcp/`。
@@ -98,6 +98,14 @@ MCP 客户端配置指向容器（stdio 直连，见上）或本地 `python mcp/
 方法论正文（仓内 `skills/prompts/` 存在时可按 sha256 核对）。
 
 ## 实例真相
+
+### 自动审计与用户待答 guidance
+
+四治理入口均携带核心 P-003 的 AD-01～AD-06 与 P-004 的 UI-01～UI-06 约束（完整规则在已解析治理根的 `architecture/principles.md`）：自动请求的 task 正文只可为 `/audit NNN NNN` 或 `/vision-audit NNN`，按 workspace-protocol §2.7 唯一解析完整身份。保留人类直调的 task/goal_id/scope 参数兼容；自动请求不得用 scope、身份元数据或 guidance 夹带范围限制、自编提示词或预期结论，不复制编排历史。正式入口不可用时停止，不自由提示兜底。
+
+同步阻塞卡片优先；不可用/无交互通路则文本提问并停止。空返回/取消/预选未提交不算答复，当前可治理 Goal 的 blocked/执行记录/goal-tree 由有权编排侧维护，保留其他阻塞；独立审计只返回待答事实，不越权写 meta，无 Goal 仍暂停，VP 不改 blocked，写盘失败仍停止。真实答复留痕并复核全部门禁后才恢复。
+
+这些是宿主消费的规范 guidance。server 不增加 provider runner、命令解析拦截器、询问 UI 或 Goal 状态写入，inputSchema 的字段/类型/required 保持；不能将 server 返回 ok 或静态测试当作用户已答复、派发已被系统级拦截或卡片行为已验证。
 
 实例状态**永远在仓库内治理记录树**（`{governance_root}`，默认 `docs`）；本 server
 不写任何治理状态，**不是**权威状态库。

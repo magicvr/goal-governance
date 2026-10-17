@@ -1,0 +1,82 @@
+{
+  "entries": [
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/claude-code-cli-audit.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-audit.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:33:14.613959+00:00",
+      "stdoutSha256Unchanged": "6ced34289175dc8bd19fc0cfd4f3319f4b1d51d2bc7fb5481eca697f4be7f4e1",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/claude-code-cli-govern.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-govern.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:33:01.473691+00:00",
+      "stdoutSha256Unchanged": "72e84b2e2ed0d6b8ac5da7c2b749cd15466c0b196fd5f68220569545b225e189",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/claude-code-cli-vision-audit.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-vision-audit.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:37:30.242985+00:00",
+      "stdoutSha256Unchanged": "520801b389cb4fcb0ae0f9f368847e1437a36442b7cf99c01894282864ae6ac9",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/claude-code-cli-vision.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/claude-code-cli-vision.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:35:40.404230+00:00",
+      "stdoutSha256Unchanged": "d9d6ca194e1c98eaea09ae12d8cf6ed550d5bbf2a15076f844028d593e43a5da",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/github-copilot-cli-govern.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-govern.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:32:58.096695+00:00",
+      "stdoutSha256Unchanged": "827ab98c37ae61e8a0b6b80b3ae64f4831e5f803cc7dcc227918b98bec7f3d72",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/github-copilot-cli-vision-audit.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-vision-audit.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:43:05.459146+00:00",
+      "stdoutSha256Unchanged": "2e11cac575ac9c602f11ca88f6ea1c65d28445d96f3a0b0053dc022e372c93e1",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/github-copilot-cli-vision.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/github-copilot-cli-vision.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:41:19.381449+00:00",
+      "stdoutSha256Unchanged": "4b656c0cd4187c63517c5e69bca2a903967e6d6dbf697662a7f63539ad2888dd",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/grok-build-cli-audit.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-audit.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:32:55.893586+00:00",
+      "stdoutSha256Unchanged": "5ca9939ef6fc77b98af3c5f561c526da6cb5aa2e1c4917cda09f7315b897db91",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/grok-build-cli-govern.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-govern.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:35:44.066175+00:00",
+      "stdoutSha256Unchanged": "12d65d418292a2795ba999de9edbfcdb04ce7d58eed5a23dcd422ff9d1bb55f4",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/grok-build-cli-vision-audit.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-vision-audit.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:36:30.355648+00:00",
+      "stdoutSha256Unchanged": "38b5866f26427747250cbfd66e195136d459223f44e72ea05f1053da48dd8025",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    },
+    {
+      "source": "docs/releases/runtime/goal-013-s3-2026-10-17-final/grok-build-cli-vision.json",
+      "copy": "docs/releases/runtime/goal-013-s3-2026-10-17-ready/grok-build-cli-vision.json",
+      "originalCapturedAtPreserved": "2026-10-16T16:35:39.870320+00:00",
+      "stdoutSha256Unchanged": "22d6fa594a286f7bcac0af56f0be0a765b0686bf4e851f1151ffd9b48d71967a",
+      "onlyEnvelopeChange": "stdoutPath/stderrPath relocation; sources, invocation, result and timestamps preserved"
+    }
+  ],
+  "originalsUnchanged": true
+}

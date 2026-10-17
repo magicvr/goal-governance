@@ -1,0 +1,31 @@
+{
+  "test": "Grok TUI launch isolation failure; excluded from acceptance",
+  "observed": "Requested sandbox temporary cwd was not honored by escalated PTY launch; UI read production workspace instead of synthetic fixture.",
+  "action": "Cancelled turn and exited TUI; no answer submitted.",
+  "exitCode": 0,
+  "providerSession": "01a14577-2508-72e2-9bc9-108042c6c3eb",
+  "retainedOutput": false,
+  "reason": "Invalid isolation run; UI/provider thought output not included as evidence.",
+  "chunks": [
+    {
+      "chunk_id": "8fef33",
+      "session_id": 94690,
+      "original_token_count": 10686
+    },
+    {
+      "chunk_id": "c90d8d",
+      "session_id": 94690,
+      "original_token_count": 7202
+    },
+    {
+      "chunk_id": "73c4aa",
+      "session_id": 94690,
+      "original_token_count": 44
+    },
+    {
+      "chunk_id": "80af6d",
+      "exit_code": 0,
+      "original_token_count": 51
+    }
+  ]
+}
