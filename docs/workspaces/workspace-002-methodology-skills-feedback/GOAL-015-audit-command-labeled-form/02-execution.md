@@ -22,6 +22,7 @@ version: 0.1.0
 | E-006 | 2026-10-17 | S5 证据重捕获：16/16 pass，两门禁转绿（Copilot 首轮失败经更正为编排侧环境缺 key） | recorded | `02-execution/E-006-s5-evidence-recapture.md` |
 | E-007 | 2026-10-17 | S5 步骤 b–e：清单、本地门禁、PR/CI、merge 与 tag | recorded | `02-execution/E-007-s5-pr-ci-merge-tag.md` |
 | E-008 | 2026-10-17 | S5 步骤 e–f：Environment 审批、正式发布与资产验收 | recorded | `02-execution/E-008-s5-release-and-asset-verification.md` |
+| E-009 | 2026-10-17 | 关门收尾与台账同步（done / 100%） | recorded | `02-execution/E-009-close-out-sync.md` |
 
 ## 用户待答与恢复（按需保留）
 

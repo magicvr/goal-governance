@@ -34,4 +34,4 @@ version: 0.2.0
 
 ## 结论状态
 
-S1～S5 执行台账与审计意见均已写完。A-005（Grok Build independent，正式命令 `/audit workspace-002 goal-015`）对 S5 退出条件 a–f 判 **pass**，开放 required = 0；A-006 已将其 1 条 recommended（当前态索引滞后）按 `fixed` 闭合（四处索引同步），并把 A-001/A-002 遗留的 F-001（矩阵缺口）、F-002（checkpoint）按 S5 事实 `fixed`。当前 **开放 required = 0、开放 recommended = 0、无冲突、无 residual/overruled**；`progress` 5/5 = 100%，`status` 仍为 `active`。GOAL-015 **具备关门条件**，关门由用户经 `/govern` 确认；独立意见不改 status / progress。A-004 的「重捕获在本目标外」为 D-003 之前的历史范围，不改写。
+GOAL-015 已于 2026-10-17 经用户指令「闭门」按 [D-004](01-decision/D-004-close-out.md) 收尾为 **`done` / 100%（S1～S5 5/5）**，收尾事实见 [E-009](02-execution/E-009-close-out-sync.md)。关门时：**开放 required = 0、开放 recommended = 0、无冲突、无 residual/overruled**；A-005（independent，`pass`）与 A-006（响应）为 S5 的最终意见，A-001～A-004 的历史结论保留不改写。关门边界为保证等级 **L0**（规范文本契约 + 消费面/镜像一致 + 仓库静态与回归 + 16 格 L3 宿主入口证据 + 一次独立审计入口解析 + `v0.13.7` 发布身份与资产验收），不新增系统级硬拦截。独立意见不直接改 `status` / `progress`；状态变更由 `/govern` 按用户指令执行。
