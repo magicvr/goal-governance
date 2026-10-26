@@ -30,6 +30,8 @@ GOAL_FORBIDDEN_ON_CHARTER = frozenset(
     {"done", "draft", "blocked", "cancelled"}
 )
 VISION_ROLE_ALLOWED = frozenset({"primary", "delivery"})
+VP_CURRENT_MATCH_STATUS = frozenset({"planned", "active"})
+VP_HISTORICAL_STATUS = frozenset({"closed", "abandoned"})
 VISION_REF_RE = re.compile(
     r"^(?P<vision_id>[a-z0-9-]+)@(?P<version>\d+\.\d+\.\d+)$"
 )
@@ -92,11 +94,20 @@ def validate_vision_plan(path: Path, charter: dict[str, str] | None = None) -> d
     if match is None:
         raise ValueError(f"invalid vision_ref: {vision_ref}")
     if charter is not None:
-        expected = f"{charter['vision_id']}@{charter['version']}"
-        if vision_ref != expected:
+        if match.group("vision_id") != charter["vision_id"]:
             raise ValueError(
-                f"vision_ref mismatch: got {vision_ref}, expected {expected}"
+                "vision_ref vision_id mismatch: "
+                f"got {match.group('vision_id')}, expected {charter['vision_id']}"
             )
+        # GOAL-016 / issue #34: only planned/active VPs must match the current
+        # Charter version. closed/abandoned VPs keep their historical ref and
+        # are checked by vision_id only.
+        if status in VP_CURRENT_MATCH_STATUS:
+            expected = f"{charter['vision_id']}@{charter['version']}"
+            if vision_ref != expected:
+                raise ValueError(
+                    f"vision_ref mismatch: got {vision_ref}, expected {expected}"
+                )
     text = path.read_text(encoding="utf-8")
     if "| workspace_id |" not in text and "工作区绑定" not in text:
         raise ValueError("VP missing workspace binding section")
@@ -132,6 +143,24 @@ def validate_workspace_vision_alignment(
         # Validate each plan_ref including vision_ref alignment to active Charter.
         validate_vision_plan(plan_path, charter)
     return fields
+
+
+def validate_primary_workspace_consistency(workspaces_root: Path) -> list[str]:
+    """Return declared primary workspace ids; fail closed on more than one.
+
+    GOAL-016 / issue #34 / D-002: `workspace.md`'s `vision_role` is the only
+    gate authority for primary. `workspaces.md` is a derived projection and is
+    intentionally not compared here; a legacy Charter `primary_workspace` field
+    is ignored.
+    """
+    primaries: list[str] = []
+    for workspace_path in sorted(workspaces_root.glob("workspace-*/workspace.md")):
+        fields = parse_frontmatter(workspace_path)
+        if fields.get("vision_role") == "primary":
+            primaries.append(fields.get("id") or workspace_path.parent.name)
+    if len(primaries) > 1:
+        raise ValueError("multiple primary workspaces: " + ", ".join(primaries))
+    return primaries
 
 
 def validate_vision_review_ledger(vision_root: Path) -> set[str]:
@@ -200,7 +229,9 @@ def validate_vision_review_ledger(vision_root: Path) -> set[str]:
     return ledger_ids
 
 
-def validate_vision_stack(vision_root: Path) -> None:
+def validate_vision_stack(
+    vision_root: Path, *, workspaces_root: Path | None = None
+) -> None:
     for name in REQUIRED_VISION_FILES:
         path = vision_root / name
         if not path.is_file():
@@ -214,6 +245,8 @@ def validate_vision_stack(vision_root: Path) -> None:
         raise ValueError("at least one plans/VP-*.md required")
     for plan_path in plan_files:
         validate_vision_plan(plan_path, charter)
+    if workspaces_root is not None:
+        validate_primary_workspace_consistency(workspaces_root)
     validate_vision_review_ledger(vision_root)
     alignment = (vision_root / "alignment.md").read_text(encoding="utf-8")
     for phrase in (
@@ -237,7 +270,9 @@ class VisionProtocolTests(unittest.TestCase):
         return vision
 
     def test_repo_vision_stack_is_complete_and_valid(self) -> None:
-        validate_vision_stack(VISION_DIR)
+        validate_vision_stack(
+            VISION_DIR, workspaces_root=REPO_ROOT / "docs" / "workspaces"
+        )
         charter = validate_charter(VISION_DIR / "charter.md")
         self.assertEqual(charter["vision_id"], "vision-goal-governance")
         self.assertEqual(charter["status"], "active")
@@ -541,6 +576,245 @@ class VisionProtocolTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "vision_ref mismatch"):
                 validate_workspace_vision_alignment(ws, vision_root=vision)
+
+
+    def test_closed_vp_keeps_historical_ref_and_checks_vision_id(self) -> None:
+        """GOAL-016 / issue #34: closed/abandoned VPs are not re-pinned."""
+        charter = {"vision_id": "vision-goal-governance", "version": "0.3.0"}
+        with tempfile.TemporaryDirectory() as tmp:
+            plan = Path(tmp) / "VP-002-old.md"
+            plan.write_text(
+                "---\n"
+                "doc_type: vision-plan\n"
+                "id: VP-002-old\n"
+                "status: closed\n"
+                "vision_ref: vision-goal-governance@0.2.0\n"
+                "---\n\n## 工作区绑定\n\n| workspace_id |\n",
+                encoding="utf-8",
+            )
+            fields = validate_vision_plan(plan, charter)
+            self.assertEqual(fields["status"], "closed")
+
+            plan.write_text(
+                plan.read_text(encoding="utf-8").replace(
+                    "status: closed", "status: abandoned"
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(validate_vision_plan(plan, charter)["status"], "abandoned")
+
+            plan.write_text(
+                plan.read_text(encoding="utf-8").replace(
+                    "status: abandoned", "status: active"
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "vision_ref mismatch"):
+                validate_vision_plan(plan, charter)
+
+            plan.write_text(
+                plan.read_text(encoding="utf-8").replace(
+                    "status: active", "status: planned"
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "vision_ref mismatch"):
+                validate_vision_plan(plan, charter)
+
+            plan.write_text(
+                plan.read_text(encoding="utf-8")
+                .replace("status: planned", "status: closed")
+                .replace(
+                    "vision-goal-governance@0.2.0",
+                    "vision-other@0.2.0",
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "vision_ref vision_id mismatch"):
+                validate_vision_plan(plan, charter)
+
+    def test_workspace_plan_refs_accept_closed_historical_vp(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = Path(tmp) / "vision"
+            plans = vision / "plans"
+            plans.mkdir(parents=True)
+            (vision / "charter.md").write_text(
+                "---\n"
+                "doc_type: vision-charter\n"
+                "vision_id: vision-goal-governance\n"
+                "version: 0.3.0\n"
+                "status: active\n"
+                "---\n",
+                encoding="utf-8",
+            )
+            (plans / "VP-001-old.md").write_text(
+                "---\n"
+                "doc_type: vision-plan\n"
+                "id: VP-001-old\n"
+                "status: closed\n"
+                "vision_ref: vision-goal-governance@0.2.0\n"
+                "---\n\n## 工作区绑定\n\n| workspace_id |\n",
+                encoding="utf-8",
+            )
+            ws = Path(tmp) / "workspace.md"
+            ws.write_text(
+                "---\n"
+                "id: ws-x\n"
+                "vision_role: delivery\n"
+                "plan_refs: VP-001-old\n"
+                "primary_plan: VP-001-old\n"
+                "---\n",
+                encoding="utf-8",
+            )
+            fields = validate_workspace_vision_alignment(ws, vision_root=vision)
+            self.assertEqual(fields["primary_plan"], "VP-001-old")
+
+    def test_new_vp_and_workspace_do_not_mutate_charter(self) -> None:
+        """A new VP/workspace must not require changing Charter text or version."""
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = self._copy_valid_vision_fixture(tmp)
+            charter_path = vision / "charter.md"
+            original = charter_path.read_text(encoding="utf-8")
+            original_version = parse_frontmatter(charter_path)["version"]
+
+            new_plan = vision / "plans" / "VP-002-new.md"
+            new_plan.write_text(
+                "---\n"
+                "doc_type: vision-plan\n"
+                "id: VP-002-new\n"
+                "status: planned\n"
+                "vision_ref: vision-fixture@0.1.0\n"
+                "---\n\n## 工作区绑定\n\n| workspace_id |\n",
+                encoding="utf-8",
+            )
+            workspace = Path(tmp) / "workspace-003-new" / "workspace.md"
+            workspace.parent.mkdir()
+            workspace.write_text(
+                "---\n"
+                "id: workspace-003-new\n"
+                "vision_role: delivery\n"
+                "plan_refs: VP-001-sample, VP-002-new\n"
+                "primary_plan: VP-002-new\n"
+                "---\n",
+                encoding="utf-8",
+            )
+
+            validate_vision_stack(vision, workspaces_root=Path(tmp))
+            validate_workspace_vision_alignment(workspace, vision_root=vision)
+            self.assertEqual(charter_path.read_text(encoding="utf-8"), original)
+            self.assertEqual(parse_frontmatter(charter_path)["version"], original_version)
+
+    def test_primary_workspace_single_authority_fails_on_multiple(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "workspaces"
+            for name, role in (
+                ("workspace-001-a", "primary"),
+                ("workspace-002-b", "delivery"),
+            ):
+                path = root / name / "workspace.md"
+                path.parent.mkdir(parents=True)
+                path.write_text(
+                    f"---\nid: {name}\nvision_role: {role}\n"
+                    "plan_refs: VP-001-sample\nprimary_plan: VP-001-sample\n---\n",
+                    encoding="utf-8",
+                )
+            self.assertEqual(
+                validate_primary_workspace_consistency(root), ["workspace-001-a"]
+            )
+            second = root / "workspace-002-b" / "workspace.md"
+            second.write_text(
+                second.read_text(encoding="utf-8").replace(
+                    "vision_role: delivery", "vision_role: primary"
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "multiple primary workspaces"):
+                validate_primary_workspace_consistency(root)
+
+    def test_legacy_charter_primary_workspace_is_ignored(self) -> None:
+        """Old Charter `primary_workspace` is a legacy hint, not a gate."""
+        with tempfile.TemporaryDirectory() as tmp:
+            vision = self._copy_valid_vision_fixture(tmp)
+            charter = vision / "charter.md"
+            charter.write_text(
+                charter.read_text(encoding="utf-8").replace(
+                    "version: 0.1.0",
+                    "version: 0.1.0\nprimary_workspace: workspace-does-not-exist",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            validate_vision_stack(vision)
+
+    def test_charter_and_template_have_no_primary_registry(self) -> None:
+        charter = (VISION_DIR / "charter.md").read_text(encoding="utf-8")
+        template = (
+            REPO_ROOT / "docs" / "templates" / "vision" / "charter.md"
+        ).read_text(encoding="utf-8")
+        for text, name in ((charter, "charter.md"), (template, "charter template")):
+            self.assertNotIn("primary_workspace:", text, msg=name)
+            self.assertNotIn("| Primary 工作区 |", text, msg=name)
+            self.assertNotIn("| 现行 active VP |", text, msg=name)
+            self.assertNotIn("| 组合编排 |", text, msg=name)
+        alignment = (VISION_DIR / "alignment.md").read_text(encoding="utf-8")
+        self.assertNotIn("Primary 可能出现在三处", alignment)
+
+    def test_production_primary_scan_matches_workspace_map(self) -> None:
+        primaries = validate_primary_workspace_consistency(
+            REPO_ROOT / "docs" / "workspaces"
+        )
+        self.assertEqual(primaries, ["workspace-001-goal-governance"])
+        workspaces_map = (VISION_DIR / "workspaces.md").read_text(encoding="utf-8")
+        row = next(
+            line
+            for line in workspaces_map.splitlines()
+            if line.startswith("| workspace-001-goal-governance |")
+        )
+        cells = [cell.strip() for cell in row.strip().strip("|").split("|")]
+        self.assertEqual(cells[1], "primary")
+
+    def test_revisions_version_semantics(self) -> None:
+        """editorial VR rows keep the previous Charter version; strategic rows bump."""
+        text = (VISION_DIR / "revisions.md").read_text(encoding="utf-8")
+        rows = []
+        for line in text.splitlines():
+            if not re.match(r"^\| VR-\d{3} \|", line):
+                continue
+            cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+            rows.append(
+                {
+                    "id": cells[0],
+                    "version": cells[2],
+                    "class": cells[3],
+                }
+            )
+        self.assertGreaterEqual(len(rows), 2)
+        for current, older in zip(rows, rows[1:]):
+            if current["class"] == "editorial":
+                self.assertEqual(
+                    current["version"],
+                    older["version"],
+                    msg=f"editorial {current['id']} must not bump Charter version",
+                )
+            elif current["class"] == "strategic":
+                self.assertNotEqual(
+                    current["version"],
+                    older["version"],
+                    msg=f"strategic {current['id']} must bump Charter version",
+                )
+
+    def test_alignment_documents_version_and_primary_semantics(self) -> None:
+        alignment = (VISION_DIR / "alignment.md").read_text(encoding="utf-8")
+        principles = (
+            REPO_ROOT / "docs" / "architecture" / "principles.md"
+        ).read_text(encoding="utf-8")
+        agents = (REPO_ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        for text in (alignment, principles):
+            self.assertIn("战略对齐版本", text)
+            self.assertIn("不 bump", text)
+            self.assertIn("`closed`/`abandoned`", text)
+        self.assertIn("唯一门禁权威", alignment)
+        self.assertIn("primary 单一权威", agents)
 
 
 class LayerNamingTests(unittest.TestCase):

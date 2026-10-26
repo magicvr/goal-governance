@@ -43,7 +43,7 @@ README = SKILLS_ROOT / "README.md"
 CORE_TEMPLATES = SKILLS_ROOT.parent / "docs" / "templates" / "goal-folder"
 # Recaptured evidence keeps the capture date in its filename; assert the shape
 # (not a frozen month) so a legitimate recapture does not silently break the gate.
-EVIDENCE_DATED_RE = r"-\d{4}-\d{2}-\d{2}\.json$"
+EVIDENCE_DATED_RE = r"-\d{4}-\d{2}-\d{2}(?:-r\d+)?\.json$"
 # GOAL-022: package distribution mirror is core/docs/templates (not skills/templates)
 SKILLS_TEMPLATES = SKILLS_ROOT / "core" / "docs" / "templates" / "goal-folder"
 CORE_WORKSPACE_TEMPLATE = SKILLS_ROOT.parent / "docs" / "templates" / "workspace-context.md"
@@ -634,7 +634,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.13.7")
+        self.assertEqual(matrix["candidateRevision"], "v0.13.8")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -695,7 +695,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 for path in entry["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertRegex(path, EVIDENCE_DATED_RE)
-                    self.assertIn(f"v0.13.7/{consumer_id}-{name}-", path.replace("\\", "/"))
+                    self.assertIn(f"v0.13.8/{consumer_id}-{name}-", path.replace("\\", "/"))
             vision = entrypoints["vision"]
             self.assertIn("vision", vision["evidence"][0])
             vision_audit = entrypoints["vision-audit"]
@@ -1259,6 +1259,26 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 r"P-005|信息就绪|I-00N",
                 msg=f"advanced Copilot primitive drifted from P-005: {path}",
             )
+
+    def test_vision_lifecycle_version_and_primary_semantics_are_shipped(self) -> None:
+        """GOAL-016: install rule surfaces must not keep the old all-VP exact match."""
+        paths = (
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+        )
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            for marker in (
+                "`closed`/`abandoned`",
+                "**版本语义**",
+                "**primary 单一权威**",
+            ):
+                self.assertIn(
+                    marker,
+                    text,
+                    msg=f"missing GOAL-016 vision semantic {marker}: {path}",
+                )
 
     def test_workspace_protocol_is_shipped_to_skills_surfaces(self) -> None:
         """Workspace isolation and fixed-reference rules must not remain core-doc-only."""

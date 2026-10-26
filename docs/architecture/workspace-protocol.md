@@ -2,9 +2,9 @@
 title: 工作区与共享资料区协议
 status: active
 created: 2026-07-20
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 1.2.0
+version: 1.3.0
 ---
 
 # 工作区与共享资料区协议
@@ -110,12 +110,12 @@ Root Goal 表达稳定目的、初始边界和高层路线图，不要求在立�
 
 ### 4b. 愿景对齐（三层链）
 
-1. **单愿景 · Charter ← VP ← Workspace/Root**：项目内唯一 active Charter；Root 与工作区通过 `plan_refs` / `primary_plan` 挂接 VP；VP 通过 `vision_ref: {vision_id}@{version}` 精确对齐 Charter。
-2. **Fail closed**：缺 Charter（完整安装判定）、缺 plan 字段、`primary_plan` 无法解析、VP `vision_ref` 与 charter 版本不一致、或 Charter/VP 使用非法 status 时，不得推进受影响的新建/放行/关门（引导补齐/re-align 除外）。
+1. **单愿景 · Charter ← VP ← Workspace/Root**：项目内唯一 active Charter；Root 与工作区通过 `plan_refs` / `primary_plan` 挂接 VP；VP 通过 `vision_ref: {vision_id}@{version}` 对齐 Charter：`planned`/`active` 精确匹配，`closed`/`abandoned` 仅要求同 `vision_id`（历史 ref 只读保留）。
+2. **Fail closed**：缺 Charter（完整安装判定）、缺 plan 字段、`primary_plan` 无法解析、`planned`/`active` VP 的 `vision_ref` 与 Charter 版本不一致、`closed`/`abandoned` VP 的 `vision_id` 不一致、或 Charter/VP 使用非法 status 时，不得推进受影响的新建/放行/关门（引导补齐/re-align 除外）。
 3. **无 plan opt-out**：**所有**工作区必须填写 `plan_refs` 与 `primary_plan`；`vision_role` 仅允许 `primary` / `delivery`。
 4. **规划与工作区非 1:1**：一 VP 可由 0..N 个工作区推进（`planned` 允许 0）；一工作区可挂 1..N 个 VP，但必须标明 `primary_plan`。多区绑定同一 active/推进中 VP 时 **`lead_workspace` 必填**。
 5. **VP 关门**：轻量纲领确认 + 链接工作区证据；多区时 lead 发起 + 用户确认；允许有界 closed（residual 点名到区/目标）；禁止把 progress% 或 Goal 审计台账放进 `{governance_root}/vision/`。
-6. **Primary 冲突**：`workspace.md` 的 `vision_role`、`{governance_root}/vision/workspaces.md` 的 role、Charter 的 `primary_workspace` 三者冲突时，以 [alignment.md](../vision/alignment.md) 的裁决顺序 fail closed，不得静默选一侧。
+6. **Primary 单一权威**：`workspace.md` 的 `vision_role: primary` 是唯一门禁权威；`{governance_root}/vision/workspaces.md` 的 role 是派生展示，不参与门禁；Charter 不再声明 `primary_workspace`（旧字段仅 legacy hint）。≥2 个工作区声明 primary 时按 [alignment.md](../vision/alignment.md) §3.1 fail closed。
 7. **跨区**：**禁止**跨工作区 `parent`；跨区提及用 Q1/Q2/Q3（§2.6）。
 8. **结构选型与冷启动**：见 P-006 与 [alignment.md](../vision/alignment.md) §0 / §10；消费方勾选见 [../vision/consumer-checklist.md](../vision/consumer-checklist.md)。
 

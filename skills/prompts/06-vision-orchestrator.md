@@ -4,7 +4,7 @@ status: active
 created: 2026-07-28
 updated: 2026-10-17
 parent: null
-version: 0.5.3
+version: 0.6.0
 role: vision-decision
 ---
 
@@ -80,7 +80,7 @@ role: vision-decision
 5. **组合编排**：`roadmap.md` 索引是否与 plans 一致。
 6. **Vision Review**：合并扫描 `reviews.md` legacy inline 与 `reviews/VRev-NNN-*.md`；核对索引链接、最大编号和开放 required（未 fixed/residual/overruled）。
 7. **工作区对齐（只读）**：各 `{governance_root}/workspaces/workspace-*/workspace.md` 的 `plan_refs`/`primary_plan`/`vision_role`（不混合多区目标正文）；旧直属 `{governance_root}/workspace-*/workspace.md` 只报告迁移阻断，新旧并存 fail closed。
-8. **re-align 债务**：Charter version 与各 VP `vision_ref` 是否一致；strategic 后未刷新的区/Root。
+8. **re-align 债务**：Charter version 与 `planned`/`active` VP `vision_ref` 是否一致（`closed`/`abandoned` 只要求同 `vision_id`）；strategic 后未刷新的区/Root。
 9. 吸收用户本轮意图（建愿景 / 改 Charter / 新 VP / Review / re-align / 结构选型…）。
 
 # 2. 分类（选一主类；可叠加标注）
@@ -91,7 +91,7 @@ role: vision-decision
 | **V1 建/修 Charter** | 用户要立愿景或改目的/边界/非目标 | editorial vs strategic 判定；strategic 须 Review + re-align 计划 |
 | **V2 组合编排 / 新意图** | 新 VP、改 VP、roadmap 索引、lead | 意图落盘；草案不可作 primary_plan 直至文件存在 |
 | **V3 Vision Review** | 初建后、strategic 后、或用户要求审视 | 追加 `VRev-00N`；默认不改 status |
-| **V4 re-align** | vision_ref 漂移或 strategic 宽阻断中 | 更新 VP ref、工作区/Root plan 声明；解除宽阻断 |
+| **V4 re-align** | `planned`/`active` VP 的 `vision_ref` 漂移或 strategic 宽阻断中 | 更新受影响 VP ref、工作区/Root plan 声明；`closed`/`abandoned` 不重钉；解除宽阻断 |
 | **V5 结构选型咨询** | 开区？子目标？新 VP？改 Charter？ | 只给判定树建议；开区执行交 `/govern` |
 | **V6 Review 响应** | 闭合 VRev required | fixed / accepted-residual / user-overruled 留痕 |
 
@@ -131,10 +131,9 @@ role: vision-decision
 ## V1 · Charter 修订
 
 1. 判定 class：`editorial` | `strategic`。
-2. 更新 charter；`updated`/version（strategic 至少 minor）。
-3. 追加 `revisions.md`（`VR-` 修订号，**不是** VRev）。
-4. 若 strategic：列出 impact VP/区 → 宽阻断说明 → 安排 V3 Review + V4 re-align；未完成前不得建议 `/govern` 放行/关门。
-5. 禁止把执行学习写成 strategic 抖动；可建议下沉为 VP/Root 阶段。
+2. 更新 charter 的 `updated`；**仅 `strategic` 才 bump `version`（至少 minor）**。`editorial` 不 bump，不要求 active/planned VP 重钉。追加 `revisions.md` 的 `VR-` 记录。
+3. 若 strategic：列出 impact VP/区（仅 `planned`/`active`）→ 宽阻断说明 → 安排 V3 Review + V4 re-align；未完成前不得建议 `/govern` 放行/关门。
+4. 禁止把执行学习写成 strategic 抖动；可建议下沉为 VP/Root 阶段。
 
 ## V2 · 意图（VP）与组合编排
 
@@ -156,7 +155,7 @@ role: vision-decision
 
 ## V4 · re-align
 
-1. 列出漂移：VP `vision_ref` ≠ 现行 charter；Root/workspace plan 字段过期。
+1. 列出漂移：`planned`/`active` VP 的 `vision_ref` ≠ 现行 charter；`closed`/`abandoned` VP 仅核对 `vision_id`；Root/workspace plan 字段过期。
 2. 确认后逐项更新；刷新 `updated`。
 3. 报告宽阻断是否解除。
 4. 不自动改 Goal 正文边界复述（仅 plan 字段与 serves_summary 短摘要，若用户要求）。

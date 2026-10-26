@@ -2,7 +2,7 @@
  "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
  "format": "goal-governance.skills-consumer-compatibility-matrix",
  "formatVersion": "1.0.0",
- "candidateRevision": "v0.13.7",
+ "candidateRevision": "v0.13.8",
  "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
  "protocol": {
   "current": "0.1.0",
@@ -50,32 +50,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/claude-code-cli-govern-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/claude-code-cli-govern-2026-10-26.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/claude-code-cli-audit-r2-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/claude-code-cli-audit-2026-10-26-r5.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/claude-code-cli-vision-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/claude-code-cli-vision-2026-10-26.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/claude-code-cli-vision-audit-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/claude-code-cli-vision-audit-2026-10-26.json"
      ]
     }
    ],
-   "evidenceScope": "GOAL-015 S5: fresh isolated consumer entrypoint/ledger captures for the v0.13.7 candidate tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained), taken after the labeled audit-command change; the probe body is the labeled formal command itself. Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Historical runtime records remain immutable."
+   "evidenceScope": "GOAL-016 S5: fresh isolated consumer entrypoint/ledger captures for the v0.13.8 candidate tree on 2026-10-26 Asia/Shanghai (UTC timestamps retained), taken after the issue #34 Charter/vision_ref version fix; the probe body is the labeled formal command itself. Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Claude Code CLI audit capture uses the gpt-6.1-sol host model override because the default model did not perform the audit write in this run; the matrix records the actual host/model used in each evidence envelope. Historical runtime records remain immutable."
   },
   {
    "id": "grok-build-cli",
@@ -98,32 +98,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/grok-build-cli-govern-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/grok-build-cli-govern-2026-10-26.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/grok-build-cli-audit-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/grok-build-cli-audit-2026-10-26.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/grok-build-cli-vision-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/grok-build-cli-vision-2026-10-26.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/grok-build-cli-vision-audit-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/grok-build-cli-vision-audit-2026-10-26.json"
      ]
     }
    ],
-   "evidenceScope": "GOAL-015 S5: fresh isolated consumer entrypoint/ledger captures for the v0.13.7 candidate tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained), taken after the labeled audit-command change; the probe body is the labeled formal command itself. Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Historical runtime records remain immutable."
+   "evidenceScope": "GOAL-016 S5: fresh isolated consumer entrypoint/ledger captures for the v0.13.8 candidate tree on 2026-10-26 Asia/Shanghai (UTC timestamps retained), taken after the issue #34 Charter/vision_ref version fix; the probe body is the labeled formal command itself. Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Claude Code CLI audit capture uses the gpt-6.1-sol host model override because the default model did not perform the audit write in this run; the matrix records the actual host/model used in each evidence envelope. Historical runtime records remain immutable."
   },
   {
    "id": "github-copilot-cli",
@@ -145,32 +145,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/github-copilot-cli-govern-r2-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/github-copilot-cli-govern-2026-10-26.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/github-copilot-cli-audit-r2-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/github-copilot-cli-audit-2026-10-26-r2.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/github-copilot-cli-vision-r2-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/github-copilot-cli-vision-2026-10-26.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.13.7/github-copilot-cli-vision-audit-r2-2026-10-17.json"
+      "docs/releases/runtime/v0.13.8/github-copilot-cli-vision-audit-2026-10-26.json"
      ]
     }
    ],
-   "evidenceScope": "GOAL-015 S5: fresh isolated consumer entrypoint/ledger captures for the v0.13.7 candidate tree on 2026-10-17 Asia/Shanghai (UTC timestamps retained), taken after the labeled audit-command change; the probe body is the labeled formal command itself. Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Historical runtime records remain immutable."
+   "evidenceScope": "GOAL-016 S5: fresh isolated consumer entrypoint/ledger captures for the v0.13.8 candidate tree on 2026-10-26 Asia/Shanghai (UTC timestamps retained), taken after the issue #34 Charter/vision_ref version fix; the probe body is the labeled formal command itself. Sources and raw-output digests verified. Covers entry routing and permitted writes, not every user-card interaction or genuine human answer/recovery. Claude Code CLI audit capture uses the gpt-6.1-sol host model override because the default model did not perform the audit write in this run; the matrix records the actual host/model used in each evidence envelope. Historical runtime records remain immutable."
   }
  ],
  "deliveryChannels": [

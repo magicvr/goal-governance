@@ -3,8 +3,8 @@ doc_type: vision-workspace-map
 title: 工作区贡献图
 status: active
 created: 2026-07-28
-updated: 2026-08-07
-version: 0.6.0
+updated: 2026-10-26
+version: 0.7.0
 ---
 
 # 工作区贡献图
@@ -19,7 +19,8 @@ version: 0.6.0
 
 ## 规则摘要
 
-- 至多一个 `role: primary`。workspace-001 在 Root 有界 done 后仍保留 **primary** 身份作 monorepo 奠基过程树权威，直至用户书面改 primary 至新区。
+- **primary 单一权威**：以各 `workspace.md` 的 `vision_role: primary` 为准；至多一个 primary，由扫描校验。本表的 `role` 是**派生展示**，不参与门禁；不一致时修正本表，不得反向覆盖 `workspace.md`。Charter 不再声明 `primary_workspace`（旧字段仅 legacy hint）。
+- workspace-001 在 Root 有界 done 后仍保留 **primary** 身份作 monorepo 奠基过程树权威，直至用户书面改 primary 至新区；当前焦点由 `map_status: active` 表达，不以 primary 表示活跃区。
 - **所有**已存在工作区必须有非空 `plan_refs` 与 `primary_plan`；`role` 仅 `primary` / `delivery`。
 - 多区服务同一 VP 时须能指向 **lead**（VP-002 lead = workspace-002；VP-004 lead = workspace-003）。
 - `map_status`：`active` \| `archived` \| 表内 `planned` 仅表示「尚未 scaffold 的预期行」，**不是**磁盘上的工作区。

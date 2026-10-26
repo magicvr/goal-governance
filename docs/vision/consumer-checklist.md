@@ -3,8 +3,8 @@ doc_type: vision-consumer-checklist
 title: 愿景体系消费方检查清单
 status: active
 created: 2026-07-28
-updated: 2026-10-15
-version: 0.5.1
+updated: 2026-10-26
+version: 0.6.0
 parent: null
 ---
 
@@ -12,6 +12,7 @@ parent: null
 
 > 政策以 [alignment.md](alignment.md) 与 **P-006** 为准。本清单只做操作映射；变更规则时先改 alignment，再同步本页。  
 > **完整安装 MUST 权威表**：[alignment.md §0.2](alignment.md#02-完整安装与冷启动)（与 [standalone-bootstrap](../standalone-bootstrap.md) **同表**，禁止另立「建议必含」）。
+> **版本语义**：Charter `version` 是战略对齐版本；`editorial` 不 bump，`strategic` 至少 minor；历史 `closed`/`abandoned` VP 不重钉。
 
 独立启用说明随消费包分发，文件本身为 **Recommended**；其完整安装判定须与权威 MUST 表一致。缺少说明不构成不完整安装，也不阻断推进。
 
@@ -46,7 +47,7 @@ parent: null
 ## C. VP 链
 
 - [ ] VP `status` ∈ {`planned`,`active`,`closed`,`abandoned`}
-- [ ] VP `vision_ref` 等于 `{charter.vision_id}@{charter.version}`（精确匹配）
+- [ ] VP `vision_ref`：`planned`/`active` 精确等于 `{charter.vision_id}@{charter.version}`；`closed`/`abandoned` 只要求 `vision_id` 相同（历史 ref 保留）
 - [ ] 若 VP `active` 且绑定工作区为 0：告警或询问，不静默当作健康推进
 - [ ] 多区绑定同一 VP 时 **`lead_workspace` 必填**
 
@@ -56,7 +57,9 @@ parent: null
 - [ ] Charter strategic 修订后：Vision Review + VP/区 re-align；未完成前**宽阻断**
 - [ ] 相关 Vision Review 的 required 已按三路径闭合（或尚无阻断本动作的开放项）
 - [ ] 不把 vision 目录内容当作 progress 或 Goal finding 关闭证据
-- [ ] Primary 声明（workspace / workspaces.md / charter.primary_workspace）无互相矛盾；若矛盾已 fail closed 并待用户裁决
+- [ ] Charter `version` 只表达战略对齐版本：`editorial` 不 bump、`strategic` 至少 minor；`closed`/`abandoned` VP 不被要求重钉
+- [ ] Primary 单一权威：仅 `workspace.md` 的 `vision_role: primary` 参与门禁；`workspaces.md` 为派生展示；旧 `charter.primary_workspace` 仅 legacy hint。≥2 个工作区声明 primary 已 fail closed
+- [ ] Charter 未维护 primary / active VP / 组合编排可变注册表
 - [ ] `active` VP 若零工作区：已告警；未超 14 日空转宽限，或已有继续空转书面留痕
 - [ ] VP 关门要求区证据链接；多区由 lead 发起 + 用户确认；有界 residual 已点名
 

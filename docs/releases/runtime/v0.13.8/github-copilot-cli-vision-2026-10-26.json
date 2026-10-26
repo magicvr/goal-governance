@@ -1,0 +1,128 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-10-26T14:45:16.418011+00:00",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "vision",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gemini-3.8-flash-high"
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "e5ef809faf957229aaea8a0610a47576e48167d034bbcac77791595f842f8727"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "a0b6144ed9c67196bd3ed64d028773ddeb4062a262261761d97ce9304b7cf1dc"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "03dbf83c052eb2f89e885a51025429f4d589455494b66efe2b2b9eb6c6dd69c1"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "2ff5b15e7b16674fedef5fbf487f936008a1f6530f347a076e3936975401c595"
+    },
+    {
+      "path": "skills/prompts/06-vision-orchestrator.md",
+      "sha256": "bfe267cc7643e17872730af0bd340f7a28cb7541ad39a663bba731bfc15c32fe"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "5cb967621ddbab86bdf4c085df13f28f9fc159afe16863968fb68d40815446f4"
+    },
+    {
+      "path": "skills/install/copilot/prompts/vision.md",
+      "sha256": "73d4bb6b42454d02a87bcdb36b53b80ffd4bb16e5a831bbc07ae7f9fab8e7d9e"
+    },
+    {
+      "path": "skills/install/copilot/copilot-instructions.md",
+      "sha256": "816b6c057351b85c7c59598174a6cbda94f881b8380351944b53699a61504601"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Windows\\system32\\cmd.exe",
+      "/d",
+      "/c",
+      "C:\\Users\\magicvr\\AppData\\Roaming\\npm\\copilot.CMD",
+      "--prompt",
+      "/vision 仅核对当前入口的职责与正式规则中 AD-01～AD-06、UI-01～UI-06 的含义，报告各自权威文件路径；这是只读入口加载核验，不推进或修订愿景/目标。",
+      "--no-auto-update",
+      "--no-remote-export",
+      "--disable-builtin-mcps",
+      "--model",
+      "gemini-3.8-flash-high",
+      "--allow-tool=read,write",
+      "--excluded-tools=shell",
+      "--no-ask-user",
+      "--output-format",
+      "json",
+      "--silent"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal015-s5-6fdc7c82",
+    "timeoutSeconds": 600,
+    "inputSha256": "77bc57e2244afcf3926a60215fe5c25023835e7a2b7fb1c787736f03498ef305",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /vision invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/attachments/s5-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/attachments/s5-runtime/copilot-vision-01/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "AD-01",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "AD-01",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "AD-01",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.8/github-copilot-cli-vision-2026-10-26.d/stdout.txt",
+    "stdoutSha256": "5395aed63c8dd44fe8184c9542427160e7462b2613b946679af51f4b68f4313b",
+    "stderrPath": "docs/releases/runtime/v0.13.8/github-copilot-cli-vision-2026-10-26.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

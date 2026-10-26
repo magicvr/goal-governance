@@ -3,9 +3,9 @@
 title: GitHub Copilot 指令 · 目标治理
 status: active
 created: 2026-07-18
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 0.14.1
+version: 0.15.0
 ---
 
 # AGENTS.md
@@ -215,9 +215,11 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 3. **先读** Charter 与 `{{GOVERNANCE_ROOT}}/vision/alignment.md`（或 consumer-checklist），再定位工作区与推进目标。
 4. **对齐递归**：子目标→父目标→Root→VP→Charter（源头）。机读字段链 + 语义不与上一级边界/非目标明显冲突。
 5. **所有工作区**必须 `plan_refs` + `primary_plan`；当前规范角色仅 `primary` / `delivery`，不存在 plan opt-out。
-6. 缺 plan、VP 缺失、或 `vision_ref` 与 charter 版本不一致 → **fail closed**。
-7. `{{GOVERNANCE_ROOT}}/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 由 `{{GOVERNANCE_ROOT}}/vision/reviews.md` 稳定索引与 `{{GOVERNANCE_ROOT}}/vision/reviews/VRev-NNN-<slug>.md` 平铺报告共同构成。legacy inline 继续可读；新条目写报告并更新索引。
-8. 细则：`{{GOVERNANCE_ROOT}}/vision/alignment.md`；原则全文 **P-006**；协议摘要：`{{GOVERNANCE_ROOT}}/architecture/workspace-protocol.md` §4b。
+6. 缺 plan、VP 缺失、`planned`/`active` VP 的 `vision_ref` 与 Charter 版本不一致、或 `closed`/`abandoned` VP 的 `vision_id` 不一致 → **fail closed**。
+7. **版本语义**：Charter `version` = 战略对齐版本，仅 `strategic` bump（至少 minor）；`editorial` 只更新 `updated` + `revisions.md` 的 `VR-` 记录，不 bump、不要求 active/planned VP 重钉。`closed`/`abandoned` VP 保留历史 `vision_ref`，不因 Charter bump 重写。
+8. **primary 单一权威**：`workspace.md` 的 `vision_role: primary` 是唯一门禁权威；`workspaces.md` 的 role 是派生展示，不参与门禁；Charter 不再声明 `primary_workspace`（旧字段仅 legacy hint）。≥2 个工作区声明 primary → fail closed。
+9. `{{GOVERNANCE_ROOT}}/vision/` **不是** goal-tree、progress% 或 Goal 审计台账；Vision Review 由 `{{GOVERNANCE_ROOT}}/vision/reviews.md` 稳定索引与 `{{GOVERNANCE_ROOT}}/vision/reviews/VRev-NNN-<slug>.md` 平铺报告共同构成。legacy inline 继续可读；新条目写报告并更新索引。
+10. 细则：`{{GOVERNANCE_ROOT}}/vision/alignment.md`；原则全文 **P-006**；协议摘要：`{{GOVERNANCE_ROOT}}/architecture/workspace-protocol.md` §4b。
 
 ## 6e. 级联流程、结构选型与分层审视（P-006 操作摘要）
 

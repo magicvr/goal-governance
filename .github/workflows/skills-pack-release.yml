@@ -86,7 +86,7 @@ jobs:
       - name: Evidence consistency gate (M-001)
         run: |
           python scripts/capture_runtime_evidence.py --check \
-            --evidence-dir docs/releases/runtime/v0.13.7
+            --evidence-dir docs/releases/runtime/v0.13.8
 
       - name: Run pack unit tests
         run: |

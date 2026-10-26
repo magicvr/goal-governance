@@ -2,9 +2,9 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 0.15.0
+version: 0.16.0
 ---
 
 # docs/ · 文档体系
@@ -71,7 +71,7 @@ docs/
    - `progress`（若有）仅由显式检查点确定性派生；默认等权，显式权重可覆盖。它不放行阶段、不关闭 finding、不覆盖 I-00N 或 `status`，也不进入愿景层。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识（含 P-001 路线图槽位）；按风险选择 `none` / `self` / `independent` / `cross`，独立审计只出意见、编排器响应全部意见；finding 合法闭合为 `fixed` / `accepted-residual` / `user-overruled`；模式/provider 歧义、意见冲突、单条必改否决/residual、信息 residual 由用户裁决。**正式审计意见**写入被审目标 `03-audit.md` 索引与 `03-audit/A-NNN-*.md`（`source` 必填；长证据可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
-10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review 使用 `reviews.md` 稳定索引 + `reviews/VRev-NNN-*.md` 独立报告；工作区角色仅 `primary` / `delivery`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
+10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review 使用 `reviews.md` 稳定索引 + `reviews/VRev-NNN-*.md` 独立报告；工作区角色仅 `primary` / `delivery`。**Charter `version` 是战略对齐版本**（editorial 不 bump，strategic 至少 minor）；primary 唯一权威是 `workspace.md` 的 `vision_role: primary`；`closed`/`abandoned` VP 保留历史 `vision_ref`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
 11. **核心模板、契约与分发镜像**：规范模板位于 `{governance_root}/templates/`（含 `goal-folder/`、`workspace-context.md`、`vision/`），消费适配器契约位于 `{governance_root}/contracts/`。Skills 包镜像由 **`python scripts/stage_skills_mirrors.py`** 生成到 `skills/core/docs/` 与 `skills/contracts/`（GOAL-022）；pack/CI 强制 stage。`skills/core/docs/README.md` 为消费方**手维精简稿**。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
 12. **独立启用**：不安装 `skills/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal（须遵守 P-006 冷启动顺序）。
 13. **工作区与共享资料协议**：显式工作区可从 `{governance_root}/templates/workspace-context.md` 创建 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`。`workspaces/` 只是父容器；旧直属 `{governance_root}/workspace-*/` 仅触发迁移阻断，新旧并存 fail closed。仅在两类显式布局都不存在且保留 `{governance_root}/goals/` 时，才是 legacy 隐式单工作区。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。
@@ -114,6 +114,8 @@ version: 0.1.0
 - **最新发布基线**：**`v0.13.6`**（PR #29 → main merge `97f6f1ea`；tag workflow [39000107099](https://github.com/magicvr/goal-governance/actions/runs/39000107099) 的 pack 与 gated publish 全绿，Environment API 记录 magicvr 人工 `skipped` 放行；9 项正式资产、双 ZIP SHA-256 与 sidecar 一致、实际下载的 bootstrap 隔离安装通过；GHCR `0.13.6` 拉取 digest 与发布日志一致、内置版本核对为 `0.13.6`）。上一基线 `v0.13.5`（PR #27 → main merge `1a6668e`）保留其历史身份。
 - **发布快照身份**：`v0.13.6` 正式发布复用 GOAL-013 S3 于 2026-10-17 为当前工作树捕获、未修改的 16 份运行记录（`docs/releases/runtime/goal-013-s3-2026-10-17-current/`），矩阵 candidateRevision = `v0.13.6`；不宣称新宿主运行。Codex 不在承诺矩阵中。
 - **当前工作树边界（2026-10-17）**：[GOAL-013](workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) S3 已为 Claude Code `2.1.301`、Grok Build `1.0.60`、GitHub Copilot CLI `1.0.75` 重取四入口 12 格证据，另有四宿主只读 MCP 目录角色探针（含 Codex `0.163.0`，不新增矩阵支持承诺）。16 份当前来源一致的记录位于 `docs/releases/runtime/goal-013-s3-2026-10-17-current/`，矩阵与 CI 一致性门禁已改指新记录；旧记录保留历史身份。当前对话真实同步卡片的 JSON/LF 提交、用户预选观察及部分答复/其他 blocker 保留已留痕；与后台 CLI 可见性严格区分。I-004 在 D-003 路径 A 及已列 profile 范围 verified，S3/S4 验证及关门审视完成，cross 意见与修正已落盘；GOAL-013 经 D-005 收尾为 done / 100%；v0.13.6 已由 GOAL-014 正式发布（PR #29 → main `97f6f1ea` → annotated tag → run 39000107099 → 9 项资产验收）并关门。静态规范不代表全平台硬拦截或穷尽所有 GUI 返回形态。`/commit` 不属于矩阵必达格；Root R3 终态未声明。
+- **当前工作树边界补记（2026-10-26 · GOAL-016 / issue #34）**：[GOAL-016](workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/00-meta.md) 修正 Charter / `vision_ref` 的版本连锁：Charter 去可变注册表、primary 单一权威（`workspace.md`）、`planned`/`active` 精确匹配而 `closed`/`abandoned` 仅校验 `vision_id`、`editorial` 不 bump `version`。候选 patch 为 `v0.13.8`，16 格运行证据重捕获至 `docs/releases/runtime/v0.13.8/`，矩阵 `candidateRevision` = `v0.13.8`；协议 `0.1.0` 与 consumer contract 数据结构不变。正式身份仍待 main merge、annotated tag、strict release evidence、Environment 人工审批与资产核对建立；保证等级仍为 L0，不新增系统级硬拦截。
+
 - **当前工作树边界补记（2026-10-17 · GOAL-015）**：[GOAL-015](workspaces/workspace-002-methodology-skills-feedback/GOAL-015-audit-command-labeled-form/00-meta.md) 把自动审计正式命令改为带标签形式 `/audit workspace-NNN goal-NNN` 与 `/vision-audit vp-NNN`（裸数字不再合法），并已按用户裁决（patch `v0.13.7`）在修正后的工作树上**重捕获 16 格运行证据**至 `docs/releases/runtime/v0.13.7/`（3 宿主 × 4 治理入口 + 四宿主 MCP 目录探针，探针正文即带标签命令，全部 `pass`）。矩阵 `candidateRevision` = `v0.13.7`，`capture_runtime_evidence --check` 与 `compatibility_report --require-ready`（`ready-for-release-evidence`、uncovered 0）通过；安装/GHCR 示例 pin、CI 证据目录与相关测试断言已同步。上条所述 GOAL-013 的 16 份记录保留其历史身份（其 `behaviorSources` 对当前树已过期）。`v0.13.7` 目前是**发布候选**，正式身份仍待 main merge、annotated tag、strict release evidence、Environment 人工审批与资产核对建立。
 
 ### canonical → Skills 镜像（GOAL-022）

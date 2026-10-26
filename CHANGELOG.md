@@ -2,9 +2,9 @@
 title: Changelog
 status: active
 created: 2026-07-20
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 0.2.0
+version: 0.2.1
 ---
 
 # Changelog
@@ -13,7 +13,20 @@ version: 0.2.0
 
 ## Unreleased
 
-（空；本次 v0.13.7 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+（空；本次 v0.13.8 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.13.8 - 2026-10-26
+
+治理协议 patch（[issue #34](https://github.com/magicvr/goal-governance/issues/34) / [GOAL-016](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/00-meta.md)）。协议 0.1.0、consumer contract 数据结构、MUST 门禁与 File/MCP 渠道边界保持不变。
+
+- **Charter 去可变注册表**：删除 `primary_workspace` 与「现行版本」中的 Primary / active VP / 组合编排登记行；primary 唯一门禁权威改为 `workspace.md` 的 `vision_role: primary`，`workspaces.md` 仅派生展示；旧字段作为 legacy hint 读取/忽略，不参与门禁。
+- **`vision_ref` 生命周期分层**：`planned`/`active` VP 仍精确匹配 Charter；`closed`/`abandoned` VP 保留关门时 ref，只校验 `vision_id`；reopen 恢复 current-match；`validate_vision_stack` 与 workspace `plan_refs` 校验按 status 过滤。
+- **版本语义**：Charter `version` = 战略对齐版本；`editorial` 只更新 `updated` + `revisions.md` 的 `VR-` 记录，不 bump；`strategic` 至少 minor，只要求 affected `planned`/`active` VP re-align；历史 VP 不重钉。
+- **回归**：新增「新建 VP 不改 Charter」「closed VP 历史 ref 通过」「active/planned 旧 ref 失败」「closed 异 `vision_id` 失败」「primary 多声明 fail closed」「旧 `primary_workspace` 忽略」等测试；`docs/tests` 76、`skills/tests` 103、镜像 38 对通过。
+- **消费面**：`alignment` 0.11.0、`principles` P-006、`workspace-protocol` 1.3.0、根 `AGENTS` 0.17.0、Charter/模板/consumer-checklist/standalone-bootstrap、四入口 prompts、Claude/Copilot 安装源与 `skills/core` 镜像同步；不要求消费仓批量迁移。
+- **16 格 runtime 证据重捕获**：3 宿主 × 4 治理入口 + 四宿主 MCP 目录探针重新采集到 `docs/releases/runtime/v0.13.8/`；`capture_runtime_evidence --check` 与 `compatibility_report --require-ready` 通过；矩阵 `candidateRevision` 与安装/GHCR pin 对齐 `v0.13.8`。
+- **审计**：A-001 self、A-002 independent `conditional`（2 required）/ A-003 响应 `fixed`、A-004 independent 复审 `pass`；开放 required 0；A-001 的 S5 重捕获与 L0 边界为 recommended 并已在本轮处理。
+- 发布身份须由 main merge、annotated `v0.13.8`、strict release evidence、Environment `release` 人工审批及真实资产核对建立。
 
 ## 0.13.7 - 2026-10-17
 

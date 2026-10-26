@@ -1,0 +1,117 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-10-26T14:43:46.961022+00:00",
+  "unit": {
+    "consumer": "grok-build-cli",
+    "entrypoint": "vision-audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Grok Build CLI",
+    "version": "1.0.70 (f50904eaee6c)",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "grok-4.6"
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "e5ef809faf957229aaea8a0610a47576e48167d034bbcac77791595f842f8727"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "a0b6144ed9c67196bd3ed64d028773ddeb4062a262261761d97ce9304b7cf1dc"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "03dbf83c052eb2f89e885a51025429f4d589455494b66efe2b2b9eb6c6dd69c1"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "2ff5b15e7b16674fedef5fbf487f936008a1f6530f347a076e3936975401c595"
+    },
+    {
+      "path": "skills/prompts/07-independent-vision-review.md",
+      "sha256": "5cb967621ddbab86bdf4c085df13f28f9fc159afe16863968fb68d40815446f4"
+    },
+    {
+      "path": "skills/install/grok/skills/vision-audit/SKILL.md",
+      "sha256": "9aeae45dd7489a96c818b802246d58775e513770cddea32fdaa9bfff8ecd34bd"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Users\\magicvr\\.grok\\bin\\grok.EXE",
+      "--single",
+      "/vision-audit vp-002",
+      "--model",
+      "grok-4.6",
+      "--reasoning-effort",
+      "low",
+      "--output-format",
+      "streaming-json",
+      "--permission-mode",
+      "acceptEdits",
+      "--no-subagents",
+      "--no-memory",
+      "--disable-web-search"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal015-s5-e92751be",
+    "timeoutSeconds": 600,
+    "inputSha256": "70e606872dcf9106781ce345080832a2f5c03382ce9a65be195990b42a9d0c59",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /vision-audit invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/attachments/s5-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/attachments/s5-runtime/grok-vision-audit-01/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "VRev-001",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "VRev-001",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "VRev-001",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "vision-audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.8/grok-build-cli-vision-audit-2026-10-26.d/stdout.txt",
+    "stdoutSha256": "9dc7ad24307c3a2c4c2b3bf0cf81a8a28a90c7dd51671aef820617784b0770fc",
+    "stderrPath": "docs/releases/runtime/v0.13.8/grok-build-cli-vision-audit-2026-10-26.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

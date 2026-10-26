@@ -2,9 +2,9 @@
 title: 核心包独立启用说明
 status: active
 created: 2026-07-19
-updated: 2026-10-15
+updated: 2026-10-26
 parent: null
-version: 0.9.0
+version: 0.10.0
 ---
 
 # 核心包独立启用说明
@@ -83,7 +83,7 @@ Copy-Item (Join-Path $target 'docs\templates\vision\charter.md') (Join-Path $vis
 New-Item -ItemType Directory -Path (Join-Path $vision 'plans') | Out-Null
 ```
 
-将 `charter.md` 改写为真实项目：`vision_id`、目的、方向级成功边界、非目标（建议 ≥3）、`status: active`、`version`、`effective_date`。不可使用 Goal 的 `done`。
+将 `charter.md` 改写为真实项目：`vision_id`、目的、方向级成功边界、非目标（建议 ≥3）、`status: active`、`version`、`effective_date`。不可使用 Goal 的 `done`。**不要**在 Charter 写 `primary_workspace` 或 active VP / 组合编排注册表；primary 由后续 `workspace.md` 声明。
 
 最小骨架示例字段：
 
@@ -218,9 +218,9 @@ GOAL-001-main-vision · <项目总目标> [active]
 2. **生成路径**：alignment MUST 表所列愿景文件、`docs/vision/plans/<VP>.md`、`workspace.md`、`goal-tree.md`、Root 五件套。
 3. **核对结果**：
    - `git rev-parse --is-inside-work-tree` → `true`
-   - Charter `status: active`；VP `vision_ref` 精确匹配 Charter
+   - Charter `status: active`；`planned`/`active` VP `vision_ref` 精确匹配 Charter（`closed`/`abandoned` 仅同 `vision_id`）
    - 愿景树 MUST 文件均存在：`README`、`roadmap`、`revisions`、`reviews`、`workspaces`、`consumer-checklist`、`alignment`；已有 VRev 时每条索引都链接 `reviews/VRev-NNN-*.md`
-   - `workspace.md` 含 `plan_refs` 与 `primary_plan`，且 VP 文件存在
+   - `workspace.md` 含 `plan_refs` 与 `primary_plan`，且 VP 文件存在；primary 仅由 `workspace.md` 的 `vision_role: primary` 表达（至多一个）
    - Root `parent: null`；`id` = 文件夹名；五件套齐全
 4. **边界**：无 `skills/` / `web/`；本验证不代表 Skills 安装或 Web 发布完成；保证等级默认 **L0**（见 principles P-003）。
 
