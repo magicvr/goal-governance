@@ -6,7 +6,7 @@ parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-26
 updated: 2026-10-26
 version: 0.1.0
-progress: 60%
+progress: 80%
 ---
 
 # GOAL-016 · Charter 注册表解耦与 vision_ref 版本语义修正（issue #34）
@@ -33,14 +33,14 @@ progress: 60%
 | **S1** | 问题复核与裁决冻结 | **完成**（2026-10-26） | issue #34 主张在代码/文档中可复现；Q-001～Q-004 获真实答复并落 D-002；范围、验收与审计模式冻结 |
 | **S2** | 协议与 canonical 文档修正 | **完成**（2026-10-26） | `alignment.md`、`principles.md` P-006、`workspace-protocol.md`、`AGENTS.md`、Charter、模板与 consumer 文档按 D-002 同步；语义无自相矛盾 |
 | **S3** | 校验实现、回归与消费面同步 | **完成**（2026-10-26） | validator/测试/fixtures 实现 A1/A3/A2；新增回归测试与 docs/skills 回归通过；Skills prompts/模板/契约镜像同步且 `stage_skills_mirrors.py --check` 通过；旧仓兼容用例通过。release/compatibility 门禁因 behavior source 变更保持红，按 E-003 移交 S5 重捕获 |
-| **S4** | cross 审计与意见响应 | 进行中 | A-001 self 与 A-002 independent（codex CLI `gpt-6.1-sol` / high）落盘；全部相关 required 按三路径合法闭合；无冲突；发布就绪意见可核对 |
-| **S5** | 发布与关门 | 未开始 | 版本清单、运行证据（如需重捕获）、本地门禁与 strict rehearsal 通过；PR 双平台 CI 全绿并合入 `main`；annotated tag；tag workflow 的 pack 与 gated publish 全绿（Environment `release` 由用户人工审批）；9 项 Release 资产逐项验收；issue #34 关闭；关门审计与用户确认完成 |
+| **S4** | cross 审计与意见响应 | **完成**（2026-10-26） | A-001 self 与 A-002 independent（codex CLI `gpt-6.1-sol` / high）落盘；A-003 将 2 条 required 与 1 条 recommended 按 `fixed` 闭合；A-004 independent 复审 `pass`；开放 required 0；A-005 响应 |
+| **S5** | 发布与关门 | 进行中 | 版本清单、运行证据（如需重捕获）、本地门禁与 strict rehearsal 通过；PR 双平台 CI 全绿并合入 `main`；annotated tag；tag workflow 的 pack 与 gated publish 全绿（Environment `release` 由用户人工审批）；9 项 Release 资产逐项验收；issue #34 关闭；关门审计与用户确认完成 |
 
 阶段先后为串行；S2/S3 内部可按文件批次并行，S4 必须在 S2/S3 事实冻结后。`progress` 仅由本表 5 个检查点等权派生；不用于放行、关闭 finding 或推导 `done`。
 
 ## 派生进度展示
 
-`progress: 60%` = S1～S5 中完成 3 / 5（S1～S3 完成，S4 进行中）。检查点变化后重算并同步 `goal-tree.md`。
+`progress: 80%` = S1～S5 中完成 4 / 5（S1～S4 完成，S5 进行中）。检查点变化后重算并同步 `goal-tree.md`。
 
 ## 信息就绪与未知项
 

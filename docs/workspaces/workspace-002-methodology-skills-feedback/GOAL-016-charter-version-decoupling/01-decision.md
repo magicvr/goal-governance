@@ -19,8 +19,8 @@ version: 0.1.0
 | S1 | [D-001](01-decision/D-001-scope-and-roadmap.md)、[D-002](01-decision/D-002-adjudication.md) | 范围/路线图 + 用户裁决冻结方案与写集（完成） |
 | S2 | D-002 §写集 | 按冻结方案同步 canonical 协议与文档（完成） |
 | S3 | D-002 §实现与测试 | validator、fixtures、回归、模板/Skills 与镜像（完成） |
-| S4 | `03-audit/` | cross 审计（self + codex independent）与意见响应（进行中） |
-| S5 | D-003（待建） | 版本清单、运行证据、发布与资产验收 |
+| S4 | `03-audit/` | cross 审计（self + codex independent）与意见响应（完成） |
+| S5 | D-003（待建） | 版本清单、运行证据、发布与资产验收（进行中） |
 
 ## 信息需求与阶段门禁
 

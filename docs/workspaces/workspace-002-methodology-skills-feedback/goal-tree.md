@@ -12,6 +12,10 @@ version: 0.57.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-26 · GOAL-016 S4 cross 审计完成（active / 80%）
+
+本地 codex CLI（`gpt-6.1-sol` / high）以正式命令 `/audit workspace-002 goal-016` 自主审计：A-002 independent `conditional` 发现 2 项 required（安装消费面旧规则、成功标准与 D-002 矛盾）与 1 项 recommended（测试命中错误状态）。A-003 响应按 `fixed` 闭合，检查点 `32c52f0`；A-004 独立复审 `pass`、开放 required 0，A-005 响应并退出 S4。docs 76 / skills 103 全绿，镜像 38 对一致。A-001 的 F-001（S5 重捕获）与 F-002（L0 边界）仍为 recommended open。S5 进行中；尚未打 tag/发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
+
 ## 2026-10-26 · GOAL-016 S2/S3 完成（active / 60%）
 
 按 D-002 完成协议修正与校验实现：Charter 去注册表（`version` 保持 0.2.0）、`alignment` 0.11.0 / `principles` 0.16.0 / `workspace-protocol` 1.3.0 改为 planned/active 精确匹配、closed/abandoned 仅校验 `vision_id`、editorial 不 bump、primary 仅 `workspace.md` 权威；模板、consumer 文档、AGENTS/copilot、Skills prompts 与镜像同步。`test_vision_protocol.py` 新增 8 类回归；docs 76 / skills 102 / orchestrator 45 / standalone 5 全绿，`stage --check` 38 对一致，`git diff --check` 干净。检查点 **`2b601c4`**（35 个显式 owned paths）。**已知红门禁**：scripts 147（4 failures / 12 errors）与 22 份 / 109 个 runtime evidence stale，全部归因 behavior source 变更，移交 S5 重捕获。S4 cross 审计准备中；未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
@@ -372,7 +376,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
-└── GOAL-016-charter-version-decoupling       [active]  Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 60%
+└── GOAL-016-charter-version-decoupling       [active]  Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 80%
 ```
 
 ## 状态表
@@ -394,7 +398,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
-| GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | active | 60% | 2026-10-26 |
+| GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-10-26 |
 
 ## 编号
 

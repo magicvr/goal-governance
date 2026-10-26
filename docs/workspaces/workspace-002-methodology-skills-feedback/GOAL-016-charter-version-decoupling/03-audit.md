@@ -28,7 +28,9 @@ version: 0.1.0
 | A-001 | 2026-10-26 | self | S1～S3 协议修正、校验实现与回归 | pass | 0 | `03-audit/A-001-self-s1-s3.md` |
 | A-002 | 2026-10-26 | independent | S1～S3 实施事实与 S4 就绪（codex CLI / gpt-6.1-sol / high） | conditional | 2 | `03-audit/A-002-independent-codex.md` |
 | A-003 | 2026-10-26 | self | 响应 A-001 / A-002 全部 findings | pass | 0 | `03-audit/A-003-response.md` |
+| A-004 | 2026-10-26 | independent | S1～S3 实施事实及 S4 修正复审（codex CLI） | pass | 0 | `03-audit/A-004-independent-reaudit.md` |
+| A-005 | 2026-10-26 | self | 响应 A-004 与 S4 退出 | pass | 0 | `03-audit/A-005-s4-close.md` |
 
 ## 结论状态
 
-S4 进行中：A-001 self `pass`；A-002 independent `conditional`（2 required / 1 recommended）；A-003 响应已将 F-003/F-004 required 与 F-005 recommended 按 `fixed` 闭合，开放 required = **0**，A-001 F-001/F-002 仍为 recommended open（S5 触发）。为核对闭合证据，需再派发一次同一正式命令的独立复审；复审通过前不推进 S5。
+S4 **完成**：A-001 self `pass`、A-002 independent `conditional`（required 已 fixed）、A-004 independent `pass`（开放 required 0）、A-005 响应；无冲突。A-001 F-001（S5 重捕获）与 F-002（L0 边界）仍为 recommended open。S5 进行中；发布证据与用户审批完成前不宣称发布或关门。
