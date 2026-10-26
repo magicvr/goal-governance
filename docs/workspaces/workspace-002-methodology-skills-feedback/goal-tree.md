@@ -14,7 +14,7 @@ version: 0.57.0
 
 ## 2026-10-26 · GOAL-016 S2/S3 完成（active / 60%）
 
-按 D-002 完成协议修正与校验实现：Charter 去注册表（`version` 保持 0.2.0）、`alignment` 0.11.0 / `principles` 0.16.0 / `workspace-protocol` 1.3.0 改为 planned/active 精确匹配、closed/abandoned 仅校验 `vision_id`、editorial 不 bump、primary 仅 `workspace.md` 权威；模板、consumer 文档、AGENTS/copilot、Skills prompts 与镜像同步。`test_vision_protocol.py` 新增 8 类回归；docs 76 / skills 102 / orchestrator 45 / standalone 5 全绿，`stage --check` 38 对一致，`git diff --check` 干净。**已知红门禁**：scripts 147（4 failures / 12 errors）与 22 份 / 109 个 runtime evidence stale，全部归因 behavior source 变更，移交 S5 重捕获。S4 cross 审计准备中；未提交、未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
+按 D-002 完成协议修正与校验实现：Charter 去注册表（`version` 保持 0.2.0）、`alignment` 0.11.0 / `principles` 0.16.0 / `workspace-protocol` 1.3.0 改为 planned/active 精确匹配、closed/abandoned 仅校验 `vision_id`、editorial 不 bump、primary 仅 `workspace.md` 权威；模板、consumer 文档、AGENTS/copilot、Skills prompts 与镜像同步。`test_vision_protocol.py` 新增 8 类回归；docs 76 / skills 102 / orchestrator 45 / standalone 5 全绿，`stage --check` 38 对一致，`git diff --check` 干净。检查点 **`2b601c4`**（35 个显式 owned paths）。**已知红门禁**：scripts 147（4 failures / 12 errors）与 22 份 / 109 个 runtime evidence stale，全部归因 behavior source 变更，移交 S5 重捕获。S4 cross 审计准备中；未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
 
 ## 2026-10-26 · GOAL-016 S1 裁决冻结（active / 20%）
 
