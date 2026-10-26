@@ -4,7 +4,7 @@ status: active
 created: 2026-07-18
 updated: 2026-10-17
 parent: null
-version: 0.14.2
+version: 0.15.0
 role: primary
 ---
 
@@ -104,7 +104,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 
 1. **愿景完整安装**：无 active `{governance_root}/vision/charter.md` → **不完整安装**；仅允许引导补齐（Charter → 首个 VP）；**拒绝**非引导开区/推进/放行/关门。有 Charter 则读 `vision_id`/`version` 与 `alignment.md`（**单愿景**；对齐递归 Charter←VP←Workspace←子目标）。
 2. 定位当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 并校验：`root_goal` 指向唯一 `parent: null` Root Goal；`canonical_scope` 为当前工作区根。绑定不匹配时 fail closed。旧直属 `{governance_root}/workspace-*/workspace.md` 只触发迁移阻断；新旧并存 fail closed，禁止双读。
-3. **所有工作区**校验 `vision_role` ∈ {`primary`,`delivery`}，并校验必填 `plan_refs`、`primary_plan`（∈ plan_refs；无 opt-out）；且 `{governance_root}/vision/plans/<primary_plan>.md` 存在，其 `vision_ref` 须精确匹配 charter 版本。失败 fail closed。检查 `reviews.md` 是否有阻断本动作的未闭合 required（VRev）。
+3. **所有工作区**校验 `vision_role` ∈ {`primary`,`delivery`}，并校验必填 `plan_refs`、`primary_plan`（∈ plan_refs；无 opt-out）；且 `{governance_root}/vision/plans/<primary_plan>.md` 存在。`planned`/`active` VP 的 `vision_ref` 须精确匹配 Charter 版本；`closed`/`abandoned` VP 只要求 `vision_id` 相同（保留历史 ref）。primary 唯一门禁权威是 `workspace.md` 的 `vision_role: primary`（≥2 个 primary fail closed）。失败 fail closed。检查 `reviews.md` 是否有阻断本动作的未闭合 required（VRev）。
 4. 只处理当前工作区。不得自动发现、加载、合并或写入其他工作区上下文；**禁止跨区 parent**。
 5. 共享资料引用须同时具备匹配的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256`；否则 fail closed。内容须用户确认才成事实。
 6. 两类显式布局都不存在、但存在 `{governance_root}/goals/` 时，才按 **legacy** 隐式单工作区兼容（缺 vision 仍按不完整/引导处理）；不得猜测外部工作区。
@@ -364,7 +364,7 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 - 新项目 S0：**先** scaffold `{governance_root}/workspaces/workspace-001-<slug>/`（workspace.md + goal-tree），**再**建 Root；slug **必须用户确认**。
 - 核心方法论与 Skills 同级必备；不得宣称 architecture 对完整安装可选。
 - 存在新 canonical 显式工作区根时，绑定不匹配或资料引用未固定/不匹配必须 fail closed；不得自动混合其他工作区上下文。旧直属 `{governance_root}/workspace-*/` 只用于迁移检测，mixed fail closed；两类显式布局都不存在时才考虑 legacy `{governance_root}/goals/` 或空治理 scaffold。
-- 缺 active Charter = 不完整安装（仅引导补齐）。有 vision 时 `vision_role` 非 `primary`/`delivery`、缺 plan 对齐或 VP/`vision_ref` 不合法必须 fail closed；不得把 vision 当 progress 权威。
+- 缺 active Charter = 不完整安装（仅引导补齐）。有 vision 时 `vision_role` 非 `primary`/`delivery`、缺 plan 对齐、`planned`/`active` VP 的 `vision_ref` 与 Charter 版本不一致、或 `closed`/`abandoned` VP 的 `vision_id` 不一致必须 fail closed；不得把 vision 当 progress 权威。
 - 单愿景；禁止跨区 parent；strategic 未 re-align 宽阻断；Vision Review required 未闭合可阻断开区/VP 关门/方向已稳宣称。
 - Root 编号保持 `GOAL-001`；新编号 = 当前最大 + 1；不复用 cancelled 号作新含义；不把工作区号嵌进 goal id。跨区：文档 Q2 / 对话 Q3 / 机器 Q1。
 - 新建目标一次建齐五件套 + 三个 ledger 目录；有变更则更新 goal-tree（树 + 表）。

@@ -3,8 +3,8 @@ doc_type: vision-index
 title: 愿景体系入口
 status: active
 created: 2026-07-28
-updated: 2026-09-13
-version: 0.7.0
+updated: 2026-10-26
+version: 0.8.0
 ---
 
 # 愿景体系 · `docs/vision/`
@@ -21,6 +21,8 @@ version: 0.7.0
 4. 愿景文档不汇总各区 progress%，不关闭 Goal finding。
 5. 完整安装**必含**本目录最小文件集（**MUST** 权威表：[alignment.md §0.2](alignment.md#02-完整安装与冷启动)）；缺 Charter 或缺任一愿景树 MUST 文件 = 不完整安装（仅引导补齐）。
 6. 所有工作区必须挂 VP；`vision_role` 仅允许 `primary` / `delivery`，无 plan opt-out。
+7. **primary 单一权威**：以 `workspace.md` 的 `vision_role: primary` 为准；`workspaces.md` 的 role 是派生展示；Charter 不声明 `primary_workspace`（旧字段仅 legacy hint）。
+8. **版本语义**：Charter `version` = 战略对齐版本，仅 `strategic` bump；`editorial` 只更新 `updated` + `revisions.md`；`closed`/`abandoned` VP 保留历史 ref，只校验 `vision_id`。
 
 ## 文件地图
 
@@ -40,7 +42,7 @@ version: 0.7.0
 
 1. **日常推进**：`charter.md` → 当前工作区 `primary_plan` 对应的 `plans/VP-*.md` → [alignment.md](alignment.md) 门禁。
 2. **冷启动 / 建区**：Charter（最小完备）→ 首个 VP → 再写工作区 `plan_refs` / `primary_plan` 与 Root。
-3. **修订愿景**：改 charter → [revisions.md](revisions.md) → Vision Review（strategic）→ 更新受影响 VP `vision_ref` → 工作区 re-align（宽阻断见 alignment）。
+3. **修订愿景**：判定 `editorial` / `strategic` → 改 charter（editorial 只改 `updated`，不 bump）→ [revisions.md](revisions.md) →（strategic）Vision Review → 更新受影响 **planned/active** VP `vision_ref` → 工作区 re-align（宽阻断见 alignment）；`closed`/`abandoned` VP 不重钉。
 
 ## 入口速记
 

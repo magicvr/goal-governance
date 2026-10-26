@@ -2,9 +2,9 @@
 title: 治理原则
 status: active
 created: 2026-07-18
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 0.15.0
+version: 0.16.0
 ---
 
 # 治理原则
@@ -402,7 +402,7 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 1. **每一个开启目标治理的项目**（一次完整治理安装，通常一个仓库的治理根）**有且仅有一个**现行愿景：一份 `status: active` 的 Charter。
 2. **禁止多愿景**：不得并行多个 active Charter / 多个争用的 `vision_id` 北极星。
 3. **不同项目**可以有不同愿景——那是各自独立的治理实例，不是同一项目内的多愿景。
-4. **换代不是多愿景**：旧 Charter 仅可 `superseded`；历史 `vision_ref` 可只读保留；**现行对齐**只认唯一 active Charter。
+4. **换代不是多愿景**：旧 Charter 仅可 `superseded`；历史 `vision_ref` 可只读保留；**现行对齐**只认唯一 active Charter。`closed` / `abandoned` VP 保留关门时 `vision_ref`，只校验同一 `vision_id`（见 §6.8）。
 5. 多工作区、多 VP 仍共一愿景：区是上下文，VP 是同一源头下的意图波次。
 
 ### 6.2 完整安装与冷启动
@@ -424,13 +424,15 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 |------|------------------------|
 | 子目标 | 父目标（`parent` 完整 id） |
 | Root | 意图 VP（`primary_plan` ∈ `plan_refs`） |
-| VP | 现行 Charter（`vision_ref` 精确匹配 `vision_id@version`） |
+| VP（`planned`/`active`） | 现行 Charter（`vision_ref` 精确匹配 `vision_id@version`） |
+| VP（`closed`/`abandoned`） | 同一 `vision_id`；保留关门时 ref，版本可不同于现行 Charter |
 | Charter | 无上一级（链源头） |
 
 - **方向/边界权威**向上对齐；**status / progress / 审计台账**以本目标与本区为准。
 - **最小可检查对齐**（完整治理）：
-  - **机读**：`parent` 合法；Root/工作区有 `plan_refs`+`primary_plan`；VP 文件存在；`vision_ref` = 现行 Charter；**禁止**省略 plan 字段。
+  - **机读**：`parent` 合法；Root/工作区有 `plan_refs`+`primary_plan`；VP 文件存在；`planned`/`active` VP 的 `vision_ref` = 现行 Charter；`closed`/`abandoned` VP 的 `vision_id` 相同；**禁止**省略 plan 字段。
   - **语义**：按下方谓词判定是否与上一级**明显冲突**；冲突 → P-004，不得静默放行。
+  - **primary**：唯一门禁权威是 `workspace.md` 的 `vision_role: primary`；`workspaces.md` 只是派生展示；Charter 不承载 primary 注册表；旧字段为 legacy hint。
 
 #### 谓词 ·「不与上一级明显冲突 / 语义对齐失败」（最小充分条件）
 
@@ -505,7 +507,7 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 
 ### 6.5 工件最小完备（Charter / 意图）
 
-**Charter 初建最小完备**：目的陈述；方向级成功边界；非目标（建议 ≥3 条）；原则摘要（可链 principles）；`vision_id` / `version` / `status` / `effective_date`（及 frontmatter 约定字段）。不要求阶段 checklist 或 progress%。
+**Charter 初建最小完备**：目的陈述；方向级成功边界；非目标（建议 ≥3 条）；原则摘要（可链 principles）；`vision_id` / `version` / `status` / `effective_date`（及 frontmatter 约定字段）。不要求阶段 checklist 或 progress%。**Charter 不承载可变注册表**：primary 工作区、现行 active VP、组合编排状态分别由 `workspace.md`、VP frontmatter、`roadmap.md` 承载；旧 `primary_workspace` 仅作 legacy hint。
 
 **VP（意图）**：意图说明；方向级退出判据；`vision_ref`；工作区绑定表；可关门记录（closed 时）。证据在工作区，不在 vision 写 progress%。**受限**：可写方向级阶段结构（先后与退出方向），**不得**写可执行纲领阶段、子目标编号、Goal status 或 progress%；状态与跟踪权威在 VP 自身的 frontmatter（`status` / `vision_ref` / `lead_workspace`），组合编排索引中的同名列只能是**显式标注的派生投影**（见 [alignment.md §0.3](../vision/alignment.md)）。
 
@@ -543,14 +545,27 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 - **禁止**为 VP/Charter 建立 Goal 五件套或用目标 `03-audit` 替代愿景审视台账。
 - Goal 独立审计仍只出意见、不改 status（P-003）。
 
-### 6.8 Charter 修订与宽阻断
+### 6.8 Charter 修订、版本语义与宽阻断
 
-| class | 含义 | re-align |
-|-------|------|----------|
-| `editorial` | 措辞/链接，不改方向/边界/非目标 | 不强制 |
-| `strategic` | 目的、边界、非目标、原则优先级 | impact 所列 VP/区必须 re-align |
+Charter `version` = **战略对齐版本**，不是每次编辑的文档版本：
 
-**strategic 后宽阻断**（受影响范围 re-align 完成前）：禁止新建子目标、放行、关门、非引导开区；允许只读与引导 re-align。流程：更新 charter → [revisions.md](../vision/revisions.md) → 更新 VP `vision_ref` → 刷新工作区/Root 声明。
+| class | 含义 | version | re-align |
+|-------|------|---------|----------|
+| `editorial` | 措辞/链接/注册表移除/派生投影同步，不改方向/边界/非目标 | **不 bump**；只更新 `updated` | 不强制；`planned`/`active` VP 不重钉 |
+| `strategic` | 目的、边界、非目标、原则优先级 | **至少 minor** | impact 所列 `planned`/`active` VP/区必须 re-align；`closed`/`abandoned` VP 保留历史 ref |
+
+流程：
+
+- **editorial**：更新 charter（`updated`，`version` 不变）→ 追加 [revisions.md](../vision/revisions.md) 的 `VR-` 记录；不要求更新 VP `vision_ref`。
+- **strategic**：更新 charter（`updated` + version bump）→ 追加 `VR-` → 更新受影响 `planned`/`active` VP 的 `vision_ref` → 刷新工作区/Root 声明 → 完成 Vision Review（可为 self）。
+- **历史 VP**：`closed`/`abandoned` 不因现行 Charter bump 而重写 `vision_ref`；只校验同一 `vision_id`；不要求版本在 `revisions.md` 可追溯。
+- **reopen**：历史 VP 改为 `planned`/`active` 时恢复 current-match，须先 re-align。
+- **禁止**以 semver 范围或额外 `alignment_version` 作为默认出口放宽匹配；`vision_ref` 仍为精确 `vision_id@version`（§6.10）。
+
+**strategic 后宽阻断**（受影响范围 re-align 完成前）：
+- **禁止**：新建子目标、放行、关门、非引导开区；
+- **允许**：只读扫描、引导 re-align、补写 revisions/Review 响应；
+- `closed`/`abandoned` VP 不需要 re-align，但不得据此绕过仍生效的宽阻断。
 
 ### 6.9 工具分工（落地节奏）
 
@@ -561,7 +576,7 @@ required / 必改 finding 只有下列路径可解除对应门禁（与 P-005 �
 
 ### 6.10 本原则 v1 非目标
 
-多愿景；`vision_ref` semver 范围匹配；Web 愿景写入 UI；自动跳过 Vision Review 的算法；硬编码嵌套层数；独立「Intent」文档类型与 VP 并列；向 vision 目录汇总 progress%。
+多愿景；`vision_ref` semver 范围匹配；Web 愿景写入 UI；自动跳过 Vision Review 的算法；在 Charter 维护 primary/active VP 等可变注册表；`editorial` 变更触发版本 bump；全量重钉历史 VP；硬编码嵌套层数；独立「Intent」文档类型与 VP 并列；向 vision 目录汇总 progress%。
 
 **价值**：人与 AI 共用同一级联与判定树；避免无北极星的空中楼阁与执行层/战略层混写。
 

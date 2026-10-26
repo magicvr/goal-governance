@@ -3,8 +3,8 @@ doc_type: vision-revisions
 title: 愿景修订时间线
 status: active
 created: 2026-07-28
-updated: 2026-08-04
-version: 0.2.1
+updated: 2026-10-26
+version: 0.2.2
 ---
 
 # 愿景修订时间线
@@ -14,6 +14,7 @@ version: 0.2.1
 
 | revision_id | date | version | class | summary | rationale | source | impact | charter_status_after |
 |-------------|------|---------|-------|---------|-----------|--------|--------|----------------------|
+| VR-007 | 2026-10-26 | 0.2.0 | editorial | 移除 Charter 可变注册表（`primary_workspace` 与现行版本中的 Primary / active VP / 组合编排行）；`version` 明确为战略对齐版本，editorial 不 bump；`closed`/`abandoned` VP 保留历史 `vision_ref`，只校验 `vision_id`；primary 权威收敛到 `workspace.md` | [issue #34](https://github.com/magicvr/goal-governance/issues/34) 的版本连锁与历史 VP 被重写问题；用户 `/govern` Q-001～Q-004 选择 A1+A3+A2、primary 单一权威、closed 仅 vision_id、patch 发布 | GOAL-016 D-002（2026-10-26） | 不改变 Charter 目的/成功边界/非目标；Charter `version` 保持 **0.2.0**；不改写历史 VP ref；不触发 strategic re-align；发布由 GOAL-016 S5 承载 | active |
 | VR-006 | 2026-08-04 | 0.2.0 | editorial | VP-003 正式挂起；冻结 `web/` 资产与专属 parser/CI 门禁由 workspace-002 GOAL-004 物理退役；未来 UI 仍保留为远期适配器类 | 用户明确保留该遗留资产已得不偿失；移除工作流负担，同时保留 Charter 的 Skills 主适配器与未来 UI 方向 | workspace-001 D-029；workspace-002 GOAL-004 D-001 | 不改 Charter 目的、成功边界或战略假设；不触发 strategic re-align；不发布新的方法论/Skills 版本 | active |
 | VR-005 | 2026-07-31 | 0.2.0 | strategic | 投资面重规划：Skills 为现行主适配器；人类 Web 远期 + 本仓 FastAPI **冻结参考实现**；预期通用基架取代自建栈（H-WEB-01）；演进以实际项目问题驱动（H-EVOL-01）。目的/成功边界/非目标已改；版本 **0.1.0→0.2.0** | 用户确认判断合理并授权 S1+B1；避免未定形态 Web 与自建栈长期抢注意力 | 用户确认 `/vision` 包 S1+B1；Web=冻结参考 | VP-001 意图/退出判据；workspace-001 + Root re-align；**strategic 后须 VRev + re-align**；不删 `web/` 代码 | active |
 | VR-004 | 2026-07-29 | 0.1.0 | editorial | Charter 成功边界与原则摘要显式纳入 **P-006**（措辞补全；目的/非目标/版本未改） | GOAL-001 A-018 F-014 fixed | GOAL-001 D-025 / A-019 | 权威面与 principles 索引一致；**不**触发 re-align | active |

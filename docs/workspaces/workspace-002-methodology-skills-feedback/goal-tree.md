@@ -2,15 +2,27 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 0.56.0
+version: 0.57.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-26 · GOAL-016 S2/S3 完成（active / 60%）
+
+按 D-002 完成协议修正与校验实现：Charter 去注册表（`version` 保持 0.2.0）、`alignment` 0.11.0 / `principles` 0.16.0 / `workspace-protocol` 1.3.0 改为 planned/active 精确匹配、closed/abandoned 仅校验 `vision_id`、editorial 不 bump、primary 仅 `workspace.md` 权威；模板、consumer 文档、AGENTS/copilot、Skills prompts 与镜像同步。`test_vision_protocol.py` 新增 8 类回归；docs 76 / skills 102 / orchestrator 45 / standalone 5 全绿，`stage --check` 38 对一致，`git diff --check` 干净。**已知红门禁**：scripts 147（4 failures / 12 errors）与 22 份 / 109 个 runtime evidence stale，全部归因 behavior source 变更，移交 S5 重捕获。S4 cross 审计准备中；未提交、未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
+
+## 2026-10-26 · GOAL-016 S1 裁决冻结（active / 20%）
+
+同步询问卡片收到 Q-001～Q-004 真实答复：**A（A1+A3+A2）**、**primary 单一权威（仅 `workspace.md`）**、**closed VP 仅校验 vision_id**、**patch `v0.13.8`**；逐题留痕于 [D-002](../GOAL-016-charter-version-decoupling/01-decision/D-002-adjudication.md)，I-001～I-004 verified。D-002 冻结写集、验收与发布边界；S1 完成、S2 进行中，派生 progress 1/5 = **20%**。尚未改协议/模板/测试，未提交、未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
+
+## 2026-10-26 · GOAL-016 立项（issue #34：Charter 注册表解耦与 vision_ref 版本语义）
+
+用户 `/govern` 指令：在工作区 2 开设新子目标，解决 [issue #34](https://github.com/magicvr/goal-governance/issues/34)，并发布新版本；交叉审计调用本地 codex CLI（`gpt-6.1-sol` / high）。创建 **GOAL-016-charter-version-decoupling**（`active / 0%`，S1～S5 0/5），范围含协议修正、validator/测试/文档/模板/Skills 消费面与一次正式发布。D-001 记录：同 Root 内建子目标，不新开 VP/工作区，不触发 Charter strategic，故不强制 Vision Review；审计模式 `cross`（A-001 self + A-002 independent codex）。I-001～I-005 登记；I-001～I-003（方案/primary 语义/closed VP 校验）为 S1 门禁，I-004（发布版本号）与 I-005（Environment 人工审批）属 S5。基线 `ec088c9`、`dev` 干净、最新 tag `v0.13.7`；尚未改协议、未提交、未发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
 
 ## 2026-10-17 · GOAL-015 关门（done / 100%，v0.13.7 已发布并验收）
 
@@ -359,7 +371,8 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-012-release-v0-13-5                  [done]    v0.13.5 正式发布与消费资产验收  progress 100%
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
-└── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
+├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
+└── GOAL-016-charter-version-decoupling       [active]  Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 60%
 ```
 
 ## 状态表
@@ -381,13 +394,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
+| GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | active | 60% | 2026-10-26 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 015 |
-| 下一可用 | **GOAL-016** |
+| 最大编号 | 016 |
+| 下一可用 | **GOAL-017** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

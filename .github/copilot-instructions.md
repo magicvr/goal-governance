@@ -2,9 +2,9 @@
 title: AGENTS 模板 · 目标治理 AI 规则
 status: active
 created: 2026-07-18
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 0.13.1
+version: 0.14.0
 ---
 
 # AGENTS.md
@@ -207,7 +207,9 @@ Skills 与核心方法论**同级必备**：缺 `{{GOVERNANCE_ROOT}}/architectur
 1. **单愿景制**：每项目有且仅有一个现行 Charter；禁止多愿景。
 2. **冷启动严格串行**：最小完备 Charter → 首个 VP 落盘 → 工作区 + Root（挂 `plan_refs`/`primary_plan`）。
 3. **所有工作区**必须挂 VP；`vision_role` 仅允许 `primary` / `delivery`，无 plan opt-out。
-4. 细则：`{{GOVERNANCE_ROOT}}/vision/alignment.md`；原则全文 **P-006**。
+4. **版本语义**：Charter `version` = 战略对齐版本，仅 `strategic` bump（至少 minor）；`editorial` 不 bump、不要求 active/planned VP 重钉；`closed`/`abandoned` VP 保留历史 `vision_ref`，只校验同一 `vision_id`。
+5. **primary 单一权威**：`workspace.md` 的 `vision_role: primary` 是唯一门禁权威；`workspaces.md` 是派生展示；Charter 不再声明 `primary_workspace`（旧字段仅 legacy hint）；≥2 个工作区声明 primary 时 fail closed。
+6. 细则：`{{GOVERNANCE_ROOT}}/vision/alignment.md`；原则全文 **P-006**。
 
 ## 6e. 级联与入口分工（P-006 操作摘要）
 

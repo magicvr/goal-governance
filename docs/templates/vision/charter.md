@@ -5,7 +5,6 @@ title: <项目愿景标题>
 status: active
 version: 0.1.0
 effective_date: YYYY-MM-DD
-primary_workspace: 
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---
@@ -48,15 +47,16 @@ updated: YYYY-MM-DD
 ## 与工作区 / VP 的关系
 
 - 本 Charter 是对齐链**源头**；不可 Goal-`done`。
-- 意图落盘为 `{governance_root}/vision/plans/VP-*.md`，经 `vision_ref` 对齐本文件版本。
+- 意图落盘为 `{governance_root}/vision/plans/VP-*.md`，经 `vision_ref` 对齐本文件版本：`planned`/`active` 精确匹配；`closed`/`abandoned` 只要求同 `vision_id`。
 - 工作区/Root 挂 `plan_refs` / `primary_plan`；不在此维护 progress%。
+- **本文件不维护 primary 工作区、active VP 或组合编排注册表**；primary 唯一权威是 `workspace.md` 的 `vision_role: primary`，组合编排见 `roadmap.md`。
 
 ## 现行版本
 
 | 项 | 值 |
 |----|-----|
 | `vision_id` | `vision-example-project` |
-| 版本 | `0.1.0` |
+| 版本 | `0.1.0`（战略对齐版本；`editorial` 不 bump） |
 | 状态 | `active` |
 
 修订史见 `docs/vision/revisions.md`。引用格式：`vision-example-project@0.1.0`。

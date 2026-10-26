@@ -2,9 +2,9 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-10-17
+updated: 2026-10-26
 parent: null
-version: 0.15.0
+version: 0.16.0
 ---
 
 # docs/ · 文档体系
@@ -71,7 +71,7 @@ docs/
    - `progress`（若有）仅由显式检查点确定性派生；默认等权，显式权重可覆盖。它不放行阶段、不关闭 finding、不覆盖 I-00N 或 `status`，也不进入愿景层。
 8. **治理闭环与交叉审计（P-002～P-004）**：阶段质量意识（含 P-001 路线图槽位）；按风险选择 `none` / `self` / `independent` / `cross`，独立审计只出意见、编排器响应全部意见；finding 合法闭合为 `fixed` / `accepted-residual` / `user-overruled`；模式/provider 歧义、意见冲突、单条必改否决/residual、信息 residual 由用户裁决。**正式审计意见**写入被审目标 `03-audit.md` 索引与 `03-audit/A-NNN-*.md`（`source` 必填；长证据可链 `attachments/`）。详见 [architecture/principles.md](architecture/principles.md)。
 9. **信息就绪与未知项门禁（P-005）**：目标可带未知立项，但在 `00-meta.md` 或 `01-decision.md` 记录 I-00N、`required`/`non-blocking` 级别、影响门禁、最晚需要阶段、验证动作、状态、延期复核与证据。到期 required 信息项阻断受影响阶段；残余风险须有用户书面接受，且不等于已验证。
-10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review 使用 `reviews.md` 稳定索引 + `reviews/VRev-NNN-*.md` 独立报告；工作区角色仅 `primary` / `delivery`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
+10. **愿景、组合治理与级联对齐（P-006）**：**单愿景**；完整安装必有 Charter；冷启动 **Charter → VP → 工作区**；对齐递归（每节点对齐上一级）；组合编排 / 意图(VP) / 纲领路线图 / 阶段计划；结构选型判定树；Vision Review 使用 `reviews.md` 稳定索引 + `reviews/VRev-NNN-*.md` 独立报告；工作区角色仅 `primary` / `delivery`。**Charter `version` 是战略对齐版本**（editorial 不 bump，strategic 至少 minor）；primary 唯一权威是 `workspace.md` 的 `vision_role: primary`；`closed`/`abandoned` VP 保留历史 `vision_ref`。全文 [architecture/principles.md](architecture/principles.md) P-006；门禁 [vision/alignment.md](vision/alignment.md)。
 11. **核心模板、契约与分发镜像**：规范模板位于 `{governance_root}/templates/`（含 `goal-folder/`、`workspace-context.md`、`vision/`），消费适配器契约位于 `{governance_root}/contracts/`。Skills 包镜像由 **`python scripts/stage_skills_mirrors.py`** 生成到 `skills/core/docs/` 与 `skills/contracts/`（GOAL-022）；pack/CI 强制 stage。`skills/core/docs/README.md` 为消费方**手维精简稿**。新目标实例写入当前工作区根，不把镜像目录当作目标状态或第二版本真相。
 12. **独立启用**：不安装 `skills/` 时，按 [standalone-bootstrap.md](standalone-bootstrap.md) 从核心文档层复制并建立第一个 Root Goal（须遵守 P-006 冷启动顺序）。
 13. **工作区与共享资料协议**：显式工作区可从 `{governance_root}/templates/workspace-context.md` 创建 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md`，绑定一个 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`。`workspaces/` 只是父容器；旧直属 `{governance_root}/workspace-*/` 仅触发迁移阻断，新旧并存 fail closed。仅在两类显式布局都不存在且保留 `{governance_root}/goals/` 时，才是 legacy 隐式单工作区。完整约束见 [architecture/workspace-protocol.md](architecture/workspace-protocol.md)。

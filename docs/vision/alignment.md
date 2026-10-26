@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-10-17
-version: 0.10.0
+updated: 2026-10-26
+version: 0.11.0
 parent: null
 ---
 
@@ -22,7 +22,7 @@ parent: null
 1. **每一个项目**（一次完整治理安装）**有且仅有一个**现行愿景：`{governance_root}/vision/charter.md` 且 `status: active`。
 2. **禁止多愿景**（并行多个 active 北极星或多个争用的 `vision_id`）。
 3. 不同项目可以有不同愿景——那是**独立治理实例**，不是本项目内多愿景。
-4. **换代**：旧 Charter 仅 `superseded`；现行对齐只认唯一 active；历史 `vision_ref` 可只读。
+4. **换代**：旧 Charter 仅 `superseded`；现行对齐只认唯一 active；**历史 `vision_ref` 可只读保留**。`closed` / `abandoned` VP 保留关门时 ref，只校验 `vision_id` 相同（见 §2.1、§8）。
 5. 多工作区、多 VP **共一愿景**。
 
 ### 0.2 完整安装与冷启动
@@ -55,7 +55,7 @@ parent: null
 | 愿景树 | `{governance_root}/vision/reviews.md` | **MUST** | Vision Review 稳定索引；报告在 `reviews/VRev-NNN-*.md`（有条目时创建目录） |
 | 愿景树 | `{governance_root}/vision/workspaces.md` | **MUST** | 工作区贡献图（可极简） |
 | 愿景树 | `{governance_root}/vision/consumer-checklist.md` | **MUST** | 与本表一致的操作勾选 |
-| 意图 | 至少一个 `{governance_root}/vision/plans/VP-*.md` | **MUST**（开区前） | `vision_ref` 精确匹配 Charter |
+| 意图 | 至少一个 `{governance_root}/vision/plans/VP-*.md` | **MUST**（开区前） | `planned`/`active` 的 `vision_ref` 精确匹配 Charter；`closed`/`abandoned` 仅要求同 `vision_id` |
 | 工作区 | 显式 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` | **MUST**（开区后） | 含必填 `plan_refs` / `primary_plan` |
 | 目标 | 工作区根 `goal-tree.md` + Root 五件套 | **MUST**（开区后） | Root `parent: null` |
 | 方法论（可选扩展） | `{governance_root}/architecture/overview.md`、`directory-layout.md` 等 | Recommended | 增强可读性，不替代 MUST |
@@ -83,6 +83,8 @@ parent: null
 
 **状态与跟踪权威**：VP 的 `status` / `vision_ref` / `lead_workspace` 权威在**该 VP 文件 frontmatter**。`roadmap.md` 保留 `status` 列时，该列**只是派生投影**：必须显式标注、不得用于任何门禁判定，也不构成第二权威（见 [principles.md §6.5](../architecture/principles.md)）。
 
+**Charter 不承载可变注册表**：primary 工作区、现行 active VP、组合编排状态分别由 `workspace.md`、VP frontmatter、`roadmap.md` 承载；不得写入 Charter。Charter 只保留愿景契约（目的/边界/非目标/原则摘要/战略假设）与 `vision_id` / `version` / `status` 等稳定元数据。
+
 ### 0.4 组合编排索引的投影与兼容读取（D-005）
 
 1. **投影**：`roadmap.md` 的 `status` 列（及其它可由 VP 派生的列）必须标注为**派生投影**；写入顺序恒为「先改 VP frontmatter → 再刷新投影」。投影不一致时**以 VP 文件为准**，且该不一致本身**不构成**门禁失败。
@@ -109,8 +111,8 @@ Charter **没有 canonical `draft` 状态**：尚不满足最小完备或尚未�
 ## 2. 对齐递归与三层链
 
 ```text
-Charter: vision_id@version          ← 链源头（单愿景）
-    ↑  VP.vision_ref 精确匹配（不做 semver 范围）
+Charter: vision_id@version          ← 链源头（单愿景；版本=战略对齐版本）
+    ↑  VP.vision_ref：planned/active 精确匹配；closed/abandoned 仅同 vision_id
 Vision Plan: VP-NNN-slug            ← 意图
     ↑  workspace/Root.plan_refs 含该 VP；primary_plan 必填且 ∈ plan_refs
 Workspace + Root Goal
@@ -122,6 +124,7 @@ Workspace + Root Goal
 - 子目标默认继承 Root 的规划语境；**有界偏离**须 P-004 留痕；改边界则升级修订 VP/Charter。
 - **残差不自动继承**：父级 `accepted-residual` / `overruled` 不自动扩到子树。
 - **复述**：允许短 `serves_summary` + 链接；禁止目标内第二套愿景边界。
+- **历史 VP**：`closed` / `abandoned` 的 `vision_ref` 是关门时的历史事实，不随现行 Charter 版本变化而重写；只校验 `vision_id`（见 §8.1）。
 
 ### 2.1 最小可检查对齐
 
@@ -129,7 +132,8 @@ Workspace + Root Goal
 |----|------|------|
 | 子→父 | `parent` 完整 id 存在且同区 | 不与父边界/非目标明显冲突 |
 | Root/区→VP | `plan_refs`、`primary_plan` 必填；VP 文件存在 | `serves_summary` 服务该意图 |
-| VP→Charter | `vision_ref` = `{vision_id}@{version}` | 意图在 Charter 边界内 |
+| VP→Charter（`planned`/`active`） | `vision_ref` = `{vision_id}@{version}` | 意图在**现行** Charter 边界内 |
+| VP→Charter（`closed`/`abandoned`） | `vision_ref` 的 `vision_id` = 现行 `vision_id`，版本可不同 | 历史意图在**同一愿景**内；保留关门时 ref |
 
 失败 → **fail closed**（引导 re-align 除外）。
 
@@ -142,20 +146,21 @@ Workspace + Root Goal
 | `primary_plan` | **必填**，且必须 ∈ `plan_refs`；对应 `{governance_root}/vision/plans/<id>.md` |
 
 - **无 plan opt-out**：任何工作区都不得省略 `plan_refs` / `primary_plan`；`vision_role` 仅允许 `primary` / `delivery`。
-- 至多一个工作区 `vision_role: primary`（与 [workspaces.md](workspaces.md) 一致）。
+- 至多一个工作区 `vision_role: primary`；`workspaces.md` 应同步刷新为派生展示，但其 `role` 不一致不构成门禁失败（见 §3.1）。
 
-### 3.1 Primary 声明冲突裁决
+### 3.1 Primary 声明与单一权威
 
-Primary 可能出现在三处：`workspace.md` 的 `vision_role: primary`、[workspaces.md](workspaces.md) 的 `role: primary`、Charter 的 `primary_workspace`。
+Primary 的**唯一门禁权威**是各工作区 `workspace.md` 的 `vision_role: primary`。`{governance_root}/vision/workspaces.md` 的 `role` 是**派生展示**（应保持一致，但不参与门禁）；Charter **不再**声明 `primary_workspace`。
 
 | 情形 | 行为 |
 |------|------|
-| 三处一致 | 通过 |
-| 仅一处声称 primary，其它未声明或为空 | 以**已声明**处为准，并应在下一维护回合补齐另外两处 |
-| 两处或以上**互相矛盾**（不同 `workspace_id`） | **fail closed**：不得推进受影响的新建 Root/放行/关门；展示冲突；按 P-004 等用户裁决后留痕再改 |
-| Charter `primary_workspace` 指向不存在的工作区 | fail closed，直至修正 Charter 或创建/声明该区 |
+| 0 个工作区声明 primary | 合法（当前无 primary） |
+| 1 个工作区声明 primary | 通过 |
+| ≥2 个工作区声明 primary | **fail closed**：不得推进受影响的新建 Root/放行/关门；展示冲突并等用户裁决后留痕 |
+| `workspaces.md` 的 role 与 `workspace.md` 不一致 | **投影维护缺口**，不构成门禁失败；下一维护回合修正，以 `workspace.md` 为准，不得静默覆盖 |
+| 旧 Charter 残留 `primary_workspace` | **legacy hint**：读取/忽略，不参与门禁；不要求消费仓立即删除；与 `workspace.md` 不一致不 fail closed |
 
-权威顺序（仅用于**修复建议**，不能静默覆盖用户已确认的矛盾）：`alignment` 本文件规则 → 用户书面裁决 → 再改 Charter / workspaces.md / workspace.md。
+「至多一个 primary」由扫描全部显式 `workspaces/workspace-*/workspace.md` 校验。**当前焦点**用 `workspaces.md` 的 `map_status: active`（或项目显式 focus 字段）表达；**不得**把 `primary` 解释为「当前活跃工作区」。用户书面裁决可迁移 primary，但须修改对应 `workspace.md` 并留痕，再刷新 `workspaces.md` 投影。
 
 ## 4. Root Goal 声明
 
@@ -196,7 +201,7 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 7. VP 关门前（区证据 + lead 规则）  
 8. 相关 **Vision Review** 的 required 意见未合法闭合时（开区 / VP 关门 / 宣称方向已稳）
 
-失败模式：缺 Charter；缺 `plan_refs` / `primary_plan`；`primary_plan` 不在列表中；VP 文件缺失；`vision_ref` 与 charter 版本不一致；非法 `vision_role`；primary 无规划；Charter/VP 非法 status；待 re-align 宽阻断生效中。
+失败模式：缺 Charter；缺 `plan_refs` / `primary_plan`；`primary_plan` 不在列表中；VP 文件缺失；`planned`/`active` VP 的 `vision_ref` 与 Charter 版本不一致；`closed`/`abandoned` VP 的 `vision_id` 不一致或 ref 非法；非法 `vision_role`；≥2 个工作区声明 primary；Charter/VP 非法 status；待 re-align 宽阻断生效中。
 
 ## 7. 规划关门（轻量）
 
@@ -206,19 +211,35 @@ Root `00-meta.md` 应含与 workspace 一致的 `plan_refs`、`primary_plan`，�
 4. 多区时由 **lead** 发起关门提案 + 用户确认。  
 5. **禁止**为 VP 建立 Goal 五件套或独立目标 `03-audit` 台账替代区内审计。
 
-## 8. Charter 修订与宽阻断
+## 8. Charter 修订、版本语义与宽阻断
 
-| class | 含义 | version | 工作区 |
-|-------|------|---------|--------|
-| `editorial` | 措辞、链接，不改方向/边界/非目标 | 可补丁级 | 不强制 re-align |
-| `strategic` | 目的、边界、非目标、原则优先级 | 至少 minor | impact 所列 VP/区必须 re-align |
+Charter `version` 是**战略对齐版本**，不是每次文档编辑的版本：
 
-流程：更新 charter → 追加 [revisions.md](revisions.md) → 更新 VP `vision_ref` → 刷新工作区/Root 声明；Charter 初建或 strategic 后完成 [Vision Review](reviews.md)（可为 self）。
+| class | 含义 | version | 受影响对象 |
+|-------|------|---------|------------|
+| `editorial` | 措辞、链接、注册表移除、派生投影同步，不改方向/边界/非目标 | **不 bump**；只更新 `updated` | 不强制 re-align；`planned`/`active` VP 不重钉 |
+| `strategic` | 目的、边界、非目标、原则优先级 | **至少 minor** | impact 所列 `planned`/`active` VP/区必须 re-align；`closed`/`abandoned` VP 保留历史 ref |
+
+流程：
+
+- **editorial**：更新 `charter.md`（`updated`，`version` 不变）→ 追加 [revisions.md](revisions.md) 的 `VR-` 记录 → 不要求更新 VP `vision_ref`。
+- **strategic**：更新 `charter.md`（`updated` + `version` bump）→ 追加 `VR-` 记录 → 更新受影响 `planned`/`active` VP 的 `vision_ref` → 刷新工作区/Root 声明 → 完成 [Vision Review](reviews.md)（可为 self）→ 解除宽阻断。
+- **历史 VP**：`closed`/`abandoned` VP 不因现行 Charter bump 而重写 `vision_ref`；校验只要求 `vision_id` 相同，不要求版本可在 `revisions.md` 追溯（见 §8.1）。
+- **禁止**用 semver 范围或额外 `alignment_version` 作为默认出口来放宽匹配；`vision_ref` 仍为精确 `vision_id@version`（P-006 §6.10）。
+
+### 8.1 版本语义与 VP 生命周期（GOAL-016 / issue #34）
+
+1. **`planned`/`active` VP**：`vision_ref` 必须精确等于现行 `{vision_id}@{version}`；Charter 版本 bump 后，旧 ref 应被门禁判失败，直至 re-align。
+2. **`closed`/`abandoned` VP**：保留关门/放弃时 `vision_ref`，只校验 `vision_id` 相同；版本可不同于现行 Charter。该 ref 是历史事实，不是当前对齐声明。
+3. **reopen**：`closed`/`abandoned` VP 若改为 `planned`/`active`，恢复 current-match；须先 re-align 再放行。
+4. **不得全量重钉**：实现与测试必须按 VP status 过滤；禁止因 Charter bump 批量改写历史 VP。
+5. **legacy 兼容**：旧 Charter 残留 `primary_workspace` 与旧 VP `vision_ref` 不被新校验误判；不要求一次性迁移。
 
 **strategic 后宽阻断**（受影响范围 re-align 完成前）：
 
-- **禁止**：新建子目标、放行、关门、非引导开区  
-- **允许**：只读扫描、引导 re-align、补写 revisions/Review 响应  
+- **禁止**：新建子目标、放行、关门、非引导开区
+- **允许**：只读扫描、引导 re-align、补写 revisions/Review 响应
+- `closed`/`abandoned` VP 不需要 re-align，但不得据此绕过仍生效的宽阻断。
 
 ## 9. Vision Review
 
