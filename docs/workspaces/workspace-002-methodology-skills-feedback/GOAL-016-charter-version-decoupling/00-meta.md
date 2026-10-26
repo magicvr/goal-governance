@@ -19,12 +19,12 @@ progress: 80%
 
 ## 成功标准
 
-- [ ] **A1 去注册表**：Charter 不再承载可变注册表（`primary_workspace` 与「现行版本」中的 Primary / active VP / 组合编排行）；模板与消费面同步；旧 Charter 残留字段作为 legacy hint 读取/忽略，不参与门禁，不要求消费仓立即迁移。
-- [ ] **A3 生命周期分层**：`planned`/`active` VP 的 `vision_ref` 仍精确匹配现行 Charter；`closed`/`abandoned` VP 保留关门时 ref，仅校验 `vision_id` 相同；`validate_vision_stack` 与 workspace `plan_refs` 校验均按 status 过滤。
-- [ ] **A2 版本语义**：Charter `version` 只表达战略对齐版本，仅 `strategic` 变更 bump（至少 minor）；`editorial` 只更新 `updated` 并追加 `revisions.md`（VR-）记录，不 bump、不要求 active/planned VP 重钉。
-- [ ] **primary 收敛**：primary 仅由 `workspace.md` 的 `vision_role: primary` 表达；`workspaces.md` 仅作派生展示、不参与门禁；≥2 个工作区声明 primary fail closed；Charter 字段删除后不再参与裁决。
-- [ ] **回归与消费兼容**：新增「新建 VP 不改 Charter」「closed VP 不重钉」「strategic bump 仍阻断 active VP」「primary 多声明 fail closed（单一权威）」测试；旧仓 `primary_workspace` 与旧 `vision_ref` 不被新校验误判；文档/模板/Skills 镜像同步且 `stage_skills_mirrors.py --check` 通过。
-- [ ] **发布与关门**：按用户确认的版本号完成 CHANGELOG/清单/运行证据/回归/PR/CI/main/tag/受门禁发布；Release 资产逐项验收；issue #34 关闭；目标经 cross 审计与用户确认后关门。
+- [x] **A1 去注册表**：Charter 不再承载可变注册表（`primary_workspace` 与「现行版本」中的 Primary / active VP / 组合编排行）；模板与消费面同步；旧 Charter 残留字段作为 legacy hint 读取/忽略，不参与门禁，不要求消费仓立即迁移。
+- [x] **A3 生命周期分层**：`planned`/`active` VP 的 `vision_ref` 仍精确匹配现行 Charter；`closed`/`abandoned` VP 保留关门时 ref，仅校验 `vision_id` 相同；`validate_vision_stack` 与 workspace `plan_refs` 校验均按 status 过滤。
+- [x] **A2 版本语义**：Charter `version` 只表达战略对齐版本，仅 `strategic` 变更 bump（至少 minor）；`editorial` 只更新 `updated` 并追加 `revisions.md`（VR-）记录，不 bump、不要求 active/planned VP 重钉。
+- [x] **primary 收敛**：primary 仅由 `workspace.md` 的 `vision_role: primary` 表达；`workspaces.md` 仅作派生展示、不参与门禁；≥2 个工作区声明 primary fail closed；Charter 字段删除后不再参与裁决。
+- [x] **回归与消费兼容**：新增「新建 VP 不改 Charter」「closed VP 不重钉」「strategic bump 仍阻断 active VP」「primary 多声明 fail closed（单一权威）」测试；旧仓 `primary_workspace` 与旧 `vision_ref` 不被新校验误判；文档/模板/Skills 镜像同步且 `stage_skills_mirrors.py --check` 通过。
+- [ ] **发布与关门**：发布与资产验收已完成、issue #34 已关闭、A-006/A-007/A-008 审计链已闭合；仅待用户最后确认后关门。
 
 ## 纲领路线图（P-001）
 
@@ -50,7 +50,7 @@ progress: 80%
 | I-002 | required | `primary` 语义 = 稳定 monorepo 身份，还是「当前活跃工作区」 | A1 的 primary 权威与校验 | S1 | 用户按 Q-002 裁决；记录 D-002 | **verified**（2026-10-26） | 若改选双权威则重新裁决 | 用户答复 **单一权威（仅 `workspace.md`）**；见 [D-002](01-decision/D-002-adjudication.md) |
 | I-003 | required | `closed` VP 历史 `vision_ref` 只校验 `vision_id`，还是还要求版本在 `revisions.md` 可追溯 | A3 校验强度 | S1 | 用户按 Q-003 裁决；记录 D-002 | **verified**（2026-10-26） | 若改选 revisions 可追溯则重新裁决 | 用户答复 **仅 `vision_id` 相同**；见 [D-002](01-decision/D-002-adjudication.md) |
 | I-004 | required | 发布版本号：patch `v0.13.8` / minor `v0.14.0` / 其他 | S5 版本清单、tag 与资产身份 | S5 清单前 | 用户按 Q-004 裁决；记录 D-002 | **verified**（2026-10-26） | 清单后不得静默改号 | 用户答复 **patch `v0.13.8`**；见 [D-002](01-decision/D-002-adjudication.md) |
-| I-005 | required | GitHub Environment `release` 的发布审批是否由用户人工完成 | S5 gated publish | S5 发布 | 用户在 GitHub 人工审批；AI 不代批、不改环境配置 | open | 到期未批则 S5 保持未满足 | 待确认 |
+| I-005 | required | GitHub Environment `release` 的发布审批是否由用户人工完成 | S5 gated publish | S5 发布 | 用户在 GitHub 人工审批；AI 不代批、不改环境配置 | **verified**（2026-10-27 用户书面确认；A-008 `user-overruled`） | 下次发布须取得 approvals API `approved` 记录，或用户明示 residual | Q-007 用户选择「我本人在 GitHub 点击了 Approve」；deployment `7336110432` waiting→queued→in_progress→success；A-007 指出 approvals API 只有 `skipped`，A-008 记录残余与复审触发 |
 
 ## 父目标
 

@@ -24,7 +24,7 @@ version: 0.1.0
 
 ## 信息需求与阶段门禁
 
-台账见 [00-meta.md](00-meta.md#信息就绪与未知项)。I-001～I-004 已于 2026-10-26 置 `verified`（[D-002](01-decision/D-002-adjudication.md)）；I-005 为 S5 发布审批，保持 `open`。S1 已退出，S2 进行中。
+台账见 [00-meta.md](00-meta.md#信息就绪与未知项)。I-001～I-005 均已于 2026-10-26/27 置 `verified`（I-005 为用户书面 attestation + A-008 `user-overruled`；API 仅 `skipped`，见 [A-008](03-audit/A-008-response-a-007.md)）；S1～S4 已退出，S5 发布与资产验收完成，待用户关门确认。
 
 ## 决策索引
 

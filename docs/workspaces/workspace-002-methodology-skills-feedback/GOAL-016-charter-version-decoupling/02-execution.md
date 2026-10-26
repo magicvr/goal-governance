@@ -21,6 +21,7 @@ version: 0.1.0
 | E-005 | 2026-10-26 | S4 cross 审计派发、修正与复审 | recorded | `02-execution/E-005-s4-cross-audit.md` |
 | E-006 | 2026-10-26 | S5 v0.13.8 证据重捕获、清单与严格预检 | recorded | `02-execution/E-006-s5-evidence-and-rehearsal.md` |
 | E-007 | 2026-10-26 | v0.13.8 正式发布、资产验收与 issue #34 关闭 | recorded | `02-execution/E-007-release-and-asset-verification.md` |
+| E-008 | 2026-10-27 | S5 关门审计、F-006 用户裁决与 F-007 同步 | recorded | `02-execution/E-008-s5-closeout-audit-and-f006.md` |
 
 ## 用户待答与恢复（按需保留）
 
@@ -29,8 +30,11 @@ version: 0.1.0
 | 问题 ID | 原题 / 选项 | 影响范围 / 门禁 | 等待原因 / 提问方式 | 原有阻塞 | 恢复条件 | 真实答复来源 / 内容 |
 |---------|-------------|-----------------|---------------------|----------|----------|---------------------|
 | Q-001～Q-004 | 方案 / primary 语义 / closed VP 校验 / 发布版本号 | S1 裁决与 S2 写集；Q-004 至 S5 清单 | 已通过同步询问卡片返回 | 无 | 已满足 | 2026-10-26 卡片：A / 单一权威（仅 workspace.md）/ 仅 vision_id 相同 / patch v0.13.8；见 [D-002](01-decision/D-002-adjudication.md) |
+| Q-005 | 是否已在 GitHub 批准 v0.13.8 的 Environment `release` 部署 | S5 gated publish；I-005 | 已通过同步询问卡片返回 | 无 | 已满足 | 2026-10-26 卡片选择「我已在 GitHub 批准」；deployment `7336110432` 后续成功（approvals API 记录见 A-007/A-008） |
+| Q-006 | codex 用量上限导致独立关门复审失败后如何收尾 | S5 关门审计 provider | 已通过同步询问卡片返回（自由输入） | 无 | 已满足 | 2026-10-26 用户改为「本地 Grok Build CLI（Grok 4.7 / xhigh）独立审计」 |
+| Q-007 | I-005 的 GitHub 操作究竟是 Approve 还是 Bypass | F-006 闭合路径 | 已通过同步询问卡片返回 | 无 | 已满足 | 2026-10-27 用户明确选择「我本人在 GitHub 点击了 Approve」；A-008 按 `user-overruled` 记录，残余=API 无 `approved` 记录 |
 
-> 无待答阻塞。I-005（Environment `release` 人工审批）属 S5 执行动作，不是当前待答。
+> 无待答阻塞。I-005 已由用户 Q-007 书面确认，A-008 `user-overruled` 闭合 F-006；发布审批的机器可复核性残余见 A-007/A-008。
 
 ## 事实边界
 

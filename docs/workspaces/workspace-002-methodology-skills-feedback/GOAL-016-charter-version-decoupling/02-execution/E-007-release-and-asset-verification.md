@@ -38,7 +38,8 @@ GitHub issue [#34](https://github.com/magicvr/goal-governance/issues/34) 于 202
 
 - **R-016-001（low / recommended open；下一 patch 触发）**：矩阵 `host.version` 基线仍为 Claude Code CLI `2.1.301` / Grok Build `1.0.60`，本次证据实际在 `2.1.310` / `1.0.70` 上采集；兼容报告与发布证据均通过，证据 envelope 记录实际版本。下一次矩阵刷新对齐，不回写 v0.13.8 历史资产。
 
-## 尚未完成
+## 后续状态（2026-10-27 补记）
 
-- 尚未进行 S5 关门审计（self + independent）与用户关门确认；GOAL-016 仍 `active / 80%`，不得据本条标 `done`。
+- S5 关门审计已做：A-006 self `pass`；A-007 independent（Grok Build 4.7 / xhigh）`conditional`，发现 F-006（I-005 API 无 `approved`）required；A-008 按用户 Q-007 书面确认「本人在 GitHub 点击 Approve」以 `user-overruled` 闭合 F-006，并修复 F-007、保留 R-016-001 为 recommended。
+- 尚待用户做最后关门确认；GOAL-016 仍 `active / 80%`，不得据本条标 `done`。
 - 未改写 v0.13.7 及更早的历史 Release/证据。

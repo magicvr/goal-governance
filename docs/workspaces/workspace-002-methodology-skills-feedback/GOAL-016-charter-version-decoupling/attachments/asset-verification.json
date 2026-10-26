@@ -22,7 +22,15 @@
       { "state": "success", "creator": "magicvr", "createdAt": "2026-10-26T15:38:18Z" }
     ],
     "pendingDeploymentsAfterPublish": 0,
-    "approvedBy": "magicvr (human maintainer; AI did not approve or change environment configuration)"
+    "approvedBy": "magicvr (user Q-007 written attestation, 2026-10-27: 'I personally clicked Approve in GitHub'; AI did not approve or change environment configuration)",
+    "approvalsApi": {
+      "runApprovals": [
+        { "state": "skipped", "user": "magicvr", "comment": "" },
+        { "state": "skipped", "user": "magicvr", "comment": "" }
+      ],
+      "approvedRecordPresent": false,
+      "note": "No `approved` record for this run; A-007 F-006 raised this as required. A-008 closes it by explicit user attestation (`user-overruled`), scope limited to v0.13.8; next release must obtain an `approved` API record or an explicit user residual."
+    }
   },
   "assets": {
     "count": 9,
