@@ -12,6 +12,10 @@ version: 0.57.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-26 · GOAL-016 v0.13.8 正式发布与 issue #34 关闭（active / 80%）
+
+PR #35 双平台 CI 全绿 → merge `43467a3` → annotated tag `v0.13.8`（tag object `d0289660`）→ tag workflow [40350346249](https://github.com/magicvr/goal-governance/actions/runs/40350346249) 的 pack 与 gated publish 全绿；Environment `release` 由维护者 **magicvr 人工审批**（deployment `7336110432`，AI 未代批）。[Release v0.13.8](https://github.com/magicvr/goal-governance/releases/tag/v0.13.8) 于 2026-10-26T15:38:09Z 发布 **9 项资产**：双 ZIP 摘要与 sidecar 一致、Core 27 成员为 Skills 86 成员逐字节子集、下载资产驱动的隔离消费安装 exit 0 且消费者规则保留、release evidence `checksPassed=true`/720 digest、matrix `ready-for-release-evidence`、GHCR digest `b4611d9b…` 与内置版本 `0.13.8` 核对。issue #34 于 15:45:12Z 关闭（COMPLETED）。已知低风险残余 R-016-001（矩阵 host version 基线未随实测升版）留待下一 patch。尚未做 S5 关门审计/用户关门确认，GOAL-016 仍 `active / 80%`。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
+
 ## 2026-10-26 · GOAL-016 S5 证据与严格预检（active / 80%）
 
 按 D-003 重捕获 16 格运行证据到 `docs/releases/runtime/v0.13.8/`：3 宿主 × 4 治理入口 + 4 宿主 MCP 目录探针，全部 `pass`；Claude audit 以 `gpt-6.1-sol`/high 重取 `-r5`、Copilot audit `-r2` 重取通过。矩阵 `candidateRevision` = `v0.13.8`、12 条证据与 3 处 `evidenceScope` 更新；`capture_runtime_evidence --check` 一致，`compatibility_report` `ready-for-release-evidence`。CHANGELOG `0.13.8`、安装/GHCR pin、CI/测试断言同步；`release_evidence --mode rehearsal --run-checks` **`checks passed: True`**（系统 Python 3.11.9，临时移出 `.venv` 3.14 后恢复），镜像 38 对一致。尚未提交/PR/tag/发布；Environment `release` 仍须用户人工审批。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。

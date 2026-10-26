@@ -1,0 +1,95 @@
+{
+  "tag": "v0.13.8",
+  "releaseUrl": "https://github.com/magicvr/goal-governance/releases/tag/v0.13.8",
+  "isDraft": false,
+  "isPrerelease": false,
+  "publishedAt": "2026-10-26T15:38:09Z",
+  "tagObject": "d0289660de2b2723bd952d9d7604b1fc65adc94f",
+  "sourceCommit": "43467a36f024462c03b2a3c9d81789b3617c91e2",
+  "workflowRun": 40350346249,
+  "jobs": {
+    "pack": "completed/success",
+    "publishGated": "completed/success"
+  },
+  "environment": {
+    "name": "release",
+    "deploymentId": 7336110432,
+    "createdAt": "2026-10-26T15:32:49Z",
+    "statusTimeline": [
+      { "state": "waiting", "creator": "magicvr", "createdAt": "2026-10-26T15:32:50Z" },
+      { "state": "queued", "creator": "magicvr", "createdAt": "2026-10-26T15:37:05Z" },
+      { "state": "in_progress", "creator": "magicvr", "createdAt": "2026-10-26T15:37:07Z" },
+      { "state": "success", "creator": "magicvr", "createdAt": "2026-10-26T15:38:18Z" }
+    ],
+    "pendingDeploymentsAfterPublish": 0,
+    "approvedBy": "magicvr (human maintainer; AI did not approve or change environment configuration)"
+  },
+  "assets": {
+    "count": 9,
+    "expectedCount": 9,
+    "names": [
+      "bootstrap-README.md",
+      "compatibility-report.json",
+      "goal-governance-core-v0.13.8.zip",
+      "goal-governance-core-v0.13.8.zip.sha256",
+      "goal-governance-skills-v0.13.8.zip",
+      "goal-governance-skills-v0.13.8.zip.sha256",
+      "install-online.ps1",
+      "install-online.sh",
+      "release-evidence.json"
+    ]
+  },
+  "digests": {
+    "skillsZipComputed": "3b7da9c02834e5a8bec660496ab161813e8384037021814bc2dd3133ca5edec5",
+    "skillsZipSidecar": "3b7da9c02834e5a8bec660496ab161813e8384037021814bc2dd3133ca5edec5",
+    "skillsZipMatch": true,
+    "coreZipComputed": "48f93f6e22920c6f60085f498a99e633ca8ddd19854600d696b8a1e74d5ef479",
+    "coreZipSidecar": "48f93f6e22920c6f60085f498a99e633ca8ddd19854600d696b8a1e74d5ef479",
+    "coreZipMatch": true
+  },
+  "releaseEvidence": {
+    "releaseStatus": "release-candidate",
+    "checksPassed": true,
+    "sourceCommit": "43467a36f024462c03b2a3c9d81789b3617c91e2",
+    "annotatedTag": "v0.13.8",
+    "tagObject": "d0289660de2b2723bd952d9d7604b1fc65adc94f",
+    "workingTreeClean": true,
+    "digestCount": 720,
+    "checks": 4
+  },
+  "subset": {
+    "skillsMembers": 86,
+    "coreMembers": 27,
+    "corePrefixInSkills": "goal-governance-skills-v0.13.8/core/",
+    "missing": 0,
+    "byteDifferences": 0
+  },
+  "consumerInstall": {
+    "asset": "downloaded goal-governance-skills-v0.13.8.zip",
+    "command": "install.ps1 -All -SkillsDir .\\skills -MethodologyDir .\\docs -NonInteractive -Force",
+    "exitCode": 0,
+    "customRulePreserved": true,
+    "customRule": "KEEP-CONSUMER-RULE-138",
+    "managedBlockPresent": true,
+    "corePrinciplesInstalled": true,
+    "claudeGovernSkillInstalled": true
+  },
+  "ghcr": {
+    "image": "ghcr.io/magicvr/goal-governance-mcp-server:0.13.8",
+    "digest": "sha256:b4611d9bc65161ea4d6ce58bded01ca032496094288222d920296641634c7195",
+    "builtInVersion": "goal-governance-mcp 0.13.8"
+  },
+  "compatibilityReportAsset": {
+    "coverageStatus": "ready-for-release-evidence",
+    "candidateRevision": "v0.13.8",
+    "sourceCommit": "43467a36f024462c03b2a3c9d81789b3617c91e2"
+  },
+  "knownResiduals": [
+    {
+      "id": "R-016-001",
+      "severity": "low",
+      "status": "recommended open; next patch trigger",
+      "summary": "Matrix host.version baselines retain Claude Code CLI 2.1.301 / Grok Build 1.0.60 while this run's evidence was captured on 2.1.310 / 1.0.70. The compatibility report and release evidence still pass; the actual capture host versions are recorded in each runtime evidence envelope. Align the matrix baselines in the next matrix refresh, without rewriting v0.13.8 historical assets."
+    }
+  ]
+}

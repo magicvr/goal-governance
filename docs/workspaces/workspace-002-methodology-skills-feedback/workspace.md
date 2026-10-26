@@ -56,4 +56,4 @@ version: 0.6.2
 - 开区：用户 2026-07-31 `/govern` 确认 slug、Root、首子目标（Codex Skills 入口）与 `delivery` 角色。
 - VP-002 原「0 区空转」自本区 scaffold 起结束；`lead_workspace` 指向本区。
 - **长期持续治理（2026-08-08，D-008）**：用户确认本区与 VP-002 为长期持续治理项目，暂不关门——Root/VP-002 保持 `active`；R3 转为「持续闭环与长期演进」；退出判据挂起（核对结论留档于 Root 01-decision D-008）；新工作按反馈随时立项（GOAL-002～009 已 done；GOAL-009 承接第三批反馈并于 2026-10-01 关门，不包含正式发布；下一编号 GOAL-010）。
-- **2026-10-26**：GOAL-010～GOAL-015 已 done（v0.13.4～v0.13.7 均已发布并验收）；用户 `/govern` 要求新建子目标解决 issue #34 并发布新版本 → 创建 [GOAL-016-charter-version-decoupling](GOAL-016-charter-version-decoupling/00-meta.md)。S1～S4 已完成（cross 审计开放 required 0），S5 `v0.13.8` 发布进行中，派生 progress **80%**。当前下一编号 **GOAL-017**。
+- **2026-10-26**：GOAL-010～GOAL-015 已 done（v0.13.4～v0.13.7 均已发布并验收）；用户 `/govern` 要求新建子目标解决 issue #34 并发布新版本 → 创建 [GOAL-016-charter-version-decoupling](GOAL-016-charter-version-decoupling/00-meta.md)。S1～S4 已完成（cross 审计开放 required 0）；**v0.13.8 已正式发布并完成 9 项资产验收，issue #34 已关闭**；S5 关门审计/用户确认待做，派生 progress **80%**。当前下一编号 **GOAL-017**。
