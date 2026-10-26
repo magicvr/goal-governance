@@ -12,6 +12,10 @@ version: 0.57.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-10-26 · GOAL-016 S5 证据与严格预检（active / 80%）
+
+按 D-003 重捕获 16 格运行证据到 `docs/releases/runtime/v0.13.8/`：3 宿主 × 4 治理入口 + 4 宿主 MCP 目录探针，全部 `pass`；Claude audit 以 `gpt-6.1-sol`/high 重取 `-r5`、Copilot audit `-r2` 重取通过。矩阵 `candidateRevision` = `v0.13.8`、12 条证据与 3 处 `evidenceScope` 更新；`capture_runtime_evidence --check` 一致，`compatibility_report` `ready-for-release-evidence`。CHANGELOG `0.13.8`、安装/GHCR pin、CI/测试断言同步；`release_evidence --mode rehearsal --run-checks` **`checks passed: True`**（系统 Python 3.11.9，临时移出 `.venv` 3.14 后恢复），镜像 38 对一致。尚未提交/PR/tag/发布；Environment `release` 仍须用户人工审批。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
+
 ## 2026-10-26 · GOAL-016 S4 cross 审计完成（active / 80%）
 
 本地 codex CLI（`gpt-6.1-sol` / high）以正式命令 `/audit workspace-002 goal-016` 自主审计：A-002 independent `conditional` 发现 2 项 required（安装消费面旧规则、成功标准与 D-002 矛盾）与 1 项 recommended（测试命中错误状态）。A-003 响应按 `fixed` 闭合，检查点 `32c52f0`；A-004 独立复审 `pass`、开放 required 0，A-005 响应并退出 S4。docs 76 / skills 103 全绿，镜像 38 对一致。A-001 的 F-001（S5 重捕获）与 F-002（L0 边界）仍为 recommended open。S5 进行中；尚未打 tag/发布。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。

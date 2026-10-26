@@ -20,7 +20,7 @@ version: 0.1.0
 | S2 | D-002 §写集 | 按冻结方案同步 canonical 协议与文档（完成） |
 | S3 | D-002 §实现与测试 | validator、fixtures、回归、模板/Skills 与镜像（完成） |
 | S4 | `03-audit/` | cross 审计（self + codex independent）与意见响应（完成） |
-| S5 | D-003（待建） | 版本清单、运行证据、发布与资产验收（进行中） |
+| S5 | [D-003](01-decision/D-003-release-v0-13-8.md) | 版本清单、运行证据、发布与资产验收（进行中） |
 
 ## 信息需求与阶段门禁
 
@@ -32,5 +32,6 @@ version: 0.1.0
 |------|------|------|------|------|
 | D-001 | 2026-10-26 | 立项范围、路线图与审计/变更流程 | accepted | `01-decision/D-001-scope-and-roadmap.md` |
 | D-002 | 2026-10-26 | 方案、primary 语义、历史 VP 校验与版本号冻结 | accepted | `01-decision/D-002-adjudication.md` |
+| D-003 | 2026-10-26 | S5 发布 v0.13.8：范围、证据与审批边界 | accepted | `01-decision/D-003-release-v0-13-8.md` |
 
 > 编号在本目标内单调不复用；用户答复前不写 D-002 的结论，不把待答写成决策。

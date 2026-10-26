@@ -19,6 +19,7 @@ version: 0.1.0
 | E-003 | 2026-10-26 | S2/S3 协议修正、校验实现与回归 | recorded | `02-execution/E-003-s2-s3-implementation.md` |
 | E-004 | 2026-10-26 | S2/S3 检查点 | recorded | `02-execution/E-004-checkpoint.md` |
 | E-005 | 2026-10-26 | S4 cross 审计派发、修正与复审 | recorded | `02-execution/E-005-s4-cross-audit.md` |
+| E-006 | 2026-10-26 | S5 v0.13.8 证据重捕获、清单与严格预检 | recorded | `02-execution/E-006-s5-evidence-and-rehearsal.md` |
 
 ## 用户待答与恢复（按需保留）
 

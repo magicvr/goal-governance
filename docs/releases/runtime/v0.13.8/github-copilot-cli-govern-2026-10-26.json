@@ -1,0 +1,140 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-10-26T14:41:20.003436+00:00",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gemini-3.8-flash-high"
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "e5ef809faf957229aaea8a0610a47576e48167d034bbcac77791595f842f8727"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "a0b6144ed9c67196bd3ed64d028773ddeb4062a262261761d97ce9304b7cf1dc"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "03dbf83c052eb2f89e885a51025429f4d589455494b66efe2b2b9eb6c6dd69c1"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "2ff5b15e7b16674fedef5fbf487f936008a1f6530f347a076e3936975401c595"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "e421027d705fd1aac2e657cd523e1403b4ee475399ac0925cc27fa6135cd4dd8"
+    },
+    {
+      "path": "skills/prompts/01-create-new-goal.md",
+      "sha256": "b400b472f6135330c76d0ae092e651796109782b8b14da1ec8d9d97e17d61ea9"
+    },
+    {
+      "path": "skills/prompts/02-record-decision.md",
+      "sha256": "e7f2a86c1c56ae9a7f9ca5aa33d1f793ad3ea1a4ebacd053081cc3553fb95726"
+    },
+    {
+      "path": "skills/prompts/03-update-execution.md",
+      "sha256": "5b853038aa7c2e2660301fd4baf9a8a3ee823d713cf7c064affb804f536602a7"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "3b0538a0fe81e7e93832b99936463a0bf401331aaa52c1769c695eac6ebc2b05"
+    },
+    {
+      "path": "skills/install/copilot/prompts/govern.md",
+      "sha256": "24a4a0ada2ac435f066c3f3dbb6fb7ec5e173f60ee07d99a30c427d690942080"
+    },
+    {
+      "path": "skills/install/copilot/copilot-instructions.md",
+      "sha256": "816b6c057351b85c7c59598174a6cbda94f881b8380351944b53699a61504601"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Windows\\system32\\cmd.exe",
+      "/d",
+      "/c",
+      "C:\\Users\\magicvr\\AppData\\Roaming\\npm\\copilot.CMD",
+      "--prompt",
+      "/govern 仅核对当前入口的职责与正式规则中 AD-01～AD-06、UI-01～UI-06 的含义，报告各自权威文件路径；这是只读入口加载核验，不推进或修订愿景/目标。",
+      "--no-auto-update",
+      "--no-remote-export",
+      "--disable-builtin-mcps",
+      "--model",
+      "gemini-3.8-flash-high",
+      "--allow-tool=read,write",
+      "--excluded-tools=shell",
+      "--no-ask-user",
+      "--output-format",
+      "json",
+      "--silent"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal015-s5-33a6a15b",
+    "timeoutSeconds": 600,
+    "inputSha256": "c28eeca34ca3371b3a4e153f2ef3b378a4a14c316e7124403154316a91e620b4",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /govern invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/attachments/s5-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/attachments/s5-runtime/copilot-govern-01/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "AD-01",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "AD-01",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "AD-01",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.13.8/github-copilot-cli-govern-2026-10-26.d/stdout.txt",
+    "stdoutSha256": "866f690a05f63cc7092e4ff1aea11d1bd71291ff54ec4d3990690998b9c5f390",
+    "stderrPath": "docs/releases/runtime/v0.13.8/github-copilot-cli-govern-2026-10-26.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}
