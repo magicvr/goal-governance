@@ -1260,6 +1260,26 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 msg=f"advanced Copilot primitive drifted from P-005: {path}",
             )
 
+    def test_vision_lifecycle_version_and_primary_semantics_are_shipped(self) -> None:
+        """GOAL-016: install rule surfaces must not keep the old all-VP exact match."""
+        paths = (
+            SKILLS_ROOT / "AGENTS.template.md",
+            SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+            SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+        )
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            for marker in (
+                "`closed`/`abandoned`",
+                "**版本语义**",
+                "**primary 单一权威**",
+            ):
+                self.assertIn(
+                    marker,
+                    text,
+                    msg=f"missing GOAL-016 vision semantic {marker}: {path}",
+                )
+
     def test_workspace_protocol_is_shipped_to_skills_surfaces(self) -> None:
         """Workspace isolation and fixed-reference rules must not remain core-doc-only."""
         protocol = (

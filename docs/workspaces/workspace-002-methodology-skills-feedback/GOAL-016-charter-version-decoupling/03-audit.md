@@ -25,8 +25,9 @@ version: 0.1.0
 
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
-| — | — | — | — | — | — | 尚无正式 A-00N；S1 裁决未完成，S4 才进入 cross 审计 |
+| A-001 | 2026-10-26 | self | S1～S3 协议修正、校验实现与回归 | pass | 0 | `03-audit/A-001-self-s1-s3.md` |
+| A-002 | 2026-10-26 | independent | S1～S3 实施事实与 S4 就绪（codex CLI / gpt-6.1-sol / high） | conditional | 2 | `03-audit/A-002-independent-codex.md` |
 
 ## 结论状态
 
-尚未到达独立审计节点。S2/S3 已完成；S4 将写入 A-001 self 与 A-002 independent（codex CLI）。独立意见不直接改 `status` / `progress`；响应和状态变更走 `/govern` 与用户裁决。
+S4 进行中：A-001 self `pass`（开放 required 0）；A-002 independent `conditional`，开放 required **2**（F-003 安装消费面旧规则、F-004 成功标准与 D-002 矛盾）与 recommended 1（F-005 测试命中错误状态）。A-003 响应与修正完成前，**不推进 S5**。

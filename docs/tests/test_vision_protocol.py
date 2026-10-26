@@ -623,7 +623,7 @@ class VisionProtocolTests(unittest.TestCase):
 
             plan.write_text(
                 plan.read_text(encoding="utf-8")
-                .replace("status: active", "status: closed")
+                .replace("status: planned", "status: closed")
                 .replace(
                     "vision-goal-governance@0.2.0",
                     "vision-other@0.2.0",

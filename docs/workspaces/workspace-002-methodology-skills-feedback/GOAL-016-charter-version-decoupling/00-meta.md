@@ -22,8 +22,8 @@ progress: 60%
 - [ ] **A1 去注册表**：Charter 不再承载可变注册表（`primary_workspace` 与「现行版本」中的 Primary / active VP / 组合编排行）；模板与消费面同步；旧 Charter 残留字段作为 legacy hint 读取/忽略，不参与门禁，不要求消费仓立即迁移。
 - [ ] **A3 生命周期分层**：`planned`/`active` VP 的 `vision_ref` 仍精确匹配现行 Charter；`closed`/`abandoned` VP 保留关门时 ref，仅校验 `vision_id` 相同；`validate_vision_stack` 与 workspace `plan_refs` 校验均按 status 过滤。
 - [ ] **A2 版本语义**：Charter `version` 只表达战略对齐版本，仅 `strategic` 变更 bump（至少 minor）；`editorial` 只更新 `updated` 并追加 `revisions.md`（VR-）记录，不 bump、不要求 active/planned VP 重钉。
-- [ ] **primary 收敛**：primary 仅由 `workspace.md` 的 `vision_role: primary` 与 `workspaces.md` 的派生投影表达；两者冲突 fail closed；至多一个 primary；Charter 字段删除后不再参与裁决。
-- [ ] **回归与消费兼容**：新增「新建 VP 不改 Charter」「closed VP 不重钉」「strategic bump 仍阻断 active VP」「primary 两处冲突 fail closed」测试；旧仓 `primary_workspace` 与旧 `vision_ref` 不被新校验误判；文档/模板/Skills 镜像同步且 `stage_skills_mirrors.py --check` 通过。
+- [ ] **primary 收敛**：primary 仅由 `workspace.md` 的 `vision_role: primary` 表达；`workspaces.md` 仅作派生展示、不参与门禁；≥2 个工作区声明 primary fail closed；Charter 字段删除后不再参与裁决。
+- [ ] **回归与消费兼容**：新增「新建 VP 不改 Charter」「closed VP 不重钉」「strategic bump 仍阻断 active VP」「primary 多声明 fail closed（单一权威）」测试；旧仓 `primary_workspace` 与旧 `vision_ref` 不被新校验误判；文档/模板/Skills 镜像同步且 `stage_skills_mirrors.py --check` 通过。
 - [ ] **发布与关门**：按用户确认的版本号完成 CHANGELOG/清单/运行证据/回归/PR/CI/main/tag/受门禁发布；Release 资产逐项验收；issue #34 关闭；目标经 cross 审计与用户确认后关门。
 
 ## 纲领路线图（P-001）
