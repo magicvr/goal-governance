@@ -33,5 +33,6 @@ version: 0.1.0
 | D-001 | 2026-10-26 | 立项范围、路线图与审计/变更流程 | accepted | `01-decision/D-001-scope-and-roadmap.md` |
 | D-002 | 2026-10-26 | 方案、primary 语义、历史 VP 校验与版本号冻结 | accepted | `01-decision/D-002-adjudication.md` |
 | D-003 | 2026-10-26 | S5 发布 v0.13.8：范围、证据与审批边界 | accepted | `01-decision/D-003-release-v0-13-8.md` |
+| D-004 | 2026-10-27 | GOAL-016 关门决定（done / 100%） | accepted | `01-decision/D-004-close-out.md` |
 
 > 编号在本目标内单调不复用；用户答复前不写 D-002 的结论，不把待答写成决策。

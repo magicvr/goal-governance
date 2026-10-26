@@ -2,7 +2,7 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-10-26
+updated: 2026-10-27
 parent: null
 version: 0.57.0
 ---
@@ -11,6 +11,10 @@ version: 0.57.0
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-10-27 · GOAL-016 关门（done / 100%，v0.13.8）
+
+用户 Q-008 确认「关门：done / 100%」。[D-004](../GOAL-016-charter-version-decoupling/01-decision/D-004-close-out.md) 将 GOAL-016 由 `active / 80%` 收尾为 **`done` / 100%（S1～S5 5/5）**：v0.13.8 已发布并完成 9 项资产验收（PR #35 → main `43467a3` → annotated tag `d0289660` → run 40350346249 → Release 2026-10-26T15:38:09Z）；issue #34 于 15:45:12Z 关闭；审计链 A-006 self `pass` → A-007 independent（Grok 4.7 / xhigh）`conditional` → A-008 按用户 Q-007 书面确认以 `user-overruled` 闭合 F-006，开放 required **0**；F-007 fixed；R-016-001（矩阵 host version 基线）为 low recommended，下一 patch 触发；I-005 的 approvals API `approved` 记录残余留待下一次发布复核。保证等级 L0，不新增系统级硬拦截。Root R3 / VP-002 保持长期 active，Root progress 67% 不变；下一编号 GOAL-017。
 
 ## 2026-10-26 · GOAL-016 v0.13.8 正式发布与 issue #34 关闭（active / 80%）
 
@@ -384,7 +388,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
-└── GOAL-016-charter-version-decoupling       [active]  Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 80%
+└── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
 ```
 
 ## 状态表
@@ -406,7 +410,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-013-audit-dispatch-and-user-input-gates | 独立审计命令派发与用户答复阻塞门禁 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
-| GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | active | 80% | 2026-10-26 |
+| GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
 
 ## 编号
 

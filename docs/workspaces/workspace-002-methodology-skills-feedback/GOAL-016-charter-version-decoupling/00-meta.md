@@ -1,19 +1,19 @@
 ---
 id: GOAL-016-charter-version-decoupling
 title: Charter 注册表解耦与 vision_ref 版本语义修正（issue #34）
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-10-26
-updated: 2026-10-26
+updated: 2026-10-27
 version: 0.1.0
-progress: 80%
+progress: 100%
 ---
 
 # GOAL-016 · Charter 注册表解耦与 vision_ref 版本语义修正（issue #34）
 
 ## 概述
 
-承接 [GitHub issue #34](https://github.com/magicvr/goal-governance/issues/34)（OPEN，2026-10-26T02:15:24Z）：Charter 同时承担「愿景契约」与「组合/工作区注册表」，且 `vision_ref` 精确钉住文档 `version`，导致新建 VP/工作区、甚至仅更新 Charter 登记表就触发版本 bump，进而迫使全部 `planned`/`active`/`closed` VP 重写 `vision_ref`，历史审计链被改写、新建成本随 VP 数量上升。
+承接 [GitHub issue #34](https://github.com/magicvr/goal-governance/issues/34)（2026-10-26T02:15:24Z 提出；2026-10-26T15:45:12Z 关闭）：Charter 同时承担「愿景契约」与「组合/工作区注册表」，且 `vision_ref` 精确钉住文档 `version`，导致新建 VP/工作区、甚至仅更新 Charter 登记表就触发版本 bump，进而迫使全部 `planned`/`active`/`closed` VP 重写 `vision_ref`，历史审计链被改写、新建成本随 VP 数量上升。
 
 本目标修正协议语义、校验实现、模板/文档/Skills 消费面与回归测试，并以一个新版本发布收口；同时按仓库惯例关闭 issue #34。变更属元规则/协议面，审计模式 `cross`（self + independent），独立审计 provider 由用户指定为本地 codex CLI（模型 `gpt-6.1-sol`，思考强度 `high`）。
 
@@ -24,7 +24,7 @@ progress: 80%
 - [x] **A2 版本语义**：Charter `version` 只表达战略对齐版本，仅 `strategic` 变更 bump（至少 minor）；`editorial` 只更新 `updated` 并追加 `revisions.md`（VR-）记录，不 bump、不要求 active/planned VP 重钉。
 - [x] **primary 收敛**：primary 仅由 `workspace.md` 的 `vision_role: primary` 表达；`workspaces.md` 仅作派生展示、不参与门禁；≥2 个工作区声明 primary fail closed；Charter 字段删除后不再参与裁决。
 - [x] **回归与消费兼容**：新增「新建 VP 不改 Charter」「closed VP 不重钉」「strategic bump 仍阻断 active VP」「primary 多声明 fail closed（单一权威）」测试；旧仓 `primary_workspace` 与旧 `vision_ref` 不被新校验误判；文档/模板/Skills 镜像同步且 `stage_skills_mirrors.py --check` 通过。
-- [ ] **发布与关门**：发布与资产验收已完成、issue #34 已关闭、A-006/A-007/A-008 审计链已闭合；仅待用户最后确认后关门。
+- [x] **发布与关门**：发布与资产验收已完成、issue #34 已关闭、A-006/A-007/A-008 审计链已闭合；用户 Q-008 已于 2026-10-27 确认关门（D-004）。
 
 ## 纲领路线图（P-001）
 
@@ -34,13 +34,13 @@ progress: 80%
 | **S2** | 协议与 canonical 文档修正 | **完成**（2026-10-26） | `alignment.md`、`principles.md` P-006、`workspace-protocol.md`、`AGENTS.md`、Charter、模板与 consumer 文档按 D-002 同步；语义无自相矛盾 |
 | **S3** | 校验实现、回归与消费面同步 | **完成**（2026-10-26） | validator/测试/fixtures 实现 A1/A3/A2；新增回归测试与 docs/skills 回归通过；Skills prompts/模板/契约镜像同步且 `stage_skills_mirrors.py --check` 通过；旧仓兼容用例通过。release/compatibility 门禁因 behavior source 变更保持红，按 E-003 移交 S5 重捕获 |
 | **S4** | cross 审计与意见响应 | **完成**（2026-10-26） | A-001 self 与 A-002 independent（codex CLI `gpt-6.1-sol` / high）落盘；A-003 将 2 条 required 与 1 条 recommended 按 `fixed` 闭合；A-004 independent 复审 `pass`；开放 required 0；A-005 响应 |
-| **S5** | 发布与关门 | 进行中 | 版本清单、运行证据（如需重捕获）、本地门禁与 strict rehearsal 通过；PR 双平台 CI 全绿并合入 `main`；annotated tag；tag workflow 的 pack 与 gated publish 全绿（Environment `release` 由用户人工审批）；9 项 Release 资产逐项验收；issue #34 关闭；关门审计与用户确认完成 |
+| **S5** | 发布与关门 | **完成**（2026-10-27） | 版本清单、运行证据（如需重捕获）、本地门禁与 strict rehearsal 通过；PR 双平台 CI 全绿并合入 `main`；annotated tag；tag workflow 的 pack 与 gated publish 全绿（Environment `release` 由用户人工审批）；9 项 Release 资产逐项验收；issue #34 关闭；A-006/A-007/A-008 关门审计链闭合；用户 Q-008 确认关门 |
 
 阶段先后为串行；S2/S3 内部可按文件批次并行，S4 必须在 S2/S3 事实冻结后。`progress` 仅由本表 5 个检查点等权派生；不用于放行、关闭 finding 或推导 `done`。
 
 ## 派生进度展示
 
-`progress: 80%` = S1～S5 中完成 4 / 5（S1～S4 完成，S5 进行中）。检查点变化后重算并同步 `goal-tree.md`。
+`progress: 100%` = S1～S5 全部完成（5/5）。检查点变化后重算并同步 `goal-tree.md`。
 
 ## 信息就绪与未知项
 

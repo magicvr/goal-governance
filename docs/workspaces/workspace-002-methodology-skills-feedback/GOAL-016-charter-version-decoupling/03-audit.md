@@ -36,4 +36,4 @@ version: 0.1.1
 
 ## 结论状态
 
-S5 发布资产可复核（E-007；A-007 重下 ZIP 并核对 GHCR digest）。A-006 self `pass`；A-007 independent（Grok 4.7 / xhigh）`conditional`，F-006 required（I-005 API 无 `approved`）由 A-008 按用户 Q-007「本人在 GitHub 点击 Approve」以 `user-overruled` 闭合，范围限 v0.13.8，残余=API 无 `approved` 记录、下次发布须取得 `approved` 或用户明示 residual；F-007 fixed；R-016-001 为 low recommended。开放 required **0**。待用户最后关门确认后标 `done`。
+S5 发布资产可复核（E-007；A-007 重下 ZIP 并核对 GHCR digest）。A-006 self `pass`；A-007 independent（Grok 4.7 / xhigh）`conditional`，F-006 required（I-005 API 无 `approved`）由 A-008 按用户 Q-007「本人在 GitHub 点击 Approve」以 `user-overruled` 闭合，范围限 v0.13.8，残余=API 无 `approved` 记录、下次发布须取得 `approved` 或用户明示 residual；F-007 fixed；R-016-001 为 low recommended。开放 required **0**。用户 Q-008 于 2026-10-27 确认关门；D-004 将 GOAL-016 标为 `done / 100%`。
