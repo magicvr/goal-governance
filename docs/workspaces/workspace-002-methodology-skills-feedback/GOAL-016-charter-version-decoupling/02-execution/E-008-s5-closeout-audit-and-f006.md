@@ -25,4 +25,4 @@ version: 0.1.0
 
 ## 结论
 
-S5 发布产出、资产验收、issue 关闭与关门审计链已闭合；A-006 self + A-007 independent + A-008 response，开放 required 0。**尚待用户最后确认**将 GOAL-016 标为 `done / 100%（S1～S5 5/5）`；确认前保持 `active / 80%`。
+S5 发布产出、资产验收、issue 关闭与关门审计链已闭合；A-006 self + A-007 independent + A-008 response，开放 required 0。用户 Q-008 于 2026-10-27 确认关门；[D-004](01-decision/D-004-close-out.md) 已将 GOAL-016 标为 `done / 100%（S1～S5 5/5）`。

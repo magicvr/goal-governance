@@ -33,6 +33,7 @@ version: 0.1.0
 | Q-005 | 是否已在 GitHub 批准 v0.13.8 的 Environment `release` 部署 | S5 gated publish；I-005 | 已通过同步询问卡片返回 | 无 | 已满足 | 2026-10-26 卡片选择「我已在 GitHub 批准」；deployment `7336110432` 后续成功（approvals API 记录见 A-007/A-008） |
 | Q-006 | codex 用量上限导致独立关门复审失败后如何收尾 | S5 关门审计 provider | 已通过同步询问卡片返回（自由输入） | 无 | 已满足 | 2026-10-26 用户改为「本地 Grok Build CLI（Grok 4.7 / xhigh）独立审计」 |
 | Q-007 | I-005 的 GitHub 操作究竟是 Approve 还是 Bypass | F-006 闭合路径 | 已通过同步询问卡片返回 | 无 | 已满足 | 2026-10-27 用户明确选择「我本人在 GitHub 点击了 Approve」；A-008 按 `user-overruled` 记录，残余=API 无 `approved` 记录 |
+| Q-008 | 是否将 GOAL-016 标为 done / 100% | 关门决定 | 已通过同步询问卡片返回 | 无 | 已满足 | 2026-10-27 用户选择「确认关门：done / 100%」；见 [D-004](01-decision/D-004-close-out.md) |
 
 > 无待答阻塞。I-005 已由用户 Q-007 书面确认，A-008 `user-overruled` 闭合 F-006；发布审批的机器可复核性残余见 A-007/A-008。
 
