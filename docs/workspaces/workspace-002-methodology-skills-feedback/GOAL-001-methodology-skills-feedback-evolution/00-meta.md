@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-当前焦点为 [GOAL-017](../GOAL-017-on-demand-governance-context/00-meta.md)：消费仓治理规则按需加载与新资产发布，active / 75%（E-004：S3 完成，S4 进行中；provider = Grok Build CLI，Grok 4.7 / xhigh），S2 已实施并验证，S3 进行中。GOAL-016 已 done / 100%，v0.13.8 已正式发布。Root R3 active / 67% 保持。
+当前焦点为 [GOAL-017](../GOAL-017-on-demand-governance-context/00-meta.md)：消费仓治理规则按需加载与新资产发布，active / 75%（E-004：S3 完成；E-005：PR #39 双平台 CI 通过，S4 进行中；provider = Grok Build CLI，Grok 4.7 / xhigh），尚未 tag 或发布。GOAL-016 已 done / 100%，v0.13.8 已正式发布。Root R3 active / 67% 保持。
 
 在 Charter `vision-goal-governance@0.2.0` 与 **VP-001 奠基有界关** 之后，以**真实项目 / 消费方使用中发现的问题**为触发，持续修正核心方法论与 Skills，使协议在实战中保持可复制、可审计、可安装。
 

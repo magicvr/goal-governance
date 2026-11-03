@@ -43,11 +43,11 @@ S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress �
 | I-001 | required | 规则生成、加载入口及旧安装保护边界 | S1 方案冻结 | S1 | 定位安装源、merge/update 与宿主入口 | verified | 实施写集冻结时复核 | D-003：加载链、stage 与递归安装映射已核对 |
 | I-002 | required | 本会话 independent provider | 实施与 cross 审计 | S1 / 实施前 | 用户回答 Q-001 | verified | provider 失败时复核 | D-002：本地 Grok Build CLI，Grok 4.7 / xhigh |
 | I-003 | required | 非治理不加载、治理必加载及升级兼容是否成立 | S3 验收 | S3 | 定向测试、隔离消费安装/升级与实际宿主探针 | verified | 实施后验证 | E-004 / A-003，代表配置实际加载对照与16格选用pass |
-| I-004 | required | 发行版本、当前 behaviorSources、发布证据及审批 | S4 发布 | S4 | 检查远端 tag、刷新兼容矩阵/运行证据、strict 预检与 CI | collecting | 打 tag 前复核 | 基线 v0.13.8；新版本尚未冻结，Environment release 保留现有门禁 |
+| I-004 | required | 发行版本、当前 behaviorSources、发布证据及审批 | S4 发布 | S4 | 检查远端 tag、刷新兼容矩阵/运行证据、strict 预检与 CI | collecting | 打 tag 前复核 | 候选 v0.14.0（D-003）；PR #39 双平台 CI 通过，尚待合并/tag/strict/实际资产验收；Environment release 保留 required reviewer magicvr 与5分钟等待 |
 
 ## 当前阻塞
 
-Q-001 已由用户真实答复：本地 Grok Build CLI，Grok 4.7 / xhigh（D-002）。复核未见其他实施前待答或开放上游 required，已恢复 active；当前 S2 完成、S3 进行中，progress 50%；I-001 已 verified。CLI 帮助已确认 model/reasoning-effort/headless 参数存在；尚不宣称独立审计成功。S3 已取得部分运行证据，待完整集合与矩阵冻结；S4 尚未发布。
+Q-001 已由用户真实答复（D-002）；Grok Build CLI（Grok 4.7 / xhigh）独立审计 A-002 已完成，A-003 将 required 按 fixed 闭合，无开放 required。S1～S3 完成，S4 进行中，active / 75%；I-001～I-003 verified。PR #39 双平台 CI 通过，发布尚未发生；Environment release 人工批准仍是后续发布门禁。
 
 ## 台账
 
