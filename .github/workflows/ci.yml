@@ -26,7 +26,7 @@ jobs:
         run: |
           python scripts/stage_skills_mirrors.py
           python scripts/stage_skills_mirrors.py --check
-          git diff --exit-code -- skills/core skills/contracts skills/templates || {
+          git diff --exit-code -- skills/core skills/contracts skills/templates skills/AGENTS.template.md skills/install/claude/AGENTS.md skills/install/copilot/copilot-instructions.md || {
             echo "skills mirrors dirty after stage; commit stage output or fix canonical" >&2
             exit 1
           }
@@ -61,7 +61,7 @@ jobs:
         run: |
           python scripts/stage_skills_mirrors.py
           python scripts/stage_skills_mirrors.py --check
-          $changed = git diff --name-only -- skills/core skills/contracts skills/templates
+          $changed = git diff --name-only -- skills/core skills/contracts skills/templates skills/AGENTS.template.md skills/install/claude/AGENTS.md skills/install/copilot/copilot-instructions.md
           if ($changed) {
             Write-Error "skills mirrors dirty after stage; commit stage output or fix canonical"
             exit 1

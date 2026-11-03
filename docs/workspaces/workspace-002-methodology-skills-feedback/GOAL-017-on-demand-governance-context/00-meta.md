@@ -6,7 +6,7 @@ parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-03
 updated: 2026-11-03
 version: 0.1.0
-progress: 50%
+progress: 75%
 ---
 
 # GOAL-017 · 消费仓治理规则按需加载与新资产发布
@@ -31,10 +31,10 @@ progress: 50%
 |------|------|------|----------|
 | S1 | 信息确认与加载契约 | 完成（D-003） | 触发边界、规则落点、体积预算、升级兼容与 cross provider 确定，冻结实施方案 |
 | S2 | canonical 与消费面实施 | 完成（E-003） | 先更新架构约定，再同步模板、宿主入口、安装/升级与镜像，定向验证通过 |
-| S3 | 验证与交叉审计 | 进行中 | 回归、隔离新装/升级、按需加载验证、运行证据刷新及 cross 意见闭环 |
-| S4 | PR、CI 发布与验收 | 未开始 | dev PR 全绿合入 main，严格发布门禁通过，CI 发布与实际资产验收完成，关门结论落盘 |
+| S3 | 验证与交叉审计 | 完成（E-004 / A-003） | 回归、隔离新装/升级、按需加载验证、运行证据刷新及 cross 意见闭环 |
+| S4 | PR、CI 发布与验收 | 进行中 | dev PR 全绿合入 main，严格发布门禁通过，CI 发布与实际资产验收完成，关门结论落盘 |
 
-S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress 按完成阶段数 / 4 等权派生，当前 2/4 = 50%，不作门禁依据。
+S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress 按完成阶段数 / 4 等权派生，当前 3/4 = 75%，不作门禁依据。
 
 ## 信息就绪与门禁
 
@@ -42,12 +42,12 @@ S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress �
 |----|------|-----------------|----------|--------------|-----------------|------|-------------|-------------|
 | I-001 | required | 规则生成、加载入口及旧安装保护边界 | S1 方案冻结 | S1 | 定位安装源、merge/update 与宿主入口 | verified | 实施写集冻结时复核 | D-003：加载链、stage 与递归安装映射已核对 |
 | I-002 | required | 本会话 independent provider | 实施与 cross 审计 | S1 / 实施前 | 用户回答 Q-001 | verified | provider 失败时复核 | D-002：本地 Grok Build CLI，Grok 4.7 / xhigh |
-| I-003 | required | 非治理不加载、治理必加载及升级兼容是否成立 | S3 验收 | S3 | 定向测试、隔离消费安装/升级与实际宿主探针 | open | 实施后验证 | 结果尚不存在，不作为启动该验证工作的门禁 |
+| I-003 | required | 非治理不加载、治理必加载及升级兼容是否成立 | S3 验收 | S3 | 定向测试、隔离消费安装/升级与实际宿主探针 | verified | 实施后验证 | E-004 / A-003，代表配置实际加载对照与16格选用pass |
 | I-004 | required | 发行版本、当前 behaviorSources、发布证据及审批 | S4 发布 | S4 | 检查远端 tag、刷新兼容矩阵/运行证据、strict 预检与 CI | collecting | 打 tag 前复核 | 基线 v0.13.8；新版本尚未冻结，Environment release 保留现有门禁 |
 
 ## 当前阻塞
 
-Q-001 已由用户真实答复：本地 Grok Build CLI，Grok 4.7 / xhigh（D-002）。复核未见其他实施前待答或开放上游 required，恢复 active / 0%；I-001 在 S1 继续收集。CLI 帮助已确认 model/reasoning-effort/headless 参数存在；尚不宣称独立审计成功。S3/S4 证据未产生。
+Q-001 已由用户真实答复：本地 Grok Build CLI，Grok 4.7 / xhigh（D-002）。复核未见其他实施前待答或开放上游 required，已恢复 active；当前 S2 完成、S3 进行中，progress 50%；I-001 已 verified。CLI 帮助已确认 model/reasoning-effort/headless 参数存在；尚不宣称独立审计成功。S3 已取得部分运行证据，待完整集合与矩阵冻结；S4 尚未发布。
 
 ## 台账
 

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "C:\\Users\\magicvr\\.grok\\bin\\grok.EXE",
+    "--single",
+    "/audit workspace-002 goal-017",
+    "--model",
+    "grok-4.7",
+    "--reasoning-effort",
+    "xhigh",
+    "--output-format",
+    "streaming-json",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search"
+  ],
+  "cwd": "C:\\Users\\magicvr\\Documents\\Code\\goal-governance",
+  "cleanConversation": true,
+  "copiedHistory": false,
+  "stdin": "DEVNULL",
+  "startedAt": "2026-11-03T10:15:57.157139+00:00",
+  "invocationCorrection": "Prior headless invocation could not approve a local read-only command; same provider and exact formal body."
+}

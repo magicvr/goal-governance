@@ -1,0 +1,23 @@
+{
+  "candidate": "v0.14.0",
+  "selectedPassingEnvelopes": [
+    "docs/releases/runtime/v0.14.0/claude-code-cli-govern-2026-11-03-r2.json",
+    "docs/releases/runtime/v0.14.0/claude-code-cli-audit-2026-11-03-r2.json",
+    "docs/releases/runtime/v0.14.0/claude-code-cli-vision-2026-11-03-r2.json",
+    "docs/releases/runtime/v0.14.0/claude-code-cli-vision-audit-2026-11-03-r2.json",
+    "docs/releases/runtime/v0.14.0/grok-build-cli-govern-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/grok-build-cli-audit-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/grok-build-cli-vision-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/grok-build-cli-vision-audit-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/github-copilot-cli-govern-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/github-copilot-cli-audit-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/github-copilot-cli-vision-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/github-copilot-cli-vision-audit-2026-11-03.json",
+    "docs/releases/runtime/v0.14.0/claude-mcp-four-entry-r2.json",
+    "docs/releases/runtime/v0.14.0/grok-mcp-four-entry.json",
+    "docs/releases/runtime/v0.14.0/copilot-mcp-four-entry.json",
+    "docs/releases/runtime/v0.14.0/codex-mcp-four-entry.json"
+  ],
+  "count": 16,
+  "excluded": "Earlier failed/limited-tool attempts are retained as historical attempts; not selected by matrix. Codex four CLI entries remain outside committed matrix."
+}

@@ -1,0 +1,32 @@
+evidence consistency FAILED: runtime.json: behavior source is stale: behavior.md (recorded af96ee9e3c0b��, current 74a5732c2159��)
+checked 1 evidence file(s); 1 problem(s)
+evidence consistency check failed: evidence directory not found: C:\Users\magicvr\AppData\Local\Temp\gg-check-nodir-9r8n5ywy\nope
+usage: python.exe -m unittest [-h] [--check] [--evidence-dir EVIDENCE_DIR]
+                              [--consumer CONSUMER]
+                              [--entrypoint {govern,audit,vision,vision-audit}]
+                              [--protocol-version PROTOCOL_VERSION]
+                              [--product PRODUCT]
+                              [--product-version PRODUCT_VERSION]
+                              [--provider PROVIDER] [--model MODEL]
+                              [--prompt-file PROMPT_FILE] [--marker MARKER]
+                              [--require-assert REQUIRE_ASSERT]
+                              [--behavior-source BEHAVIOR_SOURCE]
+                              [--screenshot SCREENSHOT] [--output OUTPUT]
+                              [--timeout-seconds TIMEOUT_SECONDS]
+                              [--stdout-mode {raw,claude-stream-json-sanitized}]
+                              [--stderr-mode {raw,request-url-redacted}]
+                              ...
+python.exe -m unittest: error: --evidence-dir is required in --check mode
+runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+runtime evidence capture failed: [Errno 2] No such file or directory: 'missing-prompt.txt'
+----------------------------------------------------------------------
+wrote release evidence: C:\Users\magicvr\AppData\Local\Temp\gg-release-cli-failure-v8ikqhnx\evidence.json
+release status: rehearsal
+checks passed: False
+evidence consistency ok (2 evidence file(s))
+evidence consistency ok (1 evidence file(s))
+Ran 155 tests in 122.848s
+
+OK (skipped=4)

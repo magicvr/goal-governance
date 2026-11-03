@@ -192,7 +192,7 @@ class BootstrapOfflinePs1Tests(unittest.TestCase):
                 (target / "docs" / "standalone-bootstrap.md").read_bytes(),
                 (REAL_SKILLS / "core" / "docs" / "standalone-bootstrap.md").read_bytes().replace(
                     b"{governance_root}", b"docs"
-                ),
+                ).replace(b"{{GOVERNANCE_ROOT}}", b"docs"),
             )
             self.assertTrue(
                 (target / ".claude" / "skills" / "govern" / "SKILL.md").is_file()

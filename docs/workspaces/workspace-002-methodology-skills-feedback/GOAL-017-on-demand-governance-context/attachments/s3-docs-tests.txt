@@ -1,0 +1,22 @@
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:117: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:117: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:102: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:102: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:87: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\docs\tests\test_dual_channel_l2.py:87: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  tools = _mcp_tools_payload(REPO_ROOT)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+----------------------------------------------------------------------
+Ran 76 tests in 2.178s
+
+OK

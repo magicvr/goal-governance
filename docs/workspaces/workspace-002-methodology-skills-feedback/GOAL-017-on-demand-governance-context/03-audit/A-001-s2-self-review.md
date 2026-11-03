@@ -18,7 +18,7 @@ version: 0.1.0
 
 D-003 与 E-003 的加载契约已落实到 canonical、三份短规则、28 个治理提示词/宿主入口、MCP 薄壳、安装升级与 43 对 stage 镜像。核心原则、工作区/愿景门禁与 AD/UI 操作摘要随完整指南保留，普通任务及 `/commit` 不强制读取全文。
 
-Skills 103 / docs 76 / 迁移相关 50 测试通过，见 [E-003](../02-execution/E-003-implementation-and-validation.md) 及 attachments/s2-*.log。新装、自定义路径、长受管块与未标记整文件升级、外部用户字节、Copilot 用户规则、dry-run、碰撞与回滚有实际测试。
+Skills 103 / docs 76 / 迁移相关 50 测试通过，见 [E-003](../02-execution/E-003-implementation-and-validation.md) 及 attachments/s2-*.txt。新装、自定义路径、长受管块与未标记整文件升级、外部用户字节、Copilot 用户规则、dry-run、碰撞与回滚有实际测试。
 
 ## Findings
 

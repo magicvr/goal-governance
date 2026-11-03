@@ -111,6 +111,8 @@ version: 0.1.0
 
 ## 可复制包版本与变更范围
 
+- **当前候选 v0.14.0（2026-11-03）**：GOAL-017 按需入口、完整指南、安装升级与 MCP guidance 已实现，当前运行证据位于 `docs/releases/runtime/v0.14.0/`；正式发行尚待 PR/main/tag/CI。下述 v0.13.8 保留最近已发布身份。
+
 - **文档入口版本**（本文件 frontmatter）：`0.15.0` — 描述 docs 树导航与 `workspaces/` 工作区容器协议的修订号。
 - **可复制核心包版本**：[`0.13.8`](https://github.com/magicvr/goal-governance/releases/tag/v0.13.8) 正式发布（[GOAL-016](workspaces/workspace-002-methodology-skills-feedback/GOAL-016-charter-version-decoupling/00-meta.md) Charter 注册表解耦与 `vision_ref` 版本语义修正；issue #34）。入口文修订号与发布身份分离，实际发行以 annotated tag 与 gated Release 为准。
 - **最近发布基线**：`v0.7.0` / `v0.8.0` / `v0.9.0` / `v0.9.1` / `v0.9.2` / `v0.10.0` / `v0.11.0` / `v0.12.0` / `v0.12.1` / `v0.13.0` / `v0.13.1` / `v0.13.2` / `v0.13.3`（annotated tag 指向 main merge commit `dfa8600`；tag workflow run `34748891084` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）/ **`v0.13.4`**（PR #23 → main merge commit `43479838`；tag workflow run `36808519534` 经 Environment `release` 审批发布 **9 项** Release 资产，skills/core ZIP 重下载摘要与 sidecar 一致）。

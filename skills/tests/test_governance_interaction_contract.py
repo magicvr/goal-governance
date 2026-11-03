@@ -157,6 +157,8 @@ class GovernanceInteractionContractTests(unittest.TestCase):
                     structured = result["structuredContent"]
                     self.assertEqual(structured["status"], "ok")
                     self.assertIsNone(structured["promptSha256"])
+                    self.assertIn("architecture/governance-guide.md", structured["guidance"])
+                    self.assertIn("缺失/不可读即停止", structured["guidance"])
                     for boundary in ("AD-01～AD-06", "UI-01～UI-06", "/audit workspace-NNN goal-NNN", "/vision-audit vp-NNN", "空返回", "预选未提交", "真实答复", "独立审计只返回待答事实"):
                         self.assertIn(boundary, structured["guidance"])
                     self.assertEqual(structured["readonly"], name in {"audit", "vision-audit"})
