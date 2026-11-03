@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-当前焦点为 [GOAL-017](../GOAL-017-on-demand-governance-context/00-meta.md)：消费仓治理规则按需加载与新资产发布，blocked / 75%（E-006：PR #39 已合并、main CI 与 strict 全绿、v0.14.0 tag 已推、CI pack success；Q-002 等待 release Environment reviewer magicvr 人工批准；provider = Grok Build CLI，Grok 4.7 / xhigh）。正式发布/最终资产验收尚未发生。GOAL-016 已 done / 100%，v0.13.8 已正式发布。Root R3 active / 67% 保持。
+当前焦点为 [GOAL-017](../GOAL-017-on-demand-governance-context/00-meta.md)：消费仓治理规则按需加载与新资产发布，active / 75%（E-007：用户确认GitHub授权、v0.14.0发布run41622193036成功，E-008正式9资产/GHCR验收通过，最终独立复核中；provider = Grok Build CLI，Grok 4.7 / xhigh）。GOAL-016 已 done / 100%，v0.13.8 已正式发布。Root R3 active / 67% 保持。
 
 在 Charter `vision-goal-governance@0.2.0` 与 **VP-001 奠基有界关** 之后，以**真实项目 / 消费方使用中发现的问题**为触发，持续修正核心方法论与 Skills，使协议在实战中保持可复制、可审计、可安装。
 
@@ -81,7 +81,7 @@ progress: 67%
 | [GOAL-014-release-v0-13-6](../GOAL-014-release-v0-13-6/00-meta.md) | v0.13.6 正式发布与消费资产验收 | done |
 | [GOAL-015-audit-command-labeled-form](../GOAL-015-audit-command-labeled-form/00-meta.md) | 审计命令带标签形式修正（workspace-/goal-/vp-） | done |
 | [GOAL-016-charter-version-decoupling](../GOAL-016-charter-version-decoupling/00-meta.md) | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | done |
-| [GOAL-017-on-demand-governance-context](../GOAL-017-on-demand-governance-context/00-meta.md) | 消费仓治理规则按需加载与新资产发布 | blocked |
+| [GOAL-017-on-demand-governance-context](../GOAL-017-on-demand-governance-context/00-meta.md) | 消费仓治理规则按需加载与新资产发布 | active |
 
 ## 备注
 

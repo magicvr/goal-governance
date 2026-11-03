@@ -1,7 +1,7 @@
 ---
 id: GOAL-017-on-demand-governance-context
 title: 消费仓治理规则按需加载与新资产发布
-status: blocked
+status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-03
 updated: 2026-11-03
@@ -32,7 +32,7 @@ progress: 75%
 | S1 | 信息确认与加载契约 | 完成（D-003） | 触发边界、规则落点、体积预算、升级兼容与 cross provider 确定，冻结实施方案 |
 | S2 | canonical 与消费面实施 | 完成（E-003） | 先更新架构约定，再同步模板、宿主入口、安装/升级与镜像，定向验证通过 |
 | S3 | 验证与交叉审计 | 完成（E-004 / A-003） | 回归、隔离新装/升级、按需加载验证、运行证据刷新及 cross 意见闭环 |
-| S4 | PR、CI 发布与验收 | 待人工审批（E-006 / Q-002） | dev PR 全绿合入 main，严格发布门禁通过，CI 发布与实际资产验收完成，关门结论落盘 |
+| S4 | PR、CI 发布与验收 | 进行中（E-007：发布成功，正式资产验收中） | dev PR 全绿合入 main，严格发布门禁通过，CI 发布与实际资产验收完成，关门结论落盘 |
 
 S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress 按完成阶段数 / 4 等权派生，当前 3/4 = 75%，不作门禁依据。
 
@@ -43,11 +43,11 @@ S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress �
 | I-001 | required | 规则生成、加载入口及旧安装保护边界 | S1 方案冻结 | S1 | 定位安装源、merge/update 与宿主入口 | verified | 实施写集冻结时复核 | D-003：加载链、stage 与递归安装映射已核对 |
 | I-002 | required | 本会话 independent provider | 实施与 cross 审计 | S1 / 实施前 | 用户回答 Q-001 | verified | provider 失败时复核 | D-002：本地 Grok Build CLI，Grok 4.7 / xhigh |
 | I-003 | required | 非治理不加载、治理必加载及升级兼容是否成立 | S3 验收 | S3 | 定向测试、隔离消费安装/升级与实际宿主探针 | verified | 实施后验证 | E-004 / A-003，代表配置实际加载对照与16格选用pass |
-| I-004 | required | 发行版本、当前 behaviorSources、发布证据及审批 | S4 发布 | S4 | 检查远端 tag、刷新兼容矩阵/运行证据、strict 预检与 CI | collecting | 用户批准后复核发布结果 | v0.14.0 tag 已推；PR #39 与 main CI 全绿，本地 strict 通过，run 41622193036 pack success；release Environment 等待 reviewer magicvr 批准（Q-002），正式资产与 GHCR 未验收 |
+| I-004 | required | 发行版本、当前 behaviorSources、发布证据及审批 | S4 发布 | S4 | 检查远端 tag、刷新兼容矩阵/运行证据、strict 预检与 CI | verified | 发布后证据改变时复核 | E-008：PR #39/main CI/strict全绿，annotated v0.14.0指向10bba86，run41622193036成功；用户已确认GitHub授权、API原始状态保留；正式9资产摘要/隔离安装/core子集及GHCR版本均通过 |
 
 ## 当前阻塞
 
-Q-001 已由用户真实答复（D-002）；Grok Build CLI（Grok 4.7 / xhigh）独立审计 A-002 已完成，A-003 将 required 按 fixed 闭合，无开放 required。S1～S3 完成，I-001～I-003 verified。S4 的 [run 41622193036](https://github.com/magicvr/goal-governance/actions/runs/41622193036) 正等待 release Environment 人工批准（Q-002，reviewer magicvr，5分钟等待自 10:47:47 UTC 开始）；因此 blocked / 75%，不改检查点。用户批准并真实回复后复核 CI、发布证据与其他门禁，再恢复执行；不代审批、不将等待视为批准。正式发布与最终资产验收尚未发生。
+Q-001/Q-002 已回答，A-003 闭合 S3 required，无开放 required。E-008正式9资产摘要/core子集/隔离安装与GHCR验收通过，I-001～I-004 verified。审批原始状态为 magicvr skipped 与 bot approved（5 minute wait timer），连同用户GitHub授权书面回复保留，不虚构 magicvr approved。A-004 self/pass，等待指定provider最终独立复核，active / 75%，不预写关门结论。
 
 ## 台账
 
