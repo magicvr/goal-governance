@@ -1,7 +1,7 @@
 ---
 id: GOAL-017-on-demand-governance-context
 doc: decision
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-03
 updated: 2026-11-03
@@ -19,3 +19,4 @@ version: 0.1.0
 
 
 | D-003 | 2026-11-03 | 按需加载契约与实施计划冻结 | accepted | [D-003](01-decision/D-003-loading-contract.md) |
+| D-004 | 2026-11-03 | 审计响应与同范围收尾 | accepted | [D-004](01-decision/D-004-close-out.md) |

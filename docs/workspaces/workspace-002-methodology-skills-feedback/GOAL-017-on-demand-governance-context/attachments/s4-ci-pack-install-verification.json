@@ -1,0 +1,11 @@
+{
+  "source": "CI pack artifact; not yet a published Release",
+  "workflowRun": 41622193036,
+  "consumer": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg017-391eabc6",
+  "exitCode": 0,
+  "userAgentsContentPreserved": true,
+  "minimalEntryPointsToFullGuide": true,
+  "fullGuideInstalled": true,
+  "formalReleaseAssetsVerified": false,
+  "ghcrVersionVerified": false
+}

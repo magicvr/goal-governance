@@ -1,0 +1,97 @@
+{
+  "workflowRun": 41622193036,
+  "releaseUrl": "https://github.com/magicvr/goal-governance/releases/tag/v0.14.0",
+  "publishedAt": "2026-11-03T10:54:46Z",
+  "assetCount": 9,
+  "files": [
+    {
+      "name": "bootstrap-README.md",
+      "bytes": 6052,
+      "sha256": "3a466998aca1110e811079d3036e63ec3a7a8c4d1be98b78ed5688a6de4b0ba3",
+      "githubDigest": "sha256:3a466998aca1110e811079d3036e63ec3a7a8c4d1be98b78ed5688a6de4b0ba3",
+      "ciPackIdentical": true
+    },
+    {
+      "name": "compatibility-report.json",
+      "bytes": 10663,
+      "sha256": "d48b9c0ef4104b2aa06c6b0236fd31f3a4da86e3be34e5baa6bd975bfda5ce5d",
+      "githubDigest": "sha256:d48b9c0ef4104b2aa06c6b0236fd31f3a4da86e3be34e5baa6bd975bfda5ce5d",
+      "ciPackIdentical": false
+    },
+    {
+      "name": "goal-governance-core-v0.14.0.zip",
+      "bytes": 92470,
+      "sha256": "5123ea4d19d1fb5f94e72267ed1cca8757f34eabd1b42a279ceea294bc209e7d",
+      "githubDigest": "sha256:5123ea4d19d1fb5f94e72267ed1cca8757f34eabd1b42a279ceea294bc209e7d",
+      "ciPackIdentical": true
+    },
+    {
+      "name": "goal-governance-core-v0.14.0.zip.sha256",
+      "bytes": 99,
+      "sha256": "cbcef656cb2361596f4dcd550c019fe9d7d0c9d9374cd72385932f58077a5e67",
+      "githubDigest": "sha256:cbcef656cb2361596f4dcd550c019fe9d7d0c9d9374cd72385932f58077a5e67",
+      "ciPackIdentical": true
+    },
+    {
+      "name": "goal-governance-skills-v0.14.0.zip",
+      "bytes": 295271,
+      "sha256": "fbb89a38eedde5f5e380d5a47644d76981f25e2ef6d7f144581501b772f692c3",
+      "githubDigest": "sha256:fbb89a38eedde5f5e380d5a47644d76981f25e2ef6d7f144581501b772f692c3",
+      "ciPackIdentical": true
+    },
+    {
+      "name": "goal-governance-skills-v0.14.0.zip.sha256",
+      "bytes": 101,
+      "sha256": "a1a99a909d4b5c95be3da86ba00392009eb6075df71e5dccc4acb084036bb4c9",
+      "githubDigest": "sha256:a1a99a909d4b5c95be3da86ba00392009eb6075df71e5dccc4acb084036bb4c9",
+      "ciPackIdentical": true
+    },
+    {
+      "name": "install-online.ps1",
+      "bytes": 12737,
+      "sha256": "89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3",
+      "githubDigest": "sha256:89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3",
+      "ciPackIdentical": true
+    },
+    {
+      "name": "install-online.sh",
+      "bytes": 10400,
+      "sha256": "86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127",
+      "githubDigest": "sha256:86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127",
+      "ciPackIdentical": true
+    },
+    {
+      "name": "release-evidence.json",
+      "bytes": 197859,
+      "sha256": "18ae1fe5971d4482d4edd8d6c7f506a31f897317d761616bf1659dcac81f63b4",
+      "githubDigest": "sha256:18ae1fe5971d4482d4edd8d6c7f506a31f897317d761616bf1659dcac81f63b4",
+      "ciPackIdentical": false
+    }
+  ],
+  "zipComparison": {
+    "skillsMembers": 88,
+    "coreMembers": 29,
+    "missing": [],
+    "mismatches": [],
+    "entryBytes": 1374,
+    "entryLines": 17
+  },
+  "releaseEvidence": {
+    "releaseStatus": "release-candidate",
+    "source": {
+      "commit": "10bba8600b4d8575b6d6230bac2529795ae7129c",
+      "branch": null,
+      "annotatedTag": "v0.14.0",
+      "tagObject": "dd387ceea63d7d97aba0b09b575634dbdcd373d0"
+    },
+    "checksPassed": true,
+    "workingTree": {
+      "statusShort": [],
+      "clean": true
+    }
+  },
+  "compatibility": {
+    "status": "ready-for-release-evidence",
+    "uncovered": 0
+  }
+}

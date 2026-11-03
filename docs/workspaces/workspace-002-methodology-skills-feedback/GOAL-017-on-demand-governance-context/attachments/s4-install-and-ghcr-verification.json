@@ -1,0 +1,24 @@
+{
+  "release": "v0.14.0",
+  "workflowRun": 41622193036,
+  "workflowConclusion": "success",
+  "consumer": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg017-pub-4dd911a3",
+  "installExitCode": 0,
+  "userOwnedBytesPreserved": true,
+  "userOwnedPrefixSha256": "91f79be3e7397afd11875210b12407da705b6af09f56876ac55d2dbb8867c324",
+  "fullGuideInstalled": true,
+  "image": "ghcr.io/magicvr/goal-governance-mcp-server:0.14.0",
+  "expectedCiDigest": "sha256:0579508b6412de67955f8d748ea4796dda28e18020d25ae00e6c9ec775a284dd",
+  "pulledRepoDigests": [
+    "ghcr.io/magicvr/goal-governance-mcp-server@sha256:0579508b6412de67955f8d748ea4796dda28e18020d25ae00e6c9ec775a284dd"
+  ],
+  "containerVersionOutput": "goal-governance-mcp 0.14.0",
+  "digestMatchesCi": true,
+  "approvalsSemantics": {
+    "userStatement": "已在github搜权",
+    "magicvr": "skipped",
+    "github-actions[bot]": "approved",
+    "botComment": "5 minute wait timer",
+    "agentApprovedOrChangedEnvironment": false
+  }
+}
