@@ -12,6 +12,10 @@ version: 0.58.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-11-03 · GOAL-017 v0.14.0 发布待审批
+
+E-006：PR #39 合入 main `10bba86`，main CI41621591428 与本地 strict 全绿；annotated tag v0.14.0 已推，run41622193036 pack success。7项CI候选资产摘要、88/29成员core子集与隔离安装通过；publish waiting release Environment 人工批准（Q-002）。GOAL-017 blocked / 75%（3/4），正式9项资产与GHCR验收尚未发生；不重打tag。Root R3 active / 67%保持。
+
 ## 2026-11-03 · GOAL-017 PR 与 CI
 
 E-005：dev `4a13491` 的 PR #39 双平台 CI run 41620421037 全绿；当前概览旧进度已同步。S4 进行中，active / 75%，尚未合并/tag/发布；保留 release Environment reviewer magicvr 与5分钟等待。Root R3 active / 67% 不变。
@@ -413,7 +417,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
-└── GOAL-017-on-demand-governance-context     [active]  消费仓治理规则按需加载与新资产发布  progress 75%（S3 完成，S4 进行中）
+└── GOAL-017-on-demand-governance-context     [blocked]  消费仓治理规则按需加载与新资产发布  progress 75%（Q-002：release Environment 待人工批准）
 ```
 
 ## 状态表
@@ -436,7 +440,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
-| GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-11-03 |
+| GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | blocked | 75% | 2026-11-03 |
 
 ## 编号
 

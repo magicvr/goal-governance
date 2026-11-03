@@ -1,0 +1,3 @@
+wrote release evidence: artifacts\goal-017-release-strict.json
+release status: release-candidate
+checks passed: True
