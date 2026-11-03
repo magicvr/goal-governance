@@ -2,15 +2,27 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-10-27
+updated: 2026-11-03
 parent: null
-version: 0.57.0
+version: 0.58.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-11-03 · GOAL-017 S1 冻结
+
+D-003 冻结最小常驻入口（≤40行/4096 bytes）、canonical 完整指南、显式触发加载、managed 升级兼容与 v0.14.0 候选发布计划；I-001/I-002 verified，S1 完成、S2 进行中，**active / 25%（1/4）**。cross provider = Grok Build CLI，Grok 4.7 / xhigh；尚未实施、PR 或发布。Root progress 67% 保持。
+
+## 2026-11-03 · GOAL-017 用户答复与恢复
+
+用户指定 independent provider 为本地 Grok Build CLI（Grok 4.7 / xhigh），D-002 / E-002 留痕；Q-001 / I-002 已解决，复核无其他实施前待答，恢复 **active / 0%**，S1 继续。尚未实施或发布；Root R3 / VP-002 active，Root progress 67% 不变。
+
+## 2026-11-03 · GOAL-017 立项与实施前待答
+
+用户要求新增子目标解决消费仓 AGENTS 治理规则常驻开销，并在 dev 开发、PR 合入 main 后由 CI 发布新资产。创建 [GOAL-017-on-demand-governance-context](GOAL-017-on-demand-governance-context/00-meta.md)，路线图 S1～S4（0/4，progress 0%）；D-001 提出最小受管入口、完整指南按需加载、升级兼容与发布验收方案。cross 模式由协议风险确定；本会话 independent provider 未指定，Q-001 以文字收集必需裁决（同步卡片用途仅限可选问题），待答记录已落盘，目标 **blocked / 0%**。尚未实施、提交、PR 或发布；Root R3 / VP-002 保持 active，Root progress 67% 不变；下一编号 GOAL-018。
 
 ## 2026-10-27 · GOAL-016 关门（done / 100%，v0.13.8）
 
@@ -388,14 +400,15 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-013-audit-dispatch-and-user-input-gates [done]   独立审计命令派发与用户答复阻塞门禁  progress 100%
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
-└── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
+├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
+└── GOAL-017-on-demand-governance-context     [active]  消费仓治理规则按需加载与新资产发布  progress 25%（S1 完成，S2 进行中）
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-10-16 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-11-03 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
@@ -411,13 +424,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
+| GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-11-03 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 016 |
-| 下一可用 | **GOAL-017** |
+| 最大编号 | 017 |
+| 下一可用 | **GOAL-018** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）

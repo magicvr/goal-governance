@@ -9,8 +9,8 @@ vision_role: delivery
 plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 created: 2026-07-31
-updated: 2026-10-26
-version: 0.6.2
+updated: 2026-11-03
+version: 0.6.3
 ---
 
 # 工作区上下文 · 方法论与 Skills 反馈演进
@@ -52,6 +52,12 @@ version: 0.6.2
 - 本区不把本仓 Web 产品终态作为成功条件（人类 UI 见 **VP-003**）；GOAL-004 只承接冻结资产退役和 producer 边界验证，不激活 VP-003。
 
 ## 备注
+
+- **2026-11-03 S1 冻结**：GOAL-017 D-003 冻结按需加载/升级兼容与 v0.14.0 候选发布方案；S1 完成、S2 进行中，active / 25%；Root/VP-002 保持 active。
+
+- **2026-11-03 恢复**：GOAL-017 Q-001 已答，independent provider = Grok Build CLI（Grok 4.7 / xhigh）；active / 0%，S1 继续；Root/VP-002 保持 active。
+
+- **2026-11-03**：新建 [GOAL-017-on-demand-governance-context](GOAL-017-on-demand-governance-context/00-meta.md)，承接消费仓规则常驻开销反馈及一次 CI 新资产发布；S1～S4 0/4，blocked / 0%（Q-001 待本会话指定 cross independent provider）。尚未实施；Root/VP-002 保持 active，下一编号 GOAL-018。
 
 - 开区：用户 2026-07-31 `/govern` 确认 slug、Root、首子目标（Codex Skills 入口）与 `delivery` 角色。
 - VP-002 原「0 区空转」自本区 scaffold 起结束；`lead_workspace` 指向本区。

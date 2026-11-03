@@ -7,8 +7,8 @@ plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
-updated: 2026-10-26
-version: 0.14.36
+updated: 2026-11-03
+version: 0.14.37
 progress: 67%
 ---
 
@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-GOAL-013 先提交 e37cad3，再完成 S4 cross/全部意见响应/关门审视；A-002 independent/pass、A-004 fixed、A-005 pass，开放 required/recommended 0。子目标 active / 100%（4/4），尚未正式改 done，无待答；见 E-012。Root R3 active / 67% 保持。
+当前焦点为 [GOAL-017](../GOAL-017-on-demand-governance-context/00-meta.md)：消费仓治理规则按需加载与新资产发布，active / 25%（D-003 冻结 S1，S2 进行中；provider = Grok Build CLI，Grok 4.7 / xhigh），尚未实施。GOAL-016 已 done / 100%，v0.13.8 已正式发布。Root R3 active / 67% 保持。
 
 在 Charter `vision-goal-governance@0.2.0` 与 **VP-001 奠基有界关** 之后，以**真实项目 / 消费方使用中发现的问题**为触发，持续修正核心方法论与 Skills，使协议在实战中保持可复制、可审计、可安装。
 
@@ -80,9 +80,14 @@ GOAL-013 先提交 e37cad3，再完成 S4 cross/全部意见响应/关门审视�
 | [GOAL-013-audit-dispatch-and-user-input-gates](../GOAL-013-audit-dispatch-and-user-input-gates/00-meta.md) | 独立审计命令派发与用户答复阻塞门禁 | done |
 | [GOAL-014-release-v0-13-6](../GOAL-014-release-v0-13-6/00-meta.md) | v0.13.6 正式发布与消费资产验收 | done |
 | [GOAL-015-audit-command-labeled-form](../GOAL-015-audit-command-labeled-form/00-meta.md) | 审计命令带标签形式修正（workspace-/goal-/vp-） | done |
-| [GOAL-016-charter-version-decoupling](../GOAL-016-charter-version-decoupling/00-meta.md) | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | active |
+| [GOAL-016-charter-version-decoupling](../GOAL-016-charter-version-decoupling/00-meta.md) | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | done |
+| [GOAL-017-on-demand-governance-context](../GOAL-017-on-demand-governance-context/00-meta.md) | 消费仓治理规则按需加载与新资产发布 | active |
 
 ## 备注
+
+- **GOAL-017 恢复（2026-11-03）**：用户 Q-001 指定 Grok Build CLI（Grok 4.7 / xhigh），D-002 / E-002 留痕；active / 0%，S1 继续；Root 检查点与 progress 不变。
+
+- **GOAL-017 立项（2026-11-03）**：用户明确授权消费仓 AGENTS 精简、按需加载与 dev → PR → main → CI 发布。子目标先登记 S1～S4、信息项和可评审方案，因本会话 cross provider 待 Q-001 指定，blocked / 0%；未实施、未发布。Root 检查点与 progress 不变，下一编号 GOAL-018。
 
 - **GOAL-016 立项（2026-10-26）**：用户 `/govern` 要求在工作区 2 建新子目标解决 [issue #34](https://github.com/magicvr/goal-governance/issues/34) 并发布新版本，交叉审计调用本地 codex CLI（`gpt-6.1-sol` / high）。创建 [GOAL-016-charter-version-decoupling](../GOAL-016-charter-version-decoupling/00-meta.md)（`active`，S1～S5 0/5），D-001 冻结「同 Root 子目标、不新开 VP/工作区、不强制 Vision Review」与 `cross` 审计模式；I-001～I-005 登记。D-002 收录用户答复 **A（A1+A3+A2）**、**primary 单一权威（仅 `workspace.md`）**、**closed VP 仅校验 vision_id**、**patch `v0.13.8`**；S1～S4 完成、S5 发布与关门完成，用户 Q-008 确认关门，[D-004](../GOAL-016-charter-version-decoupling/01-decision/D-004-close-out.md) 将 GOAL-016 标为 **done / 100%（S1～S5 5/5）**；开放 required 0，R-016-001 为 low recommended。S2/S3 已改 Charter/alignment/principles/workspace-protocol/AGENTS/模板/Skills prompts 与 validator；A-002 independent `conditional` 的 2 required + 1 recommended 经 A-003 `fixed`、A-004 复审 `pass`，开放 required 0；docs 76 / skills 103 全绿，镜像 38 对一致。S5 已重捕获 16 格证据、通过 strict rehearsal，`v0.13.8` 经用户 Environment 审批正式发布并完成 9 项资产验收，issue #34 已关闭；R-016-001（矩阵 host version 基线）为 low recommended。Root R3 / VP-002 保持 active，Root progress 67%；下一编号 GOAL-017。
 
