@@ -1,12 +1,12 @@
 ---
 id: GOAL-017-on-demand-governance-context
 title: 消费仓治理规则按需加载与新资产发布
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-03
 updated: 2026-11-03
 version: 0.1.0
-progress: 75%
+progress: 100%
 ---
 
 # GOAL-017 · 消费仓治理规则按需加载与新资产发布
@@ -23,7 +23,7 @@ progress: 75%
 - [x] 显式治理命令、自然语言治理意图和治理记录修改均能在操作前加载完整规则；缺失或非法根配置时停止受影响的治理操作。
 - [x] 新装、已有受管块升级、旧整文件迁移、自定义治理根及用户自有规则保留均有可核对验证。
 - [x] canonical、Skills/宿主入口、core-only 分发与实际打包资产一致，相关回归及 self + independent 审计通过，无开放 required。
-- [ ] dev → PR → main CI → annotated tag → CI 发布完成，下载资产摘要、隔离消费安装及适用 GHCR 版本核对通过。
+- [x] dev → PR → main CI → annotated tag → CI 发布完成，下载资产摘要、隔离消费安装及适用 GHCR 版本核对通过。
 
 ## 纲领路线图（P-001）
 
@@ -32,9 +32,9 @@ progress: 75%
 | S1 | 信息确认与加载契约 | 完成（D-003） | 触发边界、规则落点、体积预算、升级兼容与 cross provider 确定，冻结实施方案 |
 | S2 | canonical 与消费面实施 | 完成（E-003） | 先更新架构约定，再同步模板、宿主入口、安装/升级与镜像，定向验证通过 |
 | S3 | 验证与交叉审计 | 完成（E-004 / A-003） | 回归、隔离新装/升级、按需加载验证、运行证据刷新及 cross 意见闭环 |
-| S4 | PR、CI 发布与验收 | 进行中（E-007：发布成功，正式资产验收中） | dev PR 全绿合入 main，严格发布门禁通过，CI 发布与实际资产验收完成，关门结论落盘 |
+| S4 | PR、CI 发布与验收 | 完成（E-008正式资产/GHCR验收；A-005/A-006、D-004/E-009关门） | dev PR 全绿合入 main，严格发布门禁通过，CI 发布与实际资产验收完成，关门结论落盘 |
 
-S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress 按完成阶段数 / 4 等权派生，当前 3/4 = 75%，不作门禁依据。
+S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress 按完成阶段数 / 4 等权派生，当前 4/4 = 100%，不作门禁依据。
 
 ## 信息就绪与门禁
 
@@ -47,7 +47,7 @@ S1 → S2 → S3 → S4 串行；每阶段允许独立探索并行。progress �
 
 ## 当前阻塞
 
-Q-001/Q-002 已回答，A-003 闭合 S3 required，无开放 required。E-008正式9资产摘要/core子集/隔离安装与GHCR验收通过，I-001～I-004 verified。审批原始状态为 magicvr skipped 与 bot approved（5 minute wait timer），连同用户GitHub授权书面回复保留，不虚构 magicvr approved。A-004 self/pass，等待指定provider最终独立复核，active / 75%，不预写关门结论。
+无当前阻塞。Q-001/Q-002 已回答，I-001～I-004 verified；A-003闭合S3 required，A-004 self/pass、A-005 independent/pass覆盖发布关门，A-006 fixed闭合唯一recommended。E-008正式9资产、隔离安装与GHCR验收通过。D-004/E-009在用户既有完成授权内收尾，done / 100%（4/4）。审批原始状态仍为magicvr skipped与bot approved（5 minute wait timer），连同用户书面授权保留；不虚构普通approved。Root/VP保持active、Root67%。
 
 ## 台账
 

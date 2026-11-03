@@ -1,0 +1,20 @@
+我按独立交叉审计执行 `/audit workspace-002 goal-017`：先做治理根预检并读取审计协议，通过身份解析后才扫描目标正文。配置文件不存在，治理根按默认取 `docs`。接下来完整读取治理权威与独立审计提示词，再解析 `workspace-002` / `goal-017`。权威已读完。命令 `/audit workspace-002 goal-017` 符合 AD-01。接下来只做布局检测和身份字段校验，通过前不读目标正文。现场核对与台账一致：发布身份、9 个资产摘要、Core 子集和 GHCR 版本都能复现。正在把独立意见写入 `A-005`，不改目标状态。**verdict：pass。** 开放 required 为 0。[workspace-002-methodology-skills-feedback] `GOAL-017-on-demand-governance-context` 的 S4 发布验收与关门就绪可以交给 `/govern` 响应。目标仍是 active / 75%，本意见没有改 status、检查点或 goal-tree。
+
+工作区 `docs/workspaces/workspace-002-methodology-skills-feedback/`，Root `GOAL-001-methodology-skills-feedback-evolution`。
+
+现场复核与台账一致：annotated tag `v0.14.0` 指向 `10bba86`，tag workflow `41622193036` 成功；GitHub Release 的 9 个资产摘要与本地同一 ZIP 一致；Core 29 成员与 Skills 内 `core/` 逐字节相同；GHCR `0.14.0` 的 digest 与容器版本 `goal-governance-mcp 0.14.0` 已重新核对。审批记录仍是 `magicvr skipped` 与 bot `5 minute wait timer`。
+
+必改项：无。
+
+建议项：F-001（recommended，low）。`00-meta.md` 路线图括号仍写「E-007：正式资产验收中」，而 E-008 已记录验收完成。这不阻断关门。
+
+意见已写入：
+
+- `docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/03-audit/A-005-s4-closeout-independent.md`
+- 索引 `03-audit.md`
+
+建议下一步：
+
+```text
+/govern 响应 workspace-002 GOAL-017 A-005：改正路线图括号中的 F-001，并在用户确认后写 S4 关门、将目标标为 done
+```

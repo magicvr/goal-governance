@@ -1,0 +1,1 @@
+2026-11-03T11:02:22.574616Z ERROR tool_error: tool_output_error session_id=01a1a112-f8f7-7ff1-bc44-5348f951cb76 tool_name="read_file" effective_tool_name="read_file" model_id="grok-4.7" error_kind="tool_output_error"

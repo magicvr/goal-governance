@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\magicvr\\.grok\\bin\\grok.EXE",
+    "--single",
+    "/audit workspace-002 goal-017",
+    "--model",
+    "grok-4.7",
+    "--reasoning-effort",
+    "xhigh",
+    "--output-format",
+    "streaming-json",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search"
+  ],
+  "cwd": "C:\\Users\\magicvr\\Documents\\Code\\goal-governance",
+  "cleanConversation": true,
+  "copiedHistory": false,
+  "stdin": "DEVNULL",
+  "startedAt": "2026-11-03T11:02:16.490524+00:00"
+}
