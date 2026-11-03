@@ -1,0 +1,145 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-11-03T10:18:15.184028+00:00",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.317",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gpt-6.1-sol"
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "acd362d2e27b6c52b6e151a4585f3259601ca04f58b485303a10f4c63cae4d63"
+    },
+    {
+      "path": "docs/architecture/governance-guide.md",
+      "sha256": "318829cf0de11b6a0a01dc73e2ac574880dffe77af2c3c518fc10fcb07e58f63"
+    },
+    {
+      "path": "docs/templates/governance-entry.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "03dbf83c052eb2f89e885a51025429f4d589455494b66efe2b2b9eb6c6dd69c1"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "23dc3a51c3c116b664717cdfd08b84cab49a9b069c01c6a30116fc83508c3d3e"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "c0e19200e2fdd787bcfcdd20d4ffbf9081fb0b048db8a12ab068ac3e65970110"
+    },
+    {
+      "path": "skills/prompts/01-create-new-goal.md",
+      "sha256": "8632680807c9d5fba6c644422d0e9c113059ad338b9800b48ab9d6bfd15bf391"
+    },
+    {
+      "path": "skills/prompts/02-record-decision.md",
+      "sha256": "9958be60684b9122032f3e3090cbae9eaa8381bda41e761c61110fc3f8355508"
+    },
+    {
+      "path": "skills/prompts/03-update-execution.md",
+      "sha256": "1e393a2bf3b9041e6a278211ec3037bd19954b445d2f734f0aa9887ed9f089ba"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "c7e2177d76eefca6a287d425dcd9abd6abb8d91c5a71f0683024bd8735c7b2e3"
+    },
+    {
+      "path": "skills/install/claude/skills/govern/SKILL.md",
+      "sha256": "e56b0544a9c58f44210beb363d4689076be673f4c73720c3c5622b7d7c9d529d"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Users\\magicvr\\.local\\bin\\claude.EXE",
+      "--print",
+      "--no-session-persistence",
+      "--tools",
+      "Read,Glob,Grep,Edit,Write,Skill,AskUserQuestion,Bash",
+      "--permission-mode",
+      "acceptEdits",
+      "--allowedTools",
+      "Read,Glob,Grep,Edit,Write,Skill,AskUserQuestion,Bash",
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--effort",
+      "high",
+      "--max-turns",
+      "60",
+      "--model",
+      "gpt-6.1-sol"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal017-s3-084b644b",
+    "timeoutSeconds": 600,
+    "inputSha256": "c28eeca34ca3371b3a4e153f2ef3b378a4a14c316e7124403154316a91e620b4",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /govern invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/attachments/s3-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/attachments/s3-runtime/claude-govern-02/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "AD-01",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "AD-01",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "AD-01",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.14.0/claude-code-cli-govern-2026-11-03-r2.d/stdout.txt",
+    "stdoutSha256": "1e06888c70a1500a473676c55945849a8010b5556d7dfbf3c6cd857819bdeea7",
+    "stderrPath": "docs/releases/runtime/v0.14.0/claude-code-cli-govern-2026-11-03-r2.d/stderr.txt",
+    "stderrSha256": "9e3bab7227e169ac6d85e7fcade18a205eac5751d1b968d9c83ae885668240fb",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

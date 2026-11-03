@@ -55,7 +55,7 @@ Skills 是核心方法论的 **AI 消费适配器**。**核心方法论与 Skill
 
 核心行为：
 
-> Contract manifest 的 `verificationStatus` 是有界事实，当前版本与取证范围以生产者矩阵为准。v0.13.8 候选的工作树证据位于 `docs/releases/runtime/v0.13.8/`：三宿主四入口 12 格及四宿主目录角色探针 4 份，均为 GOAL-016 协议修正后的当前树重取；探针正文即带标签正式命令形式（合成夹具 `/audit workspace-002 goal-013`、`/vision-audit vp-002`）。Goal/VRev 合成台账路由已验证；不代表全部 GUI/API 返回形态、后台 CLI 人类提交或系统级硬拦截已实测。候选证据不改变既有 Release 身份，完整发行仍须经过 CI 与正式 release 门禁。
+> Contract manifest 的 `verificationStatus` 是有界事实，当前版本与取证范围以生产者矩阵为准。v0.14.0 候选的工作树证据位于 `docs/releases/runtime/v0.14.0/`：三宿主四入口 12 格及四宿主目录角色探针 4 份，作为 GOAL-017 按需加载变更后的当前树重取；采集结果与门禁以实际 envelope 为准；探针正文即带标签正式命令形式（合成夹具 `/audit workspace-002 goal-013`、`/vision-audit vp-002`）。Goal/VRev 合成台账路由已验证；不代表全部 GUI/API 返回形态、后台 CLI 人类提交或系统级硬拦截已实测。候选证据不改变既有 Release 身份，完整发行仍须经过 CI 与正式 release 门禁。
 
 - 编排：[`prompts/00-govern-orchestrator.md`](prompts/00-govern-orchestrator.md)
 - 交叉：[`prompts/05-independent-audit.md`](prompts/05-independent-audit.md)
@@ -102,6 +102,8 @@ skills/
 └── tests/
 ```
 
+消费仓根规则现为最小按需入口；完整指南安装在治理根的 `architecture/governance-guide.md`。普通业务任务无需加载治理全文，治理命令/意图或记录修改前按入口校验根并完整读取。已有安装通过 updater 升级会替换旧框架受管块，并保留项目自有块外规则。
+
 ## 安装（双入口 · GOAL-023）
 
 | 入口 | 是什么 | 网络 |
@@ -114,30 +116,30 @@ skills/
 
 ### 入口 1 · Bootstrap（推荐 · 其他项目）
 
-**本版本安装 pin `v0.13.8`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
+**本版本安装 pin `v0.14.0`**（每次发版更新本节与根 README；固定 tag URL，**禁止** `main`/branch raw 作权威入口；**不是**无 pin 的 always-latest 安装）。也可 clone monorepo 用 `scripts/bootstrap/`。
 
 > 发行身份以对应 annotated tag、gated Release 及资产校验为准。
 
 在目标项目根执行（先落盘 bootstrap，再跑；默认**不**管道直跑）：
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.13.8/install-online.ps1" `
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.14.0/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.13.8 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.14.0 -Force
 
 # 离线（本地 skills zip + .sha256）：
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 `
-  -Version 0.13.8 -ZipPath .\goal-governance-skills-v0.13.8.zip -Force
+  -Version 0.14.0 -ZipPath .\goal-governance-skills-v0.14.0.zip -Force
 ```
 
 ```bash
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.13.8/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.14.0/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.13.8 --force
+bash ./install-online.sh --version 0.14.0 --force
 
 # 离线：
-bash ./install-online.sh --version 0.13.8 --zip-path ./goal-governance-skills-v0.13.8.zip --force
+bash ./install-online.sh --version 0.14.0 --zip-path ./goal-governance-skills-v0.14.0.zip --force
 ```
 
 Bootstrap 会：校验 SHA-256 → 落到 `./skills` → 调用包内 install **默认 `-All` / `--all`**（四入口 + core → `docs/`）。digest 失败 **fail closed**。详见 [scripts/bootstrap/README.md](../scripts/bootstrap/README.md)。

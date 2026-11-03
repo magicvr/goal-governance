@@ -1,0 +1,214 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-11-03T10:25:36.492459+00:00",
+  "unit": {
+    "consumer": "github-copilot-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "GitHub Copilot CLI",
+    "version": "1.0.75",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gemini-3.8-flash-high"
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "acd362d2e27b6c52b6e151a4585f3259601ca04f58b485303a10f4c63cae4d63"
+    },
+    {
+      "path": "docs/architecture/governance-guide.md",
+      "sha256": "318829cf0de11b6a0a01dc73e2ac574880dffe77af2c3c518fc10fcb07e58f63"
+    },
+    {
+      "path": "docs/templates/governance-entry.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "03dbf83c052eb2f89e885a51025429f4d589455494b66efe2b2b9eb6c6dd69c1"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "23dc3a51c3c116b664717cdfd08b84cab49a9b069c01c6a30116fc83508c3d3e"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "c0e19200e2fdd787bcfcdd20d4ffbf9081fb0b048db8a12ab068ac3e65970110"
+    },
+    {
+      "path": "skills/prompts/01-create-new-goal.md",
+      "sha256": "8632680807c9d5fba6c644422d0e9c113059ad338b9800b48ab9d6bfd15bf391"
+    },
+    {
+      "path": "skills/prompts/02-record-decision.md",
+      "sha256": "9958be60684b9122032f3e3090cbae9eaa8381bda41e761c61110fc3f8355508"
+    },
+    {
+      "path": "skills/prompts/03-update-execution.md",
+      "sha256": "1e393a2bf3b9041e6a278211ec3037bd19954b445d2f734f0aa9887ed9f089ba"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "c7e2177d76eefca6a287d425dcd9abd6abb8d91c5a71f0683024bd8735c7b2e3"
+    },
+    {
+      "path": "skills/install/copilot/prompts/govern.md",
+      "sha256": "f7899d0e99bb5362975b99688b3104db76e49e2c2c55fcd99f83d0a711371132"
+    },
+    {
+      "path": "skills/install/copilot/copilot-instructions.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "mcp/entries.py",
+      "sha256": "0f52f7196dc2f7482b4b6080c3e7378225c8500d7aee76712b315ba9cd7622f7"
+    },
+    {
+      "path": "mcp/kernel.py",
+      "sha256": "b0168b2ea8dcd8577e4e5d6214409c9139daa97da240a05b4468ff0337aa4ff6"
+    },
+    {
+      "path": "mcp/server.py",
+      "sha256": "a0871a21dcfdd3f0e1062ea157f32dd5163ddb7803796e05a1accd84e695a248"
+    },
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/attachments/s3-runtime/copilot-catalog-01/fixture-mcp-catalog.json",
+      "sha256": "45d34ee7ded02b041a206eb4f14c3e80e6d7e5a2285c4026cd02413817373acf"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Windows\\system32\\cmd.exe",
+      "/d",
+      "/c",
+      "C:\\Users\\magicvr\\AppData\\Roaming\\npm\\copilot.CMD",
+      "--prompt",
+      "/govern 四入口只读 dispatch 核对。读取 mcp-catalog.json（实际本地 stdio initialize/tools/list/四次 tools/call 的结果）及适用标准入口，报告四个入口名称、层级、写入台账边界，以及 AD-01 和 UI-01 的约束；区分 host 入口核对与本地 MCP 进程证据。只读，不执行任何独立审计或改变目标/愿景，不启动子代理。只有核对成功才输出 MCP_L3_FOUR_ENTRY_OK；回显提示不算完成。",
+      "--no-auto-update",
+      "--no-remote-export",
+      "--disable-builtin-mcps",
+      "--model",
+      "gemini-3.8-flash-high",
+      "--allow-tool=read,write",
+      "--excluded-tools=shell",
+      "--no-ask-user",
+      "--output-format",
+      "json",
+      "--silent"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal017-s3-0c6b6774",
+    "timeoutSeconds": 600,
+    "inputSha256": "a24f91ec9295f7c21c114cc6e997d7e16b4bba144a837b54ab5d25e1c0fc6d2b",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /govern invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/attachments/s3-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/attachments/s3-runtime/copilot-catalog-01/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "MCP_L3_FOUR_ENTRY_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "MCP_L3_FOUR_ENTRY_OK",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "MCP_L3_FOUR_ENTRY_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-2",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-3",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-4",
+        "kind": "substring",
+        "pattern": "AD-01",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-5",
+        "kind": "substring",
+        "pattern": "UI-01",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.14.0/copilot-mcp-four-entry.d/stdout.txt",
+    "stdoutSha256": "47ee0a49b625a15a31dd6fb2542b35a6f874af6beee2500da5cadb95a3487ea6",
+    "stderrPath": "docs/releases/runtime/v0.14.0/copilot-mcp-four-entry.d/stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

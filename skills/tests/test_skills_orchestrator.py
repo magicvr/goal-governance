@@ -66,6 +66,21 @@ RUNTIME_EVIDENCE_SCHEMA_ID = (
 )
 
 
+def read_rule_contract(path: Path) -> str:
+    """Follow the shipped minimal entry when testing the full rule semantics."""
+    text = path.read_text(encoding="utf-8")
+    entries = {
+        SKILLS_ROOT / "AGENTS.template.md",
+        SKILLS_ROOT / "install" / "claude" / "AGENTS.md",
+        SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
+    }
+    if path in entries:
+        if "architecture/governance-guide.md" not in text:
+            raise AssertionError(f"minimal entry has no guide pointer: {path}")
+        return (SKILLS_ROOT / "core/docs/architecture/governance-guide.md").read_text(encoding="utf-8")
+    return text
+
+
 def normalized_sha256(path: Path) -> str:
     """Hash repository text with checkout line endings normalized to LF."""
     payload = path.read_bytes().replace(b"\r\n", b"\n")
@@ -634,7 +649,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.13.8")
+        self.assertEqual(matrix["candidateRevision"], "v0.14.0")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -668,8 +683,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "github-copilot-cli",
             },
         )
-        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.301")
-        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.60")
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.317")
+        self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.70 (f50904eaee6c)")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
@@ -695,7 +710,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 for path in entry["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertRegex(path, EVIDENCE_DATED_RE)
-                    self.assertIn(f"v0.13.8/{consumer_id}-{name}-", path.replace("\\", "/"))
+                    self.assertIn(f"v0.14.0/{consumer_id}-{name}-", path.replace("\\", "/"))
             vision = entrypoints["vision"]
             self.assertIn("vision", vision["evidence"][0])
             vision_audit = entrypoints["vision-audit"]
@@ -863,7 +878,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             ),
         }
         for path, bounds in rule_sections.items():
-            body = section(path.read_text(encoding="utf-8"), *bounds)
+            body = section(read_rule_contract(path), *bounds)
             with self.subTest(path=str(path), case="research-deadlock"):
                 self.assertFalse(
                     blocks_entry(body, answer_only_after_work=True),
@@ -898,7 +913,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         )
         for path in checklist_paths:
             matched = False
-            for line in path.read_text(encoding="utf-8").splitlines():
+            for line in read_rule_contract(path).splitlines():
                 if (
                     "本次要推进的阶段没有开放 required 信息门禁" in line
                     or "未跨越到期 required 信息门禁" in line
@@ -959,6 +974,8 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         required = (
             core / "README.md",
             core / "architecture" / "principles.md",
+            core / "architecture" / "governance-guide.md",
+            core / "templates" / "governance-entry.md",
             core / "architecture" / "workspace-protocol.md",
             core / "architecture" / "overview.md",
             core / "architecture" / "directory-layout.md",
@@ -1180,7 +1197,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertNotIn("未来 /vision", agents)
         self.assertRegex(agents, r"同级必备|原则全文\*\*必备\*\*|必备.*同级")
         self.assertIn("完整安装必备", agents)
-        template = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
+        template = read_rule_contract(SKILLS_ROOT / "AGENTS.template.md")
         self.assertIn("P-001～**P-006**", template)
         self.assertNotIn("P-001～P-005 全文", template)
 
@@ -1213,7 +1230,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertRegex(sh, r"INSTALL_PRIMITIVE_WRAPPERS.*1|with-primitives")
 
     def test_agents_template_does_not_force_web_app_dir(self) -> None:
-        text = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
+        text = read_rule_contract(SKILLS_ROOT / "AGENTS.template.md")
         self.assertIn("代码与文档边界", text)
         self.assertRegex(text, r"仓库根")
         self.assertRegex(text, r"默认策略|问用户|待确认")
@@ -1239,7 +1256,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             COPILOT_PROMPTS / "audit.md",
         )
         for path in paths:
-            text = path.read_text(encoding="utf-8")
+            text = read_rule_contract(path)
             self.assertRegex(
                 text,
                 r"P-005|信息就绪|I-00N",
@@ -1253,7 +1270,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             COPILOT_PROMPTS / "write-audit.md",
         )
         for path in advanced:
-            text = path.read_text(encoding="utf-8")
+            text = read_rule_contract(path)
             self.assertRegex(
                 text,
                 r"P-005|信息就绪|I-00N",
@@ -1268,7 +1285,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
         )
         for path in paths:
-            text = path.read_text(encoding="utf-8")
+            text = read_rule_contract(path)
             for marker in (
                 "`closed`/`abandoned`",
                 "**版本语义**",
@@ -1307,7 +1324,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             "05-independent-audit.md",
         ))
         for path in core_prompts:
-            text = path.read_text(encoding="utf-8")
+            text = read_rule_contract(path)
             self.assertRegex(
                 text,
                 r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspaces/workspace-<NNN>-<slug>/workspace\.md",
@@ -1336,7 +1353,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             COPILOT_PROMPTS / "audit.md",
         )
         for path in rule_surfaces:
-            text = path.read_text(encoding="utf-8")
+            text = read_rule_contract(path)
             self.assertRegex(
                 text,
                 r"(?:\{governance_root\}|\{\{GOVERNANCE_ROOT\}\})/workspaces/workspace-<NNN>-<slug>/workspace\.md",
@@ -1363,7 +1380,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             SKILLS_ROOT / "install" / "copilot" / "copilot-instructions.md",
         )
         for path in surfaces:
-            text = path.read_text(encoding="utf-8")
+            text = read_rule_contract(path)
             self.assertIn(
                 "6e.1 层级命名与判定谓词",
                 text,
@@ -1441,7 +1458,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
 
     def test_portability_skills_pkg_and_required_architecture(self) -> None:
         """Package may rename skills dir; architecture is co-required (GOAL-019)."""
-        template = (SKILLS_ROOT / "AGENTS.template.md").read_text(encoding="utf-8")
+        template = read_rule_contract(SKILLS_ROOT / "AGENTS.template.md")
         orch = (PROMPTS / "00-govern-orchestrator.md").read_text(encoding="utf-8")
         govern = (COPILOT_PROMPTS / "govern.md").read_text(encoding="utf-8")
         create01 = (PROMPTS / "01-create-new-goal.md").read_text(encoding="utf-8")
@@ -1457,7 +1474,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
             )
         # Architecture is required for complete install — not optional product framing
         self.assertRegex(template, r"同级必备|必备")
-        self.assertIn("{{GOVERNANCE_ROOT}}/architecture/principles.md", template)
+        self.assertIn("{governance_root}/architecture/principles.md", template)
         self.assertRegex(orch, r"不完整安装|同级必备")
         self.assertIn("{governance_root}/architecture/principles.md", orch)
         self.assertRegex(govern, r"不完整安装|同级必备|principles")
@@ -1623,7 +1640,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         )
         for path in sources:
             self.assertTrue(path.is_file(), f"missing independent Vision Review entry: {path}")
-            text = path.read_text(encoding="utf-8")
+            text = read_rule_contract(path)
             self.assertIn("07-independent-vision-review", text)
             self.assertIn("reviews.md", text)
             self.assertIn("/vision", text)

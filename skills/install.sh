@@ -511,6 +511,8 @@ install_core_docs() {
   [[ -d "$core_docs/templates" ]] || die "Missing package core mirror: $core_docs/templates (GOAL-019 D-004)"
   [[ -f "$core_docs/README.md" ]] || die "Missing package core mirror: $core_docs/README.md (GOAL-019 D-004)"
   [[ -f "$core_docs/architecture/principles.md" ]] || die "Missing principles.md in core mirror"
+  [[ -f "$core_docs/architecture/governance-guide.md" ]] || die "Missing governance-guide.md in core mirror"
+  [[ -f "$core_docs/templates/governance-entry.md" ]] || die "Missing governance-entry.md in core mirror"
   [[ -f "$core_docs/architecture/workspace-protocol.md" ]] || die "Missing workspace-protocol.md in core mirror"
   if [[ -f "$core_docs/architecture/tech-stack.md" ]]; then
     die "core mirror must not ship tech-stack.md (D-004)"
@@ -770,7 +772,7 @@ fi
 
 if [[ "$INSTALL_COPILOT" -eq 1 ]]; then
   mkdir -p "$TARGET_DIR/.github"
-  copy_file "$COPILOT_SRC" "$TARGET_DIR/.github/copilot-instructions.md"
+  merge_rendered_agents "$COPILOT_SRC" "$TARGET_DIR/.github/copilot-instructions.md"
 
   mkdir -p "$TARGET_DIR/.github/prompts"
   # Default product surface: impl + Goal audit + vision decision + independent Vision Review

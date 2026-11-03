@@ -68,6 +68,6 @@ Goal 交叉意见由 `/audit` 写入；独立 Vision Review 由 `/vision-audit` 
 | 路径 | 角色 |
 |------|------|
 | [{governance_root}/templates/goal-folder/](../../docs/templates/goal-folder/) | 核心 canonical 目标模板（本仓库） |
-| [../AGENTS.template.md](../AGENTS.template.md) | 规则正文 |
-| [../templates/goal-folder/](../templates/goal-folder/) | Skills 分发模板镜像 |
+| [../AGENTS.template.md](../AGENTS.template.md) | 最小按需入口（全文见治理根 architecture/governance-guide.md） |
+| [../core/docs/templates/goal-folder/](../core/docs/templates/goal-folder/) | Skills 分发模板镜像 |
 | [../install/](../install/) | 各宿主 skill / slash 安装源 |

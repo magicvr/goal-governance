@@ -2,9 +2,9 @@
 title: 架构概览
 status: active
 created: 2026-07-18
-updated: 2026-08-10
+updated: 2026-11-03
 parent: null
-version: 0.10.0
+version: 0.11.0
 ---
 
 # 架构概览
@@ -60,7 +60,8 @@ version: 0.10.0
 | `{governance_root}/architecture/` | 技术与架构约定、[治理原则](principles.md)、[工作区协议](workspace-protocol.md) |
 | `{governance_root}/_index/` | 预留索引/术语 |
 | `skills/` | AI/Agent 消费适配器、安装包与模板/契约分发镜像 |
-| `AGENTS.md` | AI 强制规则 |
+| `AGENTS.md` | 消费仓最小按需入口（维护者可保留维护规则） |
+| `{governance_root}/architecture/governance-guide.md` | 治理时加载的完整操作指南 |
 
 ## 当前阶段（现时）
 

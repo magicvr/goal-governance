@@ -107,7 +107,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
             self._assert_vision_shape(target)
             self._assert_root_shape(target)
             self._assert_workspace_shape(target)
-            self.assertIn("P-005", (target / "AGENTS.md").read_text(encoding="utf-8"))
+            self.assertIn("governance-guide.md", (target / "AGENTS.md").read_text(encoding="utf-8"))
             self.assertIn("P-006", (target / "AGENTS.md").read_text(encoding="utf-8"))
             principles = (target / "docs" / "architecture" / "principles.md").read_text(
                 encoding="utf-8"
@@ -202,10 +202,8 @@ class StandaloneBootstrapTests(unittest.TestCase):
             # The guide calls for project-owned equivalent rules, not producer AGENTS.
             common = {"status": "active", "created": DATE, "updated": DATE,
                       "parent": "null", "version": "0.1.0"}
-            (target / "AGENTS.md").write_text(self._frontmatter(
-                common, "# 项目规则\n\n遵守 docs/architecture/principles.md、"
-                "workspace-protocol.md 与 docs/vision/alignment.md。\n"
-            ), encoding="utf-8")
+            entry = (target / "docs/templates/governance-entry.md").read_text(encoding="utf-8")
+            (target / "AGENTS.md").write_text(entry.replace("{{GOVERNANCE_ROOT}}", "docs"), encoding="utf-8")
             self._materialize_vision(target)
             vision = target / "docs" / "vision"
             for name in ("revisions.md", "workspaces.md", "consumer-checklist.md"):
@@ -244,7 +242,7 @@ class StandaloneBootstrapTests(unittest.TestCase):
         source_docs = REPO_ROOT / "docs"
         (target / "docs").mkdir()
         (target / "docs" / "vision").mkdir()
-        shutil.copy2(REPO_ROOT / "AGENTS.md", target / "AGENTS.md")
+        (target / "AGENTS.md").write_text((REPO_ROOT / "docs/templates/governance-entry.md").read_text(encoding="utf-8").replace("{{GOVERNANCE_ROOT}}", "docs"), encoding="utf-8")
         shutil.copy2(source_docs / "README.md", target / "docs" / "README.md")
         shutil.copy2(source_docs / "standalone-bootstrap.md", target / "docs" / "standalone-bootstrap.md")
         shutil.copytree(source_docs / "architecture", target / "docs" / "architecture")

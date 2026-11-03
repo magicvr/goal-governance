@@ -51,6 +51,8 @@ def _minimal_skills_tree(root: Path) -> Path:
     # GOAL-019 D-004 core mirror (required for pack completeness)
     _write(skills / "core" / "docs" / "README.md", "# docs\n")
     _write(skills / "core" / "docs" / "architecture" / "principles.md", "# p\n")
+    _write(skills / "core" / "docs" / "architecture" / "governance-guide.md", "# guide\n")
+    _write(skills / "core" / "docs" / "templates" / "governance-entry.md", "# entry\n")
     _write(
         skills / "core" / "docs" / "architecture" / "workspace-protocol.md",
         "# wp\n",
@@ -314,7 +316,7 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         self.assertIn("Evidence consistency gate (M-001)", pack_block)
         self.assertIn("capture_runtime_evidence.py --check", pack_block)
         self.assertIn(
-            "--evidence-dir docs/releases/runtime/v0.13.8",
+            "--evidence-dir docs/releases/runtime/v0.14.0",
             pack_block,
         )
         # The gate must run after deps are installed (jsonschema) and before

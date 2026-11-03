@@ -384,7 +384,7 @@ class SkillsUpdateTests(unittest.TestCase):
             )
             agents_text = agents.read_text(encoding="utf-8")
             self.assertIn("methodology/architecture", agents_text)
-            self.assertIn("my-skills", agents_text)
+            self.assertTrue((target / "my-skills/prompts/00-govern-orchestrator.md").is_file())
             self.assertNotIn("{{GOVERNANCE_ROOT}}", agents_text)
             self.assertNotIn("{{SKILLS_DIR}}", agents_text)
             self.assertNotIn("{governance_root}", principles.read_text(encoding="utf-8"))

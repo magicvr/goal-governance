@@ -1,0 +1,14 @@
+我先做治理根预检和身份解析，通过后再读审计提示词并审 workspace-002 的 goal-017。配置文件不存在，治理根按默认 `docs`。接下来完整读取审计提示词和治理权威文档。权威文档已读完。命令 `/audit workspace-002 goal-017` 合法。接下来只做布局检测和身份字段校验，通过前不读目标正文。身份已唯一绑定：[workspace-002-methodology-skills-feedback] GOAL-017-on-demand-governance-context。开始通读该目标台账并自行确定审计范围。清点仍在变化。已核对的失败格和通过格足以写出意见：S3 证据还不能当作退出依据。正在把独立意见写入 A-002。**conditional**。[workspace-002-methodology-skills-feedback] GOAL-017-on-demand-governance-context 的 S2 入口预算、提示词接线和三份测试日志可以核对。S3 还不能退出。
+
+必改项：
+
+- **F-001（required，open）**：代表运行证据还不是一套可接受的集合。兼容矩阵仍是 `v0.13.8`。Claude vision-audit 与 Claude MCP 信封是 `fail`：工具列表没有 Bash 时，符号链接预检停住，没有读完整指南。Claude audit 的第一份失败之后有一份带 Bash 的 pass 重试，但不能填补其余失败格。`v0.14.0/` 在本审计期间仍在增加文件。
+- **F-002（recommended，open）**：`00-meta.md` 的「当前阻塞」、执行索引末段和 Root 概述仍写着 0% 或「尚未实施」，与路线图、信息表和 goal-tree 的 50% 不一致。E-003 所引的 65 项测试在 `s2-*.txt` 里没有 `Ran 65`。
+
+意见已写入 `docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/03-audit/A-002-s3-independent-review.md`，并登记在 `03-audit.md`。A-001 的 F-001 仍开放。本意见未改 status、progress 或 goal-tree。
+
+建议下一步：
+
+```text
+/govern 响应 [workspace-002-methodology-skills-feedback] GOAL-017 的 A-002：冻结当前行为源的完整运行证据，用能完成符号链接检查的工具列表重抓 Claude vision-audit 与 Claude MCP，更新兼容矩阵后再处理 A-001/A-002 的 required
+```

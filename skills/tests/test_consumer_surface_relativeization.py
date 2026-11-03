@@ -184,6 +184,9 @@ class ConsumerSurfaceE2ETests(unittest.TestCase):
         template = (SKILLS / "AGENTS.template.md").read_text(encoding="utf-8")
         agents = template.replace("{{GOVERNANCE_ROOT}}", ConsumerSurfaceE2ETests.NON_DOCS_ROOT)
         (consumer / "AGENTS.md").write_text(agents, encoding="utf-8")
+        guide = consumer / "governance/architecture/governance-guide.md"
+        guide.parent.mkdir(parents=True)
+        guide.write_text((SKILLS / "core/docs/architecture/governance-guide.md").read_text(encoding="utf-8").replace("{governance_root}", "governance"), encoding="utf-8")
         # Installed shells: prompts condensation with the literal placeholder.
         for name in ("govern", "audit", "vision", "vision-audit"):
             shell = (
@@ -199,7 +202,7 @@ class ConsumerSurfaceE2ETests(unittest.TestCase):
         """Extract backticked path-like references (relative root paths)."""
         return [
             token.strip("`").strip()
-            for token in re.findall(r"`([^`]+)`", text)
+            for token in re.findall(r"`([^`]+)`", text) + re.findall(r"\]\(([^)]+)\)", text)
             if re.match(r"^(?:governance|\{governance_root\})/", token)
         ]
 
@@ -209,7 +212,10 @@ class ConsumerSurfaceE2ETests(unittest.TestCase):
             agents = (consumer / "AGENTS.md").read_text(encoding="utf-8")
             # No bare docs/ anywhere in the installed rule file.
             self.assertEqual(BARE_DOCS.findall(agents), [])
-            # Key protocol paths now read under the non-docs root.
+            # Minimal entry resolves the installed full guide under the configured root.
+            self.assertIn("governance/architecture/governance-guide.md", agents)
+            self.assertLess(len(agents.encode("utf-8")), 4096)
+            guide = (consumer / "governance/architecture/governance-guide.md").read_text(encoding="utf-8")
             for fragment in (
                 "governance/architecture/principles.md",
                 "governance/workspaces/workspace-<NNN>-<slug>/",
@@ -218,7 +224,7 @@ class ConsumerSurfaceE2ETests(unittest.TestCase):
                 "governance/goals/",
                 "governance/README.md",
             ):
-                self.assertIn(fragment, agents, msg=f"missing {fragment}")
+                self.assertIn(fragment, guide, msg=f"missing {fragment}")
 
     def test_installed_shells_read_paths_under_governance_root(self) -> None:
         with tempfile.TemporaryDirectory(prefix="gg-e2e-shells-") as tmp:

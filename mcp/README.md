@@ -18,7 +18,7 @@ File 发布资产（skills zip）**不**包含本目录代码；MCP 通道的发
 ## 运行形态
 
 - **主消费形态（R4）**：**Docker 镜像** `ghcr.io/magicvr/goal-governance-mcp-server:<版本>`
-（与 GitHub Release 同 tag 同版本，如 tag `v0.13.8` → 镜像 `:0.13.8`；另有 `latest`）。
+（与 GitHub Release 同 tag 同版本，如 tag `v0.14.0` → 镜像 `:0.14.0`；另有 `latest`）。
   固定入口：`python server.py --repo-root /workspace`（MCP client 零参数，见下）。
 - **本地 stdio 进程形态仍合法**（VP-004：不强制 Docker-only）：
   `python mcp/server.py [--repo-root PATH]`。
@@ -28,10 +28,10 @@ File 发布资产（skills zip）**不**包含本目录代码；MCP 通道的发
 
 ```bash
 # 拉取（版本与 GitHub Release tag vX.Y.Z 对应；latest 指向最新发布）
-docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.13.8
+docker pull ghcr.io/magicvr/goal-governance-mcp-server:0.14.0
 
 # 手动验证（stdio 直连；将 <仓库根> 换为消费仓路径）
-docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.8
+docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.14.0
 ```
 
 **MCP client 配置**（mcpServers，stdio 直连容器，零参数；固定入口自动使用
@@ -41,7 +41,7 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 {
   "goal-governance": {
     "command": "docker",
-    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.13.8"]
+    "args": ["run", "-i", "--rm", "-v", "<仓库根>:/workspace", "ghcr.io/magicvr/goal-governance-mcp-server:0.14.0"]
   }
 }
 ```
@@ -49,8 +49,8 @@ docker run -i --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-m
 镜像内亦可调用其他 CLI（覆盖 CMD），如 lifecycle：
 
 ```bash
-docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.13.8 \
-  lifecycle.py install --root /workspace --version 0.13.8 --channel mcp --confirm
+docker run --rm -v "<仓库根>:/workspace" ghcr.io/magicvr/goal-governance-mcp-server:0.14.0 \
+  lifecycle.py install --root /workspace --version 0.14.0 --channel mcp --confirm
 ```
 
 镜像构建（发布由 `skills-pack-release.yml` tag 流程自动完成）：`docker build -t <tag> mcp/`。
@@ -140,3 +140,5 @@ MCP 客户端配置指向容器（stdio 直连，见上）或本地 `python mcp/
 - L1 MCP = 真启动 server 进程的直接测试；L1 File = 直接驱动 File 资产（无 MCP mock）。
 - L2 = `kernel.check_equivalence` 同一组断言驱动两通道；角色事实从两通道**真实资产独立提取**（File 侧读 prompt 正文短语，MCP 侧读 `tools/list` description 并解析层级前缀），其余检查点（台账边界、fail closed 声明、单愿景等）为协议 SSOT 防漂移断言。
 - L3 = 承诺宿主抽稀真探针：覆盖四治理入口在宿主侧的 dispatch 与角色边界（File skill 面）；MCP stdio 客户端路径由 L1/L2 确定性覆盖。宿主 × MCP 通道的全链路长剧不在 R1 范围（VP-004 明确「不要求完整治理长剧 + 真模型全链路」）。
+
+薄壳根规则同样按需加载治理根 `architecture/governance-guide.md`。MCP lifecycle 仅写其 allowlist，不替代完整 core 安装；缺指南时宿主依 guidance 停止治理并补装 core。普通业务任务不要求加载全文。

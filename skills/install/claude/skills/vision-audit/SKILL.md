@@ -22,6 +22,8 @@ metadata:
 
 治理根预检：配置存在时必须先读仓库根 `.goal-governance.json`，校验 JSON 与 `governance_root` 的类型、仓内相对路径及解析后的边界（含符号链接）；只有配置文件不存在才默认 `docs`。配置非法/仓外逃逸立即停止，不扫描 Goal/VP 正文、不分配审计编号、不写台账，不回退 `docs` 或包内镜像。随后才在已验证根读取权威与解析身份。
 
+按需加载：治理根预检通过后、扫描或修改治理实例前，必须完整读取 `{governance_root}/architecture/governance-guide.md`，并读取同根 `architecture/principles.md`、`architecture/workspace-protocol.md` 与 `vision/alignment.md`。指南或必备权威缺失/不可读时停止受影响治理操作并补装 core，不以根入口摘要或包内镜像替代。普通业务代码与一般文档任务不触发治理全文加载。
+
 - 先读 `{governance_root}/architecture/principles.md` 的 **AD-01～AD-06** 与 **UI-01～UI-06**，以及 workspace-protocol §2.7。自动审计正文仅 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`；带标签编号唯一绑定完整身份，拒绝裸数字、非法编号、多余参数、换行/包装，不截断后执行。
 - 自动派发禁止自编提示词、scope/文件清单/结论预期及隐藏上下文注入；使用干净会话，不复制编排历史，审计员自主扫描和定 scope。正式入口不可用则门禁未满足，不用自由提示兜底；人类直调关注点不作为自动请求的豁免。
 - 需用户信息时同步阻塞询问卡片优先；不可用/用途受限/headless 无答复通路则文本提问并停止。空返回、取消/关闭/超时、缺题、预选未提交均未答，不补默认或虚构答复，不以权限批准/工具成功当答案；部分答复仍等待其余。

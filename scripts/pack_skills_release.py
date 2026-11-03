@@ -136,6 +136,8 @@ def inventoriable_files(skills_root: Path) -> list[Path]:
         # GOAL-019 D-004 core methodology mirror (co-required with Skills)
         root / "core" / "docs" / "README.md",
         root / "core" / "docs" / "architecture" / "principles.md",
+        root / "core" / "docs" / "architecture" / "governance-guide.md",
+        root / "core" / "docs" / "templates" / "governance-entry.md",
         root / "core" / "docs" / "architecture" / "workspace-protocol.md",
         root / "core" / "docs" / "architecture" / "overview.md",
         root / "core" / "docs" / "architecture" / "directory-layout.md",

@@ -1,0 +1,46 @@
+{
+  "scope": "Representative actual Claude Code CLI on-demand loading; not a system-wide read barrier",
+  "positive": {
+    "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/attachments/s3-runtime/claude-govern-02/observation.json",
+    "call": {
+      "event": "tool-call",
+      "input": {
+        "file_path": "C:/Users/magicvr/AppData/Local/Temp/gg-goal017-s3-084b644b/docs/architecture/governance-guide.md"
+      },
+      "name": "Read",
+      "toolUseId": "call_iwpWmBdevNOhDVFogvB9upsc"
+    },
+    "result": {
+      "contentLength": 33698,
+      "contentSha256": "584e77148a393cc4985429ff7d8a25672614621b114533f9168919ef45edba1e",
+      "event": "tool-result",
+      "isError": false,
+      "toolUseId": "call_iwpWmBdevNOhDVFogvB9upsc"
+    },
+    "defaultFullFileRead": true
+  },
+  "ordinary": {
+    "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/attachments/s3-runtime/claude-ordinary-ordinary-01/observation.json",
+    "actualToolCalls": [
+      {
+        "event": "tool-call",
+        "input": {
+          "pattern": "**/counter.py"
+        },
+        "name": "Glob",
+        "toolUseId": "call_NWijuWBJGh82PQIeVAFZqq2u"
+      },
+      {
+        "event": "tool-call",
+        "input": {
+          "file_path": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal017-s3-c8199c22\\counter.py"
+        },
+        "name": "Read",
+        "toolUseId": "call_bq1cSRMWLihBK1qI2S04NPxm"
+      }
+    ],
+    "guideReadCalls": 0,
+    "changed": []
+  },
+  "sourceGuideSha256": "46e66ea672fa471ecb38bd23ab89094f6012580fb25759b2a56a7e18b088eeb1"
+}

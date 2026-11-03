@@ -2,7 +2,7 @@
 title: 提示词 · 写审计意见 / 阶段复盘
 status: active
 created: 2026-07-18
-updated: 2026-10-16
+updated: 2026-11-03
 parent: null
 version: 0.9.0
 role: primitive
@@ -27,8 +27,14 @@ role: primitive
 ## 提示词正文
 
 ```markdown
+# 治理根预检与按需加载
+
+治理根预检：配置存在时必须先读仓库根 `.goal-governance.json`，校验 JSON 与 `governance_root` 的类型、仓内相对路径及解析后的边界（含符号链接）；只有配置文件不存在才默认 `docs`。配置非法/仓外逃逸立即停止，不扫描 Goal/VP 正文、不分配审计编号、不写台账，不回退 `docs` 或包内镜像。随后才在已验证根读取权威与解析身份。
+
+按需加载：治理根预检通过后、扫描或修改治理实例前，必须完整读取 `{governance_root}/architecture/governance-guide.md`，并读取同根 `architecture/principles.md`、`architecture/workspace-protocol.md` 与 `vision/alignment.md`。指南或必备权威缺失/不可读时停止受影响治理操作并补装 core，不以根入口摘要或包内镜像替代。普通业务代码与一般文档任务不触发治理全文加载。
+
 # 角色
-你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`（含 §6b / P-002～P-005）。
+你是本项目的目标治理协作者。遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`；操作规则见完整指南 §6b / P-002～P-005。
 
 # 任务
 在指定目标的 `03-audit/` **创建**一条编号审计意见并更新 `03-audit.md` 索引（保留历史）。基于 meta / decision / execution **已有事实**；禁止编造成果。

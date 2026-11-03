@@ -2,9 +2,9 @@
 title: 核心包独立启用说明
 status: active
 created: 2026-07-19
-updated: 2026-10-26
+updated: 2026-11-03
 parent: null
-version: 0.10.0
+version: 0.11.0
 ---
 
 # 核心包独立启用说明
@@ -23,6 +23,8 @@ version: 0.10.0
 
 本说明文件为 **Recommended**，随 core-only 与 Skills 包分发，Skills 安装器会复制到配置的治理根。缺少说明不构成不完整安装，也不阻断推进；“同表”约束完整安装判定，不把说明本身升级为 MUST。
 
+完整操作规则 `{governance_root}/architecture/governance-guide.md` 为 MUST，与 alignment 权威表一致；根规则只保留最小按需入口。未进行治理的任务不要求读取该指南；治理操作前必须实际加载。
+
 ## 适用边界
 
 > **治理根（`governance_root`，默认 `docs`）**：下文 `docs/…` 路径默认落盘到治理根 `docs/`；消费仓若通过 `.goal-governance.json` 配置其他相对根（如 `governance/`），将目标侧 `docs/` 替换为 `{governance_root}/` 即可，根下内部相对布局不可改（VP-004 R3）。
@@ -31,7 +33,7 @@ version: 0.10.0
 
 | 来源 | 复制到目标仓库 | 用途 |
 |------|----------------|------|
-| `AGENTS.md` | 根目录 `AGENTS.md` | AI 与协作者的强制规则 |
+| `docs/templates/governance-entry.md` | 根目录 `AGENTS.md` 的受管块 | 最小按需入口（替换治理根占位符；已有规则时仅合并受管块） |
 | `docs/README.md` | `{governance_root}/README.md` | 核心文档入口与协议索引 |
 | `docs/standalone-bootstrap.md` | `{governance_root}/standalone-bootstrap.md` | 本说明（Recommended，离线操作参考） |
 | `docs/architecture/` | `{governance_root}/architecture/` | 架构约定与 **P-001～P-006** |
@@ -46,7 +48,7 @@ version: 0.10.0
 
 ## 1. 建立空 Git 仓库并复制核心层
 
-**从 monorepo 操作**：下面 `$source` 是源码仓根，包含根 `AGENTS.md` 和 `docs/`。**从 core-only ZIP 操作**：解压根包含 `README.md` 与 `docs/`，将整个 `docs/` 复制到目标治理根，再按 alignment MUST 表创建项目自己的根 `AGENTS.md`（或等价 AI 规则）；包不含源码仓根 `AGENTS.md`、测试脚本或愿景实例，不要直接执行依赖它们的源码复制命令。**已安装 Skills**：核心层及本说明已在治理根，直接进入第 2 节，不重复复制或覆盖已有项目实例。
+**从 monorepo 操作**：下面 `$source` 是源码仓根，包含根 `AGENTS.md` 和 `docs/`。**从 core-only ZIP 操作**：解压根包含 `README.md` 与 `docs/`，将整个 `docs/` 复制到目标治理根，再从 `docs/templates/governance-entry.md` 创建项目自己的根 `AGENTS.md`（或等价 AI 规则），将 `{{GOVERNANCE_ROOT}}` 替换为实际治理根；包不含源码仓根 `AGENTS.md`、测试脚本或愿景实例，不要直接执行依赖它们的源码复制命令。**已安装 Skills**：核心层及本说明已在治理根，直接进入第 2 节，不重复复制或覆盖已有项目实例。
 
 core-only 的 `docs/README.md`、architecture、templates、vision 规则与 Skills 内嵌 core 字节一致；本说明在两种包内均可离线阅读。下文 `consumer-checklist` 等愿景树文件在冷启动时生成，未初始化前不要求包预装实例。
 
@@ -60,7 +62,9 @@ git -C $target init
 New-Item -ItemType Directory -Path (Join-Path $target 'docs') | Out-Null
 New-Item -ItemType Directory -Path (Join-Path $target 'docs\vision') | Out-Null
 # 以下命令示例以默认 governance_root = docs 落盘；配置其他根时替换目标侧 docs/。
-Copy-Item (Join-Path $source 'AGENTS.md') (Join-Path $target 'AGENTS.md')
+# 新空仓使用最小入口；已有 AGENTS 时只替换/追加 managed 块，保留块外字节。
+$entryText = (Get-Content -Raw (Join-Path $source 'docs/templates/governance-entry.md')).Replace('{{GOVERNANCE_ROOT}}', 'docs')
+[System.IO.File]::WriteAllText((Join-Path $target 'AGENTS.md'), $entryText)
 Copy-Item (Join-Path $source 'docs/README.md') (Join-Path $target 'docs/README.md')
 Copy-Item (Join-Path $source 'docs/standalone-bootstrap.md') (Join-Path $target 'docs/standalone-bootstrap.md')
 Copy-Item -Recurse (Join-Path $source 'docs/architecture') (Join-Path $target 'docs/architecture')

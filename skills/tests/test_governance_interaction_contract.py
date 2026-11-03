@@ -11,6 +11,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from skills.tests.test_skills_orchestrator import read_rule_contract
 from mcp.entries import tool_definitions
 from mcp.server import MCPServer
 
@@ -47,7 +48,7 @@ class GovernanceInteractionContractTests(unittest.TestCase):
         for source, installed in surfaces():
             for path in (source, installed):
                 with self.subTest(path=path.relative_to(ROOT).as_posix()):
-                    text = path.read_text(encoding="utf-8")
+                    text = read_rule_contract(path)
                     for contract in ("AD-01～AD-06", "UI-01～UI-06"):
                         self.assertIn(contract, text)
                     self.assertIn("{governance_root}/architecture/principles.md", text)
@@ -97,7 +98,7 @@ class GovernanceInteractionContractTests(unittest.TestCase):
         vp_only = [ROOT / "docs/vision/alignment.md"]
         for path in both:
             with self.subTest(path=path.relative_to(ROOT).as_posix()):
-                text = path.read_text(encoding="utf-8")
+                text = read_rule_contract(path)
                 self.assertIn(goal_cmd, text)
                 self.assertIn(vp_cmd, text)
         for path in vp_only:
@@ -105,7 +106,7 @@ class GovernanceInteractionContractTests(unittest.TestCase):
                 self.assertIn(vp_cmd, path.read_text(encoding="utf-8"))
         for path in both + vp_only:
             with self.subTest(legacy=path.relative_to(ROOT).as_posix()):
-                text = path.read_text(encoding="utf-8")
+                text = read_rule_contract(path)
                 for form in legacy:
                     self.assertNotIn(form, text)
 
@@ -128,8 +129,8 @@ class GovernanceInteractionContractTests(unittest.TestCase):
             "skills/install/copilot/copilot-instructions.md", ".github/copilot-instructions.md",
         ):
             with self.subTest(path=name):
-                text = (ROOT / name).read_text(encoding="utf-8")
-                rendered = text.replace("{{GOVERNANCE_ROOT}}", "governance")
+                text = read_rule_contract(ROOT / name)
+                rendered = text.replace("{{GOVERNANCE_ROOT}}", "governance").replace("{governance_root}", "governance")
                 self.assertIn("governance/architecture/principles.md#audit-dispatch", rendered)
                 self.assertIn("governance/architecture/principles.md#user-input-wait", rendered)
                 for boundary in ("无 Goal", "VP 不改 blocked", "写盘失败", "真实答复", "其他阻塞"):
@@ -156,6 +157,8 @@ class GovernanceInteractionContractTests(unittest.TestCase):
                     structured = result["structuredContent"]
                     self.assertEqual(structured["status"], "ok")
                     self.assertIsNone(structured["promptSha256"])
+                    self.assertIn("architecture/governance-guide.md", structured["guidance"])
+                    self.assertIn("缺失/不可读即停止", structured["guidance"])
                     for boundary in ("AD-01～AD-06", "UI-01～UI-06", "/audit workspace-NNN goal-NNN", "/vision-audit vp-NNN", "空返回", "预选未提交", "真实答复", "独立审计只返回待答事实"):
                         self.assertIn(boundary, structured["guidance"])
                     self.assertEqual(structured["readonly"], name in {"audit", "vision-audit"})

@@ -3,8 +3,8 @@ doc_type: vision-consumer-checklist
 title: 愿景体系消费方检查清单
 status: active
 created: 2026-07-28
-updated: 2026-10-26
-version: 0.6.0
+updated: 2026-11-03
+version: 0.7.0
 parent: null
 ---
 
@@ -20,7 +20,7 @@ parent: null
 
 ### A0. Minimal Complete Install（对照权威 MUST 表）
 
-- [ ] 根 `AGENTS.md`（或等价 AI 规则）
+- [ ] 根 `AGENTS.md`（或等价 AI 规则）的最小按需入口；`{governance_root}/architecture/governance-guide.md` 存在且治理操作前完整读取
 - [ ] `{governance_root}/README.md`
 - [ ] `{governance_root}/architecture/principles.md`、`workspace-protocol.md`
 - [ ] `{governance_root}/templates/goal-folder/`、`workspace-context.md`、`templates/vision/charter.md` + `vision-plan.md` + `reviews-index.md` + `review.md`

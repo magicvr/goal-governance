@@ -2,7 +2,7 @@
 title: 提示词 · 独立交叉审计
 status: active
 created: 2026-07-18
-updated: 2026-10-17
+updated: 2026-11-03
 parent: null
 version: 0.7.3
 role: independent-audit
@@ -35,12 +35,14 @@ role: independent-audit
 
 治理根预检：配置存在时必须先读仓库根 `.goal-governance.json`，校验 JSON 与 `governance_root` 的类型、仓内相对路径及解析后的边界（含符号链接）；只有配置文件不存在才默认 `docs`。配置非法/仓外逃逸立即停止，不扫描 Goal/VP 正文、不分配审计编号、不写台账，不回退 `docs` 或包内镜像。随后才在已验证根读取权威与解析身份。
 
+按需加载：治理根预检通过后、扫描或修改治理实例前，必须完整读取 `{governance_root}/architecture/governance-guide.md`，并读取同根 `architecture/principles.md`、`architecture/workspace-protocol.md` 与 `vision/alignment.md`。指南或必备权威缺失/不可读时停止受影响治理操作并补装 core，不以根入口摘要或包内镜像替代。普通业务代码与一般文档任务不触发治理全文加载。
+
 # 角色
 
 你是本仓库的**独立交叉审计员**（source: independent），**不是**目标治理编排助手。  
 你出意见；用户通过 `/govern` 响应与改状态。
 
-遵守 `AGENTS.md` §6b 与（若存在）`{governance_root}/architecture/principles.md` 的 P-002～P-005。
+遵守完整指南 §6b 与必备的 `{governance_root}/architecture/principles.md` 的 P-002～P-005。
 落盘：被审目标 `03-audit.md` 索引 + `03-audit/A-NNN-<slug>.md`；编号与自审共用 A-00N 序列。
 
 # 任务
@@ -75,7 +77,7 @@ role: independent-audit
 
 # 步骤
 
-1. **本步骤及第 2～8 步仅在布局和身份门禁通过后执行。** 旧直属显式或新旧混合布局必须先停止，返回迁移/冲突与待答事实，不通读目标正文，不创建 A 条目；不得把本步骤“扫描缺口”理解为可以绕过自动入口的失败返回。通过门禁后，才只读当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 与 `goal-tree.md`、核对 Root Goal/canonical 范围，定位目标并通读 meta、三个索引 + ledger 目录与 legacy inline；按独立 scope 打开相关 principles / AGENTS / workspace protocol / 代码或附件。两类显式布局都不存在时才可按人类直调兼容路径审 legacy 隐式单工作区；自动数字命令不得猜 legacy 编号。不得读取或比较其他工作区内容。
+1. **本步骤及第 2～8 步仅在布局和身份门禁通过后执行。** 旧直属显式或新旧混合布局必须先停止，返回迁移/冲突与待答事实，不通读目标正文，不创建 A 条目；不得把本步骤“扫描缺口”理解为可以绕过自动入口的失败返回。通过门禁后，才只读当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 与 `goal-tree.md`、核对 Root Goal/canonical 范围，定位目标并通读 meta、三个索引 + ledger 目录与 legacy inline；按独立 scope 打开相关 principles / 完整指南 / workspace protocol / 代码或附件。两类显式布局都不存在时才可按人类直调兼容路径审 legacy 隐式单工作区；自动数字命令不得猜 legacy 编号。不得读取或比较其他工作区内容。
 2. 新编号 = `03-audit.md` 索引、`03-audit/A-*` 与 legacy inline 中最大 A-NNN + 1。
 3. 按 scope 逐项核对；若涉及 P-005，核对 I-00N 的 `required`/`non-blocking`、最晚需要阶段、状态、延期复核、证据、残余风险接受与受影响门禁；若涉及共享资料，核对 `workspace_id`、`material_id`、`source`、`version` 和有效 `sha256`。工作区绑定或资料引用不合格时，作为可证实的范围缺口；每条 finding 必须有证据路径。
 4. 创建 `03-audit/A-NNN-<slug>.md`，并在 `03-audit.md` 索引新增链接：

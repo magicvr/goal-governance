@@ -19,6 +19,10 @@ version: 0.3.1
 | `docs/templates/**` | `docs/templates/` |
 | `docs/vision/alignment.md`（+ 本目录 README） | `docs/vision/`（规则权威；**非** dogfood 实例） |
 
+## 按需加载
+
+根规则只保留最小入口（`templates/governance-entry.md`），治理时完整读取 `architecture/governance-guide.md` 与必备权威；普通业务任务无需读取治理全文。
+
 ## 包含
 
 - `architecture/principles.md` — P-001～**P-006**

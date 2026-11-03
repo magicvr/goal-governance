@@ -1,0 +1,40 @@
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py:627: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  self.doCleanups()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py:627: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  self.doCleanups()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py:107: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  for index, test in enumerate(self):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py:107: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  for index, test in enumerate(self):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py:657: ResourceWarning: unclosed file <_io.TextIOWrapper name=7 encoding='utf-8'>
+  function, args, kwargs = self._cleanups.pop()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\case.py:657: ResourceWarning: unclosed file <_io.TextIOWrapper name=8 encoding='utf-8'>
+  function, args, kwargs = self._cleanups.pop()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\skills\tests\test_mcp_l1.py:234: ResourceWarning: unclosed file <_io.TextIOWrapper name=7 encoding='utf-8'>
+  first = transcript()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\skills\tests\test_mcp_l1.py:234: ResourceWarning: unclosed file <_io.TextIOWrapper name=8 encoding='utf-8'>
+  first = transcript()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\skills\tests\test_mcp_l1.py:235: ResourceWarning: unclosed file <_io.TextIOWrapper name=7 encoding='utf-8'>
+  second = transcript()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\Documents\Code\goal-governance\skills\tests\test_mcp_l1.py:235: ResourceWarning: unclosed file <_io.TextIOWrapper name=8 encoding='utf-8'>
+  second = transcript()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py:84: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='utf-8'>
+  return self.run(*args, **kwds)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\magicvr\AppData\Local\Programs\Python\Python311\Lib\unittest\suite.py:84: ResourceWarning: unclosed file <_io.TextIOWrapper name=5 encoding='utf-8'>
+  return self.run(*args, **kwds)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+----------------------------------------------------------------------
+Ran 103 tests in 14.356s
+
+OK

@@ -2,7 +2,7 @@
 title: Changelog
 status: active
 created: 2026-07-20
-updated: 2026-10-26
+updated: 2026-11-03
 parent: null
 version: 0.2.1
 ---
@@ -13,7 +13,18 @@ version: 0.2.1
 
 ## Unreleased
 
-（空；本次 v0.13.8 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+（空；本次 v0.14.0 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.14.0 - 2026-11-03
+
+消费仓治理上下文按需加载（[GOAL-017](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-017-on-demand-governance-context/00-meta.md)）。consumer contract 数据结构与协议 0.1.0 保持。
+
+- 消费 AGENTS/Copilot 常驻规则从约 32 KB 缩至 17 行 / 1374 UTF-8 bytes 的最小入口；普通业务任务无需加载治理全文，治理命令、自然语言治理或治理记录修改触发完整指南加载。
+- 完整操作规则迁入 `architecture/governance-guide.md`，按需入口 canonical 为 `templates/governance-entry.md`，同时随 Skills/core-only 分发；四宿主治理入口、高级原语和 MCP 薄壳显式接入，缺失指南或非法根配置停止治理。维护者生产仓可保留维护规则。
+- 新装与升级保留根 AGENTS/Copilot 受管块外用户字节；旧整文件按准确渲染迁移，dry-run 不写入，安装失败恢复原规则与新文件缺失状态；自定义治理根/包目录、重复安装与同名指南碰撞纳入回归。
+- 新增 8 项按需加载/真实安装升级/冲突/回滚/打包回归；原完整规则语义测试沿实际入口读取指南，保留门禁约束。43 对 canonical/分发镜像一致。
+- 当前宿主运行证据、self + 用户指定 Grok 4.7 / xhigh 的独立审计、完整回归与严格发布门禁为发行前置；结果以目标台账和本版本 release evidence 为准。L0 保证，不宣称系统级硬拦截所有宿主。
+- 新发行身份由 dev PR → main、annotated `v0.14.0`、CI 与 Environment `release` 人工门禁及下载资产验收建立。
 
 ## 0.13.8 - 2026-10-26
 
