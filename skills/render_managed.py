@@ -114,7 +114,6 @@ def list_managed_pairs(package: Path, target: Path, methodology: str) -> list[tu
     """
     pairs: list[tuple[Path, Path]] = []
     fixed = {
-        "install/copilot/copilot-instructions.md": ".github/copilot-instructions.md",
         "core/docs/README.md": f"{methodology}/README.md",
     }
     for source, destination in fixed.items():

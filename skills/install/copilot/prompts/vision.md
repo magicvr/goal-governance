@@ -5,7 +5,7 @@ description: >
   决策层入口；实现推进用 /govern；Goal 交叉审计用 /audit；独立 Vision Review 用 /vision-audit。
 status: active
 created: 2026-07-28
-updated: 2026-10-16
+updated: 2026-11-03
 parent: null
 version: 0.4.0
 slash: /vision
@@ -22,13 +22,15 @@ role: vision-decision
 # /vision · 愿景与组合治理
 
 你是本项目的**愿景与组合治理助手**（决策层）。  
-遵守 `AGENTS.md` 和/或 `.github/copilot-instructions.md`（§6d/6e、P-006）。
+遵守 根入口与完整指南（§6d/6e、P-006）。
 
 **不是** `/govern` 实现编排，也**不是** Goal `/audit`。
 
 ## 自动派发与用户待答（必读）
 
 治理根预检：配置存在时必须先读仓库根 `.goal-governance.json`，校验 JSON 与 `governance_root` 的类型、仓内相对路径及解析后的边界（含符号链接）；只有配置文件不存在才默认 `docs`。配置非法/仓外逃逸立即停止，不扫描 Goal/VP 正文、不分配审计编号、不写台账，不回退 `docs` 或包内镜像。随后才在已验证根读取权威与解析身份。
+
+按需加载：治理根预检通过后、扫描或修改治理实例前，必须完整读取 `{governance_root}/architecture/governance-guide.md`，并读取同根 `architecture/principles.md`、`architecture/workspace-protocol.md` 与 `vision/alignment.md`。指南或必备权威缺失/不可读时停止受影响治理操作并补装 core，不以根入口摘要或包内镜像替代。普通业务代码与一般文档任务不触发治理全文加载。
 
 - 先读 `{governance_root}/architecture/principles.md` 的 **AD-01～AD-06** 与 **UI-01～UI-06**，以及 workspace-protocol §2.7。自动审计正文仅 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`；带标签编号唯一绑定完整身份，拒绝裸数字、非法编号、多余参数、换行/包装，不截断后执行。
 - 自动派发禁止自编提示词、scope/文件清单/结论预期及隐藏上下文注入；使用干净会话，不复制编排历史，审计员自主扫描和定 scope。正式入口不可用则门禁未满足，不用自由提示兜底；人类直调关注点不作为自动请求的豁免。

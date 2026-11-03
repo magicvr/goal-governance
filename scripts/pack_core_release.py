@@ -69,6 +69,8 @@ def inventoriable_core_files(core_root: Path) -> list[Path]:
         root / "docs" / "README.md",
         root / "docs" / "standalone-bootstrap.md",
         root / "docs" / "architecture" / "principles.md",
+        root / "docs" / "architecture" / "governance-guide.md",
+        root / "docs" / "templates" / "governance-entry.md",
         root / "docs" / "architecture" / "workspace-protocol.md",
         root / "docs" / "architecture" / "overview.md",
         root / "docs" / "architecture" / "directory-layout.md",

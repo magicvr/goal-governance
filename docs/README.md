@@ -54,6 +54,10 @@ docs/
 └── _index/                   # 预留：索引、术语等（可扩展）
 ```
 
+## 按需加载入口
+
+消费仓常驻入口由 `templates/governance-entry.md` 提供，治理时加载 `architecture/governance-guide.md`，普通业务任务无需读取全文。两者随 core-only / Skills 分发，遵守 principles 的加载契约。
+
 ## 核心规则
 
 1. **工作区内目标平铺**：所有目标直接放在各自 `{governance_root}/workspaces/workspace-<NNN>-<slug>/` 根，**禁止**用嵌套文件夹表达层级。
@@ -133,6 +137,7 @@ python scripts/stage_skills_mirrors.py --check
 | `skills/core/docs/templates/**` | 五件套 + workspace-context + vision 模板 |
 | `skills/core/docs/vision/alignment.md` | 愿景规则 |
 | `skills/core/docs/standalone-bootstrap.md` | 独立启用说明（Recommended；随两个消费包分发） |
+| `skills/AGENTS.template.md`、`skills/install/claude/AGENTS.md`、`skills/install/copilot/copilot-instructions.md` | 从 `{governance_root}/templates/governance-entry.md` 生成的最小按需入口 |
 | `skills/contracts/**` | 契约与 fixtures 逐字节镜像 |
 | **不**覆盖 | `skills/core/docs/README.md`、`skills/core/docs/vision/README.md`（消费方手维精简） |
 

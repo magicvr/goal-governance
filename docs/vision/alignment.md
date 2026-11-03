@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-10-26
-version: 0.11.0
+updated: 2026-11-03
+version: 0.12.0
 parent: null
 ---
 
@@ -39,7 +39,8 @@ parent: null
 
 | 层级 | 路径 / 条件 | 级别 | 说明 |
 |------|-------------|------|------|
-| 规则入口 | 根 `AGENTS.md`（或项目声明的等价 AI 规则） | **MUST** | 操作摘要；全文原则仍以 architecture 为准 |
+| 规则入口 | 根 `AGENTS.md`（或项目声明的等价 AI 规则） | **MUST** | 最小按需入口；治理操作前加载完整指南，普通业务任务无需加载全文 |
+| 操作规则 | `{governance_root}/architecture/governance-guide.md` | **MUST** | 完整操作指南；根入口与宿主入口显式加载，全文原则仍以 principles 为准 |
 | 文档入口 | `{governance_root}/README.md` | **MUST** | 核心文档索引 |
 | 方法论 | `{governance_root}/architecture/principles.md` | **MUST** | P-001～P-006 全文 |
 | 方法论 | `{governance_root}/architecture/workspace-protocol.md` | **MUST** | 工作区/资料协议 |

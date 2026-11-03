@@ -21,6 +21,9 @@ IMPLEMENTATION_LAYER = "implementation"
 # Shared guidance is available even when a thin MCP consumer has no File prompts.
 # This is a protocol constraint, not a new parser, runner, or schema boundary.
 _INPUT_BOUNDARY = (
+    " 按需加载：治理根预检通过后、扫描/修改治理实例前，完整读取 "
+    "{governance_root}/architecture/governance-guide.md，以及同根 principles、workspace-protocol、vision/alignment；"
+    "指南或必备权威缺失/不可读即停止治理并补装 core，不以薄壳 guidance 替代。普通业务任务不触发全文加载。"
     " 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 "
     "/vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，"
     "不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。"

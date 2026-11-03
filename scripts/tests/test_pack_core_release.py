@@ -48,6 +48,8 @@ def _minimal_core_tree(root: Path) -> Path:
     _write(core / "docs" / "README.md", "# docs\n")
     _write(core / "docs" / "standalone-bootstrap.md", "# standalone guide\n")
     _write(core / "docs" / "architecture" / "principles.md", "# p\n")
+    _write(core / "docs" / "architecture" / "governance-guide.md", "# guide\n")
+    _write(core / "docs" / "templates" / "governance-entry.md", "# entry\n")
     _write(core / "docs" / "architecture" / "workspace-protocol.md", "# wp\n")
     _write(core / "docs" / "architecture" / "overview.md", "# o\n")
     _write(core / "docs" / "architecture" / "directory-layout.md", "# d\n")

@@ -12,6 +12,10 @@ version: 0.58.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-11-03 · GOAL-017 S2 完成
+
+E-003：17 行/1374 bytes 最小入口、完整指南与28个治理入口、MCP薄壳、事务升级及dogfood同步已实现；Skills103/docs76/迁移50回归通过、stage43对一致。A-001 self/conditional：F-001（当前真实宿主加载与发布运行证据）为 S3/S4 required/open；尚无 independent、未发布。active / 50%（2/4），S3 进行中，Root67%保持。
+
 ## 2026-11-03 · GOAL-017 S1 冻结
 
 D-003 冻结最小常驻入口（≤40行/4096 bytes）、canonical 完整指南、显式触发加载、managed 升级兼容与 v0.14.0 候选发布计划；I-001/I-002 verified，S1 完成、S2 进行中，**active / 25%（1/4）**。cross provider = Grok Build CLI，Grok 4.7 / xhigh；尚未实施、PR 或发布。Root progress 67% 保持。
@@ -401,7 +405,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
-└── GOAL-017-on-demand-governance-context     [active]  消费仓治理规则按需加载与新资产发布  progress 25%（S1 完成，S2 进行中）
+└── GOAL-017-on-demand-governance-context     [active]  消费仓治理规则按需加载与新资产发布  progress 50%（S2 完成，S3 进行中）
 ```
 
 ## 状态表
@@ -424,7 +428,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-014-release-v0-13-6 | v0.13.6 正式发布与消费资产验收 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
-| GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-11-03 |
+| GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-11-03 |
 
 ## 编号
 

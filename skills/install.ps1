@@ -431,6 +431,13 @@ function Install-CoreDocs {
         Write-Err "Missing package core mirror: $readme (GOAL-019 D-004)"
     }
     $principles = Join-Path $arch 'principles.md'
+    $governanceGuide = Join-Path $arch 'governance-guide.md'
+    if (-not (Test-Path -LiteralPath $governanceGuide -PathType Leaf)) {
+        Write-Err "Missing governance-guide.md in core mirror"
+    }
+    if (-not (Test-Path -LiteralPath (Join-Path $templates 'governance-entry.md') -PathType Leaf)) {
+        Write-Err "Missing governance-entry.md in core mirror"
+    }
     $protocol = Join-Path $arch 'workspace-protocol.md'
     if (-not (Test-Path -LiteralPath $principles -PathType Leaf)) {
         Write-Err "Missing principles.md in core mirror"
@@ -850,7 +857,7 @@ if ($Copilot) {
     if (-not (Test-Path -LiteralPath $githubDir)) {
         New-Item -ItemType Directory -Path $githubDir -Force | Out-Null
     }
-    Copy-RuleFile -Source $CopilotSrc -Destination (Join-Path $githubDir 'copilot-instructions.md')
+    Merge-RenderedAgentsFile -Source $CopilotSrc -Destination (Join-Path $githubDir 'copilot-instructions.md')
 
     $promptsDir = Join-Path $githubDir 'prompts'
     if (-not (Test-Path -LiteralPath $promptsDir)) {

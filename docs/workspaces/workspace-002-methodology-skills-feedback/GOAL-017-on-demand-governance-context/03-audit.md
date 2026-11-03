@@ -12,10 +12,11 @@ version: 0.1.0
 
 ## 审计约定
 
-模式 cross：规则加载协议/跨宿主消费边界改动，至少 self + 用户指定 provider 的 independent；默认保证等级 L0。provider 经 Q-001 / D-002 指定为本地 Grok Build CLI（Grok 4.7 / xhigh），尚无正式 A 条目；不把探子只读探索当作 independent 审计。
+模式 cross：规则加载协议/跨宿主消费边界改动，至少 self + 用户指定 provider 的 independent；默认保证等级 L0。provider 经 Q-001 / D-002 指定为本地 Grok Build CLI（Grok 4.7 / xhigh），已有 A-001 self/conditional，F-001 为 S3/S4 required，independent 尚未取得；不把探子只读探索当作 independent 审计。
 
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
+| A-001 | 2026-11-03 | self | S2 implementation and S3 readiness | conditional | 1 | [A-001](03-audit/A-001-s2-self-review.md) |
 
 ## 信息就绪
 

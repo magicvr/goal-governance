@@ -2,9 +2,9 @@
 title: 目录布局
 status: active
 created: 2026-07-18
-updated: 2026-08-10
+updated: 2026-11-03
 parent: null
-version: 0.7.0
+version: 0.8.0
 ---
 
 # 目录布局
@@ -41,6 +41,7 @@ goal-governance/
 │   │   └── skills-consumer-contract.json
 │   ├── architecture/
 │   │   ├── overview.md
+│   │   ├── governance-guide.md # 按需加载的完整操作指南
 │   │   ├── principles.md     # 治理原则（元规则）
 │   │   ├── workspace-protocol.md
 │   │   ├── tech-stack.md

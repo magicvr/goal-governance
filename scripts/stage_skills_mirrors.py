@@ -30,6 +30,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 ARCHITECTURE_FILES = (
+    "governance-guide.md",
     "principles.md",
     "workspace-protocol.md",
     "overview.md",
@@ -83,6 +84,15 @@ def planned_pairs(repo_root: Path) -> list[tuple[Path, Path]]:
     docs = repo_root / "docs"
     skills = repo_root / "skills"
     pairs: list[tuple[Path, Path]] = []
+
+    # One canonical on-demand entry for every always-loaded consumer rule face.
+    entry = docs / "templates" / "governance-entry.md"
+    for relative in (
+        "AGENTS.template.md",
+        "install/claude/AGENTS.md",
+        "install/copilot/copilot-instructions.md",
+    ):
+        pairs.append((entry, skills / relative))
 
     for name in ARCHITECTURE_FILES:
         pairs.append(

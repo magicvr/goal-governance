@@ -2,7 +2,7 @@
 title: 提示词 · 独立 Vision Review
 status: active
 created: 2026-07-28
-updated: 2026-10-26
+updated: 2026-11-03
 parent: null
 version: 0.4.0
 role: independent-vision-review
@@ -22,7 +22,7 @@ role: independent-vision-review
 - **禁止**修改 Charter / VP status、`revisions.md`、工作区 Goal、`goal-tree.md` 或任何 Goal `03-audit.md`
 - 结束后提示：用 `/vision` 响应 required finding；实现层执行仍用 `/govern`
 
-权威：`{governance_root}/architecture/principles.md` **P-006**、`{governance_root}/vision/alignment.md` §9、根 `AGENTS.md` §6d/6e。
+权威：`{governance_root}/architecture/principles.md` **P-006**、`{governance_root}/vision/alignment.md` §9、根 完整指南 §6d/6e。
 
 ---
 
@@ -32,6 +32,8 @@ role: independent-vision-review
 # 治理根预检
 
 治理根预检：配置存在时必须先读仓库根 `.goal-governance.json`，校验 JSON 与 `governance_root` 的类型、仓内相对路径及解析后的边界（含符号链接）；只有配置文件不存在才默认 `docs`。配置非法/仓外逃逸立即停止，不扫描 Goal/VP 正文、不分配审计编号、不写台账，不回退 `docs` 或包内镜像。随后才在已验证根读取权威与解析身份。
+
+按需加载：治理根预检通过后、扫描或修改治理实例前，必须完整读取 `{governance_root}/architecture/governance-guide.md`，并读取同根 `architecture/principles.md`、`architecture/workspace-protocol.md` 与 `vision/alignment.md`。指南或必备权威缺失/不可读时停止受影响治理操作并补装 core，不以根入口摘要或包内镜像替代。普通业务代码与一般文档任务不触发治理全文加载。
 
 # 角色
 

@@ -35,6 +35,7 @@ def _mini_repo(base: Path) -> Path:
     skills = base / "skills"
     for name in (
         "principles.md",
+        "governance-guide.md",
         "workspace-protocol.md",
         "overview.md",
         "directory-layout.md",
@@ -44,6 +45,7 @@ def _mini_repo(base: Path) -> Path:
     _write(docs / "templates" / "goal-folder" / "00-meta.md", "# meta\n")
     _write(docs / "templates" / "workspace-context.md", "# ws\n")
     _write(docs / "templates" / "README.md", "# tmpl\n")
+    _write(docs / "templates" / "governance-entry.md", "# on-demand entry\n")
     _write(docs / "vision" / "alignment.md", "# align\n")
     _write(docs / "standalone-bootstrap.md", "# standalone guide\n")
     _write(docs / "contracts" / "skills-consumer-contract.json", "{}\n")

@@ -21,6 +21,10 @@ import zipfile
 try:  # package-relative import (skills package) with script fallback
     from skills.agents_merge import (
         MergeError,
+        MANAGED_BEGIN,
+        MANAGED_END,
+        block_payload,
+        extract_managed_block,
         has_managed_block,
         managed_block_equivalent,
         merge_agents_text,
@@ -38,6 +42,10 @@ except ImportError:  # pragma: no cover - direct script execution
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from agents_merge import (  # type: ignore[no-redef]
         MergeError,
+        MANAGED_BEGIN,
+        MANAGED_END,
+        block_payload,
+        extract_managed_block,
         has_managed_block,
         managed_block_equivalent,
         merge_agents_text,
@@ -57,6 +65,12 @@ SEMVER_RE = re.compile(
     r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
     r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?"
     r"(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
+)
+
+
+RULE_FACES = (
+    ("install/claude/AGENTS.md", "AGENTS.md"),
+    ("install/copilot/copilot-instructions.md", ".github/copilot-instructions.md"),
 )
 
 
@@ -216,6 +230,13 @@ def _agents_block_matches(consumer: str, source_text: str, methodology: str, ski
     for variant in variants:
         if managed_block_equivalent(consumer, variant):
             return True
+        # An unmarked whole-file installation is framework-owned only when
+        # it exactly matches a known package rendering (not a guessed prefix).
+        if not has_managed_block(consumer):
+            normalized = consumer.replace("\r\n", "\n").replace("\r", "\n").strip()
+            payload = block_payload(extract_managed_block(variant)).strip()
+            if normalized in (variant.strip(), payload):
+                return True
     return False
 
 
@@ -238,6 +259,8 @@ def agents_managed_conflict(
     *,
     methodology_dir: str = "docs",
     skills_dir: str = "skills",
+    source_relative: str = "install/claude/AGENTS.md",
+    destination_relative: str = "AGENTS.md",
 ) -> Path | None:
     """Return root AGENTS.md when its content would need review before merging.
 
@@ -249,14 +272,14 @@ def agents_managed_conflict(
     matches this install's rendered placeholders is the installer output, not
     a hand edit. The unsubstituted package block remains valid too.
     """
-    destination = target / "AGENTS.md"
+    destination = target / destination_relative
     if not destination.is_file():
         return None
     text = read_preserved_text(destination)
     methodology, skills = _install_tokens(target, methodology_dir, skills_dir)
     candidates = [
-        package / "install" / "claude" / "AGENTS.md",
-        (incoming_package / "install" / "claude" / "AGENTS.md")
+        package / source_relative,
+        (incoming_package / source_relative)
         if incoming_package is not None
         else None,
     ]
@@ -328,15 +351,14 @@ def modified_managed_files(
             continue
         if not _managed_bytes_match(source, destination, methodology, skills):
             modified.append(destination)
-    agents_conflict = agents_managed_conflict(
-        package,
-        target,
-        incoming_package,
-        methodology_dir=methodology,
-        skills_dir=skills,
-    )
-    if agents_conflict is not None:
-        modified.append(agents_conflict)
+    for source_relative, destination_relative in RULE_FACES:
+        conflict = agents_managed_conflict(
+            package, target, incoming_package,
+            methodology_dir=methodology, skills_dir=skills,
+            source_relative=source_relative, destination_relative=destination_relative,
+        )
+        if conflict is not None:
+            modified.append(conflict)
     return sorted(set(modified))
 
 
@@ -357,6 +379,7 @@ def backup_external_files(
             destination
             for _source, destination in managed_file_pairs(incoming_package, target, methodology)
         )
+    destinations.update(target / destination for _source, destination in RULE_FACES)
     for destination in sorted(destinations):
         relative = destination.relative_to(target)
         if destination.is_file():
@@ -476,23 +499,6 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
             shown = ", ".join(str(path.relative_to(target)) for path in modified[:8])
             raise UpdateError(f"managed files have local changes; review or pass --force-managed: {shown}")
 
-        # GOAL-008 S4: normalize a legacy whole-file AGENTS.md into the managed
-        # block before the package is swapped, then let the installer merge.
-        agents = target / "AGENTS.md"
-        if agents.is_file():
-            existing = read_preserved_text(agents)
-            if not has_managed_block(existing):
-                legacy_source = skills / "install" / "claude" / "AGENTS.md"
-                if legacy_source.is_file():
-                    try:
-                        converted, changed = merge_agents_text(
-                            existing, read_preserved_text(legacy_source)
-                        )
-                    except MergeError:
-                        changed = False
-                    if changed:
-                        write_preserved_text(agents, converted)
-
         plan = {
             "version": version,
             "current_protocol": current_protocol,
@@ -512,6 +518,24 @@ def update_package(args: argparse.Namespace) -> dict[str, object]:
         old_skills = backup / "skills"
         shutil.move(str(skills), str(old_skills))
         try:
+            # Normalize known legacy whole-file rules after dry-run and backup.
+            # Use the OLD package rendering before replacing it; rollback owns
+            # both rule files, including the exact original bytes.
+            methodology, skills_token = _install_tokens(target, methodology_dir, args.skills_dir)
+            for source_relative, destination_relative in RULE_FACES:
+                destination = target / destination_relative
+                source = old_skills / source_relative
+                if destination.is_file() and source.is_file():
+                    existing = read_preserved_text(destination)
+                    if not has_managed_block(existing):
+                        legacy = render_managed_text(read_preserved_text(source), methodology, skills_token)
+                        if not has_managed_block(legacy):
+                            legacy = f"{MANAGED_BEGIN}\n{legacy.rstrip()}\n{MANAGED_END}"
+                        converted, changed = merge_agents_text(
+                            existing, legacy
+                        )
+                        if changed:
+                            write_preserved_text(destination, converted)
             shutil.move(str(incoming), str(skills))
             if not args.skip_install:
                 run_installer(

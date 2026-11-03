@@ -93,7 +93,9 @@ def managed_section(version: str) -> str:
         "- 治理记录树：`{governance_root}`（默认 `{governance_root}/`，可配置）\n"
         "- 实例真相在仓库内治理记录；MCP 不是权威状态库\n"
         "- 四治理入口：`vision` / `vision-audit` / `govern` / `audit`（`commit` 便利可选）\n"
-        "- 规则全文：AGENTS.md §6/6b/6d/6e；`{governance_root}/architecture/principles.md`（必备）\n"
+        "- 治理命令、自然语言治理请求或修改治理记录时才加载全文；普通业务任务不要求读取\n"
+        "- 先校验 .goal-governance.json 的 governance_root（无配置默认 docs），仓内相对路径及符号链接边界；非法立即停止，不回退\n"
+        "- 在治理操作前完整读取 `{governance_root}/architecture/governance-guide.md` 及指南要求的必备权威；缺失/不可读则停止治理并补装 core\n"
         f"{MANAGED_END}"
     )
 

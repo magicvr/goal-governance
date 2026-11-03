@@ -16,6 +16,10 @@ version: 0.13.1
 > **完整安装**：`docs/architecture/` 与 Skills **同级必备**。缺 architecture = 不完整安装。
 > monorepo 维护者长文与 dogfood 过程树**不**随本精简入口分发。
 
+## 按需加载
+
+完整操作规则：[governance-guide.md](architecture/governance-guide.md)。根规则只保留 [最小入口](templates/governance-entry.md)，治理命令、自然语言治理或修改治理记录前按入口校验配置并加载全文；普通业务任务无需读取。
+
 ## 最小目录
 
 ```text

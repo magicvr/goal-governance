@@ -2,7 +2,7 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-10-26
+updated: 2026-11-03
 parent: null
 version: 0.17.0
 ---
@@ -14,6 +14,8 @@ version: 0.17.0
 > 按项目实际情况修改路径与可选节；未使用的可选节可删除。
 
 面向在本仓库工作的 AI 助手（及人类协作者）。**以下规则必须遵守。**
+
+消费仓使用最小按需入口，完整操作规则见 `docs/architecture/governance-guide.md`；本文件保留生产仓维护约定。
 
 ## 1. 文档真相来源
 
@@ -290,8 +292,8 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 | canonical（只改这里） | 镜像落点（由脚本生成） |
 |----------------------|------------------------|
-| `docs/architecture/{principles,workspace-protocol,overview,directory-layout}.md` | `skills/core/docs/architecture/`（**不含** `tech-stack.md`） |
-| `docs/templates/**` | `skills/core/docs/templates/**` |
+| `docs/architecture/{governance-guide,principles,workspace-protocol,overview,directory-layout}.md` | `skills/core/docs/architecture/`（**不含** `tech-stack.md`） |
+| `docs/templates/**` | `skills/core/docs/templates/**`；`governance-entry.md` 还生成 `skills/AGENTS.template.md`、Claude AGENTS、Copilot instructions |
 | `docs/vision/alignment.md` | `skills/core/docs/vision/alignment.md` |
 | `docs/contracts/**` | `skills/contracts/**` |
 

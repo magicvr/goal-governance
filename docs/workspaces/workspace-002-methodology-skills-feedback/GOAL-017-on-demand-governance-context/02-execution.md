@@ -15,6 +15,8 @@ version: 0.1.0
 | E-001 | 2026-11-03 | 立项扫描与实施前待答 | recorded | [E-001](02-execution/E-001-discovery-and-provider-gate.md) |
 | E-002 | 2026-11-03 | 真实答复与恢复 | recorded | [E-002](02-execution/E-002-provider-and-resume.md) |
 
+| E-003 | 2026-11-03 | S2 实施与验证 | recorded | [E-003](02-execution/E-003-implementation-and-validation.md) |
+
 ## 用户待答与恢复
 
 | 问题 ID | 原题 / 选项 | 影响范围 / 门禁 | 等待原因 / 提问方式 | 原有阻塞 | 恢复条件 | 真实答复来源 / 内容 |

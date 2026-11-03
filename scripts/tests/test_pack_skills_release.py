@@ -51,6 +51,8 @@ def _minimal_skills_tree(root: Path) -> Path:
     # GOAL-019 D-004 core mirror (required for pack completeness)
     _write(skills / "core" / "docs" / "README.md", "# docs\n")
     _write(skills / "core" / "docs" / "architecture" / "principles.md", "# p\n")
+    _write(skills / "core" / "docs" / "architecture" / "governance-guide.md", "# guide\n")
+    _write(skills / "core" / "docs" / "templates" / "governance-entry.md", "# entry\n")
     _write(
         skills / "core" / "docs" / "architecture" / "workspace-protocol.md",
         "# wp\n",
