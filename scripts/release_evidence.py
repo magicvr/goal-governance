@@ -122,7 +122,7 @@ def _run_required_checks(
     checks = [
         _run_check(
             "skills-contract-tests",
-            [core_python, "-m", "unittest", "skills/tests/test_skills_orchestrator.py", "-v"],
+            [core_python, "-m", "unittest", "discover", "-s", "skills/tests", "-p", "test_*.py", "-v"],
             root=root,
         ),
         _run_check(

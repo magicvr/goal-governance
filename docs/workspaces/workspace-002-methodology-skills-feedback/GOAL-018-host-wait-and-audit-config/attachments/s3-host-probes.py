@@ -339,7 +339,7 @@ def main() -> None:
         if case not in ("catalog", "ordinary"):
             raise SystemExit("Codex CLI is only used for the non-matrix read-only catalog profile")
         exe = shutil.which("codex")
-        command=[exe,"exec","--sandbox","read-only","--skip-git-repo-check","--ephemeral","--json","-C",str(testroot),"-"]
+        command=[exe,"exec","--sandbox","danger-full-access","--skip-git-repo-check","--ephemeral","--json","-C",str(testroot),"-"]
         if args.codex_model:
             command[2:2]=["--model",args.codex_model,"-c","model_reasoning_effort=low"]
         if exe and exe.lower().endswith(".cmd"):
@@ -439,6 +439,9 @@ def main() -> None:
         if case == "wait":
             raise SystemExit("wait evidence is not a compatibility entry probe")
         export_runtime(record,args.runtime_evidence.resolve(),output)
+        envelope = json.loads(args.runtime_evidence.read_text(encoding="utf-8"))
+        if envelope["result"]["verdict"] != "pass":
+            raise SystemExit("Recorded runtime evidence failed; process exit 0 is insufficient")
     print(json.dumps({k: record[k] for k in ("host", "case", "fixture", "exitCode", "timedOut", "changed")}, ensure_ascii=False), flush=True)
 
 

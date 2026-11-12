@@ -1,0 +1,7 @@
+{
+  "skillsMembers": 89,
+  "coreMembers": 30,
+  "coreIsByteIdenticalSubset": true,
+  "projectConfigExample": true,
+  "candidateOnly": true
+}
