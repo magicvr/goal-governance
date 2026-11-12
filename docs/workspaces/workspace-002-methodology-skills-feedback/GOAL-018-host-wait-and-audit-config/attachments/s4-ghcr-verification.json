@@ -1,0 +1,37 @@
+{
+  "verifiedAt": "2026-11-12T08:20:59.145149+00:00",
+  "image": "ghcr.io/magicvr/goal-governance-mcp-server:0.15.0",
+  "repoDigests": [
+    "ghcr.io/magicvr/goal-governance-mcp-server@sha256:86e132f950cb758459ea3c8850399039b698cdab515afa9405ef69c3c0a01543"
+  ],
+  "imageId": "sha256:15a25b7319fcbacc210ff53c5a7a9d7166c3ad7dc86e2d9a64a5724d7e3bf622",
+  "expectedPublishDigest": "sha256:86e132f950cb758459ea3c8850399039b698cdab515afa9405ef69c3c0a01543",
+  "matchesPublishJobDigest": true,
+  "publishJobUrl": "https://github.com/magicvr/goal-governance/actions/runs/43180014952/job/131053513170",
+  "serverVersionCommand": "goal-governance-mcp 0.15.0",
+  "serverInfo": {
+    "name": "goal-governance-mcp",
+    "version": "0.15.0"
+  },
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "-v",
+    "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\artifacts\\goal018-formal-consumer:/workspace:ro",
+    "ghcr.io/magicvr/goal-governance-mcp-server:0.15.0"
+  ],
+  "exitCode": 0,
+  "readOnlyMount": true,
+  "independentAudit": {
+    "model": "gpt-6.1-sol",
+    "provider": "codex",
+    "reasoning_effort": "high"
+  },
+  "independentAuditSource": ".goal-governance.json",
+  "snapshotUnchanged": true,
+  "fileCount": 160,
+  "changedPaths": [],
+  "stderr": ""
+}

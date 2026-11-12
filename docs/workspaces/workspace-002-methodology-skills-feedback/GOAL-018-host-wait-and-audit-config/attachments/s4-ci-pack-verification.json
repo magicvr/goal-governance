@@ -1,0 +1,18 @@
+{
+  "candidate": "v0.15.0",
+  "run": 43180014952,
+  "ciPackFiles": {
+    "bootstrap-README.md": "574fcb3af7f4e56aced711bb58cc3896bdcc0f336f3caa396ef4bd2f25abfb6a",
+    "goal-governance-core-v0.15.0.zip": "5908ad91b22f7965991dcfbc7601064a0b256946fabf145d4f1b11b9adb2f104",
+    "goal-governance-core-v0.15.0.zip.sha256": "89a69b0a139fd73bfa85f2a5c05fd94ddb61d0149190a31f5f9f3aa31b205e85",
+    "goal-governance-skills-v0.15.0.zip": "026e639d9a2f639ad47c2f5423560c125d369e172427daa6c2889e19d6f53cd1",
+    "goal-governance-skills-v0.15.0.zip.sha256": "fdfff30680cec347752fc2fb74cd78b646a1fec7b4821f8224c398ceec7f8305",
+    "install-online.ps1": "89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3",
+    "install-online.sh": "86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127"
+  },
+  "zipSidecarsMatch": true,
+  "skillsMembers": 89,
+  "coreMembers": 30,
+  "coreIsByteIdenticalSubset": true,
+  "formalPublication": false
+}

@@ -1,0 +1,86 @@
+{
+  "requests": [
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2025-03-26",
+        "capabilities": {},
+        "clientInfo": {
+          "name": "goal018-release-verification",
+          "version": "1.0"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "method": "notifications/initialized"
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "method": "tools/call",
+      "params": {
+        "name": "govern",
+        "arguments": {
+          "task": "Inspect project governance configuration"
+        }
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": 1,
+      "jsonrpc": "2.0",
+      "result": {
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "instructions": "Goal-governance MCP channel. Tools: vision (decision layer), vision-audit (independent Vision Review, opinions only), govern (implementation orchestration), audit (goal cross-audit, opinions only). Instance truth stays in the repository governance tree; this server never becomes an authoritative state store.",
+        "protocolVersion": "2025-03-26",
+        "serverInfo": {
+          "name": "goal-governance-mcp",
+          "version": "0.15.0"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、确认后调用原语写入目标五件套。 按需加载：治理根预检通过后、扫描/修改治理实例前，完整读取 {governance_root}/architecture/governance-guide.md，以及同根 principles、workspace-protocol、vision/alignment；指南或必备权威缺失/不可读即停止治理并补装 core，不以薄壳 guidance 替代。普通业务任务不触发全文加载。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。实际调用同步卡片并等待，必要时组合合法的宿主原生 /goal 停止能力；必须遵守原生工具的授权、blocked阈值、paused前置条件，不把结束一轮当作目标已停。不因等待自动改治理Goal状态、执行索引/goal-tree或父级投影。独立审计只返回待答事实，不越权改 meta。会话保留原题/实际返回即可，无需另次确认；仅交接或必需证据才写一次最小记录。无 Goal 仍等待当前执行，VP 不改 blocked；其他阻塞保留，写盘失败仍停止；无合法停止能力时如实报告并提示用户原生暂停/中断，不冒称已拦截。独立审计配置按会话显式指定→.goal-governance.json.independent_audit→缺失才询问；合法项目provider/model/reasoning_effort跨会话复用，非法或失败不静默替换。真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/00-govern-orchestrator.md 承载方法论正文（仓内已存在，可核对 sha256） 项目独立审计默认配置（会话显式指定优先，无需重复确认）：{\"provider\": \"codex\", \"model\": \"gpt-6.1-sol\", \"reasoning_effort\": \"high\"}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "entrypoint": "govern",
+          "governanceRoot": "docs",
+          "guidance": "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、确认后调用原语写入目标五件套。 按需加载：治理根预检通过后、扫描/修改治理实例前，完整读取 {governance_root}/architecture/governance-guide.md，以及同根 principles、workspace-protocol、vision/alignment；指南或必备权威缺失/不可读即停止治理并补装 core，不以薄壳 guidance 替代。普通业务任务不触发全文加载。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。实际调用同步卡片并等待，必要时组合合法的宿主原生 /goal 停止能力；必须遵守原生工具的授权、blocked阈值、paused前置条件，不把结束一轮当作目标已停。不因等待自动改治理Goal状态、执行索引/goal-tree或父级投影。独立审计只返回待答事实，不越权改 meta。会话保留原题/实际返回即可，无需另次确认；仅交接或必需证据才写一次最小记录。无 Goal 仍等待当前执行，VP 不改 blocked；其他阻塞保留，写盘失败仍停止；无合法停止能力时如实报告并提示用户原生暂停/中断，不冒称已拦截。独立审计配置按会话显式指定→.goal-governance.json.independent_audit→缺失才询问；合法项目provider/model/reasoning_effort跨会话复用，非法或失败不静默替换。真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。 本入口由 prompts/00-govern-orchestrator.md 承载方法论正文（仓内已存在，可核对 sha256） 项目独立审计默认配置（会话显式指定优先，无需重复确认）：{\"provider\": \"codex\", \"model\": \"gpt-6.1-sol\", \"reasoning_effort\": \"high\"}",
+          "independentAudit": {
+            "model": "gpt-6.1-sol",
+            "provider": "codex",
+            "reasoning_effort": "high"
+          },
+          "independentAuditSource": ".goal-governance.json",
+          "layer": "implementation",
+          "promptPath": "prompts/00-govern-orchestrator.md",
+          "promptSha256": "593af269eb6e74cb8b6aaa40c1ac200bed0fe5b561ce3f6b8a9302743af77a65",
+          "readonly": false,
+          "role": "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、确认后调用原语写入目标五件套。 按需加载：治理根预检通过后、扫描/修改治理实例前，完整读取 {governance_root}/architecture/governance-guide.md，以及同根 principles、workspace-protocol、vision/alignment；指南或必备权威缺失/不可读即停止治理并补装 core，不以薄壳 guidance 替代。普通业务任务不触发全文加载。 遵守 AD-01～AD-06 / UI-01～UI-06：自动审计正文仅 /audit workspace-NNN goal-NNN 或 /vision-audit vp-NNN；带标签编号唯一解析完整身份，不追加 scope/文件清单/结论预期或自编提示词，不复制编排历史，审计员自主定范围；入口失败不自由提示兜底。同步阻塞询问卡片优先，不可用则文本提问并停止；空返回/取消/预选未提交不算答复，不补默认或虚构。实际调用同步卡片并等待，必要时组合合法的宿主原生 /goal 停止能力；必须遵守原生工具的授权、blocked阈值、paused前置条件，不把结束一轮当作目标已停。不因等待自动改治理Goal状态、执行索引/goal-tree或父级投影。独立审计只返回待答事实，不越权改 meta。会话保留原题/实际返回即可，无需另次确认；仅交接或必需证据才写一次最小记录。无 Goal 仍等待当前执行，VP 不改 blocked；其他阻塞保留，写盘失败仍停止；无合法停止能力时如实报告并提示用户原生暂停/中断，不冒称已拦截。独立审计配置按会话显式指定→.goal-governance.json.independent_audit→缺失才询问；合法项目provider/model/reasoning_effort跨会话复用，非法或失败不静默替换。真实答复留痕并复核全部门禁后才恢复。人类直调参数兼容不豁免自动派发；本 server 仅返回 guidance，不执行问答/状态写入，不宣称系统级强制拦截。",
+          "status": "ok",
+          "writesTo": [
+            "workspaces/workspace-*/",
+            "workspaces/workspace-*/goal-tree.md",
+            "workspaces/workspace-*/GOAL-*/"
+          ]
+        }
+      }
+    }
+  ]
+}
