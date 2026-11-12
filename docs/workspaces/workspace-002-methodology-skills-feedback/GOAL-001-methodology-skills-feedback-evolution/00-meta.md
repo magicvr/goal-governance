@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-[GOAL-018](../GOAL-018-host-wait-and-audit-config/00-meta.md) 已立项，承接宿主原生目标待答停止与独立审计 CLI 项目配置反馈，并按用户授权完成 PR/main/发布路径；active / 50%，S1/S2 完成、S3 运行与 cross 审计中。Root R3 / VP-002 继续长期 active，Root 67% 不变。
+[GOAL-018](../GOAL-018-host-wait-and-audit-config/00-meta.md) 已立项，承接宿主原生目标待答停止与独立审计 CLI 项目配置反馈，并按用户授权完成 PR/main/发布路径；active / 75%，S1～S3 完成，cross pass，S4 发布与验收中。Root R3 / VP-002 继续长期 active，Root 67% 不变。
 
 [GOAL-017](../GOAL-017-on-demand-governance-context/00-meta.md) 已done / 100%（D-004/E-009）：消费仓治理规则按需加载，v0.14.0由PR #39→main10bba86→annotated tag→CI run41622193036正式发布；9资产/隔离安装/GHCR验收通过，Grok4.7/xhigh最终独立A-005 pass，A-006闭合recommended，无开放required。Root R3 / VP-002继续长期active，Root67%，等待下一条真实反馈。
 

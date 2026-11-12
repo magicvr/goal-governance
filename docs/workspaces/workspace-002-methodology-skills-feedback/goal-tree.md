@@ -12,6 +12,10 @@ version: 0.59.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-11-12 · GOAL-018 S3 退出
+
+A-001 Grok/grok-4.7/xhigh independent/pass，无findings；A-002 self/pass补齐完整回归与严格rehearsal，开放required0。16份选用pass、18份来源一致、matrix ready；I-003 verified。active75%（S1～S3 3/4），S4 PR/CI/main/发布验收进行中，尚未发布或关门。Root active67%不变。
+
 ## 2026-11-12 · GOAL-018 S1/S2 完成
 
 D-002 冻结宿主执行等待与项目 independent_audit 契约；canonical、四宿主入口/dogfood、MCP 配置校验/消费、模板和镜像已同步。Skills 108 项通过；S3 真实宿主运行与 cross 审计进行中，active / 50%（2/4），尚未发布。Root active / 67% 不变。
@@ -438,7 +442,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
 ├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
-└── GOAL-018-host-wait-and-audit-config       [active]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 50%（S1/S2完成，2/4）
+└── GOAL-018-host-wait-and-audit-config       [active]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 75%（S1～S3完成，3/4）
 ```
 
 ## 状态表
@@ -462,7 +466,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
-| GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-11-12 |
+| GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-11-12 |
 
 ## 编号
 

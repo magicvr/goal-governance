@@ -15,3 +15,4 @@ version: 0.1.0
 | E-001 | 2026-11-12 | 只读基线核对与立项 | recorded | [E-001](02-execution/E-001-baseline-and-creation.md) |
 | E-002 | 2026-11-12 | S1/S2 实现与 checkpoint | recorded | [E-002](02-execution/E-002-implementation-and-checkpoint.md) |
 | E-003 | 2026-11-12 | 当前运行取证与全量回归 | recorded | [E-003](02-execution/E-003-runtime-and-regression.md) |
+| E-004 | 2026-11-12 | 严格发布演练通过 | recorded | [E-004](02-execution/E-004-strict-rehearsal.md) |

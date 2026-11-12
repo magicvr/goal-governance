@@ -71,4 +71,3 @@ Project root:  C:\Users\magicvr\AppData\Local\Temp\gg-goal018-local-install-c_5o
 Skills dir:    C:\Users\magicvr\AppData\Local\Temp\gg-goal018-local-install-c_5o1e8m\skills
 Package root:  C:\Users\magicvr\AppData\Local\Temp\gg-goal018-local-install-c_5o1e8m\skills
 Bootstrap complete.
-
