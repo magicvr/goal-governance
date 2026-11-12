@@ -52,9 +52,12 @@ class GovernanceInteractionContractTests(unittest.TestCase):
                     for contract in ("AD-01～AD-06", "UI-01～UI-06"):
                         self.assertIn(contract, text)
                     self.assertIn("{governance_root}/architecture/principles.md", text)
-                    # S3 actual headless run stopped in chat but left meta
-                    # active. Pause persistence must survive every wrapper.
+                    # Waiting controls the host task; it does not manufacture
+                    # a governance-state transition or repeated ledger writes.
                     self.assertIn("无需另次确认", text)
+                    self.assertIn("宿主原生", text)
+                    self.assertIn("independent_audit", text)
+                    self.assertNotIn("将当前 active/draft Goal 置 blocked", text)
                     self.assertIn("配置存在时必须先读", text)
                     self.assertIn("不回退", text)
                     # An unconditional old wrapper instruction must not undo the
@@ -186,6 +189,15 @@ class GovernanceInteractionContractTests(unittest.TestCase):
         for field in ("问题 ID", "原题 / 选项", "影响范围 / 门禁", "原有阻塞", "恢复条件", "真实答复来源 / 内容"):
             self.assertIn(field, text)
         self.assertIn("不补默认选择或伪造提交", text)
+        self.assertIn("不要求每次询问写盘", text)
+        self.assertNotIn("将当前 active/draft Goal 置 blocked", text)
+
+    def test_wait_contract_targets_native_goals_and_respects_tool_preconditions(self):
+        text = (ROOT / "docs/architecture/principles.md").read_text(encoding="utf-8")
+        ui = text.split("### 4.0 ", 1)[1].split("### 4.1 ", 1)[0]
+        for boundary in ("宿主执行", "实际调用并等待", "不自动改变治理", "重复写盘", "blocked 连续阻塞阈值", "paused 用户明确请求"):
+            self.assertIn(boundary, ui)
+        self.assertNotIn("置 status: blocked", ui)
 
 
 if __name__ == "__main__":

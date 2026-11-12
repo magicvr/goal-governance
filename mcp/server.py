@@ -30,12 +30,14 @@ from typing import Any
 
 try:  # package context (python -m / import)
     from . import __version__
+    from .config import GovernanceRootError, resolve_governance_root, resolve_independent_audit
     from .doctor import doctor as doctor_report
     from .entries import LEDGER_TARGETS, entrypoint_specs, tool_definitions
     from .lifecycle import LifecycleError, install, uninstall, upgrade
 except ImportError:  # plain script context (python mcp/server.py)
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from __init__ import __version__  # type: ignore[no-redef]
+    from config import GovernanceRootError, resolve_governance_root, resolve_independent_audit
     from doctor import doctor as doctor_report  # type: ignore[no-redef]
     from entries import (  # type: ignore[no-redef]
         LEDGER_TARGETS,
@@ -260,6 +262,13 @@ class MCPServer:
                 f"Missing required parameter(s) for {name}: {', '.join(missing)}",
             )
 
+        # Read project configuration before reading any File prompt. Malformed
+        # defaults are errors, never a reason to ask again or change providers.
+        try:
+            governance_root = resolve_governance_root(self.repo_root)
+            audit_profile = resolve_independent_audit(self.repo_root)
+        except GovernanceRootError as error:
+            raise MCPError(-32602, str(error)) from error
         prompt_path = spec.prompt_path
         prompt_sha256: str | None = None
         candidate = self.repo_root / "skills" / prompt_path
@@ -270,6 +279,8 @@ class MCPServer:
             f"{spec.role} 本入口由 {prompt_path} 承载方法论正文"
             + ("（仓内已存在，可核对 sha256）" if prompt_sha256 else "（仓内无 File 大包，用内置角色/台账边界 guidance）")
         )
+        if audit_profile is not None:
+            guidance += " 项目独立审计默认配置（会话显式指定优先，无需重复确认）：" + json.dumps(audit_profile, ensure_ascii=False)
         structured = {
             "entrypoint": spec.name,
             "layer": spec.layer,
@@ -280,6 +291,9 @@ class MCPServer:
             "promptSha256": prompt_sha256,
             "guidance": guidance,
             "status": "ok",
+            "governanceRoot": governance_root,
+            "independentAudit": audit_profile,
+            "independentAuditSource": ".goal-governance.json" if audit_profile else None,
         }
         return {
             "content": [{"type": "text", "text": guidance}],

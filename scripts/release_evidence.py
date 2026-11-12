@@ -33,10 +33,12 @@ SEMVER_TAG_RE = re.compile(
 
 
 def _python_with_imports(root: Path, modules: tuple[str, ...]) -> str:
+    # Keep checks on the interpreter selected by the caller/CI. An unrelated
+    # local venv can have different Windows tempfile semantics and dependencies.
     candidates = [
+        Path(sys.executable),
         root / ".venv" / "Scripts" / "python.exe",
         root / ".venv" / "bin" / "python",
-        Path(sys.executable),
     ]
     seen: set[Path] = set()
     for candidate in candidates:
@@ -122,7 +124,7 @@ def _run_required_checks(
     checks = [
         _run_check(
             "skills-contract-tests",
-            [core_python, "-m", "unittest", "skills/tests/test_skills_orchestrator.py", "-v"],
+            [core_python, "-m", "unittest", "discover", "-s", "skills/tests", "-p", "test_*.py", "-v"],
             root=root,
         ),
         _run_check(

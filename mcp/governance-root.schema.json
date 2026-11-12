@@ -1,11 +1,26 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/magicvr/goal-governance/schema/governance-root-config/v1",
-  "title": "Goal Governance project config (VP-004 R3)",
-  "description": "Committable project pin for the configurable governance root. Only the root prefix is configurable; the internal layout under the root is frozen.",
+  "title": "Goal Governance project configuration",
+  "description": "Committable governance root and independent audit CLI defaults; installation preserves this project-owned file.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "independent_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "model", "reasoning_effort"],
+      "properties": {
+        "provider": {"enum": ["codex", "claude", "grok"]},
+        "model": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "reasoning_effort": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"provider": {"const": "codex"}}}, "then": {"properties": {"reasoning_effort": {"enum": ["minimal", "low", "medium", "high", "xhigh"]}}}},
+        {"if": {"properties": {"provider": {"const": "claude"}}}, "then": {"properties": {"reasoning_effort": {"enum": ["low", "medium", "high", "max"]}}}},
+        {"if": {"properties": {"provider": {"const": "grok"}}}, "then": {"properties": {"reasoning_effort": {"enum": ["low", "medium", "high", "xhigh"]}}}}
+      ]
+    },
     "governance_root": {
       "type": "string",
       "minLength": 1,

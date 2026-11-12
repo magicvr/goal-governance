@@ -85,12 +85,15 @@ class OnDemandGovernanceTests(unittest.TestCase):
     def test_new_install_and_repeat_preserve_user_rules_and_custom_paths(self):
         with tempfile.TemporaryDirectory(prefix="gg-entry-install-") as tmp:
             target = Path(tmp)
+            project_config = b'{\r\n  "governance_root": "governance", "independent_audit": {"provider": "codex", "model": "gpt-6.1-sol", "reasoning_effort": "high"}\r\n}\r\n'
+            (target / ".goal-governance.json").write_bytes(project_config)
             for rel in ("AGENTS.md", ".github/copilot-instructions.md"):
                 path = target / rel
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(b"KEEP-CONSUMER\r\n")
             for _ in range(2):
                 update.run_installer(SKILLS, target, methodology_dir="governance", skills_dir="tooling/gov")
+                self.assertEqual((target / ".goal-governance.json").read_bytes(), project_config)
                 for rel in ("AGENTS.md", ".github/copilot-instructions.md"):
                     raw = (target / rel).read_bytes()
                     self.assertTrue(raw.startswith(b"KEEP-CONSUMER\r\n"), rel)
@@ -107,8 +110,11 @@ class OnDemandGovernanceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="gg-long-upgrade-") as tmp:
             target = Path(tmp)
             originals = self.legacy(target, marked=True)
+            project_config = b'{ "governance_root": "governance", "independent_audit": {"provider":"claude","model":"opus","reasoning_effort":"max"} }\r\n'
+            (target / ".goal-governance.json").write_bytes(project_config)
             report = update.update_package(self.args(target))
             self.assertEqual(report["result"], "updated")
+            self.assertEqual((target / ".goal-governance.json").read_bytes(), project_config)
             for rel, raw in originals.items():
                 actual = (target / rel).read_bytes()
                 self.assertTrue(actual.startswith(b"KEEP-CONSUMER\r\n"))

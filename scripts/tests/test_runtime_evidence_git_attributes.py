@@ -22,18 +22,24 @@ class RuntimeEvidenceGitAttributesTests(unittest.TestCase):
             for key, value in (("user.name", "Goal Governance Tests"), ("user.email", "tests@example.invalid"), ("core.autocrlf", "true"), ("core.safecrlf", "false"), ("gc.auto", "0")):
                 git("config", key, value)
             (root / ".gitattributes").write_bytes((REPO_ROOT / ".gitattributes").read_bytes())
-            rel = "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatch-and-user-input-gates/attachments/s3-runtime/checkout-probe/stdout.jsonl"
-            target = root / rel
-            target.parent.mkdir(parents=True)
+            rels = [
+                f"docs/workspaces/workspace-002-methodology-skills-feedback/{goal}/attachments/s3-runtime/checkout-probe/stdout.jsonl"
+                for goal in ("GOAL-013-audit-dispatch-and-user-input-gates", "GOAL-018-host-wait-and-audit-config")
+            ]
             original = b'{"kind":"synthetic-runtime-evidence","answer":null}\n'
-            target.write_bytes(original)
-            git("add", "--", ".gitattributes", rel)
+            for rel in rels:
+                target = root / rel
+                target.parent.mkdir(parents=True)
+                target.write_bytes(original)
+            git("add", "--", ".gitattributes", *rels)
             git("commit", "-m", "fixture runtime evidence")
-            self.assertTrue(target.resolve().is_relative_to(root))
-            target.unlink()
-            git("checkout", "--", rel)
-            self.assertEqual(hashlib.sha256(target.read_bytes()).hexdigest(), hashlib.sha256(original).hexdigest())
-            self.assertEqual(target.read_bytes(), original)
+            for rel in rels:
+                target = root / rel
+                self.assertTrue(target.resolve().is_relative_to(root))
+                target.unlink()
+                git("checkout", "--", rel)
+                self.assertEqual(hashlib.sha256(target.read_bytes()).hexdigest(), hashlib.sha256(original).hexdigest())
+                self.assertEqual(target.read_bytes(), original)
 
 if __name__ == "__main__":
     unittest.main()

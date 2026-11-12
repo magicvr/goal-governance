@@ -1,0 +1,32 @@
+{
+  "cases": [
+    {
+      "host": "claude",
+      "version": "2.1.322 (Claude Code)",
+      "exitCode": 0,
+      "timedOut": false,
+      "changed": [],
+      "humanAnswerSubmitted": false,
+      "nativeGoalCreated": false,
+      "nativeGoalPauseVerified": false,
+      "scope": "headless question/stop and no governance-file writes only; no active native goal or genuine human/card submission",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/s3-runtime/claude-wait-01/observation.json",
+      "stdout": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/s3-runtime/claude-wait-01/stdout.jsonl"
+    },
+    {
+      "host": "grok",
+      "version": "grok 1.0.77 (50ca579fa996)",
+      "exitCode": 0,
+      "timedOut": false,
+      "changed": [],
+      "humanAnswerSubmitted": false,
+      "nativeGoalCreated": false,
+      "nativeGoalPauseVerified": false,
+      "scope": "headless question/stop and no governance-file writes only; no active native goal or genuine human/card submission",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/s3-runtime/grok-wait-01/observation.json",
+      "stdout": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/s3-runtime/grok-wait-01/stdout.jsonl"
+    }
+  ],
+  "allHeadlessStopsWithoutWrites": true,
+  "claim": "L0 representative headless behavior; native /goal pause/cancel/resume not inferred from single-turn exit"
+}

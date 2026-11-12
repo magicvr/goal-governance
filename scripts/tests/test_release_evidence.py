@@ -41,6 +41,18 @@ release_evidence = _load_module("release_evidence", RELEASE)
 class ReleaseEvidenceToolTests(unittest.TestCase):
     maxDiff = None
 
+    def test_checks_keep_the_callers_working_interpreter(self) -> None:
+        """An existing unrelated venv must not replace a usable CI interpreter."""
+        current = Path(sys.executable).resolve()
+        def probe(command, **kwargs):
+            self.assertEqual(Path(command[0]), current)
+            return subprocess.CompletedProcess(command, 0, "", "")
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(Path, "is_file", return_value=True), mock.patch.object(
+                release_evidence.subprocess, "run", side_effect=probe
+            ):
+                self.assertEqual(release_evidence._python_with_imports(Path(tmp), ("jsonschema",)), str(current))
+
     def _run(self, script: Path, *args: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [sys.executable, str(script), *args],
@@ -188,7 +200,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
             report["matrix"]["previousProtocolStatus"],
             "not-applicable-first-supported-protocol",
         )
-        self.assertEqual(report["matrix"]["candidateRevision"], "v0.14.0")
+        self.assertEqual(report["matrix"]["candidateRevision"], "v0.15.0")
         uncovered = {
             (cell["consumer"], cell["entrypoint"])
             for cell in report["coverage"]["uncovered"]
@@ -267,7 +279,7 @@ class ReleaseEvidenceToolTests(unittest.TestCase):
         self.assertIsNone(evidence["source"]["annotatedTag"])
         self.assertIsNone(evidence["source"]["tagObject"])
         self.assertEqual(evidence["protocol"]["version"], "0.1.0")
-        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.14.0")
+        self.assertEqual(evidence["protocol"]["candidateRevision"], "v0.15.0")
         self.assertIn("checksPassed", evidence)
         schema = json.loads(
             (REPO_ROOT / "docs/releases/release-evidence.schema.json").read_text(

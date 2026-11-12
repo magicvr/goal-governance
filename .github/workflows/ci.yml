@@ -32,7 +32,7 @@ jobs:
           }
       - name: Run portable contract and bootstrap tests
         run: |
-          python -m unittest skills/tests/test_skills_orchestrator.py -v
+          python -m unittest discover -s skills/tests -p 'test_*.py' -v
           python -m unittest discover -s docs/tests -p 'test_standalone_bootstrap.py' -v
           python -m unittest discover -s scripts/tests -p 'test_*.py' -v
           git diff --check
@@ -69,7 +69,7 @@ jobs:
       - name: Run Windows installer and contract tests
         shell: pwsh
         run: |
-          python -m unittest skills/tests/test_skills_orchestrator.py -v
+          python -m unittest discover -s skills/tests -p 'test_*.py' -v
           python -m unittest discover -s docs/tests -p 'test_standalone_bootstrap.py' -v
           python -m unittest discover -s scripts/tests -p 'test_*.py' -v
           git diff --check

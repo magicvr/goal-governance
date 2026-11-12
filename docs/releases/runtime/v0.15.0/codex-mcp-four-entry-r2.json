@@ -1,0 +1,214 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-11-12T07:18:05.459161+00:00",
+  "unit": {
+    "consumer": "codex-cli",
+    "entrypoint": "govern",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "OpenAI Codex CLI",
+    "version": "0.167.2",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": null
+  },
+  "behaviorSources": [
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "f9752f85aef1531a00b52cf4fac900b7387872ffe478932aef6092e8e97346af"
+    },
+    {
+      "path": "docs/architecture/governance-guide.md",
+      "sha256": "33d2b1ea7c1044026e9b1b94cc0abc955c4ac7dd44fa600556ed5e16e57b648f"
+    },
+    {
+      "path": "docs/templates/governance-entry.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "179748095855a9f73db29313c784ec203b28ad5ad44cd5470bc895186501c30f"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "c0e043a8e0cd42afcb90f66828fbb09ffe9b5d586bd77957e8c4cd8fa2c15b1c"
+    },
+    {
+      "path": "skills/prompts/00-govern-orchestrator.md",
+      "sha256": "593af269eb6e74cb8b6aaa40c1ac200bed0fe5b561ce3f6b8a9302743af77a65"
+    },
+    {
+      "path": "skills/prompts/01-create-new-goal.md",
+      "sha256": "8632680807c9d5fba6c644422d0e9c113059ad338b9800b48ab9d6bfd15bf391"
+    },
+    {
+      "path": "skills/prompts/02-record-decision.md",
+      "sha256": "8ad86421df639125686530645492ddbda57c0b36aefd216fc059de94313686c6"
+    },
+    {
+      "path": "skills/prompts/03-update-execution.md",
+      "sha256": "418014d8678e41018776f19bdb009182b7f85df1ae93510b1792adbba8ef394f"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "7439f72f53484c353cbe93ddcd77dbe848cf842f131b4232ac7063685f2d9e1e"
+    },
+    {
+      "path": "skills/install/codex/skills/govern/SKILL.md",
+      "sha256": "6395c3b6b3333dc77d85a5055ff5242ed3bc8c96d519c4f1b25f0ffe9337467c"
+    },
+    {
+      "path": "mcp/config.py",
+      "sha256": "dacb8f82bb3f9cdb393a423cf50e49fd0236ffe8d540e1d46c1c499ed1fd78bb"
+    },
+    {
+      "path": "mcp/entries.py",
+      "sha256": "71351eb69b6a2820a1505838fa0bdd3c97c178a2f1bb6bff9628f58d417e2637"
+    },
+    {
+      "path": "mcp/kernel.py",
+      "sha256": "b0168b2ea8dcd8577e4e5d6214409c9139daa97da240a05b4468ff0337aa4ff6"
+    },
+    {
+      "path": "mcp/server.py",
+      "sha256": "1d1a4ec6f8fcf1ebfd88a84f89a65489d4be6b074ecfca0cced2eb265622e635"
+    },
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/s3-runtime/codex-catalog-02/fixture-mcp-catalog.json",
+      "sha256": "3e8e64efc079ddfc14e5719ee9da6fb1a2e87b3fa28dc83519da3e95bf246468"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Windows\\system32\\cmd.exe",
+      "/d",
+      "/c",
+      "C:\\Users\\magicvr\\AppData\\Roaming\\npm\\codex.CMD",
+      "exec",
+      "--model",
+      "gpt-6.1-sol",
+      "-c",
+      "model_reasoning_effort=low",
+      "--sandbox",
+      "danger-full-access",
+      "--skip-git-repo-check",
+      "--ephemeral",
+      "--json",
+      "-C",
+      "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal018-s3-7f883d8b",
+      "-"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal018-s3-7f883d8b",
+    "timeoutSeconds": 600,
+    "inputSha256": "a24f91ec9295f7c21c114cc6e997d7e16b4bba144a837b54ab5d25e1c0fc6d2b",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /govern invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/s3-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/s3-runtime/codex-catalog-02/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "pass",
+    "marker": "MCP_L3_FOUR_ENTRY_OK",
+    "markerObserved": true,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "MCP_L3_FOUR_ENTRY_OK",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "govern",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "MCP_L3_FOUR_ENTRY_OK",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-1",
+        "kind": "substring",
+        "pattern": "vision",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-2",
+        "kind": "substring",
+        "pattern": "vision-audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-3",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-4",
+        "kind": "substring",
+        "pattern": "AD-01",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "extra-assert-5",
+        "kind": "substring",
+        "pattern": "UI-01",
+        "bound": {
+          "entrypoint": "govern",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.15.0/codex-mcp-four-entry-r2.d/stdout.txt",
+    "stdoutSha256": "f52e01c6343ae82be92e0ac0152534f053653a5ffee685c32227d4c3b4e45360",
+    "stderrPath": "docs/releases/runtime/v0.15.0/codex-mcp-four-entry-r2.d/stderr.txt",
+    "stderrSha256": "46c909471eeeaaf61eb6e362a7ac8f12272f743efb00d49a50613aafb8cf3a63",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual bounded process; marker assertions and fixture write boundary checked: True. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}

@@ -2,7 +2,7 @@
 title: Changelog
 status: active
 created: 2026-07-20
-updated: 2026-11-03
+updated: 2026-11-12
 parent: null
 version: 0.2.1
 ---
@@ -13,7 +13,16 @@ version: 0.2.1
 
 ## Unreleased
 
-（空；本次 v0.14.0 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+（空；本次 v0.15.0 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.15.0 - 2026-11-12
+
+宿主原生目标待答停止与项目独立审计 CLI 配置（[GOAL-018](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/00-meta.md)）；反馈 1、2 合并整改，协议数据结构仍为 0.1.0。
+
+- 等待用户答复时实际调用同步卡片并等待，必要时组合符合宿主工具契约的原生目标停止能力；空答、取消和自动续跑仍等待真实答复。不再因发问自动修改治理 GOAL blocked/active 或写执行索引、目标树、父级投影，不为等待创建或组合目标。
+- `.goal-governance.json` 新增可选 `independent_audit`（provider、model、reasoning_effort），显式会话指定优先，合法项目配置跨会话复用，缺失才询问。增加字段/工具/强度校验及安全 argv 映射；MCP 返回有效默认及来源，仍只读、不执行外部 CLI；安装和升级保留项目配置原字节。
+- 核心规范、执行模板、四宿主入口/dogfood、MCP guidance 与镜像同步；加入配置解析、MCP消费、宿主边界及安装升级保留回归。
+- 当前版本真实代表运行、cross 审计、CI、受保护 Release 与正式资产验收为发行门禁，结果见目标台账及本版本 release evidence。L0 规范与已列代表运行，不宣称所有宿主/模式都具备已验证的原生 `/goal` 硬停止接口。
 
 ## 0.14.0 - 2026-11-03
 

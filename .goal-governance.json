@@ -1,0 +1,8 @@
+{
+  "governance_root": "docs",
+  "independent_audit": {
+    "provider": "grok",
+    "model": "grok-4.7",
+    "reasoning_effort": "xhigh"
+  }
+}
