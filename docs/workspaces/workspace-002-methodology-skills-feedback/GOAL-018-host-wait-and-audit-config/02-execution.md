@@ -17,3 +17,4 @@ version: 0.1.0
 | E-003 | 2026-11-12 | 当前运行取证与全量回归 | recorded | [E-003](02-execution/E-003-runtime-and-regression.md) |
 | E-004 | 2026-11-12 | 严格发布演练通过 | recorded | [E-004](02-execution/E-004-strict-rehearsal.md) |
 | E-005 | 2026-11-12 | PR/main、annotated tag与发布环境门禁 | recorded | [E-005](02-execution/E-005-main-tag-and-publish-gate.md) |
+| E-006 | 2026-11-12 | 正式发布、资产与容器验收 | recorded | [E-006](02-execution/E-006-formal-publication-and-acceptance.md) |

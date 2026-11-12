@@ -1,0 +1,1 @@
+Publish GitHub Release (gated)	Build and push MCP server Docker image (GHCR)	2026-11-12T08:12:44.7357325Z     "digest": "sha256:86e132f950cb758459ea3c8850399039b698cdab515afa9405ef69c3c0a01543",

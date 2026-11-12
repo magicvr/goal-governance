@@ -43,7 +43,7 @@ S1 → S2 → S3 → S4 串行；同阶段独立扫描可并行。本目标覆�
 | I-001 | required | 各宿主原生目标和阻塞问答可用机制、工具约束与不可保证的边界 | S1 契约冻结 | S1 | 官方资料、实际工具说明与代表运行核对 | verified | 宿主升级时复核 | 现有 UI-03 错绑治理 blocked；已有历史 `/govern` 证据不证明 `/goal` 停止 |
 | I-002 | required | CLI 项目配置形状、优先级、校验、升级保留与默认 provider 来源 | S1 配置冻结 | S1 | 读取 config/schema、现有参数与最近用户指定记录 | verified | 配置/CLI 变更时复核 | 当前无项目配置；沿用 GOAL-017 D-002 的用户指定 Grok Build / grok-4.7 / xhigh |
 | I-003 | required | 当前代码的运行行为、兼容性与审计结果 | S3 验收 | S3 退出 | 回归、真实宿主运行、证据采集、self + independent | verified | 修订入口后重新采集 | E-003/E-004、A-001/A-002：当前运行、回归与cross通过 |
-| I-004 | required | 新版本可用性、发布门禁和正式资产一致性 | S4 验收 / 关门 | S4 退出 | 查远端版本、CI/Release、摘要/安装/GHCR验收 | collecting | 发布后核对 | 远端最新 v0.14.0；计划下一 minor v0.15.0，尚未发布 |
+| I-004 | required | 新版本可用性、发布门禁和正式资产一致性 | S4 验收 / 关门 | S4 退出 | 查远端版本、CI/Release、摘要/安装/GHCR验收 | verified | 资产或发布修订时复核 | E-005/E-006：v0.15.0正式发布，9资产摘要、隔离安装与GHCR通过；S4独立审计待完成 |
 
 ## 审计与边界
 

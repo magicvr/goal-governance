@@ -1,0 +1,36 @@
+{
+  "ref": {
+    "ref": "refs/tags/v0.15.0",
+    "node_id": "REF_kwDOTbrmRrFyZWZzL3RhZ3MvdjAuMTUuMA",
+    "url": "https://api.github.com/repos/magicvr/goal-governance/git/refs/tags/v0.15.0",
+    "object": {
+      "sha": "0e66284532cdb2dd69dd39bc9753fa368b089df3",
+      "type": "tag",
+      "url": "https://api.github.com/repos/magicvr/goal-governance/git/tags/0e66284532cdb2dd69dd39bc9753fa368b089df3"
+    }
+  },
+  "tagObject": {
+    "node_id": "TA_kwDOTbrmRtoAKDBlNjYyODQ1MzJjZGIyZGQ2OWRkMzliYzk3NTNmYTM2OGIwODlkZjM",
+    "sha": "0e66284532cdb2dd69dd39bc9753fa368b089df3",
+    "url": "https://api.github.com/repos/magicvr/goal-governance/git/tags/0e66284532cdb2dd69dd39bc9753fa368b089df3",
+    "tagger": {
+      "name": "magicvr",
+      "email": "magicvr@hotmail.com",
+      "date": "2026-11-12T08:02:12Z"
+    },
+    "object": {
+      "sha": "b1434524dab6df79721d58eb1a1e8d3e34175786",
+      "type": "commit",
+      "url": "https://api.github.com/repos/magicvr/goal-governance/git/commits/b1434524dab6df79721d58eb1a1e8d3e34175786"
+    },
+    "tag": "v0.15.0",
+    "message": "v0.15.0: host goal waiting and persistent independent audit CLI configuration\n",
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  }
+}

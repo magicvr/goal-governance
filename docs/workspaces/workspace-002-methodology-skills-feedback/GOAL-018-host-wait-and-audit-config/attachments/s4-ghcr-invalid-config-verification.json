@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-11-12T08:20:52.908041+00:00",
+  "expectedRejection": true,
+  "reason": "First installation fixture contained an unsupported consumer_note field; image correctly failed closed. Valid fixture used below.",
+  "responses": [
+    {
+      "id": 1,
+      "jsonrpc": "2.0",
+      "result": {
+        "capabilities": {
+          "tools": {
+            "listChanged": false
+          }
+        },
+        "instructions": "Goal-governance MCP channel. Tools: vision (decision layer), vision-audit (independent Vision Review, opinions only), govern (implementation orchestration), audit (goal cross-audit, opinions only). Instance truth stays in the repository governance tree; this server never becomes an authoritative state store.",
+        "protocolVersion": "2025-03-26",
+        "serverInfo": {
+          "name": "goal-governance-mcp",
+          "version": "0.15.0"
+        }
+      }
+    },
+    {
+      "error": {
+        "code": -32602,
+        "message": ".goal-governance.json has unknown fields: consumer_note"
+      },
+      "id": 2,
+      "jsonrpc": "2.0"
+    }
+  ],
+  "snapshotUnchanged": true
+}

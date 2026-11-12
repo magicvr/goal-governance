@@ -1,0 +1,85 @@
+{
+  "verifiedAt": "2026-11-12T08:19:30.441869+00:00",
+  "formalPublication": true,
+  "releaseUrl": "https://github.com/magicvr/goal-governance/releases/tag/v0.15.0",
+  "source": {
+    "commit": "b1434524dab6df79721d58eb1a1e8d3e34175786",
+    "branch": null,
+    "annotatedTag": "v0.15.0",
+    "tagObject": "0e66284532cdb2dd69dd39bc9753fa368b089df3"
+  },
+  "assets": [
+    {
+      "name": "bootstrap-README.md",
+      "bytes": 6052,
+      "sha256": "574fcb3af7f4e56aced711bb58cc3896bdcc0f336f3caa396ef4bd2f25abfb6a",
+      "githubDigestMatches": true,
+      "matchesCiPack": true
+    },
+    {
+      "name": "compatibility-report.json",
+      "bytes": 10615,
+      "sha256": "146d8a1ac20a626a1c159ae52de59835be4f1dbd89613bab73805bbec71a17ed",
+      "githubDigestMatches": true
+    },
+    {
+      "name": "goal-governance-core-v0.15.0.zip",
+      "bytes": 94545,
+      "sha256": "5908ad91b22f7965991dcfbc7601064a0b256946fabf145d4f1b11b9adb2f104",
+      "githubDigestMatches": true,
+      "matchesCiPack": true
+    },
+    {
+      "name": "goal-governance-core-v0.15.0.zip.sha256",
+      "bytes": 99,
+      "sha256": "89a69b0a139fd73bfa85f2a5c05fd94ddb61d0149190a31f5f9f3aa31b205e85",
+      "githubDigestMatches": true,
+      "matchesCiPack": true
+    },
+    {
+      "name": "goal-governance-skills-v0.15.0.zip",
+      "bytes": 299759,
+      "sha256": "026e639d9a2f639ad47c2f5423560c125d369e172427daa6c2889e19d6f53cd1",
+      "githubDigestMatches": true,
+      "matchesCiPack": true
+    },
+    {
+      "name": "goal-governance-skills-v0.15.0.zip.sha256",
+      "bytes": 101,
+      "sha256": "fdfff30680cec347752fc2fb74cd78b646a1fec7b4821f8224c398ceec7f8305",
+      "githubDigestMatches": true,
+      "matchesCiPack": true
+    },
+    {
+      "name": "install-online.ps1",
+      "bytes": 12737,
+      "sha256": "89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3",
+      "githubDigestMatches": true,
+      "matchesCiPack": true
+    },
+    {
+      "name": "install-online.sh",
+      "bytes": 10400,
+      "sha256": "86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127",
+      "githubDigestMatches": true,
+      "matchesCiPack": true
+    },
+    {
+      "name": "release-evidence.json",
+      "bytes": 220955,
+      "sha256": "416554ee517f63cdfff7131046b5369f649abed1ea656c6b79aa9dcb183a6026",
+      "githubDigestMatches": true
+    }
+  ],
+  "sidecarsMatch": true,
+  "zipSubset": {
+    "skillsMembers": 89,
+    "coreMembers": 30,
+    "coreByteIdenticalSubset": true
+  },
+  "checksPassed": true,
+  "workingTreeCleanAtPublication": true,
+  "compatibilityStatus": "ready-for-release-evidence",
+  "uncovered": 0,
+  "ciPackFilesMatched": 7
+}
