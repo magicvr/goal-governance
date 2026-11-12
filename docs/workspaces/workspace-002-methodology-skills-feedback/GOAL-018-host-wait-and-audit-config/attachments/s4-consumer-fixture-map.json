@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-11-12T08:35:50.243104+00:00",
+  "respondsTo": "A-003 F-002",
+  "formalPositiveFixture": {
+    "directory": "artifacts/goal018-formal-consumer",
+    "configSha256": "a61ccd94b6fa428153efa19a3014d832c81f5d86ceeab74f62566b0bb27a260a",
+    "configBytesBase64": "ew0KICAgICJnb3Zlcm5hbmNlX3Jvb3QiOiAiZG9jcyIsDQogICAgImluZGVwZW5kZW50X2F1ZGl0Ijogew0KICAgICAgICAicHJvdmlkZXIiOiAiY29kZXgiLA0KICAgICAgICAibW9kZWwiOiAiZ3B0LTYuMS1zb2wiLA0KICAgICAgICAicmVhc29uaW5nX2VmZm9ydCI6ICJoaWdoIg0KICAgIH0NCn0NCg==",
+    "parsedConfig": {
+      "governance_root": "docs",
+      "independent_audit": {
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "high"
+      }
+    }
+  },
+  "negativeFixture": {
+    "directory": "artifacts/goal018-published-consumer",
+    "configSha256": "7bcdf93ce4ed841321bad368485421ee483bbdf37ce0565c9afb7cc8f82a5046",
+    "configBytesBase64": "ew0KICAgICJnb3Zlcm5hbmNlX3Jvb3QiOiAiZG9jcyIsDQogICAgImluZGVwZW5kZW50X2F1ZGl0Ijogew0KICAgICAgICAicHJvdmlkZXIiOiAiY29kZXgiLA0KICAgICAgICAibW9kZWwiOiAiZ3B0LTYuMS1zb2wiLA0KICAgICAgICAicmVhc29uaW5nX2VmZm9ydCI6ICJoaWdoIg0KICAgIH0sDQogICAgImNvbnN1bWVyX25vdGUiOiAicHJlc2VydmUgZm9ybWF0dGluZyINCn0NCg==",
+    "parsedConfig": {
+      "governance_root": "docs",
+      "independent_audit": {
+        "provider": "codex",
+        "model": "gpt-6.1-sol",
+        "reasoning_effort": "high"
+      },
+      "consumer_note": "preserve formatting"
+    }
+  },
+  "formalInstallTargetMatchesPositiveFixture": true,
+  "ghcrMountMatchesPositiveFixture": true,
+  "distinctDirectories": true,
+  "note": "The positive fixture was created in a separate new directory. The negative directory was never replaced by the positive fixture. A-003 inspected the negative directory; its historical opinion is preserved. Base64 retains original CRLF bytes across Git checkout. The initial local log is retained separately; formal-install logs now mirror the authoritative stdout/stderr embedded in the final install receipt."
+}

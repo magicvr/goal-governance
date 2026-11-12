@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-11-12
 parent: null
-version: 0.59.0
+version: 0.60.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-11-12 · GOAL-018 关门（v0.15.0）
+
+D-003/E-007：PR #41 → main b143452 → annotated v0.15.0 → run43180014952正式发布；9资产摘要、Core30/Skills89字节子集、隔离安装保留配置与用户CRLF字节、GHCR digest/0.15.0/只读配置查询均通过。A-003 Grok4.7/xhigh independent/pass覆盖S4，A-004 self/pass将两条recommended fixed，开放required/recommended0；I-001～I-004 verified。五项成功标准满足，S1～S4完成4/4，GOAL-018 done / 100%。收据和关门文档计划经PR #42最终CI通过后合入main，不移动发布tag。Root R3 / VP-002长期active、Root67%不变，下一编号GOAL-019。
 
 ## 2026-11-12 · GOAL-018 S3 退出
 
@@ -442,7 +446,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
 ├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
-└── GOAL-018-host-wait-and-audit-config       [active]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 75%（S1～S3完成，3/4）
+└── GOAL-018-host-wait-and-audit-config       [done]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 100%（S1～S4完成，v0.15.0正式发布）
 ```
 
 ## 状态表
@@ -466,7 +470,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
-| GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-11-12 |
+| GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-12 |
 
 ## 编号
 

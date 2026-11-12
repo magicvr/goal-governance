@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-11-12
-version: 0.14.38
+version: 0.14.39
 progress: 67%
 ---
 
@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-[GOAL-018](../GOAL-018-host-wait-and-audit-config/00-meta.md) 已立项，承接宿主原生目标待答停止与独立审计 CLI 项目配置反馈，并按用户授权完成 PR/main/发布路径；active / 75%，S1～S3 完成，cross pass，S4 发布与验收中。Root R3 / VP-002 继续长期 active，Root 67% 不变。
+[GOAL-018](../GOAL-018-host-wait-and-audit-config/00-meta.md) 已 done / 100%（D-003/E-007），完成宿主原生执行等待与独立审计 CLI 项目配置整改。PR #41 → main b143452 → annotated v0.15.0 → 正式9资产、隔离安装与GHCR验收通过；A-003 independent/pass、A-004 self/pass，两个recommended fixed、无开放required。发布后收据与关门文档走PR #42，不移动tag。Root R3 / VP-002 继续长期 active，Root 67% 不变。
 
 [GOAL-017](../GOAL-017-on-demand-governance-context/00-meta.md) 已done / 100%（D-004/E-009）：消费仓治理规则按需加载，v0.14.0由PR #39→main10bba86→annotated tag→CI run41622193036正式发布；9资产/隔离安装/GHCR验收通过，Grok4.7/xhigh最终独立A-005 pass，A-006闭合recommended，无开放required。Root R3 / VP-002继续长期active，Root67%，等待下一条真实反馈。
 
@@ -84,7 +84,7 @@ progress: 67%
 | [GOAL-015-audit-command-labeled-form](../GOAL-015-audit-command-labeled-form/00-meta.md) | 审计命令带标签形式修正（workspace-/goal-/vp-） | done |
 | [GOAL-016-charter-version-decoupling](../GOAL-016-charter-version-decoupling/00-meta.md) | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | done |
 | [GOAL-017-on-demand-governance-context](../GOAL-017-on-demand-governance-context/00-meta.md) | 消费仓治理规则按需加载与新资产发布 | done |
-| [GOAL-018-host-wait-and-audit-config](../GOAL-018-host-wait-and-audit-config/00-meta.md) | 宿主原生目标待答停止与独立审计 CLI 项目配置 | active |
+| [GOAL-018-host-wait-and-audit-config](../GOAL-018-host-wait-and-audit-config/00-meta.md) | 宿主原生目标待答停止与独立审计 CLI 项目配置 | done |
 
 ## 备注
 
