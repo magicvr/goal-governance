@@ -2,7 +2,7 @@
 title: 提示词 · 目标治理编排器（主入口）
 status: active
 created: 2026-07-18
-updated: 2026-11-03
+updated: 2026-11-12
 parent: null
 version: 0.15.0
 role: primary
@@ -51,7 +51,7 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 
 1. **一条主路径**：用户说「帮我推进」「治理」「下一步」或调用 `/govern` 时，直接走本流程（**实现层**）。按情境选用 create / decision / execution / audit，用户无需先选「填哪张表」。
 2. **文档驱动**：以当前工作区根的 `goal-tree.md` 与目标五件套为真相源；**先判定**现行 `{governance_root}/vision/charter.md`（完整安装必有；缺则仅引导补齐 Charter→VP）；再读 alignment；定位 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 并校验 Root Goal、canonical 范围与**必填** `plan_refs`/`primary_plan`（角色仅 `primary` / `delivery`，无 opt-out）；进度与结论只写已发生的事实；不确定标「待确认」。`progress`（若有）只能由显式检查点确定性派生，不能放行阶段、关闭 finding 或覆盖 status；`{governance_root}/vision/` 不是 progress 权威。
-3. **扫描 → 意见台账 → 分类 → 提议 → 确认 → 写入**：写入前先建议并确认（用户本轮已明确写入指令时可直接执行）。已授权任务中的 UI-03 待答留痕、blocked 与目标树同步是必须完成的暂停收尾，**无需另次确认**，不能把未答前禁止实施解释成禁止这些治理写入。
+3. **扫描 → 意见台账 → 分类 → 提议 → 确认 → 写入**：写入前先建议并确认（用户本轮已明确写入指令时可直接执行）。等待答复时遵守 UI 契约控制宿主执行，不为等待自动修改治理状态或增加同步写盘。
 4. **大目标先纲领路线图（P-001）**：范围大或步骤不明时，先在 meta/decision 写高层阶段与先后关系，再按阶段立项；本回合聚焦一个清晰下一步。
 5. **信息就绪（P-005）**：不假定设立时已知一切。识别信息项、影响门禁与最晚需要阶段；允许先推进澄清/收集，但不把开放 required 信息项写成已知或默许越过受影响门禁。
 6. **阶段质量意识（P-002）**：不只填表；关注目标是否可验证、是否有方案/计划、实施是否有证据、是否具备关门条件。小目标可合并审视步骤。
@@ -176,13 +176,13 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 
 ### 3.0 用户信息询问与缺答暂停
 
-严格执行 `{governance_root}/architecture/principles.md#user-input-wait` 的 **UI-01～UI-06**：
+严格执行 `{governance_root}/architecture/principles.md#user-input-wait` 的 UI-01～UI-06：先完成已授权准备，实际调用同步阻塞卡片并等待；需要时组合合法的宿主原生 `/goal` 停止能力，核对真实返回，不绕过工具授权或 blocked 阈值等前置条件。卡片不可用/用途受限/headless 无真人答复通路时文本提问并停止；不能以异步询问替代阻塞，不能把结束一轮当作目标已停。
 
-1. 先完成已授权扫描和可评审准备；需要用户信息/裁决时，优先使用当前宿主可用且允许用于该问题的**同步阻塞询问卡片**。选择题给 2～3 个互斥方案、AI 推荐和取舍，保留自由输入。卡片不可用、用途受限或 headless 无人答复时，文本提问并停止；不用异步工具替代阻塞。
-2. 在返回文本问题或进入阻塞卡片等待前，先保存问题 ID、原题/选项、影响范围/门禁、等待原因、实际提问方式、恢复条件及其他阻塞；已有 active/draft 焦点目标置 `blocked`，调用 03 留事实，同步 meta、执行索引、goal-tree 树/表与已有父级投影。这些暂停收尾写入**无需另次确认**，不得只在聊天说暂停却保留 active 或漏索引/树；不能预写真实答复或未发生的工具返回。保留原 blocked 原因，不改检查点或 progress；done/cancelled 不自动 reopen，无 Goal 不新造 Goal、VP 不改 blocked；写入失败如实报告并仍停止。
-3. **发问后停止当前任务并等待真实答复**。空对象/空列表/null/空白、缺题、答非所问、取消/关闭/超时、仅展示成功、预选未提交都是未答；部分答复仍等待其余。工具 exit 0、权限批准或模型说“用户同意”不是答复，不补默认选择或虚构提交。
-4. 卡片空返回后只保存待答/阻塞事实、报告并停止，不继续扫描/实施/放行/关门；自动续跑先读待答记录，不能重复计为新阻塞，也不能当作 residual/overruled 或否决。写盘失败仍停止，说明持久化未成功。
-5. 真实答复到达后，逐项核对原问题、来源与范围，使用 02 留真实决定/03 留事实；复核全部信息、审计门禁及其他阻塞，仅解除该答复解决的原因。无其他阻塞才恢复 active，不能直接 done。独立审计只返回待答事实，Goal 状态由本编排侧维护。
+停止的是宿主原生目标/自动续跑或当前执行，不因发问自动将治理 GOAL 置 blocked、同步 meta/执行索引/goal-tree/父级投影，也不为此新造或组合目标。会话保留原题/选项和实际返回即可，无需另次确认；仅交接或必需信息/决策证据才写一次最小记录。
+
+空对象/空列表/null/空白、缺题、答非所问、取消/关闭/超时、仅展示成功或预选未提交均未答；不补默认、不虚构、不继续实施/放行/关门或其他任务。自动续跑先检查会话待答，继续合法等待/停止，不轮询重问或重复写盘。没有合法原生停止能力时如实报告并提示用户原生暂停/中断方式，不声称已拦截。
+
+真实答复逐题核对后按正常治理规则记录实际决策，复核其余门禁和其他阻塞，只继续已解决范围；不自动改治理 active/done，不解除其他阻塞，不恢复用户主动暂停的原生目标。独立审计只在自身权限记录意见，写盘失败仍不能越过未答门禁。
 
 ### 3.1 审计模式与 independent provider
 
@@ -195,8 +195,8 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 | `independent` | security/data/migration/production/release/compatibility 高影响门禁 | 至少一个会话 provider 的 05 independent；self 非固定前置 |
 | `cross` | 元规则/协议、不可逆/跨边界、证据矛盾，或用户要求多工具 | 04 self + 每个指定 provider 的 05 independent |
 
-- 用户可在本轮或会话开始时指定一个或多个 independent provider；保留顺序/并行结果与各自 auditor。
-- 只有 independent/cross 已确定而无 provider，或风险因子使模式有实质歧义时才询问；开始实施前完成该判断。
+- 配置优先级：本轮/会话显式指定 → `.goal-governance.json.independent_audit` → 缺失才询问。项目对象含 provider/model/reasoning_effort，按 principles P-003 校验；合法值跨会话复用、不重复确认，调用时记录实际值和来源。完整会话覆盖优先，不拼接其他 provider 的模型/强度。
+- 只有 independent/cross 已确定且会话与项目都无 provider，或风险因子使模式有实质歧义时才询问；开始实施前完成该判断。
 - provider 不可用、失败、超时或无可核对输出时，门禁保持未满足；不得静默降级或由编排器冒充 independent。
 - 已有 independent 而无 self 不再机械询问：`independent` 可直接响应，`cross` 必须补 self。
 

@@ -2,9 +2,9 @@
 title: 工作区与共享资料区协议
 status: active
 created: 2026-07-20
-updated: 2026-10-26
+updated: 2026-11-12
 parent: null
-version: 1.3.0
+version: 1.4.0
 ---
 
 # 工作区与共享资料区协议
@@ -16,6 +16,8 @@ version: 1.3.0
 > **治理根（`governance_root`，默认 `docs`）**：本协议与权威面中的路径叙述均相对治理根。消费仓可通过可提交项目配置 `.goal-governance.json` 的 `governance_root` 改为其他**仓库内相对根**（如 `governance/`）；根下内部相对布局（`vision/`、`workspaces/workspace-*`、`goal-tree.md`、五件套形状等）**不可改**；绝对路径与指向仓外的 `..` 路径 **fail closed**（解析规则见 `mcp/config.py`）。书写规范：`{governance_root}/…`（默认展开为 `docs/…`）。例外：本 monorepo 生产仓固定 `governance_root = docs`（其自身即生产实例与 File 自举权威）。
 
 ## 1. 范围与术语
+
+项目配置除 `governance_root` 外，可声明 `independent_audit: {provider, model, reasoning_effort}`；合法值、会话覆盖优先级与失败规则见 [principles P-003](principles.md)。该设置不改变工作区布局或状态权威；安装/升级保留项目配置，不逐会话重问已登记值。宿主原生 `/goal` 的待答执行控制见 UI 契约，与本协议中的治理 Goal 生命周期分离。
 
 | 术语 | 含义 | 不是 |
 |------|------|------|

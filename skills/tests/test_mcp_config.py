@@ -35,6 +35,69 @@ class GovernanceRootConfigTests(unittest.TestCase):
     def test_default_is_docs(self) -> None:
         self.assertEqual(config.resolve_governance_root(self.repo), "docs")
 
+    def test_project_audit_default_survives_new_session_and_override(self) -> None:
+        profile = {"provider": "grok", "model": "grok-4.7", "reasoning_effort": "xhigh"}
+        self._write_config({"governance_root": "governance", "independent_audit": profile})
+        original = (self.repo / config.CONFIG_FILENAME).read_bytes()
+        for _ in range(2):
+            self.assertEqual(config.resolve_independent_audit(self.repo), profile)
+        override = {"provider": "claude", "model": "opus", "reasoning_effort": "max"}
+        self.assertEqual(config.resolve_independent_audit(self.repo, override=override), override)
+        self.assertEqual(config.resolve_governance_root(self.repo), "governance")
+        self.assertEqual((self.repo / config.CONFIG_FILENAME).read_bytes(), original)
+        self._write_config({"governance_root": "docs"})
+        self.assertIsNone(config.resolve_independent_audit(self.repo))
+
+    def test_audit_profiles_reject_incomplete_or_invalid_defaults(self) -> None:
+        valid = {"provider": "grok", "model": "grok-4.7", "reasoning_effort": "xhigh"}
+        invalid = [None, {}, [], {"provider": "codex"}]
+        invalid += [{**valid, key: value} for key, value in (
+            ("provider", "unknown"), ("provider", []), ("model", ""),
+            ("model", "model;echo secret"), ("model", "$(whoami)"),
+            ("reasoning_effort", "max"), ("reasoning_effort", []), ("args", ["custom prompt"]),
+        )]
+        for bad in invalid:
+            with self.subTest(profile=bad):
+                self._write_config({"independent_audit": bad})
+                with self.assertRaises(config.GovernanceRootError):
+                    config.resolve_independent_audit(self.repo)
+                with self.assertRaises(config.GovernanceRootError):
+                    config.resolve_governance_root(self.repo)
+        self._write_config({"independent_audit": valid})
+        with self.assertRaises(config.GovernanceRootError):
+            config.resolve_independent_audit(self.repo, override={"provider": "claude"})
+
+    def test_audit_schema_and_cli_mapping_agree(self) -> None:
+        from jsonschema import Draft202012Validator
+        schema = json.loads((REPO_ROOT / "mcp/governance-root.schema.json").read_text(encoding="utf-8"))
+        validator = Draft202012Validator(schema)
+        for provider, efforts in config.AUDIT_EFFORTS.items():
+            for effort in efforts:
+                profile = {"provider": provider, "model": "vendor/model-1", "reasoning_effort": effort}
+                self.assertFalse(list(validator.iter_errors({"independent_audit": profile})))
+                argv = config.independent_audit_argv(profile)
+                self.assertEqual(argv[0], provider)
+                self.assertIn("vendor/model-1", argv)
+                expected = {"codex": f'model_reasoning_effort="{effort}"', "claude": effort, "grok": effort}
+                self.assertEqual(argv[-1], expected[provider])
+        for bad in ({}, None, {"provider": "grok", "model": "x", "reasoning_effort": "max"}):
+            self.assertTrue(list(validator.iter_errors({"independent_audit": bad})))
+
+    def test_mcp_consumes_project_audit_default_without_writes(self) -> None:
+        from mcp.server import MCPServer, MCPError
+        profile = {"provider": "grok", "model": "grok-4.7", "reasoning_effort": "xhigh"}
+        self._write_config({"independent_audit": profile})
+        original = (self.repo / config.CONFIG_FILENAME).read_bytes()
+        for _ in range(2):
+            result = MCPServer(self.repo).handle_tools_call({"name": "govern", "arguments": {"task": "next"}})
+            self.assertEqual(result["structuredContent"]["independentAudit"], profile)
+            self.assertEqual(result["structuredContent"]["independentAuditSource"], config.CONFIG_FILENAME)
+            self.assertIn("无需重复确认", result["structuredContent"]["guidance"])
+        self.assertEqual((self.repo / config.CONFIG_FILENAME).read_bytes(), original)
+        self._write_config({"independent_audit": {"provider": "grok"}})
+        with self.assertRaises(MCPError):
+            MCPServer(self.repo).handle_tools_call({"name": "govern", "arguments": {"task": "next"}})
+
     def test_project_config_overrides_root(self) -> None:
         self._write_config({"governance_root": "governance"})
         self.assertEqual(config.resolve_governance_root(self.repo), "governance")

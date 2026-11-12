@@ -2,7 +2,7 @@
 title: 提示词 · 更新执行进度
 status: active
 created: 2026-07-18
-updated: 2026-11-03
+updated: 2026-11-12
 parent: null
 version: 0.8.1
 role: primitive
@@ -36,9 +36,9 @@ role: primitive
 
 # 待答与阻塞记录
 
-执行 `{governance_root}/architecture/principles.md#user-input-wait` 的 UI-01～UI-06。需用户信息时同步卡片优先，缺答/空返回/取消等只记待答事实并停止，不补默认答案。由有权编排侧为当前 active/draft Goal 置 blocked，并同步 meta、goal-tree 树/表与已有父级投影；已有 blocked 保留其他原因，done/cancelled 不自动 reopen，无 Goal 只暂停任务、VP 不改 blocked。不得因记录阻塞而虚增检查点/progress。
+执行 `{governance_root}/architecture/principles.md#user-input-wait` 的 UI-01～UI-06：实际调用同步卡片并等待，需要时组合符合工具契约的宿主原生 `/goal` 停止能力；空返回/取消等均未答，不代选、不继续任务。停止的是宿主执行，不因等待自动改治理 Goal blocked/active、执行索引、goal-tree 或父级投影，不新增暂停流水。其他真实交付阻塞仍按原治理规则处理。
 
-待答记录至少含问题 ID、原题/选项、影响范围/门禁、等待原因、提问方式、原有阻塞与恢复条件；答案只在真实提交后登记来源与内容。已授权治理任务中的这些暂停收尾写入**无需另次确认**：在返回问题/进入阻塞等待前完成待答、meta blocked、执行索引、goal-tree 树/表及已有父级投影；不能以“未答不写入”为由省略，也不能预写实际答复或未发生的工具返回。恢复时核对所有门禁，未答部分/其他原因保留。写盘失败仍停止并报告未持久成功；独立审计员不得用本原语越权改状态。
+会话保留原题/选项、实际返回与恢复条件即可，无需另次确认；仅交接或必需治理证据才在已有位置保留一次最小记录，实际决策与信息变化按正常规则登记。真实答复逐题核对后复核全部门禁/其他阻塞再继续；无原生停止能力时明确报告并提示用户暂停/中断，不能以写盘代替。独立审计不借本原语越权，写盘失败仍不越过未答门禁。
 
 # 用户输入（缺项先确认）
 - 目标 ID / 路径：

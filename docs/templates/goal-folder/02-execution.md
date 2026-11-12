@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-root-slug
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 执行记录 · GOAL-NNN
@@ -18,7 +18,7 @@ version: 0.2.0
 
 ## 用户待答与恢复（按需保留）
 
-> 按 `{governance_root}/architecture/principles.md#user-input-wait` 的 UI-01～UI-06：阻塞卡片优先，缺答（含空返回/取消/预选未提交）即暂停；由有权编排侧将当前 active/draft Goal 置 blocked，同步 meta、goal-tree 树/表与已有父级投影，不改检查点/progress。无 Goal 仍暂停任务，VP 不改 blocked；保留其他阻塞，写盘失败仍停止。
+> 按 `{governance_root}/architecture/principles.md#user-input-wait` 的 UI-01～UI-06：同步阻塞卡片实际调用并等待；缺答（含空返回/取消/预选未提交）即停止宿主原生 `/goal` / 自动续跑或当前执行，遵守实际工具契约。无 Goal 仍等待，VP 不改 blocked；不因等待自动改治理状态或同步目标树，其他阻塞保留。本表仅在交接或必需证据时使用，不要求每次询问写盘；写盘失败仍不能越过未答门禁。
 
 | 问题 ID | 原题 / 选项 | 影响范围 / 门禁 | 等待原因 / 提问方式 | 原有阻塞 | 恢复条件 | 真实答复来源 / 内容 |
 |---------|-------------|-----------------|---------------------|----------|----------|---------------------|

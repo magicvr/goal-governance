@@ -2,9 +2,9 @@
 title: AGENTS · 目标治理 AI 规则（Claude Code）
 status: active
 created: 2026-07-18
-updated: 2026-11-03
+updated: 2026-11-12
 parent: null
-version: 0.17.0
+version: 0.18.0
 ---
 
 # AGENTS.md
@@ -147,7 +147,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 | `independent` | security/data/migration/production/release/compatibility 高影响门禁 | 至少一个会话指定 provider 的 independent |
 | `cross` | 元规则/协议、不可逆/跨边界、证据矛盾或用户要求多工具 | self + 至少一个指定 provider 的 independent |
 
-规则能唯一判定时不询问。只有 independent/cross 已确定但会话无 provider，或模式歧义会实质改变门禁成本时才询问；provider 失败不得静默降级或由编排器冒充 independent。
+规则能唯一判定时不询问。provider/model/reasoning_effort 按「本轮/会话显式指定 → `.goal-governance.json.independent_audit` → 缺失才询问」解析，合法项目配置跨会话直接复用；字段与 CLI 参数见 principles P-003。非法配置或 provider 失败不得静默替换/降级或由编排器冒充 independent。
 
 #### 审计意见落盘（强制）
 
@@ -173,7 +173,7 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 | 情形 | 行为 |
 |------|------|
-| 审计模式 / provider 无法唯一确定 | 按风险选择 `none` / `self` / `independent` / `cross`；仅 independent/cross 已确定但无 provider，或风险分级实质歧义时询问 |
+| 审计模式 / provider 无法唯一确定 | 按风险选择 `none` / `self` / `independent` / `cross`；仅 independent/cross 已确定且会话与项目配置都无 provider，或风险分级实质歧义时询问 |
 | 多条意见在结论/必改项上冲突 | 展示冲突 + **给建议** + **等用户决策**并留痕；未决不放行/不关门 |
 | 单条（或无冲突）required finding 要否决/residual | 停止放行；说明风险；等用户选 fixed / residual / overruled 并留痕（P-003） |
 | 信息 residual、有界实验、信息冲突 | 按 P-005 字段要求问用户并留痕；不得静默推断 |
@@ -182,13 +182,13 @@ Skills 与核心方法论**同级必备**；缺 architecture 视为不完整安�
 
 ### 用户询问与缺答暂停（UI-01～UI-06）
 
-已授权治理任务中的待答/blocked/执行索引/目标树同步是必须完成的暂停收尾，**无需另次确认**；在返回问题或进入等待前完成，不得因未答省略，不预写真实答复或未发生的工具返回。独立审计仍不扩大写权限。
+停止对象是宿主原生 `/goal` / 自动续跑或当前执行。实际调用同步卡片并等待，必要时组合合法的原生停止能力，遵守工具授权、blocked 阈值、paused 前置条件；**无需另次确认**，但不绕过宿主限制。等待不自动改变治理 GOAL 状态，不额外写执行索引、目标树或父级投影，不为等待新建或组合目标。
 
 全文 `docs/architecture/principles.md#user-input-wait`。有可用且允许的同步阻塞询问卡片时必须使用；选择题给 2～3 个互斥方案、AI 推荐及取舍，保留自由输入。卡片不可用/用途受限/headless 无真人答复通路时文本提问并停止，不以异步询问替代阻塞。
 
-发问后暂停当前任务；空答复、取消/关闭/超时、缺题、答非所问、预选未提交或仅展示成功均不是答复，不补默认、不虚构。由有权编排侧记录问题 ID、原题/选项、影响门禁、原因、提问方式、其他阻塞及恢复条件，将当前 active/draft Goal 置 blocked、记执行事实并同步 goal-tree 树/表与已有父级投影；不改检查点/progress。无 Goal 仍暂停任务，VP 不改 blocked，done/cancelled 不自动 reopen；独立审计只记录/返回待答事实，不越权改 meta。写盘失败仍停止并报告未持久成功。
+发问后等待真实答复；空返回/取消/关闭/超时、缺题、答非所问、预选未提交或仅展示成功均未答，不补默认。原题/选项与实际返回保留在会话中即可；仅交接或必需治理证据才保留一次最小记录。无 Goal 仍等待，VP 不改 blocked；无合法原生停止机制时如实报告并提示用户暂停/中断，不冒称已停止。治理真实交付阻塞另行判断；独立审计不越权改 meta，写盘失败也不越过未答门禁。
 
-空卡片返回后只记录待答/阻塞、报告并停止，不继续实施/放行/关门或其他工作，不将沉默当接受、否决、residual/overruled。自动续跑仍等真实答复、不重复计阻塞；真实答复逐题留痕后复核全部信息/审计门禁及其他阻塞，仅解除对应原因，部分答复不解除未答部分，无其他阻塞才恢复 active。
+空卡片返回后停止，不继续实施/放行/关门或其他工作，不将沉默当 residual/overruled。自动续跑先检查会话待答并保持合法停止，不轮询重问或重复写盘；真实答复逐题核对后复核全部门禁与其他阻塞，只继续已解决范围，不自动恢复治理 active/done 或用户主动暂停的原生目标。
 
 ### P-005 · 信息就绪与未知项门禁
 

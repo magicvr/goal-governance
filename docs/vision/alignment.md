@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-11-03
-version: 0.12.0
+updated: 2026-11-12
+version: 0.13.0
 parent: null
 ---
 
@@ -279,7 +279,7 @@ Charter `version` 是**战略对齐版本**，不是每次文档编辑的版本�
 
 自动调用独立 Vision Review provider 时，遵守 [P-003 · AD-01～AD-06](../architecture/principles.md#audit-dispatch)，语义正文仅为 `/vision-audit vp-NNN`；带标签 VP 选择器（小写 `vp-` 加 1～3 位编号）按 [workspace-protocol §2.7](../architecture/workspace-protocol.md) 唯一解析为完整 VP id，不能追加 scope、finding、文件清单或编排器自编提示词，不能复制编排历史。审计员自主判断范围并形成正式 scope；人类直接提出关注点不受自动派发白名单扩张限制。
 
-愿景编排与愿景审计中的询问同样遵守 [P-004 · UI-01～UI-06](../architecture/principles.md#user-input-wait)：阻塞卡片优先，缺答/空返回即暂停，真实答复留痕后复核门禁再恢复。没有当前可治理 Goal 时暂停任务并保留待答记录，**不**把 Charter/VP status 改成 blocked，不为等待新造 Goal。独立审计只写 VRev/索引或返回待答事实，不越权维护 Goal 状态。未答不等于残余风险已接受，相关 required 门禁保持。
+愿景编排与愿景审计中的询问同样遵守 [P-004 · UI-01～UI-06](../architecture/principles.md#user-input-wait)：同步阻塞卡片实际调用并等待，必要时组合符合工具契约的宿主原生 `/goal` 停止能力；缺答/空返回即停当前执行，不自动改治理 Goal 或 Charter/VP 状态，不为等待创建/组合目标。会话原题/待答即可，只有交接或必需证据才保留一次最小记录；独立审计只在 VRev/索引权限写意见。真实答复后核对门禁再继续，不将沉默当 residual，不绕过原生状态工具授权/阈值。provider/model/强度可从合法项目 `independent_audit` 复用，显式会话指定优先，失败不静默换用。
 
 ## 10. 结构选型（摘要）
 

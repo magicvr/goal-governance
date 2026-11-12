@@ -14,6 +14,7 @@ write targets.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,54 @@ DEFAULT_GOVERNANCE_ROOT = "docs"
 CONFIG_FILENAME = ".goal-governance.json"
 WORKSPACES_DIRNAME = "workspaces"
 WORKSPACE_GLOB = "workspace-*"
+AUDIT_EFFORTS = {
+    "codex": ("minimal", "low", "medium", "high", "xhigh"),
+    "claude": ("low", "medium", "high", "max"),
+    "grok": ("low", "medium", "high", "xhigh"),
+}
+
+
+def validate_independent_audit(value: Any) -> dict[str, str]:
+    """Validate one complete CLI profile; never coerce or mix providers."""
+    fields = {"provider", "model", "reasoning_effort"}
+    if not isinstance(value, dict) or set(value) != fields:
+        raise GovernanceRootError(
+            "independent_audit must contain exactly provider, model, reasoning_effort"
+        )
+    provider = value["provider"]
+    if not isinstance(provider, str) or provider not in AUDIT_EFFORTS:
+        raise GovernanceRootError("independent_audit.provider must be codex, claude or grok")
+    model = value["model"]
+    if not isinstance(model, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]*", model):
+        raise GovernanceRootError("independent_audit.model must be a non-empty model identifier")
+    effort = value["reasoning_effort"]
+    if not isinstance(effort, str) or effort not in AUDIT_EFFORTS[provider]:
+        raise GovernanceRootError(
+            f"independent_audit.reasoning_effort is invalid for {provider}"
+        )
+    return dict(value)
+
+
+def resolve_independent_audit(
+    repo_root: Path, *, override: dict[str, Any] | None = None,
+) -> dict[str, str] | None:
+    """Explicit session profile wins; a valid project profile persists across sessions."""
+    project = load_project_config(repo_root)
+    if override is not None:
+        return validate_independent_audit(override)
+    if project is None or "independent_audit" not in project:
+        return None
+    return validate_independent_audit(project["independent_audit"])
+
+
+def independent_audit_argv(profile: dict[str, Any]) -> list[str]:
+    """Return model/effort argv only; callers add the formal command, never a shell."""
+    item = validate_independent_audit(profile)
+    provider, model, effort = (item[key] for key in ("provider", "model", "reasoning_effort"))
+    if provider == "codex":
+        return ["codex", "exec", "--model", model, "-c", f'model_reasoning_effort="{effort}"']
+    flag = "--effort" if provider == "claude" else "--reasoning-effort"
+    return [provider, "--model", model, flag, effort]
 
 
 class GovernanceRootError(ValueError):
@@ -57,16 +106,25 @@ def _validate_root_name(repo_root: Path, value: Any) -> str:
 def load_project_config(repo_root: Path) -> dict[str, Any] | None:
     """Read .goal-governance.json at the repository root (committable pin)."""
     config_path = repo_root / CONFIG_FILENAME
-    if not config_path.is_file():
+    if not config_path.exists() and not config_path.is_symlink():
         return None
+    if not config_path.is_file() or not config_path.resolve().is_relative_to(repo_root.resolve()):
+        raise GovernanceRootError(f"{CONFIG_FILENAME} must be a readable file inside the repository")
     try:
         payload = json.loads(config_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as error:
+    except (json.JSONDecodeError, UnicodeError, OSError) as error:
         raise GovernanceRootError(
             f"{CONFIG_FILENAME} is not valid JSON: {error}"
         ) from error
     if not isinstance(payload, dict):
         raise GovernanceRootError(f"{CONFIG_FILENAME} must be a JSON object")
+    unknown = set(payload) - {"governance_root", "independent_audit"}
+    if unknown:
+        raise GovernanceRootError(f"{CONFIG_FILENAME} has unknown fields: {', '.join(sorted(unknown))}")
+    if "governance_root" in payload:
+        _validate_root_name(repo_root, payload["governance_root"])
+    if "independent_audit" in payload:
+        validate_independent_audit(payload["independent_audit"])
     return payload
 
 

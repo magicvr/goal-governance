@@ -2,7 +2,7 @@
 title: 提示词 · 独立 Vision Review
 status: active
 created: 2026-07-28
-updated: 2026-11-03
+updated: 2026-11-12
 parent: null
 version: 0.4.0
 role: independent-vision-review
@@ -53,7 +53,7 @@ role: independent-vision-review
 
 # 需要用户信息时
 
-执行 P-004 的 UI-01～UI-06：同步阻塞卡片优先，不可用则文本提问并停止；空返回、取消/关闭/超时、预选未提交、缺题、答非所问或仅展示成功均不是答复，不代选或虚构。只在 VRev/索引权限内保留待答问题、影响与恢复条件，或返回待答事实；由编排侧维护当前 Goal 的 blocked/执行记录/goal-tree，不能借暂停越权写 Goal，也不把 Charter/VP 改 blocked。真实答复留痕并复核门禁后恢复，未答部分继续等待，写盘失败仍停止。
+执行 P-004 的 UI-01～UI-06：实际调用同步阻塞卡片并等待；必要时组合符合工具契约的宿主原生 `/goal` 停止能力。不可用/用途受限/headless 无答复通路则文本提问并停止；无合法原生停止能力时如实报告并提示用户暂停/中断。空返回/取消/关闭/超时、缺题、预选未提交均未答，不代选、不继续执行。待答保留在会话中，不为询问自动改治理 Goal blocked、执行索引或 goal-tree；不越权改 meta/Charter/VP。仅交接或必需证据时在自身权限保留一次最小记录，真实答复核对后复核门禁，写盘失败仍不越过未答门禁。
 
 # 人类直调输入（自动合法命令不要求填表）
 

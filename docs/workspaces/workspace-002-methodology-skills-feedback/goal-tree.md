@@ -2,15 +2,23 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-11-03
+updated: 2026-11-12
 parent: null
-version: 0.58.0
+version: 0.59.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-11-12 · GOAL-018 S1/S2 完成
+
+D-002 冻结宿主执行等待与项目 independent_audit 契约；canonical、四宿主入口/dogfood、MCP 配置校验/消费、模板和镜像已同步。Skills 108 项通过；S3 真实宿主运行与 cross 审计进行中，active / 50%（2/4），尚未发布。Root active / 67% 不变。
+
+## 2026-11-12 · GOAL-018 立项
+
+用户要求新增子目标并完成整改、PR 合入 main 和新版本发布。反馈 1、2 合并为宿主原生 `/goal` 的待答停止问题；反馈 3 为独立审计 CLI 项目配置。D-001/E-001 登记 S1～S4 与 I-001～I-004，GOAL-018 active / 0%（0/4），尚未实施或发布。项目审计默认沿用最近用户指定 Grok Build / grok-4.7 / xhigh；Root R3 / VP-002 active、Root 67% 不变。下一编号 GOAL-019。
 
 ## 2026-11-03 · GOAL-017 关门（v0.14.0）
 
@@ -429,7 +437,8 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-014-release-v0-13-6                  [done]    v0.13.6 正式发布与消费资产验收  progress 100%
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
-└── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
+├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
+└── GOAL-018-host-wait-and-audit-config       [active]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 50%（S1/S2完成，2/4）
 ```
 
 ## 状态表
@@ -453,13 +462,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-015-audit-command-labeled-form | 审计命令带标签形式修正（workspace-/goal-/vp-） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-17 |
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
+| GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-11-12 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 017 |
-| 下一可用 | **GOAL-018** |
+| 最大编号 | 018 |
+| 下一可用 | **GOAL-019** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）
