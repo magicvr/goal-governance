@@ -1,0 +1,232 @@
+{
+  "candidateRevision": "v0.15.1",
+  "date": "2026-11-13",
+  "scope": "12 committed CLI cells plus four supplemental MCP role/catalog probes; representative L0 captures, not system-level interruption prevention or universal host reliability.",
+  "sourceAndRawDigestsVerified": true,
+  "formalInputsExact": true,
+  "selected": [
+    {
+      "path": "docs/releases/runtime/v0.15.1/claude-code-cli-govern-2026-11-13-r2.json",
+      "sha256": "e2bb424b17499faa5a16f6c03d783d20765906991b6a3578c4a90733b20db86f",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/claude-govern-02/observation.json",
+      "consumer": "claude-code-cli",
+      "case": "govern",
+      "version": "2.1.323",
+      "model": "gpt-6.1-sol",
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/claude-code-cli-audit-2026-11-13-r2.json",
+      "sha256": "063782241ab7de31e22a1cadfb21a8d485955d08b66454fe2d91d36287ae9b4f",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/claude-audit-02/observation.json",
+      "consumer": "claude-code-cli",
+      "case": "audit",
+      "version": "2.1.323",
+      "model": "gpt-6.1-sol",
+      "verdict": "pass",
+      "changed": [
+        "docs/workspaces/workspace-002-synthetic/GOAL-019-synthetic-counter/03-audit.md",
+        "docs/workspaces/workspace-002-synthetic/GOAL-019-synthetic-counter/03-audit/A-001-counter-whitespace-semantics.md"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/claude-code-cli-vision-2026-11-13-r2.json",
+      "sha256": "842109883e8026705f0554fe994500e0b6bd87a3e582828972dc0761eb2a86a8",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/claude-vision-02/observation.json",
+      "consumer": "claude-code-cli",
+      "case": "vision",
+      "version": "2.1.323",
+      "model": "gpt-6.1-sol",
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/claude-code-cli-vision-audit-2026-11-13-r3.json",
+      "sha256": "710905a1f80d456a2a397c310ce1503b3cc6ff043e1b82898d67e7b6b1e8eaf8",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/claude-vision-audit-03/observation.json",
+      "consumer": "claude-code-cli",
+      "case": "vision-audit",
+      "version": "2.1.323",
+      "model": "gpt-6.1-sol",
+      "verdict": "pass",
+      "changed": [
+        "docs/vision/reviews.md",
+        "docs/vision/reviews/VRev-001-vp-002-alignment.md"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/grok-build-cli-govern-2026-11-13-r2.json",
+      "sha256": "a1bb441a9b769d9aabbf151670e96010c45b26a25d356f7dcc866890274c567e",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/grok-govern-02/observation.json",
+      "consumer": "grok-build-cli",
+      "case": "govern",
+      "version": "1.0.77 (50ca579fa996)",
+      "model": null,
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/grok-build-cli-audit-2026-11-13-r2.json",
+      "sha256": "3a2c5389c961d9aa212789560c3f94e9816d99d9728c2c201d36194cb1086a27",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/grok-audit-02/observation.json",
+      "consumer": "grok-build-cli",
+      "case": "audit",
+      "version": "1.0.77 (50ca579fa996)",
+      "model": null,
+      "verdict": "pass",
+      "changed": [
+        "__pycache__/counter.cpython-311.pyc",
+        "docs/workspaces/workspace-002-synthetic/GOAL-019-synthetic-counter/03-audit.md",
+        "docs/workspaces/workspace-002-synthetic/GOAL-019-synthetic-counter/03-audit/A-001-count-spec-mismatch.md"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/grok-build-cli-vision-2026-11-13-r2.json",
+      "sha256": "1086d68ed206c84a55722701935f98a2c3992f2b75c33f4081cc09ba001a51a1",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/grok-vision-02/observation.json",
+      "consumer": "grok-build-cli",
+      "case": "vision",
+      "version": "1.0.77 (50ca579fa996)",
+      "model": null,
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/grok-build-cli-vision-audit-2026-11-13-r2.json",
+      "sha256": "78ac0395ee3d4c9cc4fa8b4a3354e4ae5c5d2d7e05ec0e294408d8034f199066",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/grok-vision-audit-02/observation.json",
+      "consumer": "grok-build-cli",
+      "case": "vision-audit",
+      "version": "1.0.77 (50ca579fa996)",
+      "model": null,
+      "verdict": "pass",
+      "changed": [
+        "docs/vision/reviews.md",
+        "docs/vision/reviews/VRev-001-vp-002-alignment.md"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13-r5.json",
+      "sha256": "4d036b3d6c196f8af9af1c9487010951f65f15c0b5046f9edad88c5805a9f3f2",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/copilot-govern-05/observation.json",
+      "consumer": "github-copilot-cli",
+      "case": "govern",
+      "version": "1.0.110",
+      "model": "gpt-6-luna",
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/github-copilot-cli-vision-2026-11-13-r5.json",
+      "sha256": "fa7e6393db42ac3fc54f786e990ebe879f0abf9be11842acf2b7a8456f927f2e",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/copilot-vision-05/observation.json",
+      "consumer": "github-copilot-cli",
+      "case": "vision",
+      "version": "1.0.110",
+      "model": "gpt-6-luna",
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/github-copilot-cli-vision-audit-2026-11-13-r7.json",
+      "sha256": "0f6b4e714b064da2281dadd42c8cca88b4bcbb3f56d18684cb3d0c99015d46f4",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/copilot-vision-audit-07/observation.json",
+      "consumer": "github-copilot-cli",
+      "case": "vision-audit",
+      "version": "1.0.110",
+      "model": "gpt-6-luna",
+      "verdict": "pass",
+      "changed": [
+        "docs/vision/reviews.md",
+        "docs/vision/reviews/VRev-001-vp-002-alignment.md"
+      ]
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/claude-mcp-four-entry-r2.json",
+      "sha256": "9aaa72daeb5fd3d7368bbd1370af5f081d373964a56bed33af6ed0908595033a",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/claude-catalog-02/observation.json",
+      "consumer": "claude-code-cli",
+      "case": "catalog",
+      "version": "2.1.323",
+      "model": "gpt-6.1-sol",
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/grok-mcp-four-entry-r2.json",
+      "sha256": "8718c68776e18d3a6a2c1afcb41b72fb38d3b24c9432a644fc9c1b867f51586e",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/grok-catalog-02/observation.json",
+      "consumer": "grok-build-cli",
+      "case": "catalog",
+      "version": "1.0.77 (50ca579fa996)",
+      "model": null,
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/codex-mcp-four-entry-r2.json",
+      "sha256": "f4a29c460ffd3260efbd8a238977094c264a978291e2935f3473eef1ee09901e",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/codex-catalog-02/observation.json",
+      "consumer": "codex-cli",
+      "case": "catalog",
+      "version": "0.169.0",
+      "model": null,
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/copilot-mcp-four-entry-r9.json",
+      "sha256": "08df0773b649e57cac25846207a2274fb20106b1cde2394f8a7803e36a497f1c",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/copilot-catalog-09/observation.json",
+      "consumer": "github-copilot-cli",
+      "case": "catalog",
+      "version": "1.0.110",
+      "model": "gpt-6-luna",
+      "verdict": "pass",
+      "changed": []
+    },
+    {
+      "path": "docs/releases/runtime/v0.15.1/github-copilot-cli-audit-2026-11-13-r12.json",
+      "sha256": "483f4561239c014dea7f909e45250cb86fa981134d760fa0fd15450f30b7e590",
+      "observation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/copilot-audit-12/observation.json",
+      "consumer": "github-copilot-cli",
+      "case": "audit",
+      "version": "1.0.110",
+      "model": "gpt-6-luna",
+      "verdict": "pass",
+      "changed": [
+        "docs/workspaces/workspace-002-synthetic/GOAL-019-synthetic-counter/03-audit.md",
+        "docs/workspaces/workspace-002-synthetic/GOAL-019-synthetic-counter/03-audit/A-001-counter-count-contract.md"
+      ],
+      "metadataClerkCompletion": []
+    }
+  ],
+  "excludedCurrentRecords": [
+    "claude-code-cli-vision-audit-2026-11-13-r2.json",
+    "github-copilot-cli-vision-audit-2026-11-13-r5.json",
+    "github-copilot-cli-vision-audit-2026-11-13-r6.json",
+    "copilot-mcp-four-entry-r7.json",
+    "github-copilot-cli-audit-2026-11-13-r5.json",
+    "github-copilot-cli-audit-2026-11-13-r10.json",
+    "github-copilot-cli-audit-2026-11-13-r11.json"
+  ],
+  "archivedSetupOrCancelledAttempts": [
+    "attempt-01-envelopes",
+    "copilot-path-attempt-02",
+    "copilot-path-attempt-03",
+    "copilot-gemini-attempt-04",
+    "copilot-catalog-false-positive-08"
+  ],
+  "complete": true,
+  "pending": [],
+  "manualRejection": {
+    "record": "copilot-mcp-four-entry-r8.json",
+    "reason": "Substring assertion matched a negated/quoted success marker. Actual assistant explicitly declined host success. Original envelope is archived unchanged and not selected."
+  },
+  "additionalManualRejection": {
+    "record": "github-copilot-cli-audit-2026-11-13-r5.json",
+    "reason": "Report source/verdict exist in body, but minimum Markdown frontmatter is missing and auditor incorrectly claims grok-4.7 instead of actual Copilot/gpt-6-luna. Not selected."
+  },
+  "reviewNotes": "Selected formal reports and indices checked for source, verdict, frontmatter and actual auditor attribution. Copilot audit12 and catalog09 replace rejected/intermediate records; catalog09 has an explicit positive standalone marker."
+}

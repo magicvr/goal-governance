@@ -2,9 +2,9 @@
 title: 目标治理完整操作指南
 status: active
 created: 2026-07-18
-updated: 2026-11-12
+updated: 2026-11-13
 parent: null
-version: 1.1.0
+version: 1.1.1
 ---
 
 # 目标治理完整操作指南
@@ -132,6 +132,8 @@ Skills 与核心方法论**同级必备**：缺 `{governance_root}/architecture/
 - **Finding 合法闭合**（三路径，全文见 principles）：`fixed`（可核对修正）｜`accepted-residual`（用户书面接受残余，含范围与复审触发）｜`user-overruled`（用户书面驳回/降级，**单条意见亦可**）。口头不算。
 - 默认主入口仍为编排器；交叉审计为专用入口（如 `/audit`），非四填表并列主路径。
 - **自动派发 AD-01～AD-06**（全文 `{governance_root}/architecture/principles.md#audit-dispatch`）：只向独立审计员输入 `/audit workspace-NNN goal-NNN` 或 `/vision-audit vp-NNN`；带标签的三位正整数唯一解析完整身份，拒绝裸数字、附言、包装与非法编号。禁止自编审计提示词、scope/文件清单/结论预期及隐藏上下文注入，不复制编排历史；审计员自主定范围，入口失败不自由提示兜底。人类直调可给关注点，MCP 参数兼容不豁免自动请求；规则约束不宣称系统级强制拦截。
+- **正式审计的运行边界**（全文 [principles · audit-session-lifecycle](principles.md#audit-session-lifecycle)）：派发方与审计方都须区分正式审计与普通探索子代理；不能仅因子代理/CLI承载，就自动套用探子的默认角色、只读/摘要输出、固定时限或到时关闭策略。单次wait超时、暂未输出或达到探索时限，不构成审计失败/完成；持续核对状态、日志与完整正式意见及索引，未完成不放行。
+- 用户明确取消、审计专用预算/时限、实际故障与宿主硬限制仍有效；中断留痕且门禁未满足，不自动换provider。用户待答按UI契约停止；审计内部普通探子仍遵守探索策略。用户明确适用于审计的规则及系统/工具权限不被豁免，冲突按P-004处理；不扩大审计写入权限或自动命令正文。
 
 
 #### 审计模式（实施前按风险确定）

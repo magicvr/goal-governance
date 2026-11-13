@@ -1,0 +1,78 @@
+{
+  "reason": "Version attribution was repaired by upgrading the npm package and binding both execution and --no-auto-update version query to the same native executable. The earlier VS Code shim hypothesis was disproven.",
+  "currentVerifiedVersion": "1.0.110",
+  "currentModel": "gpt-6-luna",
+  "currentInvocation": "s3-runtime/copilot-audit-10/invocation.json",
+  "supersededAttempt03Hypothesis": {
+    "reason": "The npm shim invocation recorded a 1.0.75 version response, while its owned process tree/log showed the bundled 1.0.71 executable. That ambiguous attempt was stopped and excluded. A fresh process uses the installed explicit 1.0.75 executable in the VS Code shim directory via a process-local PATH prefix. Provider credentials/config and requested model remain unchanged.",
+    "oldInvocation": "docs\\workspaces\\workspace-002-methodology-skills-feedback\\GOAL-019-independent-audit-lifecycle\\attachments\\s3-runtime\\copilot-govern-02\\invocation.json",
+    "oldOwnedCliPid": 36396,
+    "oldOwnedCliLogVersion": "1.0.71",
+    "oldRecordedVersion": "1.0.75",
+    "newCommand": [
+      "C:\\Users\\magicvr\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\copilot-shim\\copilot.EXE",
+      "--prompt",
+      "/govern 仅核对当前入口的职责与正式规则中 AD-01～AD-06、UI-01～UI-06 的含义，报告各自权威文件路径；这是只读入口加载核验，不推进或修订愿景/目标。",
+      "--no-auto-update",
+      "--no-remote-export",
+      "--disable-builtin-mcps",
+      "--model",
+      "gemini-3.8-flash-high",
+      "--allow-tool=read,write",
+      "--excluded-tools=shell",
+      "--no-ask-user",
+      "--output-format",
+      "json",
+      "--silent"
+    ],
+    "newVersion": "GitHub Copilot CLI 1.0.75.\nRun 'copilot update' to check for updates.",
+    "globalEnvironmentChanged": false,
+    "selectedOldAttempt": false,
+    "acceptedAsCurrentFact": false
+  },
+  "initialHypothesisVerified": false,
+  "correction": "VS Code shim delegated to the old npm 1.0.71 binary when --no-auto-update was set; it did not fix attribution. Attempts 02 and 03 are excluded, including any apparent pass. Stopping attempt 03 was due to confirmed attribution error, not elapsed scout time.",
+  "upgrade": {
+    "date": "2026-11-13",
+    "officialNpmLatestAtCheck": "1.0.110",
+    "officialGitHubReleaseAtCheck": "v1.0.111",
+    "installedPackage": "@github/copilot@1.0.110",
+    "beforePackageVersion": "1.0.71",
+    "afterPackageVersion": "1.0.110",
+    "nativeVersionWithNoAutoUpdate": "1.0.110",
+    "nativeVersionWithoutNoAutoUpdate": "1.0.110",
+    "method": "npm install --global @github/copilot@1.0.110",
+    "newGenerator": "s3-copilot-probes.py",
+    "providerOrModelChanged": false,
+    "sources": [
+      "https://registry.npmjs.org/@github%2Fcopilot",
+      "https://github.com/github/copilot-cli/releases/tag/v1.0.111",
+      "https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli"
+    ]
+  },
+  "modelOverride": {
+    "source": "explicit user instruction in current chat",
+    "previous": "gemini-3.8-flash-high",
+    "selected": "gpt-6-luna",
+    "scope": "Copilot CLI runtime captures only",
+    "globalUserConfigChanged": false,
+    "attempt": "05"
+  },
+  "endpointHealth": {
+    "purpose": "diagnostic only, not runtime matrix evidence",
+    "results": [
+      {
+        "model": "gemini-3.8-flash-high",
+        "timeoutSeconds": 40,
+        "httpResponseReceived": false
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "httpStatus": 200,
+        "seconds": 2.83
+      }
+    ],
+    "selectedModelInferredFromProbe": false
+  },
+  "productionAuditProfileChanged": false
+}

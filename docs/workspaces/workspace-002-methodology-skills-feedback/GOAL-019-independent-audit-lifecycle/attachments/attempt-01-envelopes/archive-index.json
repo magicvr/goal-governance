@@ -1,0 +1,96 @@
+{
+  "selected": false,
+  "reason": "Superseded harness attempt: lowercase selector still referred to goal-018 while synthetic meta was GOAL-019. In-flight exploratory experiments were stopped after confirming this setup defect; completed and partial outputs retained. Source hashes are historical, not refreshed. Original envelope relative pointers describe original locations; use this archive map and s3-runtime observations.",
+  "files": [
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/claude-code-cli-audit-2026-11-13.d/stderr.txt",
+      "sha256": "9e3bab7227e169ac6d85e7fcade18a205eac5751d1b968d9c83ae885668240fb",
+      "originalPath": "docs/releases/runtime/v0.15.1/claude-code-cli-audit-2026-11-13.d/stderr.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/claude-code-cli-audit-2026-11-13.d/stdout.txt",
+      "sha256": "1281e6ca7079bef103e674916e1cc91521d6a36fa400450925a6432fa6e60f02",
+      "originalPath": "docs/releases/runtime/v0.15.1/claude-code-cli-audit-2026-11-13.d/stdout.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/claude-code-cli-audit-2026-11-13.json",
+      "sha256": "d7cf6b43b21575e03be6789d5686864ec2736a8598510fdebc332033d01564e2",
+      "originalPath": "docs/releases/runtime/v0.15.1/claude-code-cli-audit-2026-11-13.json"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/claude-code-cli-govern-2026-11-13.d/stderr.txt",
+      "sha256": "9e3bab7227e169ac6d85e7fcade18a205eac5751d1b968d9c83ae885668240fb",
+      "originalPath": "docs/releases/runtime/v0.15.1/claude-code-cli-govern-2026-11-13.d/stderr.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/claude-code-cli-govern-2026-11-13.d/stdout.txt",
+      "sha256": "059f073aaf61f3ee11fb98fd000a57897eaf735b427b92018180abb92143b6b3",
+      "originalPath": "docs/releases/runtime/v0.15.1/claude-code-cli-govern-2026-11-13.d/stdout.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/claude-code-cli-govern-2026-11-13.json",
+      "sha256": "6675cddb0663f20369b944f2b786e7c4eb10e92927bb3641f6d5de5d1b55eb16",
+      "originalPath": "docs/releases/runtime/v0.15.1/claude-code-cli-govern-2026-11-13.json"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/codex-mcp-four-entry.d/stderr.txt",
+      "sha256": "e9f5906422f8173160485ba398196453735b8609ab3390b65f3d2d82ee40e348",
+      "originalPath": "docs/releases/runtime/v0.15.1/codex-mcp-four-entry.d/stderr.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/codex-mcp-four-entry.d/stdout.txt",
+      "sha256": "fd9c19087fa0986c546ebc4381610dfbdbc256a9c4b58e3b9876c9251c6ec6b4",
+      "originalPath": "docs/releases/runtime/v0.15.1/codex-mcp-four-entry.d/stdout.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/codex-mcp-four-entry.json",
+      "sha256": "dc47f3d125d4b7d4afbdc850d878419a53ddd0ee989515b9a3d37ffde9ebaf92",
+      "originalPath": "docs/releases/runtime/v0.15.1/codex-mcp-four-entry.json"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/github-copilot-cli-govern-2026-11-13.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13.d/stderr.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/github-copilot-cli-govern-2026-11-13.d/stdout.txt",
+      "sha256": "1befa4c1cb2fb581345f0d450d644b7dcfa090783f4f970874efd1e2e9a4d2d1",
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13.d/stdout.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/github-copilot-cli-govern-2026-11-13.json",
+      "sha256": "6aaf142ccd6cc16c5383e03c520699e32d4a3e192efc70bb0a64ce167e47ea89",
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13.json"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/grok-build-cli-audit-2026-11-13.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalPath": "docs/releases/runtime/v0.15.1/grok-build-cli-audit-2026-11-13.d/stderr.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/grok-build-cli-audit-2026-11-13.d/stdout.txt",
+      "sha256": "8abceef6b9c58b50c55f2759ff6fd7e0104cfc8e1b608f6a08644b3c44d5c564",
+      "originalPath": "docs/releases/runtime/v0.15.1/grok-build-cli-audit-2026-11-13.d/stdout.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/grok-build-cli-audit-2026-11-13.json",
+      "sha256": "96e5d6e5f6232ef569941850d72a6a3e1e34d574acb96ab04ac129d81ada51b7",
+      "originalPath": "docs/releases/runtime/v0.15.1/grok-build-cli-audit-2026-11-13.json"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/grok-build-cli-govern-2026-11-13.d/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalPath": "docs/releases/runtime/v0.15.1/grok-build-cli-govern-2026-11-13.d/stderr.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/grok-build-cli-govern-2026-11-13.d/stdout.txt",
+      "sha256": "73baaab213413ea56b95eb3cd5b848488b97ecf774166a0e2336af23444dca94",
+      "originalPath": "docs/releases/runtime/v0.15.1/grok-build-cli-govern-2026-11-13.d/stdout.txt"
+    },
+    {
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/attempt-01-envelopes/grok-build-cli-govern-2026-11-13.json",
+      "sha256": "fe4a59e24d586d69631012dcf7aaac393e1ebbfc5bdd05c2ecaa093e17cadc9f",
+      "originalPath": "docs/releases/runtime/v0.15.1/grok-build-cli-govern-2026-11-13.json"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+Offline mode: using local zip C:\Users\magicvr\Documents\Code\goal-governance\dist\goal019-candidate\goal-governance-skills-v0.15.1.zip
+SHA-256 OK: goal-governance-skills-v0.15.1.zip
+Materialized skills package: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills
+Running package install: install.ps1 -All -NonInteractive -Force
+Project root:  C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer
+Skills dir:    C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills
+Package root:  C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills
+
+Merged managed block: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\AGENTS.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.claude\skills\govern\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.claude\skills\audit\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.claude\skills\vision\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.claude\skills\vision-audit\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.claude\skills\commit\SKILL.md
+Claude skills: /govern + /audit + /vision + /vision-audit
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.grok\skills\govern\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.grok\skills\audit\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.grok\skills\vision\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.grok\skills\vision-audit\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.grok\skills\commit\SKILL.md
+Grok skills: /govern + /audit + /vision + /vision-audit
+Already present (managed block unchanged): C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\AGENTS.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.agents\skills\govern\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.agents\skills\audit\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.agents\skills\vision\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.agents\skills\vision-audit\SKILL.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.agents\skills\commit\SKILL.md
+Codex skills: $govern + $audit + $vision + $vision-audit under .agents/skills/
+Merged managed block: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.github\copilot-instructions.md
+Copilot slash surface: /govern + /audit + /vision + /vision-audit (governance-must)
+Convenience entry: /commit (default-installed; NOT a governance-must entrypoint)
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.github\prompts\govern.prompt.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.github\prompts\audit.prompt.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.github\prompts\vision.prompt.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.github\prompts\vision-audit.prompt.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\.github\prompts\commit.prompt.md
+Already present: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\prompts\  (from prompts)
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\templates\  (from templates)
+Already present: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\contracts\skills-consumer-contract.json
+Already present: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\contracts\skills-consumer-contract.schema.json
+Consumer contract profile: contract + schema only; producer runtime evidence remains release-owned.
+Installing core methodology -> .\docs\ (architecture + templates + vision rules + README)
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\docs\README.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\docs\standalone-bootstrap.md
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\docs\architecture\  (from core architecture)
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\docs\templates\  (from core templates)
+Installed: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\docs\vision\  (from core vision rules)
+
+Done.
+
+Next steps:
+  1. Review installed rule file(s) and docs\architecture (core methodology; required).
+  2. Create workspace skeleton (pick one):
+     - /govern S0 (AI asks for slugs), or
+     - re-run install with -InitWorkspace -WorkspaceSlug S -RootSlug S
+    3. DEFAULT user path: /govern (impl) + /audit (Goal cross-audit) + /vision (decision) + /vision-audit (independent Vision Review)
+     - Methodology: .\docs\architecture\principles.md
+     - Orchestrator: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\prompts\00-govern-orchestrator.md
+     - Cross-audit: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\prompts\05-independent-audit.md
+     - Vision: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\prompts\06-vision-orchestrator.md
+    - Independent Vision Review: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\prompts\07-independent-vision-review.md
+     - Contract: C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills\contracts\skills-consumer-contract.json
+    - Claude: /govern + /audit + /vision + /vision-audit under .\.claude\skills\
+    - Grok:   /govern + /audit + /vision + /vision-audit under .\.grok\skills\
+    - Codex:  $govern + $audit + $vision + $vision-audit under .\.agents\skills\
+    - Copilot: govern + audit + vision + vision-audit prompts
+  4. Advanced Copilot form-filling slashes only if you used -WithPrimitives.
+  5. Cold start: /vision (Charter->VP) then /govern (workspace+Root).
+
+Project root:  C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer
+Skills dir:    C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills
+Package root:  C:\Users\magicvr\Documents\Code\goal-governance\artifacts\goal019-candidate-consumer\skills
+Bootstrap complete.

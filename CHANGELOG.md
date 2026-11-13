@@ -2,9 +2,9 @@
 title: Changelog
 status: active
 created: 2026-07-20
-updated: 2026-11-12
+updated: 2026-11-13
 parent: null
-version: 0.2.1
+version: 0.2.2
 ---
 
 # Changelog
@@ -13,7 +13,17 @@ version: 0.2.1
 
 ## Unreleased
 
-（空；本次 v0.15.0 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+（空；本次 v0.15.1 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.15.1 - 2026-11-13
+
+独立审计与探索子代理的运行边界修正（[GOAL-019](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/00-meta.md)）；协议数据结构仍为0.1.0。
+
+- 正式 `/audit`、`/vision-audit` 按职责适用独立审计契约，不因子代理/CLI承载而自动继承探索角色、只读摘要、固定时限或到时关闭策略；派发方与审计方都受此边界约束。
+- 单次wait超时、暂未输出或探索时限到达不能单独作为完成/失败依据；持续核对状态、日志及正式意见与索引。用户明确取消、审计专用预算、实际故障与宿主硬限制仍有效，中断时未满足的门禁保持未满足。
+- 用户明确适用于审计的规则、权限和资源硬限制继续生效；审计内部普通探子仍遵守探索策略。保持自动命令正文与独立上下文，不扩大审计写入权限。
+- 修正落在canonical principles与完整指南，由既有四入口强制加载并随core镜像分发；未改Skills prompts、宿主wrappers或MCP实现。
+- 两份权威均被现行16格证据固定，当前宿主运行证据须重采；不以“不改Skills实现”豁免证据新鲜度。结果见本目标与发行证据；不宣称系统级防截断或真实十分钟取消实验已验证。
 
 ## 0.15.0 - 2026-11-12
 

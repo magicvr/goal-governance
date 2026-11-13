@@ -1,0 +1,15 @@
+{
+  "reason": "Substring assertion matched a negated/quoted success marker. Actual assistant explicitly declined host success. Original envelope is archived unchanged and not selected.",
+  "entries": [
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/copilot-mcp-four-entry-r8.d",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-catalog-false-positive-08/copilot-mcp-four-entry-r8.d",
+      "sha256": null
+    },
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/copilot-mcp-four-entry-r8.json",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-catalog-false-positive-08/copilot-mcp-four-entry-r8.json",
+      "sha256": "1f9f3d19a7b8f4fc8cbfe12daf330307d51fad473ffa1bc4a67a7ebfb78ad354"
+    }
+  ]
+}

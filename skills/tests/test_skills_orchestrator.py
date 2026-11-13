@@ -649,7 +649,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
         self.assertEqual(runtime_schema["$id"], RUNTIME_EVIDENCE_SCHEMA_ID)
         self.assertEqual(matrix["schemaId"], MATRIX_SCHEMA_ID)
         self.assertEqual(matrix["format"], "goal-governance.skills-consumer-compatibility-matrix")
-        self.assertEqual(matrix["candidateRevision"], "v0.15.0")
+        self.assertEqual(matrix["candidateRevision"], "v0.15.1")
         self.assertEqual(matrix["canonicalContractPath"], "docs/contracts/skills-consumer-contract.json")
         self.assertEqual(matrix["protocol"]["current"], manifest["protocol"]["version"])
         self.assertIsNone(matrix["protocol"]["previous"])
@@ -683,9 +683,9 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 "github-copilot-cli",
             },
         )
-        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.322")
+        self.assertEqual(consumers["claude-code-cli"]["host"]["version"], "2.1.323")
         self.assertEqual(consumers["grok-build-cli"]["host"]["version"], "1.0.77 (50ca579fa996)")
-        self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.75")
+        self.assertEqual(consumers["github-copilot-cli"]["host"]["version"], "1.0.110")
         self.assertEqual(consumers["github-copilot-cli"]["host"]["product"], "GitHub Copilot CLI")
         adapters_by_id = {adapter["id"]: adapter for adapter in manifest["adapters"]}
         # GOAL-013 S3: fresh entry/ledger captures for this working tree.
@@ -710,7 +710,7 @@ class TestSkillsOrchestratorPackage(unittest.TestCase):
                 for path in entry["evidence"]:
                     self.assertTrue((SKILLS_ROOT.parent / path).is_file(), msg=path)
                     self.assertRegex(path, EVIDENCE_DATED_RE)
-                    self.assertIn(f"v0.15.0/{consumer_id}-{name}-", path.replace("\\", "/"))
+                    self.assertIn(f"v0.15.1/{consumer_id}-{name}-", path.replace("\\", "/"))
             vision = entrypoints["vision"]
             self.assertIn("vision", vision["evidence"][0])
             vision_audit = entrypoints["vision-audit"]
