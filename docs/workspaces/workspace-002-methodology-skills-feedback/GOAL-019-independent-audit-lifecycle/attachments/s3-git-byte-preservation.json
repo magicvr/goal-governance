@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-13",
+  "scope": "Final selected records staged in Git index before formal independent audit",
+  "selectedEnvelopeAndRawBytesPreservedInGitIndex": 16,
+  "hostMarkdownSnapshotsByteVerified": 12,
+  "method": "Read each staged blob using git show :path as raw bytes; compare selected envelope/raw stdout/stderr SHA256 and changed Markdown SHA256 with the original observation after hashes.",
+  "passed": true
+}

@@ -2,9 +2,9 @@
 title: Bootstrap installers · dual entry point (online)
 status: active
 created: 2026-07-30
-updated: 2026-10-15
+updated: 2026-11-13
 parent: null
-version: 0.3.1
+version: 0.3.2
 ---
 
 # Bootstrap installers (GOAL-023 / VP-004 R2 dual entry)
@@ -76,22 +76,22 @@ bash scripts/bootstrap/install-online.sh \
 
 ## Online (Release)
 
-**Installation version pin: `v0.15.0`** (formal identity is established by its annotated tag and gated Release). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
+**Installation version pin: `v0.15.1`** (formal identity is established by its annotated tag and gated Release). On each formal release, update examples here and in root / `skills` README to that tag. Commands still **pin a version** — this is not unversioned always-latest install. Prefer **tag-fixed Release URLs** over floating branch raw (D-002 / D-003).
 
 Fetch bootstrap from the Release, then run (save to disk first; avoid `curl | bash` / `irm | iex` as the default path):
 
 ```powershell
-# Installation version pin: v0.15.0
-Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.15.0/install-online.ps1" `
+# Installation version pin: v0.15.1
+Invoke-WebRequest -Uri "https://github.com/magicvr/goal-governance/releases/download/v0.15.1/install-online.ps1" `
   -OutFile .\install-online.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.15.0 -Force
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install-online.ps1 -Version 0.15.1 -Force
 ```
 
 ```bash
 curl -fsSL -o install-online.sh \
-  "https://github.com/magicvr/goal-governance/releases/download/v0.15.0/install-online.sh"
+  "https://github.com/magicvr/goal-governance/releases/download/v0.15.1/install-online.sh"
 chmod +x install-online.sh
-bash ./install-online.sh --version 0.15.0 --force
+bash ./install-online.sh --version 0.15.1 --force
 ```
 
 URL shape (D-002 / D-003):

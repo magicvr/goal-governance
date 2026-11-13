@@ -1,0 +1,15 @@
+{
+  "reason": "User explicitly cancelled Gemini capture and selected gpt-6-luna. No Gemini attempt is selected.",
+  "entries": [
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13-r4.d",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-gemini-attempt-04/github-copilot-cli-govern-2026-11-13-r4.d",
+      "sha256": null
+    },
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13-r4.json",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-gemini-attempt-04/github-copilot-cli-govern-2026-11-13-r4.json",
+      "sha256": "37dca8b97fb71b6c9d43e8142793c99c39e84f0fa5f7d38c9638a66106c84ed7"
+    }
+  ]
+}

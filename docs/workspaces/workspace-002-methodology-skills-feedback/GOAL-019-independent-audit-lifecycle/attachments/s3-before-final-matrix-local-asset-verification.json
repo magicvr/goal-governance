@@ -1,0 +1,43 @@
+{
+  "verifiedAt": "2026-11-13T14:02:21.733779+00:00",
+  "tag": "v0.15.1",
+  "formal": false,
+  "assetDirectory": "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\dist\\goal019-final-candidate",
+  "zipChecks": [
+    {
+      "name": "goal-governance-skills-v0.15.1.zip",
+      "sha256": "53182cc6151b06a295289811f25fbecd2c0da4ce73d1edce068f350a6d2bd9df"
+    },
+    {
+      "name": "goal-governance-core-v0.15.1.zip",
+      "sha256": "784404900201244e04f9640874c364a8ca1994a0ea17741760c82d42a3f5ab28"
+    }
+  ],
+  "formalAssets": [],
+  "skillsMembers": 89,
+  "coreSubsetMembers": 30,
+  "coreSubsetByteEqual": true,
+  "consumer": "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\artifacts\\goal019-final-local-consumer",
+  "command": [
+    "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\scripts\\bootstrap\\install-online.ps1",
+    "-Version",
+    "0.15.1",
+    "-TargetDir",
+    "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\artifacts\\goal019-final-local-consumer",
+    "-ZipPath",
+    "C:\\Users\\magicvr\\Documents\\Code\\goal-governance\\dist\\goal019-final-candidate\\goal-governance-skills-v0.15.1.zip",
+    "-Force"
+  ],
+  "exitCode": 0,
+  "ownedAgentsCRLFBytesPreserved": true,
+  "projectConfigBytePreserved": true,
+  "configSha256": "dd27f7ecda4b4e806963ee79b11e47f132ffe610833b455466944c11f24aa328",
+  "originalAgentsBase64": "IyBDb25zdW1lciBvd25lZCBydWxlcw0KDQpFeHBsb3JhdGlvbiBhZ2VudHMgYXJlIHJlYWQtb25seSBzY291dHMuDQo=",
+  "originalConfigBase64": "ew0KICAiZ292ZXJuYW5jZV9yb290IjogImRvY3MiLA0KICAiaW5kZXBlbmRlbnRfYXVkaXQiOiB7InByb3ZpZGVyIjoiZ3JvayIsIm1vZGVsIjoiZ3Jvay00LjciLCJyZWFzb25pbmdfZWZmb3J0IjoieGhpZ2gifQ0KfQ0K",
+  "lifecycleRuleInstalled": true
+}

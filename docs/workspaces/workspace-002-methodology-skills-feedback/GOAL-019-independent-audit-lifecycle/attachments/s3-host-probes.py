@@ -284,7 +284,7 @@ def main() -> None:
     if case == "catalog":
         shutil.copytree(ROOT/"mcp",testroot/"mcp",ignore=shutil.ignore_patterns("__pycache__","*.pyc"))
         requests=[dict(jsonrpc="2.0",id=1,method="initialize",params={}),dict(jsonrpc="2.0",id=2,method="tools/list")]
-        tasks={"vision":{"task":"Inspect vision entry guidance"},"vision-audit":{"task":"/vision-audit vp-002"},"govern":{"task":"Inspect govern entry guidance","goal_id":GG},"audit":{"task":"/audit workspace-002 goal-018","goal_id":GG}}
+        tasks={"vision":{"task":"Inspect vision entry guidance"},"vision-audit":{"task":"/vision-audit vp-002"},"govern":{"task":"Inspect govern entry guidance","goal_id":GG},"audit":{"task":"/audit workspace-002 goal-019","goal_id":GG}}
         requests.extend(dict(jsonrpc="2.0",id=i,method="tools/call",params=dict(name=name,arguments=arguments)) for i,(name,arguments) in enumerate(tasks.items(),3))
         local=subprocess.run([sys.executable,str(testroot/"mcp/server.py"),"--repo-root",str(testroot)],input="".join(json.dumps(r)+"\n" for r in requests),text=True,encoding="utf-8",capture_output=True,cwd=testroot,timeout=30)
         responses=[json.loads(line) for line in local.stdout.splitlines() if line.strip()]
@@ -311,7 +311,7 @@ def main() -> None:
         for rel in ("mcp/config.py","mcp/entries.py","mcp/kernel.py","mcp/server.py",(output/"fixture-mcp-catalog.json").relative_to(ROOT).as_posix()):
             behavior_sources.append(dict(path=rel,sha256=hashlib.sha256((ROOT/rel).read_bytes().replace(b"\r\n",b"\n")).hexdigest()))
     if case in ("audit", "vision-audit"):
-        prompt = "/audit workspace-002 goal-018" if case == "audit" else "/vision-audit vp-002"
+        prompt = "/audit workspace-002 goal-019" if case == "audit" else "/vision-audit vp-002"
     elif case == "ordinary":
         prompt = "请解释 counter.py 中 count('ab') 的返回值与原因，只检查相关业务代码，不修改文件。"
     elif case == "wait":

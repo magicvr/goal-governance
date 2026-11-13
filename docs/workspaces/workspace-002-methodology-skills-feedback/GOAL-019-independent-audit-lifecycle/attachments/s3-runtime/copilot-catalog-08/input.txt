@@ -1,0 +1,1 @@
+/govern 四入口只读 dispatch 核对。读取 mcp-catalog.json（实际本地 stdio initialize/tools/list/四次 tools/call 的结果）及适用标准入口，报告四个入口名称、层级、写入台账边界，以及 AD-01 和 UI-01 的约束；区分 host 入口核对与本地 MCP 进程证据。只读，不执行任何独立审计或改变目标/愿景，不启动子代理。只有核对成功才输出 MCP_L3_FOUR_ENTRY_OK；回显提示不算完成。

@@ -1,0 +1,25 @@
+{
+  "reason": "Version attribution mismatch: 1.0.75 envelope versus actual 1.0.71 execution; excluded from selected evidence.",
+  "entries": [
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-audit-2026-11-13-r3.d",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-path-attempt-03/github-copilot-cli-audit-2026-11-13-r3.d",
+      "sha256": null
+    },
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-audit-2026-11-13-r3.json",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-path-attempt-03/github-copilot-cli-audit-2026-11-13-r3.json",
+      "sha256": "9acd0b44cd5da5bc00c6bbe0060293a1fb65bfdc6dbf1927301cc8c8e765e802"
+    },
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13-r3.d",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-path-attempt-03/github-copilot-cli-govern-2026-11-13-r3.d",
+      "sha256": null
+    },
+    {
+      "originalPath": "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13-r3.json",
+      "archivedPath": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/copilot-path-attempt-03/github-copilot-cli-govern-2026-11-13-r3.json",
+      "sha256": "424b205b415ab85eff739c25fd2728b6b255aef1eea4245c86d6bd0e014f8227"
+    }
+  ]
+}

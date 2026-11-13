@@ -1,0 +1,134 @@
+{
+  "schemaId": "https://github.com/magicvr/goal-governance/schema/runtime-evidence/v1",
+  "format": "goal-governance.host-runtime-evidence",
+  "formatVersion": "1.0.0",
+  "capturedAt": "2026-11-13T13:07:10.519737+00:00",
+  "unit": {
+    "consumer": "claude-code-cli",
+    "entrypoint": "audit",
+    "protocolVersion": "0.1.0"
+  },
+  "environment": {
+    "product": "Claude Code CLI",
+    "version": "2.1.323",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "provider": null,
+    "model": "gpt-6.1-sol"
+  },
+  "behaviorSources": [
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-host-probes.py",
+      "sha256": "ddb2d15d196be42c547ebeb5e16e6adbf69bb67f5e0bff7bc5b7ebcbcb6a2582"
+    },
+    {
+      "path": "skills/AGENTS.template.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/principles.md",
+      "sha256": "8151ed4ae74f299a6cfdde3f9a61512bbf34b08639e70566bae8a8691396c320"
+    },
+    {
+      "path": "docs/architecture/governance-guide.md",
+      "sha256": "c5c28c3ff00e34c153c70dca3b9ee40ec627deb15b07a7445ffc0a753343b0e5"
+    },
+    {
+      "path": "docs/templates/governance-entry.md",
+      "sha256": "43bfd69b0703d64ef0fcbdf9ef27ef74d99b728e1f64f22943e5c4041faa55ff"
+    },
+    {
+      "path": "docs/architecture/workspace-protocol.md",
+      "sha256": "179748095855a9f73db29313c784ec203b28ad5ad44cd5470bc895186501c30f"
+    },
+    {
+      "path": "docs/vision/alignment.md",
+      "sha256": "c0e043a8e0cd42afcb90f66828fbb09ffe9b5d586bd77957e8c4cd8fa2c15b1c"
+    },
+    {
+      "path": "skills/prompts/05-independent-audit.md",
+      "sha256": "8efa9bc9cbaae51245993f0ca5e13352cba7c29f11ed11491ed37cd98e139f5d"
+    },
+    {
+      "path": "skills/prompts/04-write-audit.md",
+      "sha256": "7439f72f53484c353cbe93ddcd77dbe848cf842f131b4232ac7063685f2d9e1e"
+    },
+    {
+      "path": "skills/install/claude/skills/audit/SKILL.md",
+      "sha256": "bb49aba390f55314356ed591fc974a76aebcd200f363f373f8415a32d1f617fa"
+    }
+  ],
+  "invocation": {
+    "command": [
+      "C:\\Users\\magicvr\\.local\\bin\\claude.EXE",
+      "--print",
+      "--no-session-persistence",
+      "--tools",
+      "Read,Glob,Grep,Edit,Write,Skill,AskUserQuestion,Bash",
+      "--permission-mode",
+      "acceptEdits",
+      "--allowedTools",
+      "Read,Glob,Grep,Edit,Write,Skill,AskUserQuestion,Bash",
+      "--output-format",
+      "stream-json",
+      "--verbose",
+      "--effort",
+      "high",
+      "--model",
+      "gpt-6.1-sol"
+    ],
+    "cwd": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal019-s3-d0e856b5",
+    "inputSha256": "44fe9d0cf97226419a5d88d4ffc577d6b805285e481de143ec2e2dd84f6a65c3",
+    "inputSummary": "Fresh synthetic consumer fixture; actual /audit invocation. Exact labeled formal command only (/audit workspace-NNN goal-NNN or /vision-audit vp-NNN); no marker/scope instructions. Recreate via docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-host-probes.py; original observation at docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/claude-audit-01/observation.json."
+  },
+  "result": {
+    "exitCode": 0,
+    "verdict": "fail",
+    "marker": "A-001",
+    "markerObserved": false,
+    "assertionPolicy": "marker+entrypoint+nontrivial-stdout@1; actual-fixture-write-boundary@1",
+    "assertions": [
+      {
+        "id": "dispatch-marker",
+        "kind": "substring",
+        "pattern": "A-001",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": false
+      },
+      {
+        "id": "entrypoint-token",
+        "kind": "substring",
+        "pattern": "audit",
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      },
+      {
+        "id": "nontrivial-stdout",
+        "kind": "min-extra-bytes",
+        "pattern": "A-001",
+        "minExtraBytes": 16,
+        "bound": {
+          "entrypoint": "audit",
+          "protocolVersion": "0.1.0"
+        },
+        "observed": true
+      }
+    ],
+    "stdoutPath": "docs/releases/runtime/v0.15.1/claude-code-cli-audit-2026-11-13.d/stdout.txt",
+    "stdoutSha256": "1281e6ca7079bef103e674916e1cc91521d6a36fa400450925a6432fa6e60f02",
+    "stderrPath": "docs/releases/runtime/v0.15.1/claude-code-cli-audit-2026-11-13.d/stderr.txt",
+    "stderrSha256": "9e3bab7227e169ac6d85e7fcade18a205eac5751d1b968d9c83ae885668240fb",
+    "warnings": [
+      "Isolated fixture entry/ledger evidence only; does not establish cancellation, genuine human submission, or production audit verdict."
+    ],
+    "reason": "Actual fresh process; marker assertions and fixture write boundary checked: False. Independent audit verdict is separate from this dispatch verdict."
+  },
+  "artifacts": {
+    "screenshots": []
+  }
+}
