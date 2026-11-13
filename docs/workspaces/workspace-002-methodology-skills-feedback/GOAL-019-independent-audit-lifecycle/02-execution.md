@@ -1,11 +1,11 @@
 ---
 id: GOAL-019-independent-audit-lifecycle
 doc: execution
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-13
 updated: 2026-11-13
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 执行索引 · GOAL-019
@@ -20,3 +20,5 @@ version: 0.2.0
 | E-006 | 2026-11-13 | 最终检查与正式独立审计前快照 | recorded | [E-006](02-execution/E-006-final-checks-before-independent-audit.md) |
 | E-007 | 2026-11-13 | 正式cross意见响应与S4开始 | recorded | [E-007](02-execution/E-007-cross-audit-and-s4-start.md) |
 | E-008 | 2026-11-13 | PR、main CI、annotated tag与CI包验收 | recorded | [E-008](02-execution/E-008-pr-main-tag-and-ci-pack.md) |
+| E-009 | 2026-11-13 | 正式发布、九资产与GHCR验收 | recorded | [E-009](02-execution/E-009-formal-release-and-asset-acceptance.md) |
+| E-010 | 2026-11-13 | 独立关门审计、意见响应与状态同步 | recorded | [E-010](02-execution/E-010-close-out-sync.md) |

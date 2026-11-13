@@ -1,11 +1,11 @@
 ---
 id: GOAL-019-independent-audit-lifecycle
 doc: decision
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-13
 updated: 2026-11-13
-version: 0.2.0
+version: 0.3.0
 ---
 
 # 决策索引 · GOAL-019
@@ -16,3 +16,4 @@ version: 0.2.0
 |------|------|------|------|------|
 | D-001 | 2026-11-13 | 范围、证据及发布路径冻结 | accepted | [D-001](01-decision/D-001-scope-and-evidence.md) |
 | D-002 | 2026-11-13 | 审计补录与运行快照字节保真 | accepted | [D-002](01-decision/D-002-evidence-completion-and-byte-preservation.md) |
+| D-003 | 2026-11-13 | v0.15.1发布验收与cross关门 | accepted | [D-003](01-decision/D-003-close-out.md) |
