@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-13
 updated: 2026-11-13
-version: 0.3.0
+version: 0.3.1
 progress: 75%
 ---
 
@@ -15,7 +15,7 @@ progress: 75%
 
 消费仓自有 AGENTS.md 的探索子代理策略可能被助手扩大解释，导致正式独立审计被套用只读、固定时限或到时关闭规则而截断。明确正式审计会话的适用边界、派发方等待与中断责任，并在 dev 完成修正，经 PR 合入 main 后发布 v0.15.1 及验收资产。
 
-本目标服务父目标 R3 与 VP-002；不改变 Charter 的目的、边界或非目标。用户已明确授权立项、修正、PR、合并和新版本发布；S1～S3完成，A-003正式Grok independent/pass、开放required0，S4开始准备PR/main与发布验收，尚未发布。
+本目标服务父目标 R3 与 VP-002；不改变 Charter 的目的、边界或非目标。S1～S3完成，A-003正式Grok independent/pass、开放required0；PR#43已合入main fbc2d2f、两平台CI绿，annotated v0.15.1已推送且CI pack验收通过。S4的受保护publish等待release Environment审批，正式Release/GHCR尚未发布验收。
 
 ## 成功标准
 
@@ -43,7 +43,7 @@ S1→S2→S3→S4 串行；同阶段的独立验证可并行。progress 仅按�
 | I-001 | required | 规则最小同步面与 CLI/MCP 证据是否必须重采 | 方案冻结 | S1 | 核对入口加载、stage、矩阵 behaviorSources 与发布校验 | verified | 写集变化时复核 | D-001；12 CLI 与4 MCP 均固定了两份权威文件，16 格须重采；不改 prompts/wrappers |
 | I-002 | required | cross independent provider 与 CLI 参数来源 | 派发 | S1 | 校验项目配置 | verified | 用户覆盖或配置变更时复核 | `.goal-governance.json`：grok / grok-4.7 / xhigh，按完整配置复用 |
 | I-003 | required | 新规则下真实入口、台账边界及当前来源哈希是否通过 | S3 退出 | S3 | 隔离消费夹具真实采集、证据校验与 cross 审计 | verified | 当前工作树或入口变更时重查 | E-006、A-002/A-003/A-004：16项来源/原始摘要、台账边界、完整回归与cross通过 |
-| I-004 | required | main/tag/Release 与正式资产是否一致、可安装 | S4 退出 / 关门 | S4 | CI、受保护发布、下载摘要/包内容/安装/GHCR 验收 | open | 发布完成或失败时复核 | 尚未 PR、tag 或发布；验收结果不能预写 |
+| I-004 | required | main/tag/Release 与正式资产是否一致、可安装 | S4 退出 / 关门 | S4 | CI、受保护发布、下载摘要/包内容/安装/GHCR 验收 | collecting | 发布完成或失败时复核 | E-008：PR#43、main CI、annotated tag与CI pack验收通过；publish待Environment审批，正式九资产/GHCR尚未验收 |
 
 ## 审计与执行约定
 

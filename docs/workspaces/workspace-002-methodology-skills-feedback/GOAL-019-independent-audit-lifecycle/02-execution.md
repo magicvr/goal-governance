@@ -19,3 +19,4 @@ version: 0.2.0
 | E-005 | 2026-11-13 | 最终选用运行证据与取证判定整改 | recorded | [E-005](02-execution/E-005-selected-runtime-and-quality-corrections.md) |
 | E-006 | 2026-11-13 | 最终检查与正式独立审计前快照 | recorded | [E-006](02-execution/E-006-final-checks-before-independent-audit.md) |
 | E-007 | 2026-11-13 | 正式cross意见响应与S4开始 | recorded | [E-007](02-execution/E-007-cross-audit-and-s4-start.md) |
+| E-008 | 2026-11-13 | PR、main CI、annotated tag与CI包验收 | recorded | [E-008](02-execution/E-008-pr-main-tag-and-ci-pack.md) |

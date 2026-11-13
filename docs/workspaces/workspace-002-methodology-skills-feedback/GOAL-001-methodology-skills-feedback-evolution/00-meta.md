@@ -8,7 +8,7 @@ primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
 updated: 2026-11-13
-version: 0.14.42
+version: 0.14.43
 progress: 67%
 ---
 
@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-[GOAL-019](../GOAL-019-independent-audit-lifecycle/00-meta.md) 承接正式独立审计被普通探索子代理策略误截断的反馈，S1～S3完成、active75%；16项当前证据与完整回归通过，A-003指定Grok independent/pass、开放required0。S4经PR合入main并发布v0.15.1及验收，尚未发布。Root R3/VP-002长期active、Root67%保持。
+[GOAL-019](../GOAL-019-independent-audit-lifecycle/00-meta.md) 承接正式独立审计被普通探索子代理策略误截断的反馈，S1～S3完成、active75%；16项当前证据、完整回归及A-003指定Grok independent/pass，开放required0。PR#43已合入main fbc2d2f、两平台CI绿，annotated v0.15.1与CI pack验收通过；受保护publish待release Environment审批，I-004 collecting，正式Release/GHCR尚未发布验收。Root R3/VP-002长期active、Root67%保持。
 
 [GOAL-018](../GOAL-018-host-wait-and-audit-config/00-meta.md) 已 done / 100%（D-003/E-007），完成宿主原生执行等待与独立审计 CLI 项目配置整改。PR #41 → main b143452 → annotated v0.15.0 → 正式9资产、隔离安装与GHCR验收通过；A-003 independent/pass、A-004 self/pass，两个recommended fixed、无开放required。发布后收据与关门文档走PR #42，不移动tag。Root R3 / VP-002 继续长期 active，Root 67% 不变。
 
