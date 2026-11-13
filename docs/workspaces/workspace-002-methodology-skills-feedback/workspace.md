@@ -9,11 +9,13 @@ vision_role: delivery
 plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 created: 2026-07-31
-updated: 2026-11-03
-version: 0.6.3
+updated: 2026-11-13
+version: 0.6.4
 ---
 
 # 工作区上下文 · 方法论与 Skills 反馈演进
+
+当前焦点：[GOAL-019-independent-audit-lifecycle](GOAL-019-independent-audit-lifecycle/00-meta.md)，正式独立审计与探索子代理的运行边界修正及v0.15.1发布。S1完成、active25%，尚未实施；状态仍以目标meta与goal-tree为准。
 
 本工作区承载 **VP-002** 的交付：以真实项目 / 消费方使用中发现的问题为触发，持续修正核心方法论与 Skills。`goal-tree.md` 与所有 `GOAL-*` 文件夹直接位于本目录；它们是本工作区唯一的目标状态真相。
 

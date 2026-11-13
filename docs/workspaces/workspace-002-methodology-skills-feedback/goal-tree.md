@@ -2,15 +2,19 @@
 title: Goal Tree · 方法论与 Skills 反馈演进
 status: active
 created: 2026-07-31
-updated: 2026-11-12
+updated: 2026-11-13
 parent: null
-version: 0.60.0
+version: 0.61.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-11-13 · GOAL-019 立项与范围冻结
+
+用户授权在dev修正正式独立审计被探索子代理策略误截断的问题，并PR合入main、发布新版本。创建[GOAL-019-independent-audit-lifecycle](GOAL-019-independent-audit-lifecycle/00-meta.md)，D-001/E-001冻结canonical修正、现有强制加载消费、16格受影响运行证据重采及v0.15.1发布路径。cross provider沿用项目Grok/grok-4.7/xhigh；S1完成、S2未开始，active25%（1/4），尚未实施或发布。Root R3/VP-002长期active、Root67%不变，下一编号GOAL-020。
 
 ## 2026-11-12 · GOAL-018 关门（v0.15.0）
 
@@ -446,7 +450,8 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-015-audit-command-labeled-form       [done]   审计命令带标签形式修正（workspace-/goal-/vp-）  progress 100%
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
 ├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
-└── GOAL-018-host-wait-and-audit-config       [done]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 100%（S1～S4完成，v0.15.0正式发布）
+├── GOAL-018-host-wait-and-audit-config       [done]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 100%（S1～S4完成，v0.15.0正式发布）
+└── GOAL-019-independent-audit-lifecycle      [active] 独立审计与探索子代理的运行边界修正及发布 progress 25%（S1完成，S2未开始）
 ```
 
 ## 状态表
@@ -471,13 +476,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
 | GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-12 |
+| GOAL-019-independent-audit-lifecycle | 独立审计与探索子代理的运行边界修正及发布 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-11-13 |
 
 ## 编号
 
 | 项 | 值 |
 |----|-----|
-| 最大编号 | 018 |
-| 下一可用 | **GOAL-019** |
+| 最大编号 | 019 |
+| 下一可用 | **GOAL-020** |
 | 规则 | 区内单调不复用；不嵌工作区号 |
 
 ## 跨区指针（非本区状态）
