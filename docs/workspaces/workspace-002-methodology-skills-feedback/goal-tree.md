@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-11-13
 parent: null
-version: 0.61.0
+version: 0.62.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-11-13 · GOAL-019 S2完成
+
+E-002/A-001：canonical生命周期边界与指南摘要已修正，生成镜像44对一致，Skills108/docs76通过。未改prompts/wrappers或MCP实现；16格行为源均受影响，S3重采与cross审计进行中。active50%（2/4），尚未PR/tag/发布；Root67%保持。
 
 ## 2026-11-13 · GOAL-019 立项与范围冻结
 
@@ -451,7 +455,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
 ├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
 ├── GOAL-018-host-wait-and-audit-config       [done]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 100%（S1～S4完成，v0.15.0正式发布）
-└── GOAL-019-independent-audit-lifecycle      [active] 独立审计与探索子代理的运行边界修正及发布 progress 25%（S1完成，S2未开始）
+└── GOAL-019-independent-audit-lifecycle      [active] 独立审计与探索子代理的运行边界修正及发布 progress 50%（S1/S2完成，S3进行中）
 ```
 
 ## 状态表
@@ -476,7 +480,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
 | GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-12 |
-| GOAL-019-independent-audit-lifecycle | 独立审计与探索子代理的运行边界修正及发布 | GOAL-001-methodology-skills-feedback-evolution | active | 25% | 2026-11-13 |
+| GOAL-019-independent-audit-lifecycle | 独立审计与探索子代理的运行边界修正及发布 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-11-13 |
 
 ## 编号
 

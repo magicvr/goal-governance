@@ -13,3 +13,4 @@ version: 0.1.0
 | E-ID | 日期 | 标题 | 状态 | 文件 |
 |------|------|------|------|------|
 | E-001 | 2026-11-13 | 基线扫描、立项与方案冻结 | recorded | [E-001](02-execution/E-001-baseline-and-creation.md) |
+| E-002 | 2026-11-13 | 契约修正、验证及检查点 | recorded | [E-002](02-execution/E-002-contract-and-checkpoint.md) |
