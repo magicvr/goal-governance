@@ -1,0 +1,43 @@
+{
+  "tag": "v0.15.1",
+  "scope": "Downloaded successful CI pack artifact; not yet a published GitHub Release",
+  "artifactId": 14048332004,
+  "artifactDigest": "sha256:abd8a9a6c440ed38545a0665ea670166327afca5f7d76a9f092255aebba43544",
+  "files": [
+    {
+      "name": "bootstrap-README.md",
+      "size": 6052,
+      "sha256": "b95237b0fbc3f17c231b9b888ca0f98f28d1fa5e02b05b1e680514fb8f76a471"
+    },
+    {
+      "name": "goal-governance-core-v0.15.1.zip",
+      "size": 95993,
+      "sha256": "b8c27942c251a5e3ec30d4ebebce16146cb7943139666552960a62940158ae4e"
+    },
+    {
+      "name": "goal-governance-core-v0.15.1.zip.sha256",
+      "size": 99,
+      "sha256": "d48423a5b49d4f8daddf04190965f48499cd5090a44294daea57b3dd68a726e4"
+    },
+    {
+      "name": "goal-governance-skills-v0.15.1.zip",
+      "size": 301213,
+      "sha256": "de43d96f446fc3a81006a74eae1a3dba5ab392536d6c390de5bb94fa6fd91e9a"
+    },
+    {
+      "name": "goal-governance-skills-v0.15.1.zip.sha256",
+      "size": 101,
+      "sha256": "42630974ba7c0cedfefd07a005468269feaf0d1625aa051c98b992754069c99e"
+    },
+    {
+      "name": "install-online.ps1",
+      "size": 12737,
+      "sha256": "89428b67eb17e80f2501a24ea14de51769c8f2860af0536a475dc0eee0ad6ef3"
+    },
+    {
+      "name": "install-online.sh",
+      "size": 10400,
+      "sha256": "86f041cfba2ce83a20a516523388bdaa7b5f252e29d0ada75363851999c93127"
+    }
+  ]
+}

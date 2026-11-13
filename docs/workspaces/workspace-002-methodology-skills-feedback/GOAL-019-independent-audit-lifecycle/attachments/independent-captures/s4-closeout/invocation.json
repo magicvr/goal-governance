@@ -1,0 +1,34 @@
+{
+  "startedAt": "2026-11-13T15:09:04.322727+00:00",
+  "configSource": ".goal-governance.json",
+  "configSha256": "dace6a4d6df29697ad25d25b9fe4bc1ae06ce593a2fbe497f0c36ca6683f4c9c",
+  "profile": {
+    "provider": "grok",
+    "model": "grok-4.7",
+    "reasoning_effort": "xhigh"
+  },
+  "command": [
+    "C:\\Users\\magicvr\\.grok\\bin\\grok.EXE",
+    "--model",
+    "grok-4.7",
+    "--reasoning-effort",
+    "xhigh",
+    "--single",
+    "/audit workspace-002 goal-019",
+    "--output-format",
+    "streaming-json",
+    "--permission-mode",
+    "bypassPermissions",
+    "--no-subagents",
+    "--disable-web-search"
+  ],
+  "body": "/audit workspace-002 goal-019",
+  "pid": 23964,
+  "cleanConversation": true,
+  "copiedHistory": false,
+  "wallClockLimit": null,
+  "state": "exited",
+  "finishedAt": "2026-11-13T15:17:17.977861+00:00",
+  "exitCode": 0,
+  "timedOut": false
+}

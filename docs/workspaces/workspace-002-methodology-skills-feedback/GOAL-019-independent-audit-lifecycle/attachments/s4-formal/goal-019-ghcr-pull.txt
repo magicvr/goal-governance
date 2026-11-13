@@ -1,0 +1,15 @@
+0.15.1: Pulling from magicvr/goal-governance-mcp-server
+37fb86c2a767: Already exists
+53daecf7856e: Already exists
+7efbce397249: Already exists
+bbe7053e6def: Already exists
+289c2f9511c8: Pulling fs layer
+97ecac561a50: Pulling fs layer
+97ecac561a50: Verifying Checksum
+97ecac561a50: Download complete
+289c2f9511c8: Download complete
+289c2f9511c8: Pull complete
+97ecac561a50: Pull complete
+Digest: sha256:0b837930b43db78f661126c325b0bf3ea7029bb758b14862b9bbcdb6045c90d6
+Status: Downloaded newer image for ghcr.io/magicvr/goal-governance-mcp-server:0.15.1
+ghcr.io/magicvr/goal-governance-mcp-server:0.15.1

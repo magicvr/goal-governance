@@ -4,13 +4,17 @@ status: active
 created: 2026-07-31
 updated: 2026-11-13
 parent: null
-version: 0.63.0
+version: 0.64.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-11-13 · GOAL-019关门（v0.15.1）
+
+D-003/E-010：PR #43→main fbc2d2f→annotated v0.15.1→run43447166061正式发布。九资产摘要、Skills89成员源绑定、Core30成员字节子集、保留消费者规则/配置原字节的隔离安装及GHCR digest/0.15.1均通过。A-003与A-006指定Grok独立审计pass，A-007响应全部意见，三项取证finding为fixed，开放required/recommended0、I-001～I-004 verified。五项成功标准满足，S1～S4完成4/4，GOAL-019 done / 100%。发布后收据与关门记录经后续dev文档PR的CI后合入main，发布tag保持原源码身份。Root R3/VP-002长期active、Root67%，下一编号GOAL-020。
 
 ## 2026-11-13 · GOAL-019 S2完成
 
@@ -455,14 +459,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-016-charter-version-decoupling       [done]    Charter 注册表解耦与 vision_ref 版本语义（issue #34）  progress 100%
 ├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
 ├── GOAL-018-host-wait-and-audit-config       [done]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 100%（S1～S4完成，v0.15.0正式发布）
-└── GOAL-019-independent-audit-lifecycle      [active] 独立审计与探索子代理的运行边界修正及发布 progress 75%（S1～S3完成，S4进行中）
+└── GOAL-019-independent-audit-lifecycle      [done] 独立审计与探索子代理的运行边界修正及发布 progress 100%（S1～S4完成，v0.15.1正式发布）
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-11-12 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-11-13 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
@@ -480,7 +484,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-016-charter-version-decoupling | Charter 注册表解耦与 vision_ref 版本语义（issue #34） | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-10-27 |
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
 | GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-12 |
-| GOAL-019-independent-audit-lifecycle | 独立审计与探索子代理的运行边界修正及发布 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-11-13 |
+| GOAL-019-independent-audit-lifecycle | 独立审计与探索子代理的运行边界修正及发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-13 |
 
 ## 编号
 
