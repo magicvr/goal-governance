@@ -2,7 +2,7 @@
  "schemaId": "https://github.com/magicvr/goal-governance/schema/skills-consumer-compatibility-matrix/v1",
  "format": "goal-governance.skills-consumer-compatibility-matrix",
  "formatVersion": "1.0.0",
- "candidateRevision": "v0.15.1",
+ "candidateRevision": "v0.16.0",
  "canonicalContractPath": "docs/contracts/skills-consumer-contract.json",
  "protocol": {
   "current": "0.1.0",
@@ -50,32 +50,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/claude-code-cli-govern-2026-11-13-r2.json"
+      "docs/releases/runtime/v0.16.0/claude-code-cli-govern-2026-11-16-r2.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/claude-code-cli-audit-2026-11-13-r2.json"
+      "docs/releases/runtime/v0.16.0/claude-code-cli-audit-2026-11-16-r2.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/claude-code-cli-vision-2026-11-13-r2.json"
+      "docs/releases/runtime/v0.16.0/claude-code-cli-vision-2026-11-16-r2.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/claude-code-cli-vision-audit-2026-11-13-r3.json"
+      "docs/releases/runtime/v0.16.0/claude-code-cli-vision-audit-2026-11-16-r2.json"
      ]
     }
    ],
-   "evidenceScope": "GOAL-019 S3: current-source isolated entry/ledger captures on 2026-11-13, with consumer ordinary-scout policy present. Exact labeled formal audit bodies and clean conversations; report plus index and write boundary verified. L0 representative captures only, not universal host reliability, a ten-minute shutdown test, native /goal behavior, or system-level interruption prevention. Failed/setup/permission/role-misinterpretation attempts retained and not selected."
+   "evidenceScope": "GOAL-020 S3 current-source isolated entry/ledger captures, 2026-11-16. Clean direct formal commands; fixture omits optional orchestrator dispatcher default. Actual report+index and write boundary checked. Compatibility pass proves entry dispatch only; goal-drift negative/positive scenario opinions are separate. L0 representative evidence, not universal semantic detection, human UI submission or system-level enforcement. Failed/stale preliminary attempts retained outside selected set."
   },
   {
    "id": "grok-build-cli",
@@ -97,32 +97,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/grok-build-cli-govern-2026-11-13-r2.json"
+      "docs/releases/runtime/v0.16.0/grok-build-cli-govern-2026-11-16-r2.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/grok-build-cli-audit-2026-11-13-r2.json"
+      "docs/releases/runtime/v0.16.0/grok-build-cli-audit-2026-11-16-r2.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/grok-build-cli-vision-2026-11-13-r2.json"
+      "docs/releases/runtime/v0.16.0/grok-build-cli-vision-2026-11-16-r2.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/grok-build-cli-vision-audit-2026-11-13-r2.json"
+      "docs/releases/runtime/v0.16.0/grok-build-cli-vision-audit-2026-11-16-r2.json"
      ]
     }
    ],
-   "evidenceScope": "GOAL-019 S3: current-source isolated entry/ledger captures on 2026-11-13, with consumer ordinary-scout policy present. Exact labeled formal audit bodies and clean conversations; report plus index and write boundary verified. L0 representative captures only, not universal host reliability, a ten-minute shutdown test, native /goal behavior, or system-level interruption prevention. Failed/setup/permission/role-misinterpretation attempts retained and not selected."
+   "evidenceScope": "GOAL-020 S3 current-source isolated entry/ledger captures, 2026-11-16. Clean direct formal commands; fixture omits optional orchestrator dispatcher default. Actual report+index and write boundary checked. Compatibility pass proves entry dispatch only; goal-drift negative/positive scenario opinions are separate. L0 representative evidence, not universal semantic detection, human UI submission or system-level enforcement. Failed/stale preliminary attempts retained outside selected set."
   },
   {
    "id": "github-copilot-cli",
@@ -144,32 +144,32 @@
      "name": "govern",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/github-copilot-cli-govern-2026-11-13-r5.json"
+      "docs/releases/runtime/v0.16.0/github-copilot-cli-govern-2026-11-16-r2.json"
      ]
     },
     {
      "name": "audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/github-copilot-cli-audit-2026-11-13-r12.json"
+      "docs/releases/runtime/v0.16.0/github-copilot-cli-audit-2026-11-16-r2.json"
      ]
     },
     {
      "name": "vision",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/github-copilot-cli-vision-2026-11-13-r5.json"
+      "docs/releases/runtime/v0.16.0/github-copilot-cli-vision-2026-11-16-r2.json"
      ]
     },
     {
      "name": "vision-audit",
      "status": "runtime-verified",
      "evidence": [
-      "docs/releases/runtime/v0.15.1/github-copilot-cli-vision-audit-2026-11-13-r7.json"
+      "docs/releases/runtime/v0.16.0/github-copilot-cli-vision-audit-2026-11-16-r2.json"
      ]
     }
    ],
-   "evidenceScope": "GOAL-019 S3: current-source isolated entry/ledger captures on 2026-11-13, with consumer ordinary-scout policy present. Exact labeled formal audit bodies and clean conversations; report plus index and write boundary verified. L0 representative captures only, not universal host reliability, a ten-minute shutdown test, native /goal behavior, or system-level interruption prevention. Failed/setup/permission/role-misinterpretation attempts retained and not selected. Direct audit fixture omits an unrelated optional dispatcher default; actual Copilot/gpt-6-luna attribution is checked. Any dispatcher metadata completion is separately recorded and preserves the independent opinion bytes."
+   "evidenceScope": "GOAL-020 S3 current-source isolated entry/ledger captures, 2026-11-16. Clean direct formal commands; fixture omits optional orchestrator dispatcher default. Actual report+index and write boundary checked. Compatibility pass proves entry dispatch only; goal-drift negative/positive scenario opinions are separate. L0 representative evidence, not universal semantic detection, human UI submission or system-level enforcement. Failed/stale preliminary attempts retained outside selected set."
   }
  ],
  "deliveryChannels": [

@@ -114,6 +114,7 @@ class PackSkillsReleaseTests(unittest.TestCase):
         self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_config.py"))
         self.assertTrue(pack.should_exclude(Path("tests") / "test_mcp_lifecycle.py"))
         self.assertTrue(pack.should_exclude(Path("tests") / "test_governance_interaction_contract.py"))
+        self.assertTrue(pack.should_exclude(Path("tests") / "test_goal_drift_contract.py"))
         self.assertFalse(pack.should_exclude(Path("tests") / "test_skills_orchestrator.py"))
         self.assertFalse(pack.should_exclude(Path("tests") / "test_install_ps1_isolated.ps1"))
 
@@ -222,6 +223,7 @@ class PackSkillsReleaseTests(unittest.TestCase):
             with zipfile.ZipFile(zip_path) as zf:
                 names = set(zf.namelist())
             root = "goal-governance-skills-v0.0.0-testpack"
+            self.assertNotIn(f"{root}/tests/test_goal_drift_contract.py", names)
             self.assertIn(f"{root}/install.sh", names)
             self.assertIn(f"{root}/install.ps1", names)
             self.assertIn(f"{root}/prompts/00-govern-orchestrator.md", names)
@@ -316,7 +318,7 @@ class SkillsPackWorkflowContractTests(unittest.TestCase):
         self.assertIn("Evidence consistency gate (M-001)", pack_block)
         self.assertIn("capture_runtime_evidence.py --check", pack_block)
         self.assertIn(
-            "--evidence-dir docs/releases/runtime/v0.15.1",
+            "--evidence-dir docs/releases/runtime/v0.16.0",
             pack_block,
         )
         # The gate must run after deps are installed (jsonschema) and before

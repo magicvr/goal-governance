@@ -12,5 +12,6 @@ version: 0.1.0
 
 | A-ID | 日期 | source | scope | verdict | 开放 required | 文件 |
 |------|------|--------|-------|---------|---------------|------|
+| A-001 | 2026-11-16 | self | S1/S2/S3实施验证 | conditional | 1 | [A-001](03-audit/A-001-s3-self-review.md) |
 
-尚未到达审计节点。信息表见 meta；未将探索摘要标成 independent 意见。
+S3正式cross待返回；A-001 F-001 required开放，阻断S3退出及S4。合成运行意见与本生产目标审计分开，未将探索摘要标成independent。

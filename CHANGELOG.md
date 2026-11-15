@@ -2,7 +2,7 @@
 title: Changelog
 status: active
 created: 2026-07-20
-updated: 2026-11-13
+updated: 2026-11-16
 parent: null
 version: 0.2.2
 ---
@@ -13,7 +13,16 @@ version: 0.2.2
 
 ## Unreleased
 
-（空；本次 v0.15.1 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+（空；本次 v0.16.0 发行内容列于下方，正式身份以 annotated tag 与 Release 证据为准。）
+
+## 0.16.0 - 2026-11-16
+
+父子目标漂移的防护与审计修正（[GOAL-020](docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/00-meta.md)）；协议数据结构仍为0.1.0。
+
+- GD-01～GD-08 将直接父级结果、原始/有效授权、当前目标/路线图与实际交付串成可复核对照；无明显冲突、parent合法或本地清单/测试全绿不能代替正向贡献与授权连续性。
+- 立项保留贡献与初始授权；路线图覆盖承诺结果并保留剩余范围；实质变更承诺/验收先获用户明确裁决，保留前后及批准来源；合法阶段子集、信息收集和已批准演进继续允许。
+- self/independent 审计自主读取直接父级与原始/变更事实，A条目保留对照、证据及影响门禁；显著漂移/关键证据不足形成required缺口，不改标准追认。既有目标按可用历史重建，禁止伪造基线。
+- canonical、目标模板、六个prompt与MCP govern/audit指导同步；新增契约回归及实际宿主反例/正例。静态、语义运行与兼容/发布证据分别陈述，保证等级L0，不宣称系统级任意漂移拦截。
 
 ## 0.15.1 - 2026-11-13
 
