@@ -16,7 +16,7 @@ progress: 67%
 
 ## 概述
 
-[GOAL-020](../GOAL-020-goal-drift-detection/00-meta.md) active / 75%，S1～S3完成、S4发布进行中；承接用户报告的父子目标漂移漏审；调查并修正协议、模板和消费入口，含 PR/main/新资产发布。服务 R3 与成功标准1/2，不关闭 Root/R3/VP，Root67%保持。
+[GOAL-020](../GOAL-020-goal-drift-detection/00-meta.md) active / 75%，S1～S3完成、v0.16.0正式验收通过、S4关门审计待返回；承接用户报告的父子目标漂移漏审；调查并修正协议、模板和消费入口，含 PR/main/新资产发布。服务 R3 与成功标准1/2，不关闭 Root/R3/VP，Root67%保持。
 
 [GOAL-019](../GOAL-019-independent-audit-lifecycle/00-meta.md) 已done / 100%（D-003/E-010），完成正式独立审计与探索子代理运行边界修正。16项证据、完整回归、A-003/A-006指定Grok independent/pass与A-007全部意见响应通过，开放required/recommended0。PR #43→main fbc2d2f→annotated v0.15.1→正式九资产/安装与GHCR验收通过，发布后收据与关门记录走后续dev文档PR。Root R3/VP-002长期active、Root67%保持。
 

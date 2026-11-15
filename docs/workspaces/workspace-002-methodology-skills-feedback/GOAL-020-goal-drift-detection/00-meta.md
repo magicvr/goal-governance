@@ -20,7 +20,7 @@ progress: 75%
 - [x] C1：用源码出处与可重放反例说明漏审机制；区分用户反馈、已证实规则缺口与未知历史实例。
 - [x] C2：canonical 方法论、模板、Skills 与 MCP 消费一致要求父级贡献、授权基线/变更与实际交付对照；发现漂移阻断受影响门禁。
 - [x] C3：反例可识别漂移，合法分阶段子集/授权调整不误判；回归、受影响宿主证据与 cross 审计通过，无开放 required。证据A-002/A-003；仅实施不符案为required阻断，不计作模型漂移分类。
-- [ ] C4：dev → PR → main CI → annotated 新版本 → 正式资产、隔离安装与容器验收可核对。
+- [x] C4：dev → PR → main CI → annotated 新版本 → 正式资产、隔离安装与容器验收可核对。E-005及正式收据；S4最终cross仍待返回。
 
 ## 父级贡献与初始授权
 
@@ -43,7 +43,7 @@ S1 → S2 → S3 → S4；阶段内独立验证可并行。progress = 已完成�
 |----|------|------|----------|----------|----------|------|-----------|-----------|
 | I-001 | required | 漏审机制与最小修正契约是什么？ | 方案冻结 | S1退出 | 权威及入口逐项对照、反例设计 | verified | 不延期 | D-001、attachments/root-cause.md、E-002 |
 | I-002 | required | 修正是否识别漂移并保留合法阶段子集？ | 实施验收 | S3退出 | 静态回归、隔离真实宿主反例/正例、指定 provider 审计 | verified | 不延期 | E-003、A-002/A-003、attachments/semantic-results.md；验收替代/无关产物被写成漂移，仅实施不符只计required阻断 |
-| I-003 | required | 发布资产是否绑定通过验证的源码？ | 关门 | S4退出 | PR/main CI、release evidence、摘要、安装与容器验收 | open | 不延期 | 待发布产生证据 |
+| I-003 | required | 发布资产是否绑定通过验证的源码？ | 关门 | S4退出 | PR/main CI、release evidence、摘要、安装与容器验收 | verified | 不延期 | E-005、s4-delivery-chain/s4-formal-file-acceptance/s4-container-acceptance.json；S4最终独立关门意见另受A-004/F-001门禁 |
 | I-004 | non-blocking | 用户原始漂移实例的具体台账是什么？ | 根因结论外推范围 | 获得实例时 | 用户补充后按同一对照复核 | open | 实例到达即复核，责任人主代理 | 当前无具体项目材料；不编造历史漏审结论 |
 
 ## 审计与交付边界

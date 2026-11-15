@@ -12,6 +12,10 @@ version: 0.65.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-11-16 · GOAL-020正式资产验收
+
+E-005：PR45/main双平台CI、annotated v0.16.0、run43756992355正式九资产/隔离安装/GHCR验收均通过，I-003 verified。A-004 self conditional唯一required为实际S4指定provider关门意见待返回；active75%，尚未done。Root67%保持，原tag不移动。
+
 ## 2026-11-16 · GOAL-020 S3退出
 
 E-004：A-002指定Grok independent/pass，A-003 fixed闭合self必改及independent建议，开放required/recommended0，I-002 verified且保留实施缺陷原定性。16格来源一致、矩阵ready、完整回归/rehearsal/候选安装通过。S1～S3完成3/4，active75%，S4 PR/发布启动；尚未PR/tag/发布，Root67%保持。

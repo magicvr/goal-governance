@@ -1,0 +1,7 @@
+{
+  "workflowRun": 43756992355,
+  "job": 132943203295,
+  "logSha256": "e9676a5bff12e7b40b8596df58a4c008cf57916320a396bbdad108c28f94f050",
+  "imageDigest": "sha256:8de74f3d2ebd3aec758aa13cf311a6a757eb6d54015eeb22e8746a275daa5414",
+  "scope": "Digest extracted from actual docker/build-push-action containerimage.digest metadata"
+}
