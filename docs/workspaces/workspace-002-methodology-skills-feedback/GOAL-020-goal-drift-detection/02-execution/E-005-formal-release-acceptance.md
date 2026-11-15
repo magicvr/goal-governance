@@ -22,6 +22,6 @@ version: 0.1.0
 
 `attachments/s4-delivery-chain.json`、`s4-release-metadata.json`、`s4-formal-file-acceptance.json`、`s4-container-digest-source.json`、`s4-container-acceptance.json`，及CI候选、本地strict副本。
 
-Environment原始审批API见`s4-release-approvals.json`，记录为magicvr两条`skipped`，不写成approved。本侧准备正常审批时pending已消失，在前置断言处退出，未发送审批POST；未修改Environment配置。只记录实际workflow success及原始状态，不虚构人工确认。
+Environment原始审批API见`s4-release-approvals.json`，记录为magicvr两条`skipped`，不写成approved。本侧正常审批准备在pending前置断言处退出，未发送审批POST；随后查询显示publish已在运行。该次pending响应未保存，不能据断言错误确认具体放行原因；未修改Environment配置。只记录实际workflow success及原始状态，不虚构人工确认。
 
 I-003 verified、C4产物/验收成立；S4最终cross关门意见尚未返回，仍active75%，未标done。收据与关门记录将走后续dev文档PR合main，发布tag保持原源码身份。Root/R3/VP长期active、Root67%不变。

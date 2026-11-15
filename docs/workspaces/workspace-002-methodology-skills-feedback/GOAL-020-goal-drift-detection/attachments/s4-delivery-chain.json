@@ -706,5 +706,5 @@
   "tag": "v0.16.0",
   "tagObject": "2fa1c53b1998017776239ab5915621f8f16f0fb3",
   "peeledCommit": "e1f4a6723a8323d101a18fe00fe468ffab712972",
-  "environmentApprovalAction": "No POST sent: pending deployment disappeared before the approval precondition check; actual approvals preserved separately, not rewritten as approved"
+  "environmentApprovalAction": "No POST sent: approval precondition assertion failed; subsequent workflow query showed publish already in progress. That pending response was not saved, so the specific reason is not established. Actual approvals are preserved separately without rewriting skipped as approved."
 }

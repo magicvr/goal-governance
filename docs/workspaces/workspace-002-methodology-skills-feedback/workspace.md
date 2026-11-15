@@ -10,14 +10,14 @@ plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 created: 2026-07-31
 updated: 2026-11-16
-version: 0.6.10
+version: 0.6.11
 ---
 
 # 工作区上下文 · 方法论与 Skills 反馈演进
 
-当前焦点：[GOAL-020-goal-drift-detection](GOAL-020-goal-drift-detection/00-meta.md)，调查父子目标漂移漏审并补齐立项、路线图、变更与审计防护，含 dev/PR/main/新资产发布；active，协议修正与S3验证完成、S4发布进行中，下一编号 GOAL-021。
+最近完成：[GOAL-020-goal-drift-detection](GOAL-020-goal-drift-detection/00-meta.md)，父子目标漂移防护及v0.16.0正式资产验收；D-002/E-006结项，指定Grok S3/S4独立意见pass、全部finding已响应。Root/R3/VP长期active，下一编号GOAL-021；状态以目标meta和goal-tree为准。
 
-最近完成：[GOAL-019-independent-audit-lifecycle](GOAL-019-independent-audit-lifecycle/00-meta.md)，正式独立审计与探索子代理的运行边界修正及v0.15.1发布。D-003/E-010关门，A-003/A-006指定Grok独立审计pass，A-007响应全部意见，开放required/recommended0；PR #43/main双平台CI、正式九资产/安装与GHCR验收均通过。工作区继续长期反馈治理，GOAL-020已立项；状态仍以目标meta与goal-tree为准。
+前次完成：[GOAL-019-independent-audit-lifecycle](GOAL-019-independent-audit-lifecycle/00-meta.md)，正式独立审计与探索子代理的运行边界修正及v0.15.1发布。D-003/E-010关门，A-003/A-006指定Grok独立审计pass，A-007响应全部意见，开放required/recommended0；PR #43/main双平台CI、正式九资产/安装与GHCR验收均通过。工作区继续长期反馈治理，GOAL-020已立项；状态仍以目标meta与goal-tree为准。
 
 本工作区承载 **VP-002** 的交付：以真实项目 / 消费方使用中发现的问题为触发，持续修正核心方法论与 Skills。`goal-tree.md` 与所有 `GOAL-*` 文件夹直接位于本目录；它们是本工作区唯一的目标状态真相。
 

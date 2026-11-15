@@ -1,7 +1,7 @@
 ---
 id: GOAL-020-goal-drift-detection
 doc: execution
-status: active
+status: done
 parent: GOAL-001-methodology-skills-feedback-evolution
 created: 2026-11-16
 updated: 2026-11-16
@@ -17,3 +17,4 @@ version: 0.1.0
 | E-003 | 2026-11-16 | 实际宿主对照、16格证据和完整回归 | [E-003](02-execution/E-003-runtime-and-validation.md) |
 | E-004 | 2026-11-16 | Grok独立意见响应、S3退出与S4启动 | [E-004](02-execution/E-004-cross-response-and-s4.md) |
 | E-005 | 2026-11-16 | PR合入、v0.16.0正式发布及资产验收 | [E-005](02-execution/E-005-formal-release-acceptance.md) |
+| E-006 | 2026-11-16 | 最终独立关门审计、响应及结项 | [E-006](02-execution/E-006-closeout.md) |
