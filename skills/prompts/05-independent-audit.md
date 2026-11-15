@@ -2,9 +2,9 @@
 title: 提示词 · 独立交叉审计
 status: active
 created: 2026-07-18
-updated: 2026-11-12
+updated: 2026-11-16
 parent: null
-version: 0.7.3
+version: 0.8.0
 role: independent-audit
 ---
 
@@ -79,6 +79,7 @@ role: independent-audit
 
 1. **本步骤及第 2～8 步仅在布局和身份门禁通过后执行。** 旧直属显式或新旧混合布局必须先停止，返回迁移/冲突与待答事实，不通读目标正文，不创建 A 条目；不得把本步骤“扫描缺口”理解为可以绕过自动入口的失败返回。通过门禁后，才只读当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md` 与 `goal-tree.md`、核对 Root Goal/canonical 范围，定位目标并通读 meta、三个索引 + ledger 目录与 legacy inline；按独立 scope 打开相关 principles / 完整指南 / workspace protocol / 代码或附件。两类显式布局都不存在时才可按人类直调兼容路径审 legacy 隐式单工作区；自动数字命令不得猜 legacy 编号。不得读取或比较其他工作区内容。
 2. 新编号 = `03-audit.md` 索引、`03-audit/A-*` 与 legacy inline 中最大 A-NNN + 1。
+2b. **目标漂移必查 GD-01～GD-08**：执行 `{governance_root}/architecture/principles.md#goal-drift`，不依赖编排器提示“查漂移”。身份门禁通过后，自主读取同区直接父目标相关目的/成功标准/非目标/路线图和决策（Root 对 VP）、被审目标原始立项/有效授权变更及实际产物；必要时沿父链追溯，不读无关子树/他区。比较父级结果→原始及有效授权→当前范围/路线图→实际交付，检查验收替代、结果无覆盖和仅实施漂移；当前本地清单/测试全绿不是无漂移证据。小 scope 也核对本 scope 贡献，未检查整体不声称整体无漂移。合法贡献子集/调查阶段/已批准调整不自动算漂移，剩余承诺须保留；既有目标按可用历史重建，关键证据不足登记 required 信息项/finding，不能伪造基线。
 3. 按 scope 逐项核对；若涉及 P-005，核对 I-00N 的 `required`/`non-blocking`、最晚需要阶段、状态、延期复核、证据、残余风险接受与受影响门禁；若涉及共享资料，核对 `workspace_id`、`material_id`、`source`、`version` 和有效 `sha256`。工作区绑定或资料引用不合格时，作为可证实的范围缺口；每条 finding 必须有证据路径。
 4. 创建 `03-audit/A-NNN-<slug>.md`，并在 `03-audit.md` 索引新增链接：
 
@@ -92,6 +93,7 @@ role: independent-audit
    ### 范围与区间
    ### 成果（有证据）
    ### 对照成功标准（若适用）
+   ### 目标漂移对照（父级条目/版本 | 原始承诺及授权变更 | 当前范围/阶段 | 实际证据 | 对齐/漂移/证据不足及影响门禁；小 scope 可一段）
    ### Findings（F-00N；required | recommended；严重度；必要时关联 I-00N）
    ### 必改项汇总
    ### 与既有意见的异同（若有 self/independent 历史）
@@ -99,13 +101,15 @@ role: independent-audit
    ### 声明
    本意见不修改 status/progress；响应由 /govern 处理。
 
+   显著漂移、承诺结果无覆盖或未经授权的验收替代必须形成 required finding，注明差异、证据与影响门禁；P-003 合法闭合前不得放行/关门，不能改父级/子目标标准追认。缺证据不能写无漂移 pass。
+
 5. 若单条超过 32 KiB：摘要 + verdict + findings 保留在 A entry；证据长文写入 `attachments/audit-A-NNN-independent.md` 并链接。
 6. 刷新 A entry 与 `03-audit.md` 索引的 `updated`（仅审计 ledger 元数据）。
 7. **不要**改 `00-meta` 的 status、检查点或派生 progress，**不要**改 goal-tree 状态；不得用 progress 证明完成或关闭 finding。
 8. 回复用户：verdict 一句话、必改项列表、已写入路径、建议「用 /govern 响应」。
 
 # Verdict 尺度
-- **pass**：scope 内无未关闭 high required，也无到期且影响 scope 的 required 信息项；关闭复审则关闭证据充分可重复核对
+- **pass**：scope 内无未关闭 required，也无到期且影响 scope 的 required 信息项；GD 对照证据支持本 scope 结论，关闭复审则关闭证据充分可重复核对
 - **conditional**：有 med required 或重要缺口；不可无条件放行
 - **fail**：关键主张名不副实、证据严重缺失、或关闭声明不实
 

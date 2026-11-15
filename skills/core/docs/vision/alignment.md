@@ -3,8 +3,8 @@ doc_type: vision-alignment
 title: 愿景对齐契约与门禁
 status: active
 created: 2026-07-28
-updated: 2026-11-12
-version: 0.13.0
+updated: 2026-11-16
+version: 0.14.0
 parent: null
 ---
 
@@ -131,12 +131,14 @@ Workspace + Root Goal
 
 | 层 | 机读 | 语义 |
 |----|------|------|
-| 子→父 | `parent` 完整 id 存在且同区 | 不与父边界/非目标明显冲突 |
+| 子→父 | `parent` 完整 id 存在且同区 | 不与父边界/非目标明显冲突，并按 GD 核对父级贡献与授权到实际交付 |
 | Root/区→VP | `plan_refs`、`primary_plan` 必填；VP 文件存在 | `serves_summary` 服务该意图 |
 | VP→Charter（`planned`/`active`） | `vision_ref` = `{vision_id}@{version}` | 意图在**现行** Charter 边界内 |
 | VP→Charter（`closed`/`abandoned`） | `vision_ref` 的 `vision_id` = 现行 `vision_id`，版本可不同 | 历史意图在**同一愿景**内；保留关门时 ref |
 
 失败 → **fail closed**（引导 re-align 除外）。
+
+目标层还须执行 [principles GD-01～GD-08](../architecture/principles.md#goal-drift)：明确子目标如何贡献直接父级结果、保留初始授权与变更、核对路线图覆盖与实际交付。无明显冲突或机读链合法不能代替这项核对。合法贡献子集不要求完成全部父级结果；实质削弱/替代承诺须先获对应授权，显著漂移阻断受影响门禁，Goal 证据与 findings 仍只落工作区目标台账。
 
 ## 3. 工作区声明（`workspace.md` frontmatter）
 

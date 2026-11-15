@@ -41,6 +41,17 @@ _INPUT_BOUNDARY = (
 )
 
 # Human-readable role boundary per entry (kept in sync with VP-004 entry table).
+_GOAL_DRIFT_BOUNDARY = (
+    " 执行 {governance_root}/architecture/principles.md#goal-drift 的 GD-01～GD-08："
+    "身份门禁通过后，读取同区直接父目标相关正文/决策（Root对VP）、原始立项与有效授权变更及实际产物，"
+    "对照父级结果→原始/有效授权→当前范围/路线图→实际交付，不能仅凭本地清单/测试全绿判无漂移。"
+    "立项保留贡献/授权基线，路线图覆盖承诺结果与退出证据，剩余承诺不消失；实质改承诺/验收先获用户明确裁决。"
+    "self/independent审计均在本目标A条目保留对照、证据、结论及影响门禁；显著漂移或关键证据不足形成required缺口，"
+    "暂停受影响范围，合法闭合前不放行，不改标准追认。合法贡献子集/调查阶段/已批准调整不自动算漂移；"
+    "既有目标按可用历史重建，不伪造基线；按需沿同区父链追溯，不读无关子树/他区。独立审计只写意见，响应归/govern。"
+)
+
+
 ROLE_BOUNDARIES: dict[str, str] = {
     "vision": (
         "决策层：建修 Charter、组合编排（VP）、Vision Review、re-align；冷启动优先。"
@@ -55,10 +66,12 @@ ROLE_BOUNDARIES: dict[str, str] = {
         "实现编排：扫描工作区与审计台账、分类、P-004 用户裁决、提议下一步、"
         "确认后调用原语写入目标五件套。"
         + _INPUT_BOUNDARY
+        + _GOAL_DRIFT_BOUNDARY
     ),
     "audit": (
         "Goal 交叉审计：只出意见到被审目标 03-audit 台账，不直接改 status/progress。"
         + _INPUT_BOUNDARY
+        + _GOAL_DRIFT_BOUNDARY
     ),
 }
 

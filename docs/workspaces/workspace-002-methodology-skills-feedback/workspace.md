@@ -9,11 +9,13 @@ vision_role: delivery
 plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 created: 2026-07-31
-updated: 2026-11-13
-version: 0.6.9
+updated: 2026-11-16
+version: 0.6.10
 ---
 
 # 工作区上下文 · 方法论与 Skills 反馈演进
+
+当前焦点：[GOAL-020-goal-drift-detection](GOAL-020-goal-drift-detection/00-meta.md)，调查父子目标漂移漏审并补齐立项、路线图、变更与审计防护，含 dev/PR/main/新资产发布；active，尚未完成修复，下一编号 GOAL-021。
 
 最近完成：[GOAL-019-independent-audit-lifecycle](GOAL-019-independent-audit-lifecycle/00-meta.md)，正式独立审计与探索子代理的运行边界修正及v0.15.1发布。D-003/E-010关门，A-003/A-006指定Grok独立审计pass，A-007响应全部意见，开放required/recommended0；PR #43/main双平台CI、正式九资产/安装与GHCR验收均通过。工作区继续长期反馈治理，下一编号GOAL-020；状态仍以目标meta与goal-tree为准。
 

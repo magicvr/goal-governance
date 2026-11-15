@@ -2,9 +2,9 @@
 title: 提示词 · 更新执行进度
 status: active
 created: 2026-07-18
-updated: 2026-11-12
+updated: 2026-11-16
 parent: null
-version: 0.8.1
+version: 0.9.0
 role: primitive
 ---
 
@@ -63,6 +63,7 @@ role: primitive
    - 下一步（计划单独标注）
 
 3. 条目具体可核对；计划与已完成分开写。
+3b. **GD-01～GD-08**：执行 `{governance_root}/architecture/principles.md#goal-drift`；阶段切换、范围变化、验收与发现偏差时，对照直接父目标结果、原始立项/有效授权变更、当前路线图和实际产物。即使文档没改，也检查实施是否换了验收对象/遗漏场景/只产出替代品；记录结果贡献及证据，保留剩余承诺。显著偏离或关键证据不足时暂停受影响范围，回流 decision/信息表并形成 required 门禁；不得先改成功标准让交付通过。合法阶段子集/信息收集和已批准调整不自动算漂移。
 4. 涉及共享资料时，先核对引用的 `workspace_id`、`material_id`、`source`、`version` 与有效 `sha256`；缺失或不匹配时记录拒绝/阻断事实，不能把资料内容写成 confirmed 事实、证据或跨工作区上下文。固定引用只说明来源，事实准入仍须用户显式确认。
 4b. 时间线若提及**他区**目标或产物：落盘用 **Q2** 路径；对话用 **Q3**。本区目标用短 id；禁止改 goal id 形状。
 5. 涉及 I-00N 时：记录实际收集/验证动作与证据路径；新发现的未知追加到信息表，并写明 `required`/`non-blocking`、影响门禁和最晚需要阶段。`deferred` 要保留理由、责任人与复核触发；没有证据时不得把状态改为 `verified`。

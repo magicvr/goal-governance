@@ -2,9 +2,9 @@
 title: 提示词 · 创建新目标
 status: active
 created: 2026-07-18
-updated: 2026-11-03
+updated: 2026-11-16
 parent: null
-version: 0.8.0
+version: 0.9.0
 role: primitive
 ---
 
@@ -67,12 +67,14 @@ P-001 与 P-005 以完整指南与 principles 为准；**全文**见 `{governanc
    - 创建**非 Root** 子目标时：工作区必须已存在且绑定正确。
    - 仅当用户明确维护旧仓、且无显式工作区根时，才使用 legacy `{governance_root}/goals/`。
 2. 新编号 = 当前工作区最大编号 + 1（三位）。Root 固定 GOAL-001。**禁止**把工作区编号嵌进 goal id。
+2b. **GD-01～GD-08**：执行 `{governance_root}/architecture/principles.md#goal-drift`。读取同区直接父目标的目的、成功标准、非目标、相关路线图/决策（Root 对 VP），说明本目标结果贡献哪一父级条目，引用 D 编号/Git ref/短引文等版本证据，显式保留父级剩余范围。首条 decision 保存原始用户授权、初始范围/成功标准及贡献基线，不以当前 meta 充当原始授权。小目标可一句说明；合法子集/信息收集无需完成全部父目标。
 3. 创建 `<workspace-root>/GOAL-NNN-<slug>/`（平铺）。`parent` 与同区链接用短 id；若正文需提及他区目标，落盘用 **Q2** 路径（`{governance_root}/workspaces/workspace-…/GOAL-…/`），对话说明用 **Q3**（`[workspace_id] GOAL-…`）。
 
 4. 一次写入五件套：`00-meta` / `01-decision` / `02-execution` / `03-audit` / `attachments/`；同时创建 `01-decision/`、`02-execution/`、`03-audit/`。索引 `.md` 不承载新目标的完整 D/E/A 正文。
 5. 模板源：优先 `{governance_root}/templates/goal-folder/`；否则 `<SKILLS_PKG>/core/docs/templates/goal-folder/`（GOAL-022：包内唯一分发源）。
 6. Frontmatter：status, created, updated, parent, version；meta 另含 id、title。`progress` 可选：仅当已写显式可枚举检查点时按 P-001 确定性派生；否则省略/显示 `—`，禁止手填百分比。Root 的 slug = 用户确认名。
 7. 正文：meta 概述/成功标准/路线图/信息概览；decision 取舍与信息项；execution 仅事实；audit 可写尚未到复盘节点。
+7b. 路线图/阶段计划按承诺结果→阶段退出证据或子目标交付检查覆盖；未覆盖结果留为未完成/待规划/依赖，不以“写方案/跑测试/过审计”替代实际效果。贡献或关键授权证据不足登记 required 信息项并阻断其影响门禁，不伪造事实；越过父级边界或实质改变用户承诺须先按 P-004 裁决。
 8. 更新 `goal-tree.md`（树 + 表）。若本目标为 Root，确保 `workspace.md` 的 `root_goal` 与 id 一致。
 9. 如需，在父目标文档轻量提及新子目标。
 
