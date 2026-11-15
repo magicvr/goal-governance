@@ -1,0 +1,12 @@
+{
+  "originalObservation": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/codex-audit-implementation-r2/observation.json",
+  "originalStream": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/codex-audit-implementation-r2/stdout.jsonl",
+  "originalPublicOpinionSha256": "7e1992ea90447cb8c4e325651f9b1c6fbaee251d1bf652de540ca39b98a9c923",
+  "requestedModel": "gpt-6-luna",
+  "observedModel": null,
+  "verdict": "fail",
+  "actualFixtureLedger": "C:\\Users\\magicvr\\AppData\\Local\\Temp\\gg-goal020-s3-c8ba34ff\\docs\\workspaces\\workspace-002-synthetic\\GOAL-020-synthetic-counter\\03-audit\\A-001-readonly-opinion-pasted.md",
+  "bodyPreservedVerbatim": true,
+  "pastedBy": "main orchestrator after actual readonly output; not by original host process",
+  "originalObservationChangedUnmodified": true
+}

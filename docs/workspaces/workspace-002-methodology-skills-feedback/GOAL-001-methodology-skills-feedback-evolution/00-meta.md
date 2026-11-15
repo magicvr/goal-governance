@@ -7,14 +7,16 @@ plan_refs: VP-002-methodology-skills-feedback-evolution
 primary_plan: VP-002-methodology-skills-feedback-evolution
 serves_summary: delivery Root；服务 VP-002 / vision-goal-governance@0.2.0；承接真实项目与消费方反馈修正协议与 Skills
 created: 2026-07-31
-updated: 2026-11-13
-version: 0.14.45
+updated: 2026-11-16
+version: 0.14.46
 progress: 67%
 ---
 
 # GOAL-001 · 真实项目反馈驱动的协议与 Skills 演进
 
 ## 概述
+
+[GOAL-020](../GOAL-020-goal-drift-detection/00-meta.md) active / 75%，S1～S3完成、S4发布进行中；承接用户报告的父子目标漂移漏审；调查并修正协议、模板和消费入口，含 PR/main/新资产发布。服务 R3 与成功标准1/2，不关闭 Root/R3/VP，Root67%保持。
 
 [GOAL-019](../GOAL-019-independent-audit-lifecycle/00-meta.md) 已done / 100%（D-003/E-010），完成正式独立审计与探索子代理运行边界修正。16项证据、完整回归、A-003/A-006指定Grok independent/pass与A-007全部意见响应通过，开放required/recommended0。PR #43→main fbc2d2f→annotated v0.15.1→正式九资产/安装与GHCR验收通过，发布后收据与关门记录走后续dev文档PR。Root R3/VP-002长期active、Root67%保持。
 
@@ -88,6 +90,7 @@ progress: 67%
 | [GOAL-017-on-demand-governance-context](../GOAL-017-on-demand-governance-context/00-meta.md) | 消费仓治理规则按需加载与新资产发布 | done |
 | [GOAL-018-host-wait-and-audit-config](../GOAL-018-host-wait-and-audit-config/00-meta.md) | 宿主原生目标待答停止与独立审计 CLI 项目配置 | done |
 | [GOAL-019-independent-audit-lifecycle](../GOAL-019-independent-audit-lifecycle/00-meta.md) | 独立审计与探索子代理的运行边界修正及发布 | done |
+| [GOAL-020-goal-drift-detection](../GOAL-020-goal-drift-detection/00-meta.md) | 父子目标漂移的漏审根因、防护与发布 | active |
 
 ## 备注
 

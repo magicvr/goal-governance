@@ -17,6 +17,7 @@ docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatc
 docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-014-release-v0-13-6/attachments/**/*.jsonl text eol=lf
 docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-018-host-wait-and-audit-config/attachments/**/*.jsonl text eol=lf
 docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/**/*.jsonl text eol=lf
+docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/**/*.jsonl text eol=lf
 
 # Immutable S3 host-generated Markdown snapshots retain original hard breaks
 # and final blank lines. Do not reformat evidence; source/docs checks stay on.
@@ -25,4 +26,5 @@ docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-013-audit-dispatc
 # GOAL-019 snapshots include native CRLF output and byte-preserved audit bodies.
 # Preserve those exact evidence bytes; canonical Markdown still uses LF above.
 docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-019-independent-audit-lifecycle/attachments/s3-runtime/**/changed/**/*.md -text -eol whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/**/changed/**/*.md -text -eol whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 

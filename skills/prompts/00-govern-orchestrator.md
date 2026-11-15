@@ -2,9 +2,9 @@
 title: 提示词 · 目标治理编排器（主入口）
 status: active
 created: 2026-07-18
-updated: 2026-11-12
+updated: 2026-11-16
 parent: null
-version: 0.15.0
+version: 0.16.0
 role: primary
 ---
 
@@ -71,6 +71,14 @@ Skills 包的**默认用户路径**。协助用户完成带质量意识的闭环
 | 核心方法论目录 | **必备**：`{governance_root}/architecture/`（至少 principles + workspace-protocol） | 缺失 → 不完整安装；从 `<SKILLS_PKG>/core/docs` 安装或重跑 install |
 | 额外目录（示例应用骨架、tech-stack 等） | **仅在用户要求或项目已有时**扩展 | 用户明确要求时再创建 |
 | 日期 | 会话/系统当前 `YYYY-MM-DD` | 用户指定日期时 |
+
+# 目标漂移检查（GD-01～GD-08）
+
+执行 `{governance_root}/architecture/principles.md#goal-drift`。当前目标有合法 parent、当前清单/测试全绿不等于对齐。立项、方案冻结、阶段切换、范围变化和关门前，读取直接父目标相关目的/成功标准/非目标/路线图与决策（Root 对 VP），比较「父级结果→原始立项与有效授权变更→当前范围/路线图→实际产物」。记录具体贡献、证据与剩余承诺；审计 A 条目必须保留对照结论，不能只列本地成功标准。
+
+新建目标首条 decision 保留原始用户授权、范围/成功标准、父级条目及版本引用；路线图逐项覆盖承诺结果，未覆盖项保持未完成/待规划，过程里程碑不替代结果。实质改承诺或削弱/替代验收前，留原值→新值、父级影响与批准来源，先获对应范围用户明确裁决；已有授权内实现细化不重复询问。未经批准不改 meta 追认。
+
+发现显著漂移或关键授权/贡献证据不足，暂停受影响范围，登记 required finding/信息项并回流修正，P-003 闭合前不放行；冲突/授权不明按 P-004 等待，不把沉默当批准。合法阶段子集、信息收集和已批准调整不自动算漂移，须明确贡献并保留父级剩余承诺。既有目标按可用历史重建，不伪造基线；按需沿同区父链追溯，不扫描无关子树/他区。独立审计只写本目标意见；规范为 L0。
 
 # P-005 信息就绪（目标领域）
 
@@ -335,6 +343,8 @@ S4 可与 S2 叠加：有未关闭 required finding 或到期 required 信息项
 5. 全部相关 required finding 已按 P-003 三路径合法闭合，且到期 required I-00N 已 `verified` 或合规 `accepted-residual` 后，才可提议放行。
 
 ### 关门检查（任何时候用户要 done）
+
+- GD 对照已包含父级贡献、原始/有效授权、当前计划及实际证据；没有把替代产物、本地全绿或子目标 done 当父级结果完成；
 
 - 相关意见无未合法闭合的 required（fixed / accepted-residual / user-overruled）；
 - 相关信息项没有未处理的关门 required；`accepted-residual` 有用户书面接受、范围和复审触发；

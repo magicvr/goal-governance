@@ -1,0 +1,11 @@
+2026-11-15T19:29:41.600687Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:29:41.602689Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:29:41.644364Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell
+2026-11-15T19:29:41.884255Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+2026-11-15T19:29:41.886252Z  WARN codex_core::client: falling back to HTTP
+2026-11-15T19:29:42.571723Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:29:42.571762Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:30:05.694983Z ERROR codex_core::tools::router: error=Provide either message or items, but not both
+2026-11-15T19:30:09.495981Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+2026-11-15T19:30:09.496087Z  WARN codex_core::client: falling back to HTTP
+2026-11-15T19:31:35.078222Z  WARN codex_core::hook_runtime: failed to resolve parent transcript path for subagent hook parent_thread_id=01a1e0af-d256-7cc3-bfdc-ba90325bda7c error=invalid thread-store request: no rollout found for thread id 01a1e0af-d256-7cc3-bfdc-ba90325bda7c

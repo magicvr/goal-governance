@@ -5,10 +5,14 @@ status: active
 parent: GOAL-001-root-slug
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-version: 0.1.0
+version: 0.2.0
 ---
 
 # 决策记录 · GOAL-NNN
+
+## 初始授权与变更（GD-01～GD-08）
+
+首条 D 记录原始用户授权、初始范围/成功标准、直接父级结果条目及版本引用、本目标贡献与剩余承接；meta 为当前投影。改变承诺/验收/关键阶段时，后续 D 记录原值→新值、理由、父级/下游覆盖影响与真实批准来源；实质改承诺或削弱/替代验收须先获对应范围用户明确裁决，已有授权内实现细化无需重问。保留原始记录，不能用 accepted 标签或改父级追认漂移。权威：`{governance_root}/architecture/principles.md#goal-drift`。
 
 ## 纲领路线图与阶段计划（按需）
 

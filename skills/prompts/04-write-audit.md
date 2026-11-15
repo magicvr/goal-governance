@@ -2,9 +2,9 @@
 title: 提示词 · 写审计意见 / 阶段复盘
 status: active
 created: 2026-07-18
-updated: 2026-11-12
+updated: 2026-11-16
 parent: null
-version: 0.9.0
+version: 0.10.0
 role: primitive
 ---
 
@@ -65,6 +65,7 @@ role: primitive
 
 1. 通读当前 `{governance_root}/workspaces/workspace-<NNN>-<slug>/workspace.md`、`00-meta`、`01-decision`（含信息需求与残余风险）、`02-execution`、现有 `03-audit`。Root/canonical 不匹配、旧直属显式布局或新旧混合布局均作为阻断缺口；不得审计或放行其他工作区内容。两类显式布局都不存在时才审 legacy 隐式单工作区。
 2. 新编号 = 索引、目录文件名与 legacy inline 中已有最大 `A-NNN` + 1（自审与独立审**共用**序列）。
+2b. **目标漂移必查 GD-01～GD-08**：执行 `{governance_root}/architecture/principles.md#goal-drift`。读取同区直接父目标相关正文/决策（Root 对 VP），被审目标原始立项、有效授权变更与实际产物；按需沿父链追溯，不读无关子树/他区。比较父级结果→原始及有效授权→当前目标/路线图→实际交付，检查验收替代、结果无覆盖及仅实施漂移，不能只看当前本地清单/测试。小 scope 也核对本 scope 贡献，未检查整体不声称整体无漂移。既有目标从可用记录重建，缺证据登记 required 信息项/finding，不伪造基线。合法贡献子集/调查阶段/已批准变更不自动算漂移，剩余承诺仍须保留。
 3. 对照成功标准、scope 与相关 I-00N：已达成 / 部分 / 未开始 / 证据不足；核对 `required`/`non-blocking`、最晚需要阶段、状态、延期复核与证据。若 scope 使用共享资料引用，核对 `workspace_id`、`material_id`、`source`、`version` 和有效 `sha256`；引用不完整/不匹配只能作为缺口，不能被当成事实或关闭证据。
 4. 创建 `03-audit/A-NNN-<slug>.md` 并在索引新增一行；entry **最小头字段强制**：
 
@@ -78,6 +79,7 @@ role: primitive
    ### 范围与区间
    ### 成果（有证据）— 指向文件、决策号或 execution
    ### 对照成功标准（表：标准 | 状态 | 证据）— scope 内适用时
+   ### 目标漂移对照（父级条目/版本 | 原始承诺及授权变更 | 当前范围/阶段 | 实际证据 | 对齐/漂移/证据不足及影响门禁；小 scope 可一段）
    ### Findings
    对每条：
    - **F-00N · 标题**
@@ -87,6 +89,7 @@ role: primitive
    - 状态：open（默认）| closed（仅当本条即关闭声明且有证据）
 
    若 required 信息项已到期、影响 scope、或 `accepted-residual` 没有用户书面接受，应作为 finding；不要把未知本身误记为失败事实。
+   显著漂移、承诺结果无覆盖或未经授权的验收替代必须形成 required finding，注明差异及影响门禁；P-003 合法闭合前不得放行/关门。缺证据不能写无漂移 pass，不能改标准追认。
 
    ### 必改项汇总（required 列表）
    ### 结论 + 建议下一步
@@ -104,7 +107,7 @@ role: primitive
 9. 语气具体、可验证；证据不足写明缺口。关门审计还须确认没有开放的关门 required 信息项，或每个 residual 都有用户接受范围与复审触发。
 
 # Verdict 尺度
-- **pass**：scope 内无 high 级未关闭 required，也无到期且影响该 scope 的 required 信息项；可进入下一步/关闭该门禁
+- **pass**：scope 内无未关闭 required，也无到期且影响该 scope 的 required 信息项；GD 对照证据支持本 scope 结论
 - **conditional**：总体可用，有 med required 或应改项；可带开放项清单推进仅当用户接受并留痕
 - **fail**：关键成功标准名不副实，或证据严重不足，或阻断项未解决
 

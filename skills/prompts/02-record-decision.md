@@ -2,9 +2,9 @@
 title: 提示词 · 记录决策
 status: active
 created: 2026-07-18
-updated: 2026-11-12
+updated: 2026-11-16
 parent: null
-version: 0.8.0
+version: 0.9.0
 role: primitive
 ---
 
@@ -62,7 +62,7 @@ role: primitive
 3. 刷新 entry 与索引的 `updated`；小改可保持 version。
 4. 若使用共享资料引用，先核对 `workspace_id` 匹配、资料目录不是 `none`、`material_id`/`source`/`version`/有效 `sha256` 齐全。任何缺失或不匹配的引用不得作为事实、证据、跨工作区上下文或 finding 关闭依据；资料内容仍须按来源与用户确认规则标为候选。
 4b. 决策正文若提及**他区**目标：落盘用 **Q2** canonical 路径；对用户说明用 **Q3** 标签。区内目标与 `parent` 仍用短 id；禁止把工作区号写进 goal 文件夹名。
-5. 若决策改变范围、成功标准、路线图或信息门禁：同步 `00-meta` / 信息需求表，并在 `02-execution` 记一句「记录决策 D-NNN：…」。`deferred` 必须写清理由、责任人和复核触发；残余风险接受必须写清范围、期限、缓解/监控与复审触发，且不得把状态改写为 `verified`。
+5. 若决策改变范围、成功标准、路线图或信息门禁：先执行 `{governance_root}/architecture/principles.md#goal-drift` 的 GD-01～GD-08，读取直接父目标与原始立项/适用变更，留原值→新值、理由、父级结果/下游覆盖影响及批准来源。实质改用户承诺或削弱/替代验收须先取得对应范围用户明确裁决，不能靠 accepted 标签或重写父级追认；已有授权内实现细化不重复询问。保留原始基线与变更链，再同步 `00-meta` / 信息需求表，并在 `02-execution` 记一句「记录决策 D-NNN：…」。阶段调整后重核承诺结果→退出证据，未覆盖项不消失；合法贡献子集不自动算漂移。`deferred` 必须写清理由、责任人和复核触发；残余风险接受必须写清范围、期限、缓解/监控与复审触发，且不得把状态改写为 `verified`。
 6. 若 status 变化，或决策改变检查点从而导致派生 progress 变化：按 P-001 重算并同步 `00-meta` / `goal-tree.md`。不得直接手填百分比或用 progress 放行门禁。
 7. 过程流水账写在 execution；decision 保持可执行结论。
 

@@ -1,0 +1,71 @@
+{
+  "scope": "Archive-only field removal; no host invocation or audit verdict changed",
+  "files": [
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/copilot-audit-02/stdout.jsonl",
+      "originalSha256": "fd2f5deadeafa9fdb16b9c29edef240fc226b54156095fb61830bb082c0aa1dd",
+      "sanitizedSha256": "19517d82f622ceb6a014658b5e9e300d721a2c3fd003fcb829af1ed7aeb07249",
+      "removedFields": [
+        "reasoningText",
+        "signature",
+        "thinking",
+        "thought"
+      ]
+    },
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/copilot-audit-subset/stdout.jsonl",
+      "originalSha256": "a62d3f30ee27f900ed86d76e1519bff4325d37a13dd8d135bbc8d5d58528baa8",
+      "sanitizedSha256": "e857e600088ba26b80102332cdedfc49a52d264a6105fa85561c5ede84d0c0fa",
+      "removedFields": [
+        "reasoningText",
+        "signature",
+        "thinking",
+        "thought"
+      ]
+    },
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/copilot-audit-unrelated/stdout.jsonl",
+      "originalSha256": "d805c275ef59a8324b49d15d0aeff095be32bf735c6a76abcc2f1fab4b7432ef",
+      "sanitizedSha256": "93f6a29f78a95e43bc75edba44cb333a4d3f1a906c11158e1f69c826e1d5ece1",
+      "removedFields": [
+        "reasoningText",
+        "signature",
+        "thinking",
+        "thought"
+      ]
+    },
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/copilot-catalog-02/stdout.jsonl",
+      "originalSha256": "3bf059115026b3df2164e90f89ca9627c7f5e2825c8ece89524b88440d0ad096",
+      "sanitizedSha256": "0c17e53f684487e1e2c10bd03bbc07676d90d7563325fd5f9c11a2a6c83d8ea6",
+      "removedFields": [
+        "reasoningText",
+        "signature",
+        "thinking",
+        "thought"
+      ]
+    },
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/copilot-govern-02/stdout.jsonl",
+      "originalSha256": "0204f406cfc7ac9e033204f802018ce33a31ea3ba8aee5f4676806489d2f984f",
+      "sanitizedSha256": "7f1b090efc8871933e8d5c4a6ff5ec26cc85f8ea14296cf631ef59a3553b20b6",
+      "removedFields": [
+        "reasoningText",
+        "signature",
+        "thinking",
+        "thought"
+      ]
+    },
+    {
+      "path": "docs/workspaces/workspace-002-methodology-skills-feedback/GOAL-020-goal-drift-detection/attachments/s3-runtime/copilot-vision-audit-02/stdout.jsonl",
+      "originalSha256": "55ca63d23494e9e775b1a61492c5165ce5b14ad74286e07cdf62eb562c2d87e2",
+      "sanitizedSha256": "a4c32f246ec77d245494cc93b2ea73b3c521c142ef9920a41966eceea3cd0779",
+      "removedFields": [
+        "reasoningText",
+        "signature",
+        "thinking",
+        "thought"
+      ]
+    }
+  ]
+}

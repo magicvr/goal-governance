@@ -5,7 +5,7 @@ status: active
 parent: GOAL-001-root-slug
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
-version: 0.3.0
+version: 0.4.0
 ---
 
 # 执行记录 · GOAL-NNN
@@ -26,6 +26,8 @@ version: 0.3.0
 > 答复到达前最后一列留空，不补默认选择或伪造提交；实际提交后先留痕，再复核全部门禁与未答部分，仅解除该答案解决的原因。独立审计员只记录/返回待答事实，不越权改 Goal 状态。
 
 ## 事实边界
+
+按 `{governance_root}/architecture/principles.md#goal-drift` 的 GD-01～GD-08：阶段切换、范围变化、验收或发现偏差时，记录实际产物如何贡献父级结果，对照原始/有效授权及当前路线图，保留剩余承诺。文档未改也须检查实施是否换验收对象/遗漏场景/只交替代品；显著偏离暂停受影响范围，回流决策/信息表，不先改标准让事实通过。
 
 > 只写已经发生且有证据的事实。每个独立时间线条目放在 `02-execution/E-NNN-<slug>.md`；计划、未知和建议分别留在决策或审计记录。不能把 `open`、`deferred` 或 `accepted-residual` 写成已验证事实。checkpoint commit hash 与覆盖路径在对应 E 条目中登记。
 

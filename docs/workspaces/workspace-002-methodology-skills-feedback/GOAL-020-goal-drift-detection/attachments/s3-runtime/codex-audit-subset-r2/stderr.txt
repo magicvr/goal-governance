@@ -1,0 +1,15 @@
+2026-11-15T19:34:14.476224Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:34:14.476268Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:34:14.480731Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell
+2026-11-15T19:34:14.616383Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+2026-11-15T19:34:14.616532Z  WARN codex_core::client: falling back to HTTP
+2026-11-15T19:34:15.593095Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:34:15.593129Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:34:15.600836Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:34:15.600865Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/
+2026-11-15T19:34:32.126311Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+2026-11-15T19:34:32.126438Z  WARN codex_core::client: falling back to HTTP
+2026-11-15T19:34:32.229815Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+2026-11-15T19:34:32.229881Z  WARN codex_core::client: falling back to HTTP
+2026-11-15T19:35:20.946630Z  WARN codex_core::hook_runtime: failed to resolve parent transcript path for subagent hook parent_thread_id=01a1e0b3-fcbc-7890-ab6a-885350da5798 error=invalid thread-store request: no rollout found for thread id 01a1e0b3-fcbc-7890-ab6a-885350da5798
+2026-11-15T19:35:21.491386Z  WARN codex_core::hook_runtime: failed to resolve parent transcript path for subagent hook parent_thread_id=01a1e0b3-fcbc-7890-ab6a-885350da5798 error=invalid thread-store request: no rollout found for thread id 01a1e0b3-fcbc-7890-ab6a-885350da5798

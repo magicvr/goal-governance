@@ -2,9 +2,9 @@
 title: 目标治理完整操作指南
 status: active
 created: 2026-07-18
-updated: 2026-11-13
+updated: 2026-11-16
 parent: null
-version: 1.1.1
+version: 1.2.0
 ---
 
 # 目标治理完整操作指南
@@ -112,6 +112,8 @@ version: 1.1.1
 Skills 与核心方法论**同级必备**：缺 `{governance_root}/architecture/` 视为不完整安装，应先补 core（重跑 install 或从包内 `core/docs` 复制），不得当作可跳过。
 
 ## 6b. 治理闭环、交叉审计与信息就绪（P-002～P-005）
+
+**目标漂移必查**：[principles · GD-01～GD-08](principles.md#goal-drift) 为权威。立项时读取直接父目标并保留原始授权/贡献基线；路线图把承诺结果映射到阶段退出证据，未覆盖结果继续保留；实质改承诺/验收前取得用户明确裁决，保留前后及批准来源。推进与 self/independent 审计对照「直接父级结果→原始及有效授权变更→当前范围/路线图→实际产物」，在 A 条目保留差异、证据、结论及影响门禁。显著漂移或关键证据不足不得按当前清单/测试全绿放行；形成 required finding/信息项，由 /govern 响应，独立审计不改状态。合法阶段子集、信息收集与已批准演进不自动算漂移；既有目标从可用记录重建，不伪造基线，不全量回写历史。本规范仍为 L0。
 
 操作摘要如下；**全文**见 `{governance_root}/architecture/principles.md`。
 降级兜底：若 principles 文件暂时缺失，仍须遵守本小节，并在推进前报告不完整安装——**这不是「architecture 可选」产品定位**。

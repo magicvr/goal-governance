@@ -2,7 +2,7 @@
 title: 文档体系说明
 status: active
 created: 2026-07-18
-updated: 2026-10-26
+updated: 2026-11-16
 parent: null
 version: 0.16.0
 ---
@@ -12,6 +12,8 @@ version: 0.16.0
 本目录是 **Goal Governance** 的核心规范与运行记录来源：方法论、文档协议、目标、决策、执行、审计与架构说明均以 Markdown 维护。具体目标实例的状态真相只存在于各自 `{governance_root}/workspaces/workspace-<NNN>-<slug>/` 根。仓库级愿景与规划对齐在 `{governance_root}/vision/`（**不是**第二套目标状态）。
 
 **现行消费路径**：以 **Skills** 为主（Charter `vision-goal-governance@0.2.0`）。冻结 Web 资产已物理退役；VP-003 保持 `planned` 并正式挂起，未来 UI 重新激活须新书面决策。
+
+**目标漂移防护**：[principles GD-01～GD-08](architecture/principles.md#goal-drift) 规定父级贡献、初始/有效授权、路线图覆盖与实际交付对照；立项、推进与 self/independent 审计均适用。本地清单/测试全绿不能替代结果对齐，合法阶段子集与授权演进仍允许。
 
 ## 目录结构
 
