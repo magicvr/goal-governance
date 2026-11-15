@@ -12,6 +12,10 @@ version: 0.65.0
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
 
+## 2026-11-16 · GOAL-020 S3退出
+
+E-004：A-002指定Grok independent/pass，A-003 fixed闭合self必改及independent建议，开放required/recommended0，I-002 verified且保留实施缺陷原定性。16格来源一致、矩阵ready、完整回归/rehearsal/候选安装通过。S1～S3完成3/4，active75%，S4 PR/发布启动；尚未PR/tag/发布，Root67%保持。
+
 ## 2026-11-16 · GOAL-020 S1/S2完成
 
 E-002：GD规则、模板、六prompt、MCP指导及生成镜像已同步，Skills113/docs76通过，stage44对一致。根因证据区分事实与推断；八夹具本地全绿不作为语义通过。S1/S2完成2/4，active50%，S3重采与cross进行中；未PR/发布，Root67%保持。
@@ -468,14 +472,14 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
 ├── GOAL-018-host-wait-and-audit-config       [done]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 100%（S1～S4完成，v0.15.0正式发布）
 ├── GOAL-019-independent-audit-lifecycle      [done] 独立审计与探索子代理的运行边界修正及发布 progress 100%（S1～S4完成，v0.15.1正式发布）
-└── GOAL-020-goal-drift-detection            [active] 父子目标漂移的漏审根因、防护与发布 progress 50%（S1/S2完成，S3进行中）
+└── GOAL-020-goal-drift-detection            [active] 父子目标漂移的漏审根因、防护与发布 progress 75%（S1～S3完成，S4进行中）
 ```
 
 ## 状态表
 
 | id | title | parent | status | progress | updated |
 |----|-------|--------|--------|----------|---------|
-| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-11-13 |
+| GOAL-001-methodology-skills-feedback-evolution | 真实项目反馈驱动的协议与 Skills 演进 | null | active | 67% | 2026-11-16 |
 | GOAL-002-codex-skills-entry | 添加 Codex 可用的 Skills 入口 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-07-31 |
 | GOAL-003-consumer-governance-ergonomics | 修复消费仓门禁与长流程治理摩擦 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
 | GOAL-004-frozen-web-asset-retirement | 移除冻结 Web 资产并挂起 VP-003 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-08-04 |
@@ -494,7 +498,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
 | GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-12 |
 | GOAL-019-independent-audit-lifecycle | 独立审计与探索子代理的运行边界修正及发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-13 |
-| GOAL-020-goal-drift-detection | 父子目标漂移的漏审根因、防护与发布 | GOAL-001-methodology-skills-feedback-evolution | active | 50% | 2026-11-16 |
+| GOAL-020-goal-drift-detection | 父子目标漂移的漏审根因、防护与发布 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-11-16 |
 
 ## 编号
 

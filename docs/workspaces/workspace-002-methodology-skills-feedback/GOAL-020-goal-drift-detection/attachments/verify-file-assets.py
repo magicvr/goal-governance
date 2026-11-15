@@ -40,6 +40,7 @@ with zipfile.ZipFile(skills) as z:
     assert b"goal-drift" in rule and b"GD-08" in rule
     assert not any("/workspaces/" in n or "/mcp/" in n for n in members)
 formal_checks = []
+source_binding = None
 if args.release_metadata:
     release = json.loads(args.release_metadata.read_text(encoding="utf-8"))
     assert release["tag_name"] == tag and not release["draft"] and not release["prerelease"]
@@ -58,6 +59,33 @@ if args.release_metadata:
     assert evidence["protocol"]["candidateRevision"] == tag
     report = json.loads((assets / "compatibility-report.json").read_text(encoding="utf-8"))
     assert report["coverage"]["status"] == "ready-for-release-evidence"
+    commit = subprocess.check_output(["git", "rev-parse", f"{tag}^{{commit}}"], cwd=ROOT).decode().strip()
+    assert evidence["source"]["commit"] == report["source"]["commit"] == commit
+    def tagged_blob(path):
+        return subprocess.check_output(["git", "show", f"{tag}:{path}"], cwd=ROOT)
+    file_checks = []
+    for archive, archive_root, prefix in (
+        (skills, f"goal-governance-skills-{tag}/", "skills/"),
+        (core, f"goal-governance-core-{tag}/", "skills/core/"),
+    ):
+        with zipfile.ZipFile(archive) as z:
+            for name in z.namelist():
+                if name.endswith("/"):
+                    continue
+                assert name.startswith(archive_root)
+                source = prefix + name[len(archive_root):]
+                data = z.read(name)
+                assert data == tagged_blob(source), source
+                file_checks.append(dict(archive=archive.name, path=source, sha256=hashlib.sha256(data).hexdigest()))
+    for asset, source in (("install-online.ps1", "scripts/bootstrap/install-online.ps1"),
+                          ("install-online.sh", "scripts/bootstrap/install-online.sh"),
+                          ("bootstrap-README.md", "scripts/bootstrap/README.md")):
+        assert (assets / asset).read_bytes() == tagged_blob(source), asset
+    for part in ("contract", "matrix"):
+        assert report[part]["sha256"] == hashlib.sha256(tagged_blob(report[part]["path"])).hexdigest()
+    source_binding = dict(tag=tag, commit=commit, archiveMembers=file_checks,
+                          archiveBytesMatchTaggedSource=True, bootstrapBytesMatchTaggedSource=True,
+                          contractAndMatrixDigestsMatchTaggedSource=True)
 consumer.mkdir(parents=True)
 owned = b"# Consumer owned rules\r\n\r\nExploration agents are read-only scouts.\r\n"
 config = b'{\r\n  "governance_root": "docs",\r\n  "independent_audit": {"provider":"grok","model":"grok-4.7","reasoning_effort":"xhigh"}\r\n}\r\n'
@@ -89,6 +117,6 @@ receipt = dict(verifiedAt=datetime.now(timezone.utc).isoformat(), tag=tag,
                projectConfigBytePreserved=True, configSha256=digest(consumer / ".goal-governance.json"),
                originalAgentsBase64=base64.b64encode(owned).decode(),
                originalConfigBase64=base64.b64encode(config).decode(),
-               lifecycleRuleInstalled=True)
+               driftRuleInstalled=True, sourceBinding=source_binding)
 args.receipt.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-print(json.dumps({k: receipt[k] for k in ("formal", "skillsMembers", "coreSubsetMembers", "exitCode", "lifecycleRuleInstalled")}))
+print(json.dumps({k: receipt[k] for k in ("formal", "skillsMembers", "coreSubsetMembers", "exitCode", "driftRuleInstalled")}))
