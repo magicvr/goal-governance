@@ -4,13 +4,21 @@ status: active
 created: 2026-07-31
 updated: 2026-11-16
 parent: null
-version: 0.65.0
+version: 0.66.0
 ---
 
 # Goal Tree
 
 > 工作区：`workspace-002-methodology-skills-feedback` · `primary_plan` = VP-002 · `vision_role` = delivery  
 > 目标状态真相仅本目录五件套 + 本文件；不汇总 progress 到愿景目录。
+
+## 2026-11-16 · GOAL-020关门（v0.16.0）
+
+D-002/E-006：PR45→main e1f4a67→annotated v0.16.0→run43756992355成功发布，九资产/API摘要、119归档成员及bootstrap源绑定、Core子集/隔离安装/GHCR验收通过。A-002/A-005指定Grok独立意见pass，A-003/A-006响应全部意见，开放required/recommended0，I-001～I-003 verified。GOAL-020 done/100%（S1～S4 4/4）；I-004保留non-blocking/open，Root/R3/VP长期active、Root67%不变。收据与关门记录经后续dev文档PR合main，原发布tag保持，下一编号GOAL-021。
+
+## 2026-11-16 · GOAL-020正式资产验收
+
+E-005：PR45/main双平台CI、annotated v0.16.0、run43756992355正式九资产/隔离安装/GHCR验收均通过，I-003 verified。A-004 self conditional唯一required为实际S4指定provider关门意见待返回；active75%，尚未done。Root67%保持，原tag不移动。
 
 ## 2026-11-16 · GOAL-020 S3退出
 
@@ -472,7 +480,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 ├── GOAL-017-on-demand-governance-context     [done]  消费仓治理规则按需加载与新资产发布  progress 100%（S1～S4完成，v0.14.0正式发布）
 ├── GOAL-018-host-wait-and-audit-config       [done]  宿主原生目标待答停止与独立审计 CLI 项目配置  progress 100%（S1～S4完成，v0.15.0正式发布）
 ├── GOAL-019-independent-audit-lifecycle      [done] 独立审计与探索子代理的运行边界修正及发布 progress 100%（S1～S4完成，v0.15.1正式发布）
-└── GOAL-020-goal-drift-detection            [active] 父子目标漂移的漏审根因、防护与发布 progress 75%（S1～S3完成，S4进行中）
+└── GOAL-020-goal-drift-detection            [done] 父子目标漂移的漏审根因、防护与发布 progress 100%（S1～S4完成，v0.16.0正式验收）
 ```
 
 ## 状态表
@@ -498,7 +506,7 @@ GOAL-001-methodology-skills-feedback-evolution  [active]  真实项目反馈驱�
 | GOAL-017-on-demand-governance-context | 消费仓治理规则按需加载与新资产发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-03 |
 | GOAL-018-host-wait-and-audit-config | 宿主原生目标待答停止与独立审计 CLI 项目配置 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-12 |
 | GOAL-019-independent-audit-lifecycle | 独立审计与探索子代理的运行边界修正及发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-13 |
-| GOAL-020-goal-drift-detection | 父子目标漂移的漏审根因、防护与发布 | GOAL-001-methodology-skills-feedback-evolution | active | 75% | 2026-11-16 |
+| GOAL-020-goal-drift-detection | 父子目标漂移的漏审根因、防护与发布 | GOAL-001-methodology-skills-feedback-evolution | done | 100% | 2026-11-16 |
 
 ## 编号
 
